@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{675EF7A6-2B4D-476F-857B-8222D67BF935}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Kurogane.Web.Data</RootNamespace>
+    <AssemblyName>Kurogane.Web.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Characters\Bowser.cs" />
+    <Compile Include="Characters\BowserJr.cs" />
+    <Compile Include="Characters\CaptainFalcon.cs" />
+    <Compile Include="Characters\Character.cs" />
+    <Compile Include="Characters\CharacterConstants.cs" />
+    <Compile Include="Characters\Charizard.cs" />
+    <Compile Include="Characters\DarkPit.cs" />
+    <Compile Include="Characters\DiddyKong.cs" />
+    <Compile Include="Characters\DonkeyKong.cs" />
+    <Compile Include="Characters\DrMario.cs" />
+    <Compile Include="Characters\DuckHunt.cs" />
+    <Compile Include="Characters\Falco.cs" />
+    <Compile Include="Characters\Fox.cs" />
+    <Compile Include="Characters\Ganondorf.cs" />
+    <Compile Include="Characters\Greninja.cs" />
+    <Compile Include="Characters\Ike.cs" />
+    <Compile Include="Characters\Jigglypuff.cs" />
+    <Compile Include="Characters\KingDedede.cs" />
+    <Compile Include="Characters\Link.cs" />
+    <Compile Include="Characters\LittleMac.cs" />
+    <Compile Include="Characters\Lucario.cs" />
+    <Compile Include="Characters\Lucas.cs" />
+    <Compile Include="Characters\Lucina.cs" />
+    <Compile Include="Characters\Luigi.cs" />
+    <Compile Include="Characters\Mario.cs" />
+    <Compile Include="Characters\Marth.cs" />
+    <Compile Include="Characters\Megaman.cs" />
+    <Compile Include="Characters\MetaKnight.cs" />
+    <Compile Include="Characters\Mewtwo.cs" />
+    <Compile Include="Characters\MiiSwordFighter.cs" />
+    <Compile Include="Characters\MrGameAndWatch.cs" />
+    <Compile Include="Characters\Ness.cs" />
+    <Compile Include="Characters\Olimar.cs" />
+    <Compile Include="Characters\PacMan.cs" />
+    <Compile Include="Characters\Palutena.cs" />
+    <Compile Include="Characters\Peach.cs" />
+    <Compile Include="Characters\Pit.cs" />
+    <Compile Include="Characters\Rob.cs" />
+    <Compile Include="Characters\Robin.cs" />
+    <Compile Include="Characters\RosalinaAndLuma.cs" />
+    <Compile Include="Characters\Roy.cs" />
+    <Compile Include="Characters\Ryu.cs" />
+    <Compile Include="Characters\Samus.cs" />
+    <Compile Include="Characters\Sheik.cs" />
+    <Compile Include="Characters\Shulk.cs" />
+    <Compile Include="Characters\Sonic.cs" />
+    <Compile Include="Characters\ToonLink.cs" />
+    <Compile Include="Characters\Wario.cs" />
+    <Compile Include="Characters\WiiFitTrainer.cs" />
+    <Compile Include="Characters\Yoshi.cs" />
+    <Compile Include="Characters\Zelda.cs" />
+    <Compile Include="Characters\ZeroSuitSamus.cs" />
+    <Compile Include="Page.cs" />
+    <Compile Include="Characters\Pikachu.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StatProperty.cs" />
+    <Compile Include="Stats\AerialMoves.cs" />
+    <Compile Include="Stats\AerialStat.cs" />
+    <Compile Include="Stats\GroundMoves.cs" />
+    <Compile Include="Stats\GroundStat.cs" />
+    <Compile Include="Stats\MovementMoves.cs" />
+    <Compile Include="Stats\MovementStat.cs" />
+    <Compile Include="Stats\Rank.cs" />
+    <Compile Include="Stats\SpecialMoves.cs" />
+    <Compile Include="Stats\SpecialStat.cs" />
+    <Compile Include="Stats\Stat.cs" />
+    <Compile Include="Stats\StatConstants.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
