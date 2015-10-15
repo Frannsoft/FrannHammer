@@ -8,6 +8,7 @@ namespace KuroganeTest
         static void Main(string[] args)
         {
             Bowser b = new Bowser();
+            Villager v = new Villager();
             new BowserJr();
             new CaptainFalcon();
             new Charizard();

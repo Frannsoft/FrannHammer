@@ -93,6 +93,7 @@
     <Compile Include="Characters\Shulk.cs" />
     <Compile Include="Characters\Sonic.cs" />
     <Compile Include="Characters\ToonLink.cs" />
+    <Compile Include="Characters\Villager.cs" />
     <Compile Include="Characters\Wario.cs" />
     <Compile Include="Characters\WiiFitTrainer.cs" />
     <Compile Include="Characters\Yoshi.cs" />
