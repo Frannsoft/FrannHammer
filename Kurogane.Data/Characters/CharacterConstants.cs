@@ -166,6 +166,9 @@ namespace Kurogane.Web.Data.Characters
         [Description("Toon%20Link")]
         TOONLINK,
 
+        [Description("Villager")]
+        VILLAGER,
+
         [Description("Wario")]
         WARIO,
 
