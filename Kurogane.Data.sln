@@ -1,25 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kurogane.Web.Data", "Kurogane.Data\Kurogane.Web.Data.csproj", "{675EF7A6-2B4D-476F-857B-8222D67BF935}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KuroganeTest", "KuroganeTest\KuroganeTest.csproj", "{65614867-D6AA-47E8-A234-B3D8BDD12710}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KuroganeHammer.Data.Core", "KuroganeHammer.Data.Core\KuroganeHammer.Data.Core.csproj", "{2904D4E7-8989-46BD-AC0A-B4356F190A15}"
+EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 3
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://frannsoftdev.visualstudio.com/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Kurogane.Data\\Kurogane.Web.Data.csproj
-		SccProjectName1 = Kurogane.Data
-		SccLocalPath1 = Kurogane.Data
-		SccProjectUniqueName2 = KuroganeTest\\KuroganeTest.csproj
-		SccProjectName2 = KuroganeTest
-		SccLocalPath2 = KuroganeTest
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -33,8 +23,27 @@ Global
 		{65614867-D6AA-47E8-A234-B3D8BDD12710}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65614867-D6AA-47E8-A234-B3D8BDD12710}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65614867-D6AA-47E8-A234-B3D8BDD12710}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2904D4E7-8989-46BD-AC0A-B4356F190A15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2904D4E7-8989-46BD-AC0A-B4356F190A15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2904D4E7-8989-46BD-AC0A-B4356F190A15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2904D4E7-8989-46BD-AC0A-B4356F190A15}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 4
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://frannsoftdev.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Kurogane.Data\\Kurogane.Web.Data.csproj
+		SccProjectName1 = Kurogane.Data
+		SccLocalPath1 = Kurogane.Data
+		SccProjectUniqueName2 = KuroganeTest\\KuroganeTest.csproj
+		SccProjectName2 = KuroganeTest
+		SccLocalPath2 = KuroganeTest
+		SccProjectUniqueName3 = KuroganeHammer.Data.Core\\KuroganeHammer.Data.Core.csproj
+		SccProjectName3 = KuroganeHammer.Data.Core
+		SccLocalPath3 = KuroganeHammer.Data.Core
 	EndGlobalSection
 EndGlobal
