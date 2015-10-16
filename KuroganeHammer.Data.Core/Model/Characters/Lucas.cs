@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class Lucas : Character
+    [JsonObject]
+	public class Lucas : Character
     {
         [StatProperty]
         public SpecialStat PKFreeze { get; set; }

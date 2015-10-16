@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class CaptainFalcon : Character
+	[JsonObject]
+	public class CaptainFalcon : Character
     {
         #region special moves
 

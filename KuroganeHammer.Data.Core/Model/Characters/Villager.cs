@@ -1,8 +1,11 @@
 ﻿using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class Villager : Character
+    [JsonObject]
+	public class Villager : Character
     {
         [StatProperty]
         public SpecialStat Pocket { get; set; }

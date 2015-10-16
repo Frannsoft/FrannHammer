@@ -1,6 +1,9 @@
 ﻿
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Stats
 {
+    [JsonObject(MemberSerialization.OptOut)]
     public class MovementMoves
     {
         [StatProperty]

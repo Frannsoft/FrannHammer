@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class MrGameAndWatch : Character
+    [JsonObject]
+	public class MrGameAndWatch : Character
     {
         [StatProperty]
         public SpecialStat ChefPan { get; set; }

@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class Sonic : Character
+    [JsonObject]
+	public class Sonic : Character
     {
         [StatProperty]
         public SpecialStat HomingAttackEarliest { get; set; }

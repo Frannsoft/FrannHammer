@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class Lucario : Character
+    [JsonObject]
+	public class Lucario : Character
     {
         [StatProperty]
         public SpecialStat AuraSphereCharging { get; set; }

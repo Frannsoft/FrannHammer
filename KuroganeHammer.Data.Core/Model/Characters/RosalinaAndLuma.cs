@@ -1,8 +1,11 @@
 ﻿using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class RosalinaAndLuma : Character
+    [JsonObject]
+	public class RosalinaAndLuma : Character
     {
         [StatProperty]
         public SpecialStat LumaShotNoCharge { get; set; }

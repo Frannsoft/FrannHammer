@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class PacMan : Character
+    [JsonObject]
+	public class PacMan : Character
     {
         [StatProperty]
         public SpecialStat BonusFruitThrow { get; set; }

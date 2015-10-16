@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class DonkeyKong : Character
+    [JsonObject]
+	public class DonkeyKong : Character
     {
         #region special moves
 

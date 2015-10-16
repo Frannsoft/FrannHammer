@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class MetaKnight : Character
+    [JsonObject]
+	public class MetaKnight : Character
     {
         [StatProperty]
         public SpecialStat MachTornado { get; set; }

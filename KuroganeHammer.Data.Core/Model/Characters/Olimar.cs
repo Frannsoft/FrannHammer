@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class Olimar : Character
+    [JsonObject]
+	public class Olimar : Character
     {
         [StatProperty]
         public SpecialStat PikminPluck { get; set; }

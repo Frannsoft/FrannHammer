@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class Peach : Character
+    [JsonObject]
+	public class Peach : Character
     {
         [StatProperty]
         public SpecialStat Toad { get; set; }

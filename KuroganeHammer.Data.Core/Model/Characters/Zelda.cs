@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class Zelda : Character
+    [JsonObject]
+	public class Zelda : Character
     {
         [StatProperty]
         public SpecialStat NayrusLove { get; set; }

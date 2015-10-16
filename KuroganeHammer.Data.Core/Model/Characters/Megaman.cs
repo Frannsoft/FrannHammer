@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class Megaman : Character
+    [JsonObject]
+	public class Megaman : Character
     {
         [StatProperty]
         public SpecialStat MetalBlade { get; set; }

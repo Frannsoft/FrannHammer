@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class Yoshi : Character
+    [JsonObject]
+	public class Yoshi : Character
     {
         [StatProperty]
         public SpecialStat EggLay { get; set; }
