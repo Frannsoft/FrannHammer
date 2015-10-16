@@ -1,5 +1,4 @@
-﻿using Kurogane.Web.Data;
-using Kurogane.Web.Data.Characters;
+﻿using KuroganeHammer.Data.Core.Model.Characters;
 
 namespace KuroganeTest
 {

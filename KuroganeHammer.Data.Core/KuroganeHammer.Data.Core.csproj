@@ -9,12 +9,13 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>KuroganeHammer.Data.Core</RootNamespace>
     <AssemblyName>KuroganeHammer.Data.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MySql.Data, Version=6.9.7.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -47,10 +52,78 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="D\Sm4shDB.cs" />
+    <Compile Include="Model\Characters\Bowser.cs" />
+    <Compile Include="Model\Characters\BowserJr.cs" />
+    <Compile Include="Model\Characters\CaptainFalcon.cs" />
+    <Compile Include="Model\Characters\Character.cs" />
+    <Compile Include="Model\Characters\CharacterConstants.cs" />
+    <Compile Include="Model\Characters\Charizard.cs" />
+    <Compile Include="Model\Characters\DarkPit.cs" />
+    <Compile Include="Model\Characters\DiddyKong.cs" />
+    <Compile Include="Model\Characters\DonkeyKong.cs" />
+    <Compile Include="Model\Characters\DrMario.cs" />
+    <Compile Include="Model\Characters\DuckHunt.cs" />
+    <Compile Include="Model\Characters\Falco.cs" />
+    <Compile Include="Model\Characters\Fox.cs" />
+    <Compile Include="Model\Characters\Ganondorf.cs" />
+    <Compile Include="Model\Characters\Greninja.cs" />
+    <Compile Include="Model\Characters\Ike.cs" />
+    <Compile Include="Model\Characters\Jigglypuff.cs" />
+    <Compile Include="Model\Characters\KingDedede.cs" />
+    <Compile Include="Model\Characters\Link.cs" />
+    <Compile Include="Model\Characters\LittleMac.cs" />
+    <Compile Include="Model\Characters\Lucario.cs" />
+    <Compile Include="Model\Characters\Lucas.cs" />
+    <Compile Include="Model\Characters\Lucina.cs" />
+    <Compile Include="Model\Characters\Luigi.cs" />
+    <Compile Include="Model\Characters\Mario.cs" />
+    <Compile Include="Model\Characters\Marth.cs" />
+    <Compile Include="Model\Characters\Megaman.cs" />
+    <Compile Include="Model\Characters\MetaKnight.cs" />
+    <Compile Include="Model\Characters\Mewtwo.cs" />
+    <Compile Include="Model\Characters\MiiSwordFighter.cs" />
+    <Compile Include="Model\Characters\MrGameAndWatch.cs" />
+    <Compile Include="Model\Characters\Ness.cs" />
+    <Compile Include="Model\Characters\Olimar.cs" />
+    <Compile Include="Model\Characters\PacMan.cs" />
+    <Compile Include="Model\Characters\Palutena.cs" />
+    <Compile Include="Model\Characters\Peach.cs" />
+    <Compile Include="Model\Characters\Pikachu.cs" />
+    <Compile Include="Model\Characters\Pit.cs" />
+    <Compile Include="Model\Characters\Rob.cs" />
+    <Compile Include="Model\Characters\Robin.cs" />
+    <Compile Include="Model\Characters\RosalinaAndLuma.cs" />
+    <Compile Include="Model\Characters\Roy.cs" />
+    <Compile Include="Model\Characters\Ryu.cs" />
+    <Compile Include="Model\Characters\Samus.cs" />
+    <Compile Include="Model\Characters\Sheik.cs" />
+    <Compile Include="Model\Characters\Shulk.cs" />
+    <Compile Include="Model\Characters\Sonic.cs" />
+    <Compile Include="Model\Characters\ToonLink.cs" />
+    <Compile Include="Model\Characters\Villager.cs" />
+    <Compile Include="Model\Characters\Wario.cs" />
+    <Compile Include="Model\Characters\WiiFitTrainer.cs" />
+    <Compile Include="Model\Characters\Yoshi.cs" />
+    <Compile Include="Model\Characters\Zelda.cs" />
+    <Compile Include="Model\Characters\ZeroSuitSamus.cs" />
+    <Compile Include="Model\Stats\AerialMoves.cs" />
+    <Compile Include="Model\Stats\AerialStat.cs" />
+    <Compile Include="Model\Stats\GroundMoves.cs" />
+    <Compile Include="Model\Stats\GroundStat.cs" />
+    <Compile Include="Model\Stats\MovementMoves.cs" />
+    <Compile Include="Model\Stats\MovementStat.cs" />
+    <Compile Include="Model\Stats\Rank.cs" />
+    <Compile Include="Model\Stats\SpecialMoves.cs" />
+    <Compile Include="Model\Stats\SpecialStat.cs" />
+    <Compile Include="Model\Stats\Stat.cs" />
+    <Compile Include="Model\Stats\StatProperty.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Web\Page.cs" />
+    <Compile Include="Web\StatConstants.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="D\app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
