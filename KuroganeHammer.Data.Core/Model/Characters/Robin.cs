@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class Robin : Character
+    [JsonObject]
+	public class Robin : Character
     {
         [StatProperty]
         public SpecialStat Thunder { get; set; }

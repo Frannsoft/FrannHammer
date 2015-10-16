@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class Samus : Character
+    [JsonObject]
+	public class Samus : Character
     {
         [StatProperty]
         public SpecialStat ChargeShot { get; set; }

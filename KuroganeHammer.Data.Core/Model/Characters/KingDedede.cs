@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class KingDedede : Character
+    [JsonObject]
+	public class KingDedede : Character
     {
         [StatProperty]
         public SpecialStat Inhale { get; set; }

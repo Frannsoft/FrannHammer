@@ -1,9 +1,11 @@
-﻿using KuroganeHammer.Data.Core.Model.Characters;
-using KuroganeHammer.Data.Core.Model.Stats;
+﻿using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class Pikachu : Character
+    [JsonObject]
+	public class Pikachu : Character
     {
         [StatProperty]
         public SpecialStat ThunderJoltAir { get; set; }

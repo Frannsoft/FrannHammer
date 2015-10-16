@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class MiiSwordFighter : Character
+    [JsonObject]
+	public class MiiSwordFighter : Character
     {
         [StatProperty]
         public SpecialStat Neutral1GaleStrikeEarly { get; set; }

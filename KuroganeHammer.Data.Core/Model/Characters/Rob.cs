@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class Rob : Character
+    [JsonObject]
+	public class Rob : Character
     {
         [StatProperty]
         public SpecialStat RoboBeamNoCharge { get; set; }

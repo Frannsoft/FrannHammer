@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class Ryu : Character
+    [JsonObject]
+	public class Ryu : Character
     {
         [StatProperty]
         public SpecialStat LightHadouken { get; set; }

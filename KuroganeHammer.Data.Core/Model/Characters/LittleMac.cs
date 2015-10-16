@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class LittleMac : Character
+    [JsonObject]
+	public class LittleMac : Character
     {
         [StatProperty]
         public SpecialStat KOPunch { get; set; }

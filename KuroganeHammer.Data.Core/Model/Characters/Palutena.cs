@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class Palutena : Character
+    [JsonObject]
+	public class Palutena : Character
     {
         [StatProperty]
         public SpecialStat AutoreticleTarget { get; set; }

@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class Jigglypuff : Character
+    [JsonObject]
+	public class Jigglypuff : Character
     {
         [StatProperty]
         public SpecialStat RolloutCharge { get; set; }

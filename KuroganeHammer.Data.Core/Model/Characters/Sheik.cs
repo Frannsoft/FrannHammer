@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class Sheik : Character
+    [JsonObject]
+	public class Sheik : Character
     {
         [StatProperty]
         public SpecialStat NeedleStorm { get; set; }

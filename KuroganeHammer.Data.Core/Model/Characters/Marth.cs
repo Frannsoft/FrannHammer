@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class Marth : Character
+    [JsonObject]
+	public class Marth : Character
     {
         [StatProperty]
         public SpecialStat Shieldbreaker { get; set; }

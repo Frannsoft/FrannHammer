@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class Ganondorf : Character
+    [JsonObject]
+	public class Ganondorf : Character
     {
         #region special moves
 

@@ -1,11 +1,13 @@
 ﻿
+using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
 using System.Reflection;
 
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class CharacterUtility
+    [JsonObject]
+	public class CharacterUtility
     {
         public static string GetEnumDescription(Enum value)
         {

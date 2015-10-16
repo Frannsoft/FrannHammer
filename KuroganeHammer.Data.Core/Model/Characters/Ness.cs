@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class Ness : Character
+    [JsonObject]
+	public class Ness : Character
     {
         [StatProperty]
         public SpecialStat PKTrashNoCharge { get; set; }

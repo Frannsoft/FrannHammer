@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class WiiFitTrainer : Character
+    [JsonObject]
+	public class WiiFitTrainer : Character
     {
         [StatProperty]
         public SpecialStat SunSalutationWindbox { get; set; }

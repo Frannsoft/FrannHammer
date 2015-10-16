@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class Wario : Character
+    [JsonObject]
+	public class Wario : Character
     {
         [StatProperty]
         public SpecialStat Chomp { get; set; }

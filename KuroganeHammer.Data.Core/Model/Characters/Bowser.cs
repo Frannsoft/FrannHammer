@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class Bowser : Character
+    [JsonObject]
+	public class Bowser : Character
     {
         #region special moves
 
@@ -53,5 +56,7 @@ namespace KuroganeHammer.Data.Core.Model.Characters
         public Bowser()
             : base(Characters.BOWSER)
         { }
+
+
     }
 }

@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class ZeroSuitSamus : Character
+    [JsonObject]
+	public class ZeroSuitSamus : Character
     {
         [StatProperty]
         public SpecialStat ParalyzerUncharged { get; set; }

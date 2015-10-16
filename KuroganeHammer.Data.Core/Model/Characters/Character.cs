@@ -1,24 +1,40 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
 using KuroganeHammer.Data.Core.Web;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
+    [JsonObject(MemberSerialization.OptIn)]
     public class Character
     {
         private const string URL_BASE = "http://kuroganehammer.com/Smash4/";
         private readonly string urlTail;
+
+        [JsonProperty]
+        private string fullurl
+        {
+            get { return URL_BASE + urlTail; }
+        }
         private Page page;
 
+        [JsonProperty]
         public string Name { get; private set; }
-        public string FrameDataVersion { get; private set; }
-        public MovementMoves MovementMoves { get; set; }
-        public GroundMoves GroundMoves { get; set; }
-        public AerialMoves AerialMoves { get; set; }
 
+        public string FrameDataVersion { get; private set; }
+
+        [JsonProperty]
+        public MovementMoves MovementMoves { get; set; }
+
+        [JsonProperty]
+        public GroundMoves GroundMoves { get; set; }
+
+        [JsonProperty]
+        public AerialMoves AerialMoves { get; set; }
 
         public Character(Characters character)
         {
@@ -31,6 +47,43 @@ namespace KuroganeHammer.Data.Core.Model.Characters
             AerialMoves = new AerialMoves();
 
             GetData();
+        }
+
+        public string AsJson<T>(StatTypes statType = StatTypes.All)
+            where T : Character
+        {
+            string serializedContent = string.Empty;
+
+            switch (statType)
+            {
+                case StatTypes.All:
+                    {
+                        serializedContent = JsonConvert.SerializeObject(this);
+                        break;
+                    }
+                case StatTypes.Aerial:
+                    {
+                        serializedContent = JsonConvert.SerializeObject(this.AerialMoves);
+                        break;
+                    }
+                case StatTypes.Ground:
+                    {
+                        serializedContent = JsonConvert.SerializeObject(this.GroundMoves);
+                        break;
+                    }
+                case StatTypes.Movement:
+                    {
+                        serializedContent = JsonConvert.SerializeObject(this.MovementMoves);
+                        break;
+                    }
+                case StatTypes.Special:
+                    {
+                        var convertChar = Convert.ChangeType(this, typeof(T));
+                        serializedContent = JsonConvert.SerializeObject(convertChar);
+                        break;
+                    }
+            }
+            return serializedContent;
         }
 
         internal void GetData()

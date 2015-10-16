@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class Luigi : Character
+    [JsonObject]
+	public class Luigi : Character
     {
         [StatProperty]
         public SpecialStat Fireball { get; set; }

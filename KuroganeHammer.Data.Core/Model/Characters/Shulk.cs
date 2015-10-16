@@ -1,8 +1,11 @@
 ﻿
 using KuroganeHammer.Data.Core.Model.Stats;
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
-    public class Shulk : Character
+    [JsonObject]
+	public class Shulk : Character
     {
         [StatProperty]
         public SpecialStat MonadoArtsDuration { get; set; }

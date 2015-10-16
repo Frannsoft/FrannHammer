@@ -1,6 +1,9 @@
 ﻿
+using Newtonsoft.Json;
+
 namespace KuroganeHammer.Data.Core.Model.Stats
 {
+    [JsonObject]
     public class GroundStat : Stat
     {
         internal string HitBoxActive { get; private set; }
