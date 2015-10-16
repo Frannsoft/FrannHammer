@@ -56,9 +56,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Kurogane.Data\Kurogane.Web.Data.csproj">
-      <Project>{675ef7a6-2b4d-476f-857b-8222d67bf935}</Project>
-      <Name>Kurogane.Web.Data</Name>
+    <ProjectReference Include="..\KuroganeHammer.Data.Core\KuroganeHammer.Data.Core.csproj">
+      <Project>{2904d4e7-8989-46bd-ac0a-b4356f190a15}</Project>
+      <Name>KuroganeHammer.Data.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
