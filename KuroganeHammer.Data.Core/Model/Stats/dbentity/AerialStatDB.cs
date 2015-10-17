@@ -1,6 +1,6 @@
 ﻿namespace KuroganeHammer.Data.Core.Model.Stats.dbentity
 {
-    internal class GroundStatDB : StatDB
+    internal class AerialStatDB : StatDB
     {
         internal string hitboxactive { get; private set; }
         internal string firstactionableframe { get; private set; }
@@ -8,20 +8,24 @@
         internal string angle { get; private set; }
         internal string baseknockbacksetknockback { get; private set; }
         internal string knockbackgrowth { get; private set; }
+        internal string landinglag { get; private set; }
+        internal string autocancel { get; private set; }
 
-        internal GroundStatDB()
+        internal AerialStatDB()
         { }
 
-        public GroundStatDB(string name, int ownerId, string rawName, string hitboxActive, string firstActionableFrame, string baseDamage,
-            string angle, string baseSetKnockback, string knockbackGrowth)
+        internal AerialStatDB(string name, int ownerId, string rawName, string hitboxActive, string firstActionableFrame, string baseDamage,
+            string angle, string baseKnockbackSetKnockback, string knockbackGrowth, string landingLang, string autoCancel)
             : base(name, ownerId, rawName)
         {
             this.hitboxactive = hitboxActive;
             this.firstactionableframe = firstActionableFrame;
             this.basedamage = baseDamage;
             this.angle = angle;
-            this.baseknockbacksetknockback = baseSetKnockback;
+            this.baseknockbacksetknockback = baseKnockbackSetKnockback;
             this.knockbackgrowth = knockbackGrowth;
+            this.landinglag = landingLang;
+            this.autocancel = autoCancel;
         }
     }
 }
