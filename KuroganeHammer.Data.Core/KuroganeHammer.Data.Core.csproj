@@ -115,6 +115,7 @@
     <Compile Include="Model\Stats\AerialStat.cs" />
     <Compile Include="Model\Stats\BaseMoves.cs" />
     <Compile Include="Model\Stats\dbentity\AerialStatDB.cs" />
+    <Compile Include="Model\Stats\dbentity\CharacterDB.cs" />
     <Compile Include="Model\Stats\dbentity\GroundStatDB.cs" />
     <Compile Include="Model\Stats\dbentity\MovementStatDB.cs" />
     <Compile Include="Model\Stats\dbentity\SpecialStatDB.cs" />
