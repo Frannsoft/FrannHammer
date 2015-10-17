@@ -1,5 +1,4 @@
-﻿
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace KuroganeHammer.Data.Core.Model.Stats
 {
@@ -13,9 +12,9 @@ namespace KuroganeHammer.Data.Core.Model.Stats
         internal string BaseKnockbackSetKnockback { get; private set; }
         internal string KnockbackGrowth { get; private set; }
 
-        public GroundStat(string name, string rawName, string hitboxActive, string firstActionableFrame, string baseDamage,
+        public GroundStat(string name, int ownerId, string rawName, string hitboxActive, string firstActionableFrame, string baseDamage,
             string angle, string baseSetKnockback, string knockbackGrowth)
-            : base(name, rawName)
+            : base(name, ownerId, rawName)
         {
             HitBoxActive = hitboxActive;
             FirstActionableFrame = firstActionableFrame;

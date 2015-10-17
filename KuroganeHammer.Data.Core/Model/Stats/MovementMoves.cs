@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace KuroganeHammer.Data.Core.Model.Stats
 {
     [JsonObject(MemberSerialization.OptOut)]
-    public class MovementMoves
+    public class MovementMoves : BaseMoves
     {
         [StatProperty]
         public MovementStat Weight { get; set; }

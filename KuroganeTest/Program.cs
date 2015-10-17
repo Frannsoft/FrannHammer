@@ -9,8 +9,9 @@ namespace KuroganeTest
         static void Main(string[] args)
         {
             CaptainFalcon c = new CaptainFalcon();
-            string json = c.AsJson<CaptainFalcon>(StatTypes.Special);
-            //File.WriteAllText(@"E:\char\bowser.json", json);
+            c.SaveCharacterToDatabase();
+            string json = c.AsJson<CaptainFalcon>(StatTypes.Aerial);
+            //File.WriteAllText(@"E:\char\cfalconmovement.json", json);
         }
     }
 }
