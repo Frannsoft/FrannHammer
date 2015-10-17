@@ -16,26 +16,6 @@ namespace KuroganeHammer.Data.Core.Model.Characters
         private const string URL_BASE = "http://kuroganehammer.com/Smash4/";
         private readonly string urlTail;
 
-        private IEnumerable<PropertyInfo> characterStatProperties
-        {
-            get { return GetCharacterProperties(this.GetType()); }
-        }
-
-        //private IEnumerable<PropertyInfo> movementStatProperties
-        //{
-        //    get { return GetCharacterProperties(MovementMoves.GetType()); }
-        //}
-
-        //private IEnumerable<PropertyInfo> groundStatProperties
-        //{
-        //    get { return GetCharacterProperties(GroundMoves.GetType()); }
-        //}
-
-        //private IEnumerable<PropertyInfo> aerialStatProperties
-        //{
-        //    get { return GetCharacterProperties(AerialMoves.GetType()); }
-        //}
-
         [JsonProperty]
         private string fullurl
         {
@@ -54,27 +34,12 @@ namespace KuroganeHammer.Data.Core.Model.Characters
         [JsonProperty]
         public Dictionary<string, Stat> FrameData { get; private set; }
 
-        //[JsonProperty]
-        //public MovementMoves MovementMoves { get; set; }
-
-        //[JsonProperty]
-        //public GroundMoves GroundMoves { get; set; }
-
-        //[JsonProperty]
-        //public AerialMoves AerialMoves { get; set; }
-
         public Character(Characters character)
         {
             Name = character.ToString();
             urlTail = CharacterUtility.GetEnumDescription(character);
             OwnerId = (int)character;
             page = new Page(URL_BASE + urlTail, OwnerId);
-
-
-            //GroundMoves = new GroundMoves();
-            //MovementMoves = new MovementMoves();
-            //AerialMoves = new AerialMoves();
-
             GetData();
         }
 
@@ -148,83 +113,10 @@ namespace KuroganeHammer.Data.Core.Model.Characters
             return serializedContent;
         }
 
-        private IEnumerable<PropertyInfo> GetCharacterProperties(Type type)
-        {
-            var props = type.GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                .Where(p => p.GetCustomAttribute<StatProperty>() != null);
-
-            return props;
-        }
-
         internal void GetData()
         {
             FrameDataVersion = page.GetVersion();
-
             FrameData = page.GetStats();
-
-
-            //foreach (PropertyInfo prop in characterStatProperties)
-            //{
-            //    if (FrameData.ContainsKey(prop.Name))
-            //    {
-            //        prop.SetValue(this, FrameData[prop.Name]);
-            //    }
-            //}
-
-            //foreach (PropertyInfo prop in movementStatProperties)
-            //{
-            //    if (FrameData.ContainsKey(prop.Name))
-            //    {
-            //        prop.SetValue(MovementMoves, stats[prop.Name]);
-            //    }
-            //}
-
-            //foreach (PropertyInfo prop in groundStatProperties)
-            //{
-            //    if (stats.ContainsKey(prop.Name))
-            //    {
-            //        prop.SetValue(GroundMoves, stats[prop.Name]);
-            //    }
-            //}
-
-            //foreach (PropertyInfo prop in aerialStatProperties)
-            //{
-            //    if (stats.ContainsKey(prop.Name))
-            //    {
-            //        prop.SetValue(AerialMoves, stats[prop.Name]);
-            //    }
-            //}
-
-
-            ////for writing character move names only
-            //var moves = page.GetSpecialStats();
-            //foreach (SpecialStat stat in moves.Values)
-            //{
-            //    WritePropertyToFIle(stat.Name);
-            //}
-
         }
-
-        //private void WritePropertyToFIle(string moveName)
-        //{
-        //    if (!File.Exists(@"E:\char\" + Name + ".dat"))
-        //    {
-        //        File.Create(@"E:\char\" + Name + ".dat").Close();
-        //        File.WriteAllText(@"E:\char\" + Name + ".dat",
-        //            "[StatProperty]\n" +
-        //            "public SpecialStat " + moveName + " { get; set;}\n\n");
-        //    }
-        //    else
-        //    {
-        //        using (StreamWriter writer = File.AppendText(@"E:\char\" + Name + ".dat"))
-        //        {
-        //            writer.WriteLine(
-        //                "[StatProperty]\n" +
-        //                "public SpecialStat " + moveName + " { get; set;}\n\n");
-        //        }
-        //    }
-        //}
-
-
     }
 }

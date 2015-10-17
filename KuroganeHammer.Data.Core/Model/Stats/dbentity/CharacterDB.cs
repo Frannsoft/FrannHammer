@@ -1,5 +1,6 @@
 ﻿namespace KuroganeHammer.Data.Core.Model.Stats.dbentity
 {
+    [TableId("roster")]
     internal class CharacterDB
     {
         internal string name { get; private set; }

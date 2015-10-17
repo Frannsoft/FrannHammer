@@ -1,5 +1,6 @@
 ﻿namespace KuroganeHammer.Data.Core.Model.Stats.dbentity
 {
+    [TableId("aerial")]
     internal class AerialStatDB : StatDB
     {
         internal string hitboxactive { get; private set; }
