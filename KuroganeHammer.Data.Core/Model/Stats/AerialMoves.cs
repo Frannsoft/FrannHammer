@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace KuroganeHammer.Data.Core.Model.Stats
 {
     [JsonObject(MemberSerialization.OptOut)]
-    public class AerialMoves
+    public class AerialMoves : BaseMoves
     {
         [StatProperty]
         public AerialStat NairHit1 { get; set; }

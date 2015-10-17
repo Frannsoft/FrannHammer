@@ -13,9 +13,9 @@ namespace KuroganeHammer.Data.Core.Model.Stats
         public string BaseKnockbackSetKnockback { get; private set; }
         public string KnockbackGrowth { get; private set; }
 
-        public SpecialStat(string name, string rawName, string hitboxActive, string firstActionableFrame, string baseDamage,
+        public SpecialStat(string name, int ownerId, string rawName, string hitboxActive, string firstActionableFrame, string baseDamage,
             string angle, string baseSetKnockback, string knockbackGrowth)
-            : base(name, rawName)
+            : base(name, ownerId, rawName)
         {
             HitboxActive = hitboxActive;
             FirstActionableFrame = firstActionableFrame;

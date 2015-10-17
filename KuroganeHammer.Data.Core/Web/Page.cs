@@ -11,12 +11,14 @@ namespace KuroganeHammer.Data.Core.Web
         protected string Url { get; private set; }
         private HtmlDocument doc;
         private HtmlWeb web;
+        private int ownerId;
 
-        public Page(string url)
+        public Page(string url, int ownerId)
         {
             Url = url;
             web = new HtmlWeb();
             doc = web.Load(Url);
+            this.ownerId = ownerId;
         }
 
         public string GetVersion()
@@ -235,7 +237,7 @@ namespace KuroganeHammer.Data.Core.Web
                     value = rawValueText;
                 }
 
-                stat = new MovementStat(name, rawNameCellText, value, rank);
+                stat = new MovementStat(name, ownerId, rawNameCellText, value, rank);
             }
 
             return stat;
@@ -256,7 +258,7 @@ namespace KuroganeHammer.Data.Core.Web
                 string bkbwbkb = cells[5].InnerText;
                 string kbg = cells[6].InnerText;
 
-                stat = new GroundStat(name, rawName, hitboxActive, faf, basedmg, angle, bkbwbkb, kbg);
+                stat = new GroundStat(name, ownerId, rawName, hitboxActive, faf, basedmg, angle, bkbwbkb, kbg);
             }
 
             return stat;
@@ -279,7 +281,7 @@ namespace KuroganeHammer.Data.Core.Web
                 string landingLag = cells[7].InnerText;
                 string autocancel = cells[8].InnerText;
 
-                stat = new AerialStat(name, rawName, hitboxActive, faf, basedmg, angle, bkbwbkb,
+                stat = new AerialStat(name, ownerId, rawName, hitboxActive, faf, basedmg, angle, bkbwbkb,
                     kbg, landingLag, autocancel);
             }
 
@@ -301,7 +303,7 @@ namespace KuroganeHammer.Data.Core.Web
                 string bkbwbkb = cells[5].InnerText;
                 string kbg = cells[6].InnerText;
 
-                stat = new SpecialStat(name, rawName, hitboxActive, faf, basedmg, angle, bkbwbkb,
+                stat = new SpecialStat(name, ownerId, rawName, hitboxActive, faf, basedmg, angle, bkbwbkb,
                     kbg);
             }
 

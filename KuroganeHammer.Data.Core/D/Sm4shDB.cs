@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using KuroganeHammer.Data.Core.Model.Characters;
+using MySql.Data.MySqlClient;
 using System;
 using System.Configuration;
 
@@ -11,7 +12,12 @@ namespace KuroganeHammer.Data.Core.D
         public Sm4shDB()
         { }
 
-        //TODO: SELECT method
+        internal void Save(Character character)
+        {
+            MySqlCommand command = new MySqlCommand();
+            var param = command.CreateParameter();
+            //param.
+        }
 
         #region private
         private MySqlConnection Open()
