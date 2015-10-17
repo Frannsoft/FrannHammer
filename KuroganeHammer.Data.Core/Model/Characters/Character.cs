@@ -84,6 +84,9 @@ namespace KuroganeHammer.Data.Core.Model.Characters
         public void SaveCharacterToDatabase()
         {
             var movementStats = ConvertStats<MovementStat, MovementStatDB>(FrameData);
+            var grountStats = ConvertStats<GroundStat, GroundStatDB>(FrameData);
+            var aerialStats = ConvertStats<AerialStat, AerialStatDB>(FrameData);
+            var specialStats = ConvertStats<SpecialStat, SpecialStatDB>(FrameData);
             //Sm4shDB db = new Sm4shDB();
             //db.Save()
         }

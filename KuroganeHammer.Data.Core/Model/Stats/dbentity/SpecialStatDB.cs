@@ -1,6 +1,6 @@
 ﻿namespace KuroganeHammer.Data.Core.Model.Stats.dbentity
 {
-    internal class GroundStatDB : StatDB
+    internal class SpecialStatDB : StatDB
     {
         internal string hitboxactive { get; private set; }
         internal string firstactionableframe { get; private set; }
@@ -9,10 +9,10 @@
         internal string baseknockbacksetknockback { get; private set; }
         internal string knockbackgrowth { get; private set; }
 
-        internal GroundStatDB()
+        internal SpecialStatDB()
         { }
 
-        public GroundStatDB(string name, int ownerId, string rawName, string hitboxActive, string firstActionableFrame, string baseDamage,
+        internal SpecialStatDB(string name, int ownerId, string rawName, string hitboxActive, string firstActionableFrame, string baseDamage,
             string angle, string baseSetKnockback, string knockbackGrowth)
             : base(name, ownerId, rawName)
         {

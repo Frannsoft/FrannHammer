@@ -6,7 +6,6 @@
         internal string value { get; private set; }
 
         internal MovementStatDB()
-            : base()
         { }
 
         internal MovementStatDB(int ownerId, string name, string rank, 
