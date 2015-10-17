@@ -1,5 +1,6 @@
 ﻿namespace KuroganeHammer.Data.Core.Model.Stats.dbentity
 {
+    [TableId("movement")]
     internal class MovementStatDB : StatDB
     {
         internal string rank { get; private set; }

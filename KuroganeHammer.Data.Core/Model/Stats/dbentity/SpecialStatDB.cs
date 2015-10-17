@@ -1,5 +1,6 @@
 ﻿namespace KuroganeHammer.Data.Core.Model.Stats.dbentity
 {
+    [TableId("special")]
     internal class SpecialStatDB : StatDB
     {
         internal string hitboxactive { get; private set; }

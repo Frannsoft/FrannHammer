@@ -120,6 +120,7 @@
     <Compile Include="Model\Stats\dbentity\MovementStatDB.cs" />
     <Compile Include="Model\Stats\dbentity\SpecialStatDB.cs" />
     <Compile Include="Model\Stats\dbentity\StatDB.cs" />
+    <Compile Include="Model\Stats\dbentity\TableIdAttribute.cs" />
     <Compile Include="Model\Stats\GroundMoves.cs" />
     <Compile Include="Model\Stats\GroundStat.cs" />
     <Compile Include="Model\Stats\MovementMoves.cs" />
