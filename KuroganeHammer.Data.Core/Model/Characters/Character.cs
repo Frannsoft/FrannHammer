@@ -87,8 +87,13 @@ namespace KuroganeHammer.Data.Core.Model.Characters
             var grountStats = ConvertStats<GroundStat, GroundStatDB>(FrameData);
             var aerialStats = ConvertStats<AerialStat, AerialStatDB>(FrameData);
             var specialStats = ConvertStats<SpecialStat, SpecialStatDB>(FrameData);
-            //Sm4shDB db = new Sm4shDB();
-            //db.Save()
+            CharacterDB charData = new CharacterDB(Name, OwnerId, fullurl);
+
+            using (Sm4shDB db = new Sm4shDB())
+            {
+                //db.Save<MovementStatDB>(movementStats);
+                db.Save<CharacterDB>(charData);
+            }
         }
 
         private List<TOut> ConvertStats<Tin, TOut>(Dictionary<string, Stat> items)
@@ -96,8 +101,8 @@ namespace KuroganeHammer.Data.Core.Model.Characters
             where TOut : StatDB
         {
             var convertedItemsList = (from item in items.Values
-                        where item.GetType() == typeof(Tin)
-                        select EntityBusinessConverter<Tin>.ConvertTo<TOut>((Tin)item))
+                                      where item.GetType() == typeof(Tin)
+                                      select EntityBusinessConverter<Tin>.ConvertTo<TOut>((Tin)item))
                        .ToList();
 
             return convertedItemsList;
