@@ -1,6 +1,6 @@
-﻿namespace KuroganeHammer.Data.Core.D
+﻿namespace MySqlConnectorWrapper
 {
-    internal enum DBVerb
+    public enum DBVerb
     {
         Create,
         Read,

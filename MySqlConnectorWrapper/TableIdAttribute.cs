@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace KuroganeHammer.Data.Core.Model.Stats.dbentity
+namespace MySqlConnectorWrapper
 {
     [AttributeUsage(AttributeTargets.Class)]
-    internal class TableId : Attribute
+    public class TableId : Attribute
     {
         internal string Value { get; private set; }
 

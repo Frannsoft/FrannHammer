@@ -1,7 +1,7 @@
 ﻿using KuroganeHammer.Data.Core.D;
 using KuroganeHammer.Data.Core.Model.Stats;
-using KuroganeHammer.Data.Core.Model.Stats.dbentity;
 using KuroganeHammer.Data.Core.Web;
+using MySqlConnectorWrapper;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,4 +1,6 @@
-﻿namespace KuroganeHammer.Data.Core.Model.Stats.dbentity
+﻿using MySqlConnectorWrapper;
+
+namespace KuroganeHammer.Data.Core.Model.Stats.dbentity
 {
     [TableId("movement")]
     internal class MovementStatDB : StatDB
@@ -9,7 +11,7 @@
         internal MovementStatDB()
         { }
 
-        internal MovementStatDB(int ownerId, string name, string rank, 
+        internal MovementStatDB(int ownerId, string name, string rank,
             string value, string rawname)
             : base(name, ownerId, rawname)
         {

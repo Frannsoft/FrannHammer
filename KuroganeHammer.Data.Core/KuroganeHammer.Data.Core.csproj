@@ -55,9 +55,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="D\DBHelper.cs" />
-    <Compile Include="D\DBVerb.cs" />
-    <Compile Include="D\EntityBusinessConverter.cs" />
     <Compile Include="D\Sm4shDB.cs" />
     <Compile Include="Model\Characters\Bowser.cs" />
     <Compile Include="Model\Characters\BowserJr.cs" />
@@ -122,7 +119,6 @@
     <Compile Include="Model\Stats\dbentity\MovementStatDB.cs" />
     <Compile Include="Model\Stats\dbentity\SpecialStatDB.cs" />
     <Compile Include="Model\Stats\dbentity\StatDB.cs" />
-    <Compile Include="Model\Stats\dbentity\TableIdAttribute.cs" />
     <Compile Include="Model\Stats\GroundMoves.cs" />
     <Compile Include="Model\Stats\GroundStat.cs" />
     <Compile Include="Model\Stats\MovementMoves.cs" />
@@ -138,8 +134,13 @@
     <Compile Include="Web\StatConstants.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="D\app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MySqlConnectorWrapper\MySqlConnectorWrapper.csproj">
+      <Project>{5314e55d-b820-4deb-a239-adf44924f279}</Project>
+      <Name>MySqlConnectorWrapper</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
