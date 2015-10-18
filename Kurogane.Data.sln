@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KuroganeTest", "KuroganeTest\KuroganeTest.csproj", "{65614867-D6AA-47E8-A234-B3D8BDD12710}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KuroganeHammer.Data.Core", "KuroganeHammer.Data.Core\KuroganeHammer.Data.Core.csproj", "{2904D4E7-8989-46BD-AC0A-B4356F190A15}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KuroganeHammer.Data.Core.UnitTests", "KuroganeHammer.Data.Core.UnitTests\KuroganeHammer.Data.Core.UnitTests.csproj", "{AB27E79F-DF49-4D41-A6B0-8DA1CC4188D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{65614867-D6AA-47E8-A234-B3D8BDD12710}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{65614867-D6AA-47E8-A234-B3D8BDD12710}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{65614867-D6AA-47E8-A234-B3D8BDD12710}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{65614867-D6AA-47E8-A234-B3D8BDD12710}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2904D4E7-8989-46BD-AC0A-B4356F190A15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2904D4E7-8989-46BD-AC0A-B4356F190A15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2904D4E7-8989-46BD-AC0A-B4356F190A15}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2904D4E7-8989-46BD-AC0A-B4356F190A15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB27E79F-DF49-4D41-A6B0-8DA1CC4188D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB27E79F-DF49-4D41-A6B0-8DA1CC4188D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB27E79F-DF49-4D41-A6B0-8DA1CC4188D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB27E79F-DF49-4D41-A6B0-8DA1CC4188D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -30,11 +30,11 @@ Global
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://***REMOVED***.visualstudio.com/defaultcollection
 		SccLocalPath0 = .
-		SccProjectUniqueName1 = KuroganeTest\\KuroganeTest.csproj
-		SccProjectName1 = KuroganeTest
-		SccLocalPath1 = KuroganeTest
-		SccProjectUniqueName2 = KuroganeHammer.Data.Core\\KuroganeHammer.Data.Core.csproj
-		SccProjectName2 = KuroganeHammer.Data.Core
-		SccLocalPath2 = KuroganeHammer.Data.Core
+		SccProjectUniqueName1 = KuroganeHammer.Data.Core\\KuroganeHammer.Data.Core.csproj
+		SccProjectName1 = KuroganeHammer.Data.Core
+		SccLocalPath1 = KuroganeHammer.Data.Core
+		SccProjectUniqueName2 = KuroganeHammer.Data.Core.UnitTests\\KuroganeHammer.Data.Core.UnitTests.csproj
+		SccProjectName2 = KuroganeHammer.Data.Core.UnitTests
+		SccLocalPath2 = KuroganeHammer.Data.Core.UnitTests
 	EndGlobalSection
 EndGlobal
