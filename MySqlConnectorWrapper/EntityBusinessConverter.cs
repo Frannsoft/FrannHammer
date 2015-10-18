@@ -19,8 +19,6 @@ namespace MySqlConnectorWrapper
             {
                 if (PropExistsInType(prop))
                 {
-                    var propr = typeof(TInitial).GetProperties(flags);
-
                     //holds value from initial type.  We need to create a new propertyinfo because of case sensitive property names not being found
                     //when not matching (obviously).
                     PropertyInfo tempProp = typeof(TInitial).GetProperty(prop.Name, flags);
