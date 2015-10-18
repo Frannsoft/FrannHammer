@@ -3,7 +3,6 @@ using KuroganeHammer.Data.Core.Model.Stats;
 using KuroganeHammer.Data.Core.Model.Stats.dbentity;
 using KuroganeHammer.Data.Core.Web;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,15 +12,15 @@ namespace KuroganeHammer.Data.Core.Model.Characters
     [TableId("roster")]
     public class Character
     {
+        private Page page;
         private const string URL_BASE = "http://kuroganehammer.com/Smash4/";
         private readonly string urlTail;
 
         [JsonProperty]
-        private string fullurl
+        public string FullUrl
         {
             get { return URL_BASE + urlTail; }
         }
-        private Page page;
 
         [JsonProperty]
         public string Name { get; private set; }
@@ -43,34 +42,25 @@ namespace KuroganeHammer.Data.Core.Model.Characters
             GetData();
         }
 
-        /// <summary>
-        /// Actually saves the values to the Sm4sh database.
-        /// </summary>
-        public void SaveCharacterToDatabase()
+        public void Save()
         {
-            var movementStats = ConvertStats<MovementStat, MovementStatDB>(FrameData);
-            var grountStats = ConvertStats<GroundStat, GroundStatDB>(FrameData);
-            var aerialStats = ConvertStats<AerialStat, AerialStatDB>(FrameData);
-            var specialStats = ConvertStats<SpecialStat, SpecialStatDB>(FrameData);
-            CharacterDB charData = new CharacterDB(Name, OwnerId, fullurl);
-
+            //TODO: this needs safety precaution so not everyone can overwrite values
             using (Sm4shDB db = new Sm4shDB())
             {
-                //db.Save<MovementStatDB>(movementStats);
-                db.Save<CharacterDB>(charData);
+                db.Save(this);
             }
         }
 
-        private List<TOut> ConvertStats<Tin, TOut>(Dictionary<string, Stat> items)
-            where Tin : Stat
-            where TOut : StatDB
+        /// <summary>
+        /// Inserts new values to the Sm4sh database.
+        /// </summary>
+        public void SaveAs()
         {
-            var convertedItemsList = (from item in items.Values
-                                      where item.GetType() == typeof(Tin)
-                                      select EntityBusinessConverter<Tin>.ConvertTo<TOut>((Tin)item))
-                       .ToList();
-
-            return convertedItemsList;
+            //TODO: This needs safety precautions so people don't just overwrite values
+            using (Sm4shDB db = new Sm4shDB())
+            {
+                db.Save(this);
+            }
         }
 
         public string AsJson<T>(StatTypes statType = StatTypes.All)
@@ -95,25 +85,33 @@ namespace KuroganeHammer.Data.Core.Model.Characters
                     }
                 case StatTypes.Ground:
                     {
-                        //serializedContent = JsonConvert.SerializeObject(this.GroundMoves);
+                        var groundStats = (from data in FrameData.Values
+                                           where data.GetType() == typeof(AerialStat)
+                                           select data).ToList();
+                        serializedContent = JsonConvert.SerializeObject(groundStats);
                         break;
                     }
                 case StatTypes.Movement:
                     {
-                        //serializedContent = JsonConvert.SerializeObject(this.MovementMoves);
+                        var movementStats = (from data in FrameData.Values
+                                             where data.GetType() == typeof(MovementStat)
+                                             select data).ToList();
+                        serializedContent = JsonConvert.SerializeObject(movementStats);
                         break;
                     }
                 case StatTypes.Special:
                     {
-                        var convertChar = Convert.ChangeType(this, typeof(T));
-                        serializedContent = JsonConvert.SerializeObject(convertChar);
+                        var specialStats = (from data in FrameData.Values
+                                            where data.GetType() == typeof(SpecialStat)
+                                            select data).ToList();
+                        serializedContent = JsonConvert.SerializeObject(specialStats);
                         break;
                     }
             }
             return serializedContent;
         }
 
-        internal void GetData()
+        private void GetData()
         {
             FrameDataVersion = page.GetVersion();
             FrameData = page.GetStats();

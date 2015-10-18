@@ -1,10 +1,43 @@
-﻿using System;
+﻿using KuroganeHammer.Data.Core.Model.Characters;
+using KuroganeHammer.Data.Core.Model.Stats;
+using KuroganeHammer.Data.Core.Model.Stats.dbentity;
+using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace KuroganeHammer.Data.Core.D
 {
     public class Sm4shDB : IDisposable
     {
+        private class StatContainer
+        {
+            internal List<MovementStatDB> MovementStats;
+            internal List<GroundStatDB> GroundStats;
+            internal List<AerialStatDB> AerialStats;
+            internal List<SpecialStatDB> SpecialStats;
+            internal CharacterDB CharacterData;
+
+            internal StatContainer(Character character)
+            {
+                MovementStats = ConvertStats<MovementStat, MovementStatDB>(character.FrameData);
+                GroundStats = ConvertStats<GroundStat, GroundStatDB>(character.FrameData);
+                AerialStats = ConvertStats<AerialStat, AerialStatDB>(character.FrameData);
+                SpecialStats = ConvertStats<SpecialStat, SpecialStatDB>(character.FrameData);
+                CharacterData = new CharacterDB(character.Name, character.OwnerId, character.FullUrl);
+            }
+
+            private List<TOut> ConvertStats<Tin, TOut>(Dictionary<string, Stat> items)
+          where Tin : Stat
+          where TOut : StatDB
+            {
+                var convertedItemsList = (from item in items.Values
+                                          where item.GetType() == typeof(Tin)
+                                          select EntityBusinessConverter<Tin>.ConvertTo<TOut>((Tin)item))
+                           .ToList();
+
+                return convertedItemsList;
+            }
+        }
         private DBHelper dbHelper;
 
         public Sm4shDB()
@@ -12,12 +45,33 @@ namespace KuroganeHammer.Data.Core.D
             dbHelper = new DBHelper();
         }
 
+        internal void Save(Character character)
+        {
+            StatContainer container = new StatContainer(character);
+
+            Save(container.MovementStats);
+            Save(container.GroundStats);
+            Save(container.AerialStats);
+            Save(container.SpecialStats);
+            Save(container.CharacterData);
+        }
+
+        internal void SaveAs(Character character)
+        {
+            StatContainer container = new StatContainer(character);
+            SaveAs(container.MovementStats);
+            SaveAs(container.GroundStats);
+            SaveAs(container.AerialStats);
+            SaveAs(container.SpecialStats);
+            Save(container.CharacterData);
+        }
+
         /// <summary>
         /// Use when updating existing data.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="stats"></param>
-        internal void Save<T>(List<T> stats)
+        private void Save<T>(List<T> stats)
         {
             foreach (var stat in stats)
             {
@@ -30,7 +84,7 @@ namespace KuroganeHammer.Data.Core.D
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="stat"></param>
-        internal void Save<T>(T stat)
+        private void Save<T>(T stat)
         {
             dbHelper.ExecuteNonQuery<T>(stat, DBVerb.Update);
         }
@@ -40,7 +94,7 @@ namespace KuroganeHammer.Data.Core.D
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="stats"></param>
-        internal void SaveAs<T>(List<T> stats)
+        private void SaveAs<T>(List<T> stats)
         {
             foreach (var stat in stats)
             {
@@ -53,7 +107,7 @@ namespace KuroganeHammer.Data.Core.D
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="stat"></param>
-        internal void SaveAs<T>(T stat)
+        private void SaveAs<T>(T stat)
         {
             dbHelper.ExecuteNonQuery<T>(stat, DBVerb.Create);
         }
