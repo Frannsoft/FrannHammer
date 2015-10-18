@@ -11,98 +11,65 @@ namespace KuroganeHammer.Data.Core.D
 {
     public class Sm4shDB : IDisposable
     {
-        private MySqlConnection conn;
+        private DBHelper dbHelper;
 
         public Sm4shDB()
         {
-            conn = Open();
+            dbHelper = new DBHelper();
         }
 
+        /// <summary>
+        /// Use when updating existing data.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="stats"></param>
         internal void Save<T>(List<T> stats)
         {
             foreach (var stat in stats)
             {
-                MySqlCommand command = GetCommand<T>(stat);
-                command.ExecuteNonQuery();
+                dbHelper.ExecuteNonQuery<T>(stat, DBVerb.Update);
             }
         }
 
+        /// <summary>
+        /// Use when updating existing data.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="stat"></param>
         internal void Save<T>(T stat)
         {
-            MySqlCommand command = GetCommand<T>(stat);
-            command.ExecuteNonQuery();
+            dbHelper.ExecuteNonQuery<T>(stat, DBVerb.Update);
         }
 
-        private MySqlCommand GetCommand<T>(T stat)
+        /// <summary>
+        /// Use when creating data for the first time.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="stats"></param>
+        internal void SaveAs<T>(List<T> stats)
         {
-            MySqlCommand command = new MySqlCommand();
-            command.Connection = conn;
-
-            var statProperties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance
-                | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy);
-            MySqlParameter parameter = default(MySqlParameter);
-
-            StringBuilder sb = new StringBuilder();
-
-            string table = typeof(T).GetCustomAttribute<TableId>().Value;
-            if (string.IsNullOrEmpty(table))
+            foreach(var stat in stats)
             {
-                throw new ArgumentException("Unable to retrieve table type");
+                dbHelper.ExecuteNonQuery<T>(stat, DBVerb.Create);
             }
-
-            sb.Append("INSERT INTO " + table + " (");
-
-            foreach (var prop in statProperties)
-            {
-                sb.Append(prop.Name + ",");
-            }
-            sb.Remove(sb.Length - 1, 1);
-
-            sb.Append(") VALUES (");
-
-            foreach (var prop in statProperties)
-            {
-                sb.Append("?" + prop.Name + ",");
-            }
-            sb.Remove(sb.Length - 1, 1);
-            sb.Append(")");
-
-            command.CommandText = sb.ToString();
-
-            foreach (var prop in statProperties)
-            {
-                parameter = new MySqlParameter();
-                parameter.ParameterName = "@" + prop.Name;
-                parameter.Value = prop.GetValue(stat);
-                command.Parameters.Add(parameter);
-            }
-            return command;
         }
 
-        #region private
-        private MySqlConnection Open()
+        /// <summary>
+        /// Use when creating data for the first time.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="stat"></param>
+        internal void SaveAs<T>(T stat)
         {
-            string cs = ConfigurationManager.AppSettings["connstring"];
-            conn = new MySqlConnection(cs);
-            conn.Open();
-            return conn;
+            dbHelper.ExecuteNonQuery<T>(stat, DBVerb.Create);
         }
-
-        private void Close()
-        {
-            if (conn != null)
-            {
-                conn.Close();
-            }
-        }
-        #endregion
 
         #region IDisposable
         public void Dispose()
         {
-            if (conn != null)
+            if (dbHelper != null)
             {
-                conn.Dispose();
+                dbHelper.Dispose();
             }
         }
         #endregion

@@ -55,6 +55,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="D\DBHelper.cs" />
+    <Compile Include="D\DBVerb.cs" />
     <Compile Include="D\EntityBusinessConverter.cs" />
     <Compile Include="D\Sm4shDB.cs" />
     <Compile Include="Model\Characters\Bowser.cs" />

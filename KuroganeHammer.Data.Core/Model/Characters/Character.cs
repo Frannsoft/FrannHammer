@@ -6,11 +6,11 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
     [JsonObject(MemberSerialization.OptIn)]
+    [TableId("roster")]
     public class Character
     {
         private const string URL_BASE = "http://kuroganehammer.com/Smash4/";
