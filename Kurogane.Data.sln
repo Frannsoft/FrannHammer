@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KuroganeHammer.Data.Core", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KuroganeHammer.Data.Core.UnitTests", "KuroganeHammer.Data.Core.UnitTests\KuroganeHammer.Data.Core.UnitTests.csproj", "{AB27E79F-DF49-4D41-A6B0-8DA1CC4188D1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySqlConnectorWrapper", "MySqlConnectorWrapper\MySqlConnectorWrapper.csproj", "{5314E55D-B820-4DEB-A239-ADF44924F279}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,12 +23,16 @@ Global
 		{AB27E79F-DF49-4D41-A6B0-8DA1CC4188D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB27E79F-DF49-4D41-A6B0-8DA1CC4188D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB27E79F-DF49-4D41-A6B0-8DA1CC4188D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5314E55D-B820-4DEB-A239-ADF44924F279}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5314E55D-B820-4DEB-A239-ADF44924F279}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5314E55D-B820-4DEB-A239-ADF44924F279}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5314E55D-B820-4DEB-A239-ADF44924F279}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 3
+		SccNumberOfProjects = 4
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://***REMOVED***.visualstudio.com/defaultcollection
 		SccLocalPath0 = .
@@ -36,5 +42,8 @@ Global
 		SccProjectUniqueName2 = KuroganeHammer.Data.Core.UnitTests\\KuroganeHammer.Data.Core.UnitTests.csproj
 		SccProjectName2 = KuroganeHammer.Data.Core.UnitTests
 		SccLocalPath2 = KuroganeHammer.Data.Core.UnitTests
+		SccProjectUniqueName3 = MySqlConnectorWrapper\\MySqlConnectorWrapper.csproj
+		SccProjectName3 = MySqlConnectorWrapper
+		SccLocalPath3 = MySqlConnectorWrapper
 	EndGlobalSection
 EndGlobal

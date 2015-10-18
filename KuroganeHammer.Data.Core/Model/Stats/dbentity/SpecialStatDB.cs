@@ -1,4 +1,6 @@
-﻿namespace KuroganeHammer.Data.Core.Model.Stats.dbentity
+﻿using MySqlConnectorWrapper;
+
+namespace KuroganeHammer.Data.Core.Model.Stats.dbentity
 {
     [TableId("special")]
     internal class SpecialStatDB : StatDB

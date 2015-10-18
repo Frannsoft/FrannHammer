@@ -1,4 +1,6 @@
-﻿namespace KuroganeHammer.Data.Core.Model.Stats.dbentity
+﻿using MySqlConnectorWrapper;
+
+namespace KuroganeHammer.Data.Core.Model.Stats.dbentity
 {
     [TableId("aerial")]
     internal class AerialStatDB : StatDB

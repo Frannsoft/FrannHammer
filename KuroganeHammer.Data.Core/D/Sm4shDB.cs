@@ -4,6 +4,7 @@ using KuroganeHammer.Data.Core.Model.Stats.dbentity;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using MySqlConnectorWrapper;
 
 namespace KuroganeHammer.Data.Core.D
 {

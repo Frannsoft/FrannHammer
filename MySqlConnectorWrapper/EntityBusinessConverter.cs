@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace KuroganeHammer.Data.Core.D
+namespace MySqlConnectorWrapper
 {
     public static class EntityBusinessConverter<TInitial>
     {

@@ -1,24 +1,23 @@
-﻿using KuroganeHammer.Data.Core.Model.Stats.dbentity;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Reflection;
 using System.Text;
 
-namespace KuroganeHammer.Data.Core.D
+namespace MySqlConnectorWrapper
 {
-    internal sealed class DBHelper : IDisposable
+    public sealed class DBHelper : IDisposable
     {
         private MySqlConnection conn;
 
-        internal DBHelper()
+        public DBHelper()
         {
             Open();
         }
 
         #region query logic
-        internal void ExecuteNonQuery<T>(T stat, DBVerb verb)
+        public void ExecuteNonQuery<T>(T stat, DBVerb verb)
         {
             MySqlCommand command = default(MySqlCommand);
 
@@ -50,7 +49,7 @@ namespace KuroganeHammer.Data.Core.D
             }
         }
 
-        internal MySqlDataReader ExecuteReader<T>(T stat)
+        public MySqlDataReader ExecuteReader<T>(T stat)
         {
             MySqlCommand command = default(MySqlCommand);
             string commandText = string.Empty;
