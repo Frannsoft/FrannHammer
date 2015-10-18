@@ -175,7 +175,7 @@ namespace KuroganeHammer.Data.Core.D
             StringBuilder sb = new StringBuilder();
             sb.Append("DELETE FROM " + table + " WHERE ");
 
-            foreach(var prop in statProperties)
+            foreach (var prop in statProperties)
             {
                 sb.Append(prop.Name + " = ?" + prop.Name + " AND ");
             }
@@ -188,14 +188,14 @@ namespace KuroganeHammer.Data.Core.D
             StringBuilder sb = new StringBuilder();
             sb.Append("SELECT ");
 
-            foreach(var prop in statProperties)
+            foreach (var prop in statProperties)
             {
                 sb.Append(prop.Name + ",");
             }
             sb.Remove(sb.Length - 1, 1);
             sb.Append(" FROM " + table + " WHERE ");
 
-            foreach(var prop in statProperties)
+            foreach (var prop in statProperties)
             {
                 sb.Append(prop.Name + " = ?" + prop.Name + " AND ");
             }

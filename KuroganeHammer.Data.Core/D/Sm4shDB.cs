@@ -1,11 +1,5 @@
-﻿using KuroganeHammer.Data.Core.Model.Characters;
-using KuroganeHammer.Data.Core.Model.Stats.dbentity;
-using MySql.Data.MySqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Reflection;
-using System.Text;
 
 namespace KuroganeHammer.Data.Core.D
 {
@@ -48,7 +42,7 @@ namespace KuroganeHammer.Data.Core.D
         /// <param name="stats"></param>
         internal void SaveAs<T>(List<T> stats)
         {
-            foreach(var stat in stats)
+            foreach (var stat in stats)
             {
                 dbHelper.ExecuteNonQuery<T>(stat, DBVerb.Create);
             }
