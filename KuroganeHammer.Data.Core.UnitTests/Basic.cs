@@ -10,6 +10,7 @@ namespace KuroganeHammer.Data.Core.UnitTests
         public void TestMethod1()
         {
             CaptainFalcon falcon = new CaptainFalcon();
+            falcon.SaveAs();
         }
     }
 }

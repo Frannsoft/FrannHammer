@@ -75,7 +75,6 @@ namespace KuroganeHammer.Data.Core.D
         private List<MySqlParameter> GetCommandParameters<T>(MySqlCommand command, PropertyInfo[] statProperties, T stat)
         {
             List<MySqlParameter> parameters = new List<MySqlParameter>();
-
             foreach (var prop in statProperties)
             {
                 MySqlParameter parameter = new MySqlParameter();

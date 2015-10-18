@@ -8,7 +8,7 @@ namespace KuroganeHammer.Data.Core.Model.Characters
 	public class CaptainFalcon : Character
     {
         #region special moves
-
+        //TODO: remove special moves
         [StatProperty]
         public SpecialStat FalconPunch { get; set; }
 
