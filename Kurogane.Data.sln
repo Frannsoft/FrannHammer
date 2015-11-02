@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KuroganeHammer.Data.Core", "KuroganeHammer.Data.Core\KuroganeHammer.Data.Core.csproj", "{2904D4E7-8989-46BD-AC0A-B4356F190A15}"
 EndProject
@@ -9,7 +9,27 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KuroganeHammer.Data.Core.Un
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySqlConnectorWrapper", "MySqlConnectorWrapper\MySqlConnectorWrapper.csproj", "{5314E55D-B820-4DEB-A239-ADF44924F279}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kurogane.Data.RestApi", "Kurogane.Data.RestApi\Kurogane.Data.RestApi.csproj", "{E1B5E9BA-8808-4B98-B6AA-385A7438ABD3}"
+EndProject
 Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://frannsoftdev.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = KuroganeHammer.Data.Core\\KuroganeHammer.Data.Core.csproj
+		SccProjectName1 = KuroganeHammer.Data.Core
+		SccLocalPath1 = KuroganeHammer.Data.Core
+		SccProjectUniqueName2 = KuroganeHammer.Data.Core.UnitTests\\KuroganeHammer.Data.Core.UnitTests.csproj
+		SccProjectName2 = KuroganeHammer.Data.Core.UnitTests
+		SccLocalPath2 = KuroganeHammer.Data.Core.UnitTests
+		SccProjectUniqueName3 = MySqlConnectorWrapper\\MySqlConnectorWrapper.csproj
+		SccProjectName3 = MySqlConnectorWrapper
+		SccLocalPath3 = MySqlConnectorWrapper
+		SccProjectUniqueName4 = Kurogane.Data.RestApi\\Kurogane.Data.RestApi.csproj
+		SccProjectName4 = Kurogane.Data.RestApi
+		SccLocalPath4 = Kurogane.Data.RestApi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -27,23 +47,12 @@ Global
 		{5314E55D-B820-4DEB-A239-ADF44924F279}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5314E55D-B820-4DEB-A239-ADF44924F279}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5314E55D-B820-4DEB-A239-ADF44924F279}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1B5E9BA-8808-4B98-B6AA-385A7438ABD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1B5E9BA-8808-4B98-B6AA-385A7438ABD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1B5E9BA-8808-4B98-B6AA-385A7438ABD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1B5E9BA-8808-4B98-B6AA-385A7438ABD3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 4
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://frannsoftdev.visualstudio.com/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = KuroganeHammer.Data.Core\\KuroganeHammer.Data.Core.csproj
-		SccProjectName1 = KuroganeHammer.Data.Core
-		SccLocalPath1 = KuroganeHammer.Data.Core
-		SccProjectUniqueName2 = KuroganeHammer.Data.Core.UnitTests\\KuroganeHammer.Data.Core.UnitTests.csproj
-		SccProjectName2 = KuroganeHammer.Data.Core.UnitTests
-		SccLocalPath2 = KuroganeHammer.Data.Core.UnitTests
-		SccProjectUniqueName3 = MySqlConnectorWrapper\\MySqlConnectorWrapper.csproj
-		SccProjectName3 = MySqlConnectorWrapper
-		SccLocalPath3 = MySqlConnectorWrapper
 	EndGlobalSection
 EndGlobal

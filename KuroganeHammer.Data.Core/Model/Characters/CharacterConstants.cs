@@ -28,162 +28,163 @@ namespace KuroganeHammer.Data.Core.Model.Characters
         }
     }
 
+    [Flags]
     public enum Characters
     {
         [Description("Pikachu")]
-        PIKACHU,
+        PIKACHU = 1,
 
         [Description("Falco")]
-        FALCO,
+        FALCO = 2,
 
         [Description("Donkey%20Kong")]
-        DONKEYKONG,
+        DONKEYKONG = 3,
 
         [Description("Bowser")]
-        BOWSER,
+        BOWSER = 4,
 
         [Description("Bowser%20Jr")]
-        BOWSERJR,
+        BOWSERJR = 5,
 
         [Description("Captain%20Falcon")]
-        CAPTAINFALCON,
+        CAPTAINFALCON = 6,
 
         [Description("Charizard")]
-        CHARIZARD,
+        CHARIZARD = 7,
 
         [Description("Dark%20Pit")]
-        DARKPIT,
+        DARKPIT = 8,
 
         [Description("Diddy%20Kong")]
-        DIDDYKONG,
+        DIDDYKONG = 9,
 
         [Description("Dr.%20Mario/")]
-        DRMARIO,
+        DRMARIO = 10,
 
         [Description("Duck%20Hunt")]
-        DUCKHUNT,
+        DUCKHUNT = 11,
 
         [Description("Fox")]
-        FOX,
+        FOX = 12,
 
         [Description("Ganondorf")]
-        GANONDORF,
+        GANONDORF = 13,
 
         [Description("Greninja")]
-        GRENINJA,
+        GRENINJA = 14,
 
         [Description("Ike")]
-        IKE,
+        IKE = 15,
 
         [Description("Jigglypuff")]
-        JIGGLYPUFF,
+        JIGGLYPUFF = 16,
 
         [Description("King%20Dedede")]
-        DEDEDE,
+        DEDEDE = 17,
 
         [Description("Link")]
-        LINK,
+        LINK = 18,
 
         [Description("Little%20Mac")]
-        LITTLEMAC,
+        LITTLEMAC = 19,
 
         [Description("Lucario")]
-        LUCARIO,
+        LUCARIO = 20,
 
         [Description("Lucas")]
-        LUCAS,
+        LUCAS = 21,
 
         [Description("Lucina")]
-        LUCINA,
+        LUCINA = 22,
 
         [Description("Luigi")]
-        LUIGI,
+        LUIGI = 23,
 
         [Description("Mario")]
-        MARIO,
+        MARIO = 24,
 
         [Description("Marth")]
-        MARTH,
+        MARTH = 25,
 
         [Description("Mega%20Man")]
-        MEGAMAN,
+        MEGAMAN = 26,
 
         [Description("Meta%20Knight")]
-        METAKNIGHT,
+        METAKNIGHT = 27,
 
         [Description("Mewtwo")]
-        MEWTWO,
+        MEWTWO = 28,
 
         [Description("Mii%20Swordfighter")]
-        MIISWORDFIGHTER,
+        MIISWORDFIGHTER = 29,
 
         [Description("Game%20And%20Watch")]
-        GAMEANDWATCH,
+        GAMEANDWATCH = 30,
 
         [Description("Ness")]
-        NESS,
+        NESS = 31,
 
         [Description("Olimar")]
-        OLIMAR,
+        OLIMAR = 32,
 
         [Description("PAC-MAN")]
-        PACMAN,
+        PACMAN = 33,
 
         [Description("Palutena")]
-        PALUTENA,
+        PALUTENA = 34,
 
         [Description("Peach")]
-        PEACH,
+        PEACH = 35,
 
         [Description("Pit")]
-        PIT,
+        PIT = 36,
 
         [Description("R.O.B/")]
-        ROB,
+        ROB = 37,
 
         [Description("Robin")]
-        ROBIN,
+        ROBIN = 38,
 
         [Description("Rosalina%20And%20Luma")]
-        ROSALINAANDLUMA,
+        ROSALINAANDLUMA = 39,
 
         [Description("Roy")]
-        ROY,
+        ROY = 40,
 
         [Description("Ryu")]
-        RYU,
+        RYU = 41,
 
         [Description("Samus")]
-        SAMUS,
+        SAMUS = 42,
 
         [Description("Sheik")]
-        SHEIK,
+        SHEIK = 43,
 
         [Description("Shulk")]
-        SHULK,
+        SHULK = 44,
 
         [Description("Sonic")]
-        SONIC,
+        SONIC = 45,
 
         [Description("Toon%20Link")]
-        TOONLINK,
+        TOONLINK = 46,
 
         [Description("Villager")]
-        VILLAGER,
+        VILLAGER = 47,
 
         [Description("Wario")]
-        WARIO,
+        WARIO = 48,
 
         [Description("Wii%20Fit%20Trainer")]
-        WIIFITRAINER,
+        WIIFITRAINER = 49,
 
         [Description("Yoshi")]
-        YOSHI,
+        YOSHI = 50,
 
         [Description("Zelda")]
-        ZELDA,
+        ZELDA = 51,
 
         [Description("Zero%20Suit%20Samus")]
-        ZEROSUITSAMUS
+        ZEROSUITSAMUS = 52
     }
 }

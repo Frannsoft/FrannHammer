@@ -42,6 +42,11 @@ namespace KuroganeHammer.Data.Core.Model.Characters
             GetData();
         }
 
+        public static Character FromId(int id)
+        {
+            return new Character((Characters)id);
+        }
+
         public void Save()
         {
             //TODO: this needs safety precaution so not everyone can overwrite values
@@ -63,8 +68,7 @@ namespace KuroganeHammer.Data.Core.Model.Characters
             }
         }
 
-        public string AsJson<T>(StatTypes statType = StatTypes.All)
-            where T : Character
+        public string AsJson(StatTypes statType = StatTypes.All)
         {
             string serializedContent = string.Empty;
 
@@ -105,6 +109,18 @@ namespace KuroganeHammer.Data.Core.Model.Characters
                                             where data.GetType() == typeof(SpecialStat)
                                             select data).ToList();
                         serializedContent = JsonConvert.SerializeObject(specialStats);
+                        break;
+                    }
+                default:
+                    {
+                        serializedContent = JsonConvert.SerializeObject(
+                            new
+                            {
+                                Name = Name,
+                                FullUrl = FullUrl,
+                                OwnerId = OwnerId,
+                                FrameDataVersion = FrameDataVersion
+                            });
                         break;
                     }
             }
