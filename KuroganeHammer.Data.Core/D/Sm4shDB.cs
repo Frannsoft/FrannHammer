@@ -41,12 +41,13 @@ namespace KuroganeHammer.Data.Core.D
         }
         private DBHelper dbHelper;
 
+        private const string k = "Database=Sm4sh;Data Source=us-cdbr-azure-east-a.cloudapp.net;User Id=b95624cb341584;Password=a3e4a4a7";
         public Sm4shDB()
         {
-            dbHelper = new DBHelper();
+            dbHelper = new DBHelper(k);
         }
 
-        internal void Save(Character character)
+        public void Save(Character character)
         {
             StatContainer container = new StatContainer(character);
 
@@ -57,7 +58,7 @@ namespace KuroganeHammer.Data.Core.D
             Save(container.CharacterData);
         }
 
-        internal void SaveAs(Character character)
+        public void SaveAs(Character character)
         {
             StatContainer container = new StatContainer(character);
             SaveAs(container.MovementStats);

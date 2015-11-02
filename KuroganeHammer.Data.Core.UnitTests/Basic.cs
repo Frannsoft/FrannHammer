@@ -1,4 +1,5 @@
-﻿using KuroganeHammer.Data.Core.Model.Characters;
+﻿using KuroganeHammer.Data.Core.D;
+using KuroganeHammer.Data.Core.Model.Characters;
 using NUnit.Framework;
 
 namespace KuroganeHammer.Data.Core.UnitTests
@@ -10,7 +11,6 @@ namespace KuroganeHammer.Data.Core.UnitTests
         public void TestMethod1()
         {
             CaptainFalcon falcon = new CaptainFalcon();
-            falcon.SaveAs();
         }
     }
 }

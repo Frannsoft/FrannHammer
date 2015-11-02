@@ -11,9 +11,9 @@ namespace MySqlConnectorWrapper
     {
         private MySqlConnection conn;
 
-        public DBHelper()
+        public DBHelper(string connectionString)
         {
-            Open();
+            Open(connectionString);
         }
 
         #region query logic
@@ -203,9 +203,8 @@ namespace MySqlConnectorWrapper
         #endregion
 
         #region db ops
-        private MySqlConnection Open()
+        private MySqlConnection Open(string cs)
         {
-            string cs = ConfigurationManager.AppSettings["connstring"];
             conn = new MySqlConnection(cs);
             conn.Open();
             return conn;
