@@ -1,6 +1,8 @@
-﻿using KuroganeHammer.Data.Core.Model.Characters;
+﻿using Kurogane.Data.RestApi.DTOs;
+using KuroganeHammer.Data.Core.Model.Stats;
 using System.Collections.Generic;
 using System.Web.Http;
+using System.Linq;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
@@ -9,20 +11,52 @@ namespace Kurogane.Data.RestApi.Controllers
     {
         private Sm4shContext db = new Sm4shContext();
 
-        public IEnumerable<string> Get()
+        /// <summary>
+        /// Takes in the character ID and returns all of the found 
+        /// character's <see cref="MovementStatModel"/> data.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public IEnumerable<MovementStatModel> Get(int id)
         {
-            return new string[] { "value1", "value2" };
+            var character = (from c in db.Characters.ToList()
+                             where c.Id == id
+                             select c).FirstOrDefault();
+
+            IEnumerable<MovementStatModel> stats = default(IEnumerable<MovementStatModel>);
+
+            if (character != null)
+            {
+                stats = from stat in db.MovementStats.ToList()
+                        where stat.OwnerId == character.OwnerId
+                        select new MovementStatModel()
+                        {
+                            Name = stat.Name,
+                            OwnerId = stat.OwnerId,
+                            Rank = stat.Rank,
+                            RawName = stat.RawName,
+                            Value = stat.Value
+                        };
+            }
+
+            return stats;
         }
 
-        public string Get(int id)
+        public IHttpActionResult Post([FromBody]MovementStat value)
         {
-            Character character = Character.FromId(id);
-            return character.AsJson();
-        }
+            {
+                if (value != null)
+                {
+                    db.MovementStats.Add(value);
+                    db.SaveChanges();
+                    return Ok();
+                }
+                else
+                {
+                    return InternalServerError();
+                }
 
-        public void Post([FromBody]string value)
-        {
-
+            }
         }
 
         public void Put(int id, [FromBody]string value)

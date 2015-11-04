@@ -1,7 +1,8 @@
-﻿using Kurogane.Data.RestApi.Models;
+﻿using Kurogane.Data.RestApi.DTOs;
 using KuroganeHammer.Data.Core.Model.Characters;
 using System.Collections.Generic;
 using System.Web.Http;
+using System.Linq;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
@@ -10,20 +11,28 @@ namespace Kurogane.Data.RestApi.Controllers
     {
         private Sm4shContext db = new Sm4shContext();
 
-        // GET: api/Character
-        public IEnumerable<string> Get()
+        public IEnumerable<CharacterModel> Get()
         {
-            return new string[] { "value1111", "value2" };
+            return from chars in db.Characters.ToList()
+                   select new CharacterModel()
+                   {
+                       FrameDataVersion = chars.FrameDataVersion,
+                       FullUrl = chars.FullUrl,
+                       Name = chars.Name,
+                       OwnerId = chars.OwnerId
+                   };
         }
 
-        // GET: api/Character/5
-        public string Get(int id)
+        public CharacterModel Get(int id)
         {
-            db.Characters.Add(new CharacterModel() { Name = "test" });
-            db.SaveChanges();
-
             Character character = Character.FromId(id);
-            return character.AsJson();
+            return new CharacterModel()
+            {
+                FrameDataVersion = character.FrameDataVersion,
+                FullUrl = character.FullUrl,
+                Name = character.Name,
+                OwnerId = character.OwnerId
+            };
         }
 
         // POST: api/Character
