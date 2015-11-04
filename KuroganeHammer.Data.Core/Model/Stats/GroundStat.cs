@@ -6,12 +6,12 @@ namespace KuroganeHammer.Data.Core.Model.Stats
     [Table("GroundStats")]
     public class GroundStat : Stat
     {
-        public string HitBoxActive { get; private set; }
-        public string FirstActionableFrame { get; private set; }
-        public string BaseDamage { get; private set; }
-        public string Angle { get; private set; }
-        public string BaseKnockbackSetKnockback { get; private set; }
-        public string KnockbackGrowth { get; private set; }
+        public string HitBoxActive { get; set; }
+        public string FirstActionableFrame { get; set; }
+        public string BaseDamage { get; set; }
+        public string Angle { get; set; }
+        public string BaseKnockbackSetKnockback { get; set; }
+        public string KnockbackGrowth { get; set; }
 
         public GroundStat(string name, int ownerId, string rawName, string hitboxActive, string firstActionableFrame, string baseDamage,
             string angle, string baseKnockbackSetKnockback, string knockbackGrowth)

@@ -11,5 +11,7 @@ namespace KuroganeHammer.Data.Core.UnitTests
         {
             Character kirby = new Character(Characters.KIRBY);
         }
+
+
     }
 }

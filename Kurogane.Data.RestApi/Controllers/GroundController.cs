@@ -46,16 +46,21 @@ namespace Kurogane.Data.RestApi.Controllers
             return stats;
         }
 
-        /// <summary>
-        /// test
-        /// </summary>
-        /// <param name="value">zzzz</param>
-        /// <returns>IHttpActionResult</returns>
+        [Route("")]
         public IHttpActionResult Post([FromBody]GroundStat value)
         {
             if (value != null)
             {
-                db.GroundStats.Add(value);
+                var stat = db.GroundStats.Find(value.Id);
+
+                if (stat != null)
+                {
+                    stat = value;
+                }
+                else
+                {
+                    db.GroundStats.Add(value);
+                }
                 db.SaveChanges();
                 return Ok();
             }
@@ -65,13 +70,43 @@ namespace Kurogane.Data.RestApi.Controllers
             }
 
         }
-
-        public void Put(int id, [FromBody]string value)
+        [Route("{id}")]
+        public IHttpActionResult Patch(int id, [FromBody]GroundStat value)
         {
+            if (value != null)
+            {
+                var stat = db.GroundStats.Find(value.Id);
+
+                if (stat != null)
+                {
+                    stat = value;
+                }
+                else
+                {
+                    db.GroundStats.Add(value);
+                }
+                db.SaveChanges();
+                return Ok();
+            }
+            else
+            {
+                return InternalServerError();
+            }
         }
 
-        public void Delete(int id)
+        public IHttpActionResult Delete(int id)
         {
+            var stat = db.GroundStats.Find(id);
+
+            if (stat != null)
+            {
+                db.GroundStats.Remove(stat);
+                return Ok();
+            }
+            else
+            {
+                return InternalServerError();
+            }
         }
     }
 }

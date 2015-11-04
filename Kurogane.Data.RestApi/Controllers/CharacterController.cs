@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
-    [RoutePrefix("api/Character")]
+    [RoutePrefix("api/{id}/Character")]
     public class CharacterController : ApiController
     {
         private Sm4shContext db = new Sm4shContext();
@@ -35,12 +35,21 @@ namespace Kurogane.Data.RestApi.Controllers
             };
         }
 
-        // POST: api/Character
+        [Route("")]
         public IHttpActionResult Post([FromBody]CharacterDTO value)
         {
             if (value != null)
             {
-                db.Characters.Add(value);
+                var stat = db.Characters.Find(value.Id);
+
+                if (stat != null)
+                {
+                    stat = value;
+                }
+                else
+                {
+                    db.Characters.Add(value);
+                }
                 db.SaveChanges();
                 return Ok();
             }
@@ -50,15 +59,43 @@ namespace Kurogane.Data.RestApi.Controllers
             }
 
         }
-
-        // PUT: api/Character/5
-        public void Put(int id, [FromBody]string value)
+        [Route("{id}")]
+        public IHttpActionResult Patch(int id, [FromBody]CharacterDTO value)
         {
+            if (value != null)
+            {
+                var stat = db.Characters.Find(value.Id);
+
+                if (stat != null)
+                {
+                    stat = value;
+                }
+                else
+                {
+                    db.Characters.Add(value);
+                }
+                db.SaveChanges();
+                return Ok();
+            }
+            else
+            {
+                return InternalServerError();
+            }
         }
 
-        // DELETE: api/Character/5
-        public void Delete(int id)
+        public IHttpActionResult Delete(int id)
         {
+            var stat = db.Characters.Find(id);
+
+            if (stat != null)
+            {
+                db.Characters.Remove(stat);
+                return Ok();
+            }
+            else
+            {
+                return InternalServerError();
+            }
         }
     }
 }
