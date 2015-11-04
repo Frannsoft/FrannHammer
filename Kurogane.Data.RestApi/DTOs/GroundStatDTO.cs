@@ -1,7 +1,9 @@
-﻿
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Kurogane.Data.RestApi.DTOs
 {
-    public class SpecialStatModel
+    public class GroundStatDTO
     {
         public int OwnerId { get; set; }
         public string Name { get; set; }
@@ -12,5 +14,7 @@ namespace Kurogane.Data.RestApi.DTOs
         public string Angle { get; set; }
         public string BaseKnockbackSetKnockback { get; set; }
         public string KnockbackGrowth { get; set; }
+        public int WeightDependent { get; set; }
+        public string Intagibility { get; set; }
     }
 }

@@ -12,24 +12,24 @@ namespace Kurogane.Data.RestApi.Controllers
         private Sm4shContext db = new Sm4shContext();
 
         /// <summary>
-        /// Get all of the <see cref="GroundStatModel"/> data for the character
+        /// Get all of the <see cref="GroundStatDTO"/> data for the character
         /// with the passed in ID.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public IEnumerable<GroundStatModel> Get(int id)
+        public IEnumerable<GroundStatDTO> Get(int id)
         {
             var character = (from c in db.Characters.ToList()
                              where c.Id == id
                              select c).FirstOrDefault();
 
-            IEnumerable<GroundStatModel> stats = default(IEnumerable<GroundStatModel>);
+            IEnumerable<GroundStatDTO> stats = default(IEnumerable<GroundStatDTO>);
 
             if (character != null)
             {
                 stats = from stat in db.GroundStats.ToList()
                         where stat.OwnerId == character.OwnerId
-                        select new GroundStatModel()
+                        select new GroundStatDTO()
                         {
                             Angle = stat.Angle,
                             BaseDamage = stat.BaseDamage,

@@ -13,23 +13,23 @@ namespace Kurogane.Data.RestApi.Controllers
 
         /// <summary>
         /// Takes in the character ID and returns all of the found 
-        /// character's <see cref="MovementStatModel"/> data.
+        /// character's <see cref="MovementStatDTO"/> data.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public IEnumerable<MovementStatModel> Get(int id)
+        public IEnumerable<MovementStatDTO> Get(int id)
         {
             var character = (from c in db.Characters.ToList()
                              where c.Id == id
                              select c).FirstOrDefault();
 
-            IEnumerable<MovementStatModel> stats = default(IEnumerable<MovementStatModel>);
+            IEnumerable<MovementStatDTO> stats = default(IEnumerable<MovementStatDTO>);
 
             if (character != null)
             {
                 stats = from stat in db.MovementStats.ToList()
                         where stat.OwnerId == character.OwnerId
-                        select new MovementStatModel()
+                        select new MovementStatDTO()
                         {
                             Name = stat.Name,
                             OwnerId = stat.OwnerId,

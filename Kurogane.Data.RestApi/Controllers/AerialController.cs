@@ -12,23 +12,23 @@ namespace Kurogane.Data.RestApi.Controllers
         private Sm4shContext db = new Sm4shContext();
 
         /// <summary>
-        /// Takes in the character ID and returns all of the found character's <see cref="AerialStatModel"/> data.
+        /// Takes in the character ID and returns all of the found character's <see cref="AerialStatDTO"/> data.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public IEnumerable<AerialStatModel> Get(int id)
+        public IEnumerable<AerialStatDTO> Get(int id)
         {
             var character = (from c in db.Characters.ToList()
                              where c.Id == id
                              select c).FirstOrDefault();
 
-            IEnumerable<AerialStatModel> stats = default(IEnumerable<AerialStatModel>);
+            IEnumerable<AerialStatDTO> stats = default(IEnumerable<AerialStatDTO>);
 
             if (character != null)
             {
                 stats = from stat in db.AerialStats.ToList()
                         where stat.OwnerId == character.OwnerId
-                        select new AerialStatModel()
+                        select new AerialStatDTO()
                         {
                             Angle = stat.Angle,
                             AutoCancel = stat.Autocancel,

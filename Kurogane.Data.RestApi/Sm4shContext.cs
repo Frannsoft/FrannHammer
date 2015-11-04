@@ -7,7 +7,7 @@ namespace Kurogane.Data.RestApi
 {
     public class Sm4shContext : DbContext
     {
-        public DbSet<CharacterModel> Characters { get; set; }
+        public DbSet<CharacterDTO> Characters { get; set; }
         public DbSet<MovementStat> MovementStats { get; set; }
         public DbSet<AerialStat> AerialStats { get; set; }
         public DbSet<GroundStat> GroundStats { get; set; }
