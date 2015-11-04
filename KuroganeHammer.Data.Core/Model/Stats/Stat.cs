@@ -4,17 +4,16 @@ using System.ComponentModel.DataAnnotations;
 
 namespace KuroganeHammer.Data.Core.Model.Stats
 {
-    [Serializable]
     public class Stat
     {
         [Required]
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         [Required]
-        public int OwnerId { get; private set; }
+        public int OwnerId { get; set; }
 
         [Required]
-        public string RawName { get; private set; }
+        public string RawName { get; set; }
 
         [Key]
         public int Id { get; set; }

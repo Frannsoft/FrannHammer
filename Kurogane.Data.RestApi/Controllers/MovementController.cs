@@ -42,29 +42,67 @@ namespace Kurogane.Data.RestApi.Controllers
             return stats;
         }
 
+        [Route("")]
         public IHttpActionResult Post([FromBody]MovementStat value)
         {
+            if (value != null)
             {
-                if (value != null)
+                var stat = db.MovementStats.Find(value.Id);
+
+                if(stat != null)
                 {
-                    db.MovementStats.Add(value);
-                    db.SaveChanges();
-                    return Ok();
+                    stat = value;
                 }
                 else
                 {
-                    return InternalServerError();
+                    db.MovementStats.Add(value);
                 }
-
+                db.SaveChanges();
+                return Ok();
+            }
+            else
+            {
+                return InternalServerError();
             }
         }
 
-        public void Put(int id, [FromBody]string value)
+        [Route("{id}")]
+        public IHttpActionResult Patch(int id, [FromBody]MovementStat value)
         {
+            if (value != null)
+            {
+                var stat = db.MovementStats.Find(id);
+
+                if (stat != null)
+                {
+                    stat = value;
+                }
+                else
+                {
+                    db.MovementStats.Add(value);
+                }
+                db.SaveChanges();
+                return Ok();
+            }
+            else
+            {
+                return InternalServerError();
+            }
         }
 
-        public void Delete(int id)
+        public IHttpActionResult Delete(int id)
         {
+            var stat = db.MovementStats.Find(id);
+
+            if (stat != null)
+            {
+                db.MovementStats.Remove(stat);
+                return Ok();
+            }
+            else
+            {
+                return InternalServerError();
+            }
         }
     }
 }

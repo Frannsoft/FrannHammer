@@ -23,8 +23,6 @@ namespace Kurogane.Data.RestApi
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             app.UseWebApi(config);
 
-            
-
         }
 
         public void ConfigureOAuth(IAppBuilder app)

@@ -47,11 +47,21 @@ namespace Kurogane.Data.RestApi.Controllers
             return stats;
         }
 
+        [Route("")]
         public IHttpActionResult Post([FromBody]AerialStat value)
         {
             if (value != null)
             {
-                db.AerialStats.Add(value);
+                var stat = db.AerialStats.Find(value.Id);
+
+                if (stat != null)
+                {
+                    stat = value;
+                }
+                else
+                {
+                    db.AerialStats.Add(value);
+                }
                 db.SaveChanges();
                 return Ok();
             }
@@ -59,15 +69,45 @@ namespace Kurogane.Data.RestApi.Controllers
             {
                 return InternalServerError();
             }
-
         }
 
-        public void Put(int id, [FromBody]string value)
+        [Route("{id}")]
+        public IHttpActionResult Patch(int id, [FromBody]AerialStat value)
         {
+            if (value != null)
+            {
+                var stat = db.AerialStats.Find(id);
+
+                if (stat != null)
+                {
+                    stat = value;
+                }
+                else
+                {
+                    db.AerialStats.Add(value);
+                }
+                db.SaveChanges();
+                return Ok();
+            }
+            else
+            {
+                return InternalServerError();
+            }
         }
 
-        public void Delete(int id)
+        public IHttpActionResult Delete(int id)
         {
+            var stat = db.AerialStats.Find(id);
+
+            if (stat != null)
+            {
+                db.AerialStats.Remove(stat);
+                return Ok();
+            }
+            else
+            {
+                return InternalServerError();
+            }
         }
     }
 }
