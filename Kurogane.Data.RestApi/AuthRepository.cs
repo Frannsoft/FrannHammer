@@ -1,4 +1,4 @@
-﻿using Kurogane.Data.RestApi.Models;
+﻿using Kurogane.Data.RestApi.DTOs;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;

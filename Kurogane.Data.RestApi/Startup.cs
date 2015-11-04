@@ -4,6 +4,7 @@ using Microsoft.Owin.Security.OAuth;
 using Owin;
 using System;
 using System.Web.Http;
+using Swashbuckle.Application;
 
 [assembly: OwinStartup(typeof(Kurogane.Data.RestApi.Startup))]
 namespace Kurogane.Data.RestApi
@@ -16,9 +17,14 @@ namespace Kurogane.Data.RestApi
             ConfigureOAuth(app);
 
             HttpConfiguration config = new HttpConfiguration();
+            config.EnableSwagger(c => c.SingleApiVersion("v1", "Kurogane.Data.RestApi"))
+            .EnableSwaggerUi();
             WebApiConfig.Register(config);
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             app.UseWebApi(config);
+
+            
+
         }
 
         public void ConfigureOAuth(IAppBuilder app)

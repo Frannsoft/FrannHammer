@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Kurogane.Data.RestApi.Models
+namespace Kurogane.Data.RestApi.DTOs
 {
     [Table("Roster")]
     public class CharacterModel
@@ -18,7 +18,6 @@ namespace Kurogane.Data.RestApi.Models
         [Required]
         public int OwnerId { get; set; }
 
-        [Required]
         public string FrameDataVersion { get; set; }
 
 

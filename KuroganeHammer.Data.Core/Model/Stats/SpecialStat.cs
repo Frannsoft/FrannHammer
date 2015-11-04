@@ -1,9 +1,11 @@
 ﻿
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace KuroganeHammer.Data.Core.Model.Stats
 {
     [JsonObject]
+    [Table("SpecialStats")]
     public class SpecialStat : Stat
     {
         public string HitboxActive { get; private set; }
@@ -14,15 +16,18 @@ namespace KuroganeHammer.Data.Core.Model.Stats
         public string KnockbackGrowth { get; private set; }
 
         public SpecialStat(string name, int ownerId, string rawName, string hitboxActive, string firstActionableFrame, string baseDamage,
-            string angle, string baseSetKnockback, string knockbackGrowth)
+            string angle, string baseKnockbackSetKnockback, string knockbackGrowth)
             : base(name, ownerId, rawName)
         {
             HitboxActive = hitboxActive;
             FirstActionableFrame = firstActionableFrame;
             BaseDamage = baseDamage;
             Angle = angle;
-            BaseKnockbackSetKnockback = baseSetKnockback;
+            BaseKnockbackSetKnockback = baseKnockbackSetKnockback;
             KnockbackGrowth = knockbackGrowth;
         }
+
+        public SpecialStat()
+        { }
     }
 }

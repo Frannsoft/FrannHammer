@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace KuroganeHammer.Data.Core.Model.Stats
 {
     [JsonObject]
+    [Table("MovementStats")]
     public class MovementStat : Stat
     {
         public string Rank { get; private set; }
@@ -15,5 +17,7 @@ namespace KuroganeHammer.Data.Core.Model.Stats
             Rank = rank;
         }
 
+        public MovementStat()
+        { }
     }
 }

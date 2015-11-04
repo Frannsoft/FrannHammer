@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Kurogane.Data.RestApi.Models
+namespace Kurogane.Data.RestApi.DTOs
 {
     public class UserModel
     {

@@ -1,23 +1,32 @@
 ﻿using Newtonsoft.Json;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace KuroganeHammer.Data.Core.Model.Stats
 {
-    [JsonObject(MemberSerialization.OptIn)]
+    [Serializable]
     public class Stat
     {
-        [JsonProperty]
+        [Required]
         public string Name { get; private set; }
 
-        [JsonProperty]
+        [Required]
         public int OwnerId { get; private set; }
 
-        internal string RawName { get; private set; }
+        [Required]
+        public string RawName { get; private set; }
+
+        [Key]
+        public int Id { get; set; }
 
         public Stat(string name, int ownerId, string rawName)
         {
             Name = name;
             OwnerId = ownerId;
-            RawName = rawName;
+            RawName = rawName.Trim();
         }
+
+        public Stat()
+        { }
     }
 }
