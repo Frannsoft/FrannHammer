@@ -194,6 +194,6 @@ namespace KuroganeHammer.Data.Core.Model.Characters
         MIIGUNNER = 54,
 
         [Description("Kirby")]
-        KIRBY
+        KIRBY = 55
     }
 }

@@ -11,10 +11,10 @@ namespace Kurogane.Data.RestApi.Controllers
     {
         private Sm4shContext db = new Sm4shContext();
 
-        public IEnumerable<CharacterModel> Get()
+        public IEnumerable<CharacterDTO> Get()
         {
             return from chars in db.Characters.ToList()
-                   select new CharacterModel()
+                   select new CharacterDTO()
                    {
                        FrameDataVersion = chars.FrameDataVersion,
                        FullUrl = chars.FullUrl,
@@ -23,10 +23,10 @@ namespace Kurogane.Data.RestApi.Controllers
                    };
         }
 
-        public CharacterModel Get(int id)
+        public CharacterDTO Get(int id)
         {
             Character character = Character.FromId(id);
-            return new CharacterModel()
+            return new CharacterDTO()
             {
                 FrameDataVersion = character.FrameDataVersion,
                 FullUrl = character.FullUrl,
@@ -36,7 +36,7 @@ namespace Kurogane.Data.RestApi.Controllers
         }
 
         // POST: api/Character
-        public IHttpActionResult Post([FromBody]CharacterModel value)
+        public IHttpActionResult Post([FromBody]CharacterDTO value)
         {
             if (value != null)
             {

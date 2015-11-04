@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Kurogane.Data.RestApi.DTOs
 {
-    public class MovementStatModel
+    public class MovementStatDTO
     {
         public int OwnerId { get; set; }
         public string Name { get; set; }

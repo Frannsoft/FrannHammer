@@ -12,24 +12,24 @@ namespace Kurogane.Data.RestApi.Controllers
         private Sm4shContext db = new Sm4shContext();
 
         /// <summary>
-        /// Get all of the <see cref="SpecialStatModel"/> data for the character
+        /// Get all of the <see cref="SpecialStatDTO"/> data for the character
         /// with the passed in ID.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public IEnumerable<SpecialStatModel> Get(int id)
+        public IEnumerable<SpecialStatDTO> Get(int id)
         {
             var character = (from c in db.Characters.ToList()
                              where c.Id == id
                              select c).FirstOrDefault();
 
-            IEnumerable<SpecialStatModel> stats = default(IEnumerable<SpecialStatModel>);
+            IEnumerable<SpecialStatDTO> stats = default(IEnumerable<SpecialStatDTO>);
 
             if (character != null)
             {
                 stats = from stat in db.SpecialStats.ToList()
                         where stat.OwnerId == character.OwnerId
-                        select new SpecialStatModel()
+                        select new SpecialStatDTO()
                         {
                             Angle = stat.Angle,
                             BaseDamage = stat.BaseDamage,

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Kurogane.Data.RestApi.DTOs
 {
     [Table("Roster")]
-    public class CharacterModel
+    public class CharacterDTO
     {
         [Key]
         public int Id { get; set; }
