@@ -1,15 +1,13 @@
-﻿using KuroganeHammer.Data.Core.D;
-using KuroganeHammer.Data.Core.Model.Stats;
+﻿using KuroganeHammer.Data.Core.Model.Stats;
 using KuroganeHammer.Data.Core.Web;
-using MySqlConnectorWrapper;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
     [JsonObject(MemberSerialization.OptIn)]
-    [TableId("roster")]
     public class Character
     {
         private Page page;
@@ -47,27 +45,7 @@ namespace KuroganeHammer.Data.Core.Model.Characters
             return new Character((Characters)id);
         }
 
-        public void Save()
-        {
-            //TODO: this needs safety precaution so not everyone can overwrite values
-            using (Sm4shDB db = new Sm4shDB())
-            {
-                db.Save(this);
-            }
-        }
-
-        /// <summary>
-        /// Inserts new values to the Sm4sh database.
-        /// </summary>
-        public void SaveAs()
-        {
-            //TODO: This needs safety precautions so people don't just overwrite values
-            using (Sm4shDB db = new Sm4shDB())
-            {
-                db.Save(this);
-            }
-        }
-
+        [Obsolete]
         public string AsJson(StatTypes statType = StatTypes.All)
         {
             string serializedContent = string.Empty;

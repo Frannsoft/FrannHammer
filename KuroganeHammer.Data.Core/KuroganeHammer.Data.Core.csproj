@@ -57,70 +57,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="D\Sm4shDB.cs" />
-    <Compile Include="Model\Characters\Bowser.cs" />
-    <Compile Include="Model\Characters\BowserJr.cs" />
-    <Compile Include="Model\Characters\CaptainFalcon.cs" />
     <Compile Include="Model\Characters\Character.cs" />
     <Compile Include="Model\Characters\CharacterConstants.cs" />
-    <Compile Include="Model\Characters\Charizard.cs" />
-    <Compile Include="Model\Characters\DarkPit.cs" />
-    <Compile Include="Model\Characters\DiddyKong.cs" />
-    <Compile Include="Model\Characters\DonkeyKong.cs" />
-    <Compile Include="Model\Characters\DrMario.cs" />
-    <Compile Include="Model\Characters\DuckHunt.cs" />
-    <Compile Include="Model\Characters\Falco.cs" />
-    <Compile Include="Model\Characters\Fox.cs" />
-    <Compile Include="Model\Characters\Ganondorf.cs" />
-    <Compile Include="Model\Characters\Greninja.cs" />
-    <Compile Include="Model\Characters\Ike.cs" />
-    <Compile Include="Model\Characters\Jigglypuff.cs" />
-    <Compile Include="Model\Characters\KingDedede.cs" />
-    <Compile Include="Model\Characters\Link.cs" />
-    <Compile Include="Model\Characters\LittleMac.cs" />
-    <Compile Include="Model\Characters\Lucario.cs" />
-    <Compile Include="Model\Characters\Lucas.cs" />
-    <Compile Include="Model\Characters\Lucina.cs" />
-    <Compile Include="Model\Characters\Luigi.cs" />
-    <Compile Include="Model\Characters\Mario.cs" />
-    <Compile Include="Model\Characters\Marth.cs" />
-    <Compile Include="Model\Characters\Megaman.cs" />
-    <Compile Include="Model\Characters\MetaKnight.cs" />
-    <Compile Include="Model\Characters\Mewtwo.cs" />
-    <Compile Include="Model\Characters\MiiSwordFighter.cs" />
-    <Compile Include="Model\Characters\MrGameAndWatch.cs" />
-    <Compile Include="Model\Characters\Ness.cs" />
-    <Compile Include="Model\Characters\Olimar.cs" />
-    <Compile Include="Model\Characters\PacMan.cs" />
-    <Compile Include="Model\Characters\Palutena.cs" />
-    <Compile Include="Model\Characters\Peach.cs" />
-    <Compile Include="Model\Characters\Pikachu.cs" />
-    <Compile Include="Model\Characters\Pit.cs" />
-    <Compile Include="Model\Characters\Rob.cs" />
-    <Compile Include="Model\Characters\Robin.cs" />
-    <Compile Include="Model\Characters\RosalinaAndLuma.cs" />
-    <Compile Include="Model\Characters\Roy.cs" />
-    <Compile Include="Model\Characters\Ryu.cs" />
-    <Compile Include="Model\Characters\Samus.cs" />
-    <Compile Include="Model\Characters\Sheik.cs" />
-    <Compile Include="Model\Characters\Shulk.cs" />
-    <Compile Include="Model\Characters\Sonic.cs" />
-    <Compile Include="Model\Characters\ToonLink.cs" />
-    <Compile Include="Model\Characters\Villager.cs" />
-    <Compile Include="Model\Characters\Wario.cs" />
-    <Compile Include="Model\Characters\WiiFitTrainer.cs" />
-    <Compile Include="Model\Characters\Yoshi.cs" />
-    <Compile Include="Model\Characters\Zelda.cs" />
-    <Compile Include="Model\Characters\ZeroSuitSamus.cs" />
     <Compile Include="Model\Stats\AerialMoves.cs" />
     <Compile Include="Model\Stats\AerialStat.cs" />
     <Compile Include="Model\Stats\BaseMoves.cs" />
-    <Compile Include="Model\Stats\dbentity\AerialStatDB.cs" />
-    <Compile Include="Model\Stats\dbentity\CharacterDB.cs" />
-    <Compile Include="Model\Stats\dbentity\GroundStatDB.cs" />
-    <Compile Include="Model\Stats\dbentity\MovementStatDB.cs" />
-    <Compile Include="Model\Stats\dbentity\SpecialStatDB.cs" />
-    <Compile Include="Model\Stats\dbentity\StatDB.cs" />
     <Compile Include="Model\Stats\GroundMoves.cs" />
     <Compile Include="Model\Stats\GroundStat.cs" />
     <Compile Include="Model\Stats\MovementMoves.cs" />
@@ -137,12 +78,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MySqlConnectorWrapper\MySqlConnectorWrapper.csproj">
-      <Project>{5314e55d-b820-4deb-a239-adf44924f279}</Project>
-      <Name>MySqlConnectorWrapper</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

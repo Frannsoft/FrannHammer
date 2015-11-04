@@ -7,16 +7,16 @@ using System.Reflection;
 namespace KuroganeHammer.Data.Core.Model.Characters
 {
     [JsonObject]
-	public class CharacterUtility
+    public class CharacterUtility
     {
         public static string GetEnumDescription(Enum value)
         {
             FieldInfo fieldInfo = value.GetType().GetField(value.ToString());
 
-            DescriptionAttribute[] attributes = 
+            DescriptionAttribute[] attributes =
                 (DescriptionAttribute[])fieldInfo.GetCustomAttributes<DescriptionAttribute>(false);
 
-            if(attributes != null &&
+            if (attributes != null &&
                 attributes.Length > 0)
             {
                 return attributes[0].Description;
@@ -185,6 +185,15 @@ namespace KuroganeHammer.Data.Core.Model.Characters
         ZELDA = 51,
 
         [Description("Zero%20Suit%20Samus")]
-        ZEROSUITSAMUS = 52
+        ZEROSUITSAMUS = 52,
+
+        [Description("Mii%20Brawler")]
+        MIIBRAWLER = 53,
+
+        [Description("Mii%20Gunner")]
+        MIIGUNNER = 54,
+
+        [Description("Kirby")]
+        KIRBY
     }
 }

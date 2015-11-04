@@ -154,6 +154,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\FranSm4shTest.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -171,10 +172,6 @@
     <ProjectReference Include="..\KuroganeHammer.Data.Core\KuroganeHammer.Data.Core.csproj">
       <Project>{2904d4e7-8989-46bd-ac0a-b4356f190a15}</Project>
       <Name>KuroganeHammer.Data.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MySqlConnectorWrapper\MySqlConnectorWrapper.csproj">
-      <Project>{5314e55d-b820-4deb-a239-adf44924f279}</Project>
-      <Name>MySqlConnectorWrapper</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
