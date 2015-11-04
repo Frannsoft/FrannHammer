@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
-    [RoutePrefix("api/{id}/Character")]
+    [RoutePrefix("api/Character")]
     public class CharacterController : ApiController
     {
         private Sm4shContext db = new Sm4shContext();
