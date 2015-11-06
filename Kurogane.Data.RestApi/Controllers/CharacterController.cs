@@ -3,10 +3,10 @@ using KuroganeHammer.Data.Core.Model.Characters;
 using System.Collections.Generic;
 using System.Web.Http;
 using System.Linq;
+using KuroganeHammer.Data.Core.Model.Stats;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
-    [RoutePrefix("api/Character")]
     public class CharacterController : ApiController
     {
         private Sm4shContext db = new Sm4shContext();
@@ -23,6 +23,8 @@ namespace Kurogane.Data.RestApi.Controllers
                    };
         }
 
+        [Route("api/{id}/character")]
+        [HttpGet]
         public CharacterDTO Get(int id)
         {
             Character character = Character.FromId(id);
@@ -35,7 +37,8 @@ namespace Kurogane.Data.RestApi.Controllers
             };
         }
 
-        [Route("")]
+        [Route("api/{id}/character")]
+        [HttpPost]
         public IHttpActionResult Post([FromBody]CharacterDTO value)
         {
             if (value != null)
@@ -44,11 +47,22 @@ namespace Kurogane.Data.RestApi.Controllers
 
                 if (stat != null)
                 {
-                    stat = value;
+                    stat.FrameDataVersion = value.FrameDataVersion;
+                    stat.FullUrl = value.FullUrl;
+                    stat.Name = value.Name;
+                    stat.OwnerId = value.OwnerId;
                 }
                 else
                 {
-                    db.Characters.Add(value);
+                    stat = new CharacterStat()
+                    {
+                        FrameDataVersion = value.FrameDataVersion,
+                        FullUrl = value.FullUrl,
+                        Name = value.Name,
+                        OwnerId = value.OwnerId
+                    };
+
+                    db.Characters.Add(stat);
                 }
                 db.SaveChanges();
                 return Ok();
@@ -59,22 +73,29 @@ namespace Kurogane.Data.RestApi.Controllers
             }
 
         }
-        [Route("{id}")]
-        public IHttpActionResult Patch(int id, [FromBody]CharacterDTO value)
+
+        [Route("api/{id}/character")]
+        [HttpPut]
+        public IHttpActionResult Put(int id, [FromBody]CharacterDTO value)
         {
             if (value != null)
             {
-                var stat = db.Characters.Find(value.Id);
+                var stat = db.Characters.Find(id);
 
                 if (stat != null)
                 {
-                    stat = value;
+                    stat.FrameDataVersion = value.FrameDataVersion;
+                    stat.FullUrl = value.FullUrl;
+                    stat.Name = value.Name;
+                    stat.OwnerId = value.OwnerId;
+
+                    db.SaveChanges();
                 }
                 else
                 {
-                    db.Characters.Add(value);
+                    return InternalServerError();
                 }
-                db.SaveChanges();
+               
                 return Ok();
             }
             else
