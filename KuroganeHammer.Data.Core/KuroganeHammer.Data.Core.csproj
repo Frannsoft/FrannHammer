@@ -62,6 +62,7 @@
     <Compile Include="Model\Stats\AerialMoves.cs" />
     <Compile Include="Model\Stats\AerialStat.cs" />
     <Compile Include="Model\Stats\BaseMoves.cs" />
+    <Compile Include="Model\Stats\CharacterStat.cs" />
     <Compile Include="Model\Stats\GroundMoves.cs" />
     <Compile Include="Model\Stats\GroundStat.cs" />
     <Compile Include="Model\Stats\MovementMoves.cs" />

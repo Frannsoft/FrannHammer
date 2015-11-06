@@ -9,7 +9,7 @@ namespace KuroganeHammer.Data.Core.UnitTests
         [Test]
         public void TestMethod1()
         {
-            Character kirby = new Character(Characters.KIRBY);
+            Character kirby = new Character(Characters.SHULK);
         }
 
 

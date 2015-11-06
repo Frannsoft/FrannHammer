@@ -1,21 +1,21 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Kurogane.Data.RestApi.DTOs
+namespace KuroganeHammer.Data.Core.Model.Stats
 {
-    public class CharacterDTO
+    [Table("Roster")]
+    public class CharacterStat
     {
-        [Key]
-        public int Id { get; set; }
+        public string FullUrl { get; set; }
 
         [Required]
         public string Name { get; set; }
 
         [Required]
-        public string FullUrl { get; set; }
-
-        [Required]
         public int OwnerId { get; set; }
+
+        [Key]
+        public int Id { get; set; }
 
         public string FrameDataVersion { get; set; }
     }

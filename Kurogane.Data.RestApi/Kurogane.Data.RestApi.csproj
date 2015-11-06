@@ -143,6 +143,7 @@
     <Compile Include="DTOs\AerialStatDTO.cs" />
     <Compile Include="DTOs\GroundStatDTO.cs" />
     <Compile Include="DTOs\SpecialStatDTO.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Sm4shContext.cs" />
     <Compile Include="Controllers\MovementController.cs" />
     <Compile Include="DTOs\CharacterDTO.cs" />
