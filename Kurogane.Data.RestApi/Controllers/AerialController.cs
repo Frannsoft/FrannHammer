@@ -1,54 +1,88 @@
-﻿using KuroganeHammer.Data.Core.Model.Stats;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Web.Http;
 using System.Linq;
 using Kurogane.Data.RestApi.DTOs;
+using System.Data.Entity;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
-    [RoutePrefix("api/Aerial")]
     public class AerialController : ApiController
     {
         private Sm4shContext db = new Sm4shContext();
 
-        /// <summary>
-        /// Takes in the character ID and returns all of the found character's <see cref="AerialStatDTO"/> data.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public IEnumerable<AerialStatDTO> Get(int id)
+        [Route("api/aerial")]
+        [HttpGet]
+        public IEnumerable<AerialStatDTO> Get()
         {
-            var character = (from c in db.Characters.ToList()
-                             where c.Id == id
-                             select c).FirstOrDefault();
-
-            IEnumerable<AerialStatDTO> stats = default(IEnumerable<AerialStatDTO>);
-
-            if (character != null)
-            {
-                stats = from stat in db.AerialStats.ToList()
-                        where stat.OwnerId == character.OwnerId
-                        select new AerialStatDTO()
-                        {
-                            Angle = stat.Angle,
-                            AutoCancel = stat.Autocancel,
-                            BaseDamage = stat.BaseDamage,
-                            BackKnockbackSetKnockback = stat.BaseKnockbackSetKnockback,
-                            FirstActionableFrame = stat.FirstActionableFrame,
-                            HitboxActive = stat.HitboxActive,
-                            KnockbackGrowth = stat.KnockbackGrowth,
-                            LandingLag = stat.LandingLag,
-                            Name = stat.Name,
-                            OwnerId = stat.OwnerId,
-                            RawName = stat.RawName
-                        };
-            }
-
-            return stats;
+            return from aerial in db.AerialStats
+                   select new AerialStatDTO()
+                   {
+                       Angle = aerial.Angle,
+                       AutoCancel = aerial.Autocancel,
+                       BackKnockbackSetKnockback = aerial.BaseKnockbackSetKnockback,
+                       BaseDamage = aerial.BaseDamage,
+                       FirstActionableFrame = aerial.FirstActionableFrame,
+                       HitboxActive = aerial.HitboxActive,
+                       KnockbackGrowth = aerial.KnockbackGrowth,
+                       LandingLag = aerial.LandingLag,
+                       Name = aerial.Name,
+                       OwnerId = aerial.OwnerId,
+                       RawName = aerial.RawName
+                   };
         }
 
-        [Route("")]
-        public IHttpActionResult Post([FromBody]AerialStat value)
+        //[Route("api/{id}/aerial")]
+        //[HttpGet]
+        //public AerialStatDTO Get(int id)
+        //{
+        //    var aerial = db.AerialStats.Find(id);
+
+        //    return new AerialStatDTO()
+        //    {
+        //        Angle = aerial.Angle,
+        //        AutoCancel = aerial.Autocancel,
+        //        BackKnockbackSetKnockback = aerial.BaseKnockbackSetKnockback,
+        //        BaseDamage = aerial.BaseDamage,
+        //        FirstActionableFrame = aerial.FirstActionableFrame,
+        //        HitboxActive = aerial.HitboxActive,
+        //        KnockbackGrowth = aerial.KnockbackGrowth,
+        //        LandingLag = aerial.LandingLag,
+        //        Name = aerial.Name,
+        //        OwnerId = aerial.OwnerId,
+        //        RawName = aerial.RawName,
+        //        Id = aerial.Id
+        //    };
+        //}
+
+        [Route("api/characters/{id}/aerials")]
+        [HttpGet]
+        public IEnumerable<AerialStatDTO> Get(int id)
+        {
+            return from aerial in db.AerialStats
+                   where aerial.OwnerId == id
+                   select new AerialStatDTO()
+                   {
+                       Angle = aerial.Angle,
+                       AutoCancel = aerial.Autocancel,
+                       BackKnockbackSetKnockback = aerial.BaseKnockbackSetKnockback,
+                       BaseDamage = aerial.BaseDamage,
+                       FirstActionableFrame = aerial.FirstActionableFrame,
+                       HitboxActive = aerial.HitboxActive,
+                       KnockbackGrowth = aerial.KnockbackGrowth,
+                       LandingLag = aerial.LandingLag,
+                       Name = aerial.Name,
+                       CharacterName = db.Characters.FirstOrDefault(s => s.OwnerId == aerial.OwnerId).Name,
+                       OwnerId = aerial.OwnerId,
+                       RawName = aerial.RawName,
+                       Id = aerial.Id
+                   };
+        }
+
+
+
+        [Route("api/{id}/aerial")]
+        [HttpPost]
+        public IHttpActionResult Post([FromBody]AerialStatDTO value)
         {
             if (value != null)
             {
@@ -56,23 +90,25 @@ namespace Kurogane.Data.RestApi.Controllers
 
                 if (stat != null)
                 {
-                    stat = value;
+                    db.AerialStats.Attach(stat);
+                    db.Entry(stat).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return Ok();
                 }
                 else
                 {
-                    db.AerialStats.Add(value);
+                    return BadRequest("Unable to find value.");
                 }
-                db.SaveChanges();
-                return Ok();
             }
             else
             {
-                return InternalServerError();
+                return BadRequest("Parameter null.");
             }
         }
 
-        [Route("{id}")]
-        public IHttpActionResult Patch(int id, [FromBody]AerialStat value)
+        [Route("api/{id}/aerial")]
+        [HttpPut]
+        public IHttpActionResult Put(int id, [FromBody]AerialStatDTO value)
         {
             if (value != null)
             {
@@ -80,21 +116,24 @@ namespace Kurogane.Data.RestApi.Controllers
 
                 if (stat != null)
                 {
-                    stat = value;
+                    db.AerialStats.Add(stat);
+                    db.Entry(stat).State = EntityState.Added;
+                    db.SaveChanges();
+                    return Ok();
                 }
                 else
                 {
-                    db.AerialStats.Add(value);
+                    return BadRequest();
                 }
-                db.SaveChanges();
-                return Ok();
             }
             else
             {
-                return InternalServerError();
+                return BadRequest();
             }
         }
 
+        [Route("api/{id}/aerial")]
+        [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
             var stat = db.AerialStats.Find(id);
@@ -102,11 +141,12 @@ namespace Kurogane.Data.RestApi.Controllers
             if (stat != null)
             {
                 db.AerialStats.Remove(stat);
+                db.Entry(stat).State = EntityState.Deleted;
                 return Ok();
             }
             else
             {
-                return InternalServerError();
+                return BadRequest();
             }
         }
     }
