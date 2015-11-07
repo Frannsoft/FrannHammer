@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntityBusinessConverter.cs" />
     <Compile Include="Model\Characters\Character.cs" />
     <Compile Include="Model\Characters\CharacterConstants.cs" />
     <Compile Include="Model\Stats\AerialMoves.cs" />

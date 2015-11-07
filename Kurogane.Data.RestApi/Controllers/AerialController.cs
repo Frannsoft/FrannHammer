@@ -3,6 +3,8 @@ using System.Web.Http;
 using System.Linq;
 using Kurogane.Data.RestApi.DTOs;
 using System.Data.Entity;
+using KuroganeHammer.Data.Core.Model.Stats;
+using KuroganeHammer.Data.Core;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
@@ -14,50 +16,43 @@ namespace Kurogane.Data.RestApi.Controllers
         [HttpGet]
         public IEnumerable<AerialStatDTO> Get()
         {
-            return from aerial in db.AerialStats
-                   select new AerialStatDTO()
-                   {
-                       Angle = aerial.Angle,
-                       AutoCancel = aerial.Autocancel,
-                       BackKnockbackSetKnockback = aerial.BaseKnockbackSetKnockback,
-                       BaseDamage = aerial.BaseDamage,
-                       FirstActionableFrame = aerial.FirstActionableFrame,
-                       HitboxActive = aerial.HitboxActive,
-                       KnockbackGrowth = aerial.KnockbackGrowth,
-                       LandingLag = aerial.LandingLag,
-                       Name = aerial.Name,
-                       CharacterName = db.Characters.FirstOrDefault(s => s.OwnerId == aerial.OwnerId).Name,
-                       OwnerId = aerial.OwnerId,
-                       RawName = aerial.RawName,
-                       Id = aerial.Id
-                   };
+            return from aerial in db.AerialStats.ToList()
+                   select EntityBusinessConverter<AerialStat>.ConvertTo<AerialStatDTO>(aerial);
+
+            //return from aerial in db.AerialStats
+            //       select new AerialStatDTO()
+            //       {
+            //           Angle = aerial.Angle,
+            //           AutoCancel = aerial.Autocancel,
+            //           BackKnockbackSetKnockback = aerial.BaseKnockbackSetKnockback,
+            //           BaseDamage = aerial.BaseDamage,
+            //           FirstActionableFrame = aerial.FirstActionableFrame,
+            //           HitboxActive = aerial.HitboxActive,
+            //           KnockbackGrowth = aerial.KnockbackGrowth,
+            //           LandingLag = aerial.LandingLag,
+            //           Name = aerial.Name,
+            //           CharacterName = db.Characters.FirstOrDefault(s => s.OwnerId == aerial.OwnerId).Name,
+            //           OwnerId = aerial.OwnerId,
+            //           RawName = aerial.RawName,
+            //           Id = aerial.Id
+            //       };
         }
 
         [Route("api/characters/{id}/aerials")]
         [HttpGet]
         public IEnumerable<AerialStatDTO> Get(int id)
         {
-            return from aerial in db.AerialStats
-                   where aerial.OwnerId == id
-                   select new AerialStatDTO()
-                   {
-                       Angle = aerial.Angle,
-                       AutoCancel = aerial.Autocancel,
-                       BackKnockbackSetKnockback = aerial.BaseKnockbackSetKnockback,
-                       BaseDamage = aerial.BaseDamage,
-                       FirstActionableFrame = aerial.FirstActionableFrame,
-                       HitboxActive = aerial.HitboxActive,
-                       KnockbackGrowth = aerial.KnockbackGrowth,
-                       LandingLag = aerial.LandingLag,
-                       Name = aerial.Name,
-                       CharacterName = db.Characters.FirstOrDefault(s => s.OwnerId == aerial.OwnerId).Name,
-                       OwnerId = aerial.OwnerId,
-                       RawName = aerial.RawName,
-                       Id = aerial.Id
-                   };
+            if (id > 0)
+            {
+                return from aerial in db.AerialStats.ToList()
+                       where aerial.OwnerId == id
+                       select EntityBusinessConverter<AerialStat>.ConvertTo<AerialStatDTO>(aerial);
+            }
+            else
+            {
+                return null;
+            }
         }
-
-
 
         [Route("api/{id}/aerial")]
         [HttpPost]

@@ -1,4 +1,5 @@
 ﻿using Kurogane.Data.RestApi.DTOs;
+using KuroganeHammer.Data.Core;
 using KuroganeHammer.Data.Core.Model.Stats;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -15,43 +16,17 @@ namespace Kurogane.Data.RestApi.Controllers
         [HttpGet]
         public IEnumerable<SpecialStatDTO> Get()
         {
-            return from special in db.SpecialStats
-                   select new SpecialStatDTO()
-                   {
-                       Angle = special.Angle,
-                       BaseDamage = special.BaseDamage,
-                       BaseKnockbackSetKnockback = special.BaseKnockbackSetKnockback,
-                       FirstActionableFrame = special.FirstActionableFrame,
-                       HitboxActive = special.HitboxActive,
-                       KnockbackGrowth = special.KnockbackGrowth,
-                       Name = special.Name,
-                       CharacterName = db.Characters.FirstOrDefault(s => s.OwnerId == special.OwnerId).Name,
-                       OwnerId = special.OwnerId,
-                       RawName = special.RawName,
-                       Id = special.Id
-                   };
+            return from special in db.SpecialStats.ToList()
+                   select EntityBusinessConverter<SpecialStat>.ConvertTo<SpecialStatDTO>(special);
         }
 
         [Route("api/characters/{id}/special")]
         [HttpGet]
         public IEnumerable<SpecialStatDTO> Get(int id)
         {
-            return from special in db.SpecialStats
+            return from special in db.SpecialStats.ToList()
                    where special.OwnerId == id
-                   select new SpecialStatDTO()
-                   {
-                       Angle = special.Angle,
-                       BaseDamage = special.BaseDamage,
-                       BaseKnockbackSetKnockback = special.BaseKnockbackSetKnockback,
-                       FirstActionableFrame = special.FirstActionableFrame,
-                       HitboxActive = special.HitboxActive,
-                       KnockbackGrowth = special.KnockbackGrowth,
-                       Name = special.Name,
-                       CharacterName = db.Characters.FirstOrDefault(s => s.OwnerId == special.OwnerId).Name,
-                       OwnerId = special.OwnerId,
-                       RawName = special.RawName,
-                       Id = special.Id
-                   };
+                   select EntityBusinessConverter<SpecialStat>.ConvertTo<SpecialStatDTO>(special);
         }
 
         [Route("api/{id}/special")]
