@@ -3,6 +3,8 @@ using System.Web.Http;
 using System.Data.Entity;
 using System.Linq;
 using System.Collections.Generic;
+using KuroganeHammer.Data.Core.Model.Stats;
+using KuroganeHammer.Data.Core;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
@@ -15,29 +17,23 @@ namespace Kurogane.Data.RestApi.Controllers
         public IEnumerable<CharacterDTO> Get()
         {
             return from chars in db.Characters
-                   select new CharacterDTO()
-                   {
-                       FrameDataVersion = chars.FrameDataVersion,
-                       FullUrl = chars.FullUrl,
-                       Name = chars.Name,
-                       OwnerId = chars.OwnerId,
-                       Id = chars.Id
-                   };
+                   select EntityBusinessConverter<CharacterStat>.ConvertTo<CharacterDTO>(chars);
         }
 
         [Route("api/{id}/character")]
         [HttpGet]
         public CharacterDTO Get(int id)
         {
-            var character = db.Characters.Find(id);
-
-            return new CharacterDTO()
+            if (id > 0)
             {
-                FrameDataVersion = character.FrameDataVersion,
-                FullUrl = character.FullUrl,
-                Name = character.Name,
-                OwnerId = character.OwnerId
-            };
+                var character = db.Characters.Find(id);
+
+                return EntityBusinessConverter<CharacterStat>.ConvertTo<CharacterDTO>(character);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         [Route("api/{id}/character")]

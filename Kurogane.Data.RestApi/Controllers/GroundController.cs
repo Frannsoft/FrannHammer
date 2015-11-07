@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Web.Http;
 using System.Linq;
 using System.Data.Entity;
+using KuroganeHammer.Data.Core.Model.Stats;
+using KuroganeHammer.Data.Core;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
@@ -14,42 +16,24 @@ namespace Kurogane.Data.RestApi.Controllers
         [HttpGet]
         public IEnumerable<GroundStatDTO> Get()
         {
-            return from ground in db.GroundStats
-                   select new GroundStatDTO()
-                   {
-                       Angle = ground.Angle,
-                       BaseDamage = ground.BaseDamage,
-                       BaseKnockbackSetKnockback = ground.BaseKnockbackSetKnockback,
-                       FirstActionableFrame = ground.FirstActionableFrame,
-                       HitboxActive = ground.HitBoxActive,
-                       KnockbackGrowth = ground.KnockbackGrowth,
-                       Name = ground.Name,
-                       CharacterName = db.Characters.FirstOrDefault(s => s.OwnerId == ground.OwnerId).Name,
-                       OwnerId = ground.OwnerId,
-                       RawName = ground.RawName,
-                       Id = ground.Id
-                   };
+            return from ground in db.GroundStats.ToList()
+                   select EntityBusinessConverter<GroundStat>.ConvertTo<GroundStatDTO>(ground);
         }
 
         [Route("api/characters/{id}/ground")]
         [HttpGet]
         public IEnumerable<GroundStatDTO> Get(int id)
         {
-            return from ground in db.GroundStats
-                   where ground.OwnerId == id
-                   select new GroundStatDTO()
-                   {
-                       Angle = ground.Angle,
-                       BaseDamage = ground.BaseDamage,
-                       BaseKnockbackSetKnockback = ground.BaseKnockbackSetKnockback,
-                       FirstActionableFrame = ground.FirstActionableFrame,
-                       HitboxActive = ground.HitBoxActive,
-                       KnockbackGrowth = ground.KnockbackGrowth,
-                       Name = ground.Name,
-                       CharacterName = db.Characters.FirstOrDefault(s => s.OwnerId == ground.OwnerId).Name,
-                       OwnerId = ground.OwnerId,
-                       RawName = ground.RawName,
-                   };
+            if (id > 0)
+            {
+                return from ground in db.GroundStats.ToList()
+                       where ground.OwnerId == id
+                       select EntityBusinessConverter<GroundStat>.ConvertTo<GroundStatDTO>(ground);
+            }
+            else
+            {
+                return null;
+            }
         }
 
 

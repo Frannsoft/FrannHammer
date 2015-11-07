@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Web.Http;
 using System.Linq;
 using System.Data.Entity;
+using KuroganeHammer.Data.Core.Model.Stats;
+using KuroganeHammer.Data.Core;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
@@ -14,35 +16,17 @@ namespace Kurogane.Data.RestApi.Controllers
         [HttpGet]
         public IEnumerable<MovementStatDTO> Get()
         {
-            return from movement in db.MovementStats
-                   select new MovementStatDTO()
-                   {
-                       Name = movement.Name,
-                       OwnerId = movement.OwnerId,
-                       Rank = movement.Rank,
-                       RawName = movement.RawName,
-                       Value = movement.Value,
-                       CharacterName = db.Characters.FirstOrDefault(s => s.OwnerId == movement.OwnerId).Name,
-                       Id = movement.Id
-                   };
+            return from movement in db.MovementStats.ToList()
+                   select EntityBusinessConverter<MovementStat>.ConvertTo<MovementStatDTO>(movement);
         }
 
         [Route("api/characters/{id}/movement")]
         [HttpGet]
         public IEnumerable<MovementStatDTO> Get(int id)
         {
-            return from movement in db.MovementStats
+            return from movement in db.MovementStats.ToList()
                    where movement.OwnerId == id
-                   select new MovementStatDTO()
-                   {
-                       Name = movement.Name,
-                       OwnerId = movement.OwnerId,
-                       Rank = movement.Rank,
-                       RawName = movement.RawName,
-                       Value = movement.Value,
-                       CharacterName = db.Characters.FirstOrDefault(s => s.OwnerId == movement.OwnerId).Name,
-                       Id = movement.Id
-                   };
+                   select EntityBusinessConverter<MovementStat>.ConvertTo<MovementStatDTO>(movement);
         }
 
         [Route("api/{id}/movement")]
