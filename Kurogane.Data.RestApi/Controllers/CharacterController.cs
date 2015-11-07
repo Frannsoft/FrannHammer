@@ -20,7 +20,8 @@ namespace Kurogane.Data.RestApi.Controllers
                        FrameDataVersion = chars.FrameDataVersion,
                        FullUrl = chars.FullUrl,
                        Name = chars.Name,
-                       OwnerId = chars.OwnerId
+                       OwnerId = chars.OwnerId,
+                       Id = chars.Id
                    };
         }
 
