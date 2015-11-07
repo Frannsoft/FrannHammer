@@ -1,9 +1,8 @@
 ﻿using Kurogane.Data.RestApi.DTOs;
-using KuroganeHammer.Data.Core.Model.Characters;
-using System.Collections.Generic;
 using System.Web.Http;
+using System.Data.Entity;
 using System.Linq;
-using KuroganeHammer.Data.Core.Model.Stats;
+using System.Collections.Generic;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
@@ -11,9 +10,11 @@ namespace Kurogane.Data.RestApi.Controllers
     {
         private Sm4shContext db = new Sm4shContext();
 
+        [Route("api/{id}/character")]
+        [HttpGet]
         public IEnumerable<CharacterDTO> Get()
         {
-            return from chars in db.Characters.ToList()
+            return from chars in db.Characters
                    select new CharacterDTO()
                    {
                        FrameDataVersion = chars.FrameDataVersion,
@@ -27,7 +28,8 @@ namespace Kurogane.Data.RestApi.Controllers
         [HttpGet]
         public CharacterDTO Get(int id)
         {
-            Character character = Character.FromId(id);
+            var character = db.Characters.Find(id);
+
             return new CharacterDTO()
             {
                 FrameDataVersion = character.FrameDataVersion,
@@ -47,31 +49,20 @@ namespace Kurogane.Data.RestApi.Controllers
 
                 if (stat != null)
                 {
-                    stat.FrameDataVersion = value.FrameDataVersion;
-                    stat.FullUrl = value.FullUrl;
-                    stat.Name = value.Name;
-                    stat.OwnerId = value.OwnerId;
+                    db.Characters.Attach(stat);
+                    db.Entry(stat).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return Ok();
                 }
                 else
                 {
-                    stat = new CharacterStat()
-                    {
-                        FrameDataVersion = value.FrameDataVersion,
-                        FullUrl = value.FullUrl,
-                        Name = value.Name,
-                        OwnerId = value.OwnerId
-                    };
-
-                    db.Characters.Add(stat);
+                    return BadRequest("Unable to find value.");
                 }
-                db.SaveChanges();
-                return Ok();
             }
             else
             {
-                return InternalServerError();
+                return BadRequest("Parameter null.");
             }
-
         }
 
         [Route("api/{id}/character")]
@@ -84,26 +75,24 @@ namespace Kurogane.Data.RestApi.Controllers
 
                 if (stat != null)
                 {
-                    stat.FrameDataVersion = value.FrameDataVersion;
-                    stat.FullUrl = value.FullUrl;
-                    stat.Name = value.Name;
-                    stat.OwnerId = value.OwnerId;
-
+                    db.Characters.Add(stat);
+                    db.Entry(stat).State = EntityState.Added;
                     db.SaveChanges();
+                    return Ok();
                 }
                 else
                 {
-                    return InternalServerError();
+                    return BadRequest();
                 }
-               
-                return Ok();
             }
             else
             {
-                return InternalServerError();
+                return BadRequest();
             }
         }
 
+        [Route("api/{id}/character")]
+        [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
             var stat = db.Characters.Find(id);
@@ -111,11 +100,12 @@ namespace Kurogane.Data.RestApi.Controllers
             if (stat != null)
             {
                 db.Characters.Remove(stat);
+                db.Entry(stat).State = EntityState.Deleted;
                 return Ok();
             }
             else
             {
-                return InternalServerError();
+                return BadRequest();
             }
         }
     }
