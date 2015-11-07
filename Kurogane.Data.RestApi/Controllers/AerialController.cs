@@ -26,33 +26,12 @@ namespace Kurogane.Data.RestApi.Controllers
                        KnockbackGrowth = aerial.KnockbackGrowth,
                        LandingLag = aerial.LandingLag,
                        Name = aerial.Name,
+                       CharacterName = db.Characters.FirstOrDefault(s => s.OwnerId == aerial.OwnerId).Name,
                        OwnerId = aerial.OwnerId,
-                       RawName = aerial.RawName
+                       RawName = aerial.RawName,
+                       Id = aerial.Id
                    };
         }
-
-        //[Route("api/{id}/aerial")]
-        //[HttpGet]
-        //public AerialStatDTO Get(int id)
-        //{
-        //    var aerial = db.AerialStats.Find(id);
-
-        //    return new AerialStatDTO()
-        //    {
-        //        Angle = aerial.Angle,
-        //        AutoCancel = aerial.Autocancel,
-        //        BackKnockbackSetKnockback = aerial.BaseKnockbackSetKnockback,
-        //        BaseDamage = aerial.BaseDamage,
-        //        FirstActionableFrame = aerial.FirstActionableFrame,
-        //        HitboxActive = aerial.HitboxActive,
-        //        KnockbackGrowth = aerial.KnockbackGrowth,
-        //        LandingLag = aerial.LandingLag,
-        //        Name = aerial.Name,
-        //        OwnerId = aerial.OwnerId,
-        //        RawName = aerial.RawName,
-        //        Id = aerial.Id
-        //    };
-        //}
 
         [Route("api/characters/{id}/aerials")]
         [HttpGet]

@@ -1,53 +1,61 @@
 ﻿using Kurogane.Data.RestApi.DTOs;
-using KuroganeHammer.Data.Core.Model.Stats;
 using System.Collections.Generic;
 using System.Web.Http;
 using System.Linq;
+using System.Data.Entity;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
-    [RoutePrefix("api/Ground")]
     public class GroundController : ApiController
     {
         private Sm4shContext db = new Sm4shContext();
 
-        /// <summary>
-        /// Get all of the <see cref="GroundStatDTO"/> data for the character
-        /// with the passed in ID.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        [Route("api/ground")]
+        [HttpGet]
+        public IEnumerable<GroundStatDTO> Get()
+        {
+            return from ground in db.GroundStats
+                   select new GroundStatDTO()
+                   {
+                       Angle = ground.Angle,
+                       BaseDamage = ground.BaseDamage,
+                       BaseKnockbackSetKnockback = ground.BaseKnockbackSetKnockback,
+                       FirstActionableFrame = ground.FirstActionableFrame,
+                       HitboxActive = ground.HitBoxActive,
+                       KnockbackGrowth = ground.KnockbackGrowth,
+                       Name = ground.Name,
+                       CharacterName = db.Characters.FirstOrDefault(s => s.OwnerId == ground.OwnerId).Name,
+                       OwnerId = ground.OwnerId,
+                       RawName = ground.RawName,
+                       Id = ground.Id
+                   };
+        }
+
+        [Route("api/characters/{id}/ground")]
+        [HttpGet]
         public IEnumerable<GroundStatDTO> Get(int id)
         {
-            var character = (from c in db.Characters.ToList()
-                             where c.Id == id
-                             select c).FirstOrDefault();
-
-            IEnumerable<GroundStatDTO> stats = default(IEnumerable<GroundStatDTO>);
-
-            if (character != null)
-            {
-                stats = from stat in db.GroundStats.ToList()
-                        where stat.OwnerId == character.OwnerId
-                        select new GroundStatDTO()
-                        {
-                            Angle = stat.Angle,
-                            BaseDamage = stat.BaseDamage,
-                            BaseKnockbackSetKnockback = stat.BaseKnockbackSetKnockback,
-                            FirstActionableFrame = stat.FirstActionableFrame,
-                            HitboxActive = stat.HitBoxActive,
-                            KnockbackGrowth = stat.KnockbackGrowth,
-                            Name = stat.Name,
-                            OwnerId = stat.OwnerId,
-                            RawName = stat.RawName,
-                        };
-            }
-
-            return stats;
+            return from ground in db.GroundStats
+                   where ground.OwnerId == id
+                   select new GroundStatDTO()
+                   {
+                       Angle = ground.Angle,
+                       BaseDamage = ground.BaseDamage,
+                       BaseKnockbackSetKnockback = ground.BaseKnockbackSetKnockback,
+                       FirstActionableFrame = ground.FirstActionableFrame,
+                       HitboxActive = ground.HitBoxActive,
+                       KnockbackGrowth = ground.KnockbackGrowth,
+                       Name = ground.Name,
+                       CharacterName = db.Characters.FirstOrDefault(s => s.OwnerId == ground.OwnerId).Name,
+                       OwnerId = ground.OwnerId,
+                       RawName = ground.RawName,
+                   };
         }
 
-        [Route("")]
-        public IHttpActionResult Post([FromBody]GroundStat value)
+
+        [Route("api/{id}/ground")]
+        [HttpPost]
+        public IHttpActionResult Post([FromBody]GroundStatDTO value)
         {
             if (value != null)
             {
@@ -55,45 +63,51 @@ namespace Kurogane.Data.RestApi.Controllers
 
                 if (stat != null)
                 {
-                    stat = value;
+                    db.GroundStats.Attach(stat);
+                    db.Entry(stat).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return Ok();
                 }
                 else
                 {
-                    db.GroundStats.Add(value);
+                    return BadRequest("Unable to find value.");
                 }
-                db.SaveChanges();
-                return Ok();
             }
             else
             {
-                return InternalServerError();
+                return BadRequest("Parameter null.");
             }
-
         }
-        [Route("{id}")]
-        public IHttpActionResult Patch(int id, [FromBody]GroundStat value)
+
+
+        [Route("api/{id}/ground")]
+        [HttpPut]
+        public IHttpActionResult Put(int id, [FromBody]GroundStatDTO value)
         {
             if (value != null)
             {
-                var stat = db.GroundStats.Find(value.Id);
+                var stat = db.GroundStats.Find(id);
 
                 if (stat != null)
                 {
-                    stat = value;
+                    db.GroundStats.Add(stat);
+                    db.Entry(stat).State = EntityState.Added;
+                    db.SaveChanges();
+                    return Ok();
                 }
                 else
                 {
-                    db.GroundStats.Add(value);
+                    return BadRequest();
                 }
-                db.SaveChanges();
-                return Ok();
             }
             else
             {
-                return InternalServerError();
+                return BadRequest();
             }
         }
 
+        [Route("api/{id}/ground")]
+        [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
             var stat = db.GroundStats.Find(id);
@@ -101,11 +115,12 @@ namespace Kurogane.Data.RestApi.Controllers
             if (stat != null)
             {
                 db.GroundStats.Remove(stat);
+                db.Entry(stat).State = EntityState.Deleted;
                 return Ok();
             }
             else
             {
-                return InternalServerError();
+                return BadRequest();
             }
         }
     }

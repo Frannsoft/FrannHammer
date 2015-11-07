@@ -1,73 +1,79 @@
 ﻿using Kurogane.Data.RestApi.DTOs;
-using KuroganeHammer.Data.Core.Model.Stats;
 using System.Collections.Generic;
 using System.Web.Http;
 using System.Linq;
+using System.Data.Entity;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
-    [RoutePrefix("api/Movement")]
     public class MovementController : ApiController
     {
         private Sm4shContext db = new Sm4shContext();
 
-        /// <summary>
-        /// Takes in the character ID and returns all of the found 
-        /// character's <see cref="MovementStatDTO"/> data.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public IEnumerable<MovementStatDTO> Get(int id)
+        [Route("api/movement")]
+        [HttpGet]
+        public IEnumerable<MovementStatDTO> Get()
         {
-            var character = (from c in db.Characters.ToList()
-                             where c.Id == id
-                             select c).FirstOrDefault();
-
-            IEnumerable<MovementStatDTO> stats = default(IEnumerable<MovementStatDTO>);
-
-            if (character != null)
-            {
-                stats = from stat in db.MovementStats.ToList()
-                        where stat.OwnerId == character.OwnerId
-                        select new MovementStatDTO()
-                        {
-                            Name = stat.Name,
-                            OwnerId = stat.OwnerId,
-                            Rank = stat.Rank,
-                            RawName = stat.RawName,
-                            Value = stat.Value
-                        };
-            }
-
-            return stats;
+            return from movement in db.MovementStats
+                   select new MovementStatDTO()
+                   {
+                       Name = movement.Name,
+                       OwnerId = movement.OwnerId,
+                       Rank = movement.Rank,
+                       RawName = movement.RawName,
+                       Value = movement.Value,
+                       CharacterName = db.Characters.FirstOrDefault(s => s.OwnerId == movement.OwnerId).Name,
+                       Id = movement.Id
+                   };
         }
 
-        [Route("")]
-        public IHttpActionResult Post([FromBody]MovementStat value)
+        [Route("api/characters/{id}/movement")]
+        [HttpGet]
+        public IEnumerable<MovementStatDTO> Get(int id)
+        {
+            return from movement in db.MovementStats
+                   where movement.OwnerId == id
+                   select new MovementStatDTO()
+                   {
+                       Name = movement.Name,
+                       OwnerId = movement.OwnerId,
+                       Rank = movement.Rank,
+                       RawName = movement.RawName,
+                       Value = movement.Value,
+                       CharacterName = db.Characters.FirstOrDefault(s => s.OwnerId == movement.OwnerId).Name,
+                       Id = movement.Id
+                   };
+        }
+
+        [Route("api/{id}/movement")]
+        [HttpPost]
+        public IHttpActionResult Post([FromBody]MovementStatDTO value)
         {
             if (value != null)
             {
                 var stat = db.MovementStats.Find(value.Id);
 
-                if(stat != null)
+                if (stat != null)
                 {
-                    stat = value;
+                    db.MovementStats.Attach(stat);
+                    db.Entry(stat).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return Ok();
                 }
                 else
                 {
-                    db.MovementStats.Add(value);
+                    return BadRequest("Unable to find value.");
                 }
-                db.SaveChanges();
-                return Ok();
             }
             else
             {
-                return InternalServerError();
+                return BadRequest("Parameter null.");
             }
         }
 
-        [Route("{id}")]
-        public IHttpActionResult Patch(int id, [FromBody]MovementStat value)
+        [Route("api/{id}/movement")]
+        [HttpPut]
+        public IHttpActionResult Put(int id, [FromBody]MovementStatDTO value)
         {
             if (value != null)
             {
@@ -75,21 +81,24 @@ namespace Kurogane.Data.RestApi.Controllers
 
                 if (stat != null)
                 {
-                    stat = value;
+                    db.MovementStats.Add(stat);
+                    db.Entry(stat).State = EntityState.Added;
+                    db.SaveChanges();
+                    return Ok();
                 }
                 else
                 {
-                    db.MovementStats.Add(value);
+                    return BadRequest();
                 }
-                db.SaveChanges();
-                return Ok();
             }
             else
             {
-                return InternalServerError();
+                return BadRequest();
             }
         }
 
+        [Route("api/{id}/movement")]
+        [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
             var stat = db.MovementStats.Find(id);
@@ -97,11 +106,12 @@ namespace Kurogane.Data.RestApi.Controllers
             if (stat != null)
             {
                 db.MovementStats.Remove(stat);
+                db.Entry(stat).State = EntityState.Deleted;
                 return Ok();
             }
             else
             {
-                return InternalServerError();
+                return BadRequest();
             }
         }
     }

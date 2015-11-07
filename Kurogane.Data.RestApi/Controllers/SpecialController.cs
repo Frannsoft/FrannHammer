@@ -1,53 +1,62 @@
 ﻿using Kurogane.Data.RestApi.DTOs;
 using KuroganeHammer.Data.Core.Model.Stats;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Http;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
-    [RoutePrefix("api/Special")]
     public class SpecialController : ApiController
     {
         private Sm4shContext db = new Sm4shContext();
 
-        /// <summary>
-        /// Get all of the <see cref="SpecialStatDTO"/> data for the character
-        /// with the passed in ID.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public IEnumerable<SpecialStatDTO> Get(int id)
+        [Route("api/special")]
+        [HttpGet]
+        public IEnumerable<SpecialStatDTO> Get()
         {
-            var character = (from c in db.Characters.ToList()
-                             where c.Id == id
-                             select c).FirstOrDefault();
-
-            IEnumerable<SpecialStatDTO> stats = default(IEnumerable<SpecialStatDTO>);
-
-            if (character != null)
-            {
-                stats = from stat in db.SpecialStats.ToList()
-                        where stat.OwnerId == character.OwnerId
-                        select new SpecialStatDTO()
-                        {
-                            Angle = stat.Angle,
-                            BaseDamage = stat.BaseDamage,
-                            BaseKnockbackSetKnockback = stat.BaseKnockbackSetKnockback,
-                            FirstActionableFrame = stat.FirstActionableFrame,
-                            HitboxActive = stat.HitboxActive,
-                            KnockbackGrowth = stat.KnockbackGrowth,
-                            Name = stat.Name,
-                            OwnerId = stat.OwnerId,
-                            RawName = stat.RawName
-                        };
-            }
-
-            return stats;
+            return from special in db.SpecialStats
+                   select new SpecialStatDTO()
+                   {
+                       Angle = special.Angle,
+                       BaseDamage = special.BaseDamage,
+                       BaseKnockbackSetKnockback = special.BaseKnockbackSetKnockback,
+                       FirstActionableFrame = special.FirstActionableFrame,
+                       HitboxActive = special.HitboxActive,
+                       KnockbackGrowth = special.KnockbackGrowth,
+                       Name = special.Name,
+                       CharacterName = db.Characters.FirstOrDefault(s => s.OwnerId == special.OwnerId).Name,
+                       OwnerId = special.OwnerId,
+                       RawName = special.RawName,
+                       Id = special.Id
+                   };
         }
 
-        [Route("")]
-        public IHttpActionResult Post([FromBody]SpecialStat value)
+        [Route("api/characters/{id}/special")]
+        [HttpGet]
+        public IEnumerable<SpecialStatDTO> Get(int id)
+        {
+            return from special in db.SpecialStats
+                   where special.OwnerId == id
+                   select new SpecialStatDTO()
+                   {
+                       Angle = special.Angle,
+                       BaseDamage = special.BaseDamage,
+                       BaseKnockbackSetKnockback = special.BaseKnockbackSetKnockback,
+                       FirstActionableFrame = special.FirstActionableFrame,
+                       HitboxActive = special.HitboxActive,
+                       KnockbackGrowth = special.KnockbackGrowth,
+                       Name = special.Name,
+                       CharacterName = db.Characters.FirstOrDefault(s => s.OwnerId == special.OwnerId).Name,
+                       OwnerId = special.OwnerId,
+                       RawName = special.RawName,
+                       Id = special.Id
+                   };
+        }
+
+        [Route("api/{id}/special")]
+        [HttpPost]
+        public IHttpActionResult Post([FromBody]SpecialStatDTO value)
         {
             if (value != null)
             {
@@ -55,23 +64,25 @@ namespace Kurogane.Data.RestApi.Controllers
 
                 if (stat != null)
                 {
-                    stat = value;
+                    db.SpecialStats.Attach(stat);
+                    db.Entry(stat).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return Ok();
                 }
                 else
                 {
-                    db.SpecialStats.Add(value);
+                    return BadRequest("Unable to find value.");
                 }
-                db.SaveChanges();
-                return Ok();
             }
             else
             {
-                return InternalServerError();
+                return BadRequest("Parameter null.");
             }
         }
 
-        [Route("{id}")]
-        public IHttpActionResult Patch(int id, [FromBody]SpecialStat value)
+        [Route("api/{id}/special")]
+        [HttpPut]
+        public IHttpActionResult Put(int id, [FromBody]SpecialStatDTO value)
         {
             if (value != null)
             {
@@ -79,21 +90,24 @@ namespace Kurogane.Data.RestApi.Controllers
 
                 if (stat != null)
                 {
-                    stat = value;
+                    db.SpecialStats.Add(stat);
+                    db.Entry(stat).State = EntityState.Added;
+                    db.SaveChanges();
+                    return Ok();
                 }
                 else
                 {
-                    db.SpecialStats.Add(value);
+                    return BadRequest();
                 }
-                db.SaveChanges();
-                return Ok();
             }
             else
             {
-                return InternalServerError();
+                return BadRequest();
             }
         }
 
+        [Route("api/{id}/special")]
+        [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
             var stat = db.SpecialStats.Find(id);
@@ -101,11 +115,12 @@ namespace Kurogane.Data.RestApi.Controllers
             if (stat != null)
             {
                 db.SpecialStats.Remove(stat);
+                db.Entry(stat).State = EntityState.Deleted;
                 return Ok();
             }
             else
             {
-                return InternalServerError();
+                return BadRequest();
             }
         }
     }
