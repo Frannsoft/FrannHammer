@@ -4,7 +4,7 @@ namespace KuroganeHammer.Data.Core.Web
     internal class StatConstants
     {
         #region xpath
-
+        internal const string XPATH_IMAGE_URL = @"html/body/div[1]/div/img";
         internal const string XPATH_FRAME_DATA_VERSION = @"/html/body/div[1]/div/h1|/html/body/div/div/*/h1";
         internal const string XPATH_TABLE_NODE_MOVEMENT_STATS = @"(//*/table[@id='AutoNumber1'])[1]";
         internal const string XPATH_TABLE_NODE_GROUND_STATS = @"(//*/table[@id='AutoNumber1'])[2]";

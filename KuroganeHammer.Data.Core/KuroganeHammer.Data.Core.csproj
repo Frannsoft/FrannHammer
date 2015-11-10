@@ -68,6 +68,7 @@
     <Compile Include="Model\Stats\GroundStat.cs" />
     <Compile Include="Model\Stats\MovementMoves.cs" />
     <Compile Include="Model\Stats\MovementStat.cs" />
+    <Compile Include="Model\Stats\MoveStat.cs" />
     <Compile Include="Model\Stats\Rank.cs" />
     <Compile Include="Model\Stats\SpecialMoves.cs" />
     <Compile Include="Model\Stats\SpecialStat.cs" />

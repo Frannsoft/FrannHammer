@@ -5,9 +5,11 @@ using Kurogane.Data.RestApi.DTOs;
 using System.Data.Entity;
 using KuroganeHammer.Data.Core.Model.Stats;
 using KuroganeHammer.Data.Core;
+using System;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
+    [Obsolete]
     public class AerialController : ApiController
     {
         private Sm4shContext db = new Sm4shContext();

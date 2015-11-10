@@ -5,9 +5,11 @@ using System.Linq;
 using System.Data.Entity;
 using KuroganeHammer.Data.Core.Model.Stats;
 using KuroganeHammer.Data.Core;
+using System;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
+    [Obsolete]
     public class GroundController : ApiController
     {
         private Sm4shContext db = new Sm4shContext();

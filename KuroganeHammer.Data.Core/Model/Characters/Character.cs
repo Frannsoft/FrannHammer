@@ -21,12 +21,17 @@ namespace KuroganeHammer.Data.Core.Model.Characters
         }
 
         [JsonProperty]
+        public string ImageUrl { get; private set; }
+
+        [JsonProperty]
         public string Name { get; private set; }
 
         [JsonProperty]
         public int OwnerId { get; set; }
 
+        public string Description { get; private set; }
         public string FrameDataVersion { get; private set; }
+        public string Style { get; private set; }
 
         [JsonProperty]
         public Dictionary<string, Stat> FrameData { get; private set; }
@@ -108,6 +113,7 @@ namespace KuroganeHammer.Data.Core.Model.Characters
         private void GetData()
         {
             FrameDataVersion = page.GetVersion();
+            ImageUrl = page.GetImageUrl();
             FrameData = page.GetStats();
         }
     }

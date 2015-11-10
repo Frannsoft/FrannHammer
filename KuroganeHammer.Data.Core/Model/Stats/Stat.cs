@@ -12,17 +12,13 @@ namespace KuroganeHammer.Data.Core.Model.Stats
         [Required]
         public int OwnerId { get; set; }
 
-        [Required]
-        public string RawName { get; set; }
-
         [Key]
         public int Id { get; set; }
 
-        public Stat(string name, int ownerId, string rawName)
+        public Stat(string name, int ownerId)
         {
             Name = name;
             OwnerId = ownerId;
-            RawName = rawName.Trim();
         }
 
         public Stat()

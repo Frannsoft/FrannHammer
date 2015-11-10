@@ -10,8 +10,8 @@ namespace KuroganeHammer.Data.Core.Model.Stats
         public string Rank { get; set; }
         public string Value { get; set; }
 
-        public MovementStat(string name, int ownerId, string rawName, string value, string rank = "")
-            : base(name, ownerId, rawName)
+        public MovementStat(string name, int ownerId, string value, string rank = "")
+            : base(name, ownerId)
         {
             Value = value;
             Rank = rank;

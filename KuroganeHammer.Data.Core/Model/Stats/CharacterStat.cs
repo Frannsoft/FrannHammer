@@ -3,10 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace KuroganeHammer.Data.Core.Model.Stats
 {
-    [Table("Roster")]
+    [Table("Characters")]
     public class CharacterStat
     {
-        public string FullUrl { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -17,6 +16,9 @@ namespace KuroganeHammer.Data.Core.Model.Stats
         [Key]
         public int Id { get; set; }
 
-        public string FrameDataVersion { get; set; }
+        public string Style { get; set; }
+        public string ImageUrl { get; set; }
+        public string Description { get; set; }
+
     }
 }

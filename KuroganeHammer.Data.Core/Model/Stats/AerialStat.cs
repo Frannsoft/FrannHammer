@@ -21,9 +21,9 @@ namespace KuroganeHammer.Data.Core.Model.Stats
         public string LandingLag { get; set; }
         public string Autocancel { get; set; }
 
-        public AerialStat(string name, int ownerId, string rawName, string hitboxActive, string firstActionableFrame, string baseDamage,
+        public AerialStat(string name, int ownerId, string hitboxActive, string firstActionableFrame, string baseDamage,
             string angle, string baseKnockbackSetKnockback, string knockbackGrowth, string landingLag, string autoCancel)
-            : base(name, ownerId, rawName)
+            : base(name, ownerId)
         {
             HitboxActive = hitboxActive;
             FirstActionableFrame = firstActionableFrame;

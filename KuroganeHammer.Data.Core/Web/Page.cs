@@ -36,6 +36,12 @@ namespace KuroganeHammer.Data.Core.Web
             return version; //clean it up
         }
 
+        public string GetImageUrl()
+        {
+            HtmlNode node = doc.DocumentNode.SelectSingleNode(StatConstants.XPATH_IMAGE_URL);
+            return node.Attributes["src"].Value;
+        }
+
         public Dictionary<string, Stat> GetStats()
         {
             Dictionary<string, Stat> items = new Dictionary<string, Stat>();
@@ -82,27 +88,6 @@ namespace KuroganeHammer.Data.Core.Web
                 }
             }
         }
-
-        //internal Dictionary<string, SpecialStat> GetSpecialStats()
-        //{
-        //    Dictionary<string, SpecialStat> items = new Dictionary<string, SpecialStat>();
-
-        //    foreach (SpecialStat stat in GetStats<SpecialStat>(StatConstants.XPATH_TABLE_NODE_SPECIAL_STATS))
-        //    {
-        //        try
-        //        {
-        //            items.Add(stat.Name, stat);
-        //        }
-        //        catch (ArgumentException)
-        //        {
-        //            using (TextWriter writer = new StreamWriter(@"E:\char\errordump.dat", true))
-        //            {
-        //                writer.WriteLine(Url + " ---- " + stat.Name);
-        //            }
-        //        }
-        //    }
-        //    return items;
-        //}
 
         private HtmlNodeCollection GetRows(string xpathToTable)
         {
@@ -237,7 +222,7 @@ namespace KuroganeHammer.Data.Core.Web
                     value = rawValueText;
                 }
 
-                stat = new MovementStat(name, ownerId, rawNameCellText, value, rank);
+                stat = new MovementStat(name, ownerId, value, rank);
             }
 
             return stat;
@@ -258,7 +243,7 @@ namespace KuroganeHammer.Data.Core.Web
                 string bkbwbkb = cells[5].InnerText;
                 string kbg = cells[6].InnerText;
 
-                stat = new GroundStat(name, ownerId, rawName, hitboxActive, faf, basedmg, angle, bkbwbkb, kbg);
+                stat = new GroundStat(name, ownerId, hitboxActive, faf, basedmg, angle, bkbwbkb, kbg);
             }
 
             return stat;
@@ -281,7 +266,7 @@ namespace KuroganeHammer.Data.Core.Web
                 string landingLag = cells[7].InnerText;
                 string autocancel = cells[8].InnerText;
 
-                stat = new AerialStat(name, ownerId, rawName, hitboxActive, faf, basedmg, angle, bkbwbkb,
+                stat = new AerialStat(name, ownerId, hitboxActive, faf, basedmg, angle, bkbwbkb,
                     kbg, landingLag, autocancel);
             }
 
@@ -303,7 +288,7 @@ namespace KuroganeHammer.Data.Core.Web
                 string bkbwbkb = cells[5].InnerText;
                 string kbg = cells[6].InnerText;
 
-                stat = new SpecialStat(name, ownerId, rawName, hitboxActive, faf, basedmg, angle, bkbwbkb,
+                stat = new SpecialStat(name, ownerId, hitboxActive, faf, basedmg, angle, bkbwbkb,
                     kbg);
             }
 
