@@ -1,6 +1,7 @@
 ﻿using Kurogane.Data.RestApi.DTOs;
 using KuroganeHammer.Data.Core;
 using KuroganeHammer.Data.Core.Model.Stats;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Web.Http;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
+    [Obsolete]
     public class SpecialController : ApiController
     {
         private Sm4shContext db = new Sm4shContext();

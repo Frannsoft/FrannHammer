@@ -11,6 +11,7 @@ namespace Kurogane.Data.RestApi
         public DbSet<AerialStat> AerialStats { get; set; }
         public DbSet<GroundStat> GroundStats { get; set; }
         public DbSet<SpecialStat> SpecialStats { get; set; }
+        public DbSet<MoveStat> Moves { get; set; }
 
         public Sm4shContext()
             : base(ConfigurationManager.ConnectionStrings["AuthContext"].ConnectionString)

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Collections.Generic;
 using KuroganeHammer.Data.Core.Model.Stats;
 using KuroganeHammer.Data.Core;
+using System;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
@@ -12,23 +13,23 @@ namespace Kurogane.Data.RestApi.Controllers
     {
         private Sm4shContext db = new Sm4shContext();
 
-        [Route("api/{id}/character")]
+        [Route("api/characters")]
         [HttpGet]
-        public IEnumerable<CharacterDTO> Get()
+        public IEnumerable<CharacterDTO> GetRoster()
         {
             return from chars in db.Characters
                    select EntityBusinessConverter<CharacterStat>.ConvertTo<CharacterDTO>(chars);
         }
 
-        [Route("api/{id}/character")]
+        [Route("api/characters/{id}")]
         [HttpGet]
-        public CharacterDTO Get(int id)
+        public CharacterDTO GetCharacter(int id)
         {
             if (id > 0)
             {
-                var character = db.Characters.Find(id);
+                var characters = db.Characters.Find(id);
 
-                return EntityBusinessConverter<CharacterStat>.ConvertTo<CharacterDTO>(character);
+                return EntityBusinessConverter<CharacterStat>.ConvertTo<CharacterDTO>(characters);
             }
             else
             {
@@ -36,24 +37,51 @@ namespace Kurogane.Data.RestApi.Controllers
             }
         }
 
-        [Route("api/{id}/character")]
+        [Route("api/characters/{id}/movement")]
+        [HttpGet]
+        public IEnumerable<MovementStatDTO> GetMovementForRoster(int id)
+        {
+            return from movement in db.MovementStats.ToList()
+                   where movement.OwnerId == id
+                   select EntityBusinessConverter<MovementStat>.ConvertTo<MovementStatDTO>(movement);
+        }
+
+        [Route("api/characters/{id}/moves")]
+        [HttpGet]
+        public IEnumerable<MoveDTO> GetMoves(int id)
+        {
+            return from move in db.Moves.ToList()
+                   where move.OwnerId == id
+                   select EntityBusinessConverter<MoveStat>.ConvertTo<MoveDTO>(move);
+        }
+
+        [Route("api/characters{id}/moves/{type}")]
+        [HttpGet]
+        public IEnumerable<MoveDTO> GetMoveForCharacterOfType(int id, MoveType type)
+        {
+            return from movement in db.Moves.ToList()
+                   where movement.OwnerId == id &&
+                   movement.Type == type
+                   select EntityBusinessConverter<MoveStat>.ConvertTo<MoveDTO>(movement);
+        }
+
+        //[Route("api/characters/{id}")]
         [HttpPost]
         public IHttpActionResult Post([FromBody]CharacterDTO value)
         {
             if (value != null)
             {
-                var stat = db.Characters.Find(value.Id);
-
+                CharacterStat stat = EntityBusinessConverter<CharacterDTO>.ConvertTo<CharacterStat>(value);
                 if (stat != null)
                 {
                     db.Characters.Attach(stat);
-                    db.Entry(stat).State = EntityState.Modified;
+                    db.Entry(stat).State = EntityState.Added;
                     db.SaveChanges();
                     return Ok();
                 }
                 else
                 {
-                    return BadRequest("Unable to find value.");
+                    return BadRequest("Unable to create backend object.");
                 }
             }
             else
@@ -62,7 +90,7 @@ namespace Kurogane.Data.RestApi.Controllers
             }
         }
 
-        [Route("api/{id}/character")]
+        //[Route("api/characters/{id}")]
         [HttpPut]
         public IHttpActionResult Put(int id, [FromBody]CharacterDTO value)
         {
@@ -88,7 +116,7 @@ namespace Kurogane.Data.RestApi.Controllers
             }
         }
 
-        [Route("api/{id}/character")]
+        //[Route("api/characters/{id}")]
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {

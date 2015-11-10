@@ -139,11 +139,21 @@
     <Compile Include="Controllers\AerialController.cs" />
     <Compile Include="Controllers\CharacterController.cs" />
     <Compile Include="Controllers\GroundController.cs" />
+    <Compile Include="Controllers\MoveController.cs" />
     <Compile Include="Controllers\SpecialController.cs" />
     <Compile Include="DTOs\AerialStatDTO.cs" />
     <Compile Include="DTOs\BaseDTO.cs" />
     <Compile Include="DTOs\GroundStatDTO.cs" />
+    <Compile Include="DTOs\MoveDTO.cs" />
     <Compile Include="DTOs\SpecialStatDTO.cs" />
+    <Compile Include="Migrations\201511100306017_Refactoreddb.cs" />
+    <Compile Include="Migrations\201511100306017_Refactoreddb.Designer.cs">
+      <DependentUpon>201511100306017_Refactoreddb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511100331126_refactoragain.cs" />
+    <Compile Include="Migrations\201511100331126_refactoragain.Designer.cs">
+      <DependentUpon>201511100331126_refactoragain.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Sm4shContext.cs" />
     <Compile Include="Controllers\MovementController.cs" />
@@ -175,6 +185,14 @@
       <Project>{2904d4e7-8989-46bd-ac0a-b4356f190a15}</Project>
       <Name>KuroganeHammer.Data.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201511100306017_Refactoreddb.resx">
+      <DependentUpon>201511100306017_Refactoreddb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511100331126_refactoragain.resx">
+      <DependentUpon>201511100331126_refactoragain.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
