@@ -5,25 +5,20 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KuroganeHammer.Data.Core", "KuroganeHammer.Data.Core\KuroganeHammer.Data.Core.csproj", "{2904D4E7-8989-46BD-AC0A-B4356F190A15}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KuroganeHammer.Data.Core.UnitTests", "KuroganeHammer.Data.Core.UnitTests\KuroganeHammer.Data.Core.UnitTests.csproj", "{AB27E79F-DF49-4D41-A6B0-8DA1CC4188D1}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kurogane.Data.RestApi", "Kurogane.Data.RestApi\Kurogane.Data.RestApi.csproj", "{E1B5E9BA-8808-4B98-B6AA-385A7438ABD3}"
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 4
+		SccNumberOfProjects = 3
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://frannsoftdev.visualstudio.com/defaultcollection
 		SccLocalPath0 = .
 		SccProjectUniqueName1 = KuroganeHammer.Data.Core\\KuroganeHammer.Data.Core.csproj
 		SccProjectName1 = KuroganeHammer.Data.Core
 		SccLocalPath1 = KuroganeHammer.Data.Core
-		SccProjectUniqueName2 = KuroganeHammer.Data.Core.UnitTests\\KuroganeHammer.Data.Core.UnitTests.csproj
-		SccProjectName2 = KuroganeHammer.Data.Core.UnitTests
-		SccLocalPath2 = KuroganeHammer.Data.Core.UnitTests
-		SccProjectUniqueName3 = Kurogane.Data.RestApi\\Kurogane.Data.RestApi.csproj
-		SccProjectName3 = Kurogane.Data.RestApi
-		SccLocalPath3 = Kurogane.Data.RestApi
+		SccProjectUniqueName2 = Kurogane.Data.RestApi\\Kurogane.Data.RestApi.csproj
+		SccProjectName2 = Kurogane.Data.RestApi
+		SccLocalPath2 = Kurogane.Data.RestApi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,10 +29,6 @@ Global
 		{2904D4E7-8989-46BD-AC0A-B4356F190A15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2904D4E7-8989-46BD-AC0A-B4356F190A15}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2904D4E7-8989-46BD-AC0A-B4356F190A15}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AB27E79F-DF49-4D41-A6B0-8DA1CC4188D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AB27E79F-DF49-4D41-A6B0-8DA1CC4188D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AB27E79F-DF49-4D41-A6B0-8DA1CC4188D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AB27E79F-DF49-4D41-A6B0-8DA1CC4188D1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E1B5E9BA-8808-4B98-B6AA-385A7438ABD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E1B5E9BA-8808-4B98-B6AA-385A7438ABD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1B5E9BA-8808-4B98-B6AA-385A7438ABD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
