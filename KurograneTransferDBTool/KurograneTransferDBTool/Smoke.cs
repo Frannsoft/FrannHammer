@@ -1,19 +1,24 @@
 ﻿using KuroganeHammer.Data.Core.Model.Characters;
 using NUnit.Framework;
-using System.Net.Http;
 using System.Threading.Tasks;
-using System.Linq;
 using KuroganeHammer.Data.Core.Model.Stats;
 using System.Net;
-using System;
-using Kurogane.Data.RestApi.DTOs;
-using Newtonsoft.Json;
+using KuroganeHammer.Data.Core.Web;
+using System.Collections.Generic;
 
 namespace KurograneTransferDBTool
 {
     public class Smoke : BaseTest
     {
+        [Test]
+        public void GetThumbnailDataFromKurogane()
+        {
+            List<Thumbnail> images = new HomePage("http://kuroganehammer.com/Smash4/")
+            .GetThumbnailData();
 
+            Assert.IsTrue(images.Count == 53);
+
+        }
 
         [Test]
         public async Task GetCharacter()
@@ -58,7 +63,7 @@ namespace KurograneTransferDBTool
         }
 
 
-      
-       
+
+
     }
 }
