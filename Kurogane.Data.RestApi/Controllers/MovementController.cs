@@ -28,17 +28,18 @@ namespace Kurogane.Data.RestApi.Controllers
             return EntityBusinessConverter<MovementStat>.ConvertTo<MovementStatDTO>(movement);
         }
 
+        [Route("api/movement")]
         [HttpPost]
         public IHttpActionResult Post([FromBody]MovementStatDTO value)
         {
             if (value != null)
             {
-                var stat = db.MovementStats.Find(value.Id);
+                var stat = EntityBusinessConverter<MovementStatDTO>.ConvertTo<MovementStat>(value);
 
                 if (stat != null)
                 {
                     db.MovementStats.Attach(stat);
-                    db.Entry(stat).State = EntityState.Modified;
+                    db.Entry(stat).State = EntityState.Added;
                     db.SaveChanges();
                     return Ok();
                 }

@@ -8,9 +8,6 @@ namespace Kurogane.Data.RestApi
     {
         public DbSet<CharacterStat> Characters { get; set; }
         public DbSet<MovementStat> MovementStats { get; set; }
-        public DbSet<AerialStat> AerialStats { get; set; }
-        public DbSet<GroundStat> GroundStats { get; set; }
-        public DbSet<SpecialStat> SpecialStats { get; set; }
         public DbSet<MoveStat> Moves { get; set; }
 
         public Sm4shContext()
