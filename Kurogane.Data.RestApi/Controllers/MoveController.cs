@@ -51,7 +51,7 @@ namespace Kurogane.Data.RestApi.Controllers
             if (value != null)
             {
                 MoveStat stat = EntityBusinessConverter<MoveDTO>.ConvertTo<MoveStat>(value);
-                if(stat != null)
+                if (stat != null)
                 {
                     db.Moves.Attach(stat);
                     db.Entry(stat).State = EntityState.Added;

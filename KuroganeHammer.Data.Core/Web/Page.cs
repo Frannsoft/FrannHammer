@@ -204,25 +204,18 @@ namespace KuroganeHammer.Data.Core.Web
 
                 string rawValueText = valueCell.InnerText;
                 string value = string.Empty;
-                string rank = string.Empty;
 
                 if (rawValueText.Contains("["))
                 {
                     string[] checkRank = valueCell.InnerText.Split('[');
                     value = checkRank[0];
-                    rank = string.Empty;
-                    if (checkRank.Length > 1)
-                    {
-                        rank = checkRank[1]
-                            .Replace("]", string.Empty);
-                    }
                 }
                 else
                 {
                     value = rawValueText;
                 }
 
-                stat = new MovementStat(name, ownerId, value, rank);
+                stat = new MovementStat(name, ownerId, value);
             }
 
             return stat;
