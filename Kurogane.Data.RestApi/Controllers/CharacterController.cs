@@ -82,7 +82,7 @@ namespace Kurogane.Data.RestApi.Controllers
                 CharacterStat stat = EntityBusinessConverter<CharacterDTO>.ConvertTo<CharacterStat>(value);
                 if (stat != null)
                 {
-                    db.Characters.Attach(stat);
+                    db.Characters.Add(stat);
                     db.Entry(stat).State = EntityState.Added;
                     db.SaveChanges();
                     return Ok();
@@ -98,7 +98,7 @@ namespace Kurogane.Data.RestApi.Controllers
             }
         }
 
-        //[Route("api/characters/{id}")]
+        [Route("api/characters/{id}")]
         [HttpPut]
         public IHttpActionResult Put(int id, [FromBody]CharacterDTO value)
         {
@@ -106,10 +106,16 @@ namespace Kurogane.Data.RestApi.Controllers
             {
                 var stat = db.Characters.Find(id);
 
+                stat.Description = value.Description;
+                stat.MainImageUrl = value.MainImageUrl;
+                stat.ThumbnailUrl = value.ThumbnailUrl;
+                stat.Name = value.Name;
+                stat.OwnerId = value.OwnerId;
+                stat.Style = value.Style;
                 if (stat != null)
                 {
-                    db.Characters.Add(stat);
-                    db.Entry(stat).State = EntityState.Added;
+                    db.Characters.Attach(stat);
+                    db.Entry(stat).State = EntityState.Modified;
                     db.SaveChanges();
                     return Ok();
                 }

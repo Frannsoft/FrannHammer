@@ -17,7 +17,8 @@ namespace KuroganeHammer.Data.Core.Model.Stats
         public int Id { get; set; }
 
         public string Style { get; set; }
-        public string ImageUrl { get; set; }
+        public string MainImageUrl { get; set; }
+        public string ThumbnailUrl { get; set; }
         public string Description { get; set; }
 
     }

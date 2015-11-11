@@ -80,7 +80,7 @@ namespace KuroganeHammer.Data.Core.Model.Characters
         JIGGLYPUFF = 16,
 
         [Description("King%20Dedede")]
-        DEDEDE = 17,
+        KINGDEDEDE = 17,
 
         [Description("Link")]
         LINK = 18,
@@ -119,7 +119,7 @@ namespace KuroganeHammer.Data.Core.Model.Characters
         MIISWORDFIGHTER = 29,
 
         [Description("Game%20And%20Watch")]
-        GAMEANDWATCH = 30,
+        MRGAMEWATCH = 30,
 
         [Description("Ness")]
         NESS = 31,
@@ -146,7 +146,7 @@ namespace KuroganeHammer.Data.Core.Model.Characters
         ROBIN = 38,
 
         [Description("Rosalina%20And%20Luma")]
-        ROSALINAANDLUMA = 39,
+        ROSALINALUMA = 39,
 
         [Description("Roy")]
         ROY = 40,
@@ -176,7 +176,7 @@ namespace KuroganeHammer.Data.Core.Model.Characters
         WARIO = 48,
 
         [Description("Wii%20Fit%20Trainer")]
-        WIIFITRAINER = 49,
+        WIIFITTRAINER = 49,
 
         [Description("Yoshi")]
         YOSHI = 50,
