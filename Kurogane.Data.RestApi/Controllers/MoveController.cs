@@ -16,11 +16,11 @@ namespace Kurogane.Data.RestApi.Controllers
         [HttpGet]
         public IEnumerable<MoveDTO> GetMoves()
         {
-            return from move in db.Moves
+            return from move in db.Moves.ToList()
                    select EntityBusinessConverter<MoveStat>.ConvertTo<MoveDTO>(move);
         }
 
-        [Route("api/moves/{type}")]
+        [Route("api/movesoftype/{type}")]
         [HttpGet]
         public IEnumerable<MoveDTO> GetMovesOfType(MoveType type)
         {
@@ -35,7 +35,14 @@ namespace Kurogane.Data.RestApi.Controllers
         {
             var move = db.Moves.Find(id);
 
-            return EntityBusinessConverter<MoveStat>.ConvertTo<MoveDTO>(move);
+            if (move != null)
+            {
+                return EntityBusinessConverter<MoveStat>.ConvertTo<MoveDTO>(move);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         [HttpPost]
