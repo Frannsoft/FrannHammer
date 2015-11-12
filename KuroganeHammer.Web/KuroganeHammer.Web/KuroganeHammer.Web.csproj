@@ -129,9 +129,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
+    <Content Include="app\controllers\characterController.js" />
     <Content Include="app\controllers\charactersRosterController.js" />
+    <Content Include="app\controllers\movementRankController.js" />
+    <Content Include="app\services\characterMovesService.js" />
+    <Content Include="app\services\characterService.js" />
     <Content Include="app\services\charactersRosterService.js" />
+    <Content Include="app\services\characterMovementService.js" />
+    <Content Include="app\services\movementRankService.js" />
+    <Content Include="app\views\character.html" />
     <Content Include="app\views\charactersRoster.html" />
+    <Content Include="app\views\movementRanks.html" />
     <Content Include="Content\css\animateroster.css" />
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\bootstrap.min.css" />
@@ -965,6 +973,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\angular.min.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\frannhammertest.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

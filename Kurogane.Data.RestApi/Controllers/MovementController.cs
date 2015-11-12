@@ -28,6 +28,37 @@ namespace Kurogane.Data.RestApi.Controllers
             return EntityBusinessConverter<MovementStat>.ConvertTo<MovementStatDTO>(movement);
         }
 
+        [Route("api/movement/{name}")]
+        [HttpGet]
+        public IEnumerable<MovementStatDTO> GetAllMovementOfName(string name, [FromUri] string orderBy)
+        {
+            IEnumerable<MovementStatDTO> movementStats = default(IEnumerable<MovementStatDTO>);
+            
+            if(orderBy.Equals("desc"))
+            {
+               movementStats = from movement in db.MovementStats.ToList()
+                               where movement.Name.Equals(name)
+                               orderby movement.Value descending
+                               select EntityBusinessConverter<MovementStat>.ConvertTo<MovementStatDTO>(movement);
+            }
+            else if(orderBy.Equals("asc"))
+            {
+                movementStats = from movement in db.MovementStats.ToList()
+                                where movement.Name.Equals(name)
+                                orderby movement.Value ascending
+                                select EntityBusinessConverter<MovementStat>.ConvertTo<MovementStatDTO>(movement);
+            }
+            else
+            {
+                movementStats = from movement in db.MovementStats.ToList()
+                                where movement.Name.Equals(name)
+                                orderby movement.Value descending
+                                select EntityBusinessConverter<MovementStat>.ConvertTo<MovementStatDTO>(movement);
+            }
+            return movementStats;
+
+        }
+
         [Route("api/movement")]
         [HttpPost]
         public IHttpActionResult Post([FromBody]MovementStatDTO value)

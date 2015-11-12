@@ -5,6 +5,16 @@ app.config(function ($routeProvider) {
         controller: "charactersRosterController",
         templateUrl: "/app/views/charactersRoster.html"
     });
+
+    $routeProvider.when("/character/:characterId", {
+        controller: "characterController",
+        templateUrl: "/app/views/character.html"
+    });
+
+    $routeProvider.when("/movement", {
+        controller: "movementRankController",
+        templateUrl: "/app/views/movementRanks.html"
+    });
     
-    $routeProvider.otherwise({ redirectTo: "/index" });
+    $routeProvider.otherwise({ redirectTo: "/" });
 });
