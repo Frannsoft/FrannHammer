@@ -1,0 +1,64 @@
+﻿<div class="col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-md-offset-2 ">
+    <h2>{{characterName}}</h2>
+
+
+    <div class="container" ng-animate="'animateroster'">
+
+        <div style="text-align:center">
+            <img ng-src="{{mainImageUrl}}"
+                 alt="{{characterName}}" style="margin:auto" />
+            <br />
+            <br />
+            <br />
+            <br />
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in movementData" ng-click="go(item)">
+                        <td>{{item.name}}</td>
+                        <td>{{item.value}}</td>
+                    </tr>
+            </table>
+
+            <br />
+            <br />
+            <br />
+            <br />
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>HitboxActive</th>
+                        <th>FirstActionableFrame</th>
+                        <th>BaseDamage</th>
+                        <th>Angle</th>
+                        <th>BaseKnockbackSetKnockback</th>
+                        <th>KnockbackGrowth</th>
+                        <th>Type</th>
+                        <th>LandingLag</th>
+                        <th>AutoCancel</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in moveData">
+                        <td>{{item.name}}</td>
+                        <td>{{item.hitboxActive}}</td>
+                        <td>{{item.firstActionableFrame}}</td>
+                        <td>{{item.baseDamage}}</td>
+                        <td>{{item.angle}}</td>
+                        <td>{{item.baseKnockBackSetKnockback}}</td>
+                        <td>{{item.knockbackGrowth}}</td>
+                        <td>{{item.type}}</td>
+                        <td>{{item.landingLag}}</td>
+                        <td>{{item.autoCancel}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
