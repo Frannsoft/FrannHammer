@@ -6,7 +6,7 @@ namespace KuroganeHammer.Data.Core.Model.Stats
     public class MoveStat : Stat
     {
         public string HitboxActive { get; set; }
-        public string FirstActionableFrame { get; set; }
+        public int FirstActionableFrame { get; set; }
         public string BaseDamage { get; set; }
         public string Angle { get; set; }
         public string BaseKnockBackSetKnockback { get; set; }

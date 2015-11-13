@@ -19,7 +19,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="item in movementData" ng-click="go(item)">
+                    <tr ng-repeat="item in movementData" ng-click="goToMovementRanking(item)">
                         <td>{{item.name}}</td>
                         <td>{{item.value}}</td>
                     </tr>
@@ -45,7 +45,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="item in moveData">
+                    <tr ng-repeat="item in moveData" ng-click="goToMoveRanking(item)">
                         <td>{{item.name}}</td>
                         <td>{{item.hitboxActive}}</td>
                         <td>{{item.firstActionableFrame}}</td>

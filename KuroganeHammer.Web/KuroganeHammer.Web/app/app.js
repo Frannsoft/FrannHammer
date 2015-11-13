@@ -15,6 +15,16 @@ app.config(function ($routeProvider) {
         controller: "movementRankController",
         templateUrl: "/app/views/movementRanks.html"
     });
+
+    $routeProvider.when('/moveRanking', {
+        controller: "moveRankController",
+        templateUrl: "/app/views/moveRanks.html"
+    });
+
+    $routeProvider.when("/contactus", {
+        controller: "",
+        templateUrl: "app/views/contactus.html"
+    });
     
     $routeProvider.otherwise({ redirectTo: "/" });
 });

@@ -132,14 +132,18 @@
     <Content Include="app\controllers\characterController.js" />
     <Content Include="app\controllers\charactersRosterController.js" />
     <Content Include="app\controllers\movementRankController.js" />
+    <Content Include="app\controllers\moveRankController.js" />
     <Content Include="app\services\characterMovesService.js" />
     <Content Include="app\services\characterService.js" />
     <Content Include="app\services\charactersRosterService.js" />
     <Content Include="app\services\characterMovementService.js" />
     <Content Include="app\services\movementRankService.js" />
+    <Content Include="app\services\moveRankService.js" />
     <Content Include="app\views\character.html" />
     <Content Include="app\views\charactersRoster.html" />
+    <Content Include="app\views\contactus.html" />
     <Content Include="app\views\movementRanks.html" />
+    <Content Include="app\views\moveRanks.html" />
     <Content Include="Content\css\animateroster.css" />
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\bootstrap.min.css" />
@@ -174,6 +178,7 @@
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
+    <None Include="Scripts\angular.intellisense.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
@@ -920,6 +925,7 @@
     <Content Include="Scripts\i18n\angular-locale_zh.js" />
     <Content Include="Scripts\i18n\angular-locale_zu-za.js" />
     <Content Include="Scripts\i18n\angular-locale_zu.js" />
+    <None Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

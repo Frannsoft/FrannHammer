@@ -42,8 +42,11 @@ app.controller('characterController', function ($scope, characterService, charac
         });
     }
 
-    $scope.go = function goToStat(item) {
-        $location.path('/movement').search({ name: item.name });
-        //why does this not work?
+    $scope.goToMovementRanking = function goToMovementRanking(item) {
+        $location.path('/movement').search({ name: item.name, orderBy: 'desc' });
+    }
+
+    $scope.goToMoveRanking = function goToMoveRanking(item) {
+        $location.path('/moveRanking').search({ name: item.name, orderBy: 'desc' });
     }
 });
