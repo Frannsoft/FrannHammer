@@ -102,19 +102,19 @@ namespace KuroganeHammer.Data.Core.Web
             if (!string.IsNullOrEmpty(cell.InnerText))
             {
                 retVal = cell.InnerText
-                    .Replace(" ", string.Empty)
-                    .Replace("/", string.Empty)
-                    .Replace("(", string.Empty)
-                    .Replace(")", string.Empty)
-                    .Replace(",", string.Empty)
-                    .Replace("!", string.Empty)
-                    .Replace("-", string.Empty)
-                    .Replace("&", string.Empty)
-                    .Replace("'", string.Empty)
-                    .Replace(".", string.Empty)
-                    .Replace("͡°͜ʖ͡°", string.Empty)
-                    .Replace(":", string.Empty)
-                    .Replace("\"", string.Empty)
+                    //.Replace(" ", string.Empty)
+                    //.Replace("/", string.Empty)
+                    //.Replace("(", string.Empty)
+                    //.Replace(")", string.Empty)
+                    //.Replace(",", string.Empty)
+                    //.Replace("!", string.Empty)
+                    //.Replace("-", string.Empty)
+                    //.Replace("&", string.Empty)
+                    //.Replace("'", string.Empty)
+                    //.Replace(".", string.Empty)
+                    //.Replace("͡°͜ʖ͡°", string.Empty)
+                    //.Replace(":", string.Empty)
+                    //.Replace("\"", string.Empty)
                     .Trim();
             }
 

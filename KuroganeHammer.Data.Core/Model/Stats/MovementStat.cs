@@ -7,12 +7,18 @@ namespace KuroganeHammer.Data.Core.Model.Stats
     [Table("MovementStats")]
     public class MovementStat : Stat
     {
-        public string Value { get; set; }
+        public double Value { get; set; }
 
         public MovementStat(string name, int ownerId, string value)
             : base(name, ownerId)
         {
-            Value = value;
+            value = value.Replace(" ", string.Empty);
+
+            double result = 0;
+            if(double.TryParse(value, out result))
+            {
+                Value = Convert.ToDouble(result);
+            }
         }
 
         public MovementStat()

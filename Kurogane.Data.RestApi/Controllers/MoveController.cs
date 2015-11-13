@@ -1,5 +1,6 @@
 ﻿using Kurogane.Data.RestApi.DTOs;
 using KuroganeHammer.Data.Core;
+using KuroganeHammer.Data.Core.Model.Characters;
 using KuroganeHammer.Data.Core.Model.Stats;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -27,6 +28,59 @@ namespace Kurogane.Data.RestApi.Controllers
             return from move in db.Moves.ToList()
                    where move.Type == type
                    select EntityBusinessConverter<MoveStat>.ConvertTo<MoveDTO>(move);
+        }
+
+        [Route("api/moves/{name}")]
+        [HttpGet]
+        public IEnumerable<MoveDTO> GetMovesOfName(string name, [FromUri] string orderBy)
+        {
+            IEnumerable<MoveDTO> moveStats = default(IEnumerable<MoveDTO>);
+
+            if (orderBy.Equals("desc"))
+            {
+                moveStats =  from move in db.Moves.ToList()
+                       where move.Name == name
+                       orderby move.FirstActionableFrame descending
+                       select new MoveDTO
+                       {
+                           Angle = move.Angle,
+                           AutoCancel = move.AutoCancel,
+                           BaseDamage = move.BaseDamage,
+                           BaseKnockBackSetKnockback = move.BaseKnockBackSetKnockback,
+                           FirstActionableFrame = move.FirstActionableFrame,
+                           HitboxActive = move.HitboxActive,
+                           Id = move.Id,
+                           KnockbackGrowth = move.KnockbackGrowth,
+                           LandingLag = move.LandingLag,
+                           Name = move.Name,
+                           OwnerId = move.OwnerId,
+                           Type = move.Type,
+                           CharacterName = ((Characters)move.OwnerId).ToString()
+                       };
+            }
+            else
+            {
+                moveStats = from move in db.Moves.ToList()
+                       where move.Name == name
+                            orderby move.FirstActionableFrame ascending
+                       select new MoveDTO
+                       {
+                           Angle = move.Angle,
+                           AutoCancel = move.AutoCancel,
+                           BaseDamage = move.BaseDamage,
+                           BaseKnockBackSetKnockback = move.BaseKnockBackSetKnockback,
+                           FirstActionableFrame = move.FirstActionableFrame,
+                           HitboxActive = move.HitboxActive,
+                           Id = move.Id,
+                           KnockbackGrowth = move.KnockbackGrowth,
+                           LandingLag = move.LandingLag,
+                           Name = move.Name,
+                           OwnerId = move.OwnerId,
+                           Type = move.Type,
+                           CharacterName = ((Characters)move.OwnerId).ToString()
+                       };
+            }
+            return moveStats;
         }
 
         [Route("api/moves/{id}")]

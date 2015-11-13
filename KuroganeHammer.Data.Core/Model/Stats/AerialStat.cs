@@ -13,7 +13,7 @@ namespace KuroganeHammer.Data.Core.Model.Stats
     public class AerialStat : Stat
     {
         public string HitboxActive { get; set; }
-        public string FirstActionableFrame { get; set; }
+        public int FirstActionableFrame { get; set; }
         public string BaseDamage { get; set; }
         public string Angle { get; set; }
         public string BaseKnockbackSetKnockback { get; set; }
@@ -26,7 +26,13 @@ namespace KuroganeHammer.Data.Core.Model.Stats
             : base(name, ownerId)
         {
             HitboxActive = hitboxActive;
-            FirstActionableFrame = firstActionableFrame;
+            firstActionableFrame = firstActionableFrame.Replace(" ", string.Empty);
+
+            int result = 0;
+            if (int.TryParse(firstActionableFrame, out result))
+            {
+                FirstActionableFrame = Convert.ToInt32(result);
+            }
             BaseDamage = baseDamage;
             Angle = angle;
             BaseKnockbackSetKnockback = baseKnockbackSetKnockback;
