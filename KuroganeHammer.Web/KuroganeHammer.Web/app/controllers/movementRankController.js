@@ -2,6 +2,9 @@
 app.controller('movementRankController', function ($scope, movementRankService, $routeParams) {
 
     $scope.movementName = $routeParams.name;
+    $scope.predicate = 'value';
+    $scope.reverse = true;
+    
 
     $scope.movementData = [];
 
@@ -16,5 +19,10 @@ app.controller('movementRankController', function ($scope, movementRankService, 
             $scope.movementData = result;
         });
     }
+
+    $scope.order = function (predicate) {
+        $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
+        $scope.predicate = predicate;
+    };
 
 });
