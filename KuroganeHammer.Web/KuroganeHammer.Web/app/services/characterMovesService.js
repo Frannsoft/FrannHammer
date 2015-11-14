@@ -1,7 +1,6 @@
-﻿app.factory('characterMovesService', function ($resource) {
+﻿app.factory('characterMovesService', function ($resource, $rootScope) {
 
-    //var requestUri = 'http://fransm4shtest.azurewebsites.net/api/characters/:id/moves';
-    var requestUri = 'http://localhost:53410/api/characters/:id/moves';
+    var requestUri = $rootScope.ROUTES + 'characters/:id/moves';
 
     return $resource(requestUri,
         {

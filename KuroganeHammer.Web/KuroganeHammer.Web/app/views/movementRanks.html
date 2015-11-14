@@ -8,8 +8,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="item in movementData">
-                <td>{{item.characterName}}</td>
+            <tr ng-repeat="item in movementData | orderBy: '-value'">
+                <td><img width="70" height="70" ng-src="{{item.characterThumbnailUrl}}" /></td>
                 <td>{{item.value}}</td>
             </tr>
     </table>

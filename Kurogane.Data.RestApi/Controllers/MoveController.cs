@@ -30,57 +30,31 @@ namespace Kurogane.Data.RestApi.Controllers
                    select EntityBusinessConverter<MoveStat>.ConvertTo<MoveDTO>(move);
         }
 
-        [Route("api/moves/{name}")]
+        [Route("api/movesofname")]
         [HttpGet]
-        public IEnumerable<MoveDTO> GetMovesOfName(string name, [FromUri] string orderBy)
+        public IEnumerable<MoveDTO> GetMovesOfName([FromUri]string name)
         {
-            IEnumerable<MoveDTO> moveStats = default(IEnumerable<MoveDTO>);
-
-            if (orderBy.Equals("desc"))
-            {
-                moveStats =  from move in db.Moves.ToList()
-                       where move.Name == name
-                       orderby move.FirstActionableFrame descending
-                       select new MoveDTO
-                       {
-                           Angle = move.Angle,
-                           AutoCancel = move.AutoCancel,
-                           BaseDamage = move.BaseDamage,
-                           BaseKnockBackSetKnockback = move.BaseKnockBackSetKnockback,
-                           FirstActionableFrame = move.FirstActionableFrame,
-                           HitboxActive = move.HitboxActive,
-                           Id = move.Id,
-                           KnockbackGrowth = move.KnockbackGrowth,
-                           LandingLag = move.LandingLag,
-                           Name = move.Name,
-                           OwnerId = move.OwnerId,
-                           Type = move.Type,
-                           CharacterName = ((Characters)move.OwnerId).ToString()
-                       };
-            }
-            else
-            {
-                moveStats = from move in db.Moves.ToList()
-                       where move.Name == name
-                            orderby move.FirstActionableFrame ascending
-                       select new MoveDTO
-                       {
-                           Angle = move.Angle,
-                           AutoCancel = move.AutoCancel,
-                           BaseDamage = move.BaseDamage,
-                           BaseKnockBackSetKnockback = move.BaseKnockBackSetKnockback,
-                           FirstActionableFrame = move.FirstActionableFrame,
-                           HitboxActive = move.HitboxActive,
-                           Id = move.Id,
-                           KnockbackGrowth = move.KnockbackGrowth,
-                           LandingLag = move.LandingLag,
-                           Name = move.Name,
-                           OwnerId = move.OwnerId,
-                           Type = move.Type,
-                           CharacterName = ((Characters)move.OwnerId).ToString()
-                       };
-            }
-            return moveStats;
+            return from move in db.Moves.ToList()
+                        where move.Name == name
+                        select new MoveDTO
+                        {
+                            Angle = move.Angle,
+                            AutoCancel = move.AutoCancel,
+                            BaseDamage = move.BaseDamage,
+                            BaseKnockBackSetKnockback = move.BaseKnockBackSetKnockback,
+                            FirstActionableFrame = move.FirstActionableFrame,
+                            HitboxActive = move.HitboxActive,
+                            Id = move.Id,
+                            KnockbackGrowth = move.KnockbackGrowth,
+                            LandingLag = move.LandingLag,
+                            Name = move.Name,
+                            OwnerId = move.OwnerId,
+                            Type = move.Type,
+                            CharacterName = ((Characters)move.OwnerId).ToString(),
+                            CharacterThumbnailUrl = (from ch in db.Characters.ToList()
+                                                     where ch.OwnerId == move.OwnerId
+                                                     select ch.ThumbnailUrl).First()
+                        };
         }
 
         [Route("api/moves/{id}")]

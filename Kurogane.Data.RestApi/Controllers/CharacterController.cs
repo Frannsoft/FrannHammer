@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using KuroganeHammer.Data.Core.Model.Stats;
 using KuroganeHammer.Data.Core;
 using System;
+using KuroganeHammer.Data.Core.Model.Characters;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
@@ -61,11 +62,29 @@ namespace Kurogane.Data.RestApi.Controllers
         {
             return from move in db.Moves.ToList()
                    where move.OwnerId == id
-                   select EntityBusinessConverter<MoveStat>.ConvertTo<MoveDTO>(move);
+                   select new MoveDTO
+                        {
+                            Angle = move.Angle,
+                            AutoCancel = move.AutoCancel,
+                            BaseDamage = move.BaseDamage,
+                            BaseKnockBackSetKnockback = move.BaseKnockBackSetKnockback,
+                            FirstActionableFrame = move.FirstActionableFrame,
+                            HitboxActive = move.HitboxActive,
+                            Id = move.Id,
+                            KnockbackGrowth = move.KnockbackGrowth,
+                            LandingLag = move.LandingLag,
+                            Name = move.Name,
+                            OwnerId = move.OwnerId,
+                            Type = move.Type,
+                            CharacterName = ((Characters)move.OwnerId).ToString(),
+                            CharacterThumbnailUrl = (from ch in db.Characters.ToList()
+                                                     where ch.OwnerId == move.OwnerId
+                                                     select ch.ThumbnailUrl).First()
+                        };
         }
 
         [Route("api/characters/{id}/moves/{type}")]
-        [HttpGet] 
+        [HttpGet]
         public IEnumerable<MoveDTO> GetMoveForCharacterOfType(int id, MoveType type)
         {
             return from movement in db.Moves.ToList()

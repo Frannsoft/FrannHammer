@@ -1,4 +1,9 @@
-﻿var app = angular.module('KuroganeHammerApp', ['ngRoute', 'ngResource', 'ui.bootstrap']);
+﻿var app = angular.module('KuroganeHammerApp', ['ngRoute', 'ngResource', 'ui.bootstrap'])
+.run(function ($rootScope) {
+    //$rootScope.ROUTES = 'http://fransm4shtest.azurewebsites.net/api/'
+    $rootScope.ROUTES = 'http://localhost:53410/api/'
+});
+
 app.config(function ($routeProvider) {
 
     $routeProvider.when("/", {

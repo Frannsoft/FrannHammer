@@ -43,10 +43,10 @@ app.controller('characterController', function ($scope, characterService, charac
     }
 
     $scope.goToMovementRanking = function goToMovementRanking(item) {
-        $location.path('/movement').search({ name: item.name, orderBy: 'desc' });
+        $location.path('/movement').search({ name: item.name });
     }
 
     $scope.goToMoveRanking = function goToMoveRanking(item) {
-        $location.path('/moveRanking').search({ name: item.name, orderBy: 'desc' });
+        $location.path('/moveRanking').search({ name: item.name });
     }
 });

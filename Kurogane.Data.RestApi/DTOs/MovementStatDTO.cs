@@ -5,6 +5,7 @@ namespace Kurogane.Data.RestApi.DTOs
 {
     public class MovementStatDTO : BaseDTO
     {
+        public string CharacterThumbnailUrl { get; set; }
         public int OwnerId { get; set; }
         public string Name { get; set; }
         public double Value { get; set; }

@@ -1,26 +1,9 @@
-﻿
-.animate-enter, 
-.animate-leave
-{ 
-    -webkit-transition: 475ms cubic-bezier(0.785, 0.135, 0.150, 0.860) all;
-    -moz-transition: 475ms cubic-bezier(0.785, 0.135, 0.150, 0.860) all;
-    -ms-transition: 475ms cubic-bezier(0.785, 0.135, 0.150, 0.860) all;
-    -o-transition: 475ms cubic-bezier(0.785, 0.135, 0.150, 0.860) all;
-    transition: 475ms cubic-bezier(0.785, 0.135, 0.150, 0.860) all;
-    position: relative;
-    display: block;
-} 
-
-.animate-enter.animate-enter-active, 
-.animate-leave {
-    opacity: 1;
-    left: 0;
-    height: 30px;
+﻿.slide.ng-enter, .slide.ng-leave {
+  -webkit-transition:0.5s linear all;
+  transition:0.5s linear all;
 }
 
-.animate-leave.animate-leave-active,
-.animate-enter {
-    opacity: 0;
-    left: -50px;
-    height: 0px;
-}
+.slide.ng-enter { opacity:1 }        /* starting animations for enter */
+.slide.ng-enter-active { } /* terminal animations for enter */
+.slide.ng-leave { opacity:0 }        /* starting animations for leave */
+.slide.ng-leave-active { } /* terminal animations for leave */

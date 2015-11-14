@@ -13,7 +13,7 @@ app.controller('moveRankController', function ($scope, moveRankService, $routePa
     }
 
     function getRankData() {
-        moveRankService.query({ name: $scope.moveName, orderBy: $scope.moveOrder }, function (result) {
+        moveRankService.query({ name: $scope.moveName }, function (result) {
             $scope.moveData = result;
         })
     }

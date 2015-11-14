@@ -21,10 +21,13 @@ namespace Kurogane.Data.RestApi.Controllers
                    select new MovementStatDTO
                    {
                        CharacterName = ((Characters)movement.OwnerId).ToString(),
+                       CharacterThumbnailUrl = (from ch in db.Characters.ToList()
+                                                where ch.OwnerId == movement.OwnerId
+                                                select ch.ThumbnailUrl).First(),
                        Id = movement.Id,
                        Name = movement.Name,
                        OwnerId = movement.OwnerId,
-                       Value = movement.Value,
+                       Value = movement.Value
                    };
         }
 
@@ -36,49 +39,34 @@ namespace Kurogane.Data.RestApi.Controllers
             return new MovementStatDTO
                                 {
                                     CharacterName = ((Characters)movement.OwnerId).ToString(),
+                                    CharacterThumbnailUrl = (from ch in db.Characters.ToList()
+                                                             where ch.OwnerId == movement.OwnerId
+                                                             select ch.ThumbnailUrl).First(),
                                     Id = movement.Id,
                                     Name = movement.Name,
                                     OwnerId = movement.OwnerId,
-                                    Value = movement.Value,
+                                    Value = movement.Value
                                 };
         }
 
-        [Route("api/movement/{name}")]
+        [Route("api/movement")]
         [HttpGet]
-        public IEnumerable<MovementStatDTO> GetAllMovementOfName(string name, [FromUri] string orderBy)
+        public IEnumerable<MovementStatDTO> GetAllMovementOfName([FromUri]string name)
         {
-            IEnumerable<MovementStatDTO> movementStats = default(IEnumerable<MovementStatDTO>);
-
-            if (orderBy.Equals("desc"))
-            {
-                movementStats = from movement in db.MovementStats.ToList()
-                                where movement.Name.Equals(name)
-                                orderby movement.Value descending
-                                select new MovementStatDTO
-                                {
-                                    CharacterName = ((Characters)movement.OwnerId).ToString(),
-                                    Id = movement.Id,
-                                    Name = movement.Name,
-                                    OwnerId = movement.OwnerId,
-                                    Value = movement.Value,
-                                };
-            }
-            else
-            {
-                movementStats = from movement in db.MovementStats.ToList()
-                                where movement.Name.Equals(name)
-                                orderby movement.Value ascending
-                                select new MovementStatDTO
-                                {
-                                    CharacterName = ((Characters)movement.OwnerId).ToString(),
-                                    Id = movement.Id,
-                                    Name = movement.Name,
-                                    OwnerId = movement.OwnerId,
-                                    Value = movement.Value,
-                                };
-            }
-            return movementStats;
-
+            return from movement in db.MovementStats.ToList()
+                   where movement.Name.Equals(name)
+                   orderby movement.Value descending
+                   select new MovementStatDTO
+                   {
+                       CharacterName = ((Characters)movement.OwnerId).ToString(),
+                       CharacterThumbnailUrl = (from ch in db.Characters.ToList()
+                                                where ch.OwnerId == movement.OwnerId
+                                                select ch.ThumbnailUrl).First(),
+                       Id = movement.Id,
+                       Name = movement.Name,
+                       OwnerId = movement.OwnerId,
+                       Value = movement.Value
+                   };
         }
 
         [Route("api/movement")]
