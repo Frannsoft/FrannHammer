@@ -1,9 +1,16 @@
 ﻿<div class="col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-md-offset-2">
-    <h2>{{movementName}}</h2>
+    <h2>{{moveName}} (Ordered by First Actionable Frame)</h2>
+    <br />
+    <br />
+    <!--<div class="btn-group btn-group-justified">
+        <input type="radio" class="btn btn-default" ng-model="moveOrder" ng-value="order" />Ascending
+        <input type="radio" class="btn btn-default" name="order" ng-value="Descending" />Ascending
+    </div>-->
     <table class="table table-hover">
         <thead>
             <tr>
                 <th>Character</th>
+                <th>CharName</th>
                 <th>Name</th>
                 <th>HitboxActive</th>
                 <th>FirstActionableFrame</th>
@@ -17,7 +24,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="item in moveData">
+            <tr ng-repeat="item in moveData | orderBy: '-characterName'">
+                <td><img width="70" height="70" ng-src="{{item.characterThumbnailUrl}}" /></td>
                 <td>{{item.characterName}}</td>
                 <td>{{item.name}}</td>
                 <td>{{item.hitboxActive}}</td>

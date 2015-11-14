@@ -2,7 +2,6 @@
 app.controller('movementRankController', function ($scope, movementRankService, $routeParams) {
 
     $scope.movementName = $routeParams.name;
-    $scope.movementOrder = $routeParams.orderBy;
 
     $scope.movementData = [];
 
@@ -13,7 +12,7 @@ app.controller('movementRankController', function ($scope, movementRankService, 
     }
 
     function getRankData() {
-        movementRankService.query({ name: $scope.movementName, orderBy: $scope.movementOrder }, function (result) {
+        movementRankService.query({ name: $scope.movementName }, function (result) {
             $scope.movementData = result;
         });
     }

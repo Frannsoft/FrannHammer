@@ -5,6 +5,7 @@ namespace Kurogane.Data.RestApi.DTOs
     public class MoveDTO
     {
         public string CharacterName { get; set; }
+        public string CharacterThumbnailUrl { get; set; }
         public int Id { get; set; }
         public string HitboxActive { get; set; }
         public int FirstActionableFrame { get; set; }
