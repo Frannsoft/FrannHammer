@@ -1,6 +1,6 @@
 ﻿<div class="col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-md-offset-2">
     <ul class="list-group" style="column-count:5; -webkit-column-count:5; -moz-column-count:5;">
-        <li data-ng-repeat="item in characters"  style="list-style-type:none">
+        <li ng-repeat="item in characters" class="box fade-in one" style="list-style-type:none">
             <a href="#character/{{item.id}}">
                 <img data-ng-src="{{item.thumbnailUrl}}"
                      title="{{item.name}}" />

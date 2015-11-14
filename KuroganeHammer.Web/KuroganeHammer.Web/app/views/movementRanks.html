@@ -4,11 +4,14 @@
         <thead>
             <tr>
                 <th>Character</th>
-                <th>Value</th>
+                <th>
+                    <a href="" ng-click="order('value')">Value</a>
+                    <span class="sortorder" ng-show="predicate === 'value'" ng-class="{reverse:reverse}"></span>
+                </th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="item in movementData | orderBy: '-value'">
+            <tr ng-repeat="item in movementData | orderBy:predicate:reverse">
                 <td><img width="70" height="70" ng-src="{{item.characterThumbnailUrl}}" /></td>
                 <td>{{item.value}}</td>
             </tr>

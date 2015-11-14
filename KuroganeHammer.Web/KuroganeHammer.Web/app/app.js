@@ -1,7 +1,7 @@
-﻿var app = angular.module('KuroganeHammerApp', ['ngRoute', 'ngResource', 'ui.bootstrap'])
+﻿var app = angular.module('KuroganeHammerApp', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngAnimate'])
 .run(function ($rootScope) {
-    //$rootScope.ROUTES = 'http://fransm4shtest.azurewebsites.net/api/'
-    $rootScope.ROUTES = 'http://localhost:53410/api/'
+    $rootScope.ROUTES = 'http://fransm4shtest.azurewebsites.net/api/'
+    //$rootScope.ROUTES = 'http://localhost:53410/api/'
 });
 
 app.config(function ($routeProvider) {
@@ -29,6 +29,16 @@ app.config(function ($routeProvider) {
     $routeProvider.when("/contactus", {
         controller: "",
         templateUrl: "app/views/contactus.html"
+    });
+
+    $routeProvider.when("/aboutus", {
+        controller: "",
+        templateUrl: "app/views/aboutus.html"
+    });
+
+    $routeProvider.when("/glossary", {
+        controller: "",
+        templateUrl: "app/views/glossary.html"
     });
     
     $routeProvider.otherwise({ redirectTo: "/" });

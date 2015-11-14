@@ -8,7 +8,8 @@ app.controller('characterController', function ($scope, characterService, charac
     $scope.characterDescription;
     $scope.ownerId;
     $scope.characterStyle;
-
+    $scope.predicate = 'id';
+    $scope.reverse = false;
     $scope.movementData = [];
     $scope.moveData = [];
 
@@ -49,4 +50,9 @@ app.controller('characterController', function ($scope, characterService, charac
     $scope.goToMoveRanking = function goToMoveRanking(item) {
         $location.path('/moveRanking').search({ name: item.name });
     }
+
+    $scope.order = function (predicate) {
+        $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
+        $scope.predicate = predicate;
+    };
 });

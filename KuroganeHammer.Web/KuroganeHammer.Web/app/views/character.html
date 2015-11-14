@@ -1,8 +1,8 @@
-﻿<div class="col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-md-offset-2 ">
+﻿<div class="col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-md-offset-2">
     <h2>{{characterName}}</h2>
 
 
-    <div class="container" ng-animate="'animateroster'">
+    <div class="container fade-in two">
 
         <div style="text-align:center">
             <img ng-src="{{mainImageUrl}}"
@@ -29,23 +29,54 @@
             <br />
             <br />
             <br />
+            <h6>Sorting by: {{predicate}}</h6>
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>HitboxActive</th>
-                        <th>FirstActionableFrame</th>
-                        <th>BaseDamage</th>
-                        <th>Angle</th>
-                        <th>BaseKnockbackSetKnockback</th>
-                        <th>KnockbackGrowth</th>
-                        <th>Type</th>
-                        <th>LandingLag</th>
-                        <th>AutoCancel</th>
+                        <th>
+                            <a href="" ng-click="order('name')">Name</a>
+                            <span ng-show="predicate === 'name'" ng-class="{reverse:reverse}"></span>
+                        </th>
+                        <th>
+                            <a href="" ng-click="order('hitboxActive')">HitboxActive</a>
+                            <span ng-show="predicate === 'hitboxActive'" ng-class="{reverse:reverse}"></span>
+                        </th>
+                        <th>
+                            <a href="" ng-click="order('firstActionableFrame')">FirstActionableFrame</a>
+                            <span ng-show="predicate === 'firstActionableFrame'" ng-class="{reverse:reverse}"></span>
+                        </th>
+                        <th>
+                            <a href="" ng-click="order('baseDamage')">BaseDamage</a>
+                            <span ng-show="predicate === 'baseDamage'" ng-class="{reverse:reverse}"></span>
+                        </th>
+                        <th>
+                            <a href="" ng-click="order('angle')">Angle</a>
+                            <span ng-show="predicate === 'angle'" ng-class="{reverse:reverse}"></span>
+                        </th>
+                        <th>
+                            <a href="" ng-click="order('baseKnockBackSetKnockback')">BaseKnockbackSetKnockback</a>
+                            <span ng-show="predicate === 'baseKnockBackSetKnockback'" ng-class="{reverse:reverse}"></span>
+                        </th>
+                        <th>
+                            <a href="" ng-click="order('knockbackGrowth')">KnockbackGrowth</a>
+                            <span ng-show="predicate === 'knockbackGrowth'" ng-class="{reverse:reverse}"></span>
+                        </th>
+                        <th>
+                            <a href="" ng-click="order('type')">Type</a>
+                            <span ng-show="predicate === 'type'" ng-class="{reverse:reverse}"></span>
+                        </th>
+                        <th>
+                            <a href="" ng-click="order('landingLag')">LandingLag</a>
+                            <span ng-show="predicate === 'landingLag'" ng-class="{reverse:reverse}"></span>
+                        </th>
+                        <th>
+                            <a href="" ng-click="order('autoCancel')">AutoCancel</a>
+                            <span ng-show="predicate === 'autoCancel'" ng-class="{reverse:reverse}"></span>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="item in moveData" ng-click="goToMoveRanking(item)">
+                    <tr ng-repeat="item in moveData | orderBy:predicate:reverse" ng-click="goToMoveRanking(item)">
                         <td>{{item.name}}</td>
                         <td>{{item.hitboxActive}}</td>
                         <td>{{item.firstActionableFrame}}</td>
