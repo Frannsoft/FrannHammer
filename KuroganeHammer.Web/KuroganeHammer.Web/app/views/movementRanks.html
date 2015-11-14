@@ -11,7 +11,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="item in movementData | orderBy:predicate:reverse">
+            <tr ng-repeat="item in movementData | orderBy:predicate:reverse" ng-click="goToCharacter(item)">
                 <td><img width="70" height="70" ng-src="{{item.characterThumbnailUrl}}" /></td>
                 <td>{{item.value}}</td>
             </tr>

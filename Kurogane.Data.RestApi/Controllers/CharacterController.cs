@@ -19,6 +19,7 @@ namespace Kurogane.Data.RestApi.Controllers
         public IEnumerable<CharacterDTO> GetRoster()
         {
             return from chars in db.Characters.ToList()
+                   orderby chars.Name ascending
                    select EntityBusinessConverter<CharacterStat>.ConvertTo<CharacterDTO>(chars);
         }
 
