@@ -1,5 +1,6 @@
 ﻿'use strict';
-app.controller('moveRankController', function ($scope, moveRankService, $routeParams) {
+app.controller('moveRankController', function ($scope, moveRankService, 
+    $routeParams, $location) {
 
     $scope.moveName = $routeParams.name;
     $scope.moveOrder = $routeParams.orderBy;
@@ -7,8 +8,6 @@ app.controller('moveRankController', function ($scope, moveRankService, $routePa
     $scope.reverse = true;
 
     $scope.moveData = [];
-
-    
 
     init();
 
@@ -27,4 +26,9 @@ app.controller('moveRankController', function ($scope, moveRankService, $routePa
         $scope.predicate = predicate;
     };
 
+    $scope.goToCharacter = function (item) {
+        var characterId = item.ownerId;
+        $location.search('name', null);
+        $location.path('/character/' + characterId);
+    };
 });
