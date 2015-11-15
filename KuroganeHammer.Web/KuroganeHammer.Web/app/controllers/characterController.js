@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller('characterController', function ($scope, characterService, characterMovementService,
+app.controller('characterController', function ($scope, $rootScope, characterService, characterMovementService,
     characterMovesService, $routeParams, $location) {
 
     $scope.characterId = $routeParams.characterId;
@@ -12,6 +12,7 @@ app.controller('characterController', function ($scope, characterService, charac
     $scope.reverse = false;
     $scope.movementData = [];
     $scope.moveData = [];
+    $scope.twitterFullUrl;
 
     init();
 
@@ -19,6 +20,11 @@ app.controller('characterController', function ($scope, characterService, charac
         getCharacterData();
         getCharacterMovementData();
         getCharacterMovesData();
+        setTwitterUrl();
+    }
+
+    function setTwitterUrl() {
+        $scope.twitterFullUrl = $rootScope.BASEURL + 'character/' + $scope.characterId;
     }
 
     function getCharacterData() {

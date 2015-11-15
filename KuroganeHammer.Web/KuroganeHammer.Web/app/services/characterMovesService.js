@@ -1,6 +1,6 @@
 ﻿app.factory('characterMovesService', function ($resource, $rootScope) {
 
-    var requestUri = $rootScope.ROUTES + 'characters/:id/moves';
+    var requestUri = $rootScope.APIROUTE + 'characters/:id/moves';
 
     return $resource(requestUri,
         {

@@ -9,11 +9,11 @@ namespace KuroganeHammer.Web
 {
     public class RouteConfig
     {
-        public static void RegisterRoutes(RouteCollection routes)
+        public static void RegisterAPIROUTE(RouteCollection APIROUTE)
         {
-            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            APIROUTE.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
+            APIROUTE.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
