@@ -1,6 +1,6 @@
 ﻿app.factory('movementRankService', function ($resource, $rootScope) {
 
-    var requestUri = $rootScope.ROUTES + 'movement';
+    var requestUri = $rootScope.APIROUTE + 'movement';
 
     return $resource(requestUri,
         {

@@ -11,7 +11,7 @@ namespace KuroganeHammer.Web
         {
             // Web API configuration and services
 
-            // Web API routes
+            // Web API APIROUTE
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
