@@ -15,6 +15,18 @@ app.config(function ($routeProvider) {
         return !check;
     })();
 
+    // Load twitter sharing button
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0],
+            p = /^http:/.test(d.location) ? 'http' : 'https';
+        if (!d.getElementById(id)) {
+            js = d.createElement(s);
+            js.id = id;
+            js.src = p + '://platform.twitter.com/widgets.js';
+            fjs.parentNode.insertBefore(js, fjs);
+        }
+    }(document, 'script', 'twitter-wjs'));
+
     $routeProvider.when("/", {
         controller: "charactersRosterController",
         templateUrl: (_isNotMobile) ? "/app/views/charactersRoster.html" : "app/views/mCharactersRoster.html"
