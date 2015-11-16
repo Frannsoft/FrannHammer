@@ -3,8 +3,8 @@
     $rootScope.APIROUTE = 'http://fransm4shtest.azurewebsites.net/api/'
     //$rootScope.APIROUTE = 'http://localhost:53410/api/'
 
-    $rootScope.BASEURL = 'http://localhost:58934/%23/';
-    //$rootScope.BASEURL = 'http://frannhammertest.azurewebsites.net/%23/';
+    //$rootScope.BASEURL = 'http://localhost:58934/%23/';
+    $rootScope.BASEURL = 'http://frannhammertest.azurewebsites.net/%23/';
 });
 
 app.config(function ($routeProvider) {

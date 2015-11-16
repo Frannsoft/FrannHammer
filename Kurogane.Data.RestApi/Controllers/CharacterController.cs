@@ -94,6 +94,7 @@ namespace Kurogane.Data.RestApi.Controllers
                    select EntityBusinessConverter<MoveStat>.ConvertTo<MoveDTO>(movement);
         }
 
+        [Route("api/characters")]
         [HttpPost]
         public IHttpActionResult Post([FromBody]CharacterDTO value)
         {
@@ -150,7 +151,7 @@ namespace Kurogane.Data.RestApi.Controllers
             }
         }
 
-        //[Route("api/characters/{id}")]
+        [Route("api/characters/{id}")]
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {

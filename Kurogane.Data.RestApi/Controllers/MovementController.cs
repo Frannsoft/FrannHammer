@@ -13,23 +13,23 @@ namespace Kurogane.Data.RestApi.Controllers
     {
         private Sm4shContext db = new Sm4shContext();
 
-        [Route("api/movement")]
-        [HttpGet]
-        public IEnumerable<MovementStatDTO> GetAllMovementStats()
-        {
-            return from movement in db.MovementStats.ToList()
-                   select new MovementStatDTO
-                   {
-                       CharacterName = ((Characters)movement.OwnerId).ToString(),
-                       CharacterThumbnailUrl = (from ch in db.Characters.ToList()
-                                                where ch.OwnerId == movement.OwnerId
-                                                select ch.ThumbnailUrl).First(),
-                       Id = movement.Id,
-                       Name = movement.Name,
-                       OwnerId = movement.OwnerId,
-                       Value = movement.Value
-                   };
-        }
+        //[Route("api/allmovementstats")]
+        //[HttpGet]
+        //public IEnumerable<MovementStatDTO> GetAllMovementStats()
+        //{
+        //    return from movement in db.MovementStats.ToList()
+        //           select new MovementStatDTO
+        //           {
+        //               CharacterName = ((Characters)movement.OwnerId).ToString(),
+        //               CharacterThumbnailUrl = (from ch in db.Characters.ToList()
+        //                                        where ch.OwnerId == movement.OwnerId
+        //                                        select ch.ThumbnailUrl).First(),
+        //               Id = movement.Id,
+        //               Name = movement.Name,
+        //               OwnerId = movement.OwnerId,
+        //               Value = movement.Value
+        //           };
+        //}
 
         [Route("api/movement/{id}")]
         [HttpGet]
@@ -75,18 +75,27 @@ namespace Kurogane.Data.RestApi.Controllers
         {
             if (value != null)
             {
-                var stat = EntityBusinessConverter<MovementStatDTO>.ConvertTo<MovementStat>(value);
+                var existingStat = db.MovementStats.Find(value.Id);
 
-                if (stat != null)
+                if (existingStat == null)
                 {
-                    db.MovementStats.Attach(stat);
-                    db.Entry(stat).State = EntityState.Added;
-                    db.SaveChanges();
-                    return Ok();
+                    var stat = EntityBusinessConverter<MovementStatDTO>.ConvertTo<MovementStat>(value);
+
+                    if (stat != null)
+                    {
+                        db.MovementStats.Attach(stat);
+                        db.Entry(stat).State = EntityState.Added;
+                        db.SaveChanges();
+                        return Ok(stat);
+                    }
+                    else
+                    {
+                        return BadRequest("Unable to find value.");
+                    }
                 }
                 else
                 {
-                    return BadRequest("Unable to find value.");
+                    return BadRequest("Stat already exists");
                 }
             }
             else
@@ -101,8 +110,9 @@ namespace Kurogane.Data.RestApi.Controllers
             if (value != null)
             {
                 var stat = db.MovementStats.Find(id);
-
-                if (stat != null)
+                
+                if (stat != null &&
+                    stat.Id == value.Id)
                 {
                     db.MovementStats.Add(stat);
                     db.Entry(stat).State = EntityState.Added;
@@ -111,7 +121,7 @@ namespace Kurogane.Data.RestApi.Controllers
                 }
                 else
                 {
-                    return BadRequest();
+                    return BadRequest("unable to find value.");
                 }
             }
             else
