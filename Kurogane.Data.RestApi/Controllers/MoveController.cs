@@ -13,13 +13,13 @@ namespace Kurogane.Data.RestApi.Controllers
     {
         private Sm4shContext db = new Sm4shContext();
 
-        [Route("api/moves")]
-        [HttpGet]
-        public IEnumerable<MoveDTO> GetMoves()
-        {
-            return from move in db.Moves.ToList()
-                   select EntityBusinessConverter<MoveStat>.ConvertTo<MoveDTO>(move);
-        }
+        //[Route("api/moves")]
+        //[HttpGet]
+        //public IEnumerable<MoveDTO> GetMoves()
+        //{
+        //    return from move in db.Moves.ToList()
+        //           select EntityBusinessConverter<MoveStat>.ConvertTo<MoveDTO>(move);
+        //}
 
         [Route("api/movesoftype/{type}")]
         [HttpGet]
@@ -73,6 +73,7 @@ namespace Kurogane.Data.RestApi.Controllers
             }
         }
 
+        [Route("api/move")]
         [HttpPost]
         public IHttpActionResult Post([FromBody]MoveDTO value)
         {
@@ -97,6 +98,7 @@ namespace Kurogane.Data.RestApi.Controllers
             }
         }
 
+        [Route("api/move/{id}")]
         [HttpPut]
         public IHttpActionResult Put(int id, [FromBody]MoveDTO value)
         {
@@ -122,6 +124,7 @@ namespace Kurogane.Data.RestApi.Controllers
             }
         }
 
+        [Route("api/move")]
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
