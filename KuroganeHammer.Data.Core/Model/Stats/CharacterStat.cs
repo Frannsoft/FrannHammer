@@ -6,7 +6,6 @@ namespace KuroganeHammer.Data.Core.Model.Stats
     [Table("Characters")]
     public class CharacterStat
     {
-
         [Required]
         public string Name { get; set; }
 
@@ -20,6 +19,5 @@ namespace KuroganeHammer.Data.Core.Model.Stats
         public string MainImageUrl { get; set; }
         public string ThumbnailUrl { get; set; }
         public string Description { get; set; }
-
     }
 }

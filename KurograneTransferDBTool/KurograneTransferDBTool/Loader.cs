@@ -120,6 +120,61 @@ namespace KurograneTransferDBTool
         }
 
         [Test]
+        [TestCase("35-39", 4)]
+        [TestCase("2-15", 13)]
+        [TestCase("2,4,6,8-12", 7)]
+        [TestCase("18-19, 21-22, 24-25, 27-28, 30-31", 5)]
+        public void GetHitboxLength(string hitboxActive, int expectedTotal)
+        {
+            List<int> ints = new List<int>();
+            string[] vals;
+            if (hitboxActive.Contains(','))
+            {
+                vals = hitboxActive.Split(new char[] { ',' });
+
+                foreach (var commaVal in vals)
+                {
+                    AddHitboxLength(ints, commaVal.Split(new char[] { '-' }, 2));
+                }
+            }
+            else
+            {
+                AddHitboxLength(ints, hitboxActive.Split(new char[] { '-' }, 2));
+            }
+
+            int total = ints.Aggregate(0, (i, j) => i + j);
+            Assert.AreEqual(expectedTotal, total);
+        }
+
+        private void AddHitboxLength(List<int> ints, string[] vals)
+        {
+            int result = GetDifference(vals);
+            if (result > 0)
+            {
+                ints.Add(result);
+            }
+        }
+
+        private int GetDifference(string[] vals)
+        {
+            int one, two, result;
+
+            if (vals.Length > 1)
+            {
+                one = Convert.ToInt32(vals[0]);
+                two = Convert.ToInt32(vals[1]);
+                result = two - one;
+            }
+            else
+            {
+                result = 1; //add one
+            }
+
+
+            return result;
+        }
+
+        [Test]
         public async Task ReloadThumbnailData()
         {
             HomePage homePage = new HomePage("http://kuroganehammer.com/Smash4/");
