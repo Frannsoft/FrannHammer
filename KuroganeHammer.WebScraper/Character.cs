@@ -1,11 +1,9 @@
-﻿using KuroganeHammer.Data.Core.Model.Stats;
-using KuroganeHammer.Data.Core.Web;
+﻿using KuroganeHammer.Data.Core.Model.Characters;
+using KuroganeHammer.Data.Core.Model.Stats;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace KuroganeHammer.Data.Core.Model.Characters
+namespace KuroganeHammer.WebScraper
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class Character

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace KuroganeHammer.Data.Core.Web
+namespace KuroganeHammer.WebScraper
 {
     public class Page
     {

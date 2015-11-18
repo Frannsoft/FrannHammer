@@ -1,5 +1,5 @@
 ﻿
-namespace KuroganeHammer.Data.Core.Web
+namespace KuroganeHammer.WebScraper
 {
     internal class StatConstants
     {
@@ -13,7 +13,7 @@ namespace KuroganeHammer.Data.Core.Web
         internal const string XPATH_TABLE_ROWS = "tbody/tr";
         internal const string XPATH_TABLE_CELLS = "th|td";
         internal const string XPATH_TABLE_CELLKEYNAMES = "td[contains(@style, 'font-weight: bold')]"; //th[contains(@style, 'font-weight: bold')]|
-        internal const string XPATH_TABLE_CELLVALUES =  @"following-sibling::td[not(contains(@style, 'font-weight: bold'))]";
+        internal const string XPATH_TABLE_CELLVALUES = @"following-sibling::td[not(contains(@style, 'font-weight: bold'))]";
         #endregion
     }
 }

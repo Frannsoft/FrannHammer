@@ -1,7 +1,7 @@
 ﻿using HtmlAgilityPack;
 using System.Collections.Generic;
 
-namespace KuroganeHammer.Data.Core.Web
+namespace KuroganeHammer.WebScraper
 {
     public class HomePage
     {
