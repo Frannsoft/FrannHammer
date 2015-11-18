@@ -160,7 +160,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="SwaggerUI\css\" />
     <Folder Include="SwaggerUI\images\" />
     <Folder Include="SwaggerUI\lib\" />

@@ -1,5 +1,4 @@
-﻿using KuroganeHammer.Data.Core.Model.Characters;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System.Threading.Tasks;
 using KuroganeHammer.Data.Core.Model.Stats;
 using System.Net;
