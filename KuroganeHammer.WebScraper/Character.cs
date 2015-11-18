@@ -1,4 +1,4 @@
-﻿using KuroganeHammer.Data.Core.Model.Characters;
+﻿using KuroganeHammer.Data.Core;
 using KuroganeHammer.Data.Core.Model.Stats;
 using Newtonsoft.Json;
 using System.Collections.Generic;

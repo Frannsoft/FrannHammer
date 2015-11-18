@@ -3,8 +3,8 @@ using NUnit.Framework;
 using System.Threading.Tasks;
 using KuroganeHammer.Data.Core.Model.Stats;
 using System.Net;
-using KuroganeHammer.Data.Core.Web;
 using System.Collections.Generic;
+using KuroganeHammer.WebScraper;
 
 namespace KurograneTransferDBTool
 {

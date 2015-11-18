@@ -57,20 +57,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CharacterUtility.cs" />
     <Compile Include="EntityBusinessConverter.cs" />
-    <Compile Include="Model\Characters\CharacterConstants.cs" />
-    <Compile Include="Model\Stats\AerialStat.cs" />
-    <Compile Include="Model\Stats\CharacterStat.cs" />
-    <Compile Include="Model\Stats\GroundStat.cs" />
-    <Compile Include="Model\Stats\MovementStat.cs" />
-    <Compile Include="Model\Stats\MoveStat.cs" />
-    <Compile Include="Model\Stats\MoveType.cs" />
-    <Compile Include="Model\Stats\SpecialStat.cs" />
-    <Compile Include="Model\Stats\Stat.cs" />
+    <Compile Include="CharacterConstants.cs" />
+    <Compile Include="Stats\AerialStat.cs" />
+    <Compile Include="Stats\CharacterStat.cs" />
+    <Compile Include="Stats\GroundStat.cs" />
+    <Compile Include="Stats\MovementStat.cs" />
+    <Compile Include="Stats\MoveStat.cs" />
+    <Compile Include="Stats\MoveType.cs" />
+    <Compile Include="Stats\SpecialStat.cs" />
+    <Compile Include="Stats\Stat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Model\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
