@@ -46,6 +46,9 @@
     <Reference Include="KuroganeHammer.Data.Core">
       <HintPath>E:\Development\C#projects\Kurogane.Data\KuroganeHammer.Data.Core\bin\Debug\KuroganeHammer.Data.Core.dll</HintPath>
     </Reference>
+    <Reference Include="KuroganeHammer.WebScraper">
+      <HintPath>E:\Development\C#projects\Kurogane.Data\KuroganeHammer.WebScraper\bin\Debug\KuroganeHammer.WebScraper.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>E:\Development\C#projects\Kurogane.Data\KurograneTransferDBTool\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>

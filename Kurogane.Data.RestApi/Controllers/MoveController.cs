@@ -1,6 +1,5 @@
 ﻿using Kurogane.Data.RestApi.DTOs;
 using KuroganeHammer.Data.Core;
-using KuroganeHammer.Data.Core.Model.Characters;
 using KuroganeHammer.Data.Core.Model.Stats;
 using System.Collections.Generic;
 using System.Data.Entity;

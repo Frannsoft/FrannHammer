@@ -1,7 +1,7 @@
 ﻿using Kurogane.Data.RestApi.DTOs;
 using KuroganeHammer.Data.Core.Model.Characters;
 using KuroganeHammer.Data.Core.Model.Stats;
-using KuroganeHammer.Data.Core.Web;
+using KuroganeHammer.WebScraper;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using System;

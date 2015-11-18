@@ -5,7 +5,6 @@ using System.Linq;
 using System.Collections.Generic;
 using KuroganeHammer.Data.Core.Model.Stats;
 using KuroganeHammer.Data.Core;
-using KuroganeHammer.Data.Core.Model.Characters;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
