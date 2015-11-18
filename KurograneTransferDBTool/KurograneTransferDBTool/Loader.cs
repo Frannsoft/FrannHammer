@@ -46,9 +46,9 @@ namespace KurograneTransferDBTool
                                   {
                                       Angle = move.Angle,
                                       BaseDamage = move.BaseDamage,
-                                      BaseKnockBackSetKnockback = move.BaseKnockbackSetKnockback,
+                                      BaseKnockBackSetKnockback = move.BaseKnockBackSetKnockback,
                                       FirstActionableFrame = move.FirstActionableFrame,
-                                      HitboxActive = move.HitBoxActive,
+                                      HitboxActive = move.HitboxActive,
                                       KnockbackGrowth = move.KnockbackGrowth,
                                       Name = move.Name,
                                       OwnerId = move.OwnerId,
@@ -59,9 +59,9 @@ namespace KurograneTransferDBTool
                                   select new MoveDTO()
                                   {
                                       Angle = move.Angle,
-                                      AutoCancel = move.Autocancel,
+                                      AutoCancel = move.AutoCancel,
                                       BaseDamage = move.BaseDamage,
-                                      BaseKnockBackSetKnockback = move.BaseKnockbackSetKnockback,
+                                      BaseKnockBackSetKnockback = move.BaseKnockBackSetKnockback,
                                       FirstActionableFrame = move.FirstActionableFrame,
                                       HitboxActive = move.HitboxActive,
                                       KnockbackGrowth = move.KnockbackGrowth,
@@ -76,7 +76,7 @@ namespace KurograneTransferDBTool
                                    {
                                        Angle = move.Angle,
                                        BaseDamage = move.BaseDamage,
-                                       BaseKnockBackSetKnockback = move.BaseKnockbackSetKnockback,
+                                       BaseKnockBackSetKnockback = move.BaseKnockBackSetKnockback,
                                        FirstActionableFrame = move.FirstActionableFrame,
                                        HitboxActive = move.HitboxActive,
                                        KnockbackGrowth = move.KnockbackGrowth,
