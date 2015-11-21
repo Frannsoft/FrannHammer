@@ -1,5 +1,5 @@
 ﻿using HtmlAgilityPack;
-using KuroganeHammer.Data.Core.Model.Stats;
+using KuroganeHammer.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;

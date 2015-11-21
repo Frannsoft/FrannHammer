@@ -1,5 +1,5 @@
 ﻿using KuroganeHammer.Data.Core;
-using KuroganeHammer.Data.Core.Model.Stats;
+using KuroganeHammer.Model;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 

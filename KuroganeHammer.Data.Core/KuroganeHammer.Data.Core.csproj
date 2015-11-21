@@ -60,14 +60,6 @@
     <Compile Include="CharacterUtility.cs" />
     <Compile Include="EntityBusinessConverter.cs" />
     <Compile Include="CharacterConstants.cs" />
-    <Compile Include="Stats\AerialStat.cs" />
-    <Compile Include="Stats\CharacterStat.cs" />
-    <Compile Include="Stats\GroundStat.cs" />
-    <Compile Include="Stats\MovementStat.cs" />
-    <Compile Include="Stats\MoveStat.cs" />
-    <Compile Include="Stats\MoveType.cs" />
-    <Compile Include="Stats\SpecialStat.cs" />
-    <Compile Include="Stats\Stat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

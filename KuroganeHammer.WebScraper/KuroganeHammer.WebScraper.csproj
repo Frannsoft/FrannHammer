@@ -65,6 +65,10 @@
       <Project>{2904d4e7-8989-46bd-ac0a-b4356f190a15}</Project>
       <Name>KuroganeHammer.Data.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KuroganeHammer.Model\KuroganeHammer.Model.csproj">
+      <Project>{a96ff023-4419-4b0c-9a4d-fa3e60650a7c}</Project>
+      <Name>KuroganeHammer.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

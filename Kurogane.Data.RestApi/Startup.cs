@@ -5,6 +5,7 @@ using Owin;
 using System;
 using System.Web.Http;
 using Swashbuckle.Application;
+using Kurogane.Data.RestApi.App_Start;
 
 [assembly: OwinStartup(typeof(Kurogane.Data.RestApi.Startup))]
 namespace Kurogane.Data.RestApi
@@ -23,6 +24,7 @@ namespace Kurogane.Data.RestApi
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             app.UseWebApi(config);
 
+            Bootstrapper.Run();
         }
 
         public void ConfigureOAuth(IAppBuilder app)

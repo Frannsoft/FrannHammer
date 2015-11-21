@@ -1,170 +1,144 @@
 ﻿using Kurogane.Data.RestApi.DTOs;
 using System.Web.Http;
-using System.Data.Entity;
 using System.Linq;
 using System.Collections.Generic;
-using KuroganeHammer.Data.Core.Model.Stats;
-using KuroganeHammer.Data.Core;
+using KuroganeHammer.Service;
+using KuroganeHammer.Model;
+using System.Data.Entity.Infrastructure;
+using System.Net;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
     public class CharacterController : ApiController
     {
-        private Sm4shContext db = new Sm4shContext();
+        private readonly ICharacterStatService characterStatService;
+        private readonly IMovementStatService movementStatService;
+        private readonly IMoveStatService moveStatService;
+
+        public CharacterController(ICharacterStatService characterStatService, IMovementStatService movementStatService, IMoveStatService moveStatService)
+        {
+            this.characterStatService = characterStatService;
+            this.movementStatService = movementStatService;
+            this.moveStatService = moveStatService;
+        }
 
         [Route("api/characters")]
         [HttpGet]
-        public IEnumerable<CharacterDTO> GetRoster()
+        public IHttpActionResult GetRoster()
         {
-            return from chars in db.Characters.ToList()
-                   orderby chars.Name ascending
-                   select EntityBusinessConverter<CharacterStat>.ConvertTo<CharacterDTO>(chars);
+            var characterDTOs = from characters in characterStatService.GetCharacters()
+                                select new CharacterDTO(characters, characterStatService);
+
+            return Ok<IEnumerable<CharacterDTO>>(characterDTOs);
         }
 
         [Route("api/characters/{id}")]
         [HttpGet]
-        public CharacterDTO GetCharacter(int id)
+        public IHttpActionResult GetCharacter(int id)
         {
-            //TODO - THIS NEEDS TO BE SHIFTED TO USE OWNERID AS A KEY NOT REGULAR ID SINCE
-            //AZURE DOES NOT RESET IDS? (OR DROP TABLE THEN REINSERT)
-            if (id > 0)
-            {
-                var characters = db.Characters.Find(id);
-
-                if (characters != null)
-                {
-                    return EntityBusinessConverter<CharacterStat>.ConvertTo<CharacterDTO>(characters);
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            else
-            {
-                return null;
-            }
+            var character = characterStatService.GetCharacter(id);
+            CharacterDTO charDTO = new CharacterDTO(character, characterStatService);
+            return Ok(character);
         }
 
         [Route("api/characters/{id}/movement")]
         [HttpGet]
-        public IEnumerable<MovementStatDTO> GetMovementForRoster(int id)
+        public IHttpActionResult GetMovementForRoster(int id)
         {
-            return from movement in db.MovementStats.ToList()
-                   where movement.OwnerId == id
-                   select EntityBusinessConverter<MovementStat>.ConvertTo<MovementStatDTO>(movement);
+            var movementStats = from movements in movementStatService.GetMovementStatsForCharacter(id)
+                                select new MovementStatDTO(movements, characterStatService);
+            return Ok(movementStats);
         }
 
         [Route("api/characters/{id}/moves")]
         [HttpGet]
-        public IEnumerable<MoveDTO> GetMoves(int id)
+        public IHttpActionResult GetMoves(int id)
         {
-            return from move in db.Moves.ToList()
-                   where move.OwnerId == id
-                   select new MoveDTO
-                        {
-                            Angle = move.Angle,
-                            AutoCancel = move.AutoCancel,
-                            BaseDamage = move.BaseDamage,
-                            BaseKnockBackSetKnockback = move.BaseKnockBackSetKnockback,
-                            FirstActionableFrame = move.FirstActionableFrame,
-                            HitboxActive = move.HitboxActive,
-                            Id = move.Id,
-                            KnockbackGrowth = move.KnockbackGrowth,
-                            LandingLag = move.LandingLag,
-                            Name = move.Name,
-                            OwnerId = move.OwnerId,
-                            Type = move.Type,
-                            CharacterName = ((Characters)move.OwnerId).ToString(),
-                            CharacterThumbnailUrl = (from ch in db.Characters.ToList()
-                                                     where ch.OwnerId == move.OwnerId
-                                                     select ch.ThumbnailUrl).First()
-                        };
+            var moves = from move in moveStatService.GetMovesByCharacter(id)
+                        where move.OwnerId == id
+                        select new MoveDTO(move, characterStatService);
+
+            return Ok(moves);
         }
 
         [Route("api/characters/{id}/moves/{type}")]
         [HttpGet]
-        public IEnumerable<MoveDTO> GetMoveForCharacterOfType(int id, MoveType type)
+        public IHttpActionResult GetMoveForCharacterOfType(int id, MoveType type)
         {
-            return from movement in db.Moves.ToList()
-                   where movement.OwnerId == id &&
-                   movement.Type == type
-                   select EntityBusinessConverter<MoveStat>.ConvertTo<MoveDTO>(movement);
+            var moves = from move in moveStatService.GetMovesByCharacter(id)
+                        where move.OwnerId == id &&
+                        move.Type == type
+                        select new MoveDTO(move, characterStatService);
+
+            return Ok(moves);
         }
 
         [Route("api/characters")]
         [HttpPost]
-        public IHttpActionResult Post([FromBody]CharacterDTO value)
+        public IHttpActionResult Post([FromBody]CharacterStat value)
         {
-            if (value != null)
+            if (!ModelState.IsValid)
             {
-                CharacterStat stat = EntityBusinessConverter<CharacterDTO>.ConvertTo<CharacterStat>(value);
-                if (stat != null)
-                {
-                    db.Characters.Add(stat);
-                    db.Entry(stat).State = EntityState.Added;
-                    db.SaveChanges();
-                    return Ok();
-                }
-                else
-                {
-                    return BadRequest("Unable to create backend object.");
-                }
+                return BadRequest(ModelState);
             }
-            else
-            {
-                return BadRequest("Parameter null.");
-            }
+
+            characterStatService.CreateCharacter(value);
+
+            return Ok(value);
         }
 
         [Route("api/characters/{id}")]
         [HttpPut]
-        public IHttpActionResult Put(int id, [FromBody]CharacterDTO value)
+        public IHttpActionResult Put(int id, [FromBody]CharacterStat value)
         {
-            if (value != null)
+            if (!ModelState.IsValid)
             {
-                var stat = db.Characters.Find(id);
-
-                stat.Description = value.Description;
-                stat.MainImageUrl = value.MainImageUrl;
-                stat.ThumbnailUrl = value.ThumbnailUrl;
-                stat.Name = value.Name;
-                stat.OwnerId = value.OwnerId;
-                stat.Style = value.Style;
-                if (stat != null)
-                {
-                    db.Characters.Attach(stat);
-                    db.Entry(stat).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return Ok();
-                }
-                else
-                {
-                    return BadRequest();
-                }
+                return BadRequest(ModelState);
             }
-            else
+
+            if (id != value.Id)
             {
                 return BadRequest();
             }
+
+            characterStatService.UpdateCharacter(value);
+
+            try
+            {
+                characterStatService.SaveCharacter();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!CharacterExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         [Route("api/characters/{id}")]
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
-            var stat = db.Characters.Find(id);
+            CharacterStat character = characterStatService.GetCharacter(id);
+            if (character == null)
+            {
+                return NotFound();
+            }
 
-            if (stat != null)
-            {
-                db.Characters.Remove(stat);
-                db.Entry(stat).State = EntityState.Deleted;
-                return Ok();
-            }
-            else
-            {
-                return BadRequest();
-            }
+            characterStatService.DeleteCharacter(character);
+
+            return Ok();
+        }
+
+        private bool CharacterExists(int id)
+        {
+            return characterStatService.GetCharacter(id) != null;
         }
     }
 }

@@ -1,144 +1,119 @@
 ﻿using Kurogane.Data.RestApi.DTOs;
-using KuroganeHammer.Data.Core;
-using KuroganeHammer.Data.Core.Model.Stats;
-using System.Collections.Generic;
-using System.Data.Entity;
+using KuroganeHammer.Model;
+using KuroganeHammer.Service;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Net;
 using System.Web.Http;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
     public class MoveController : ApiController
     {
-        private Sm4shContext db = new Sm4shContext();
+        private readonly IMoveStatService moveStatService;
+        private readonly ICharacterStatService characterStatService;
 
-        //[Route("api/moves")]
-        //[HttpGet]
-        //public IEnumerable<MoveDTO> GetMoves()
-        //{
-        //    return from move in db.Moves.ToList()
-        //           select EntityBusinessConverter<MoveStat>.ConvertTo<MoveDTO>(move);
-        //}
+        public MoveController(IMoveStatService moveStatService, ICharacterStatService characterStatService)
+        {
+            this.moveStatService = moveStatService;
+            this.characterStatService = characterStatService;
+        }
 
         [Route("api/movesoftype/{type}")]
         [HttpGet]
-        public IEnumerable<MoveDTO> GetMovesOfType(MoveType type)
+        public IHttpActionResult GetMovesOfType(MoveType type)
         {
-            return from move in db.Moves.ToList()
-                   where move.Type == type
-                   select EntityBusinessConverter<MoveStat>.ConvertTo<MoveDTO>(move);
+            var moves = from move in moveStatService.GetMovesByType(type)
+                        select new MoveDTO(move, characterStatService);
+
+            return Ok(moves);
         }
 
         [Route("api/movesofname")]
         [HttpGet]
-        public IEnumerable<MoveDTO> GetMovesOfName([FromUri]string name)
+        public IHttpActionResult GetMovesOfName([FromUri]string name)
         {
-            return from move in db.Moves.ToList()
-                        where move.Name == name
-                        select new MoveDTO
-                        {
-                            Angle = move.Angle,
-                            AutoCancel = move.AutoCancel,
-                            BaseDamage = move.BaseDamage,
-                            BaseKnockBackSetKnockback = move.BaseKnockBackSetKnockback,
-                            FirstActionableFrame = move.FirstActionableFrame,
-                            HitboxActive = move.HitboxActive,
-                            Id = move.Id,
-                            KnockbackGrowth = move.KnockbackGrowth,
-                            LandingLag = move.LandingLag,
-                            Name = move.Name,
-                            OwnerId = move.OwnerId,
-                            Type = move.Type,
-                            CharacterName = ((Characters)move.OwnerId).ToString(),
-                            CharacterThumbnailUrl = (from ch in db.Characters.ToList()
-                                                     where ch.OwnerId == move.OwnerId
-                                                     select ch.ThumbnailUrl).First()
-                        };
+            var moves = from move in moveStatService.GetMovesByName(name)
+                        select new MoveDTO(move, characterStatService);
+
+            return Ok(moves);
         }
 
         [Route("api/moves/{id}")]
         [HttpGet]
-        public MoveDTO Get(int id)
+        public IHttpActionResult GetMove(int id)
         {
-            var move = db.Moves.Find(id);
-
-            if (move != null)
-            {
-                return EntityBusinessConverter<MoveStat>.ConvertTo<MoveDTO>(move);
-            }
-            else
-            {
-                return null;
-            }
+            var move = moveStatService.GetMove(id);
+            return Ok(move);
         }
 
         [Route("api/move")]
         [HttpPost]
-        public IHttpActionResult Post([FromBody]MoveDTO value)
+        public IHttpActionResult Post([FromBody]MoveStat value)
         {
-            if (value != null)
+            if (!ModelState.IsValid)
             {
-                MoveStat stat = EntityBusinessConverter<MoveDTO>.ConvertTo<MoveStat>(value);
-                if (stat != null)
-                {
-                    db.Moves.Attach(stat);
-                    db.Entry(stat).State = EntityState.Added;
-                    db.SaveChanges();
-                    return Ok();
-                }
-                else
-                {
-                    return BadRequest("Unable to find value.");
-                }
+                return BadRequest(ModelState);
             }
-            else
-            {
-                return BadRequest("Parameter null.");
-            }
+
+            moveStatService.CreateMove(value);
+
+            return Ok(value);
         }
 
         [Route("api/move/{id}")]
         [HttpPut]
-        public IHttpActionResult Put(int id, [FromBody]MoveDTO value)
+        public IHttpActionResult Put(int id, [FromBody]MoveStat value)
         {
-            if (value != null)
+            if (!ModelState.IsValid)
             {
-                var stat = db.Moves.Find(id);
-
-                if (stat != null)
-                {
-                    db.Moves.Add(stat);
-                    db.Entry(stat).State = EntityState.Added;
-                    db.SaveChanges();
-                    return Ok();
-                }
-                else
-                {
-                    return BadRequest();
-                }
+                return BadRequest(ModelState);
             }
-            else
+
+            if (id != value.Id)
             {
                 return BadRequest();
             }
+
+            moveStatService.UpdateMove(value);
+
+            try
+            {
+                moveStatService.SaveMove();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!MoveStatExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         [Route("api/move")]
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
-            var stat = db.Moves.Find(id);
+            MoveStat move = moveStatService.GetMove(id);
+            if (move == null)
+            {
+                return NotFound();
+            }
 
-            if (stat != null)
-            {
-                db.Moves.Remove(stat);
-                db.Entry(stat).State = EntityState.Deleted;
-                return Ok();
-            }
-            else
-            {
-                return BadRequest();
-            }
+            moveStatService.DeleteMove(move);
+
+            return Ok();
+        }
+
+        private bool MoveStatExists(int id)
+        {
+            return moveStatService.GetMove(id) != null;
         }
     }
 }

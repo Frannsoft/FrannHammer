@@ -1,16 +1,20 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using KuroganeHammer.Model;
+using KuroganeHammer.Service;
 
 namespace Kurogane.Data.RestApi.DTOs
 {
-    public class CharacterDTO
+    public class CharacterDTO : BaseDTO
     {
-        public int Id { get; set; }
         public string Style { get; set; }
         public string MainImageUrl { get; set; }
-        public string ThumbnailUrl { get; set; }
         public string Description { get; set; }
-        public string Name { get; set; }
-        public int OwnerId { get; set; }
+
+        public CharacterDTO(CharacterStat stat, ICharacterStatService characterStatService)
+            : base(stat, characterStatService)
+        {
+            Style = stat.Style;
+            Description = stat.Description;
+            MainImageUrl = stat.MainImageUrl;
+        }
     }
 }
