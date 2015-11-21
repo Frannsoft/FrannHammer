@@ -6,7 +6,6 @@ using KuroganeHammer.Service;
 using KuroganeHammer.Model;
 using System.Data.Entity.Infrastructure;
 using System.Net;
-using KuroganeHammer.Data.Infrastructure;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
@@ -28,6 +27,7 @@ namespace Kurogane.Data.RestApi.Controllers
         public IHttpActionResult GetRoster()
         {
             var characterDTOs = from characters in characterStatService.GetCharacters()
+                                orderby characters.Name ascending
                                 select new CharacterDTO(characters, characterStatService);
 
             return Ok<IEnumerable<CharacterDTO>>(characterDTOs);
