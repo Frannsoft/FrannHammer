@@ -6,6 +6,7 @@ using KuroganeHammer.Service;
 using KuroganeHammer.Model;
 using System.Data.Entity.Infrastructure;
 using System.Net;
+using KuroganeHammer.Data.Infrastructure;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
