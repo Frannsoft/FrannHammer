@@ -169,7 +169,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\Bootstrapper.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="AuthContext.cs" />
     <Compile Include="AuthRepository.cs" />
@@ -177,6 +176,7 @@
     <Compile Include="Controllers\CharacterController.cs" />
     <Compile Include="Controllers\MoveController.cs" />
     <Compile Include="Controllers\MovementController.cs" />
+    <Compile Include="CustomAssembliesResolver.cs" />
     <Compile Include="DTOs\BaseDTO.cs" />
     <Compile Include="DTOs\CharacterDTO.cs" />
     <Compile Include="DTOs\MoveDTO.cs" />

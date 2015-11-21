@@ -5,7 +5,14 @@ using Owin;
 using System;
 using System.Web.Http;
 using Swashbuckle.Application;
-using Kurogane.Data.RestApi.App_Start;
+using System.Reflection;
+using Autofac;
+using Autofac.Integration.Mvc;
+using KuroganeHammer.Data.Infrastructure;
+using KuroganeHammer.Service;
+using Autofac.Integration.WebApi;
+using System.Web.Http.Dispatcher;
+using Kurogane.Data.RestApi.Controllers;
 
 [assembly: OwinStartup(typeof(Kurogane.Data.RestApi.Startup))]
 namespace Kurogane.Data.RestApi
@@ -18,13 +25,50 @@ namespace Kurogane.Data.RestApi
             ConfigureOAuth(app);
 
             HttpConfiguration config = new HttpConfiguration();
+            config.Services.Replace(typeof(IAssembliesResolver), new CustomAssembliesResolver());
             config.EnableSwagger(c => c.SingleApiVersion("v1", "Kurogane.Data.RestApi"))
             .EnableSwaggerUi();
             WebApiConfig.Register(config);
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
-            app.UseWebApi(config);
 
-            Bootstrapper.Run();
+            var builder = new ContainerBuilder();
+            //builder.RegisterControllers(Assembly.GetExecutingAssembly());
+            builder.RegisterApiControllers(typeof(CharacterController).Assembly);
+            builder.RegisterApiControllers(typeof(MoveController).Assembly);
+            builder.RegisterApiControllers(typeof(MovementController).Assembly);
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerRequest();
+            builder.RegisterType<DbFactory>().As<IDbFactory>().InstancePerRequest();
+
+            //repos
+            builder.RegisterAssemblyTypes(typeof(CharacterStatRepository).Assembly)
+                .Where(t => t.Name.EndsWith("Repository"))
+                .AsImplementedInterfaces().InstancePerRequest();
+
+            builder.RegisterAssemblyTypes(typeof(MovementStatRepository).Assembly)
+                .Where(t => t.Name.EndsWith("Repository"))
+                .AsImplementedInterfaces().InstancePerRequest();
+
+            builder.RegisterAssemblyTypes(typeof(MoveStatRepository).Assembly)
+                .Where(t => t.Name.EndsWith("Repository"))
+                .AsImplementedInterfaces().InstancePerRequest();
+
+            //services
+            builder.RegisterAssemblyTypes(typeof(CharacterService).Assembly)
+                .Where(t => t.Name.EndsWith("Service"))
+                .AsImplementedInterfaces().InstancePerRequest();
+
+            builder.RegisterAssemblyTypes(typeof(MoveService).Assembly)
+                .Where(t => t.Name.EndsWith("Service"))
+                .AsImplementedInterfaces().InstancePerRequest();
+
+            builder.RegisterAssemblyTypes(typeof(MovementStatService).Assembly)
+                .Where(t => t.Name.EndsWith("Service"))
+                .AsImplementedInterfaces().InstancePerRequest();
+
+            IContainer container = builder.Build();
+            config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+
+            app.UseWebApi(config);
         }
 
         public void ConfigureOAuth(IAppBuilder app)
