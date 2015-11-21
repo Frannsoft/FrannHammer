@@ -2,148 +2,107 @@
 using System.Collections.Generic;
 using System.Web.Http;
 using System.Linq;
-using System.Data.Entity;
-using KuroganeHammer.Data.Core.Model.Stats;
-using KuroganeHammer.Data.Core;
+using KuroganeHammer.Service;
+using KuroganeHammer.Model;
+using System.Data.Entity.Infrastructure;
+using System.Net;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
     public class MovementController : ApiController
     {
-        private Sm4shContext db = new Sm4shContext();
+        private readonly IMovementStatService movementStatService;
+        private readonly ICharacterStatService characterStatService;
 
-        //[Route("api/allmovementstats")]
-        //[HttpGet]
-        //public IEnumerable<MovementStatDTO> GetAllMovementStats()
-        //{
-        //    return from movement in db.MovementStats.ToList()
-        //           select new MovementStatDTO
-        //           {
-        //               CharacterName = ((Characters)movement.OwnerId).ToString(),
-        //               CharacterThumbnailUrl = (from ch in db.Characters.ToList()
-        //                                        where ch.OwnerId == movement.OwnerId
-        //                                        select ch.ThumbnailUrl).First(),
-        //               Id = movement.Id,
-        //               Name = movement.Name,
-        //               OwnerId = movement.OwnerId,
-        //               Value = movement.Value
-        //           };
-        //}
+        public MovementController(IMovementStatService movementStatService, ICharacterStatService characterStatService)
+        {
+            this.movementStatService = movementStatService;
+            this.characterStatService = characterStatService;
+        }
 
         [Route("api/movement/{id}")]
         [HttpGet]
-        public MovementStatDTO Get(int id)
+        public IHttpActionResult GetMovementStat(int id)
         {
-            var movement = db.MovementStats.Find(id);
-            return new MovementStatDTO
-                                {
-                                    CharacterName = ((Characters)movement.OwnerId).ToString(),
-                                    CharacterThumbnailUrl = (from ch in db.Characters.ToList()
-                                                             where ch.OwnerId == movement.OwnerId
-                                                             select ch.ThumbnailUrl).First(),
-                                    Id = movement.Id,
-                                    Name = movement.Name,
-                                    OwnerId = movement.OwnerId,
-                                    Value = movement.Value
-                                };
+            var movement = movementStatService.GetMovementStat(id);
+            var movementDTO = new MovementStatDTO(movement, characterStatService);
+            return Ok(movementDTO);
         }
 
         [Route("api/movement")]
         [HttpGet]
         public IEnumerable<MovementStatDTO> GetAllMovementOfName([FromUri]string name)
         {
-            return from movement in db.MovementStats.ToList()
-                   where movement.Name.Equals(name)
-                   orderby movement.Value descending
-                   select new MovementStatDTO
-                   {
-                       CharacterName = ((Characters)movement.OwnerId).ToString(),
-                       CharacterThumbnailUrl = (from ch in db.Characters.ToList()
-                                                where ch.OwnerId == movement.OwnerId
-                                                select ch.ThumbnailUrl).First(),
-                       Id = movement.Id,
-                       Name = movement.Name,
-                       OwnerId = movement.OwnerId,
-                       Value = movement.Value
-                   };
+            return from movements in movementStatService.GetMovementStatsByName(name)
+                   select new MovementStatDTO(movements, characterStatService);
         }
 
         [Route("api/movement")]
         [HttpPost]
-        public IHttpActionResult Post([FromBody]MovementStatDTO value)
+        public IHttpActionResult Post([FromBody]MovementStat value)
         {
-            if (value != null)
+            if (!ModelState.IsValid)
             {
-                var existingStat = db.MovementStats.Find(value.Id);
-
-                if (existingStat == null)
-                {
-                    var stat = EntityBusinessConverter<MovementStatDTO>.ConvertTo<MovementStat>(value);
-
-                    if (stat != null)
-                    {
-                        db.MovementStats.Attach(stat);
-                        db.Entry(stat).State = EntityState.Added;
-                        db.SaveChanges();
-                        return Ok(stat);
-                    }
-                    else
-                    {
-                        return BadRequest("Unable to find value.");
-                    }
-                }
-                else
-                {
-                    return BadRequest("Stat already exists");
-                }
+                return BadRequest(ModelState);
             }
-            else
-            {
-                return BadRequest("Parameter null.");
-            }
+
+            movementStatService.CreateMovementStat(value);
+
+            return Ok(value);
         }
 
+        [Route("api/movements/{id}")]
         [HttpPut]
-        public IHttpActionResult Put(int id, [FromBody]MovementStatDTO value)
+        public IHttpActionResult Put(int id, [FromBody]MovementStat value)
         {
-            if (value != null)
+            if (!ModelState.IsValid)
             {
-                var stat = db.MovementStats.Find(id);
-                
-                if (stat != null &&
-                    stat.Id == value.Id)
-                {
-                    db.MovementStats.Add(stat);
-                    db.Entry(stat).State = EntityState.Added;
-                    db.SaveChanges();
-                    return Ok();
-                }
-                else
-                {
-                    return BadRequest("unable to find value.");
-                }
+                return BadRequest(ModelState);
             }
-            else
+
+            if (id != value.Id)
             {
                 return BadRequest();
             }
+
+            movementStatService.UpdateMovementStat(value);
+
+            try
+            {
+                movementStatService.SaveMovement();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!MovementStatExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
-            var stat = db.MovementStats.Find(id);
+            MovementStat movement = movementStatService.GetMovementStat(id);
+            if (movement == null)
+            {
+                return NotFound();
+            }
 
-            if (stat != null)
-            {
-                db.MovementStats.Remove(stat);
-                db.Entry(stat).State = EntityState.Deleted;
-                return Ok();
-            }
-            else
-            {
-                return BadRequest();
-            }
+            movementStatService.DeleteMovementStat(movement);
+
+            return Ok();
+        }
+
+        private bool MovementStatExists(int id)
+        {
+            return movementStatService.GetMovementStat(id) != null;
         }
     }
 }

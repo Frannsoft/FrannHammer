@@ -1,13 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using KuroganeHammer.Model;
+using KuroganeHammer.Service;
 
 namespace Kurogane.Data.RestApi.DTOs
 {
     public class BaseDTO
     {
+        public string CharacterName { get; set; }
         public int Id { get; set; }
+        public string ThumbnailUrl { get; set; }
+        public int OwnerId { get; set; }
+        public string Name { get; set; }
+
+        public BaseDTO(Stat stat, ICharacterStatService characterStatService)
+        {
+            this.Id = stat.Id;
+            this.OwnerId = stat.OwnerId;
+            this.Name = stat.Name;
+
+            CharacterStat character = characterStatService.GetCharacter(stat.OwnerId);
+            this.CharacterName = character.Name;
+            this.ThumbnailUrl = character.ThumbnailUrl;
+        }
     }
 }
