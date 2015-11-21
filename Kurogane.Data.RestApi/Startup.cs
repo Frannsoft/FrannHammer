@@ -5,9 +5,7 @@ using Owin;
 using System;
 using System.Web.Http;
 using Swashbuckle.Application;
-using System.Reflection;
 using Autofac;
-using Autofac.Integration.Mvc;
 using KuroganeHammer.Data.Infrastructure;
 using KuroganeHammer.Service;
 using Autofac.Integration.WebApi;
@@ -26,7 +24,7 @@ namespace Kurogane.Data.RestApi
 
             HttpConfiguration config = new HttpConfiguration();
             config.Services.Replace(typeof(IAssembliesResolver), new CustomAssembliesResolver());
-            config.EnableSwagger(c => c.SingleApiVersion("v1", "Kurogane.Data.RestApi"))
+            config.EnableSwagger(c => c.SingleApiVersion("v1", "FrannHammerAPI"))
             .EnableSwaggerUi();
             WebApiConfig.Register(config);
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);

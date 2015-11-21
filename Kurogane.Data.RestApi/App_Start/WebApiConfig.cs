@@ -16,7 +16,7 @@ namespace Kurogane.Data.RestApi
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
+                routeTemplate: "frannhammerAPI/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
 

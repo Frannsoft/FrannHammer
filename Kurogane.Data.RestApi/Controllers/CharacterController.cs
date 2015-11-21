@@ -23,7 +23,7 @@ namespace Kurogane.Data.RestApi.Controllers
             this.moveStatService = moveStatService;
         }
 
-        [Route("api/characters")]
+        [Route("frannhammerAPI/characters")]
         [HttpGet]
         public IHttpActionResult GetRoster()
         {
@@ -33,7 +33,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok<IEnumerable<CharacterDTO>>(characterDTOs);
         }
 
-        [Route("api/characters/{id}")]
+        [Route("frannhammerAPI/characters/{id}")]
         [HttpGet]
         public IHttpActionResult GetCharacter(int id)
         {
@@ -42,7 +42,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(character);
         }
 
-        [Route("api/characters/{id}/movement")]
+        [Route("frannhammerAPI/characters/{id}/movement")]
         [HttpGet]
         public IHttpActionResult GetMovementForRoster(int id)
         {
@@ -51,7 +51,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(movementStats);
         }
 
-        [Route("api/characters/{id}/moves")]
+        [Route("frannhammerAPI/characters/{id}/moves")]
         [HttpGet]
         public IHttpActionResult GetMoves(int id)
         {
@@ -62,7 +62,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(moves);
         }
 
-        [Route("api/characters/{id}/moves/{type}")]
+        [Route("frannhammerAPI/characters/{id}/moves/{type}")]
         [HttpGet]
         public IHttpActionResult GetMoveForCharacterOfType(int id, MoveType type)
         {
@@ -74,7 +74,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(moves);
         }
 
-        [Route("api/characters")]
+        [Route("frannhammerAPI/characters")]
         [HttpPost]
         public IHttpActionResult Post([FromBody]CharacterStat value)
         {
@@ -88,7 +88,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(value);
         }
 
-        [Route("api/characters/{id}")]
+        [Route("frannhammerAPI/characters/{id}")]
         [HttpPut]
         public IHttpActionResult Put(int id, [FromBody]CharacterStat value)
         {
@@ -122,7 +122,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        [Route("api/characters/{id}")]
+        [Route("frannhammerAPI/characters/{id}")]
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {

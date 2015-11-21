@@ -5,7 +5,7 @@ using System.Web.Http;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
-    [RoutePrefix("api/Account")]
+    [RoutePrefix("frannhammerAPI/Account")]
     public class AccountController : ApiController
     {
         private AuthRepository _repo = null;
