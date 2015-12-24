@@ -48,8 +48,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="item in moveData | orderBy:predicate:reverse" ng-click="goToCharacter(item)">
-                <td><img width="70" height="70" ng-src="{{item.characterThumbnailUrl}}" /></td>
+            <tr ng-repeat="item in moveData | orderBy:predicate" ng-click="goToCharacter(item)">
+                <td><img width="70" height="70" ng-src="{{item.thumbnailUrl}}" /></td>
                 <td>{{item.hitboxActive}}</td>
                 <td>{{item.firstActionableFrame}}</td>
                 <td>{{item.baseDamage}}</td>

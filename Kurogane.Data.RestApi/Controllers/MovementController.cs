@@ -20,7 +20,7 @@ namespace Kurogane.Data.RestApi.Controllers
             this.characterStatService = characterStatService;
         }
 
-        [Route("frannhammerAPI/movement/{id}")]
+        [Route("movement/{id}")]
         [HttpGet]
         public IHttpActionResult GetMovementStat(int id)
         {
@@ -29,7 +29,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(movementDTO);
         }
 
-        [Route("frannhammerAPI/movement")]
+        [Route("movement")]
         [HttpGet]
         public IEnumerable<MovementStatDTO> GetAllMovementOfName([FromUri]string name)
         {
@@ -37,7 +37,7 @@ namespace Kurogane.Data.RestApi.Controllers
                    select new MovementStatDTO(movements, characterStatService);
         }
 
-        [Route("frannhammerAPI/movement")]
+        [Route("movement")]
         [HttpPost]
         public IHttpActionResult Post([FromBody]MovementStat value)
         {
@@ -51,7 +51,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(value);
         }
 
-        [Route("frannhammerAPI/movements/{id}")]
+        [Route("movements/{id}")]
         [HttpPut]
         public IHttpActionResult Put(int id, [FromBody]MovementStat value)
         {

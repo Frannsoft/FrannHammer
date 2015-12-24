@@ -46,6 +46,12 @@
     <Reference Include="KuroganeHammer.Data.Core">
       <HintPath>E:\Development\C#projects\Kurogane.Data\KuroganeHammer.Data.Core\bin\Debug\KuroganeHammer.Data.Core.dll</HintPath>
     </Reference>
+    <Reference Include="KuroganeHammer.Model">
+      <HintPath>E:\Development\C#projects\Kurogane.Data\KuroganeHammer.Model\bin\Debug\KuroganeHammer.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="KuroganeHammer.Service">
+      <HintPath>E:\Development\C#projects\Kurogane.Data\KuroganeHammer.Service\bin\Debug\KuroganeHammer.Service.dll</HintPath>
+    </Reference>
     <Reference Include="KuroganeHammer.WebScraper">
       <HintPath>E:\Development\C#projects\Kurogane.Data\KuroganeHammer.WebScraper\bin\Debug\KuroganeHammer.WebScraper.dll</HintPath>
     </Reference>

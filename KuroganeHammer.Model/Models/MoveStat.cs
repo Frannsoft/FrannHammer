@@ -22,7 +22,7 @@ namespace KuroganeHammer.Model
             : base(name, ownerId)
         {
             HitboxActive = hitboxActive;
-            TotalHitboxActiveLength = DetermineHitBoxActiveLength(hitboxActive);
+            //TotalHitboxActiveLength = DetermineHitBoxActiveLength(hitboxActive);
             firstActionableFrame = firstActionableFrame.Replace(" ", string.Empty);
 
             int result = 0;

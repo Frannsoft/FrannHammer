@@ -19,7 +19,7 @@ namespace Kurogane.Data.RestApi.Controllers
             this.characterStatService = characterStatService;
         }
 
-        [Route("frannhammerAPI/movesoftype/{type}")]
+        [Route("movesoftype/{type}")]
         [HttpGet]
         public IHttpActionResult GetMovesOfType(MoveType type)
         {
@@ -29,7 +29,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(moves);
         }
 
-        [Route("frannhammerAPI/movesofname")]
+        [Route("movesofname")]
         [HttpGet]
         public IHttpActionResult GetMovesOfName([FromUri]string name)
         {
@@ -39,7 +39,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(moves);
         }
 
-        [Route("frannhammerAPI/moves/{id}")]
+        [Route("moves/{id}")]
         [HttpGet]
         public IHttpActionResult GetMove(int id)
         {
@@ -47,7 +47,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(move);
         }
 
-        [Route("frannhammerAPI/move")]
+        [Route("move")]
         [HttpPost]
         public IHttpActionResult Post([FromBody]MoveStat value)
         {
@@ -61,7 +61,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(value);
         }
 
-        [Route("frannhammerAPI/move/{id}")]
+        [Route("move/{id}")]
         [HttpPut]
         public IHttpActionResult Put(int id, [FromBody]MoveStat value)
         {
@@ -96,7 +96,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        [Route("frannhammerAPI/move")]
+        [Route("move")]
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {

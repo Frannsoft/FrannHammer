@@ -6,8 +6,8 @@ namespace KuroganeHammer.Data.Infrastructure
 {
     public interface IMovementStatRepository : IRepository<MovementStat>
     {
-        IEnumerable<MovementStat> GetMovementStatsByName(string name);
-        IEnumerable<MovementStat> GetMovementStatsByCharacter(int characterId);
+        List<MovementStat> GetMovementStatsByName(string name);
+        List<MovementStat> GetMovementStatsByCharacter(int characterId);
     }
 
     public class MovementStatRepository : RepositoryBase<MovementStat>, IMovementStatRepository
@@ -16,16 +16,25 @@ namespace KuroganeHammer.Data.Infrastructure
             : base(dbFactory)
         { }
 
-        public IEnumerable<MovementStat> GetMovementStatsByName(string movementName)
+        public List<MovementStat> GetMovementStatsByName(string movementName)
         {
-            var movement = this.DbContext.MovementStats.Where(m => m.Name == movementName);
+            List<MovementStat> movement = null;
 
+            using (var context = new Sm4shEntities())
+            {
+                movement = context.MovementStats.Where(m => m.Name == movementName).ToList();
+            }
             return movement;
         }
 
-        public IEnumerable<MovementStat> GetMovementStatsByCharacter(int characterId)
+        public List<MovementStat> GetMovementStatsByCharacter(int characterId)
         {
-            var movements = this.DbContext.MovementStats.Where(m => m.OwnerId == characterId);
+            List<MovementStat> movements = null;
+
+            using(var context = new Sm4shEntities())
+            {
+                movements = context.MovementStats.Where(m => m.OwnerId == characterId).ToList();  
+            }
             return movements;
         }
 

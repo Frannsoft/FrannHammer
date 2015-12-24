@@ -17,9 +17,9 @@ namespace Kurogane.Data.RestApi.DTOs
             this.OwnerId = stat.OwnerId;
             this.Name = stat.Name;
 
-            CharacterStat character = characterStatService.GetCharacter(stat.OwnerId);
-            this.CharacterName = character.Name;
-            this.ThumbnailUrl = character.ThumbnailUrl;
+           CharacterStat character = characterStatService.GetCharacter(stat.OwnerId);
+           this.CharacterName = character.Name;
+           this.ThumbnailUrl = character.ThumbnailUrl;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Kurogane.Data.RestApi.DTOs;
 using KuroganeHammer.Data.Core;
-using KuroganeHammer.Data.Core.Model.Stats;
+using KuroganeHammer.Model;
 using KuroganeHammer.WebScraper;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -15,105 +15,53 @@ namespace KurograneTransferDBTool
 {
     public class Loader : BaseTest
     {
-
-
         [Test]
         public async Task ReloadAllCharacterData()
         {
             int[] charIds = (int[])Enum.GetValues(typeof(Characters));
 
+            List<Thumbnail> thumbnails = new HomePage("http://kuroganehammer.com/Smash4/")
+                .GetThumbnailData();
+
             foreach (int i in charIds)
             {
                 Character character = new Character((Characters)i);
 
-                //load character
-                CharacterDTO charDTO = new CharacterDTO()
+                string val = string.Empty;
+                if(character.Name.Contains("Mii") || character.Name.Contains("MII"))
                 {
-                    Description = character.Description,
-                    MainImageUrl = character.MainImageUrl,
-                    ThumbnailUrl = character.ThumbnailUrl,
-                    Name = character.Name,
-                    OwnerId = character.OwnerId,
-                    Style = character.Style
-                };
+                    val = "MIIFIGHTERS";
+                }
+                else
+                {
+                    val = character.Name;
+                }
 
-                var result = await client.PostAsJsonAsync(BASEURL + "character", charDTO);
+                Thumbnail thumbnail = thumbnails.FirstOrDefault(t => t.Key.Equals(val, StringComparison.OrdinalIgnoreCase));
+
+                //load character
+                CharacterStat charStat = new CharacterStat(character.Name,
+                    character.OwnerId, character.Style, character.MainImageUrl, thumbnail.Url, character.Description);
+
+                var result = await client.PostAsJsonAsync(BASEURL + "characters", charStat);
                 Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
 
                 //load moves
-                var groundMoves = from move in character.FrameData.Values.OfType<GroundStat>()
-                                  select new MoveDTO()
-                                  {
-                                      Angle = move.Angle,
-                                      BaseDamage = move.BaseDamage,
-                                      BaseKnockBackSetKnockback = move.BaseKnockBackSetKnockback,
-                                      FirstActionableFrame = move.FirstActionableFrame,
-                                      HitboxActive = move.HitboxActive,
-                                      KnockbackGrowth = move.KnockbackGrowth,
-                                      Name = move.Name,
-                                      OwnerId = move.OwnerId,
-                                      Type = MoveType.Ground
-                                  };
+                var moves = from move in character.FrameData.Values.OfType<MoveStat>()
+                            select move;
 
-                var aerialMoves = from move in character.FrameData.Values.OfType<AerialStat>()
-                                  select new MoveDTO()
-                                  {
-                                      Angle = move.Angle,
-                                      AutoCancel = move.AutoCancel,
-                                      BaseDamage = move.BaseDamage,
-                                      BaseKnockBackSetKnockback = move.BaseKnockBackSetKnockback,
-                                      FirstActionableFrame = move.FirstActionableFrame,
-                                      HitboxActive = move.HitboxActive,
-                                      KnockbackGrowth = move.KnockbackGrowth,
-                                      LandingLag = move.LandingLag,
-                                      Name = move.Name,
-                                      OwnerId = move.OwnerId,
-                                      Type = MoveType.Aerial
-                                  };
-
-                var specialMoves = from move in character.FrameData.Values.OfType<SpecialStat>()
-                                   select new MoveDTO()
-                                   {
-                                       Angle = move.Angle,
-                                       BaseDamage = move.BaseDamage,
-                                       BaseKnockBackSetKnockback = move.BaseKnockBackSetKnockback,
-                                       FirstActionableFrame = move.FirstActionableFrame,
-                                       HitboxActive = move.HitboxActive,
-                                       KnockbackGrowth = move.KnockbackGrowth,
-                                       Name = move.Name,
-                                       OwnerId = move.OwnerId,
-                                       Type = MoveType.Special
-                                   };
-
-                var movementMoves = from move in character.FrameData.Values.OfType<MovementStat>()
-                                    select new MovementStatDTO()
-                                    {
-                                        Name = move.Name,
-                                        OwnerId = move.OwnerId,
-                                        Value = move.Value
-                                    };
-
-                foreach (var groundMove in groundMoves)
+                foreach (var move in moves)
                 {
-                    var groundResult = await client.PostAsJsonAsync(BASEURL + "move", groundMove);
-                    Assert.AreEqual(HttpStatusCode.OK, groundResult.StatusCode);
+                    var moveResult = await client.PostAsJsonAsync(BASEURL + "move", move);
+                    Assert.AreEqual(HttpStatusCode.OK, moveResult.StatusCode);
                 }
 
-                foreach (var aerialMove in aerialMoves)
-                {
-                    var aerialResult = await client.PostAsJsonAsync(BASEURL + "move", aerialMove);
-                    Assert.AreEqual(HttpStatusCode.OK, aerialResult.StatusCode);
-                }
+                var movements = from movement in character.FrameData.Values.OfType<MovementStat>()
+                                select movement;
 
-                foreach (var specialMove in specialMoves)
+                foreach (var movement in movements)
                 {
-                    var specialResult = await client.PostAsJsonAsync(BASEURL + "move", specialMove);
-                    Assert.AreEqual(HttpStatusCode.OK, specialResult.StatusCode);
-                }
-
-                foreach (var movementMove in movementMoves)
-                {
-                    var movementResult = await client.PostAsJsonAsync(BASEURL + "movement", movementMove);
+                    var movementResult = await client.PostAsJsonAsync(BASEURL + "movement", movement);
                     Assert.AreEqual(HttpStatusCode.OK, movementResult.StatusCode);
                 }
             }
@@ -209,19 +157,19 @@ namespace KurograneTransferDBTool
                 Character character = new Character((Characters)i);
 
 
-                var movementMoves = from move in character.FrameData.Values.OfType<MovementStat>()
-                                    select new MovementStatDTO()
-                                    {
-                                        Name = move.Name,
-                                        OwnerId = move.OwnerId,
-                                        Value = move.Value
-                                    };
+                //var movementMoves = from move in character.FrameData.Values.OfType<MovementStat>()
+                //                    select new MovementStatDTO()
+                //                    {
+                //                        Name = move.Name,
+                //                        OwnerId = move.OwnerId,
+                //                        Value = move.Value
+                //                    };
 
-                foreach (var movementMove in movementMoves)
-                {
-                    var movementResult = await client.PostAsJsonAsync(BASEURL + "movement", movementMove);
-                    Assert.AreEqual(HttpStatusCode.OK, movementResult.StatusCode);
-                }
+                //foreach (var movementMove in movementMoves)
+                //{
+                //    var movementResult = await client.PostAsJsonAsync(BASEURL + "movement", movementMove);
+                //    Assert.AreEqual(HttpStatusCode.OK, movementResult.StatusCode);
+                //}
             }
         }
 

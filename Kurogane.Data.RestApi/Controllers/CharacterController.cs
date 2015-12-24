@@ -22,27 +22,27 @@ namespace Kurogane.Data.RestApi.Controllers
             this.moveStatService = moveStatService;
         }
 
-        [Route("frannhammerAPI/characters")]
+        [Route("characters")]
         [HttpGet]
         public IHttpActionResult GetRoster()
         {
             var characterDTOs = from characters in characterStatService.GetCharacters()
                                 orderby characters.Name ascending
-                                select new CharacterDTO(characters, characterStatService);
+                                select new CharacterDTO(characters);
 
             return Ok<IEnumerable<CharacterDTO>>(characterDTOs);
         }
 
-        [Route("frannhammerAPI/characters/{id}")]
+        [Route("characters/{id}")]
         [HttpGet]
         public IHttpActionResult GetCharacter(int id)
         {
             var character = characterStatService.GetCharacter(id);
-            CharacterDTO charDTO = new CharacterDTO(character, characterStatService);
+            CharacterDTO charDTO = new CharacterDTO(character);
             return Ok(character);
         }
 
-        [Route("frannhammerAPI/characters/{id}/movement")]
+        [Route("characters/{id}/movement")]
         [HttpGet]
         public IHttpActionResult GetMovementForRoster(int id)
         {
@@ -51,7 +51,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(movementStats);
         }
 
-        [Route("frannhammerAPI/characters/{id}/moves")]
+        [Route("characters/{id}/moves")]
         [HttpGet]
         public IHttpActionResult GetMoves(int id)
         {
@@ -62,7 +62,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(moves);
         }
 
-        [Route("frannhammerAPI/characters/{id}/moves/{type}")]
+        [Route("characters/{id}/moves/{type}")]
         [HttpGet]
         public IHttpActionResult GetMoveForCharacterOfType(int id, MoveType type)
         {
@@ -74,7 +74,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(moves);
         }
 
-        [Route("frannhammerAPI/characters")]
+        [Route("characters")]
         [HttpPost]
         public IHttpActionResult Post([FromBody]CharacterStat value)
         {
@@ -88,7 +88,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(value);
         }
 
-        [Route("frannhammerAPI/characters/{id}")]
+        [Route("characters/{id}")]
         [HttpPut]
         public IHttpActionResult Put(int id, [FromBody]CharacterStat value)
         {
@@ -122,7 +122,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        [Route("frannhammerAPI/characters/{id}")]
+        [Route("characters/{id}")]
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
