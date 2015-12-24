@@ -32,6 +32,7 @@ namespace KuroganeHammer.Data.Infrastructure
         public virtual void Add(T entity)
         {
             dbSet.Add(entity);
+            DbContext.SaveChanges();
         }
 
         public virtual void Update(T entity)

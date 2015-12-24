@@ -11,7 +11,7 @@ namespace KurograneTransferDBTool
     public class BaseTest
     {
         protected HttpClient client;
-        protected const string BASEURL = "http://localhost:53410/api/";
+        protected const string BASEURL = "http://localhost/frannhammerAPI/";
 
         [SetUp]
         public void SetUp()

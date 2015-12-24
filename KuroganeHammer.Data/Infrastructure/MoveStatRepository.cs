@@ -6,9 +6,9 @@ namespace KuroganeHammer.Data.Infrastructure
 {
     public interface IMoveStatRepository : IRepository<MoveStat>
     {
-        IEnumerable<MoveStat> GetMoveStatByName(string name);
-        IEnumerable<MoveStat> GetMoveStatByType(MoveType moveType);
-        IEnumerable<MoveStat> GetMoveStatsByCharacter(int id);
+        List<MoveStat> GetMoveStatByName(string name);
+        List<MoveStat> GetMoveStatByType(MoveType moveType);
+        List<MoveStat> GetMoveStatsByCharacter(int id);
     }
 
     public class MoveStatRepository : RepositoryBase<MoveStat>, IMoveStatRepository
@@ -17,23 +17,38 @@ namespace KuroganeHammer.Data.Infrastructure
             : base(dbFactory)
         { }
 
-        public IEnumerable<MoveStat> GetMoveStatByName(string name)
+        public List<MoveStat> GetMoveStatByName(string name)
         {
-            var moves = this.DbContext.Moves.Where(m => m.Name == name);
+            List<MoveStat> moves = null;
+
+            using (var context = new Sm4shEntities())
+            {
+                moves = context.Moves.Where(m => m.Name == name).ToList();
+            }
             return moves;
         }
 
 
-        public IEnumerable<MoveStat> GetMoveStatByType(MoveType moveType)
+        public List<MoveStat> GetMoveStatByType(MoveType moveType)
         {
-            var moves = this.DbContext.Moves.Where(m => m.Type == moveType);
+            List<MoveStat> moves = null;
+
+            using (var context = new Sm4shEntities())
+            {
+                moves = context.Moves.Where(m => m.Type == moveType).ToList();
+            }
             return moves;
         }
 
 
-        public IEnumerable<MoveStat> GetMoveStatsByCharacter(int id)
+        public List<MoveStat> GetMoveStatsByCharacter(int id)
         {
-            var moves = this.DbContext.Moves.Where(m => m.OwnerId == id);
+            List<MoveStat> moves = null;
+
+            using (var context = new Sm4shEntities())
+            {
+                moves = context.Moves.Where(m => m.OwnerId == id).ToList();
+            }
             return moves;
         }
     }
