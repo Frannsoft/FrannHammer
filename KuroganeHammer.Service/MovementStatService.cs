@@ -48,6 +48,7 @@ namespace KuroganeHammer.Service
         public void CreateMovementStat(MovementStat movementStat)
         {
             movementStatRepository.Add(movementStat);
+            SaveMovement();
         }
 
         public void SaveMovement()
@@ -64,11 +65,13 @@ namespace KuroganeHammer.Service
         public void UpdateMovementStat(MovementStat movementStat)
         {
             movementStatRepository.Update(movementStat);
+            SaveMovement();
         }
 
         public void DeleteMovementStat(MovementStat movementStat)
         {
             movementStatRepository.Delete(movementStat);
+            SaveMovement();
         }
     }
 }
