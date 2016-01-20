@@ -52,6 +52,11 @@ app.config(function ($routeProvider) {
         templateUrl: "app/views/contactus.html"
     });
 
+    $routeProvider.when("/admin/:characterId", {
+        controller: 'adminCharacterController',
+        templateUrl: "app/views/adminCharacter.html"
+    });
+
     $routeProvider.when("/aboutus", {
         controller: "",
         templateUrl: "app/views/aboutus.html"
