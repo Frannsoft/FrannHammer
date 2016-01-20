@@ -46,12 +46,21 @@ namespace Kurogane.Data.RestApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            movementStatService.CreateMovementStat(value);
+            var foundMovement = movementStatService.GetMovementStat(value.Id);
+            
+            if(foundMovement == null)
+            {
+                movementStatService.CreateMovementStat(value);
+            }
+            else
+            {
+                return BadRequest();
+            }
 
             return Ok(value);
         }
 
-        [Route("movements/{id}")]
+        [Route("movement/{id}")]
         [HttpPut]
         public IHttpActionResult Put(int id, [FromBody]MovementStat value)
         {
@@ -65,22 +74,14 @@ namespace Kurogane.Data.RestApi.Controllers
                 return BadRequest();
             }
 
-            movementStatService.UpdateMovementStat(value);
+            var foundMovement = movementStatService.GetMovementStat(value.Id);
+            if (foundMovement != null)
+            {
+                foundMovement.Name = value.Name;
+                foundMovement.Value = value.Value;
 
-            try
-            {
-                movementStatService.SaveMovement();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MovementStatExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                movementStatService.UpdateMovementStat(foundMovement);
+                return Ok(value);
             }
 
             return StatusCode(HttpStatusCode.NoContent);

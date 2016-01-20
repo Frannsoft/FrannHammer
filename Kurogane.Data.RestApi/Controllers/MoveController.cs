@@ -47,7 +47,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(move);
         }
 
-        [Route("move")]
+        [Route("moves")]
         [HttpPost]
         public IHttpActionResult Post([FromBody]MoveStat value)
         {
@@ -56,12 +56,21 @@ namespace Kurogane.Data.RestApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            moveStatService.CreateMove(value);
+            var foundMove = moveStatService.GetMove(value.Id);
+
+            if(foundMove == null)
+            {
+                moveStatService.CreateMove(value);
+            }
+            else
+            {
+                return BadRequest();
+            }
 
             return Ok(value);
         }
 
-        [Route("move/{id}")]
+        [Route("moves/{id}")]
         [HttpPut]
         public IHttpActionResult Put(int id, [FromBody]MoveStat value)
         {
@@ -75,28 +84,31 @@ namespace Kurogane.Data.RestApi.Controllers
                 return BadRequest();
             }
 
-            moveStatService.UpdateMove(value);
+            var foundMove = moveStatService.GetMove(value.Id);
+            if(foundMove != null)
+            {
+                foundMove.Angle = value.Angle;
+                foundMove.AutoCancel = value.AutoCancel;
+                foundMove.BaseDamage = value.BaseDamage;
+                foundMove.BaseKnockBackSetKnockback = value.BaseKnockBackSetKnockback;
+                foundMove.FirstActionableFrame = value.FirstActionableFrame;
+                foundMove.HitboxActive = value.HitboxActive;
+                foundMove.KnockbackGrowth = value.KnockbackGrowth;
+                foundMove.LandingLag = value.LandingLag;
+                foundMove.Name = value.Name;
+                foundMove.TotalHitboxActiveLength = value.TotalHitboxActiveLength;
+                foundMove.Type = value.Type;
 
-            try
-            {
-                moveStatService.SaveMove();
+                moveStatService.UpdateMove(value);
+
+                return Ok(value);
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MoveStatExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        [Route("move")]
+        [Route("moves")]
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
