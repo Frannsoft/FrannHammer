@@ -6,6 +6,7 @@ using KuroganeHammer.Service;
 using KuroganeHammer.Model;
 using System.Data.Entity.Infrastructure;
 using System.Net;
+using AutoMapper;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
@@ -83,7 +84,15 @@ namespace Kurogane.Data.RestApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            characterStatService.CreateCharacter(value);
+            var foundChar = characterStatService.GetCharacter(value.Id);
+            if(foundChar == null)
+            {
+                characterStatService.CreateCharacter(value);
+            }
+            else
+            {
+                return BadRequest();
+            }
 
             return Ok(value);
         }
@@ -102,23 +111,18 @@ namespace Kurogane.Data.RestApi.Controllers
                 return BadRequest();
             }
 
-            characterStatService.UpdateCharacter(value);
+            var foundChar = characterStatService.GetCharacter(value.Id);
+            if (foundChar != null)
+            {
+                foundChar.Description = value.Description;
+                foundChar.MainImageUrl = value.MainImageUrl;
+                foundChar.Name = value.Name;
+                foundChar.Style = value.Style;
+                foundChar.ThumbnailUrl = value.ThumbnailUrl;
 
-            try
-            {
-                characterStatService.SaveCharacter();
+                characterStatService.UpdateCharacter(foundChar);
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CharacterExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+
             return StatusCode(HttpStatusCode.NoContent);
         }
 
