@@ -25,3 +25,6 @@
 /// <reference path="../app/controllers/movementrankcontroller.js" />
 /// <reference path="../app/controllers/moverankcontroller.js" />
 /// <reference path="../app/services/moverankservice.js" />
+/// <reference path="../app/controllers/admincharactercontroller.js" />
+/// <reference path="../app/services/movementservice.js" />
+/// <reference path="../app/services/moveservice.js" />
