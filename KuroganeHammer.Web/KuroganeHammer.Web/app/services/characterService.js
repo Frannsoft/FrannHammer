@@ -7,3 +7,11 @@
             id: '@id'
         });
 });
+
+app.factory('characterService', function ($resource, $rootScope) {
+
+    return $resource($rootScope.APIROUTE + 'characters/:id', null,
+        {
+            'update': { method: 'PUT' }
+        });
+});
