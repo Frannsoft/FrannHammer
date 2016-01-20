@@ -40,11 +40,13 @@ namespace KuroganeHammer.Service
         public void CreateCharacter(CharacterStat characterStat)
         {
             characterStatRepository.Add(characterStat);
+            SaveCharacter();
         }
 
         public void UpdateCharacter(CharacterStat characterStat)
         {
             characterStatRepository.Update(characterStat);
+            SaveCharacter();
         }
 
         public void SaveCharacter()
@@ -55,6 +57,7 @@ namespace KuroganeHammer.Service
         public void DeleteCharacter(CharacterStat characterStat)
         {
             characterStatRepository.Delete(characterStat);
+            SaveCharacter();
         }
     }
 }
