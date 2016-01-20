@@ -52,7 +52,7 @@ namespace KurograneTransferDBTool
 
                 foreach (var move in moves)
                 {
-                    var moveResult = await client.PostAsJsonAsync(BASEURL + "move", move);
+                    var moveResult = await client.PostAsJsonAsync(BASEURL + "moves", move);
                     Assert.AreEqual(HttpStatusCode.OK, moveResult.StatusCode);
                 }
 
