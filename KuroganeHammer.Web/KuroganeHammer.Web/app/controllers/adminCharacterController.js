@@ -13,6 +13,12 @@ app.controller('adminCharacterController', function ($scope, $rootScope, charact
     $scope.movementData = [];
     $scope.moveData = [];
 
+    $scope.showNewMovementRow = false;
+    $scope.newMovementStat;
+
+    $scope.showNewMoveRow = false;
+    $scope.newMoveStat;
+
     init();
 
     function init() {
@@ -75,8 +81,68 @@ app.controller('adminCharacterController', function ($scope, $rootScope, charact
             response.thumbnailUrl = item.thumbnailUrl;
             response.ownerId = item.ownerId;
             response.name = item.name;
-            
+
             moveService.update({ id: item.id }, response);
+        });
+    }
+
+    $scope.createNewMovementStat = function () {
+        movementService.save({
+            name: $scope.newMovementStat.name, value: $scope.newMovementStat.value,
+            ownerId: $scope.ownerId
+        });
+
+        $scope.newMovementStat.name = '';
+        $scope.newMovementStat.value = '';
+        $scope.showMovementRow();
+    }
+
+    $scope.showMovementRow = function showMovementRow() {
+        $scope.showNewMovementRow = !$scope.showNewMovementRow;
+    };
+
+    $scope.createNewMoveStat = function () {
+        moveService.save({
+            name: $scope.newMoveStat.name,
+            hitboxActive: $scope.newMoveStat.hitboxActive,
+            firstActionableFrame: $scope.newMoveStat.firstActionableFrame,
+            baseDamage: $scope.newMoveStat.baseDamage,
+            angle: $scope.newMoveStat.angle,
+            baseKnockBackSetKnockback: $scope.newMoveStat.baseKnockBackSetKnockback,
+            knockbackGrowth: $scope.newMoveStat.knockbackGrowth,
+            landingLag: $scope.newMoveStat.landingLag,
+            autoCancel: $scope.newMoveStat.autoCancel,
+            ownerId: $scope.ownerId
+        });
+
+        $scope.newMoveStat.name = '';
+        $scope.newMoveStat.hitboxActive = '';
+        $scope.newMoveStat.firstActionableFrame = '';
+        $scope.newMoveStat.baseDamage = '';
+        $scope.newMoveStat.angle = '';
+        $scope.newMoveStat.baseKnockBackSetKnockback = '';
+        $scope.newMoveStat.knockbackGrowth = '';
+        $scope.newMoveStat.landingLag = '';
+        $scope.newMoveStat.autoCancel = '';
+
+        $scope.showNewMoveRow();
+    }
+
+    $scope.showMoveRow = function showMoveRow() {
+        $scope.showNewMoveRow = !$scope.showNewMoveRow;
+    }
+
+    $scope.deleteMovementRow = function (item) {
+        movementService.get({ id: item.id }, function (response) {
+            movementService.delete({ id: item.id });
+            getCharacterMovementData(); //refresh
+        });
+    }
+
+    $scope.deleteMoveRow = function (item) {
+        moveService.get({ id: item.id }, function (response) {
+            moveService.delete({ id: item.id });
+            getCharacterMovesData(); //refresh
         });
     }
 
