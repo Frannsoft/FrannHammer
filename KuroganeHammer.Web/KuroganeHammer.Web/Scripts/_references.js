@@ -28,3 +28,5 @@
 /// <reference path="../app/controllers/admincharactercontroller.js" />
 /// <reference path="../app/services/movementservice.js" />
 /// <reference path="../app/services/moveservice.js" />
+/// <reference path="jquery-1.9.1.js" />
+/// <reference path="bootstrap.min.js" />
