@@ -16,6 +16,7 @@ namespace Kurogane.Data.RestApi.Providers
         {
 
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
+            context.OwinContext.Response.Headers.Add("Access-Control-Allow-Headers", new[] { "Content-Type" });
 
             using (AuthRepository _repo = new AuthRepository())
             {
