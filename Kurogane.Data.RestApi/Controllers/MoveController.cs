@@ -108,7 +108,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        [Route("moves")]
+        [Route("moves/{id}")]
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
