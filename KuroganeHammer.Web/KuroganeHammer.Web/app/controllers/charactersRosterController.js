@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller('charactersRosterController', function ($scope, charactersRosterService, $filter) {
+app.controller('charactersRosterController', function ($scope, charactersRosterService, $filter, $location) {
 
     $scope.characters = [];
     $scope.filteredPlacesCount = 0;
@@ -19,4 +19,8 @@ app.controller('charactersRosterController', function ($scope, charactersRosterS
                 $scope.totalRecordsCount = charactersResult.length;
         });
     };
+
+    $scope.goToCharacter = function goToCharacter(item) {
+        $location.path('/character/' + item.id);//.search({ characterId: item.id });
+    }
 });
