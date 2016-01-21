@@ -1,7 +1,7 @@
 ﻿<div class="col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-md-offset-2">
 
-    <input type="text" style="color:black;" value="{{characterName}}" ng-model="characterName" />
-    <input type="button" ng-click="saveChanges()" value="Save Character Changes" />
+    <input type="text" class="form-control" value="{{characterName}}" ng-model="characterName" />
+    <span class="glyphicon glyphicon-floppy-disk" ng-click="saveChanges()"></span>
 
     <div class="container fade-in two">
 
@@ -12,21 +12,47 @@
             <br />
             <br />
             <br />
+            <input type="button" ng-click="showMovementRow()" value="Add new movement stat" />
+            <div ng-show="showNewMovementRow">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td>
+                            <input type="text" class="form-control" value="" ng-model="newMovementStat.name" />
+                        </td>
+                        <td>
+                            <input type="text" style="color:black;" value="" ng-model="newMovementStat.value" />
+                        </td>
+                        <td>
+                            <input type="button" style="color:black;" ng-click="createNewMovementStat()" value="Create" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
             <table class="table table-hover">
                 <thead>
                     <tr>
                         <th>Name</th>
                         <th>Value</th>
+                        <th>Edit</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="item in movementData" ng-click="goToMovementRanking(item)">
-                        <td>{{item.name}}</td>
                         <td>
-                            <input type="text" style="color:black;" value="{{item.value}}" ng-model="item.value"  />
+                            <input type="text" class="form-control" value="{{item.name}}" ng-model="item.name" />
                         </td>
                         <td>
-                            <input type="button" style="color:black;" ng-click="saveMovementRow(item)" value="Save" />
+                            <input type="text" class="form-control" value="{{item.value}}" ng-model="item.value" />
+                        </td>
+                        <td>
+                            <span class="glyphicon glyphicon-floppy-disk" ng-click="saveMovementRow(item)"></span>
+                            <span class="glyphicon glyphicon-remove" ng-click="deleteMovementRow(item)"></span>
                         </td>
                     </tr>
             </table>
@@ -36,6 +62,59 @@
             <br />
             <br />
             <h6 style="float:left;">Sorting by: {{predicate}}</h6>
+            <input type="button" ng-click="showMoveRow()" value="Add new move" />
+            <div ng-show="showNewMoveRow">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>HitboxActive</th>
+                            <th>FirstActionableFrame</th>
+                            <th>BaseDamage</th>
+                            <th>Angle</th>
+                            <th>BaseKnockbackSetKnockback</th>
+                            <th>KnockbackGrowth</th>
+                            <th>LandingLag</th>
+                            <th>AutoCancel</th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td>
+                            <input type="text" class="form-control" ng-model="newMoveStat.name" />
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="newMoveStat.hitboxActive" />
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="newMoveStat.firstActionableFrame" />
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="newMoveStat.baseDamage" />
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="newMoveStat.angle" />
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="newMoveStat.baseKnockBackSetKnockback" />
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="newMoveStat.knockbackGrowth" />
+                        </td>
+                        <!--<td>
+                            <input type="text"class="form-control"value="{{item.type}}" ng-model="item.type" />
+                        </td>-->
+                        <td>
+                            <input type="text" class="form-control" ng-model="newMoveStat.landingLag" />
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="newMoveStat.autoCancel" />
+                        </td>
+                        <td>
+                            <input type="button" class="form-control" ng-click="createNewMoveStat()" value="Create" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -70,10 +149,10 @@
                             <a href="" ng-click="order('knockbackGrowth')">KnockbackGrowth</a>
                             <span ng-show="predicate === 'knockbackGrowth'" ng-class="{reverse:reverse}"></span>
                         </th>
-                        <th>
+                        <!--<th>
                             <a href="" ng-click="order('type')">Type</a>
                             <span ng-show="predicate === 'type'" ng-class="{reverse:reverse}"></span>
-                        </th>
+                        </th>-->
                         <th>
                             <a href="" ng-click="order('landingLag')">LandingLag</a>
                             <span ng-show="predicate === 'landingLag'" ng-class="{reverse:reverse}"></span>
@@ -87,37 +166,40 @@
                 <tbody>
                     <tr ng-repeat="item in moveData | orderBy:predicate:reverse" ng-click="goToMoveRanking(item)">
                         <td>
-                            <input type="button" style="color:black;" ng-click="saveMoveRow(item)" value="Save" />
+                            <span>
+                                <span class="glyphicon glyphicon-floppy-disk" ng-click="saveMoveRow(item)"></span>
+                                <span class="glyphicon glyphicon-remove" ng-click="deleteMoveRow(item)"></span>
+                            </span>
                         </td>
                         <td>
                             <input type="text" style="color:black;" value="{{item.name}}" ng-model="item.name" />
                         </td>
                         <td>
-                            <input type="text" style="color:black;" value="{{item.hitboxActive}}" ng-model="item.hitboxActive" />
+                            <input type="text" class="form-control" value="{{item.hitboxActive}}" ng-model="item.hitboxActive" />
                         </td>
                         <td>
-                            <input type="text" style="color:black;" value="{{item.firstActionableFrame}}" ng-model="item.firstActionableFrame" />
+                            <input type="text" class="form-control" value="{{item.firstActionableFrame}}" ng-model="item.firstActionableFrame" />
                         </td>
                         <td>
-                            <input type="text" style="color:black;" value="{{item.baseDamage}}" ng-model="item.baseDamage" />
+                            <input type="text" class="form-control" value="{{item.baseDamage}}" ng-model="item.baseDamage" />
                         </td>
                         <td>
-                            <input type="text" style="color:black;" value="{{item.angle}}" ng-model="item.angle" />
+                            <input type="text" class="form-control" value="{{item.angle}}" ng-model="item.angle" />
                         </td>
                         <td>
-                            <input type="text" style="color:black;" value="{{item.baseKnockBackSetKnockback}}" ng-model="item.baseKnockBackSetKnockback" />
+                            <input type="text" class="form-control" value="{{item.baseKnockBackSetKnockback}}" ng-model="item.baseKnockBackSetKnockback" />
                         </td>
                         <td>
-                            <input type="text" style="color:black;" value="{{item.knockbackGrowth}}" ng-model="item.knockbackGrowth" />
+                            <input type="text" class="form-control" value="{{item.knockbackGrowth}}" ng-model="item.knockbackGrowth" />
+                        </td>
+                        <!--<td>
+                            <input type="text"class="form-control"value="{{item.type}}" ng-model="item.type" />
+                        </td>-->
+                        <td>
+                            <input type="text" class="form-control" value="{{item.landingLag}}" ng-model="item.landingLag" />
                         </td>
                         <td>
-                            <input type="text" style="color:black;" value="{{item.type}}" ng-model="item.type" />
-                        </td>
-                        <td>
-                            <input type="text" style="color:black;" value="{{item.landingLag}}" ng-model="item.landingLag" />
-                        </td>
-                        <td>
-                            <input type="text" style="color:black;" value="{{item.autoCancel}}" ng-model="item.autoCancel" />
+                            <input type="text" class="form-control" value="{{item.autoCancel}}" ng-model="item.autoCancel" />
                         </td>
                     </tr>
                 </tbody>
