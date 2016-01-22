@@ -5,7 +5,7 @@
     return $resource(requestUri,
         {
             id: '@id'
-        });
+        })
 });
 
 app.factory('characterService', function ($resource, $rootScope) {

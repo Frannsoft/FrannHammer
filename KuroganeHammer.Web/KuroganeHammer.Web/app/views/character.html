@@ -4,7 +4,7 @@
     <!--<a href="https://twitter.com/share" class="twitter-share-button" data-via="jpol711" data-dnt="true">Tweet</a>-->
     <div class="container fade-in two">
 
-        <div style="text-align:center">
+        <div style="text-align:center;">
             <img ng-src="{{mainImageUrl}}"
                  alt="{{characterName}}" style="margin:auto" />
             <br />
@@ -14,82 +14,87 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Value</th>
+                        <th>
+                            <a href="">Name</a>
+                        </th>
+                        <th>
+                            <a href="">Value</a>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="item in movementData" ng-click="goToMovementRanking(item)">
-                        <td>{{item.name}}</td>
-                        <td>{{item.value}}</td>
+                        <td nowrap>{{item.name}}</td>
+                        <td nowrap>{{item.value}}</td>
                     </tr>
             </table>
 
             <br />
             <br />
-            <br />
-            <br />
-            <h6 style="float:left;">Sorting by: {{predicate}}</h6>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>
-                            <a href="" ng-click="order('name')">Name</a>
-                            <span ng-show="predicate === 'name'" ng-class="{reverse:reverse}"></span>
-                        </th>
-                        <th>
-                            <a href="" ng-click="order('hitboxActive')">HitboxActive</a>
-                            <span ng-show="predicate === 'hitboxActive'" ng-class="{reverse:reverse}"></span>
-                        </th>
-                        <th>
-                            <a href="" ng-click="order('firstActionableFrame')">FirstActionableFrame</a>
-                            <span ng-show="predicate === 'firstActionableFrame'" ng-class="{reverse:reverse}"></span>
-                        </th>
-                        <th>
-                            <a href="" ng-click="order('baseDamage')">BaseDamage</a>
-                            <span ng-show="predicate === 'baseDamage'" ng-class="{reverse:reverse}"></span>
-                        </th>
-                        <th>
-                            <a href="" ng-click="order('angle')">Angle</a>
-                            <span ng-show="predicate === 'angle'" ng-class="{reverse:reverse}"></span>
-                        </th>
-                        <th>
-                            <a href="" ng-click="order('baseKnockBackSetKnockback')">BaseKnockbackSetKnockback</a>
-                            <span ng-show="predicate === 'baseKnockBackSetKnockback'" ng-class="{reverse:reverse}"></span>
-                        </th>
-                        <th>
-                            <a href="" ng-click="order('knockbackGrowth')">KnockbackGrowth</a>
-                            <span ng-show="predicate === 'knockbackGrowth'" ng-class="{reverse:reverse}"></span>
-                        </th>
-                        <th>
-                            <a href="" ng-click="order('type')">Type</a>
-                            <span ng-show="predicate === 'type'" ng-class="{reverse:reverse}"></span>
-                        </th>
-                        <th>
-                            <a href="" ng-click="order('landingLag')">LandingLag</a>
-                            <span ng-show="predicate === 'landingLag'" ng-class="{reverse:reverse}"></span>
-                        </th>
-                        <th>
-                            <a href="" ng-click="order('autoCancel')">AutoCancel</a>
-                            <span ng-show="predicate === 'autoCancel'" ng-class="{reverse:reverse}"></span>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="item in moveData | orderBy:predicate:reverse" ng-click="goToMoveRanking(item)">
-                        <td>{{item.name}}</td>
-                        <td>{{item.hitboxActive}}</td>
-                        <td>{{item.firstActionableFrame}}</td>
-                        <td>{{item.baseDamage}}</td>
-                        <td>{{item.angle}}</td>
-                        <td>{{item.baseKnockBackSetKnockback}}</td>
-                        <td>{{item.knockbackGrowth}}</td>
-                        <td>{{item.type}}</td>
-                        <td>{{item.landingLag}}</td>
-                        <td>{{item.autoCancel}}</td>
-                    </tr>
-                </tbody>
-            </table>
+
         </div>
+    </div>
+
+    <div class="fade-in two">
+        <h6 style="float:left;">Sorting by: {{predicate}}</h6>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th title="Name">
+                        <a href="" ng-click="order('name')">Name</a>
+                        <span ng-show="predicate === 'name'" ng-class="{reverse:reverse}"></span>
+                    </th>
+                    <th title="HitboxActive">
+                        <a href="" ng-click="order('hitboxActive')">HitboxActive</a>
+                        <span ng-show="predicate === 'hitboxActive'" ng-class="{reverse:reverse}"></span>
+                    </th>
+                    <th title="First Actionable Frame">
+                        <a href="" ng-click="order('firstActionableFrame')">FAF</a>
+                        <span ng-show="predicate === 'firstActionableFrame'" ng-class="{reverse:reverse}"></span>
+                    </th>
+                    <th title="Base Damage" nowrap>
+                        <a href="" ng-click="order('baseDamage')">Base Dmg. (+SD)</a>
+                        <span ng-show="predicate === 'baseDamage'" ng-class="{reverse:reverse}"></span>
+                    </th>
+                    <th title="Angle">
+                        <a href="" ng-click="order('angle')">Angle</a>
+                        <span ng-show="predicate === 'angle'" ng-class="{reverse:reverse}"></span>
+                    </th>
+                    <th title="BaseKnockBack/SetKnockback">
+                        <a href="" ng-click="order('baseKnockBackSetKnockback')">BKB/WBKB</a>
+                        <span ng-show="predicate === 'baseKnockBackSetKnockback'" ng-class="{reverse:reverse}"></span>
+                    </th>
+                    <th title="Knockback Growth">
+                        <a href="" ng-click="order('knockbackGrowth')">KBG</a>
+                        <span ng-show="predicate === 'knockbackGrowth'" ng-class="{reverse:reverse}"></span>
+                    </th>
+                    <!--<th>
+                        <a href="" ng-click="order('type')">Type</a>
+                        <span ng-show="predicate === 'type'" ng-class="{reverse:reverse}"></span>
+                    </th>-->
+                    <th title="Landing Lag">
+                        <a href="" ng-click="order('landingLag')">LandingLag</a>
+                        <span ng-show="predicate === 'landingLag'" ng-class="{reverse:reverse}"></span>
+                    </th>
+                    <th title="Auto Cancel">
+                        <a href="" ng-click="order('autoCancel')">AutoCancel</a>
+                        <span ng-show="predicate === 'autoCancel'" ng-class="{reverse:reverse}"></span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in moveData | orderBy:predicate:reverse" ng-click="goToMoveRanking(item)">
+                    <td nowrap>{{item.name}}</td>
+                    <td nowrap>{{item.hitboxActive}}</td>
+                    <td nowrap>{{item.firstActionableFrame}}</td>
+                    <td nowrap>{{item.baseDamage}}</td>
+                    <td nowrap>{{item.angle}}</td>
+                    <td nowrap>{{item.baseKnockBackSetKnockback}}</td>
+                    <td nowrap>{{item.knockbackGrowth}}</td>
+                    <td nowrap>{{item.landingLag}}</td>
+                    <td nowrap>{{item.autoCancel}}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
