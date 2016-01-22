@@ -1,12 +1,9 @@
 ﻿using Kurogane.Data.RestApi.DTOs;
 using System.Web.Http;
 using System.Linq;
-using System.Collections.Generic;
 using KuroganeHammer.Service;
 using KuroganeHammer.Model;
-using System.Data.Entity.Infrastructure;
 using System.Net;
-using AutoMapper;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
@@ -31,7 +28,7 @@ namespace Kurogane.Data.RestApi.Controllers
                                 orderby characters.Name ascending
                                 select new CharacterDTO(characters);
 
-            return Ok<IEnumerable<CharacterDTO>>(characterDTOs);
+            return Ok(characterDTOs);
         }
 
         [Route("characters/{id}")]
@@ -85,7 +82,7 @@ namespace Kurogane.Data.RestApi.Controllers
             }
 
             var foundChar = characterStatService.GetCharacter(value.Id);
-            if(foundChar == null)
+            if (foundChar == null)
             {
                 characterStatService.CreateCharacter(value);
             }
