@@ -52,9 +52,14 @@ app.config(function ($routeProvider) {
         templateUrl: "app/views/contactus.html"
     });
 
-    $routeProvider.when("/admin/:characterId", {
+    $routeProvider.when("/admin/editCharacter/:characterId", {
         controller: 'adminCharacterController',
         templateUrl: "app/views/adminCharacter.html"
+    });
+
+    $routeProvider.when("/admin/newCharacter", {
+        controller: 'adminNewCharacterController',
+        templateUrl: "app/views/adminNewCharacter.html"
     });
 
     $routeProvider.when("/aboutus", {
@@ -65,6 +70,11 @@ app.config(function ($routeProvider) {
     $routeProvider.when("/glossary", {
         controller: "",
         templateUrl: "app/views/glossary.html"
+    });
+
+    $routeProvider.when("/api", {
+        controller: "",
+        templateUrl: "app/views/apidocs.html"
     });
     
     $routeProvider.otherwise({ redirectTo: "/" });
