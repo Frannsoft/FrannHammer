@@ -30,3 +30,4 @@
 /// <reference path="../app/services/moveservice.js" />
 /// <reference path="jquery-1.9.1.js" />
 /// <reference path="bootstrap.min.js" />
+/// <reference path="../app/controllers/adminnewcharactercontroller.js" />

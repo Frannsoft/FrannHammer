@@ -48,6 +48,7 @@
   <ItemGroup>
     <Content Include="app\app.js" />
     <Content Include="app\controllers\adminCharacterController.js" />
+    <Content Include="app\controllers\adminNewCharacterController.js" />
     <Content Include="app\controllers\characterController.js" />
     <Content Include="app\controllers\charactersRosterController.js" />
     <Content Include="app\controllers\movementRankController.js" />
@@ -62,6 +63,8 @@
     <Content Include="app\services\moveService.js" />
     <Content Include="app\views\aboutus.html" />
     <Content Include="app\views\adminCharacter.html" />
+    <Content Include="app\views\adminNewCharacter.html" />
+    <Content Include="app\views\apidocs.html" />
     <Content Include="app\views\character.html" />
     <Content Include="app\views\charactersRoster.html" />
     <Content Include="app\views\contactus.html" />
@@ -872,9 +875,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="app\filters\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
