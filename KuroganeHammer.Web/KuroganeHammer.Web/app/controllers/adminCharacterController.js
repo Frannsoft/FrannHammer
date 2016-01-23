@@ -5,6 +5,7 @@ app.controller('adminCharacterController', function ($scope, $rootScope, charact
     $scope.characterId = $routeParams.characterId;
     $scope.characterName;
     $scope.mainImageUrl;
+    $scope.characterStyle;
     $scope.characterDescription;
     $scope.ownerId;
     $scope.characterStyle;

@@ -121,43 +121,43 @@
                         <th>
                             <span>Edit</span>
                         </th>
-                        <th>
+                        <th title="Name">
                             <a href="" ng-click="order('name')">Name</a>
                             <span ng-show="predicate === 'name'" ng-class="{reverse:reverse}"></span>
                         </th>
-                        <th>
+                        <th title="HitboxActive">
                             <a href="" ng-click="order('hitboxActive')">HitboxActive</a>
                             <span ng-show="predicate === 'hitboxActive'" ng-class="{reverse:reverse}"></span>
                         </th>
-                        <th>
-                            <a href="" ng-click="order('firstActionableFrame')">FirstActionableFrame</a>
+                        <th title="First Actionable Frame">
+                            <a href="" ng-click="order('firstActionableFrame')">FAF</a>
                             <span ng-show="predicate === 'firstActionableFrame'" ng-class="{reverse:reverse}"></span>
                         </th>
-                        <th>
-                            <a href="" ng-click="order('baseDamage')">BaseDamage</a>
+                        <th title="Base Damage" nowrap>
+                            <a href="" ng-click="order('baseDamage')">Base Dmg. (+SD)</a>
                             <span ng-show="predicate === 'baseDamage'" ng-class="{reverse:reverse}"></span>
                         </th>
-                        <th>
+                        <th title="Angle">
                             <a href="" ng-click="order('angle')">Angle</a>
                             <span ng-show="predicate === 'angle'" ng-class="{reverse:reverse}"></span>
                         </th>
-                        <th>
-                            <a href="" ng-click="order('baseKnockBackSetKnockback')">BaseKnockbackSetKnockback</a>
+                        <th title="BaseKnockBack/SetKnockback">
+                            <a href="" ng-click="order('baseKnockBackSetKnockback')">BKB/WBKB</a>
                             <span ng-show="predicate === 'baseKnockBackSetKnockback'" ng-class="{reverse:reverse}"></span>
                         </th>
-                        <th>
-                            <a href="" ng-click="order('knockbackGrowth')">KnockbackGrowth</a>
+                        <th title="Knockback Growth">
+                            <a href="" ng-click="order('knockbackGrowth')">KBG</a>
                             <span ng-show="predicate === 'knockbackGrowth'" ng-class="{reverse:reverse}"></span>
                         </th>
                         <!--<th>
-                            <a href="" ng-click="order('type')">Type</a>
-                            <span ng-show="predicate === 'type'" ng-class="{reverse:reverse}"></span>
-                        </th>-->
-                        <th>
+        <a href="" ng-click="order('type')">Type</a>
+        <span ng-show="predicate === 'type'" ng-class="{reverse:reverse}"></span>
+    </th>-->
+                        <th title="Landing Lag">
                             <a href="" ng-click="order('landingLag')">LandingLag</a>
                             <span ng-show="predicate === 'landingLag'" ng-class="{reverse:reverse}"></span>
                         </th>
-                        <th>
+                        <th title="Auto Cancel">
                             <a href="" ng-click="order('autoCancel')">AutoCancel</a>
                             <span ng-show="predicate === 'autoCancel'" ng-class="{reverse:reverse}"></span>
                         </th>
