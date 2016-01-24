@@ -1,4 +1,5 @@
-﻿var app = angular.module('KuroganeHammerApp', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngAnimate'])
+﻿var app = angular.module('KuroganeHammerApp', ['ngRoute', 'ngResource', 'ui.bootstrap',
+    'ngAnimate'])
 .run(function ($rootScope) {
     //$rootScope.APIROUTE = 'http://fransm4shtest.azurewebsites.net/api/'
     $rootScope.APIROUTE = 'http://localhost/frannhammerAPI/'
