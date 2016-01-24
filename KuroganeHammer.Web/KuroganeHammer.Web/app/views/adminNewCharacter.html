@@ -9,30 +9,30 @@
         <br />
         <hr />
         <h4>Details:</h4>
-        <textarea class="form-control" rows="3" id="textArea" ng-bind="characterDescription" placeholder="Description..."></textarea>
+        <textarea class="form-control" rows="3" id="textArea" ng-model="characterDescription" placeholder="Description..."></textarea>
         <br />
-        <input type="text" class="form-control" value="" ng-bind="characterStyle" placeholder="Style..." />
+        <input type="text" class="form-control" value="" ng-model="characterStyle" placeholder="Style..." />
         <br />
         <hr />
         <h4>Imagery:</h4>
         <div>
             <label>Main Image (used when viewing character page):</label>
-            <input type="file" value="..." />
+            <input type="file" value="..." ng-model="mainImageUrl" />
         </div>
         <br />
         <div>
             <label>Tile Image (used when viewing the roster page):</label>
-            <input type="file" value="..." />
+            <input type="file" value="..." ng-model="tileImageUrl" />
         </div>
 
         <div style="text-align:center">
-            <img ng-src="{{mainImageUrl}}"
+            <!--<img ng-src="{{mainImageUrl}}"
                  alt="{{characterName}}" style="margin:auto" />
             <br />
+            <br />-->
             <br />
             <br />
-            <br />
-            <input type="button" ng-click="createNewMovementRow()" value="Add new movement stat" />
+            <input type="button" ng-click="showMovementRow()" value="Add new movement stat" />
             <div ng-show="showNewMovementRow">
                 <table class="table table-hover">
                     <thead>
@@ -47,6 +47,9 @@
                         </td>
                         <td>
                             <input type="text" class="form-control" value="" ng-model="newMovementStat.value" />
+                        </td>
+                        <td title="submit movement (does not send any data to server)">
+                            <span class="glyphicon glyphicon-ok" ng-click="addTempMovement()" />
                         </td>
                     </tr>
                 </table>
@@ -73,7 +76,7 @@
             <br />
             <br />
             <br />
-            <input type="button" ng-click="createNewMoveRow()" value="Add new move" />
+            <input type="button" ng-click="showMoveRow()" value="Add new move" />
             <div ng-show="showNewMoveRow">
                 <table class="table table-hover">
                     <thead>
@@ -119,6 +122,9 @@
                         </td>
                         <td>
                             <input type="text" class="form-control" ng-model="newMoveStat.autoCancel" />
+                        </td>
+                        <td title="Submit move (does not send any data to server)">
+                            <span class="glyphicon glyphicon-ok" ng-click="addTempMove()" />
                         </td>
                     </tr>
                 </table>
