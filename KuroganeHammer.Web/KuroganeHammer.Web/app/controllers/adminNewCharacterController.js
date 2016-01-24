@@ -1,8 +1,8 @@
 ﻿'use strict';
 app.controller('adminNewCharacterController', function ($scope, $rootScope, characterService,
-    characterMovementService, characterMovesService, movementService, moveService, $routeParams,
+    characterMovementService, characterMovesService, movementService, moveService,
+    $routeParams,
     $resource) {
-
 
     $scope.characterName;
     $scope.mainImageUrl;
@@ -12,13 +12,33 @@ app.controller('adminNewCharacterController', function ($scope, $rootScope, char
     $scope.moveData = [];
     $scope.tileImageUrl;
 
+    $scope.showNewMovementRow = false;
+    $scope.showNewMoveRow = false;
+
     $scope.newMovementStat;
     $scope.newMoveStat;
     $scope.tempMovementData = [];
     $scope.tempMoveData = [];
 
     $scope.saveCharacter = function saveNewCharacter() {
+        $scope.moveData = $scope.tempMoveData;
+        $scope.movementData = $scope.tempMovementData;
 
+        //TODO: need image paths here too? - maybe just image name - 
+        //path will be decided server side and then stored in db.
+
+        characterService.save({
+            name: $scope.characterName,
+            style: $scope.characterStyle,
+            description: $scope.characterDescription,
+            mainImageUrl: $scope.mainImageUrl,
+            thumbnailUrl: $scope.tileImageUrl
+        }, function (newChar) {
+
+            //using the new char id save the moves and movement data
+            $scope.createNewMovementStat(newChar);
+            $scope.createNewMoveStat(newChar);
+        });
     }
 
     $scope.saveChanges = function saveAllChanges() {
@@ -58,18 +78,19 @@ app.controller('adminNewCharacterController', function ($scope, $rootScope, char
         });
     }
 
-    $scope.createNewMovementStat = function createNewMovementStat() {
-        movementService.save({
-            name: $scope.newMovementStat.name, value: $scope.newMovementStat.value,
-            ownerId: $scope.ownerId
+    $scope.addTempMovement = function addTempMovement() {
+        $scope.tempMovementData.push({
+            name: $scope.newMovementStat.name,
+            value: $scope.newMovementStat.value
         });
 
         $scope.newMovementStat.name = '';
         $scope.newMovementStat.value = '';
+
     }
 
-    $scope.createNewMoveStat = function createNewMoveStat() {
-        moveService.save({
+    $scope.addTempMove = function addTempMove() {
+        $scope.tempMoveData.push({
             name: $scope.newMoveStat.name,
             hitboxActive: $scope.newMoveStat.hitboxActive,
             firstActionableFrame: $scope.newMoveStat.firstActionableFrame,
@@ -79,7 +100,46 @@ app.controller('adminNewCharacterController', function ($scope, $rootScope, char
             knockbackGrowth: $scope.newMoveStat.knockbackGrowth,
             landingLag: $scope.newMoveStat.landingLag,
             autoCancel: $scope.newMoveStat.autoCancel,
-            ownerId: $scope.ownerId
+        });
+
+        $scope.newMoveStat.name = '';
+        $scope.newMoveStat.hitboxActive = '';
+        $scope.newMoveStat.firstActionableFrame = '';
+        $scope.newMoveStat.baseDamage = '';
+        $scope.newMoveStat.angle = '';
+        $scope.newMoveStat.baseKnockBackSetKnockback = '';
+        $scope.newMoveStat.knockbackGrowth = '';
+        $scope.newMoveStat.landingLag = '';
+        $scope.newMoveStat.autoCancel = '';
+    }
+
+    $scope.createNewMovementStat = function createNewMovementStat(item) {
+        $scope.tempMovementData.forEach(function (data) {
+            movementService.save({
+                name: data.name, value: data.value,
+                ownerId: item.id
+            });
+        });
+
+        $scope.newMovementStat.name = '';
+        $scope.newMovementStat.value = '';
+    }
+
+    $scope.createNewMoveStat = function createNewMoveStat(item) {
+
+        $scope.tempMoveData.forEach(function (data) {
+            moveService.save({
+                name: data.name,
+                hitboxActive: data.hitboxActive,
+                firstActionableFrame: data.firstActionableFrame,
+                baseDamage: data.baseDamage,
+                angle: data.angle,
+                baseKnockBackSetKnockback: data.baseKnockBackSetKnockback,
+                knockbackGrowth: data.knockbackGrowth,
+                landingLag: data.landingLag,
+                autoCancel: data.autoCancel,
+                ownerId: item.id
+            });
         });
 
         $scope.newMoveStat.name = '';
@@ -95,7 +155,7 @@ app.controller('adminNewCharacterController', function ($scope, $rootScope, char
     }
 
     $scope.createNewMovementRow = function createNewMovementRow() {
-        $scope.tempMovementData.push({ name: '', value: '' });
+        //$scope.tempMovementData.push({ name: '', value: '' });
     };
 
     $scope.createNewMoveRow = function createNewMoveRow() {
@@ -112,12 +172,12 @@ app.controller('adminNewCharacterController', function ($scope, $rootScope, char
         })
     };
 
-    //$scope.showMovementRow = function showMovementRow() {
-    //    $scope.showNewMovementRow = !$scope.showNewMovementRow;
-    //};
+    $scope.showMovementRow = function showMovementRow() {
+        $scope.showNewMovementRow = !$scope.showNewMovementRow;
+    };
 
-    //$scope.showMoveRow = function showMoveRow() {
-    //    $scope.showNewMoveRow = !$scope.showNewMoveRow;
-    //}
+    $scope.showMoveRow = function showMoveRow() {
+        $scope.showNewMoveRow = !$scope.showNewMoveRow;
+    }
 
 });
