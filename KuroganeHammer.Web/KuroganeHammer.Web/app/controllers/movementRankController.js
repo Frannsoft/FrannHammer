@@ -6,7 +6,6 @@ app.controller('movementRankController', function ($scope, movementRankService, 
     $scope.predicate = 'value';
     $scope.reverse = true;
     
-
     $scope.movementData = [];
 
     init();

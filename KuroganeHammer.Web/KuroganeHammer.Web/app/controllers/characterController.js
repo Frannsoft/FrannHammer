@@ -1,5 +1,6 @@
 ﻿'use strict';
-app.controller('characterController', function ($scope, $rootScope, characterService, characterMovementService,
+app.controller('characterController', function ($scope, $rootScope, characterService,
+    characterMovementService,
     characterMovesService, $routeParams, $location) {
 
     $scope.characterId = $routeParams.characterId;
@@ -44,7 +45,7 @@ app.controller('characterController', function ($scope, $rootScope, characterSer
     }
 
     function getCharacterMovesData() {
-        characterMovesService.query({ id: $scope.characterId }, function(result){
+        characterMovesService.query({ id: $scope.characterId }, function (result) {
             $scope.moveData = result;
         });
     }

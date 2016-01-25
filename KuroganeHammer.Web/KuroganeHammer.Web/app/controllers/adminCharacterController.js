@@ -9,7 +9,7 @@ app.controller('adminCharacterController', function ($scope, $rootScope, charact
     $scope.characterDescription;
     $scope.ownerId;
     $scope.characterStyle;
-    $scope.predicate = 'id';
+    $scope.predicate = 'id'; //id by default
     $scope.reverse = false;
     $scope.movementData = [];
     $scope.moveData = [];
@@ -28,6 +28,7 @@ app.controller('adminCharacterController', function ($scope, $rootScope, charact
         getCharacterMovesData();
     }
 
+    //get character info methods
     function getCharacterData() {
         characterService.get({ id: $scope.characterId }, function (characterDataResult) {
             $scope.characterName = characterDataResult.name;
@@ -50,6 +51,7 @@ app.controller('adminCharacterController', function ($scope, $rootScope, charact
         });
     }
 
+    //save character methods
     $scope.saveChanges = function saveAllChanges() {
 
         characterService.get({ id: $scope.characterId }, function (chara) {
@@ -93,14 +95,8 @@ app.controller('adminCharacterController', function ($scope, $rootScope, charact
             ownerId: $scope.ownerId
         });
 
-        $scope.newMovementStat.name = '';
-        $scope.newMovementStat.value = '';
-        $scope.showMovementRow();
+        clearMovementStat();
     }
-
-    $scope.showMovementRow = function showMovementRow() {
-        $scope.showNewMovementRow = !$scope.showNewMovementRow;
-    };
 
     $scope.createNewMoveStat = function () {
         moveService.save({
@@ -116,21 +112,7 @@ app.controller('adminCharacterController', function ($scope, $rootScope, charact
             ownerId: $scope.ownerId
         });
 
-        $scope.newMoveStat.name = '';
-        $scope.newMoveStat.hitboxActive = '';
-        $scope.newMoveStat.firstActionableFrame = '';
-        $scope.newMoveStat.baseDamage = '';
-        $scope.newMoveStat.angle = '';
-        $scope.newMoveStat.baseKnockBackSetKnockback = '';
-        $scope.newMoveStat.knockbackGrowth = '';
-        $scope.newMoveStat.landingLag = '';
-        $scope.newMoveStat.autoCancel = '';
-
-        $scope.showNewMoveRow();
-    }
-
-    $scope.showMoveRow = function showMoveRow() {
-        $scope.showNewMoveRow = !$scope.showNewMoveRow;
+        clearMoveStat();
     }
 
     $scope.deleteMovementRow = function (item) {
@@ -147,6 +129,38 @@ app.controller('adminCharacterController', function ($scope, $rootScope, charact
         });
     }
 
+    //clear temp table data methods
+    function clearMoveStat() {
+        $scope.newMoveStat.name = '';
+        $scope.newMoveStat.hitboxActive = '';
+        $scope.newMoveStat.firstActionableFrame = '';
+        $scope.newMoveStat.baseDamage = '';
+        $scope.newMoveStat.angle = '';
+        $scope.newMoveStat.baseKnockBackSetKnockback = '';
+        $scope.newMoveStat.knockbackGrowth = '';
+        $scope.newMoveStat.landingLag = '';
+        $scope.newMoveStat.autoCancel = '';
+
+        $scope.showNewMoveRow();
+    }
+
+    function clearMovementStat() {
+        $scope.newMovementStat.name = '';
+        $scope.newMovementStat.value = '';
+        $scope.showMovementRow();
+    }
+
+    //show a new movement row in the UI 
+    $scope.showMovementRow = function showMovementRow() {
+        $scope.showNewMovementRow = !$scope.showNewMovementRow;
+    };
+
+    //show a new move row in the UI
+    $scope.showMoveRow = function showMoveRow() {
+        $scope.showNewMoveRow = !$scope.showNewMoveRow;
+    }
+
+    //reorder the table data
     $scope.order = function (predicate) {
         $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
         $scope.predicate = predicate;
