@@ -1,7 +1,6 @@
 ﻿using Kurogane.Data.RestApi.DTOs;
 using KuroganeHammer.Model;
 using KuroganeHammer.Service;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
@@ -29,7 +28,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(moves);
         }
 
-        [Route("movesofname")]
+        [Route("moves")]
         [HttpGet]
         public IHttpActionResult GetMovesOfName([FromUri]string name)
         {
@@ -58,7 +57,7 @@ namespace Kurogane.Data.RestApi.Controllers
 
             var foundMove = moveStatService.GetMove(value.Id);
 
-            if(foundMove == null)
+            if (foundMove == null)
             {
                 moveStatService.CreateMove(value);
             }
@@ -85,7 +84,7 @@ namespace Kurogane.Data.RestApi.Controllers
             }
 
             var foundMove = moveStatService.GetMove(value.Id);
-            if(foundMove != null)
+            if (foundMove != null)
             {
                 foundMove.Angle = value.Angle;
                 foundMove.AutoCancel = value.AutoCancel;

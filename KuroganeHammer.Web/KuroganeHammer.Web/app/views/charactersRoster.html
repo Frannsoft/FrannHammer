@@ -1,10 +1,12 @@
 ﻿<div class="col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-md-offset-2">
-    <ul >
-        <li ng-repeat="item in characters" class="box fade-in one" style="display:inline-block; float:left; margin: 5px;">
-            <a href="#character/{{item.id}}">
-                <img data-ng-src="{{item.thumbnailUrl}}"
-                     title="{{item.name}}" />
-            </a>
+    <ul>
+        <li ng-repeat="character in vm.characters" class="box fade-in one" style="display:inline-block; float:left; margin: 5px;">
+            <div ng-click="vm.goToCharacter(character)">
+                <a href="">
+                    <img data-ng-src="{{character.thumbnailUrl}}"
+                         title="{{character.name}}" />
+                </a>
+            </div>
         </li>
     </ul>
 </div>
