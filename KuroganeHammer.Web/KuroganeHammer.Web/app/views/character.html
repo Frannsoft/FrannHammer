@@ -1,12 +1,12 @@
 ﻿<div class="col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-md-offset-2">
-    <h2>{{characterName}}</h2>
+    <h2>{{vm.characterName}}</h2>
 
     <a href="https://twitter.com/share" class="twitter-share-button" data-via="jpol711" data-dnt="true">Tweet</a>
     <div class="container fade-in two">
 
         <div style="text-align:center;">
-            <img ng-src="{{mainImageUrl}}"
-                 alt="{{characterName}}" style="margin:auto" />
+            <img ng-src="{{vm.mainImageUrl}}"
+                 alt="{{vm.characterName}}" style="margin:auto" />
             <br />
             <br />
             <br />
@@ -23,7 +23,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="item in movementData" ng-click="goToMovementRanking(item)">
+                    <tr ng-repeat="item in vm.movementData" ng-click="vm.goToMovementRanking(item)">
                         <td nowrap>{{item.name}}</td>
                         <td nowrap>{{item.value}}</td>
                     </tr>
@@ -36,54 +36,54 @@
     </div>
 
     <div class="fade-in two">
-        <h6 style="float:left;">Sorting by: {{predicate}}</h6>
+        <h6 style="float:left;">Sorting by: {{vm.predicate}}</h6>
         <table class="table table-hover">
             <thead>
                 <tr>
                     <th title="Name">
-                        <a href="" ng-click="order('name')">Name</a>
-                        <span ng-show="predicate === 'name'" ng-class="{reverse:reverse}"></span>
+                        <a href="" ng-click="vm.order('name')">Name</a>
+                        <span ng-show="vm.predicate === 'name'" ng-class="{vm.reverse:vm.reverse}"></span>
                     </th>
                     <th title="HitboxActive">
-                        <a href="" ng-click="order('hitboxActive')">HitboxActive</a>
-                        <span ng-show="predicate === 'hitboxActive'" ng-class="{reverse:reverse}"></span>
+                        <a href="" ng-click="vm.order('hitboxActive')">HitboxActive</a>
+                        <span ng-show="vm.predicate === 'hitboxActive'" ng-class="{vm.reverse:vm.reverse}"></span>
                     </th>
                     <th title="First Actionable Frame">
-                        <a href="" ng-click="order('firstActionableFrame')">FAF</a>
-                        <span ng-show="predicate === 'firstActionableFrame'" ng-class="{reverse:reverse}"></span>
+                        <a href="" ng-click="vm.order('firstActionableFrame')">FAF</a>
+                        <span ng-show="vm.predicate === 'firstActionableFrame'" ng-class="{vm.reverse:vm.reverse}"></span>
                     </th>
                     <th title="Base Damage" nowrap>
-                        <a href="" ng-click="order('baseDamage')">Base Dmg. (+SD)</a>
-                        <span ng-show="predicate === 'baseDamage'" ng-class="{reverse:reverse}"></span>
+                        <a href="" ng-click="vm.order('baseDamage')">Base Dmg. (+SD)</a>
+                        <span ng-show="vm.predicate === 'baseDamage'" ng-class="{vm.reverse:vm.reverse}"></span>
                     </th>
                     <th title="Angle">
-                        <a href="" ng-click="order('angle')">Angle</a>
-                        <span ng-show="predicate === 'angle'" ng-class="{reverse:reverse}"></span>
+                        <a href="" ng-click="vm.order('angle')">Angle</a>
+                        <span ng-show="vm.predicate === 'angle'" ng-class="{vm.reverse:vm.reverse}"></span>
                     </th>
                     <th title="BaseKnockBack/SetKnockback">
-                        <a href="" ng-click="order('baseKnockBackSetKnockback')">BKB/WBKB</a>
-                        <span ng-show="predicate === 'baseKnockBackSetKnockback'" ng-class="{reverse:reverse}"></span>
+                        <a href="" ng-click="vm.order('baseKnockBackSetKnockback')">BKB/WBKB</a>
+                        <span ng-show="vm.predicate === 'baseKnockBackSetKnockback'" ng-class="{vm.reverse:vm.reverse}"></span>
                     </th>
                     <th title="Knockback Growth">
-                        <a href="" ng-click="order('knockbackGrowth')">KBG</a>
-                        <span ng-show="predicate === 'knockbackGrowth'" ng-class="{reverse:reverse}"></span>
+                        <a href="" ng-click="vm.order('knockbackGrowth')">KBG</a>
+                        <span ng-show="vm.predicate === 'knockbackGrowth'" ng-class="{vm.reverse:vm.reverse}"></span>
                     </th>
                     <!--<th>
-                        <a href="" ng-click="order('type')">Type</a>
-                        <span ng-show="predicate === 'type'" ng-class="{reverse:reverse}"></span>
+                        <a href="" ng-click="vm.order('type')">Type</a>
+                        <span ng-show="vm.predicate === 'type'" ng-class="{vm.reverse:vm.reverse}"></span>
                     </th>-->
                     <th title="Landing Lag">
-                        <a href="" ng-click="order('landingLag')">LandingLag</a>
-                        <span ng-show="predicate === 'landingLag'" ng-class="{reverse:reverse}"></span>
+                        <a href="" ng-click="vm.order('landingLag')">LandingLag</a>
+                        <span ng-show="vm.predicate === 'landingLag'" ng-class="{vm.reverse:vm.reverse}"></span>
                     </th>
                     <th title="Auto Cancel">
-                        <a href="" ng-click="order('autoCancel')">AutoCancel</a>
-                        <span ng-show="predicate === 'autoCancel'" ng-class="{reverse:reverse}"></span>
+                        <a href="" ng-click="vm.order('autoCancel')">AutoCancel</a>
+                        <span ng-show="vm.predicate === 'autoCancel'" ng-class="{vm.reverse:vm.reverse}"></span>
                     </th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="item in moveData | orderBy:predicate:reverse" ng-click="goToMoveRanking(item)">
+                <tr ng-repeat="item in vm.moveData | orderBy:vm.predicate:vm.reverse" ng-click="vm.goToMoveRanking(item)">
                     <td nowrap>{{item.name}}</td>
                     <td nowrap>{{item.hitboxActive}}</td>
                     <td nowrap>{{item.firstActionableFrame}}</td>

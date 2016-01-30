@@ -47,21 +47,16 @@
 
 </body>
 <!-- 3rd party libraries -->
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.js"></script>
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular-route.min.js"></script>
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular-resource.min.js"></script>
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular-animate.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.9.0/ui-bootstrap.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.9.0/ui-bootstrap-tpls.min.js"></script>
+
 <!-- Load app main script -->
 <script type="text/javascript" src="app/app.js"></script>
-<!-- Load controllers -->
-<script type="text/javascript" src="app/controllers/charactersRosterController.js"></script>
-<script type="text/javascript" src="app/controllers/characterController.js"></script>
-<script type="text/javascript" src="app/controllers/movementRankController.js"></script>
-<script type="text/javascript" src="app/controllers/moveRankController.js"></script>
-<script type="text/javascript" src="app/controllers/adminCharacterController.js"></script>
-<script type="text/javascript" src="app/controllers/adminNewCharacterController.js"></script>
+
 <!-- Load Services-->
 <script type="text/javascript" src="app/services/charactersRosterService.js"></script>
 <script type="text/javascript" src="app/services/characterService.js"></script>
@@ -71,6 +66,23 @@
 <script type="text/javascript" src="app/services/moveRankService.js"></script>
 <script type="text/javascript" src="app/services/movementService.js"></script>
 <script type="text/javascript" src="app/services/moveService.js"></script>
-<!-- Load Filters-->
+<script src="app/services/common.services.js"></script>
+<script src="app/services/dataAccessService.js"></script>
+
+<!-- Load controllers -->
+<script type="text/javascript" src="app/controllers/charactersRosterController.js"></script>
+<script type="text/javascript" src="app/controllers/characterController.js"></script>
+<script type="text/javascript" src="app/controllers/movementRankController.js"></script>
+<script type="text/javascript" src="app/controllers/moveRankController.js"></script>
+<script type="text/javascript" src="app/controllers/adminCharacterController.js"></script>
+<script type="text/javascript" src="app/controllers/adminNewCharacterController.js"></script>
+<script src="app/controllers/characterRosterCtrl.js"></script>
+<script src="app/controllers/movementRankCtrl.js"></script>
+<script src="app/controllers/moveRankCtrl.js"></script>
+<script src="app/controllers/characterCtrl.js"></script>
+<!-- Load Domains-->
+<script src="app/domain/character.js"></script>
+<script src="app/domain/movement.js"></script>
+<script src="app/domain/move.js"></script>
 </html>
 

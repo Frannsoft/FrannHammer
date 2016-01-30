@@ -1,54 +1,54 @@
 ﻿<div class="col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-md-offset-2">
-    <h2>{{moveName}}</h2>
+    <h2>{{vm.moveName}}</h2>
     <br/>
     <br/>
     <!--<a href="https://twitter.com/share" class="twitter-share-button" data-via="jpol711" data-dnt="true">Tweet</a>-->
     <br />
     <br />
-    <h6>Sorting by: {{predicate}}</h6>
+    <h6>Sorting by: {{vm.predicate}}</h6>
     <table class="table table-hover">
         <thead>
             <tr>
                 <th>
-                    <a href="" ng-click="order('characterName')">Character</a>
-                    <span ng-show="predicate === 'characterName'" ng-class="{reverse:reverse}"></span>
+                    <a href="" ng-click="vm.order('characterName')">Character</a>
+                    <span ng-show="vm.predicate === 'characterName'" ng-class="{vm.reverse:vm.reverse}"></span>
                 </th>
                 <th>
-                    <a href="" ng-click="order('hitboxActive')">HitboxActive</a>
-                    <span ng-show="predicate === 'hitboxActive'" ng-class="{reverse:reverse}"></span>
+                    <a href="" ng-click="vm.order('hitboxActive')">HitboxActive</a>
+                    <span ng-show="vm.predicate === 'hitboxActive'" ng-class="{vm.reverse:vm.reverse}"></span>
                 </th>
                 <th>
-                    <a href="" ng-click="order('firstActionableFrame')">FirstActionableFrame</a>
-                    <span ng-show="predicate === 'firstActionableFrame'" ng-class="{reverse:reverse}"></span>
+                    <a href="" ng-click="vm.order('firstActionableFrame')">FirstActionableFrame</a>
+                    <span ng-show="vm.predicate === 'firstActionableFrame'" ng-class="{vm.reverse:vm.reverse}"></span>
                 </th>
                 <th>
-                    <a href="" ng-click="order('baseDamage')">BaseDamage</a>
-                    <span ng-show="predicate === 'baseDamage'" ng-class="{reverse:reverse}"></span>
+                    <a href="" ng-click="vm.order('baseDamage')">BaseDamage</a>
+                    <span ng-show="vm.predicate === 'baseDamage'" ng-class="{vm.reverse:vm.reverse}"></span>
                 </th>
                 <th>
-                    <a href="" ng-click="order('angle')">Angle</a>
-                    <span ng-show="predicate === 'angle'" ng-class="{reverse:reverse}"></span>
+                    <a href="" ng-click="vm.order('angle')">Angle</a>
+                    <span ng-show="vm.predicate === 'angle'" ng-class="{vm.reverse:vm.reverse}"></span>
                 </th>
                 <th>
-                    <a href="" ng-click="order('baseKnockBackSetKnockback')">BaseKnockbackSetKnockback</a>
-                    <span ng-show="predicate === 'baseKnockBackSetKnockback'" ng-class="{reverse:reverse}"></span>
+                    <a href="" ng-click="vm.order('baseKnockBackSetKnockback')">BaseKnockbackSetKnockback</a>
+                    <span ng-show="vm.predicate === 'baseKnockBackSetKnockback'" ng-class="{vm.reverse:vm.reverse}"></span>
                 </th>
                 <th>
-                    <a href="" ng-click="order('knockbackGrowth')">KnockbackGrowth</a>
-                    <span ng-show="predicate === 'knockbackGrowth'" ng-class="{reverse:reverse}"></span>
+                    <a href="" ng-click="vm.order('knockbackGrowth')">KnockbackGrowth</a>
+                    <span ng-show="vm.predicate === 'knockbackGrowth'" ng-class="{vm.reverse:vm.reverse}"></span>
                 </th>
                 <th>
-                    <a href="" ng-click="order('landingLag')">LandingLag</a>
-                    <span ng-show="predicate === 'landingLag'" ng-class="{reverse:reverse}"></span>
+                    <a href="" ng-click="vm.order('landingLag')">LandingLag</a>
+                    <span ng-show="vm.predicate === 'landingLag'" ng-class="{vm.reverse:vm.reverse}"></span>
                 </th>
                 <th>
-                    <a href="" ng-click="order('autoCancel')">AutoCancel</a>
-                    <span ng-show="predicate === 'autoCancel'" ng-class="{reverse:reverse}"></span>
+                    <a href="" ng-click="vm.order('autoCancel')">AutoCancel</a>
+                    <span ng-show="vm.predicate === 'autoCancel'" ng-class="{vm.reverse:vm.reverse}"></span>
                 </th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="item in moveData | orderBy:predicate" ng-click="goToCharacter(item)">
+            <tr ng-repeat="item in vm.moveData | orderBy:vm.predicate" ng-click="vm.goToCharacter(item)">
                 <td><img width="70" height="70" ng-src="{{item.thumbnailUrl}}" /></td>
                 <td>{{item.hitboxActive}}</td>
                 <td>{{item.firstActionableFrame}}</td>

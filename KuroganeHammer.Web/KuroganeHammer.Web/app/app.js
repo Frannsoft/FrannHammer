@@ -1,5 +1,6 @@
-﻿var app = angular.module('KuroganeHammerApp', ['ngRoute', 'ngResource', 'ui.bootstrap',
-    'ngAnimate'])
+﻿/////
+var app = angular.module('KuroganeHammerApp', ['ngRoute', 'ngResource', 'ui.bootstrap',
+    'ngAnimate', 'common.services'])
 .run(function ($rootScope) {
     //$rootScope.APIROUTE = 'http://fransm4shtest.azurewebsites.net/api/'
     $rootScope.APIROUTE = 'http://localhost/frannhammerAPI/'
@@ -29,22 +30,22 @@ app.config(function ($routeProvider) {
     }(document, 'script', 'twitter-wjs'));
 
     $routeProvider.when("/", {
-        controller: "charactersRosterController",
+        controller: "CharacterRosterCtrl as vm",
         templateUrl: (_isNotMobile) ? "/app/views/charactersRoster.html" : "app/views/mCharactersRoster.html"
     });
 
     $routeProvider.when("/character/:characterId", {
-        controller: "characterController",
+        controller: "CharacterCtrl as vm",
         templateUrl: "/app/views/character.html"
     });
 
     $routeProvider.when("/movement", {
-        controller: "movementRankController",
+        controller: "MovementRankCtrl as vm",
         templateUrl: "/app/views/movementRanks.html"
     });
 
     $routeProvider.when('/moveRanking', {
-        controller: "moveRankController",
+        controller: "MoveRankCtrl as vm",
         templateUrl: "/app/views/moveRanks.html"
     });
 
