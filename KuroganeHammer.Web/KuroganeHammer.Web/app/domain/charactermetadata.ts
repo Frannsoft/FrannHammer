@@ -5,6 +5,7 @@
         id: number;
         name: string;
         mainImageUrl: string;
+        thumbnailUrl: string;
         description: string;
         ownerId: number;
         style: string;

@@ -879,6 +879,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app\controllers\adminCharacterCtrl.ts" />
+    <TypeScriptCompile Include="app\controllers\adminNewCharacterCtrl.ts" />
     <TypeScriptCompile Include="app\controllers\characterCtrl.ts" />
     <TypeScriptCompile Include="app\controllers\movementRankCtrl.ts" />
     <TypeScriptCompile Include="app\controllers\moveRankCtrl.ts" />
