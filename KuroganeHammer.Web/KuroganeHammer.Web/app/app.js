@@ -60,7 +60,7 @@ app.config(function ($routeProvider) {
     });
 
     $routeProvider.when("/admin/newCharacter", {
-        controller: 'adminNewCharacterController',
+        controller: 'AdminNewCharacterCtrl as vm',
         templateUrl: "app/views/adminNewCharacter.html"
     });
 

@@ -22,7 +22,7 @@
         showMoveRow(): void;
     }
 
-    interface IAdminCharacterParams extends ng.route.IRouteParamsService {
+    export interface IAdminCharacterParams extends ng.route.IRouteParamsService {
         characterId: number;
     }
 
