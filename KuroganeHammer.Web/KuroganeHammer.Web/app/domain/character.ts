@@ -1,12 +1,8 @@
 ﻿module app.domain {
-    export interface ICharacter {
-        id: number;
-        characterName: string;
-        mainImageUrl: string;
-        characterDescription: string;
-        ownerId: number;
-        characterStyle: string;
-        movementData: any[];
-        moveData: any[];
+    export interface ICharacter extends ng.resource.IResource<ICharacter>{
+        
+        metaData: app.domain.ICharacterMetadata;
+        movementData: app.domain.IMovement[];
+        moveData: app.domain.IMove[];
     }
 }

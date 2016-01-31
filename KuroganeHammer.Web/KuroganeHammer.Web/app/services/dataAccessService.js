@@ -7,26 +7,31 @@ var app;
         var DataAccessService = (function () {
             function DataAccessService($resource) {
                 this.$resource = $resource;
+                this.updateAction = {
+                    method: 'PUT',
+                    isArray: false,
+                };
             }
-            DataAccessService.prototype.getCharacterById = function (characterId) {
-                return this.$resource("http://localhost/frannhammerAPI/characters/:characterId", {
-                    characterId: characterId
-                });
+            DataAccessService.prototype.getCharacterResource = function (characterId) {
+                return this.$resource("http://localhost/frannhammerAPI/characters/:characterId", { characterId: characterId }, { update: this.updateAction });
             };
-            DataAccessService.prototype.getCharacterResource = function () {
-                return this.$resource("http://localhost/frannhammerAPI/characters/:characterId");
+            DataAccessService.prototype.getMovementResource = function (movementId) {
+                return this.$resource("http://localhost/frannhammerAPI/movement/:movementId", { movementId: movementId }, { update: this.updateAction });
+            };
+            DataAccessService.prototype.getMoveResource = function (moveId) {
+                return this.$resource("http://localhost/frannhammerAPI/moves/:moveId", { moveId: moveId }, { update: this.updateAction });
             };
             DataAccessService.prototype.getMovementsOfName = function (name) {
-                return this.$resource("http://localhost/frannhammerAPI/movement/", { name: name });
+                return this.$resource("http://localhost/frannhammerAPI/movement/", { name: name }, { update: this.updateAction });
             };
             DataAccessService.prototype.getMovesOfName = function (name) {
-                return this.$resource("http://localhost/frannhammerAPI/moves/", { name: name });
+                return this.$resource("http://localhost/frannhammerAPI/moves/", { name: name }, { update: this.updateAction });
             };
-            DataAccessService.prototype.getMovesById = function (id) {
-                return this.$resource("http://localhost/frannhammerAPI/characters/:id/moves", { id: id });
+            DataAccessService.prototype.getMovesOfCharacter = function (characterId) {
+                return this.$resource("http://localhost/frannhammerAPI/characters/:characterId/moves", { characterId: characterId }, { update: this.updateAction });
             };
-            DataAccessService.prototype.getMovementsById = function (id) {
-                return this.$resource("http://localhost/frannHammerAPI/characters/:id/movement", { id: id });
+            DataAccessService.prototype.getMovementsOfCharacter = function (characterId) {
+                return this.$resource("http://localhost/frannhammerAPI/characters/:characterId/movement", { characterId: characterId }, { update: this.updateAction });
             };
             DataAccessService.$inject = ["$resource"];
             return DataAccessService;

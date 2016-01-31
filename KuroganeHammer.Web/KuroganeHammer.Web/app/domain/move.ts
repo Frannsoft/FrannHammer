@@ -1,6 +1,6 @@
 ﻿module app.domain {
 
-    export interface IMove {
+    export interface IMove extends ng.resource.IResource<IMove>{
 
         name: string;
         id: number;

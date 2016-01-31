@@ -41,20 +41,20 @@
             
             this.characterId = $routeParams.characterId;
 
-            var characterResource = dataAccessService.getCharacterById(this.characterId);
+            var characterResource = dataAccessService.getCharacterResource(this.characterId);
             characterResource.get((data: app.domain.ICharacter) => {
-                this.characterName = data.characterName;
-                this.mainImageUrl = data.mainImageUrl;
-                this.characterDescription = data.characterDescription;
-                this.characterStyle = data.characterStyle;
+                this.characterName = data.metaData.name;
+                this.mainImageUrl = data.metaData.mainImageUrl;
+                this.characterDescription = data.metaData.description;
+                this.characterStyle = data.metaData.style;
             });
 
-            var movementResource = dataAccessService.getMovementsById(this.characterId);
+            var movementResource = dataAccessService.getMovementResource(this.characterId);
             movementResource.query((data: app.domain.IMovement[]) => {
                 this.movementData = data;
             });
 
-            var moveResource = dataAccessService.getMovesById(this.characterId);
+            var moveResource = dataAccessService.getMoveResource(this.characterId);
             moveResource.query((data: app.domain.IMove[]) => {
                 this.moveData = data;
             });
@@ -65,7 +65,7 @@
         }
 
         goToMovementRanking(rowItem: IMovement): void {
-            this.$location.path('/movement').search({ name: rowItem.movementName });
+            this.$location.path('/movement').search({ name: rowItem.name });
         }
 
         goToMoveRanking(rowItem: IMove): void {

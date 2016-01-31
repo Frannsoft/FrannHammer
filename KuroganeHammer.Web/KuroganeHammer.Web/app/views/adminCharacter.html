@@ -1,19 +1,19 @@
 ﻿<div class="col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-md-offset-2">
 
-    <input type="text" class="form-control" value="{{characterName}}" ng-model="characterName" />
-    <span class="glyphicon glyphicon-floppy-disk" ng-click="saveChanges()"></span>
+    <input type="text" class="form-control" value="{{vm.character.name}}" ng-model="vm.character.name" />
+    <span class="glyphicon glyphicon-floppy-disk" ng-click="vm.saveCharacterChanges()"></span>
 
     <div class="container fade-in two">
 
         <div style="text-align:center">
-            <img ng-src="{{mainImageUrl}}"
-                 alt="{{characterName}}" style="margin:auto" />
+            <img ng-src="{{vm.character.mainImageUrl}}"
+                 alt="{{vm.character.name}}" style="margin:auto" />
             <br />
             <br />
             <br />
             <br />
-            <input type="button" ng-click="showMovementRow()" value="Add new movement stat" />
-            <div ng-show="showNewMovementRow">
+            <input type="button" ng-click="vm.showMovementRow()" value="Add new movement stat" />
+            <div ng-show="vm.showNewMovementRow">
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -23,13 +23,13 @@
                     </thead>
                     <tr>
                         <td>
-                            <input type="text" class="form-control" value="" ng-model="newMovementStat.name" />
+                            <input type="text" class="form-control" value="" ng-model="vm.newMovementStat.name" />
                         </td>
                         <td>
-                            <input type="text" style="color:black;" value="" ng-model="newMovementStat.value" />
+                            <input type="text" style="color:black;" value="" ng-model="vm.newMovementStat.value" />
                         </td>
                         <td>
-                            <input type="button" style="color:black;" ng-click="createNewMovementStat()" value="Create" />
+                            <input type="button" style="color:black;" ng-click="vm.createNewMovementStat()" value="Create" />
                         </td>
                     </tr>
                 </table>
@@ -43,7 +43,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="item in movementData">
+                    <tr ng-repeat="item in vm.movementData">
                         <td>
                             <input type="text" class="form-control" value="{{item.name}}" ng-model="item.name" />
                         </td>
@@ -51,8 +51,8 @@
                             <input type="text" class="form-control" value="{{item.value}}" ng-model="item.value" />
                         </td>
                         <td>
-                            <span class="glyphicon glyphicon-floppy-disk" ng-click="saveMovementRow(item)"></span>
-                            <span class="glyphicon glyphicon-remove" ng-click="deleteMovementRow(item)"></span>
+                            <span title="save" class="glyphicon glyphicon-floppy-disk" ng-click="vm.saveMovementRow(item)"></span>
+                            <span title="delete" class="glyphicon glyphicon-remove" ng-click="vm.deleteMovementRow(item)"></span>
                         </td>
                     </tr>
             </table>
@@ -61,9 +61,9 @@
             <br />
             <br />
             <br />
-            <h6 style="float:left;">Sorting by: {{predicate}}</h6>
-            <input type="button" ng-click="showMoveRow()" value="Add new move" />
-            <div ng-show="showNewMoveRow">
+            <h6 style="float:left;">Sorting by: {{vm.predicate}}</h6>
+            <input type="button" ng-click="vm.showMoveRow()" value="Add new move" />
+            <div ng-show="vm.showNewMoveRow">
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -80,34 +80,34 @@
                     </thead>
                     <tr>
                         <td>
-                            <input type="text" class="form-control" ng-model="newMoveStat.name" />
+                            <input type="text" class="form-control" ng-model="vm.newMoveStat.name" />
                         </td>
                         <td>
-                            <input type="text" class="form-control" ng-model="newMoveStat.hitboxActive" />
+                            <input type="text" class="form-control" ng-model="vm.newMoveStat.hitboxActive" />
                         </td>
                         <td>
-                            <input type="text" class="form-control" ng-model="newMoveStat.firstActionableFrame" />
+                            <input type="text" class="form-control" ng-model="vm.newMoveStat.firstActionableFrame" />
                         </td>
                         <td>
-                            <input type="text" class="form-control" ng-model="newMoveStat.baseDamage" />
+                            <input type="text" class="form-control" ng-model="vm.newMoveStat.baseDamage" />
                         </td>
                         <td>
-                            <input type="text" class="form-control" ng-model="newMoveStat.angle" />
+                            <input type="text" class="form-control" ng-model="vm.newMoveStat.angle" />
                         </td>
                         <td>
-                            <input type="text" class="form-control" ng-model="newMoveStat.baseKnockBackSetKnockback" />
+                            <input type="text" class="form-control" ng-model="vm.newMoveStat.baseKnockBackSetKnockback" />
                         </td>
                         <td>
-                            <input type="text" class="form-control" ng-model="newMoveStat.knockbackGrowth" />
+                            <input type="text" class="form-control" ng-model="vm.newMoveStat.knockbackGrowth" />
                         </td>
                         <td>
-                            <input type="text" class="form-control" ng-model="newMoveStat.landingLag" />
+                            <input type="text" class="form-control" ng-model="vm.newMoveStat.landingLag" />
                         </td>
                         <td>
-                            <input type="text" class="form-control" ng-model="newMoveStat.autoCancel" />
+                            <input type="text" class="form-control" ng-model="vm.newMoveStat.autoCancel" />
                         </td>
                         <td>
-                            <input type="button" class="form-control" ng-click="createNewMoveStat()" value="Create" />
+                            <input type="button" class="form-control" ng-click="vm.createNewMoveStat()" value="Create" />
                         </td>
                     </tr>
                 </table>
@@ -120,48 +120,48 @@
                         </th>
                         <th title="Name">
                             <a href="">Name</a>
-                            <span ng-show="predicate === 'name'" ng-class="{reverse:reverse}"></span>
+                            <span ng-show="vm.predicate === 'name'" ng-class="{vm.reverse:vm.reverse}"></span>
                         </th>
                         <th title="HitboxActive">
                             <a href="">HitboxActive</a>
-                            <span ng-show="predicate === 'hitboxActive'" ng-class="{reverse:reverse}"></span>
+                            <span ng-show="vm.predicate === 'hitboxActive'" ng-class="{vm.reverse:vm.reverse}"></span>
                         </th>
                         <th title="First Actionable Frame">
                             <a href="">FAF</a>
-                            <span ng-show="predicate === 'firstActionableFrame'" ng-class="{reverse:reverse}"></span>
+                            <span ng-show="vm.predicate === 'firstActionableFrame'" ng-class="{vm.reverse:vm.reverse}"></span>
                         </th>
                         <th title="Base Damage" nowrap>
                             <a href="">Base Dmg. (+SD)</a>
-                            <span ng-show="predicate === 'baseDamage'" ng-class="{reverse:reverse}"></span>
+                            <span ng-show="vm.predicate === 'baseDamage'" ng-class="{vm.reverse:vm.reverse}"></span>
                         </th>
                         <th title="Angle">
                             <a href="">Angle</a>
-                            <span ng-show="predicate === 'angle'" ng-class="{reverse:reverse}"></span>
+                            <span ng-show="vm.predicate === 'angle'" ng-class="{vm.reverse:vm.reverse}"></span>
                         </th>
                         <th title="BaseKnockBack/SetKnockback">
                             <a href="">BKB/WBKB</a>
-                            <span ng-show="predicate === 'baseKnockBackSetKnockback'" ng-class="{reverse:reverse}"></span>
+                            <span ng-show="vm.predicate === 'baseKnockBackSetKnockback'" ng-class="{vm.reverse:vm.reverse}"></span>
                         </th>
                         <th title="Knockback Growth">
                             <a href="">KBG</a>
-                            <span ng-show="predicate === 'knockbackGrowth'" ng-class="{reverse:reverse}"></span>
+                            <span ng-show="vm.predicate === 'knockbackGrowth'" ng-class="{vm.reverse:vm.reverse}"></span>
                         </th>
                         <th title="Landing Lag">
                             <a href="">LandingLag</a>
-                            <span ng-show="predicate === 'landingLag'" ng-class="{reverse:reverse}"></span>
+                            <span ng-show="vm.predicate === 'landingLag'" ng-class="{vm.reverse:vm.reverse}"></span>
                         </th>
                         <th title="Auto Cancel">
                             <a href="">AutoCancel</a>
-                            <span ng-show="predicate === 'autoCancel'" ng-class="{reverse:reverse}"></span>
+                            <span ng-show="vm.predicate === 'autoCancel'" ng-class="{vm.reverse:vm.reverse}"></span>
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="item in moveData | orderBy:predicate:reverse">
+                    <tr ng-repeat="item in vm.moveData | orderBy:vm.predicate:vm.reverse">
                         <td>
                             <span>
-                                <span class="glyphicon glyphicon-floppy-disk" ng-click="saveMoveRow(item)"></span>
-                                <span class="glyphicon glyphicon-remove" ng-click="deleteMoveRow(item)"></span>
+                                <span title="save" class="glyphicon glyphicon-floppy-disk" ng-click="vm.saveMoveRow(item)"></span>
+                                <span title="delete" class="glyphicon glyphicon-remove" ng-click="vm.deleteMoveRow(item)"></span>
                             </span>
                         </td>
                         <td>
@@ -195,5 +195,9 @@
                 </tbody>
             </table>
         </div>
+        <hr />
+        <a href="" class="btn btn-success" ng-click="vm.saveAllChanges()">Save Changes</a>
+        <hr />
+        <br />
     </div>
 </div>

@@ -21,7 +21,7 @@
         }
 
         goToCharacter(character: ICharacter): void {
-            this.$location.path('/character/' + character.id);
+            this.$location.path('/character/' + character.metaData.id);
         }
     }
 

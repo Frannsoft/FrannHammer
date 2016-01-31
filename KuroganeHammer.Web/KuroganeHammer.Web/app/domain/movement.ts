@@ -1,6 +1,8 @@
 ﻿module app.domain {
-    export interface IMovement {
-        movementName: string;
-        movementValue: number;
+    export interface IMovement extends ng.resource.IResource<IMovement>{
+        ownerId: number;
+        id: number;
+        name: string;
+        value: number;
     }
 }
