@@ -1,60 +1,83 @@
-﻿ /// <reference path="../../scripts/typings/angularjs/angular.d.ts" />
+﻿/// <reference path="../../scripts/typings/angularjs/angular.d.ts" />
 /// <reference path="../../scripts/typings/angularjs/angular-resource.d.ts" />
 
 module app.common {
+
     interface IDataAccessService {
-        getCharacterResource(): ng.resource.IResourceClass<ICharacterResource>;
-        getMovementsOfName(name: string): ng.resource.IResourceClass<IMovementResource>;
-        getMovesOfName(name: string): ng.resource.IResourceClass<IMoveResource>;
-        getCharacterById(id: number): ng.resource.IResourceClass<ICharacterResource>;
-        getMovesById(id: number): ng.resource.IResourceClass<IMoveResource>;
-        getMovementsById(id: number): ng.resource.IResourceClass<IMovementResource>;
+        getCharacterResource(characterId?: number): app.common.ICharacterResource;
+        getMovementResource(movementId?: number): app.common.IMovementResource;
+        getMoveResource(moveId?: number): app.common.IMoveResource;
+        getMovementsOfName(name: string): app.common.IMovementResource;
+        getMovesOfName(name: string): app.common.IMoveResource;
+        getMovesOfCharacter(characterId: number): app.common.IMoveResource;
+        getMovementsOfCharacter(characterId: number): app.common.IMovementResource;
     }
 
-    interface ICharacterResource extends ng.resource.IResource<app.domain.ICharacter> {
-
+    export interface ICharacterResource extends ng.resource.IResourceClass<app.domain.ICharacter> {
+        update(ICharacter): app.domain.ICharacter;
     }
 
-    interface IMovementResource extends ng.resource.IResource<app.domain.IMovement> {
-
+    export interface IMovementResource extends ng.resource.IResourceClass<app.domain.IMovement> {
+        update(IMovement): app.domain.IMovement;
     }
 
-    interface IMoveResource extends ng.resource.IResource<app.domain.IMove> {
-
+    export interface IMoveResource extends ng.resource.IResourceClass<app.domain.IMove> {
+        update(IMove): app.domain.IMove;
     }
 
     export class DataAccessService implements IDataAccessService {
 
+        updateAction: ng.resource.IActionDescriptor;
+
         static $inject = ["$resource"];
         constructor(private $resource: ng.resource.IResourceService) {
-
+            this.updateAction = {
+                method: 'PUT',
+                isArray: false,
+            };
         }
 
-        getCharacterById(characterId: number): ng.resource.IResourceClass<ICharacterResource> {
-            return this.$resource("http://localhost/frannhammerAPI/characters/:characterId",
-                {
-                    characterId: characterId
-                });
+
+        getCharacterResource(characterId?: number): app.common.ICharacterResource {
+            return <app.common.ICharacterResource> this.$resource("http://localhost/frannhammerAPI/characters/:characterId",
+                { characterId: characterId },
+                { update: this.updateAction });
         }
 
-        getCharacterResource(): ng.resource.IResourceClass<ICharacterResource> {
-            return this.$resource("http://localhost/frannhammerAPI/characters/:characterId");
+        getMovementResource(movementId?: number): app.common.IMovementResource {
+            return <app.common.IMovementResource> this.$resource("http://localhost/frannhammerAPI/movement/:movementId",
+                { movementId: movementId },
+                { update: this.updateAction });
         }
 
-        getMovementsOfName(name: string): ng.resource.IResourceClass<IMovementResource> {
-            return this.$resource("http://localhost/frannhammerAPI/movement/", { name: name });
+        getMoveResource(moveId?: number): app.common.IMoveResource {
+            return <app.common.IMoveResource> this.$resource("http://localhost/frannhammerAPI/moves/:moveId",
+                { moveId: moveId },
+                { update: this.updateAction });
         }
 
-        getMovesOfName(name: string): ng.resource.IResourceClass<IMoveResource> {
-            return this.$resource("http://localhost/frannhammerAPI/moves/", { name: name });
+        getMovementsOfName(name: string): app.common.IMovementResource {
+            return <app.common.IMovementResource> this.$resource("http://localhost/frannhammerAPI/movement/",
+                { name: name },
+                { update: this.updateAction });
         }
 
-        getMovesById(id: number): ng.resource.IResourceClass<IMoveResource> {
-            return this.$resource("http://localhost/frannhammerAPI/characters/:id/moves", { id: id }); 
+        getMovesOfName(name: string): app.common.IMoveResource {
+            return <app.common.IMoveResource> this.$resource("http://localhost/frannhammerAPI/moves/",
+                { name: name },
+                { update: this.updateAction });
         }
 
-        getMovementsById(id: number): ng.resource.IResourceClass<IMovementResource> {
-            return this.$resource("http://localhost/frannHammerAPI/characters/:id/movement", { id: id });
+        getMovesOfCharacter(characterId: number): app.common.IMoveResource {
+            return <app.common.IMoveResource> this.$resource("http://localhost/frannhammerAPI/characters/:characterId/moves",
+                { characterId: characterId },
+                { update: this.updateAction });
+        }
+
+        getMovementsOfCharacter(characterId: number): app.common.IMovementResource {
+            return <app.common.IMovementResource> this.$resource("http://localhost/frannhammerAPI/characters/:characterId/movement",
+                { characterId: characterId },
+                { update: this.updateAction });
         }
     }
     angular

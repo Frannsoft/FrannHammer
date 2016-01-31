@@ -120,7 +120,7 @@ namespace Kurogane.Data.RestApi.Controllers
                 characterStatService.UpdateCharacter(foundChar);
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(value);
         }
 
         [Route("characters/{id}")]

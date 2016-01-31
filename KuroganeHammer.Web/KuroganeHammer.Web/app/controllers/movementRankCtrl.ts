@@ -42,7 +42,7 @@
 
         goToCharacter(rowItem: ICharacter): void {
             this.$location.search('name', null); //cleanup url
-            this.$location.path('/character/' + rowItem.ownerId);
+            this.$location.path('/character/' + rowItem.metaData.ownerId);
         }
     }
 

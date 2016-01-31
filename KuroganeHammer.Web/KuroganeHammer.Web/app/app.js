@@ -55,7 +55,7 @@ app.config(function ($routeProvider) {
     });
 
     $routeProvider.when("/admin/editCharacter/:characterId", {
-        controller: 'adminCharacterController',
+        controller: 'AdminCharacterCtrl as vm',
         templateUrl: "app/views/adminCharacter.html"
     });
 

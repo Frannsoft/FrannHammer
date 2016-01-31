@@ -878,11 +878,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="app\controllers\adminCharacterCtrl.ts" />
     <TypeScriptCompile Include="app\controllers\characterCtrl.ts" />
     <TypeScriptCompile Include="app\controllers\movementRankCtrl.ts" />
     <TypeScriptCompile Include="app\controllers\moveRankCtrl.ts" />
     <TypeScriptCompile Include="app\domain\character.ts" />
     <TypeScriptCompile Include="app\controllers\characterRosterCtrl.ts" />
+    <TypeScriptCompile Include="app\domain\charactermetadata.ts" />
     <TypeScriptCompile Include="app\domain\move.ts" />
     <TypeScriptCompile Include="app\domain\movement.ts" />
     <TypeScriptCompile Include="app\services\dataAccessService.ts" />
