@@ -14,13 +14,15 @@
         <hr />
         <h4>Imagery:</h4>
         <div>
-            <label>Main Image (used when viewing character page):</label>
-            <input type="file" value="..." ng-model="vm.character.mainImageUrl" />
+            <label title="Used when viewing character page">Main Image Url:</label>
+            <!--<input type="file" value="..." ng-model="vm.character.mainImageUrl" />-->
+            <input type="text" value="{{vm.character.mainImageUrl}}" ng-model="vm.character.mainImageUrl" />
         </div>
         <br />
         <div>
-            <label>Tile Image (used when viewing the roster page):</label>
-            <input type="file" value="..." ng-model="vm.character.thumbnailUrl" />
+            <label title="Used when viewing the roster page">Tile Image Url:</label>
+            <!--<input type="file" value="..." ng-model="vm.character.thumbnailUrl" />-->
+            <input type="text" value="{{vm.character.thumbnailUrl}}" ng-model="vm.character.thumbnailUrl" />
         </div>
 
         <div style="text-align:center">
