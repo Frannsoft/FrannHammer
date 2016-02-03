@@ -1,12 +1,12 @@
 ﻿<div class="col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-md-offset-2">
-    <h2>{{vm.characterName}}</h2>
+    <h2>{{vm.character.name}}</h2>
 
     <a href="https://twitter.com/share" class="twitter-share-button" data-via="jpol711" data-dnt="true">Tweet</a>
     <div class="container fade-in two">
 
         <div style="text-align:center;">
-            <img ng-src="{{vm.mainImageUrl}}"
-                 alt="{{vm.characterName}}" style="margin:auto" />
+            <img ng-src="{{vm.character.mainImageUrl}}"
+                 alt="{{vm.character.name}}" style="m style="margin:auto" />
             <br />
             <br />
             <br />
@@ -27,6 +27,7 @@
                         <td nowrap>{{item.name}}</td>
                         <td nowrap>{{item.value}}</td>
                     </tr>
+                </tbody>
             </table>
 
             <br />

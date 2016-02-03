@@ -2,7 +2,7 @@
 
     interface ICharacterRosterModel {
         characters: app.domain.ICharacter[];
-        goToCharacter(character: ICharacter): void;
+        goToCharacter(character: ICharacterMetadata): void;
     }
 
     class CharacterRosterCtrl implements ICharacterRosterModel {
@@ -20,8 +20,8 @@
             });
         }
 
-        goToCharacter(character: ICharacter): void {
-            this.$location.path('/character/' + character.metaData.id);
+        goToCharacter(character: ICharacterMetadata): void {
+            this.$location.path('/character/' + character.id);
         }
     }
 

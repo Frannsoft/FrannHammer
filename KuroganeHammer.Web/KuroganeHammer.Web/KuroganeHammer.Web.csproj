@@ -49,20 +49,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
-    <Content Include="app\controllers\adminCharacterController.js" />
-    <Content Include="app\controllers\adminNewCharacterController.js" />
-    <Content Include="app\controllers\characterController.js" />
-    <Content Include="app\controllers\charactersRosterController.js" />
-    <Content Include="app\controllers\movementRankController.js" />
-    <Content Include="app\controllers\moveRankController.js" />
-    <Content Include="app\services\characterMovesService.js" />
-    <Content Include="app\services\characterService.js" />
-    <Content Include="app\services\charactersRosterService.js" />
-    <Content Include="app\services\characterMovementService.js" />
-    <Content Include="app\services\movementRankService.js" />
-    <Content Include="app\services\movementService.js" />
-    <Content Include="app\services\moveRankService.js" />
-    <Content Include="app\services\moveService.js" />
     <Content Include="app\views\aboutus.html" />
     <Content Include="app\views\adminCharacter.html" />
     <Content Include="app\views\adminNewCharacter.html" />

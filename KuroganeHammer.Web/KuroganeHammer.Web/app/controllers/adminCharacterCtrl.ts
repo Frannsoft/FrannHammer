@@ -9,7 +9,7 @@
         showNewMoveRow: boolean;
         newMovementStat: app.domain.IMovement;
         newMoveStat: app.domain.IMove;
-        saveCharacterChanges(): void;
+        saveCharacterDetailsChanges(): void;
         saveMovementRow(rowItem: IMovement): void;
         saveMoveRow(rowItem: IMove): void;
         createNewMovementStat(): void;
@@ -63,7 +63,7 @@
             });
         }
 
-        saveCharacterChanges(): void {
+        saveCharacterDetailsChanges(): void {
             var characterResource = this.dataAccessService.getCharacterResource(this.character.id);
             characterResource.update(this.character);
         }

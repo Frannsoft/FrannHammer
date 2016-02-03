@@ -36,7 +36,7 @@ var app;
                     _this.moveData = data;
                 });
             };
-            AdminCharacterCtrl.prototype.saveCharacterChanges = function () {
+            AdminCharacterCtrl.prototype.saveCharacterDetailsChanges = function () {
                 var characterResource = this.dataAccessService.getCharacterResource(this.character.id);
                 characterResource.update(this.character);
             };
