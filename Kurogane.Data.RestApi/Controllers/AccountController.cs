@@ -1,11 +1,12 @@
-﻿using Kurogane.Data.RestApi.DTOs;
+﻿using KuroganeHammer.Data.Infrastructure;
+using KuroganeHammer.Model.Models;
 using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
-    [RoutePrefix("frannhammerAPI/Account")]
+    [RoutePrefix("account")]
     public class AccountController : ApiController
     {
         private AuthRepository _repo = null;

@@ -183,8 +183,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="AuthContext.cs" />
-    <Compile Include="AuthRepository.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CharacterController.cs" />
     <Compile Include="Controllers\MoveController.cs" />
@@ -194,7 +192,6 @@
     <Compile Include="DTOs\CharacterDTO.cs" />
     <Compile Include="DTOs\MoveDTO.cs" />
     <Compile Include="DTOs\MovementStatDTO.cs" />
-    <Compile Include="DTOs\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="Startup.cs" />

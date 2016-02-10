@@ -3,7 +3,6 @@ using System.Web.Http;
 using System.Linq;
 using KuroganeHammer.Service;
 using KuroganeHammer.Model;
-using System.Net;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
@@ -20,6 +19,8 @@ namespace Kurogane.Data.RestApi.Controllers
             this.moveStatService = moveStatService;
         }
 
+        //test
+        [Authorize]
         [Route("characters")]
         [HttpGet]
         public IHttpActionResult GetRoster()

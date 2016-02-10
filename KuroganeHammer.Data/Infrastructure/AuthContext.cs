@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace Kurogane.Data.RestApi
+namespace KuroganeHammer.Data.Infrastructure
 {
     public class AuthContext : IdentityDbContext<IdentityUser>
     {
