@@ -1,5 +1,5 @@
 ﻿/////
-var app = angular.module('KuroganeHammerApp', ['ngRoute', 'ngResource', 'ui.bootstrap',
+var app = angular.module('KuroganeHammerApp', ['ngRoute', 'ngResource', 'ui.bootstrap', 'LocalStorageModule',
     'ngAnimate', 'common.services'])
 .run(function ($rootScope) {
     //$rootScope.APIROUTE = 'http://fransm4shtest.azurewebsites.net/api/'
@@ -9,7 +9,7 @@ var app = angular.module('KuroganeHammerApp', ['ngRoute', 'ngResource', 'ui.boot
     //$rootScope.BASEURL = 'http://frannhammertest.azurewebsites.net/%23/';
 });
 
-app.config(function ($routeProvider) {
+app.config(function ($routeProvider, $httpProvider) {
 
     var _isNotMobile = (function () {
         var check = false;
@@ -28,6 +28,11 @@ app.config(function ($routeProvider) {
             fjs.parentNode.insertBefore(js, fjs);
         }
     }(document, 'script', 'twitter-wjs'));
+
+    $routeProvider.when("/home", {
+        controller: "homeController",
+        templateUrl: "app/views/home.html"
+    });
 
     $routeProvider.when("/", {
         controller: "CharacterRosterCtrl as vm",
@@ -78,6 +83,22 @@ app.config(function ($routeProvider) {
         controller: "",
         templateUrl: "app/views/apidocs.html"
     });
+
+    $routeProvider.when("/login", {
+        controller: "loginController",
+        templateUrl: "app/views/login.html"
+    });
+
+    $routeProvider.when("/signup", {
+        controller: "signupController",
+        templateUrl: "app/views/signup.html"
+    });
     
     $routeProvider.otherwise({ redirectTo: "/" });
+
+    
 });
+
+app.config(function ($httpProvider) {
+    $httpProvider.interceptors.push('authInterceptorService');
+})
