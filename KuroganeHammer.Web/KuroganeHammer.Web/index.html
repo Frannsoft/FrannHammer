@@ -18,14 +18,15 @@
                     <h4>Welcome to the home of Kurogane Hammer</h4>
                 </div>
             </div>
-            <div class="navbar-collapse collapse">
+            <div class="navbar-collapse collapse" data-ng-controller="indexController">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="/">Home</a></li>
                     <li><a href="/">Smash 4</a></li>
                     <li><a href="#aboutus">About Us</a></li>
                     <li><a href="#glossary">Glossary</a></li>
                     <li><a href="#api">API</a></li>
-                    <li><a href="#login">Login</a></li>
+                    <li data-ng-hide="authentication.isAuth"><a href="#login">Login</a></li>
+                    <li data-ng-show="authentication.isAuth"><a href="" ng-click="logOut()">Logout</a></li>
                     <li><a href="#signup">Signup</a></li>
                 </ul>
             </div>

@@ -1,7 +1,7 @@
 ﻿'use strict';
-app.factory('authService', ['$http', '$q', 'localStorageService', function ($http, $q, $rootScope, localStorageService) {
+app.factory('authService', ['$http', '$q', 'localStorageService', function ($http, $q, localStorageService) {
 
-    var serviceBase = $rootScope.APIROUTE;
+    var serviceBase = 'http://localhost/frannhammerAPI/';
     var authServiceFactory = {};
 
     var _authentication = {
@@ -16,13 +16,11 @@ app.factory('authService', ['$http', '$q', 'localStorageService', function ($htt
         return $http.post(serviceBase + 'account/register', registration).then(function (response) {
             return response;
         });
-
     };
 
     var _login = function (loginData) {
 
         var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password;
-
         var deferred = $q.defer();
 
         $http.post(serviceBase + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function (response) {
@@ -40,7 +38,6 @@ app.factory('authService', ['$http', '$q', 'localStorageService', function ($htt
         });
 
         return deferred.promise;
-
     };
 
     var _logOut = function () {
@@ -49,7 +46,6 @@ app.factory('authService', ['$http', '$q', 'localStorageService', function ($htt
 
         _authentication.isAuth = false;
         _authentication.userName = "";
-
     };
 
     var _fillAuthData = function () {
@@ -59,7 +55,6 @@ app.factory('authService', ['$http', '$q', 'localStorageService', function ($htt
             _authentication.isAuth = true;
             _authentication.userName = authData.userName;
         }
-
     }
 
     authServiceFactory.saveRegistration = _saveRegistration;
