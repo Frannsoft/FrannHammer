@@ -49,6 +49,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
+    <Content Include="app\controllers\homeController.js" />
+    <Content Include="app\controllers\indexController.js" />
+    <Content Include="app\controllers\loginController.js" />
+    <Content Include="app\controllers\signupController.js" />
+    <Content Include="app\services\authInterceptorService.js" />
+    <Content Include="app\services\authService.js" />
     <Content Include="app\views\aboutus.html" />
     <Content Include="app\views\adminCharacter.html" />
     <Content Include="app\views\adminNewCharacter.html" />
@@ -57,9 +63,12 @@
     <Content Include="app\views\charactersRoster.html" />
     <Content Include="app\views\contactus.html" />
     <Content Include="app\views\glossary.html" />
+    <Content Include="app\views\home.html" />
+    <Content Include="app\views\login.html" />
     <Content Include="app\views\mCharactersRoster.html" />
     <Content Include="app\views\movementRanks.html" />
     <Content Include="app\views\moveRanks.html" />
+    <Content Include="app\views\signup.html" />
     <Content Include="content\css\boxfade.css" />
     <Content Include="content\css\bootstrap.css" />
     <Content Include="content\css\bootstrap.min.css" />
@@ -78,6 +87,8 @@
     <Content Include="Scripts\angular-csp.css" />
     <Content Include="Scripts\angular-loader.js" />
     <Content Include="Scripts\angular-loader.min.js" />
+    <Content Include="Scripts\angular-local-storage.js" />
+    <Content Include="Scripts\angular-local-storage.min.js" />
     <Content Include="Scripts\angular-message-format.js" />
     <Content Include="Scripts\angular-message-format.min.js" />
     <Content Include="Scripts\angular-messages.js" />

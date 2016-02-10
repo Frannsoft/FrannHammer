@@ -25,6 +25,8 @@
                     <li><a href="#aboutus">About Us</a></li>
                     <li><a href="#glossary">Glossary</a></li>
                     <li><a href="#api">API</a></li>
+                    <li><a href="#login">Login</a></li>
+                    <li><a href="#signup">Signup</a></li>
                 </ul>
             </div>
         </div>
@@ -53,6 +55,7 @@
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular-animate.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.9.0/ui-bootstrap.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.9.0/ui-bootstrap-tpls.min.js"></script>
+<script type="text/javascript" src="Scripts/angular-local-storage.min.js"></script>
 
 <!-- Load app main script -->
 <script type="text/javascript" src="app/app.js"></script>
@@ -60,7 +63,8 @@
 <!-- Load Services-->
 <script src="app/services/common.services.js"></script>
 <script src="app/services/dataAccessService.js"></script>
-
+<script src="app/services/authInterceptorService.js"></script>
+<script src="app/services/authService.js"></script>
 <!-- Load controllers -->
 <script src="app/controllers/characterRosterCtrl.js"></script>
 <script src="app/controllers/movementRankCtrl.js"></script>
@@ -68,6 +72,10 @@
 <script src="app/controllers/characterCtrl.js"></script>
 <script src="app/controllers/adminCharacterCtrl.js"></script>
 <script src="app/controllers/adminNewCharacterCtrl.js"></script>
+<script src="app/controllers/signupController.js"></script>
+<script src="app/controllers/loginController.js"></script>
+<script src="app/controllers/indexController.js"></script>
+<script src="app/controllers/homeController.js"></script>
 <!-- Load Domains-->
 <script src="app/domain/character.js"></script>
 <script src="app/domain/movement.js"></script>
