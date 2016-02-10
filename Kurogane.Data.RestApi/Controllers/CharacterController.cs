@@ -18,15 +18,7 @@ namespace Kurogane.Data.RestApi.Controllers
             this.movementStatService = movementStatService;
             this.moveStatService = moveStatService;
         }
-        //seven
-        //six
-        //five
 
-        //three
-        //two
-        //two
-        //one
-        //test
         [Authorize]
         [Route("characters")]
         [HttpGet]
