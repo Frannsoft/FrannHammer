@@ -24,8 +24,8 @@ namespace Kurogane.Data.RestApi
 
             HttpConfiguration config = new HttpConfiguration();
             config.Services.Replace(typeof(IAssembliesResolver), new CustomAssembliesResolver());
-            config.EnableSwagger(c => c.SingleApiVersion("v1", "FrannHammerAPI"))
-            .EnableSwaggerUi();
+            //config.EnableSwagger(c => c.SingleApiVersion("v1", "FrannHammerAPI"))
+            //.EnableSwaggerUi();
             WebApiConfig.Register(config);
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
 
@@ -75,7 +75,7 @@ namespace Kurogane.Data.RestApi
             {
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(30),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
                 Provider = new SimpleAuthorizationServerProvider()
             };
 

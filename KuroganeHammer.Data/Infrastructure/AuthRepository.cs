@@ -1,10 +1,10 @@
-﻿using Kurogane.Data.RestApi.DTOs;
+﻿using KuroganeHammer.Model.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Threading.Tasks;
 
-namespace Kurogane.Data.RestApi
+namespace KuroganeHammer.Data.Infrastructure
 {
     public class AuthRepository : IDisposable
     {
