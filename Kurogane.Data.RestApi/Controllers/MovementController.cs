@@ -37,6 +37,7 @@ namespace Kurogane.Data.RestApi.Controllers
                    select new MovementStatDTO(movements, characterStatService);
         }
 
+        [Authorize]
         [Route("movement")]
         [HttpPost]
         public IHttpActionResult Post([FromBody]MovementStat value)
@@ -60,6 +61,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(value);
         }
 
+        [Authorize]
         [Route("movement/{id}")]
         [HttpPut]
         public IHttpActionResult Put(int id, [FromBody]MovementStat value)
@@ -87,6 +89,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        [Authorize]
         [Route("movement/{id}")]
         [HttpDelete]
         public IHttpActionResult Delete(int id)

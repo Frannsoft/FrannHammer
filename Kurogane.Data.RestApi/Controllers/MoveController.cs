@@ -18,6 +18,7 @@ namespace Kurogane.Data.RestApi.Controllers
             this.characterStatService = characterStatService;
         }
 
+        
         [Route("movesoftype/{type}")]
         [HttpGet]
         public IHttpActionResult GetMovesOfType(MoveType type)
@@ -46,6 +47,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(move);
         }
 
+        [Authorize]
         [Route("moves")]
         [HttpPost]
         public IHttpActionResult Post([FromBody]MoveStat value)
@@ -69,6 +71,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(value);
         }
 
+        [Authorize]
         [Route("moves/{id}")]
         [HttpPut]
         public IHttpActionResult Put(int id, [FromBody]MoveStat value)
@@ -107,6 +110,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        [Authorize]
         [Route("moves/{id}")]
         [HttpDelete]
         public IHttpActionResult Delete(int id)
