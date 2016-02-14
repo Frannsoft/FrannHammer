@@ -19,7 +19,6 @@ namespace Kurogane.Data.RestApi.Controllers
             this.moveStatService = moveStatService;
         }
 
-        [Authorize]
         [Route("characters")]
         [HttpGet]
         public IHttpActionResult GetRoster()
@@ -72,6 +71,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(moves);
         }
 
+        [Authorize]
         [Route("characters")]
         [HttpPost]
         public IHttpActionResult Post([FromBody]CharacterStat value)
@@ -94,6 +94,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(value);
         }
 
+        [Authorize]
         [Route("characters/{id}")]
         [HttpPut]
         public IHttpActionResult Put(int id, [FromBody]CharacterStat value)
@@ -123,6 +124,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(value);
         }
 
+        [Authorize]
         [Route("characters/{id}")]
         [HttpDelete]
         public IHttpActionResult Delete(int id)

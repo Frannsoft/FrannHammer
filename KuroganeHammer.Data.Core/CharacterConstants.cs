@@ -175,6 +175,12 @@ namespace KuroganeHammer.Data.Core
         KIRBY = 55,
 
         [Description("Cloud")]
-        CLOUD = 56
+        CLOUD = 56,
+
+        [Description("Bayonetta")]
+        BAYONETTA = 57,
+
+        [Description("Corrin")]
+        CORRIN = 58
     }
 }
