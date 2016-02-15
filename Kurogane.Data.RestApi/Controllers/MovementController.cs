@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Web.Http;
 using System.Linq;
-using KuroganeHammer.Service;
-using KuroganeHammer.Model;
 using System.Data.Entity.Infrastructure;
 using System.Net;
+using Kurogane.Data.RestApi.Providers;
+using Kurogane.Data.RestApi.Models;
 
 namespace Kurogane.Data.RestApi.Controllers
 {

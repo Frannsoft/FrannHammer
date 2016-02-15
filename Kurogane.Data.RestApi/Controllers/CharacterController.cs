@@ -1,8 +1,8 @@
 ﻿using Kurogane.Data.RestApi.DTOs;
 using System.Web.Http;
 using System.Linq;
-using KuroganeHammer.Service;
-using KuroganeHammer.Model;
+using Kurogane.Data.RestApi.Models;
+using Kurogane.Data.RestApi.Providers;
 
 namespace Kurogane.Data.RestApi.Controllers
 {

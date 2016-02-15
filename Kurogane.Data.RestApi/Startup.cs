@@ -4,13 +4,15 @@ using Microsoft.Owin.Security.OAuth;
 using Owin;
 using System;
 using System.Web.Http;
-using Swashbuckle.Application;
 using Autofac;
-using KuroganeHammer.Data.Infrastructure;
-using KuroganeHammer.Service;
 using Autofac.Integration.WebApi;
 using System.Web.Http.Dispatcher;
 using Kurogane.Data.RestApi.Controllers;
+using Kurogane.Data.RestApi.Infrastructure;
+using System.Configuration;
+using Microsoft.Owin.Security.DataHandler.Encoder;
+using Microsoft.Owin.Security.Jwt;
+using Microsoft.Owin.Security;
 
 [assembly: OwinStartup(typeof(Kurogane.Data.RestApi.Startup))]
 namespace Kurogane.Data.RestApi
@@ -20,7 +22,9 @@ namespace Kurogane.Data.RestApi
     {
         public void Configuration(IAppBuilder app)
         {
-            ConfigureOAuth(app);
+            //ConfigureOAuth(app);
+            ConfigureOAuthTokenGeneration(app);
+            ConfigureOAuthTokenConsumption(app);
 
             HttpConfiguration config = new HttpConfiguration();
             config.Services.Replace(typeof(IAssembliesResolver), new CustomAssembliesResolver());
@@ -82,7 +86,45 @@ namespace Kurogane.Data.RestApi
             // Token Generation
             app.UseOAuthAuthorizationServer(OAuthServerOptions);
             app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+        }
 
+        private void ConfigureOAuthTokenGeneration(IAppBuilder app)
+        {
+            //configure the db context and user manager to use a single instance per request
+            app.CreatePerOwinContext(AuthContext.Create);
+            app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
+            app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
+
+            OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions
+            {
+                AllowInsecureHttp = true,
+                TokenEndpointPath = new PathString("/oauth/token"),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
+                Provider = new CustomOAuthProvider(),
+                AccessTokenFormat = new CustomJwtFormat("http://localhost/")
+            };
+
+            app.UseOAuthAuthorizationServer(OAuthServerOptions);
+        }
+
+        private void ConfigureOAuthTokenConsumption(IAppBuilder app)
+        {
+
+            var issuer = "http://localhost/";
+            string audienceId = ConfigurationManager.AppSettings["as:AudienceId"];
+            byte[] audienceSecret = TextEncodings.Base64Url.Decode(ConfigurationManager.AppSettings["as:AudienceSecret"]);
+
+            // Api controllers with an [Authorize] attribute will be validated with JWT
+            app.UseJwtBearerAuthentication(
+                new JwtBearerAuthenticationOptions
+                {
+                    AuthenticationMode = AuthenticationMode.Active,
+                    AllowedAudiences = new[] { audienceId },
+                    IssuerSecurityTokenProviders = new IIssuerSecurityTokenProvider[]
+                    {
+                        new SymmetricKeyIssuerSecurityTokenProvider(issuer, audienceSecret)
+                    }
+                });
         }
 
     }

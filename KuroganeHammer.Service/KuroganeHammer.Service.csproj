@@ -46,20 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CharacterService.cs" />
-    <Compile Include="MovementStatService.cs" />
-    <Compile Include="MoveService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\KuroganeHammer.Data\KuroganeHammer.Data.csproj">
-      <Project>{f01469b8-495a-46f9-9b8a-eb87a049aa0a}</Project>
-      <Name>KuroganeHammer.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\KuroganeHammer.Model\KuroganeHammer.Model.csproj">
-      <Project>{a96ff023-4419-4b0c-9a4d-fa3e60650a7c}</Project>
-      <Name>KuroganeHammer.Model</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
