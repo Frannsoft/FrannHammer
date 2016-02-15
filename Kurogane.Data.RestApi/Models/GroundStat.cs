@@ -1,5 +1,5 @@
 ﻿
-namespace KuroganeHammer.Model
+namespace Kurogane.Data.RestApi.Models
 {
     public class GroundStat : MoveStat
     {

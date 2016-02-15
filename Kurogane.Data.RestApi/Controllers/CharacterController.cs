@@ -1,8 +1,8 @@
 ﻿using Kurogane.Data.RestApi.DTOs;
 using System.Web.Http;
 using System.Linq;
-using KuroganeHammer.Service;
-using KuroganeHammer.Model;
+using Kurogane.Data.RestApi.Models;
+using Kurogane.Data.RestApi.Providers;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
@@ -72,6 +72,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(moves);
         }
 
+        [Authorize]
         [Route("characters")]
         [HttpPost]
         public IHttpActionResult Post([FromBody]CharacterStat value)
@@ -94,6 +95,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(value);
         }
 
+        [Authorize]
         [Route("characters/{id}")]
         [HttpPut]
         public IHttpActionResult Put(int id, [FromBody]CharacterStat value)
@@ -123,6 +125,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(value);
         }
 
+        [Authorize]
         [Route("characters/{id}")]
         [HttpDelete]
         public IHttpActionResult Delete(int id)

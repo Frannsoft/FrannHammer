@@ -58,16 +58,17 @@
     <Compile Include="StatConstants.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Kurogane.Data.RestApi\Kurogane.Data.RestApi.csproj">
+      <Project>{e1b5e9ba-8808-4b98-b6aa-385a7438abd3}</Project>
+      <Name>Kurogane.Data.RestApi</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KuroganeHammer.Data.Core\KuroganeHammer.Data.Core.csproj">
       <Project>{2904d4e7-8989-46bd-ac0a-b4356f190a15}</Project>
       <Name>KuroganeHammer.Data.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\KuroganeHammer.Model\KuroganeHammer.Model.csproj">
-      <Project>{a96ff023-4419-4b0c-9a4d-fa3e60650a7c}</Project>
-      <Name>KuroganeHammer.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

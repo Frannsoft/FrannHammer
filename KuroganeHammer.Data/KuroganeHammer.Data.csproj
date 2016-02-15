@@ -86,9 +86,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\CharacterStatConfiguration.cs" />
-    <Compile Include="Configuration\MovementStatConfiguration.cs" />
-    <Compile Include="Configuration\MoveStatConfiguration.cs" />
+    <Compile Include="Infrastructure\ApplicationRoleManager.cs" />
+    <Compile Include="Infrastructure\ApplicationUser.cs" />
+    <Compile Include="Infrastructure\ApplicationUserManager.cs" />
     <Compile Include="Infrastructure\AuthContext.cs" />
     <Compile Include="Infrastructure\AuthRepository.cs" />
     <Compile Include="Infrastructure\CharacterStatRepository.cs" />
@@ -109,12 +109,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KuroganeHammer.Model\KuroganeHammer.Model.csproj">
-      <Project>{a96ff023-4419-4b0c-9a4d-fa3e60650a7c}</Project>
-      <Name>KuroganeHammer.Model</Name>
-    </ProjectReference>
+    <Folder Include="Configuration\" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
