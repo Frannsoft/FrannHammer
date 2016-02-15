@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace KuroganeHammer.Model.Models
+namespace Kurogane.Data.RestApi.Models
 {
     public class UserModel
     {

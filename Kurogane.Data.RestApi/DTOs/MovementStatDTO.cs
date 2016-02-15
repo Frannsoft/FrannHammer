@@ -1,5 +1,6 @@
-﻿using KuroganeHammer.Model;
-using KuroganeHammer.Service;
+﻿
+using Kurogane.Data.RestApi.Models;
+using Kurogane.Data.RestApi.Providers;
 
 namespace Kurogane.Data.RestApi.DTOs
 {

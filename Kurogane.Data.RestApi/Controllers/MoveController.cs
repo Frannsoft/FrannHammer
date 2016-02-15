@@ -1,6 +1,6 @@
 ﻿using Kurogane.Data.RestApi.DTOs;
-using KuroganeHammer.Model;
-using KuroganeHammer.Service;
+using Kurogane.Data.RestApi.Models;
+using Kurogane.Data.RestApi.Providers;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
@@ -17,7 +17,7 @@ namespace Kurogane.Data.RestApi.Controllers
             this.moveStatService = moveStatService;
             this.characterStatService = characterStatService;
         }
-
+        
         [Route("movesoftype/{type}")]
         [HttpGet]
         public IHttpActionResult GetMovesOfType(MoveType type)
@@ -46,6 +46,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(move);
         }
 
+        [Authorize]
         [Route("moves")]
         [HttpPost]
         public IHttpActionResult Post([FromBody]MoveStat value)
@@ -69,6 +70,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(value);
         }
 
+        [Authorize]
         [Route("moves/{id}")]
         [HttpPut]
         public IHttpActionResult Put(int id, [FromBody]MoveStat value)
@@ -107,6 +109,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        [Authorize]
         [Route("moves/{id}")]
         [HttpDelete]
         public IHttpActionResult Delete(int id)
