@@ -18,7 +18,7 @@ namespace Kurogane.Data.RestApi.Controllers
         {
             _repo = new AuthRepository();
         }
-
+        //test
         [Authorize(Roles = "Admin")]
         [Route("users")]
         public IHttpActionResult GetUsers()
