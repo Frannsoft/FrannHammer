@@ -1,8 +1,8 @@
-﻿using KuroganeHammer.Data.Infrastructure;
-using KuroganeHammer.Model;
+﻿using Kurogane.Data.RestApi.Infrastructure;
+using Kurogane.Data.RestApi.Models;
 using System.Collections.Generic;
 
-namespace KuroganeHammer.Service
+namespace Kurogane.Data.RestApi.Providers
 {
     public interface ICharacterStatService
     {

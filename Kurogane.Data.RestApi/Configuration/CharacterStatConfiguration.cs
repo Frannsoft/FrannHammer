@@ -1,7 +1,7 @@
-﻿using KuroganeHammer.Model;
+﻿using Kurogane.Data.RestApi.Models;
 using System.Data.Entity.ModelConfiguration;
 
-namespace KuroganeHammer.Data.Configuration
+namespace Kurogane.Data.RestApi.Configuration
 {
     public class CharacterStatConfiguration : EntityTypeConfiguration<CharacterStat>
     {

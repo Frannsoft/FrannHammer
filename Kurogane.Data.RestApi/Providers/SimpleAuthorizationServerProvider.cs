@@ -1,4 +1,4 @@
-﻿using KuroganeHammer.Data.Infrastructure;
+﻿using Kurogane.Data.RestApi.Infrastructure;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security.OAuth;
 using System.Security.Claims;
@@ -21,7 +21,7 @@ namespace Kurogane.Data.RestApi.Providers
 
             using (AuthRepository _repo = new AuthRepository())
             {
-                IdentityUser user = await _repo.FindUser(context.UserName, context.Password);
+                ApplicationUser user = await _repo.FindUser(context.UserName, context.Password);
 
                 if (user == null)
                 {

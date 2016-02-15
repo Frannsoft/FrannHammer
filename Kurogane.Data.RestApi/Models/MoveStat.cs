@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 
-namespace KuroganeHammer.Model
+namespace Kurogane.Data.RestApi.Models
 {
     public class MoveStat : Stat
     {
