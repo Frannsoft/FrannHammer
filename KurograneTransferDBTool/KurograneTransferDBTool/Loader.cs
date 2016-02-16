@@ -1,6 +1,6 @@
 ﻿using Kurogane.Data.RestApi.DTOs;
+using Kurogane.Data.RestApi.Models;
 using KuroganeHammer.Data.Core;
-using KuroganeHammer.Model;
 using KuroganeHammer.WebScraper;
 using Newtonsoft.Json;
 using NUnit.Framework;

@@ -46,15 +46,10 @@
     <Reference Include="KuroganeHammer.Data.Core">
       <HintPath>E:\Development\C#projects\Kurogane.Data\KuroganeHammer.Data.Core\bin\Debug\KuroganeHammer.Data.Core.dll</HintPath>
     </Reference>
-    <Reference Include="KuroganeHammer.Model">
-      <HintPath>E:\Development\C#projects\Kurogane.Data\KuroganeHammer.Model\bin\Debug\KuroganeHammer.Model.dll</HintPath>
-    </Reference>
-    <Reference Include="KuroganeHammer.Service">
-      <HintPath>E:\Development\C#projects\Kurogane.Data\KuroganeHammer.Service\bin\Debug\KuroganeHammer.Service.dll</HintPath>
-    </Reference>
     <Reference Include="KuroganeHammer.WebScraper">
       <HintPath>E:\Development\C#projects\Kurogane.Data\KuroganeHammer.WebScraper\bin\Debug\KuroganeHammer.WebScraper.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>E:\Development\C#projects\Kurogane.Data\KurograneTransferDBTool\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -66,6 +61,7 @@
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
