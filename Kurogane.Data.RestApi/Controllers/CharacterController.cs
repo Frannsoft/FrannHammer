@@ -37,7 +37,7 @@ namespace Kurogane.Data.RestApi.Controllers
         {
             var character = characterStatService.GetCharacter(id);
             CharacterDTO charDTO = new CharacterDTO(character);
-            return Ok(character);
+            return Ok(charDTO);
         }
 
         [Route("characters/{id}/movement")]
@@ -72,7 +72,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(moves);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("characters")]
         [HttpPost]
         public IHttpActionResult Post([FromBody]CharacterStat value)
@@ -95,7 +95,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(value);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("characters/{id}")]
         [HttpPut]
         public IHttpActionResult Put(int id, [FromBody]CharacterStat value)
@@ -125,7 +125,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(value);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("characters/{id}")]
         [HttpDelete]
         public IHttpActionResult Delete(int id)
