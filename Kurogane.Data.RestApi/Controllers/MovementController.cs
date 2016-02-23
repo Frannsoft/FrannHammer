@@ -20,6 +20,16 @@ namespace Kurogane.Data.RestApi.Controllers
             this.characterStatService = characterStatService;
         }
 
+        [Authorize(Roles = "Admin")]
+        [Route("movements")]
+        [HttpGet]
+        public IHttpActionResult GetMovements()
+        {
+            var movementsResult = from movements in movementStatService.GetMovementStats()
+                   select new MovementStatDTO(movements, characterStatService);
+            return Ok(movementsResult);
+        }
+
         [Route("movement/{id}")]
         [HttpGet]
         public IHttpActionResult GetMovementStat(int id)
