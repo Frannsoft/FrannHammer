@@ -46,11 +46,6 @@ namespace KuroganeHammer.WebScraper
             GetData();
         }
 
-        public static Character FromId(int id)
-        {
-            return new Character((Characters)id);
-        }
-
         private void GetData()
         {
             FrameDataVersion = page.GetVersion();

@@ -44,24 +44,5 @@ namespace KurograneTransferDBTool
 
             Assert.AreEqual(HttpStatusCode.OK, getResult.StatusCode);
         }
-
-        [Test]
-        public async Task GetMovesOfType()
-        {
-            //var getResult = await client.GetAsync(BASEURL + "movesoftype/" + MoveType.Ground);
-            //string content = await getResult.Content.ReadAsStringAsync();
-
-            //Assert.AreEqual(HttpStatusCode.OK, getResult.StatusCode);
-        }
-
-        [Test]
-        public void GetCharacterFromKurogane()
-        {
-            var chara = Character.FromId(7);
-        }
-
-
-
-
     }
 }

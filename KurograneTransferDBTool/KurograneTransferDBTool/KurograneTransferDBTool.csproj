@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="BaseTest.cs" />
     <Compile Include="Loader.cs" />
+    <Compile Include="PropertyUpdateHelper.cs" />
     <Compile Include="Smoke.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

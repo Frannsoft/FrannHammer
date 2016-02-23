@@ -22,5 +22,44 @@ namespace Kurogane.Data.RestApi.DTOs
             OwnerId = stat.OwnerId;
             Name = stat.Name;
         }
+
+        public CharacterDTO()
+        { }
+
+        public override bool Equals(object obj)
+        {
+            bool retVal = false;
+
+            CharacterDTO compDTO = obj as CharacterDTO;
+
+            if(compDTO != null)
+            {
+                if(this.Description.Equals(compDTO.Description) &&
+                    this.MainImageUrl.Equals(compDTO.MainImageUrl) &&
+                    this.Name.Equals(compDTO.Name) &&
+                    this.OwnerId.Equals(compDTO.OwnerId) &&
+                    this.Style.Equals(compDTO.Style) &&
+                    this.ThumbnailUrl.Equals(compDTO.ThumbnailUrl))
+                {
+                    retVal = true;
+                }
+            }
+
+            return retVal;
+        }
+
+        public override int GetHashCode()
+        {
+            return new
+            {
+                Description,
+                MainImageUrl,
+                Name,
+                OwnerId,
+                Style,
+                ThumbnailUrl
+            }.GetHashCode();
+        }
+
     }
 }

@@ -16,6 +16,42 @@ namespace KurograneTransferDBTool
     public class Loader : BaseTest
     {
         [Test]
+        [Explicit("Updates character data")]
+        public async Task UpdateCharacterData()
+        {
+            int[] charIds = (int[])Enum.GetValues(typeof(Characters));
+
+            var response = await client.GetAsync(BASEURL + "characters");
+            CharacterDTO[] characters = await response.Content.ReadAsAsync<CharacterDTO[]>();
+
+            foreach(int i in charIds)
+            {
+                Character character = new Character((Characters)i);
+
+                var characterStatFromDB = characters.FirstOrDefault(c => c.OwnerId == character.OwnerId);
+                if(characterStatFromDB == null)
+                { throw new InvalidOperationException("Character from page data could not be found in db"); }
+
+                var cachedHashCode = characterStatFromDB.GetHashCode();
+                PropertyUpdateHelper.UpdateProperty(character, characterStatFromDB);
+
+                var newHashCode = characterStatFromDB.GetHashCode();
+
+                //if updated version has differences, push update to server
+                if(cachedHashCode != newHashCode)
+                { 
+                    //submit update post
+                    var updateResponse = await client.PutAsJsonAsync(BASEURL + "characters/" + characterStatFromDB.Id, characterStatFromDB);
+
+                    //check if OK - 200 //if not, stop updating
+                    Assert.AreEqual(HttpStatusCode.OK, updateResponse.StatusCode);
+                }
+
+            }
+        }
+
+        [Test]
+        [Explicit("Actually reloads all data")]
         public async Task ReloadAllCharacterData()
         {
             int[] charIds = (int[])Enum.GetValues(typeof(Characters));
