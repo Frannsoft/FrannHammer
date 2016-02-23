@@ -51,6 +51,53 @@ namespace KurograneTransferDBTool
         }
 
         [Test]
+        [Explicit("Updates movement data")]
+        public async Task UpdateMovementData()
+        {
+            int[] charIds = (int[])Enum.GetValues(typeof(Characters));
+
+            var response = await client.GetAsync(BASEURL + "movements");
+            MovementStatDTO[] movementsFromDB = await response.Content.ReadAsAsync<MovementStatDTO[]>();
+
+            foreach(int i in charIds)
+            {
+                Character character = new Character((Characters)i);
+
+                var movements = from charMoves in character.FrameData.Values.OfType<MovementStat>()
+                            select charMoves;
+
+                foreach(var move in movements)
+                {
+                    //get a single move
+
+                    //find it in the returned array of existing movements by id
+
+                    //TODO: ID doesn't exist on kuro's page so we have nothing to go on here.
+                    //probably going to have to create a hash for each movement and move and check it against the page values to determine if there's a difference
+                    //shouldn't be a big deal.
+                    var moveFromDB = movementsFromDB.FirstOrDefault(m => m.Id == move.Id); 
+
+                    if(moveFromDB == null)
+                    { throw new InvalidOperationException("Unable to find move in DB."); }
+
+                    var cachedHashCode = moveFromDB.GetHashCode();
+                    PropertyUpdateHelper.UpdateProperty(move, moveFromDB);
+                    var newHashCode = moveFromDB.GetHashCode();
+
+                    //if updated version has hash differences, push update to server
+                    if (cachedHashCode != newHashCode)
+                    {
+                        //submit update post
+                        var updateResponse = await client.PutAsJsonAsync(BASEURL + "movement/" + moveFromDB.Id, moveFromDB);
+
+                        //check if OK - 200 //if not, stop updating
+                        Assert.AreEqual(HttpStatusCode.OK, updateResponse.StatusCode);
+                    }
+                }
+            }
+        }
+
+        [Test]
         [Explicit("Actually reloads all data")]
         public async Task ReloadAllCharacterData()
         {
