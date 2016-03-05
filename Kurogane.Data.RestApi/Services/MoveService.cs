@@ -1,8 +1,8 @@
-﻿using Kurogane.Data.RestApi.Infrastructure;
+﻿using System.Collections.Generic;
+using Kurogane.Data.RestApi.Infrastructure;
 using Kurogane.Data.RestApi.Models;
-using System.Collections.Generic;
 
-namespace Kurogane.Data.RestApi.Providers
+namespace Kurogane.Data.RestApi.Services
 {
     public interface IMoveStatService
     {
@@ -18,59 +18,59 @@ namespace Kurogane.Data.RestApi.Providers
 
     public class MoveService : IMoveStatService
     {
-        private readonly IMoveStatRepository moveStatRepository;
-        private readonly IUnitOfWork unitOfWork;
+        private readonly IMoveStatRepository _moveStatRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
         public MoveService(IMoveStatRepository moveStatRepository, IUnitOfWork unitOfWork)
         {
-            this.moveStatRepository = moveStatRepository;
-            this.unitOfWork = unitOfWork;
+            _moveStatRepository = moveStatRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public IEnumerable<MoveStat> GetMovesByType(MoveType moveType)
         {
-            var moves = moveStatRepository.GetMoveStatByType(moveType);
+            var moves = _moveStatRepository.GetMoveStatByType(moveType);
             return moves;
         }
 
         public IEnumerable<MoveStat> GetMovesByName(string name)
         {
-            var moves = moveStatRepository.GetMoveStatByName(name);
+            var moves = _moveStatRepository.GetMoveStatByName(name);
             return moves;
         }
 
         public IEnumerable<MoveStat> GetMovesByCharacter(int id)
         {
-            var moves = moveStatRepository.GetMoveStatsByCharacter(id);
+            var moves = _moveStatRepository.GetMoveStatsByCharacter(id);
             return moves;
         }
 
         public void CreateMove(MoveStat moveStat)
         {
-            moveStatRepository.Add(moveStat);
+            _moveStatRepository.Add(moveStat);
             SaveMove();
         }
 
         public void SaveMove()
         {
-            unitOfWork.Commit();
+            _unitOfWork.Commit();
         }
 
         public MoveStat GetMove(int id)
         {
-            var move = moveStatRepository.GetById(id);
+            var move = _moveStatRepository.GetById(id);
             return move;
         }
 
         public void UpdateMove(MoveStat moveStat)
         {
-            moveStatRepository.Update(moveStat);
+            _moveStatRepository.Update(moveStat);
             SaveMove();
         }
 
         public void DeleteMove(MoveStat moveStat)
         {
-            moveStatRepository.Delete(moveStat);
+            _moveStatRepository.Delete(moveStat);
             SaveMove();
         }
     }

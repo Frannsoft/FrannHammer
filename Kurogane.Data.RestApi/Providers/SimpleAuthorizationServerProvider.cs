@@ -1,5 +1,4 @@
 ﻿using Kurogane.Data.RestApi.Infrastructure;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security.OAuth;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -19,9 +18,9 @@ namespace Kurogane.Data.RestApi.Providers
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Headers", new[] { "Content-Type" });
 
-            using (AuthRepository _repo = new AuthRepository())
+            using (var repo = new AuthRepository())
             {
-                ApplicationUser user = await _repo.FindUser(context.UserName, context.Password);
+                var user = await repo.FindUser(context.UserName, context.Password);
 
                 if (user == null)
                 {

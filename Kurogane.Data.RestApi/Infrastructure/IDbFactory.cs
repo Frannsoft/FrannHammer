@@ -4,6 +4,6 @@ namespace Kurogane.Data.RestApi.Infrastructure
 {
     public interface IDbFactory : IDisposable
     {
-        Sm4shEntities Init();
+        Sm4ShEntities Init();
     }
 }

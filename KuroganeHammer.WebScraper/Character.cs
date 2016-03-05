@@ -8,15 +8,12 @@ namespace KuroganeHammer.WebScraper
     [JsonObject(MemberSerialization.OptIn)]
     public class Character
     {
-        private Page page;
-        private const string URL_BASE = "http://kuroganehammer.com/Smash4/";
-        private readonly string urlTail;
+        private readonly Page _page;
+        private const string UrlBase = "http://kuroganehammer.com/Smash4/";
+        private readonly string _urlTail;
 
         [JsonProperty]
-        public string FullUrl
-        {
-            get { return URL_BASE + urlTail; }
-        }
+        public string FullUrl => UrlBase + _urlTail;
 
         [JsonProperty]
         public string MainImageUrl { get; private set; }
@@ -37,20 +34,22 @@ namespace KuroganeHammer.WebScraper
         [JsonProperty]
         public Dictionary<string, Stat> FrameData { get; private set; }
 
-        public Character(Characters character)
+        public Character(Characters character, string description, string style)
         {
+            Description = description;
+            Style = style;
             Name = character.ToString();
-            urlTail = CharacterUtility.GetEnumDescription(character);
+            _urlTail = CharacterUtility.GetEnumDescription(character);
             OwnerId = (int)character;
-            page = new Page(URL_BASE + urlTail, OwnerId);
+            _page = new Page(UrlBase + _urlTail, OwnerId);
             GetData();
         }
 
         private void GetData()
         {
-            FrameDataVersion = page.GetVersion();
-            MainImageUrl = page.GetImageUrl();
-            FrameData = page.GetStats();
+            FrameDataVersion = _page.GetVersion();
+            MainImageUrl = _page.GetImageUrl();
+            FrameData = _page.GetStats();
         }
     }
 }

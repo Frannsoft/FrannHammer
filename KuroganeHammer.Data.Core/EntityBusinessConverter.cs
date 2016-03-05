@@ -6,32 +6,25 @@ namespace KuroganeHammer.Data.Core
 {
     public static class EntityBusinessConverter<TInitial>
     {
-        private static BindingFlags flags = BindingFlags.FlattenHierarchy |
+        private static BindingFlags _flags = BindingFlags.FlattenHierarchy |
                         BindingFlags.IgnoreCase | BindingFlags.Instance | BindingFlags.NonPublic
                         | BindingFlags.Public;
 
         public static TResult ConvertTo<TResult>(TInitial initialType)
         {
-            TResult tResult = (TResult)Activator.CreateInstance(typeof(TResult), true);
-            var resultTypeProps = typeof(TResult).GetProperties(flags);
+            var tResult = (TResult)Activator.CreateInstance(typeof(TResult), true);
+            var resultTypeProps = typeof(TResult).GetProperties(_flags);
 
-            foreach (PropertyInfo prop in resultTypeProps)
+            foreach (var prop in resultTypeProps)
             {
                 if (PropExistsInType(prop))
                 {
                     //holds value from initial type.  We need to create a new propertyinfo because of case sensitive property names not being found
                     //when not matching (obviously).
-                    PropertyInfo tempProp = typeof(TInitial).GetProperty(prop.Name, flags);
+                    var tempProp = typeof(TInitial).GetProperty(prop.Name, _flags);
 
-                    object initialObjectValue = tempProp.GetValue(initialType);
-                    if (initialObjectValue != null)
-                    {
-                        prop.SetValue(tResult, initialObjectValue);
-                    }
-                    else
-                    {
-                        prop.SetValue(tResult, null);
-                    }
+                    var initialObjectValue = tempProp.GetValue(initialType);
+                    prop.SetValue(tResult, initialObjectValue);
                 }
             }
 
@@ -47,7 +40,7 @@ namespace KuroganeHammer.Data.Core
         {
             //converting everything to lower case prior to comparison since that 
             //seems to be the standard naming convention for this db.
-            var props = typeof(TInitial).GetProperties(flags);
+            var props = typeof(TInitial).GetProperties(_flags);
             return props.Any(p => p.Name.ToLower().Equals(prop.Name.ToLower()));
         }
     }

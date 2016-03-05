@@ -10,6 +10,7 @@ using System.Web.Http.Dispatcher;
 using Kurogane.Data.RestApi.Controllers;
 using Kurogane.Data.RestApi.Infrastructure;
 using System.Configuration;
+using Kurogane.Data.RestApi.Services;
 using Microsoft.Owin.Security.DataHandler.Encoder;
 using Microsoft.Owin.Security.Jwt;
 using Microsoft.Owin.Security;
@@ -26,7 +27,7 @@ namespace Kurogane.Data.RestApi
             ConfigureOAuthTokenGeneration(app);
             ConfigureOAuthTokenConsumption(app);
 
-            HttpConfiguration config = new HttpConfiguration();
+            var config = new HttpConfiguration();
             config.Services.Replace(typeof(IAssembliesResolver), new CustomAssembliesResolver());
             //config.EnableSwagger(c => c.SingleApiVersion("v1", "FrannHammerAPI"))
             //.EnableSwaggerUi();
@@ -67,7 +68,7 @@ namespace Kurogane.Data.RestApi
                 .Where(t => t.Name.EndsWith("Service"))
                 .AsImplementedInterfaces().InstancePerRequest();
 
-            IContainer container = builder.Build();
+            var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
 
             app.UseWebApi(config);
@@ -75,7 +76,7 @@ namespace Kurogane.Data.RestApi
 
         public void ConfigureOAuth(IAppBuilder app)
         {
-            OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
+            var oAuthServerOptions = new OAuthAuthorizationServerOptions()
             {
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/token"),
@@ -84,7 +85,7 @@ namespace Kurogane.Data.RestApi
             };
 
             // Token Generation
-            app.UseOAuthAuthorizationServer(OAuthServerOptions);
+            app.UseOAuthAuthorizationServer(oAuthServerOptions);
             app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
         }
 
@@ -95,7 +96,7 @@ namespace Kurogane.Data.RestApi
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
 
-            OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions
+            var oAuthServerOptions = new OAuthAuthorizationServerOptions
             {
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/oauth/token"),
@@ -104,15 +105,15 @@ namespace Kurogane.Data.RestApi
                 AccessTokenFormat = new CustomJwtFormat("http://localhost/")
             };
 
-            app.UseOAuthAuthorizationServer(OAuthServerOptions);
+            app.UseOAuthAuthorizationServer(oAuthServerOptions);
         }
 
         private void ConfigureOAuthTokenConsumption(IAppBuilder app)
         {
 
             var issuer = "http://localhost/";
-            string audienceId = ConfigurationManager.AppSettings["as:AudienceId"];
-            byte[] audienceSecret = TextEncodings.Base64Url.Decode(ConfigurationManager.AppSettings["as:AudienceSecret"]);
+            var audienceId = ConfigurationManager.AppSettings["as:AudienceId"];
+            var audienceSecret = TextEncodings.Base64Url.Decode(ConfigurationManager.AppSettings["as:AudienceSecret"]);
 
             // Api controllers with an [Authorize] attribute will be validated with JWT
             app.UseJwtBearerAuthentication(

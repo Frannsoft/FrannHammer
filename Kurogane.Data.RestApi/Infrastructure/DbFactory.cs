@@ -3,19 +3,16 @@ namespace Kurogane.Data.RestApi.Infrastructure
 {
     public class DbFactory : Disposable, IDbFactory
     {
-        Sm4shEntities dbContext;
+        Sm4ShEntities _dbContext;
 
-        public Sm4shEntities Init()
+        public Sm4ShEntities Init()
         {
-            return dbContext ?? (dbContext = new Sm4shEntities());
+            return _dbContext ?? (_dbContext = new Sm4ShEntities());
         }
 
         protected override void DisposeCore()
         {
-            if (dbContext != null)
-            {
-                dbContext.Dispose();
-            }
+            _dbContext?.Dispose();
         }
     }
 }

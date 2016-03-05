@@ -25,7 +25,7 @@ namespace Kurogane.Data.RestApi.Infrastructure
 
         public virtual void Commit()
         {
-            base.SaveChanges();
+            SaveChanges();
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

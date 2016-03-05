@@ -9,18 +9,11 @@ namespace Kurogane.Data.RestApi.Infrastructure
         public static IEnumerable<Claim> GetClaims(ApplicationUser user)
         {
 
-            List<Claim> claims = new List<Claim>();
+            var claims = new List<Claim>();
 
             var daysInWork = (DateTime.Now.Date - user.JoinDate).TotalDays;
 
-            if (daysInWork > 90)
-            {
-                claims.Add(CreateClaim("FTE", "1"));
-
-            }
-            else {
-                claims.Add(CreateClaim("FTE", "0"));
-            }
+            claims.Add(daysInWork > 90 ? CreateClaim("FTE", "1") : CreateClaim("FTE", "0"));
 
             return claims;
         }

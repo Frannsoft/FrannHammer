@@ -4,7 +4,7 @@ namespace Kurogane.Data.RestApi.Infrastructure
 {
     public class Disposable : IDisposable
     {
-        private bool isDisposed;
+        private bool _isDisposed;
 
         ~Disposable()
         {
@@ -18,12 +18,12 @@ namespace Kurogane.Data.RestApi.Infrastructure
         }
         private void Dispose(bool disposing)
         {
-            if (!isDisposed && disposing)
+            if (!_isDisposed && disposing)
             {
                 DisposeCore();
             }
 
-            isDisposed = true;
+            _isDisposed = true;
         }
 
         // Ovveride this to dispose custom objects

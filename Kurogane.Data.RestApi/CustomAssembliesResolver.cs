@@ -11,10 +11,12 @@ namespace Kurogane.Data.RestApi
         public override ICollection<Assembly> GetAssemblies()
         {
             var baseAssemblies = base.GetAssemblies().ToList();
-            var assemblies = new List<Assembly>(baseAssemblies);
-            assemblies.Add(typeof(CharacterController).Assembly);
-            assemblies.Add(typeof(MoveController).Assembly);
-            assemblies.Add(typeof(MovementController).Assembly);
+            var assemblies = new List<Assembly>(baseAssemblies)
+            {
+                typeof (CharacterController).Assembly,
+                typeof (MoveController).Assembly,
+                typeof (MovementController).Assembly
+            };
             baseAssemblies.AddRange(assemblies);
 
             return baseAssemblies.Distinct().ToList();
