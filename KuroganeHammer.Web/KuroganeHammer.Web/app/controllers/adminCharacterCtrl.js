@@ -24,14 +24,14 @@ var app;
             }
             AdminCharacterCtrl.prototype.getCharacterMovementData = function () {
                 var _this = this;
-                var movementResource = this.dataAccessService.getMovementsOfCharacter(this.character.id);
+                var movementResource = this.dataAccessService.getMovementsOfCharacter(this.character.ownerId);
                 movementResource.query(function (data) {
                     _this.movementData = data;
                 });
             };
             AdminCharacterCtrl.prototype.getCharacterMoveData = function () {
                 var _this = this;
-                var moveResource = this.dataAccessService.getMovesOfCharacter(this.character.id);
+                var moveResource = this.dataAccessService.getMovesOfCharacter(this.character.ownerId);
                 moveResource.query(function (data) {
                     _this.moveData = data;
                 });
@@ -49,12 +49,12 @@ var app;
                 moveResource.save({ id: rowItem.id }, rowItem);
             };
             AdminCharacterCtrl.prototype.createNewMovementStat = function () {
-                this.newMovementStat.ownerId = this.character.id;
+                this.newMovementStat.ownerId = this.character.ownerId;
                 var movementResource = this.dataAccessService.getMovementResource();
                 movementResource.save(this.newMovementStat);
             };
             AdminCharacterCtrl.prototype.createNewMoveStat = function () {
-                this.newMoveStat.ownerId = this.character.id;
+                this.newMoveStat.ownerId = this.character.ownerId;
                 var moveResource = this.dataAccessService.getMoveResource();
                 moveResource.save(this.newMoveStat);
             };

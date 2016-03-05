@@ -19,7 +19,6 @@ namespace Kurogane.Data.RestApi.Controllers
             this.moveStatService = moveStatService;
         }
 
-        [Authorize]
         [Route("characters")]
         [HttpGet]
         public IHttpActionResult GetRoster()

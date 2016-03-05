@@ -14,7 +14,7 @@ var app;
                 });
             }
             CharacterRosterCtrl.prototype.goToCharacter = function (character) {
-                this.$location.path('/character/' + character.id);
+                this.$location.path('/character/' + character.ownerId);
             };
             CharacterRosterCtrl.$inject = ["dataAccessService", "$location"];
             return CharacterRosterCtrl;
