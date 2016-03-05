@@ -50,14 +50,14 @@
         }
 
         getCharacterMovementData(): void {
-            var movementResource = this.dataAccessService.getMovementsOfCharacter(this.character.id);
+            var movementResource = this.dataAccessService.getMovementsOfCharacter(this.character.ownerId);
             movementResource.query((data: app.domain.IMovement[]) => {
                 this.movementData = data;
             });
         }
 
         getCharacterMoveData(): void {
-            var moveResource = this.dataAccessService.getMovesOfCharacter(this.character.id);
+            var moveResource = this.dataAccessService.getMovesOfCharacter(this.character.ownerId);
             moveResource.query((data: app.domain.IMove[]) => {
                 this.moveData = data;
             });
@@ -79,13 +79,13 @@
         }
 
         createNewMovementStat(): void {
-            this.newMovementStat.ownerId = this.character.id;
+            this.newMovementStat.ownerId = this.character.ownerId;
             var movementResource = this.dataAccessService.getMovementResource();
             movementResource.save(this.newMovementStat);
         }
 
         createNewMoveStat(): void {
-            this.newMoveStat.ownerId = this.character.id;
+            this.newMoveStat.ownerId = this.character.ownerId;
             var moveResource = this.dataAccessService.getMoveResource();
             moveResource.save(this.newMoveStat);
         }

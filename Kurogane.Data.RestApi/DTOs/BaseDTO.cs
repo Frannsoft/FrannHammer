@@ -17,9 +17,9 @@ namespace Kurogane.Data.RestApi.DTOs
             this.OwnerId = stat.OwnerId;
             this.Name = stat.Name;
 
-           CharacterStat character = characterStatService.GetCharacter(stat.OwnerId);
-           this.CharacterName = character.Name;
-           this.ThumbnailUrl = character.ThumbnailUrl;
+            CharacterStat character = characterStatService.GetCharacter(stat.OwnerId);
+            this.CharacterName = character.Name;
+            this.ThumbnailUrl = character.ThumbnailUrl;
         }
 
         public BaseDTO()
@@ -30,9 +30,9 @@ namespace Kurogane.Data.RestApi.DTOs
             bool retVal = false;
             BaseDTO baseComp = obj as BaseDTO;
 
-            if(baseComp != null)
+            if (baseComp != null)
             {
-                if(this.CharacterName.Equals(baseComp.CharacterName) &&
+                if (this.CharacterName.Equals(baseComp.CharacterName) &&
                     this.Name.Equals(baseComp.Name) &&
                     this.OwnerId.Equals(baseComp.OwnerId) &&
                     this.ThumbnailUrl.Equals(baseComp.ThumbnailUrl))

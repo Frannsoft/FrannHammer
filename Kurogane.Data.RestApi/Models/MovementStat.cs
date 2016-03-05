@@ -20,5 +20,30 @@ namespace Kurogane.Data.RestApi.Models
 
         public MovementStat()
         { }
+
+        public override bool Equals(object obj)
+        {
+            bool retVal = false;
+            MovementStat compMovement = obj as MovementStat;
+
+            if (compMovement != null)
+            {
+                if (this.Value.Equals(compMovement.Value) &&
+                    base.Equals(compMovement))
+                {
+                    retVal = true;
+                }
+            }
+
+            return retVal;
+        }
+
+        public override int GetHashCode()
+        {
+            return new
+            {
+                Value
+            }.GetHashCode() + base.GetHashCode();
+        }
     }
 }

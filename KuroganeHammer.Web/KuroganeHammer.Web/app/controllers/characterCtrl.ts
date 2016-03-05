@@ -34,8 +34,8 @@
             var characterResource = dataAccessService.getCharacterResource($routeParams.characterId);
             characterResource.get((data: app.domain.ICharacterMetadata) => {
                 this.character = data;
-                this.getMovementData(this.character.id);
-                this.getMoveData(this.character.id);
+                this.getMovementData(this.character.ownerId);
+                this.getMoveData(this.character.ownerId);
             });
             
         }
