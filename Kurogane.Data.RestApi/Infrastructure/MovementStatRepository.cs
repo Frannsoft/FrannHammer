@@ -18,9 +18,9 @@ namespace Kurogane.Data.RestApi.Infrastructure
 
         public List<MovementStat> GetMovementStatsByName(string movementName)
         {
-            List<MovementStat> movement = null;
+            List<MovementStat> movement;
 
-            using (var context = new Sm4shEntities())
+            using (var context = new Sm4ShEntities())
             {
                 movement = context.MovementStats.Where(m => m.Name == movementName).ToList();
             }
@@ -29,9 +29,9 @@ namespace Kurogane.Data.RestApi.Infrastructure
 
         public List<MovementStat> GetMovementStatsByCharacter(int characterId)
         {
-            List<MovementStat> movements = null;
+            List<MovementStat> movements;
 
-            using(var context = new Sm4shEntities())
+            using(var context = new Sm4ShEntities())
             {
                 movements = context.MovementStats.Where(m => m.OwnerId == characterId).ToList();  
             }

@@ -7,9 +7,9 @@ namespace Kurogane.Data.RestApi.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class properseedsuperuserpd : IMigrationMetadata
+    public sealed partial class Properseedsuperuserpd : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(properseedsuperuserpd));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Properseedsuperuserpd));
         
         string IMigrationMetadata.Id
         {

@@ -1,5 +1,4 @@
-﻿using Kurogane.Data.RestApi.Models;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Threading.Tasks;
@@ -8,9 +7,9 @@ namespace Kurogane.Data.RestApi.Infrastructure
 {
     public class AuthRepository : IDisposable
     {
-        private AuthContext _ctx;
+        private readonly AuthContext _ctx;
 
-        private UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public AuthRepository()
         {
@@ -32,7 +31,7 @@ namespace Kurogane.Data.RestApi.Infrastructure
 
         public async Task<ApplicationUser> FindUser(string userName, string password)
         {
-            ApplicationUser user = await _userManager.FindAsync(userName, password);
+            var user = await _userManager.FindAsync(userName, password);
 
             return user;
         }

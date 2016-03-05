@@ -1,29 +1,29 @@
 ﻿using Kurogane.Data.RestApi.DTOs;
 using Kurogane.Data.RestApi.Models;
-using Kurogane.Data.RestApi.Providers;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
+using Kurogane.Data.RestApi.Services;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
     public class MoveController : ApiController
     {
-        private readonly IMoveStatService moveStatService;
-        private readonly ICharacterStatService characterStatService;
+        private readonly IMoveStatService _moveStatService;
+        private readonly ICharacterStatService _characterStatService;
 
         public MoveController(IMoveStatService moveStatService, ICharacterStatService characterStatService)
         {
-            this.moveStatService = moveStatService;
-            this.characterStatService = characterStatService;
+            _moveStatService = moveStatService;
+            _characterStatService = characterStatService;
         }
         
         [Route("movesoftype/{type}")]
         [HttpGet]
         public IHttpActionResult GetMovesOfType(MoveType type)
         {
-            var moves = from move in moveStatService.GetMovesByType(type)
-                        select new MoveDTO(move, characterStatService);
+            var moves = from move in _moveStatService.GetMovesByType(type)
+                        select new MoveDto(move, _characterStatService);
 
             return Ok(moves);
         }
@@ -32,8 +32,8 @@ namespace Kurogane.Data.RestApi.Controllers
         [HttpGet]
         public IHttpActionResult GetMovesOfName([FromUri]string name)
         {
-            var moves = from move in moveStatService.GetMovesByName(name)
-                        select new MoveDTO(move, characterStatService);
+            var moves = from move in _moveStatService.GetMovesByName(name)
+                        select new MoveDto(move, _characterStatService);
 
             return Ok(moves);
         }
@@ -42,7 +42,7 @@ namespace Kurogane.Data.RestApi.Controllers
         [HttpGet]
         public IHttpActionResult GetMove(int id)
         {
-            var move = moveStatService.GetMove(id);
+            var move = _moveStatService.GetMove(id);
             return Ok(move);
         }
 
@@ -56,11 +56,11 @@ namespace Kurogane.Data.RestApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var foundMove = moveStatService.GetMove(value.Id);
+            var foundMove = _moveStatService.GetMove(value.Id);
 
             if (foundMove == null)
             {
-                moveStatService.CreateMove(value);
+                _moveStatService.CreateMove(value);
             }
             else
             {
@@ -85,7 +85,7 @@ namespace Kurogane.Data.RestApi.Controllers
                 return BadRequest();
             }
 
-            var foundMove = moveStatService.GetMove(value.Id);
+            var foundMove = _moveStatService.GetMove(value.Id);
             if (foundMove != null)
             {
                 foundMove.Angle = value.Angle;
@@ -100,7 +100,7 @@ namespace Kurogane.Data.RestApi.Controllers
                 foundMove.TotalHitboxActiveLength = value.TotalHitboxActiveLength;
                 foundMove.Type = value.Type;
 
-                moveStatService.UpdateMove(value);
+                _moveStatService.UpdateMove(value);
 
                 return Ok(value);
             }
@@ -114,20 +114,15 @@ namespace Kurogane.Data.RestApi.Controllers
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
-            MoveStat move = moveStatService.GetMove(id);
+            var move = _moveStatService.GetMove(id);
             if (move == null)
             {
                 return NotFound();
             }
 
-            moveStatService.DeleteMove(move);
+            _moveStatService.DeleteMove(move);
 
             return Ok();
-        }
-
-        private bool MoveStatExists(int id)
-        {
-            return moveStatService.GetMove(id) != null;
         }
     }
 }

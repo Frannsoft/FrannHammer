@@ -12,7 +12,7 @@ namespace Kurogane.Data.RestApi.Controllers
     [RoutePrefix("account")]
     public class AccountController : BaseApiController
     {
-        private AuthRepository _repo = null;
+        private readonly AuthRepository _repo;
 
         public AccountController()
         {
@@ -24,21 +24,20 @@ namespace Kurogane.Data.RestApi.Controllers
         public IHttpActionResult GetUsers()
         {
             //Only SuperAdmin or Admin can delete users (Later when implement roles)
-            var identity = User.Identity as System.Security.Claims.ClaimsIdentity;
 
-            return Ok(this.AppUserManager.Users.ToList().Select(u => this.TheModelFactory.Create(u)));
+            return Ok(AppUserManager.Users.ToList().Select(u => TheModelFactory.Create(u)));
         }
 
         [Authorize(Roles = "Admin")]
         [Route("user/{id:guid}", Name = "GetUserById")]
-        public async Task<IHttpActionResult> GetUser(string Id)
+        public async Task<IHttpActionResult> GetUser(string id)
         {
             //Only SuperAdmin or Admin can delete users (Later when implement roles)
-            var user = await this.AppUserManager.FindByIdAsync(Id);
+            var user = await AppUserManager.FindByIdAsync(id);
 
             if (user != null)
             {
-                return Ok(this.TheModelFactory.Create(user));
+                return Ok(TheModelFactory.Create(user));
             }
 
             return NotFound();
@@ -50,11 +49,11 @@ namespace Kurogane.Data.RestApi.Controllers
         public async Task<IHttpActionResult> GetUserByName(string username)
         {
             //Only SuperAdmin or Admin can delete users (Later when implement roles)
-            var user = await this.AppUserManager.FindByNameAsync(username);
+            var user = await AppUserManager.FindByNameAsync(username);
 
             if (user != null)
             {
-                return Ok(this.TheModelFactory.Create(user));
+                return Ok(TheModelFactory.Create(user));
             }
 
             return NotFound();
@@ -107,22 +106,22 @@ namespace Kurogane.Data.RestApi.Controllers
             };
 
 
-            IdentityResult addUserResult = await this.AppUserManager.CreateAsync(user, createUserModel.Password);
+            var addUserResult = await AppUserManager.CreateAsync(user, createUserModel.Password);
 
             if (!addUserResult.Succeeded)
             {
                 return GetErrorResult(addUserResult);
             }
 
-            string code = await this.AppUserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            var code = await AppUserManager.GenerateEmailConfirmationTokenAsync(user.Id);
 
-            var callbackUrl = new Uri(Url.Link("ConfirmEmailRoute", new { userId = user.Id, code = code }));
+            var callbackUrl = new Uri(Url.Link("ConfirmEmailRoute", new { userId = user.Id, code }));
 
-            await this.AppUserManager.SendEmailAsync(user.Id,
+            await AppUserManager.SendEmailAsync(user.Id,
                                                     "Confirm your account",
                                                     "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-            Uri locationHeader = new Uri(Url.Link("GetUserById", new { id = user.Id }));
+            var locationHeader = new Uri(Url.Link("GetUserById", new { id = user.Id }));
 
             return Created(locationHeader, TheModelFactory.Create(user));
 
@@ -160,7 +159,7 @@ namespace Kurogane.Data.RestApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            IdentityResult result = await this.AppUserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+            var result = await AppUserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
 
             if (!result.Succeeded)
             {
@@ -177,11 +176,11 @@ namespace Kurogane.Data.RestApi.Controllers
 
             //Only SuperAdmin or Admin can delete users (Later when implement roles)
 
-            var appUser = await this.AppUserManager.FindByIdAsync(id);
+            var appUser = await AppUserManager.FindByIdAsync(id);
 
             if (appUser != null)
             {
-                IdentityResult result = await this.AppUserManager.DeleteAsync(appUser);
+                var result = await AppUserManager.DeleteAsync(appUser);
 
                 if (!result.Succeeded)
                 {
@@ -202,25 +201,25 @@ namespace Kurogane.Data.RestApi.Controllers
         public async Task<IHttpActionResult> AssignRolesToUser([FromUri] string id, [FromBody] string[] rolesToAssign)
         {
 
-            var appUser = await this.AppUserManager.FindByIdAsync(id);
+            var appUser = await AppUserManager.FindByIdAsync(id);
 
             if (appUser == null)
             {
                 return NotFound();
             }
 
-            var currentRoles = await this.AppUserManager.GetRolesAsync(appUser.Id);
+            var currentRoles = await AppUserManager.GetRolesAsync(appUser.Id);
 
-            var rolesNotExists = rolesToAssign.Except(this.AppRoleManager.Roles.Select(x => x.Name)).ToArray();
+            var rolesNotExists = rolesToAssign.Except(AppRoleManager.Roles.Select(x => x.Name)).ToArray();
 
-            if (rolesNotExists.Count() > 0)
+            if (rolesNotExists.Any())
             {
 
-                ModelState.AddModelError("", string.Format("Roles '{0}' does not exixts in the system", string.Join(",", rolesNotExists)));
+                ModelState.AddModelError("", $"Roles '{string.Join(",", rolesNotExists)}' does not exixts in the system");
                 return BadRequest(ModelState);
             }
 
-            IdentityResult removeResult = await this.AppUserManager.RemoveFromRolesAsync(appUser.Id, currentRoles.ToArray());
+            var removeResult = await AppUserManager.RemoveFromRolesAsync(appUser.Id, currentRoles.ToArray());
 
             if (!removeResult.Succeeded)
             {
@@ -228,7 +227,7 @@ namespace Kurogane.Data.RestApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            IdentityResult addResult = await this.AppUserManager.AddToRolesAsync(appUser.Id, rolesToAssign);
+            var addResult = await AppUserManager.AddToRolesAsync(appUser.Id, rolesToAssign);
 
             if (!addResult.Succeeded)
             {
@@ -251,22 +250,22 @@ namespace Kurogane.Data.RestApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var appUser = await this.AppUserManager.FindByIdAsync(id);
+            var appUser = await AppUserManager.FindByIdAsync(id);
 
             if (appUser == null)
             {
                 return NotFound();
             }
 
-            foreach (ClaimBindingModel claimModel in claimsToAssign)
+            foreach (var claimModel in claimsToAssign)
             {
                 if (appUser.Claims.Any(c => c.ClaimType == claimModel.Type))
                 {
 
-                    await this.AppUserManager.RemoveClaimAsync(id, ExtendedClaimsProvider.CreateClaim(claimModel.Type, claimModel.Value));
+                    await AppUserManager.RemoveClaimAsync(id, ExtendedClaimsProvider.CreateClaim(claimModel.Type, claimModel.Value));
                 }
 
-                await this.AppUserManager.AddClaimAsync(id, ExtendedClaimsProvider.CreateClaim(claimModel.Type, claimModel.Value));
+                await AppUserManager.AddClaimAsync(id, ExtendedClaimsProvider.CreateClaim(claimModel.Type, claimModel.Value));
             }
 
             return Ok();
@@ -283,18 +282,18 @@ namespace Kurogane.Data.RestApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var appUser = await this.AppUserManager.FindByIdAsync(id);
+            var appUser = await AppUserManager.FindByIdAsync(id);
 
             if (appUser == null)
             {
                 return NotFound();
             }
 
-            foreach (ClaimBindingModel claimModel in claimsToRemove)
+            foreach (var claimModel in claimsToRemove)
             {
                 if (appUser.Claims.Any(c => c.ClaimType == claimModel.Type))
                 {
-                    await this.AppUserManager.RemoveClaimAsync(id, ExtendedClaimsProvider.CreateClaim(claimModel.Type, claimModel.Value));
+                    await AppUserManager.RemoveClaimAsync(id, ExtendedClaimsProvider.CreateClaim(claimModel.Type, claimModel.Value));
                 }
             }
 
@@ -312,7 +311,7 @@ namespace Kurogane.Data.RestApi.Controllers
             base.Dispose(disposing);
         }
 
-        private IHttpActionResult GetErrorResult(IdentityResult result)
+        private new IHttpActionResult GetErrorResult(IdentityResult result)
         {
             if (result == null)
             {
@@ -323,7 +322,7 @@ namespace Kurogane.Data.RestApi.Controllers
             {
                 if (result.Errors != null)
                 {
-                    foreach (string error in result.Errors)
+                    foreach (var error in result.Errors)
                     {
                         ModelState.AddModelError("", error);
                     }

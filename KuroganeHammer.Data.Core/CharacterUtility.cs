@@ -10,9 +10,9 @@ namespace KuroganeHammer.Data.Core
     {
         public static string GetEnumDescription(Enum value)
         {
-            FieldInfo fieldInfo = value.GetType().GetField(value.ToString());
+            var fieldInfo = value.GetType().GetField(value.ToString());
 
-            DescriptionAttribute[] attributes =
+            var attributes =
                 (DescriptionAttribute[])fieldInfo.GetCustomAttributes<DescriptionAttribute>(false);
 
             if (attributes != null &&

@@ -10,7 +10,7 @@ namespace Kurogane.Data.RestApi.Providers
     public class CustomJwtFormat : ISecureDataFormat<AuthenticationTicket>
     {
 
-        private readonly string _issuer = string.Empty;
+        private readonly string _issuer;
 
         public CustomJwtFormat(string issuer)
         {
@@ -21,12 +21,12 @@ namespace Kurogane.Data.RestApi.Providers
         {
             if (data == null)
             {
-                throw new ArgumentNullException("data");
+                throw new ArgumentNullException(nameof(data));
             }
 
-            string audienceId = ConfigurationManager.AppSettings["as:AudienceId"];
+            var audienceId = ConfigurationManager.AppSettings["as:AudienceId"];
 
-            string symmetricKeyAsBase64 = ConfigurationManager.AppSettings["as:AudienceSecret"];
+            var symmetricKeyAsBase64 = ConfigurationManager.AppSettings["as:AudienceSecret"];
 
             var keyByteArray = TextEncodings.Base64Url.Decode(symmetricKeyAsBase64);
 
