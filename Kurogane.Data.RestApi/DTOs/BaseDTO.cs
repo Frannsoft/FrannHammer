@@ -1,9 +1,10 @@
-﻿using Kurogane.Data.RestApi.Models;
-using Kurogane.Data.RestApi.Providers;
+﻿using System.Diagnostics.CodeAnalysis;
+using Kurogane.Data.RestApi.Models;
+using Kurogane.Data.RestApi.Services;
 
 namespace Kurogane.Data.RestApi.DTOs
 {
-    public class BaseDTO
+    public class BaseDto
     {
         public string CharacterName { get; set; }
         public int Id { get; set; }
@@ -11,31 +12,31 @@ namespace Kurogane.Data.RestApi.DTOs
         public int OwnerId { get; set; }
         public string Name { get; set; }
 
-        public BaseDTO(Stat stat, ICharacterStatService characterStatService)
+        public BaseDto(Stat stat, ICharacterStatService characterStatService)
         {
-            this.Id = stat.Id;
-            this.OwnerId = stat.OwnerId;
-            this.Name = stat.Name;
+            Id = stat.Id;
+            OwnerId = stat.OwnerId;
+            Name = stat.Name;
 
-            CharacterStat character = characterStatService.GetCharacter(stat.OwnerId);
-            this.CharacterName = character.Name;
-            this.ThumbnailUrl = character.ThumbnailUrl;
+            var character = characterStatService.GetCharacter(stat.OwnerId);
+            CharacterName = character.Name;
+            ThumbnailUrl = character.ThumbnailUrl;
         }
 
-        public BaseDTO()
+        public BaseDto()
         { }
 
         public override bool Equals(object obj)
         {
-            bool retVal = false;
-            BaseDTO baseComp = obj as BaseDTO;
+            var retVal = false;
+            var baseComp = obj as BaseDto;
 
             if (baseComp != null)
             {
-                if (this.CharacterName.Equals(baseComp.CharacterName) &&
-                    this.Name.Equals(baseComp.Name) &&
-                    this.OwnerId.Equals(baseComp.OwnerId) &&
-                    this.ThumbnailUrl.Equals(baseComp.ThumbnailUrl))
+                if (CharacterName.Equals(baseComp.CharacterName) &&
+                    Name.Equals(baseComp.Name) &&
+                    OwnerId.Equals(baseComp.OwnerId) &&
+                    ThumbnailUrl.Equals(baseComp.ThumbnailUrl))
                 {
                     retVal = true;
                 }
@@ -44,6 +45,7 @@ namespace Kurogane.Data.RestApi.DTOs
             return retVal;
         }
 
+        [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]
         public override int GetHashCode()
         {
             return new

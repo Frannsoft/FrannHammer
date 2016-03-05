@@ -1,8 +1,9 @@
-﻿using Kurogane.Data.RestApi.Models;
+﻿using System.Diagnostics.CodeAnalysis;
+using Kurogane.Data.RestApi.Models;
 
 namespace Kurogane.Data.RestApi.DTOs
 {
-    public class CharacterDTO
+    public class CharacterDto
     {
         public int Id { get; set; }
         public string ThumbnailUrl { get; set; }
@@ -12,7 +13,7 @@ namespace Kurogane.Data.RestApi.DTOs
         public string MainImageUrl { get; set; }
         public string Description { get; set; }
 
-        public CharacterDTO(CharacterStat stat)
+        public CharacterDto(CharacterStat stat)
         {
             Style = stat.Style;
             Description = stat.Description;
@@ -23,23 +24,23 @@ namespace Kurogane.Data.RestApi.DTOs
             Name = stat.Name;
         }
 
-        public CharacterDTO()
+        public CharacterDto()
         { }
 
         public override bool Equals(object obj)
         {
-            bool retVal = false;
+            var retVal = false;
 
-            CharacterDTO compDTO = obj as CharacterDTO;
+            var compDto = obj as CharacterDto;
 
-            if(compDTO != null)
+            if(compDto != null)
             {
-                if(this.Description.Equals(compDTO.Description) &&
-                    this.MainImageUrl.Equals(compDTO.MainImageUrl) &&
-                    this.Name.Equals(compDTO.Name) &&
-                    this.OwnerId.Equals(compDTO.OwnerId) &&
-                    this.Style.Equals(compDTO.Style) &&
-                    this.ThumbnailUrl.Equals(compDTO.ThumbnailUrl))
+                if(Description.Equals(compDto.Description) &&
+                    MainImageUrl.Equals(compDto.MainImageUrl) &&
+                    Name.Equals(compDto.Name) &&
+                    OwnerId.Equals(compDto.OwnerId) &&
+                    Style.Equals(compDto.Style) &&
+                    ThumbnailUrl.Equals(compDto.ThumbnailUrl))
                 {
                     retVal = true;
                 }
@@ -48,6 +49,7 @@ namespace Kurogane.Data.RestApi.DTOs
             return retVal;
         }
 
+        [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]
         public override int GetHashCode()
         {
             return new

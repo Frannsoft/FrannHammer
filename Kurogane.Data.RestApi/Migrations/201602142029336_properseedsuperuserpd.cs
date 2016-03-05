@@ -1,9 +1,8 @@
 namespace Kurogane.Data.RestApi.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
     
-    public partial class properseedsuperuserpd : DbMigration
+    public partial class Properseedsuperuserpd : DbMigration
     {
         public override void Up()
         {

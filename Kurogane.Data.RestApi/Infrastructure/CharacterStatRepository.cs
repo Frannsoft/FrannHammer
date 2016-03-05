@@ -16,8 +16,8 @@ namespace Kurogane.Data.RestApi.Infrastructure
 
         public CharacterStat GetCharacter(int id)
         {
-            var character = this.DbContext.Characters.Where(c => c.OwnerId == id)
-                .FirstOrDefault();
+            var character = DbContext.Characters
+                .FirstOrDefault(c => c.OwnerId == id);
             return character;
         }
     }

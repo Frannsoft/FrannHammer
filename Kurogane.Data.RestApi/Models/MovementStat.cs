@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Kurogane.Data.RestApi.Models
 {
@@ -11,7 +12,7 @@ namespace Kurogane.Data.RestApi.Models
         {
             value = value.Replace(" ", string.Empty);
 
-            double result = 0;
+            double result;
             if(double.TryParse(value, out result))
             {
                 Value = Convert.ToDouble(result);
@@ -23,13 +24,12 @@ namespace Kurogane.Data.RestApi.Models
 
         public override bool Equals(object obj)
         {
-            bool retVal = false;
-            MovementStat compMovement = obj as MovementStat;
+            var retVal = false;
+            var compMovement = obj as MovementStat;
 
             if (compMovement != null)
             {
-                if (this.Value.Equals(compMovement.Value) &&
-                    base.Equals(compMovement))
+                if (!Value.Equals(compMovement.Value) || !base.Equals(compMovement))
                 {
                     retVal = true;
                 }
@@ -38,6 +38,7 @@ namespace Kurogane.Data.RestApi.Models
             return retVal;
         }
 
+        [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]
         public override int GetHashCode()
         {
             return new

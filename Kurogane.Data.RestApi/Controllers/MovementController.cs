@@ -2,22 +2,21 @@
 using System.Collections.Generic;
 using System.Web.Http;
 using System.Linq;
-using System.Data.Entity.Infrastructure;
 using System.Net;
-using Kurogane.Data.RestApi.Providers;
 using Kurogane.Data.RestApi.Models;
+using Kurogane.Data.RestApi.Services;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
     public class MovementController : ApiController
     {
-        private readonly IMovementStatService movementStatService;
-        private readonly ICharacterStatService characterStatService;
+        private readonly IMovementStatService _movementStatService;
+        private readonly ICharacterStatService _characterStatService;
 
         public MovementController(IMovementStatService movementStatService, ICharacterStatService characterStatService)
         {
-            this.movementStatService = movementStatService;
-            this.characterStatService = characterStatService;
+            _movementStatService = movementStatService;
+            _characterStatService = characterStatService;
         }
 
         [Authorize(Roles = "Admin")]
@@ -25,8 +24,8 @@ namespace Kurogane.Data.RestApi.Controllers
         [HttpGet]
         public IHttpActionResult GetMovements()
         {
-            var movementsResult = from movements in movementStatService.GetMovementStats()
-                   select new MovementStatDTO(movements, characterStatService);
+            var movementsResult = from movements in _movementStatService.GetMovementStats()
+                   select new MovementStatDto(movements, _characterStatService);
             return Ok(movementsResult);
         }
 
@@ -34,17 +33,17 @@ namespace Kurogane.Data.RestApi.Controllers
         [HttpGet]
         public IHttpActionResult GetMovementStat(int id)
         {
-            var movement = movementStatService.GetMovementStat(id);
-            var movementDTO = new MovementStatDTO(movement, characterStatService);
-            return Ok(movementDTO);
+            var movement = _movementStatService.GetMovementStat(id);
+            var movementDto = new MovementStatDto(movement, _characterStatService);
+            return Ok(movementDto);
         }
 
         [Route("movement")]
         [HttpGet]
-        public IEnumerable<MovementStatDTO> GetAllMovementOfName([FromUri]string name)
+        public IEnumerable<MovementStatDto> GetAllMovementOfName([FromUri]string name)
         {
-            return from movements in movementStatService.GetMovementStatsByName(name)
-                   select new MovementStatDTO(movements, characterStatService);
+            return from movements in _movementStatService.GetMovementStatsByName(name)
+                   select new MovementStatDto(movements, _characterStatService);
         }
 
         [Authorize]
@@ -57,11 +56,11 @@ namespace Kurogane.Data.RestApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var foundMovement = movementStatService.GetMovementStat(value.Id);
+            var foundMovement = _movementStatService.GetMovementStat(value.Id);
             
             if(foundMovement == null)
             {
-                movementStatService.CreateMovementStat(value);
+                _movementStatService.CreateMovementStat(value);
             }
             else
             {
@@ -86,13 +85,13 @@ namespace Kurogane.Data.RestApi.Controllers
                 return BadRequest();
             }
 
-            var foundMovement = movementStatService.GetMovementStat(value.Id);
+            var foundMovement = _movementStatService.GetMovementStat(value.Id);
             if (foundMovement != null)
             {
                 foundMovement.Name = value.Name;
                 foundMovement.Value = value.Value;
 
-                movementStatService.UpdateMovementStat(foundMovement);
+                _movementStatService.UpdateMovementStat(foundMovement);
                 return Ok(value);
             }
 
@@ -104,20 +103,15 @@ namespace Kurogane.Data.RestApi.Controllers
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
-            MovementStat movement = movementStatService.GetMovementStat(id);
+            var movement = _movementStatService.GetMovementStat(id);
             if (movement == null)
             {
                 return NotFound();
             }
 
-            movementStatService.DeleteMovementStat(movement);
+            _movementStatService.DeleteMovementStat(movement);
 
             return Ok();
-        }
-
-        private bool MovementStatExists(int id)
-        {
-            return movementStatService.GetMovementStat(id) != null;
         }
     }
 }
