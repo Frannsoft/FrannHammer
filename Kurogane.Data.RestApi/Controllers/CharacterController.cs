@@ -2,49 +2,49 @@
 using System.Web.Http;
 using System.Linq;
 using Kurogane.Data.RestApi.Models;
-using Kurogane.Data.RestApi.Providers;
+using Kurogane.Data.RestApi.Services;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
     public class CharacterController : ApiController
     {
-        private readonly ICharacterStatService characterStatService;
-        private readonly IMovementStatService movementStatService;
-        private readonly IMoveStatService moveStatService;
+        private readonly ICharacterStatService _characterStatService;
+        private readonly IMovementStatService _movementStatService;
+        private readonly IMoveStatService _moveStatService;
 
         public CharacterController(ICharacterStatService characterStatService, IMovementStatService movementStatService, IMoveStatService moveStatService)
         {
-            this.characterStatService = characterStatService;
-            this.movementStatService = movementStatService;
-            this.moveStatService = moveStatService;
+            _characterStatService = characterStatService;
+            _movementStatService = movementStatService;
+            _moveStatService = moveStatService;
         }
 
         [Route("characters")]
         [HttpGet]
         public IHttpActionResult GetRoster()
         {
-            var characterDTOs = from characters in characterStatService.GetCharacters()
+            var characterDtOs = from characters in _characterStatService.GetCharacters()
                                 orderby characters.Name ascending
-                                select new CharacterDTO(characters);
+                                select new CharacterDto(characters);
 
-            return Ok(characterDTOs);
+            return Ok(characterDtOs);
         }
 
         [Route("characters/{id}")]
         [HttpGet]
         public IHttpActionResult GetCharacter(int id)
         {
-            var character = characterStatService.GetCharacter(id);
-            CharacterDTO charDTO = new CharacterDTO(character);
-            return Ok(charDTO);
+            var character = _characterStatService.GetCharacter(id);
+            var charDto = new CharacterDto(character);
+            return Ok(charDto);
         }
 
         [Route("characters/{id}/movement")]
         [HttpGet]
         public IHttpActionResult GetMovementForRoster(int id)
         {
-            var movementStats = from movements in movementStatService.GetMovementStatsForCharacter(id)
-                                select new MovementStatDTO(movements, characterStatService);
+            var movementStats = from movements in _movementStatService.GetMovementStatsForCharacter(id)
+                                select new MovementStatDto(movements, _characterStatService);
             return Ok(movementStats);
         }
 
@@ -52,9 +52,9 @@ namespace Kurogane.Data.RestApi.Controllers
         [HttpGet]
         public IHttpActionResult GetMoves(int id)
         {
-            var moves = from move in moveStatService.GetMovesByCharacter(id)
+            var moves = from move in _moveStatService.GetMovesByCharacter(id)
                         where move.OwnerId == id
-                        select new MoveDTO(move, characterStatService);
+                        select new MoveDto(move, _characterStatService);
 
             return Ok(moves);
         }
@@ -63,10 +63,10 @@ namespace Kurogane.Data.RestApi.Controllers
         [HttpGet]
         public IHttpActionResult GetMoveForCharacterOfType(int id, MoveType type)
         {
-            var moves = from move in moveStatService.GetMovesByCharacter(id)
+            var moves = from move in _moveStatService.GetMovesByCharacter(id)
                         where move.OwnerId == id &&
                         move.Type == type
-                        select new MoveDTO(move, characterStatService);
+                        select new MoveDto(move, _characterStatService);
 
             return Ok(moves);
         }
@@ -81,10 +81,10 @@ namespace Kurogane.Data.RestApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var foundChar = characterStatService.GetCharacter(value.Id);
+            var foundChar = _characterStatService.GetCharacter(value.Id);
             if (foundChar == null)
             {
-                characterStatService.CreateCharacter(value);
+                _characterStatService.CreateCharacter(value);
             }
             else
             {
@@ -109,7 +109,7 @@ namespace Kurogane.Data.RestApi.Controllers
                 return BadRequest();
             }
 
-            var foundChar = characterStatService.GetCharacter(value.Id);
+            var foundChar = _characterStatService.GetCharacter(value.Id);
             if (foundChar != null)
             {
                 foundChar.Description = value.Description;
@@ -118,7 +118,7 @@ namespace Kurogane.Data.RestApi.Controllers
                 foundChar.Style = value.Style;
                 foundChar.ThumbnailUrl = value.ThumbnailUrl;
 
-                characterStatService.UpdateCharacter(foundChar);
+                _characterStatService.UpdateCharacter(foundChar);
             }
 
             return Ok(value);
@@ -129,20 +129,15 @@ namespace Kurogane.Data.RestApi.Controllers
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
-            CharacterStat character = characterStatService.GetCharacter(id);
+            var character = _characterStatService.GetCharacter(id);
             if (character == null)
             {
                 return NotFound();
             }
 
-            characterStatService.DeleteCharacter(character);
+            _characterStatService.DeleteCharacter(character);
 
             return Ok();
-        }
-
-        private bool CharacterExists(int id)
-        {
-            return characterStatService.GetCharacter(id) != null;
         }
     }
 }

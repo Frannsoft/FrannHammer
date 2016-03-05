@@ -1,8 +1,8 @@
-﻿using Kurogane.Data.RestApi.Infrastructure;
+﻿using System.Collections.Generic;
+using Kurogane.Data.RestApi.Infrastructure;
 using Kurogane.Data.RestApi.Models;
-using System.Collections.Generic;
 
-namespace Kurogane.Data.RestApi.Providers
+namespace Kurogane.Data.RestApi.Services
 {
     public interface IMovementStatService
     {
@@ -18,59 +18,59 @@ namespace Kurogane.Data.RestApi.Providers
 
     public class MovementStatService : IMovementStatService
     {
-        private readonly IMovementStatRepository movementStatRepository;
-        private readonly IUnitOfWork unitOfWork;
+        private readonly IMovementStatRepository _movementStatRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
         public MovementStatService(IMovementStatRepository movementStatRepository, IUnitOfWork unitOfWork)
         {
-            this.movementStatRepository = movementStatRepository;
-            this.unitOfWork = unitOfWork;
+            _movementStatRepository = movementStatRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public IEnumerable<MovementStat> GetMovementStats()
         {
-            var movements = movementStatRepository.GetAll();
+            var movements = _movementStatRepository.GetAll();
             return movements;
         }
 
         public MovementStat GetMovementStat(int id)
         {
-            var movement = movementStatRepository.GetById(id);
+            var movement = _movementStatRepository.GetById(id);
             return movement;
         }
 
         public IEnumerable<MovementStat> GetMovementStatsForCharacter(int id)
         {
-            var movements = movementStatRepository.GetMovementStatsByCharacter(id);
+            var movements = _movementStatRepository.GetMovementStatsByCharacter(id);
             return movements;
         }
 
         public void CreateMovementStat(MovementStat movementStat)
         {
-            movementStatRepository.Add(movementStat);
+            _movementStatRepository.Add(movementStat);
             SaveMovement();
         }
 
         public void SaveMovement()
         {
-            unitOfWork.Commit();
+            _unitOfWork.Commit();
         }
 
         public IEnumerable<MovementStat> GetMovementStatsByName(string name)
         {
-            var movements = movementStatRepository.GetMovementStatsByName(name);
+            var movements = _movementStatRepository.GetMovementStatsByName(name);
             return movements;
         }
 
         public void UpdateMovementStat(MovementStat movementStat)
         {
-            movementStatRepository.Update(movementStat);
+            _movementStatRepository.Update(movementStat);
             SaveMovement();
         }
 
         public void DeleteMovementStat(MovementStat movementStat)
         {
-            movementStatRepository.Delete(movementStat);
+            _movementStatRepository.Delete(movementStat);
             SaveMovement();
         }
     }

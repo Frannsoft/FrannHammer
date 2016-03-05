@@ -4,7 +4,6 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security.DataProtection;
 using System.Net.Http;
-using System.Web;
 using System.Web.Http;
 
 namespace Kurogane.Data.RestApi.Controllers
@@ -13,43 +12,23 @@ namespace Kurogane.Data.RestApi.Controllers
     {
 
         private ModelFactory _modelFactory;
-        private ApplicationUserManager _AppUserManager = null;
-        private ApplicationRoleManager _AppRoleManager = null;
+        private readonly ApplicationUserManager _appUserManager = null;
+        private readonly ApplicationRoleManager _appRoleManager = null;
 
         protected ApplicationUserManager AppUserManager
         {
             get
             {
-                var manager = _AppUserManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                var manager = _appUserManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
                 var provider = new DpapiDataProtectionProvider("KuroganeHammer");
                 manager.UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser>(provider.Create("usermanagement"));
                 return manager;
             }
         }
 
-        protected ApplicationRoleManager AppRoleManager
-        {
-            get
-            {
-                return _AppRoleManager ?? Request.GetOwinContext().GetUserManager<ApplicationRoleManager>();
-            }
-        }
+        protected ApplicationRoleManager AppRoleManager => _appRoleManager ?? Request.GetOwinContext().GetUserManager<ApplicationRoleManager>();
 
-        public BaseApiController()
-        {
-        }
-
-        protected ModelFactory TheModelFactory
-        {
-            get
-            {
-                if (_modelFactory == null)
-                {
-                    _modelFactory = new ModelFactory(this.Request, this.AppUserManager);
-                }
-                return _modelFactory;
-            }
-        }
+        protected ModelFactory TheModelFactory => _modelFactory ?? (_modelFactory = new ModelFactory(Request, AppUserManager));
 
         protected IHttpActionResult GetErrorResult(IdentityResult result)
         {
@@ -62,7 +41,7 @@ namespace Kurogane.Data.RestApi.Controllers
             {
                 if (result.Errors != null)
                 {
-                    foreach (string error in result.Errors)
+                    foreach (var error in result.Errors)
                     {
                         ModelState.AddModelError("", error);
                     }

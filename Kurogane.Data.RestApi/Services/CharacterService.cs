@@ -1,8 +1,8 @@
-﻿using Kurogane.Data.RestApi.Infrastructure;
+﻿using System.Collections.Generic;
+using Kurogane.Data.RestApi.Infrastructure;
 using Kurogane.Data.RestApi.Models;
-using System.Collections.Generic;
 
-namespace Kurogane.Data.RestApi.Providers
+namespace Kurogane.Data.RestApi.Services
 {
     public interface ICharacterStatService
     {
@@ -16,47 +16,47 @@ namespace Kurogane.Data.RestApi.Providers
 
     public class CharacterService : ICharacterStatService
     {
-        private readonly ICharacterStatRepository characterStatRepository;
-        private readonly IUnitOfWork unitOfWork;
+        private readonly ICharacterStatRepository _characterStatRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
         public CharacterService(ICharacterStatRepository characterStatRepository, IUnitOfWork unitOfWork)
         {
-            this.characterStatRepository = characterStatRepository;
-            this.unitOfWork = unitOfWork;
+            _characterStatRepository = characterStatRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public IEnumerable<CharacterStat> GetCharacters()
         {
-            var characters = characterStatRepository.GetAll();
+            var characters = _characterStatRepository.GetAll();
             return characters;
         }
 
         public CharacterStat GetCharacter(int id)
         {
-            var character = characterStatRepository.GetCharacter(id);
+            var character = _characterStatRepository.GetCharacter(id);
             return character;
         }
 
         public void CreateCharacter(CharacterStat characterStat)
         {
-            characterStatRepository.Add(characterStat);
+            _characterStatRepository.Add(characterStat);
             SaveCharacter();
         }
 
         public void UpdateCharacter(CharacterStat characterStat)
         {
-            characterStatRepository.Update(characterStat);
+            _characterStatRepository.Update(characterStat);
             SaveCharacter();
         }
 
         public void SaveCharacter()
         {
-            unitOfWork.Commit();
+            _unitOfWork.Commit();
         }
 
         public void DeleteCharacter(CharacterStat characterStat)
         {
-            characterStatRepository.Delete(characterStat);
+            _characterStatRepository.Delete(characterStat);
             SaveCharacter();
         }
     }

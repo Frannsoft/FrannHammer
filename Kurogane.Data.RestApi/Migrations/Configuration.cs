@@ -33,13 +33,13 @@ namespace Kurogane.Data.RestApi.Migrations
             
             manager.Create(user, "MySuperP@ssword!");
 
-            if(roleManager.Roles.Count() == 0)
+            if(!roleManager.Roles.Any())
             {
                 roleManager.Create(new IdentityRole { Name = "Admin" });
             }
 
             var adminUser = manager.FindByName("KuroUser");
-            manager.AddToRoles(adminUser.Id, new string[] { "Admin" });
+            manager.AddToRoles(adminUser.Id, "Admin");
         }
     }
 }
