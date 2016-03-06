@@ -11,7 +11,7 @@ namespace KurograneTransferDBTool
     {
         protected HttpClient LoggedInClient;
         protected HttpClient AnonymousClient;
-        protected const string Baseuri = "http://localhost/frannhammerAPI/";
+        protected const string Baseuri = "http://localhost/api/";
         private string _authToken;
 
         [SetUp]
