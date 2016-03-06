@@ -34,10 +34,8 @@ namespace KuroganeHammer.WebScraper
         [JsonProperty]
         public Dictionary<string, Stat> FrameData { get; private set; }
 
-        public Character(Characters character, string description, string style)
+        public Character(Characters character)
         {
-            Description = description;
-            Style = style;
             Name = character.ToString();
             _urlTail = CharacterUtility.GetEnumDescription(character);
             OwnerId = (int)character;
