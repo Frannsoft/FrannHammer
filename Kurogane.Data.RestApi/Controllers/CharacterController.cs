@@ -25,7 +25,7 @@ namespace Kurogane.Data.RestApi.Controllers
         {
             var characterDtOs = from characters in _characterStatService.GetCharacters()
                                 orderby characters.Name ascending
-                                select new CharacterDTO(characters);
+                                select new CharacterDto(characters);
 
             return Ok(characterDtOs);
         }
@@ -35,7 +35,7 @@ namespace Kurogane.Data.RestApi.Controllers
         public IHttpActionResult GetCharacter(int id)
         {
             var character = _characterStatService.GetCharacter(id);
-            var charDto = new CharacterDTO(character);
+            var charDto = new CharacterDto(character);
             return Ok(charDto);
         }
 
@@ -44,7 +44,7 @@ namespace Kurogane.Data.RestApi.Controllers
         public IHttpActionResult GetMovementForRoster(int id)
         {
             var movementStats = from movements in _movementStatService.GetMovementStatsForCharacter(id)
-                                select new MovementStatDTO(movements, _characterStatService);
+                                select new MovementStatDto(movements, _characterStatService);
             return Ok(movementStats);
         }
 
@@ -54,22 +54,22 @@ namespace Kurogane.Data.RestApi.Controllers
         {
             var moves = from move in _moveStatService.GetMovesByCharacter(id)
                         where move.OwnerId == id
-                        select new MoveDTO(move, _characterStatService);
+                        select new MoveDto(move, _characterStatService);
 
             return Ok(moves);
         }
 
-        //[Route("characters/{id}/moves/{type}")]
-        //[HttpGet]
-        //public IHttpActionResult GetMoveForCharacterOfType(int id, MoveType type)
-        //{
-        //    var moves = from move in _moveStatService.GetMovesByCharacter(id)
-        //                where move.OwnerId == id &&
-        //                move.Type == type
-        //                select new MoveDTO(move, _characterStatService);
+        [Route("characters/{id}/moves/{type}")]
+        [HttpGet]
+        public IHttpActionResult GetMoveForCharacterOfType(int id, MoveType type)
+        {
+            var moves = from move in _moveStatService.GetMovesByCharacter(id)
+                        where move.OwnerId == id &&
+                        move.Type == type
+                        select new MoveDto(move, _characterStatService);
 
-        //    return Ok(moves);
-        //}
+            return Ok(moves);
+        }
 
         [Authorize(Roles = "Admin")]
         [Route("characters")]

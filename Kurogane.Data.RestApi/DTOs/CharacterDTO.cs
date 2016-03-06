@@ -3,7 +3,7 @@ using Kurogane.Data.RestApi.Models;
 
 namespace Kurogane.Data.RestApi.DTOs
 {
-    public class CharacterDTO
+    public class CharacterDto
     {
         public int Id { get; set; }
         public string ThumbnailUrl { get; set; }
@@ -13,7 +13,7 @@ namespace Kurogane.Data.RestApi.DTOs
         public string MainImageUrl { get; set; }
         public string Description { get; set; }
 
-        public CharacterDTO(CharacterStat stat)
+        public CharacterDto(CharacterStat stat)
         {
             Style = stat.Style;
             Description = stat.Description;
@@ -24,14 +24,14 @@ namespace Kurogane.Data.RestApi.DTOs
             Name = stat.Name;
         }
 
-        public CharacterDTO()
+        public CharacterDto()
         { }
 
         public override bool Equals(object obj)
         {
             var retVal = false;
 
-            var compDto = obj as CharacterDTO;
+            var compDto = obj as CharacterDto;
 
             if(compDto != null)
             {

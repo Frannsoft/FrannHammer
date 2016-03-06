@@ -23,7 +23,7 @@ namespace Kurogane.Data.RestApi.Controllers
         public IHttpActionResult GetMovesOfType(MoveType type)
         {
             var moves = from move in _moveStatService.GetMovesByType(type)
-                        select new MoveDTO(move, _characterStatService);
+                        select new MoveDto(move, _characterStatService);
 
             return Ok(moves);
         }
@@ -33,7 +33,7 @@ namespace Kurogane.Data.RestApi.Controllers
         public IHttpActionResult GetMovesOfName([FromUri]string name)
         {
             var moves = from move in _moveStatService.GetMovesByName(name)
-                        select new MoveDTO(move, _characterStatService);
+                        select new MoveDto(move, _characterStatService);
 
             return Ok(moves);
         }
@@ -43,11 +43,10 @@ namespace Kurogane.Data.RestApi.Controllers
         public IHttpActionResult GetMove(int id)
         {
             var move = _moveStatService.GetMove(id);
-            var moveDTO = new MoveDTO(move, _characterStatService);
-            return Ok(moveDTO);
+            return Ok(move);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         [Route("moves")]
         [HttpPost]
         public IHttpActionResult Post([FromBody]MoveStat value)
@@ -71,7 +70,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(value);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         [Route("moves/{id}")]
         [HttpPut]
         public IHttpActionResult Put(int id, [FromBody]MoveStat value)
@@ -110,7 +109,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         [Route("moves/{id}")]
         [HttpDelete]
         public IHttpActionResult Delete(int id)
