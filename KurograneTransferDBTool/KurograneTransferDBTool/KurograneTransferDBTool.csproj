@@ -41,7 +41,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Kurogane.Data.RestApi">
-      <HintPath>..\..\Kurogane.Data.RestApi\bin\Kurogane.Data.RestApi.dll</HintPath>
+      <HintPath>E:\Development\C#projects\Kurogane.Data\Kurogane.Data.RestApi\bin\Kurogane.Data.RestApi.dll</HintPath>
     </Reference>
     <Reference Include="KuroganeHammer.Data.Core">
       <HintPath>E:\Development\C#projects\Kurogane.Data\KuroganeHammer.Data.Core\bin\Debug\KuroganeHammer.Data.Core.dll</HintPath>

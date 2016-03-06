@@ -9,28 +9,27 @@ namespace KurograneTransferDBTool
 {
     public class BaseTest
     {
-        protected HttpClient LoggedInClient;
-        protected HttpClient AnonymousClient;
-        protected const string Baseuri = "http://localhost/frannhammerAPI/";
-        private string _authToken;
+        protected HttpClient client;
+        protected const string BASEURL = "http://localhost/frannhammerAPI/";
+        string authToken;
 
         [SetUp]
         public void SetUp()
         {
-            LoggedInClient = new HttpClient { BaseAddress = new Uri(Baseuri) };
+            client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost/frannHammerAPI");
             var content = new FormUrlEncodedContent(new[]
             {
                 new KeyValuePair<string, string>("grant_type", "password"),
                 new KeyValuePair<string, string>("username", "KuroUser"),
-                new KeyValuePair<string, string>("password", "!Cr4zyH4nd?")
+                new KeyValuePair<string, string>("password", "")
             });
 
-            var response = LoggedInClient.PostAsync("oauth/token", content).Result;
-            _authToken = JsonConvert.DeserializeObject<dynamic>(response.Content.ReadAsStringAsync().Result).access_token;
+            var response = client.PostAsync("/oauth/token", content).Result;
+            var jsonResponse = response.Content.ReadAsStringAsync().Result;
+            authToken = JsonConvert.DeserializeObject<dynamic>(response.Content.ReadAsStringAsync().Result).access_token;
 
-            LoggedInClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _authToken);
-
-            AnonymousClient = new HttpClient { BaseAddress = new Uri(Baseuri) };
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authToken);
         }
     }
 }

@@ -5,23 +5,23 @@ using Kurogane.Data.RestApi.Services;
 
 namespace Kurogane.Data.RestApi.DTOs
 {
-    public class MovementStatDTO : BaseDTO
+    public class MovementStatDto : BaseDto
     {
         public double Value { get; set; }
 
-        public MovementStatDTO(MovementStat movement, ICharacterStatService characterStatService)
+        public MovementStatDto(MovementStat movement, ICharacterStatService characterStatService)
             : base(movement, characterStatService)
         {
             Value = movement.Value;
         }
 
-        public MovementStatDTO()
+        public MovementStatDto()
         { }
 
         public override bool Equals(object obj)
         {
             var retVal = false;
-            var compMovement = obj as MovementStatDTO;
+            var compMovement = obj as MovementStatDto;
 
             if(compMovement != null)
             {

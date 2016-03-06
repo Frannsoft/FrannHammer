@@ -4,7 +4,7 @@ using Kurogane.Data.RestApi.Services;
 
 namespace Kurogane.Data.RestApi.DTOs
 {
-    public class MoveDTO : BaseDTO
+    public class MoveDto : BaseDto
     {
         public string HitboxActive { get; set; }
         public int FirstActionableFrame { get; set; }
@@ -16,7 +16,7 @@ namespace Kurogane.Data.RestApi.DTOs
         public string KnockbackGrowth { get; set; }
         public MoveType Type { get; set; }
 
-        public MoveDTO(MoveStat move, ICharacterStatService characterStatService)
+        public MoveDto(MoveStat move, ICharacterStatService characterStatService)
             : base(move, characterStatService)
         {
             Angle = move.Angle;
@@ -29,8 +29,5 @@ namespace Kurogane.Data.RestApi.DTOs
             LandingLag = move.LandingLag;
             Type = move.Type;
         }
-
-        public MoveDTO()
-        { }
     }
 }
