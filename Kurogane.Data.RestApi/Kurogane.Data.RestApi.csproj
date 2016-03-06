@@ -250,6 +250,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\FranSm4shTest.pubxml" />
+    <None Include="Properties\PublishProfiles\KuroganeHammer.pubxml" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
