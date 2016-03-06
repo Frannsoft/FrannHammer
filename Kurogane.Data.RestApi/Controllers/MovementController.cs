@@ -25,7 +25,7 @@ namespace Kurogane.Data.RestApi.Controllers
         public IHttpActionResult GetMovements()
         {
             var movementsResult = from movements in _movementStatService.GetMovementStats()
-                   select new MovementStatDto(movements, _characterStatService);
+                                  select new MovementStatDTO(movements, _characterStatService);
             return Ok(movementsResult);
         }
 
@@ -34,19 +34,19 @@ namespace Kurogane.Data.RestApi.Controllers
         public IHttpActionResult GetMovementStat(int id)
         {
             var movement = _movementStatService.GetMovementStat(id);
-            var movementDto = new MovementStatDto(movement, _characterStatService);
+            var movementDto = new MovementStatDTO(movement, _characterStatService);
             return Ok(movementDto);
         }
 
         [Route("movement")]
         [HttpGet]
-        public IEnumerable<MovementStatDto> GetAllMovementOfName([FromUri]string name)
+        public IEnumerable<MovementStatDTO> GetAllMovementOfName([FromUri]string name)
         {
             return from movements in _movementStatService.GetMovementStatsByName(name)
-                   select new MovementStatDto(movements, _characterStatService);
+                   select new MovementStatDTO(movements, _characterStatService);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("movement")]
         [HttpPost]
         public IHttpActionResult Post([FromBody]MovementStat value)
@@ -57,8 +57,8 @@ namespace Kurogane.Data.RestApi.Controllers
             }
 
             var foundMovement = _movementStatService.GetMovementStat(value.Id);
-            
-            if(foundMovement == null)
+
+            if (foundMovement == null)
             {
                 _movementStatService.CreateMovementStat(value);
             }
@@ -70,7 +70,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(value);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("movement/{id}")]
         [HttpPut]
         public IHttpActionResult Put(int id, [FromBody]MovementStat value)
@@ -98,7 +98,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("movement/{id}")]
         [HttpDelete]
         public IHttpActionResult Delete(int id)

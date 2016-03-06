@@ -15,8 +15,8 @@ namespace KurograneTransferDBTool
         /// <returns></returns>
         public static void UpdateProperty<TSource, TRet>(TSource source, TRet retVal)
         {
-            PropertyInfo[] sourceProps = source.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
-            PropertyInfo[] retValProps = retVal.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            var sourceProps = source.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            var retValProps = retVal.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
             foreach (var prop in retValProps)
             {

@@ -17,13 +17,13 @@ namespace Kurogane.Data.RestApi.Controllers
             _moveStatService = moveStatService;
             _characterStatService = characterStatService;
         }
-        
+
         [Route("movesoftype/{type}")]
         [HttpGet]
         public IHttpActionResult GetMovesOfType(MoveType type)
         {
             var moves = from move in _moveStatService.GetMovesByType(type)
-                        select new MoveDto(move, _characterStatService);
+                        select new MoveDTO(move, _characterStatService);
 
             return Ok(moves);
         }
@@ -33,7 +33,7 @@ namespace Kurogane.Data.RestApi.Controllers
         public IHttpActionResult GetMovesOfName([FromUri]string name)
         {
             var moves = from move in _moveStatService.GetMovesByName(name)
-                        select new MoveDto(move, _characterStatService);
+                        select new MoveDTO(move, _characterStatService);
 
             return Ok(moves);
         }
@@ -43,10 +43,11 @@ namespace Kurogane.Data.RestApi.Controllers
         public IHttpActionResult GetMove(int id)
         {
             var move = _moveStatService.GetMove(id);
-            return Ok(move);
+            var moveDTO = new MoveDTO(move, _characterStatService);
+            return Ok(moveDTO);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("moves")]
         [HttpPost]
         public IHttpActionResult Post([FromBody]MoveStat value)
@@ -70,7 +71,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(value);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("moves/{id}")]
         [HttpPut]
         public IHttpActionResult Put(int id, [FromBody]MoveStat value)
@@ -109,7 +110,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("moves/{id}")]
         [HttpDelete]
         public IHttpActionResult Delete(int id)
