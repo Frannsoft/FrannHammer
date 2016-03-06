@@ -4,7 +4,7 @@ using Kurogane.Data.RestApi.Services;
 
 namespace Kurogane.Data.RestApi.DTOs
 {
-    public class BaseDto
+    public class BaseDTO
     {
         public string CharacterName { get; set; }
         public int Id { get; set; }
@@ -12,7 +12,7 @@ namespace Kurogane.Data.RestApi.DTOs
         public int OwnerId { get; set; }
         public string Name { get; set; }
 
-        public BaseDto(Stat stat, ICharacterStatService characterStatService)
+        public BaseDTO(Stat stat, ICharacterStatService characterStatService)
         {
             Id = stat.Id;
             OwnerId = stat.OwnerId;
@@ -23,13 +23,13 @@ namespace Kurogane.Data.RestApi.DTOs
             ThumbnailUrl = character.ThumbnailUrl;
         }
 
-        public BaseDto()
+        public BaseDTO()
         { }
 
         public override bool Equals(object obj)
         {
             var retVal = false;
-            var baseComp = obj as BaseDto;
+            var baseComp = obj as BaseDTO;
 
             if (baseComp != null)
             {

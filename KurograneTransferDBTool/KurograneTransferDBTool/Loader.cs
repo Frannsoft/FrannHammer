@@ -1,5 +1,5 @@
-﻿using Kurogane.Data.RestApi.DTOs;
-using Kurogane.Data.RestApi.Models;
+﻿using Kurogane.Data.RestApi.Models;
+using Kurogane.Data.RestApi.DTOs;
 using KuroganeHammer.Data.Core;
 using KuroganeHammer.WebScraper;
 using Newtonsoft.Json;
@@ -19,14 +19,14 @@ namespace KurograneTransferDBTool
         [Explicit("Updates character data")]
         public async Task UpdateCharacterData()
         {
-            int[] charIds = (int[])Enum.GetValues(typeof(Characters));
+            var charIds = (int[])Enum.GetValues(typeof(Characters));
 
-            var response = await client.GetAsync(BASEURL + "characters");
-            CharacterDTO[] characters = await response.Content.ReadAsAsync<CharacterDTO[]>();
+            var response = await LoggedInClient.GetAsync(Baseuri + "characters");
+            var characters = await response.Content.ReadAsAsync<CharacterDTO[]>();
 
-            foreach(int i in charIds)
+            foreach(var i in charIds)
             {
-                Character character = new Character((Characters)i);
+                var character = new Character((Characters)i);
 
                 var characterStatFromDB = characters.FirstOrDefault(c => c.OwnerId == character.OwnerId);
                 if(characterStatFromDB == null)
@@ -41,7 +41,7 @@ namespace KurograneTransferDBTool
                 if(cachedHashCode != newHashCode)
                 { 
                     //submit update post
-                    var updateResponse = await client.PutAsJsonAsync(BASEURL + "characters/" + characterStatFromDB.Id, characterStatFromDB);
+                    var updateResponse = await LoggedInClient.PutAsJsonAsync(Baseuri + "characters/" + characterStatFromDB.Id, characterStatFromDB);
 
                     //check if OK - 200 //if not, stop updating
                     Assert.AreEqual(HttpStatusCode.OK, updateResponse.StatusCode);
@@ -54,14 +54,14 @@ namespace KurograneTransferDBTool
         [Explicit("Updates movement data")]
         public async Task UpdateMovementData()
         {
-            int[] charIds = (int[])Enum.GetValues(typeof(Characters));
+            var charIds = (int[])Enum.GetValues(typeof(Characters));
 
-            var response = await client.GetAsync(BASEURL + "movements");
-            MovementStatDTO[] movementsFromDB = await response.Content.ReadAsAsync<MovementStatDTO[]>();
+            var response = await LoggedInClient.GetAsync(Baseuri + "movements");
+            var movementsFromDB = await response.Content.ReadAsAsync<MovementStatDTO[]>();
 
-            foreach(int i in charIds)
+            foreach(var i in charIds)
             {
-                Character character = new Character((Characters)i);
+                var character = new Character((Characters)i);
 
                 var movements = from charMoves in character.FrameData.Values.OfType<MovementStat>()
                             select charMoves;
@@ -88,7 +88,7 @@ namespace KurograneTransferDBTool
                     if (cachedHashCode != newHashCode)
                     {
                         //submit update post
-                        var updateResponse = await client.PutAsJsonAsync(BASEURL + "movement/" + moveFromDB.Id, moveFromDB);
+                        var updateResponse = await LoggedInClient.PutAsJsonAsync(Baseuri + "movement/" + moveFromDB.Id, moveFromDB);
 
                         //check if OK - 200 //if not, stop updating
                         Assert.AreEqual(HttpStatusCode.OK, updateResponse.StatusCode);
@@ -101,16 +101,16 @@ namespace KurograneTransferDBTool
         [Explicit("Actually reloads all data")]
         public async Task ReloadAllCharacterData()
         {
-            int[] charIds = (int[])Enum.GetValues(typeof(Characters));
+            var charIds = (int[])Enum.GetValues(typeof(Characters));
 
-            List<Thumbnail> thumbnails = new HomePage("http://kuroganehammer.com/Smash4/")
+            var thumbnails = new HomePage("http://kuroganehammer.com/Smash4/")
                 .GetThumbnailData();
 
-            foreach (int i in charIds)
+            foreach (var i in charIds)
             {
-                Character character = new Character((Characters)i);
+                var character = new Character((Characters)i);
 
-                string val = string.Empty;
+                var val = string.Empty;
                 if(character.Name.Contains("Mii") || character.Name.Contains("MII"))
                 {
                     val = "MIIFIGHTERS";
@@ -120,13 +120,13 @@ namespace KurograneTransferDBTool
                     val = character.Name;
                 }
 
-                Thumbnail thumbnail = thumbnails.FirstOrDefault(t => t.Key.Equals(val, StringComparison.OrdinalIgnoreCase));
+                var thumbnail = thumbnails.FirstOrDefault(t => t.Key.Equals(val, StringComparison.OrdinalIgnoreCase));
 
                 //load character
-                CharacterStat charStat = new CharacterStat(character.Name,
+                var charStat = new CharacterStat(character.Name,
                     character.OwnerId, character.Style, character.MainImageUrl, thumbnail.Url, character.Description);
 
-                var result = await client.PostAsJsonAsync(BASEURL + "characters", charStat);
+                var result = await LoggedInClient.PostAsJsonAsync(Baseuri + "characters", charStat);
                 Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
 
                 //load moves
@@ -135,7 +135,7 @@ namespace KurograneTransferDBTool
 
                 foreach (var move in moves)
                 {
-                    var moveResult = await client.PostAsJsonAsync(BASEURL + "moves", move);
+                    var moveResult = await LoggedInClient.PostAsJsonAsync(Baseuri + "moves", move);
                     Assert.AreEqual(HttpStatusCode.OK, moveResult.StatusCode);
                 }
 
@@ -144,7 +144,7 @@ namespace KurograneTransferDBTool
 
                 foreach (var movement in movements)
                 {
-                    var movementResult = await client.PostAsJsonAsync(BASEURL + "movement", movement);
+                    var movementResult = await LoggedInClient.PostAsJsonAsync(Baseuri + "movement", movement);
                     Assert.AreEqual(HttpStatusCode.OK, movementResult.StatusCode);
                 }
             }
@@ -157,7 +157,7 @@ namespace KurograneTransferDBTool
         [TestCase("18-19, 21-22, 24-25, 27-28, 30-31", 5)]
         public void GetHitboxLength(string hitboxActive, int expectedTotal)
         {
-            List<int> ints = new List<int>();
+            var ints = new List<int>();
             string[] vals;
             if (hitboxActive.Contains(','))
             {
@@ -173,13 +173,13 @@ namespace KurograneTransferDBTool
                 AddHitboxLength(ints, hitboxActive.Split(new char[] { '-' }, 2));
             }
 
-            int total = ints.Aggregate(0, (i, j) => i + j);
+            var total = ints.Aggregate(0, (i, j) => i + j);
             Assert.AreEqual(expectedTotal, total);
         }
 
         private void AddHitboxLength(List<int> ints, string[] vals)
         {
-            int result = GetDifference(vals);
+            var result = GetDifference(vals);
             if (result > 0)
             {
                 ints.Add(result);
@@ -208,8 +208,8 @@ namespace KurograneTransferDBTool
         [Test]
         public async Task ReloadThumbnailData()
         {
-            HomePage homePage = new HomePage("http://kuroganehammer.com/Smash4/");
-            List<Thumbnail> images = homePage.GetThumbnailData();
+            var homePage = new HomePage("http://kuroganehammer.com/Smash4/");
+            var images = homePage.GetThumbnailData();
 
             foreach (var image in images)
             {
@@ -217,14 +217,14 @@ namespace KurograneTransferDBTool
                 //these three need to be updated manually for now
                 if (image.Key != "MIIFIGHTERS")
                 {
-                    Characters character = (Characters)Enum.Parse(typeof(Characters), image.Key);
+                    var character = (Characters)Enum.Parse(typeof(Characters), image.Key);
 
-                    var get = await client.GetAsync(BASEURL + "characters/" + (int)character);
+                    var get = await LoggedInClient.GetAsync(Baseuri + "characters/" + (int)character);
 
-                    CharacterDTO dto = JsonConvert.DeserializeObject<CharacterDTO>(await get.Content.ReadAsStringAsync());
+                    var dto = JsonConvert.DeserializeObject<CharacterDTO>(await get.Content.ReadAsStringAsync());
 
                     dto.ThumbnailUrl = image.Url;
-                    var putResult = await client.PutAsJsonAsync(BASEURL + "characters/" + (int)character, dto);
+                    var putResult = await LoggedInClient.PutAsJsonAsync(Baseuri + "characters/" + (int)character, dto);
                     Assert.AreEqual(HttpStatusCode.OK, putResult.StatusCode);
                 }
             }
@@ -233,11 +233,11 @@ namespace KurograneTransferDBTool
         [Test]
         public async Task ReloadMovement()
         {
-            int[] charIds = (int[])Enum.GetValues(typeof(Characters));
+            var charIds = (int[])Enum.GetValues(typeof(Characters));
 
-            foreach (int i in charIds)
+            foreach (var i in charIds)
             {
-                Character character = new Character((Characters)i);
+                var character = new Character((Characters)i);
 
 
                 //var movementMoves = from move in character.FrameData.Values.OfType<MovementStat>()
@@ -260,13 +260,13 @@ namespace KurograneTransferDBTool
         [Ignore("permanent")]
         public async Task UpdateCharacter()
         {
-            var get = await client.GetAsync(BASEURL + +(int)Characters.BOWSER + "/character");
+            var get = await LoggedInClient.GetAsync(Baseuri + +(int)Characters.Bowser + "/character");
 
-            CharacterDTO bowser = JsonConvert.DeserializeObject<CharacterDTO>(await get.Content.ReadAsStringAsync());
+            var bowser = JsonConvert.DeserializeObject<CharacterDTO>(await get.Content.ReadAsStringAsync());
 
             bowser.Name = "NEWNAME";
 
-            var result = await client.PutAsJsonAsync(BASEURL + +(int)Characters.BOWSER + "/character", bowser);
+            var result = await LoggedInClient.PutAsJsonAsync(Baseuri + +(int)Characters.Bowser + "/character", bowser);
         }
 
     }
