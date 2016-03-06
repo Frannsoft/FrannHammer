@@ -9,7 +9,7 @@ using System.Web.Http;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
-    [RoutePrefix("account")]
+    [RoutePrefix("api/account")]
     public class AccountController : BaseApiController
     {
         private readonly AuthRepository _repo;

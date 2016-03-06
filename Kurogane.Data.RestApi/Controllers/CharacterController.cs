@@ -6,6 +6,7 @@ using Kurogane.Data.RestApi.Services;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
+    [RoutePrefix("api")]
     public class CharacterController : ApiController
     {
         private readonly ICharacterStatService _characterStatService;

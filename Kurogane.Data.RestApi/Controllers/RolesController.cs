@@ -8,7 +8,7 @@ using System.Web.Http;
 namespace Kurogane.Data.RestApi.Controllers
 {
     [Authorize(Roles = "Admin")]
-    [RoutePrefix("roles")]
+    [RoutePrefix("api/roles")]
     public class RolesController : BaseApiController
     {
         

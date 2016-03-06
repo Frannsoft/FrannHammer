@@ -7,6 +7,7 @@ using Kurogane.Data.RestApi.Services;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
+    [RoutePrefix("api")]
     public class MoveController : ApiController
     {
         private readonly IMoveStatService _moveStatService;
