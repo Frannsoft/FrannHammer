@@ -21,6 +21,13 @@ namespace KuroganeHammer.WebScraper
             _ownerId = ownerId;
         }
 
+        public Page(string url)
+        {
+            Url = url;
+            var web = new HtmlWeb();
+            _doc = web.Load(Url);
+        }
+
         public string GetVersion()
         {
             var node = _doc.DocumentNode.SelectSingleNode(StatConstants.XpathFrameDataVersion);
@@ -49,29 +56,52 @@ namespace KuroganeHammer.WebScraper
             foreach (var stat in GetStats<MovementStat>(StatConstants.XpathTableNodeMovementStats))
             {
                 AddItem(ref items, stat);
-                //items.Add(stat.Name, stat);
             }
 
             foreach (var stat in GetStats<GroundStat>(StatConstants.XpathTableNodeGroundStats))
             {
                 AddItem(ref items, stat);
-                //items.Add(stat.Name, stat);
             }
 
             foreach (var stat in GetStats<AerialStat>(StatConstants.XpathTableNodeAerialStats))
             {
                 AddItem(ref items, stat);
-                //items.Add(stat.Name, stat);
             }
 
             foreach (var stat in GetStats<SpecialStat>(StatConstants.XpathTableNodeSpecialStats))
             {
                 //remove after done writing out class move files
                 AddItem(ref items, stat);
-                //items.Add(stat.Name, stat);
             }
 
             return items;
+        }
+
+        /// <summary>
+        /// Get the character attributes.
+        /// </summary>
+        /// <returns></returns>
+        public AttributeValueRowCollection GetAttributes()
+        {
+            var rows = GetRows(StatConstants.XpathTableNodeAttributesWithDescription) ??
+                       GetRows(StatConstants.XpathTableNodeAttributesWithNoDescription);
+
+            var headers = GetHeaders();
+            var attributesRows = new List<AttributeValueRow>();
+
+            foreach (var t in rows)
+            {
+                var cells = t.SelectNodes(StatConstants.XpathTableCells);
+
+                var attributes = cells.Select((t1, k) =>
+                    new AttributeValue(headers[k], t1.InnerText))
+                    .ToList();
+                attributesRows.Add(new AttributeValueRow(attributes));
+            }
+
+            var attrValueCollection = new AttributeValueRowCollection(attributesRows);
+
+            return attrValueCollection;
         }
 
         private void AddItem(ref Dictionary<string, Stat> items, Stat stat)
@@ -92,7 +122,23 @@ namespace KuroganeHammer.WebScraper
         private HtmlNodeCollection GetRows(string xpathToTable)
         {
             var tableNode = _doc.DocumentNode.SelectSingleNode(xpathToTable);
-            return tableNode.SelectNodes(StatConstants.XpathTableRows);
+            return tableNode?.SelectNodes(StatConstants.XpathTableRows);
+        }
+
+        /// <summary>
+        /// Designed to get the headers on tables where necessary.  Right now, it's only
+        /// necessary when getting character attributes.
+        /// </summary>
+        /// <returns></returns>
+        private List<string> GetHeaders()
+        {
+            var rawHeaders = _doc.DocumentNode.SelectNodes(StatConstants.XpathTableNodeAttributeHeaders) ??
+                             _doc.DocumentNode.SelectNodes(StatConstants.XpathTableNodeAttributeHeadersWithNoDescription);
+            var headers = (from row in rawHeaders
+                           from cell in row.SelectNodes(StatConstants.XpathTableCells)
+                           select cell.InnerText).ToList();
+
+            return headers;
         }
 
         private string GetStatName(HtmlNode cell)
@@ -129,14 +175,14 @@ namespace KuroganeHammer.WebScraper
 
             if (typeof(T) == typeof(MovementStat))
             {
-                stats.AddRange(rows.SelectMany(row => row.SelectNodes(StatConstants.XpathTableCellkeynames), 
-                    (row, statName) => (T) GetStat<T>(statName)).Where(stat => stat != null));
+                stats.AddRange(rows.SelectMany(row => row.SelectNodes(StatConstants.XpathTableCellkeynames),
+                    (row, statName) => (T)GetStat<T>(statName)).Where(stat => stat != null));
             }
             else if (typeof(T) == typeof(GroundStat)
                 || typeof(T) == typeof(AerialStat)
                 || typeof(T) == typeof(SpecialStat))
             {
-                stats.AddRange(rows.Select(row => (T) GetStat<T>(row.SelectNodes(StatConstants.XpathTableCells))));
+                stats.AddRange(rows.Select(row => (T)GetStat<T>(row.SelectNodes(StatConstants.XpathTableCells))));
             }
 
             return stats;
