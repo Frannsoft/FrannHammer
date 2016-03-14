@@ -231,32 +231,6 @@ namespace KurograneTransferDBTool
         }
 
         [Test]
-        public async Task ReloadMovement()
-        {
-            var charIds = (int[])Enum.GetValues(typeof(Characters));
-
-            foreach (var i in charIds)
-            {
-                var character = new Character((Characters)i);
-
-
-                //var movementMoves = from move in character.FrameData.Values.OfType<MovementStat>()
-                //                    select new MovementStatDTO()
-                //                    {
-                //                        Name = move.Name,
-                //                        OwnerId = move.OwnerId,
-                //                        Value = move.Value
-                //                    };
-
-                //foreach (var movementMove in movementMoves)
-                //{
-                //    var movementResult = await client.PostAsJsonAsync(BASEURL + "movement", movementMove);
-                //    Assert.AreEqual(HttpStatusCode.OK, movementResult.StatusCode);
-                //}
-            }
-        }
-
-        [Test]
         [Ignore("permanent")]
         public async Task UpdateCharacter()
         {

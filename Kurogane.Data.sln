@@ -9,6 +9,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kurogane.Data.RestApi", "Ku
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KuroganeHammer.WebScraper", "KuroganeHammer.WebScraper\KuroganeHammer.WebScraper.csproj", "{9D3C1343-F4B4-4538-B0E0-590D3B2F5DE3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KurograneTransferDBTool", "KurograneTransferDBTool\KurograneTransferDBTool\KurograneTransferDBTool.csproj", "{BBA304DE-3510-4B40-99CD-74338C6108F5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9D3C1343-F4B4-4538-B0E0-590D3B2F5DE3} = {9D3C1343-F4B4-4538-B0E0-590D3B2F5DE3}
+		{E1B5E9BA-8808-4B98-B6AA-385A7438ABD3} = {E1B5E9BA-8808-4B98-B6AA-385A7438ABD3}
+		{2904D4E7-8989-46BD-AC0A-B4356F190A15} = {2904D4E7-8989-46BD-AC0A-B4356F190A15}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +34,10 @@ Global
 		{9D3C1343-F4B4-4538-B0E0-590D3B2F5DE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D3C1343-F4B4-4538-B0E0-590D3B2F5DE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D3C1343-F4B4-4538-B0E0-590D3B2F5DE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBA304DE-3510-4B40-99CD-74338C6108F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBA304DE-3510-4B40-99CD-74338C6108F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBA304DE-3510-4B40-99CD-74338C6108F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBA304DE-3510-4B40-99CD-74338C6108F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

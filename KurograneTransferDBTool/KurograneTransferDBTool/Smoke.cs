@@ -101,5 +101,37 @@ namespace KurograneTransferDBTool
             var move = await getResult.Content.ReadAsAsync<MoveDTO>();
             Assert.IsTrue(move != null);
         }
+
+        [Test]
+        [TestCase("http://kuroganehammer.com/Smash4/AirAcceleration")]
+        [TestCase("http://kuroganehammer.com/Smash4/Airdodge")]
+        [TestCase("http://kuroganehammer.com/Smash4/AirSpeed")]
+        [TestCase("http://kuroganehammer.com/Smash4/FallSpeed")]
+        [TestCase("http://kuroganehammer.com/Smash4/Gravity")]
+        [TestCase("http://kuroganehammer.com/Smash4/ItemToss")]
+        [TestCase("http://kuroganehammer.com/Smash4/ItemTossBack")]
+        [TestCase("http://kuroganehammer.com/Smash4/ItemTossDash")]
+        [TestCase("http://kuroganehammer.com/Smash4/ItemTossDown")]
+        [TestCase("http://kuroganehammer.com/Smash4/ItemTossForward")]
+        [TestCase("http://kuroganehammer.com/Smash4/ItemTossUp")]
+        [TestCase("http://kuroganehammer.com/Smash4/Jumpsquat")]
+        [TestCase("http://kuroganehammer.com/Smash4/LedgeAttack")]
+        [TestCase("http://kuroganehammer.com/Smash4/LedgeGetup")]
+        [TestCase("http://kuroganehammer.com/Smash4/LedgeJump")]
+        [TestCase("http://kuroganehammer.com/Smash4/LedgeRoll")]
+        [TestCase("http://kuroganehammer.com/Smash4/Rolls")]
+        [TestCase("http://kuroganehammer.com/Smash4/DashSpeed")]
+        [TestCase("http://kuroganehammer.com/Smash4/Spotdodge")]
+        [TestCase("http://kuroganehammer.com/Smash4/Tech")]
+        [TestCase("http://kuroganehammer.com/Smash4/WalkSpeed")]
+        [TestCase("http://kuroganehammer.com/Smash4/Weight")]
+        public void CanIGetAttributes(string url)
+        {
+            var page = new Page(url);
+            var attributes = page.GetAttributes();
+
+            Assert.That(attributes != null);
+            Assert.That(attributes.AttributeValues.Count > 0);
+        }
     }
 }
