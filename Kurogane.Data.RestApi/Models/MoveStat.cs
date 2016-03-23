@@ -15,7 +15,7 @@ namespace Kurogane.Data.RestApi.Models
         public string KnockbackGrowth { get; set; }
         public MoveType Type { get; set; }
 
-        public MoveStat(string name, int ownerId, string hitboxActive, string firstActionableFrame, string baseDamage,
+        public MoveStat(MoveType type, string name, int ownerId, string hitboxActive, string firstActionableFrame, string baseDamage,
             string angle, string baseKnockbackSetKnockback, string knockbackGrowth, string landingLag = "", string autoCancel = "")
             : base(name, ownerId)
         {
@@ -35,6 +35,7 @@ namespace Kurogane.Data.RestApi.Models
             KnockbackGrowth = knockbackGrowth;
             LandingLag = landingLag;
             AutoCancel = autoCancel;
+            Type = type;
         }
 
         public MoveStat()
