@@ -106,11 +106,9 @@ namespace KurograneTransferDBTool
             var thumbnails = new HomePage("http://kuroganehammer.com/Smash4/")
                 .GetThumbnailData();
 
-            foreach (var i in charIds)
+            foreach (var character in charIds.Select(i => new Character((Characters)i)))
             {
-                var character = new Character((Characters)i);
-
-                var val = string.Empty;
+                string val;
                 if (character.Name.Contains("Mii") || character.Name.Contains("MII"))
                 {
                     val = "MIIFIGHTERS";
@@ -131,7 +129,7 @@ namespace KurograneTransferDBTool
 
                 //load moves
                 var moves = from move in character.FrameData.Values.OfType<MoveStat>()
-                            select move;
+                    select move;
 
                 foreach (var move in moves)
                 {
@@ -140,7 +138,7 @@ namespace KurograneTransferDBTool
                 }
 
                 var movements = from movement in character.FrameData.Values.OfType<MovementStat>()
-                                select movement;
+                    select movement;
 
                 foreach (var movement in movements)
                 {
