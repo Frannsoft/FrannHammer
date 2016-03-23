@@ -3,9 +3,9 @@ var app = angular.module('KuroganeHammerApp', ['ngRoute', 'ngResource', 'ui.boot
     'ngAnimate', 'common.services'])
 .run(function ($rootScope) {
     //$rootScope.APIROUTE = 'http://fransm4shtest.azurewebsites.net/api/'
-    $rootScope.APIROUTE = 'http://localhost/frannhammerAPI/'
+    $rootScope.APIROUTE = 'http://localhost:53410/api/';
 
-    $rootScope.BASEURL = 'http://localhost:8080/%23/';
+    $rootScope.BASEURL = 'http://localhost:58934/%23/';
     //$rootScope.BASEURL = 'http://frannhammertest.azurewebsites.net/%23/';
 });
 
@@ -34,7 +34,7 @@ app.config(function ($routeProvider, $httpProvider) {
         templateUrl: "app/views/home.html"
     });
 
-    $routeProvider.when("/", {
+    $routeProvider.when("/smash4", {
         controller: "CharacterRosterCtrl as vm",
         templateUrl: (_isNotMobile) ? "/app/views/charactersRoster.html" : "app/views/mCharactersRoster.html"
     });
@@ -49,7 +49,7 @@ app.config(function ($routeProvider, $httpProvider) {
         templateUrl: "/app/views/movementRanks.html"
     });
 
-    $routeProvider.when('/moveRanking', {
+    $routeProvider.when('/moveranking', {
         controller: "MoveRankCtrl as vm",
         templateUrl: "/app/views/moveRanks.html"
     });
@@ -59,12 +59,12 @@ app.config(function ($routeProvider, $httpProvider) {
         templateUrl: "app/views/contactus.html"
     });
 
-    $routeProvider.when("/admin/editCharacter/:characterId", {
+    $routeProvider.when("/admin/editcharacter/:characterId", {
         controller: 'AdminCharacterCtrl as vm',
         templateUrl: "app/views/adminCharacter.html"
     });
 
-    $routeProvider.when("/admin/newCharacter", {
+    $routeProvider.when("/admin/newcharacter", {
         controller: 'AdminNewCharacterCtrl as vm',
         templateUrl: "app/views/adminNewCharacter.html"
     });
