@@ -64,7 +64,7 @@
         }
 
         saveCharacterDetailsChanges(): void {
-            var characterResource = this.dataAccessService.getCharacterResource(this.character.id);
+            var characterResource = this.dataAccessService.getCharacterResource(this.character.ownerId);
             characterResource.update(this.character);
         }
 

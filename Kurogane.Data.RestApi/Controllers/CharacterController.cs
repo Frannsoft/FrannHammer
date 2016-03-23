@@ -105,12 +105,12 @@ namespace Kurogane.Data.RestApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != value.Id)
+            if (id != value.OwnerId)
             {
                 return BadRequest();
             }
 
-            var foundChar = _characterStatService.GetCharacter(value.Id);
+            var foundChar = _characterStatService.GetCharacter(value.OwnerId);
             if (foundChar != null)
             {
                 foundChar.Description = value.Description;
