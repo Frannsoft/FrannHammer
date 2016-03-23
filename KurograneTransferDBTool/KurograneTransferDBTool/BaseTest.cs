@@ -25,7 +25,7 @@ namespace KurograneTransferDBTool
                 new KeyValuePair<string, string>("password", "")
             });
 
-            var response = LoggedInClient.PostAsync("oauth/token", content).Result;
+            var response = LoggedInClient.PostAsync("http://localhost:53410/oauth/token", content).Result;
             _authToken =
                 JsonConvert.DeserializeObject<dynamic>(response.Content.ReadAsStringAsync().Result).access_token;
 

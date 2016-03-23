@@ -95,7 +95,7 @@ namespace KurograneTransferDBTool
         [Test]
         public async Task GetMoveById()
         {
-            var getResult = await AnonymousClient.GetAsync(Baseuri + "moves/" + 9575);
+            var getResult = await AnonymousClient.GetAsync(Baseuri + "moves/" + 20);
             Assert.AreEqual(HttpStatusCode.OK, getResult.StatusCode);
 
             var move = await getResult.Content.ReadAsAsync<MoveDTO>();
@@ -111,7 +111,7 @@ namespace KurograneTransferDBTool
         [TestCase("http://kuroganehammer.com/Smash4/ItemToss")]
         [TestCase("http://kuroganehammer.com/Smash4/ItemTossBack")]
         [TestCase("http://kuroganehammer.com/Smash4/ItemTossDash")]
-        [TestCase("http://kuroganehammer.com/Smash4/ItemTossDown")]
+        //[TestCase("http://kuroganehammer.com/Smash4/ItemTossDown")] - this url doesn't exist anymore
         [TestCase("http://kuroganehammer.com/Smash4/ItemTossForward")]
         [TestCase("http://kuroganehammer.com/Smash4/ItemTossUp")]
         [TestCase("http://kuroganehammer.com/Smash4/Jumpsquat")]
