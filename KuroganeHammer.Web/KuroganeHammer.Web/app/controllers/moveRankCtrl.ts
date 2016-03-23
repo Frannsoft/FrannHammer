@@ -18,10 +18,10 @@
         moveName: string;
         predicate: string;
         reverse: boolean;
-        moveData: app.domain.IMove[];
+        moveData: domain.IMove[];
 
         static $inject = ["dataAccessService", "$location", "$routeParams"];
-        constructor(private dataAccessService: app.common.DataAccessService,
+        constructor(private dataAccessService: common.DataAccessService,
             private $location: ng.ILocationService,
             private $routeParams: IMoveParams) {
 
@@ -30,7 +30,7 @@
             this.moveName = $routeParams.name;
 
             var moveResource = dataAccessService.getMovesOfName(this.moveName);
-            moveResource.query((data: app.domain.IMove[]) => {
+            moveResource.query((data: domain.IMove[]) => {
                 this.moveData = data;
             });
         }

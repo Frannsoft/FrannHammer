@@ -23,7 +23,7 @@ var app;
             };
             MovementRankCtrl.prototype.goToCharacter = function (rowItem) {
                 this.$location.search('name', null); //cleanup url
-                this.$location.path('/character/' + rowItem.metaData.ownerId);
+                this.$location.path('/character/' + rowItem.ownerId);
             };
             MovementRankCtrl.$inject = ["dataAccessService", "$location", "$routeParams"];
             return MovementRankCtrl;

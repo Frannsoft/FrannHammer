@@ -1,21 +1,21 @@
 ﻿module app.domain {
 
     interface ICharacterRosterModel {
-        characters: app.domain.ICharacter[];
+        characters: domain.ICharacter[];
         goToCharacter(character: ICharacterMetadata): void;
     }
 
     class CharacterRosterCtrl implements ICharacterRosterModel {
 
-        characters: app.domain.ICharacter[];
+        characters: domain.ICharacter[];
 
         static $inject = ["dataAccessService", "$location"];
-        constructor(private dataAccessService: app.common.DataAccessService,
+        constructor(private dataAccessService: common.DataAccessService,
         private $location: ng.ILocationService) {
             this.characters = [];
 
             var characterResource = dataAccessService.getCharacterResource();
-            characterResource.query((data: app.domain.ICharacter[]) => {
+            characterResource.query((data: domain.ICharacter[]) => {
                 this.characters = data;
             });
         }

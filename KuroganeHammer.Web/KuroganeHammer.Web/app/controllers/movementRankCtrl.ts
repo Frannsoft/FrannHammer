@@ -3,11 +3,11 @@
     interface IMovementModel {
 
         name: string;
-        movementData: app.domain.IMovement[];
+        movementData: domain.IMovement[];
         predicate: string;
         reverse: boolean;
         order(predicate: string): void;
-        goToCharacter(rowItem: ICharacter): void;
+        goToCharacter(rowItem: IMovement): void;
     }
 
     interface IMovementParams extends ng.route.IRouteParamsService {
@@ -17,12 +17,12 @@
     class MovementRankCtrl implements IMovementModel {
 
         name: string;
-        movementData: app.domain.IMovement[];
+        movementData: domain.IMovement[];
         predicate: string = 'value';
         reverse: boolean = true;
 
         static $inject = ["dataAccessService", "$location", "$routeParams"];
-        constructor(private dataAccessService: app.common.DataAccessService,
+        constructor(private dataAccessService: common.DataAccessService,
             private $location: ng.ILocationService,
             private $routeParams: IMovementParams) {
 
@@ -30,7 +30,7 @@
             this.name = $routeParams.name;
 
             var movementResource = dataAccessService.getMovementsOfName(this.name);
-            movementResource.query((data: app.domain.IMovement[]) => {
+            movementResource.query((data: domain.IMovement[]) => {
                 this.movementData = data;
             });
         }
@@ -40,9 +40,9 @@
             this.predicate = predicate;
         }
 
-        goToCharacter(rowItem: ICharacter): void {
+        goToCharacter(rowItem: IMovement): void {
             this.$location.search('name', null); //cleanup url
-            this.$location.path('/character/' + rowItem.metaData.ownerId);
+            this.$location.path('/character/' + rowItem.ownerId);
         }
     }
 

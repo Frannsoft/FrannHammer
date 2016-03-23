@@ -2,32 +2,32 @@
 
     interface IAdminNewCharacterModel {
 
-        character: app.domain.ICharacterMetadata;
-        movementData: app.domain.Movement[];
-        moveData: app.domain.Move[];
+        character: domain.ICharacterMetadata;
+        movementData: domain.Movement[];
+        moveData: domain.Move[];
         showNewMovementRow: boolean;
         showNewMoveRow: boolean;
-        newMovementStat: app.domain.IMovement;
-        newMoveStat: app.domain.IMove;
-        tempMovementData: app.domain.Movement[];
-        tempMoveData: app.domain.Move[];
+        newMovementStat: domain.IMovement;
+        newMoveStat: domain.IMove;
+        tempMovementData: domain.Movement[];
+        tempMoveData: domain.Move[];
     }
 
     class AdminNewCharacterCtrl implements IAdminNewCharacterModel {
 
         static $inject = ["dataAccessService", "$routeParams"];
         constructor(
-            public dataAccessService: app.common.DataAccessService,
-            private $routeParams: app.domain.IAdminCharacterParams,
-            public character: app.domain.ICharacterMetadata,
-            public movementData: app.domain.Movement[],
-            public moveData: app.domain.Move[],
+            public dataAccessService: common.DataAccessService,
+            private $routeParams: domain.IAdminCharacterParams,
+            public character: domain.ICharacterMetadata,
+            public movementData: domain.Movement[],
+            public moveData: domain.Move[],
             public showNewMovementRow: boolean,
             public showNewMoveRow: boolean,
-            public newMovementStat: app.domain.IMovement,
-            public newMoveStat: app.domain.IMove,
-            public tempMovementData: app.domain.Movement[],
-            public tempMoveData: app.domain.Move[]) {
+            public newMovementStat: domain.IMovement,
+            public newMoveStat: domain.IMove,
+            public tempMovementData: domain.Movement[],
+            public tempMoveData: domain.Move[]) {
 
             var charId = $routeParams.characterId;
             this.movementData = [];
@@ -44,13 +44,13 @@
             //path will be decided server side and then stored in db.
 
             var characterResource = this.dataAccessService.getCharacterResource();
-            characterResource.save(this.character, (newChar: app.domain.ICharacterMetadata) => {
+            characterResource.save(this.character, (newChar: domain.ICharacterMetadata) => {
                 this.createNewMovementStats(newChar.id, this.movementData);
                 this.createNewMoveStats(newChar.id, this.moveData);
             });
         }
 
-        createNewMoveStats(ownerId: number, moveData: app.domain.Move[]): void {
+        createNewMoveStats(ownerId: number, moveData: domain.Move[]): void {
 
             var moveResource = this.dataAccessService.getMoveResource();
 
@@ -62,7 +62,7 @@
             this.clearTempMoveStat();
         }
 
-        createNewMovementStats(ownerId: number, movementData: app.domain.Movement[]): void {
+        createNewMovementStats(ownerId: number, movementData: domain.Movement[]): void {
 
             var movementResource = this.dataAccessService.getMovementResource();
 

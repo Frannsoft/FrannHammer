@@ -11,40 +11,37 @@
 </head>
 <body>
     <header class="container">
-        <div class="navbar navbar-default" id="menu">
-            <div class="navbar-header">
-                <button class="btn btn-success navbar-toggle"></button>
-                <div id="logo">
-                    <h4>Welcome to the home of Kurogane Hammer</h4>
-                </div>
-            </div>
-            <div class="navbar-collapse collapse" data-ng-controller="indexController">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/">Smash 4</a></li>
+            <div class="navbar navbar-default">
+                <ul class="nav navbar-nav navbar-left" id="menu">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#smash4">Smash 4</a></li>
                     <li><a href="#aboutus">About Us</a></li>
                     <li><a href="#glossary">Glossary</a></li>
                     <li><a href="#api">API</a></li>
-                    <!--<li data-ng-hide="authentication.isAuth"><a href="#login">Login</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" id="menu">
+                    <li data-ng-hide="authentication.isAuth"><a href="#login">Login</a></li>
                     <li data-ng-show="authentication.isAuth"><a href="" ng-click="logOut()">Logout</a></li>
-                    <li><a href="#signup">Signup</a></li>-->
+                    <li><a href="#signup">Signup</a></li>
                 </ul>
             </div>
-        </div>
     </header>
 
     <div ng-view=""></div>
 
-    <footer class="container">
-        <div class="navbar-default">
-            <img width="100" height="100" src="http://kuroganehammer.com/logo/BowserLogo.png" />
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="/">Home</a></li>
-                <li><a href="http://qldsmash.com/Forum/Thread/smash-4-frame-data-site-wwwkuroganehammercom.204/1">qldsmash.com</a></li>
-                <li><a href="https://twitter.com/KuroganeHammer">twitter</a></li>
-                <li><a href="http://smashboards.com/">smashboards</a></li>
-                <li><a href="#contactus">Contact Us</a></li>
-            </ul>
+<br/><br/><br/>
+    <footer>
+        <div  style="text-align: center;">
+            <div class="col-lg-12">
+                <img width="100" height="100" src="http://kuroganehammer.com/logo/BowserLogo.png"/>
+                <ul class="list-inline">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="http://qldsmash.com/Forum/Thread/smash-4-frame-data-site-wwwkuroganehammercom.204/1">qldsmash.com</a></li>
+                    <li><a href="https://twitter.com/KuroganeHammer">twitter</a></li>
+                    <li><a href="http://smashboards.com/">smashboards</a></li>
+                    <li><a href="#contactus">Contact Us</a></li>
+                </ul>
+            </div>
         </div>
     </footer>
 

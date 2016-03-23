@@ -2,13 +2,13 @@
 
     interface IAdminCharacterModel {
 
-        movementData: app.domain.IMovement[];
-        moveData: app.domain.IMove[];
-        character: app.domain.ICharacterMetadata;
+        movementData: domain.IMovement[];
+        moveData: domain.IMove[];
+        character: domain.ICharacterMetadata;
         showNewMovementRow: boolean;
         showNewMoveRow: boolean;
-        newMovementStat: app.domain.IMovement;
-        newMoveStat: app.domain.IMove;
+        newMovementStat: domain.IMovement;
+        newMoveStat: domain.IMove;
         saveCharacterDetailsChanges(): void;
         saveMovementRow(rowItem: IMovement): void;
         saveMoveRow(rowItem: IMove): void;
@@ -29,20 +29,20 @@
     class AdminCharacterCtrl implements IAdminCharacterModel {
 
         static $inject = ["dataAccessService", "$routeParams"];
-        constructor(public dataAccessService: app.common.DataAccessService,
+        constructor(public dataAccessService: common.DataAccessService,
             private $routeParams: IAdminCharacterParams,
-            public character: app.domain.ICharacterMetadata,
-            public movementData: app.domain.IMovement[],
-            public moveData: app.domain.IMove[],
+            public character: domain.ICharacterMetadata,
+            public movementData: domain.IMovement[],
+            public moveData: domain.IMove[],
             public showNewMovementRow: boolean,
             public showNewMoveRow: boolean,
-            public newMovementStat: app.domain.IMovement,
-            public newMoveStat: app.domain.IMove) {
+            public newMovementStat: domain.IMovement,
+            public newMoveStat: domain.IMove) {
 
             var charId = $routeParams.characterId;
 
             var characterResource = dataAccessService.getCharacterResource(charId);
-            characterResource.get((data: app.domain.ICharacterMetadata) => {
+            characterResource.get((data: domain.ICharacterMetadata) => {
                 this.character = data;
                 this.getCharacterMovementData();
                 this.getCharacterMoveData();
@@ -51,14 +51,14 @@
 
         getCharacterMovementData(): void {
             var movementResource = this.dataAccessService.getMovementsOfCharacter(this.character.ownerId);
-            movementResource.query((data: app.domain.IMovement[]) => {
+            movementResource.query((data: domain.IMovement[]) => {
                 this.movementData = data;
             });
         }
 
         getCharacterMoveData(): void {
             var moveResource = this.dataAccessService.getMovesOfCharacter(this.character.ownerId);
-            moveResource.query((data: app.domain.IMove[]) => {
+            moveResource.query((data: domain.IMove[]) => {
                 this.moveData = data;
             });
         }
@@ -68,12 +68,12 @@
             characterResource.update(this.character);
         }
 
-        saveMovementRow(rowItem: app.domain.IMovement): void {
+        saveMovementRow(rowItem: domain.IMovement): void {
             var movementResource = this.dataAccessService.getMovementResource(this.character.id);
             movementResource.save({ id: rowItem.id }, rowItem);
         }
 
-        saveMoveRow(rowItem: app.domain.IMove): void {
+        saveMoveRow(rowItem: domain.IMove): void {
             var moveResource = this.dataAccessService.getMoveResource(this.character.id);
             moveResource.save({ id: rowItem.id }, rowItem);
         }
@@ -90,12 +90,12 @@
             moveResource.save(this.newMoveStat);
         }
 
-        deleteMovementRow(rowItem: app.domain.IMovement): void {
+        deleteMovementRow(rowItem: domain.IMovement): void {
             var movementResource = this.dataAccessService.getMovementResource(rowItem.id);
             movementResource.delete(() => this.getCharacterMovementData());
         }
 
-        deleteMoveRow(rowItem: app.domain.IMove): void {
+        deleteMoveRow(rowItem: domain.IMove): void {
             var moveResource = this.dataAccessService.getMoveResource(rowItem.id);
             moveResource.delete(() => this.getCharacterMoveData());
         }

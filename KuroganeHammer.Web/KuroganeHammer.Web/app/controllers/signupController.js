@@ -10,6 +10,13 @@ app.controller('signupController', ['$scope', '$location', '$timeout', 'authServ
         confirmPassword: ""
     };
 
+    var startTimer = function () {
+        var timer = $timeout(function () {
+            $timeout.cancel(timer);
+            $location.path('/login');
+        }, 2000);
+    }
+
     $scope.signUp = function () {
 
         authService.saveRegistration($scope.registration).then(function (response) {
@@ -29,12 +36,4 @@ app.controller('signupController', ['$scope', '$location', '$timeout', 'authServ
              $scope.message = "Failed to register user due to:" + errors.join(' ');
          });
     };
-
-    var startTimer = function () {
-        var timer = $timeout(function () {
-            $timeout.cancel(timer);
-            $location.path('/login');
-        }, 2000);
-    }
-
 }]);
