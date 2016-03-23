@@ -1,10 +1,13 @@
-﻿<div class="col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-md-offset-2">
+﻿<div class="col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-md-offset-2" style="text-align: center;">
+    <br/><br/>
+    <img src="http://kuroganehammer.com/Smash4/character/logo2.png"/>
+    <br/><br/>
     <ul>
-        <li ng-repeat="character in vm.characters" class="box fade-in one" style="display:inline-block; float:left; margin: 5px;">
+        <li ng-repeat="character in vm.characters" class="box fade-in one" style="display: inline-block; float: left; margin: 5px;">
             <div ng-click="vm.goToCharacter(character)">
                 <a href="">
                     <img data-ng-src="{{character.thumbnailUrl}}"
-                         title="{{character.name}}" />
+                         title="{{character.name}}"/>
                 </a>
             </div>
         </li>

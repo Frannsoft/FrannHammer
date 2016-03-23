@@ -2,11 +2,11 @@
 
     interface ICharacterModel {
 
-        character: app.domain.ICharacterMetadata;
+        character: domain.ICharacterMetadata;
         predicate: string;
         reverse: boolean;
-        movementData: app.domain.IMovement[];
-        moveData: app.domain.IMove[];
+        movementData: domain.IMovement[];
+        moveData: domain.IMove[];
         twitterFullUrl: string;
         setTwitterUrl(): void;
         goToMovementRanking(rowItem: IMovement): void;
@@ -21,18 +21,18 @@
     class CharacterCtrl implements ICharacterModel {
 
         static $inject = ["dataAccessService", "$routeParams", "$location"];
-        constructor(public dataAccessService: app.common.DataAccessService,
+        constructor(public dataAccessService: common.DataAccessService,
             private $routeParams: ICharacterParams, 
             public $location: ng.ILocationService,
             public character: ICharacterMetadata,
             public predicate: string,
             public reverse: boolean,
-            public movementData: app.domain.IMovement[],
-            public moveData: app.domain.IMove[],
+            public movementData: domain.IMovement[],
+            public moveData: domain.IMove[],
             public twitterFullUrl: string) {
             
             var characterResource = dataAccessService.getCharacterResource($routeParams.characterId);
-            characterResource.get((data: app.domain.ICharacterMetadata) => {
+            characterResource.get((data: domain.ICharacterMetadata) => {
                 this.character = data;
                 this.getMovementData(this.character.ownerId);
                 this.getMoveData(this.character.ownerId);
@@ -42,14 +42,14 @@
 
         getMovementData(id: number): void {
             var movementResource = this.dataAccessService.getMovementsOfCharacter(id);
-            movementResource.query((data: app.domain.IMovement[]) => {
+            movementResource.query((data: domain.IMovement[]) => {
                 this.movementData = data;
             });
         }
 
         getMoveData(id: number): void {
             var moveResource = this.dataAccessService.getMovesOfCharacter(id);
-            moveResource.query((data: app.domain.IMove[]) => {
+            moveResource.query((data: domain.IMove[]) => {
                 this.moveData = data;
             });
         }
