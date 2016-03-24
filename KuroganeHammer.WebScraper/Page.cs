@@ -186,7 +186,6 @@ namespace KuroganeHammer.WebScraper
             }
 
             return stats;
-
         }
 
         private Stat GetStat<T>(HtmlNode nameCell)
