@@ -14,6 +14,20 @@ namespace KurograneTransferDBTool
     public class Smoke : BaseTest
     {
         [Test]
+        public void ShouldBeAbleToLoginWithBasicUser()
+        {
+            Assert.IsTrue(LoggedInBasicClient != null);
+            Assert.That(LoggedInBasicClient.DefaultRequestHeaders.Authorization.Scheme.Length > 0);
+        }
+
+        [Test]
+        public void ShouldBeAbleToLoginWithAdminUser()
+        {
+            Assert.That(LoggedInAdminClient != null);
+            Assert.That(LoggedInAdminClient.DefaultRequestHeaders.Authorization.Scheme.Length > 0);
+        }
+
+        [Test]
         public void GetThumbnailDataFromKurogane()
         {
             var images = new HomePage("http://kuroganehammer.com/Smash4/")
@@ -27,7 +41,7 @@ namespace KurograneTransferDBTool
         {
             foreach (var character in Enum.GetValues(typeof(Characters)))
             {
-                var getResult = await AnonymousClient.GetAsync(Baseuri + "characters/" + (int)character);
+                var getResult = await LoggedInBasicClient.GetAsync(Baseuri + "characters/" + (int)character);
                 Assert.AreEqual(HttpStatusCode.OK, getResult.StatusCode);
 
                 var foundCharacter = await getResult.Content.ReadAsAsync<CharacterDTO>();
@@ -38,7 +52,7 @@ namespace KurograneTransferDBTool
         [Test]
         public async Task GetAllCharacters()
         {
-            var getResult = await AnonymousClient.GetAsync(Baseuri + "characters");
+            var getResult = await LoggedInBasicClient.GetAsync(Baseuri + "characters");
             Assert.AreEqual(HttpStatusCode.OK, getResult.StatusCode);
         }
 
@@ -47,7 +61,7 @@ namespace KurograneTransferDBTool
         {
             foreach (var character in Enum.GetValues(typeof(Characters)))
             {
-                var getResult = await AnonymousClient.GetAsync(Baseuri + "characters/" + (int)character + "/movement");
+                var getResult = await LoggedInBasicClient.GetAsync(Baseuri + "characters/" + (int)character + "/movement");
                 Assert.AreEqual(HttpStatusCode.OK, getResult.StatusCode);
 
                 var foundMovement = await getResult.Content.ReadAsAsync<List<MovementStatDTO>>();
@@ -60,7 +74,7 @@ namespace KurograneTransferDBTool
         {
             foreach (var character in Enum.GetValues(typeof(Characters)))
             {
-                var getResult = await AnonymousClient.GetAsync(Baseuri + "characters/" + (int)character + "/moves");
+                var getResult = await LoggedInBasicClient.GetAsync(Baseuri + "characters/" + (int)character + "/moves");
                 Assert.AreEqual(HttpStatusCode.OK, getResult.StatusCode);
 
                 var foundMoves = await getResult.Content.ReadAsAsync<List<MoveDTO>>();
@@ -73,7 +87,7 @@ namespace KurograneTransferDBTool
         {
             foreach (var moveType in Enum.GetValues(typeof(MoveType)))
             {
-                var getResult = await AnonymousClient.GetAsync(Baseuri + "movesoftype/" + (int)moveType);
+                var getResult = await LoggedInBasicClient.GetAsync(Baseuri + "movesoftype/" + (int)moveType);
                 Assert.AreEqual(HttpStatusCode.OK, getResult.StatusCode);
 
                 var foundMoves = await getResult.Content.ReadAsAsync<List<MoveDTO>>();
@@ -85,7 +99,7 @@ namespace KurograneTransferDBTool
         public async Task GetMovesOfName()
         {
             var uri = Baseuri + "moves?name=" + WebUtility.HtmlEncode("Jab+1");
-            var getResult = await AnonymousClient.GetAsync(uri);
+            var getResult = await LoggedInBasicClient.GetAsync(uri);
             Assert.AreEqual(HttpStatusCode.OK, getResult.StatusCode);
 
             var foundMoves = await getResult.Content.ReadAsAsync<List<MoveDTO>>();
@@ -95,7 +109,7 @@ namespace KurograneTransferDBTool
         [Test]
         public async Task GetMoveById()
         {
-            var getResult = await AnonymousClient.GetAsync(Baseuri + "moves/" + 20);
+            var getResult = await LoggedInBasicClient.GetAsync(Baseuri + "moves/" + 9562);
             Assert.AreEqual(HttpStatusCode.OK, getResult.StatusCode);
 
             var move = await getResult.Content.ReadAsAsync<MoveDTO>();
