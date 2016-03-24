@@ -35,7 +35,8 @@ namespace Kurogane.Data.RestApi.Migrations
 
             if(!roleManager.Roles.Any())
             {
-                roleManager.Create(new IdentityRole { Name = "Admin" });
+                roleManager.Create(new IdentityRole { Name = "Admin" }); 
+                roleManager.Create(new IdentityRole {Name = "Basic"}); //Just GETs
             }
 
             var adminUser = manager.FindByName("KuroUser");
