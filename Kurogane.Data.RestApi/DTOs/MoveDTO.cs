@@ -14,7 +14,7 @@ namespace Kurogane.Data.RestApi.DTOs
         public string LandingLag { get; set; }
         public string AutoCancel { get; set; }
         public string KnockbackGrowth { get; set; }
-        public MoveType Type { get; set; }
+        public string Type { get; set; }
 
         public MoveDTO(MoveStat move, ICharacterStatService characterStatService)
             : base(move, characterStatService)
@@ -27,7 +27,7 @@ namespace Kurogane.Data.RestApi.DTOs
             HitboxActive = move.HitboxActive;
             KnockbackGrowth = move.KnockbackGrowth;
             LandingLag = move.LandingLag;
-            Type = move.Type;
+            Type = move.Type.ToString();
         }
 
         public MoveDTO()
