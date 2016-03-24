@@ -1,7 +1,12 @@
-﻿using Kurogane.Data.RestApi.Models;
+﻿using System;
+using Kurogane.Data.RestApi.Models;
 using KuroganeHammer.Data.Core;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace KuroganeHammer.WebScraper
 {
@@ -27,6 +32,9 @@ namespace KuroganeHammer.WebScraper
         [JsonProperty]
         public int OwnerId { get; set; }
 
+        [JsonProperty]
+        public string ColorHex { get; private set; }
+
         public string Description { get; private set; }
         public string FrameDataVersion { get; private set; }
         public string Style { get; private set; }
@@ -48,6 +56,31 @@ namespace KuroganeHammer.WebScraper
             FrameDataVersion = _page.GetVersion();
             MainImageUrl = _page.GetImageUrl();
             FrameData = _page.GetStats();
+            ColorHex = GetColorHex().Result;
+        }
+
+        private async Task<string> GetColorHex()
+        {
+            var bitmapImage = default(Bitmap);
+            //download image
+
+            using (var client = new HttpClient())
+            {
+                using (var response = await client.GetAsync(MainImageUrl))
+                {
+                    response.EnsureSuccessStatusCode();
+
+                    using (var inputStream = new MemoryStream())
+                    {
+                        await response.Content.ReadAsStreamAsync().Result.CopyToAsync(inputStream);
+                        bitmapImage = new Bitmap(inputStream);
+                    }
+                }
+            }
+            //get color via bitmap call
+
+            var color = bitmapImage.GetPixel(110, 90);
+            return "#" + color.R.ToString("X2") + color.G.ToString("X2") + color.B.ToString("X2");
         }
     }
 }

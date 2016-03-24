@@ -212,6 +212,10 @@
     <Compile Include="Migrations\201602142029336_properseedsuperuserpd.Designer.cs">
       <DependentUpon>201602142029336_properseedsuperuserpd.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603240209582_added color theme hex string to character.cs" />
+    <Compile Include="Migrations\201603240209582_added color theme hex string to character.Designer.cs">
+      <DependentUpon>201603240209582_added color theme hex string to character.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AerialStat.cs" />
@@ -269,6 +273,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201602142029336_properseedsuperuserpd.resx">
       <DependentUpon>201602142029336_properseedsuperuserpd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603240209582_added color theme hex string to character.resx">
+      <DependentUpon>201603240209582_added color theme hex string to character.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
