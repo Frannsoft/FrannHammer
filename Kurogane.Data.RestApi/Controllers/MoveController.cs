@@ -19,6 +19,7 @@ namespace Kurogane.Data.RestApi.Controllers
             _characterStatService = characterStatService;
         }
 
+        [Authorize(Roles = "Basic")]
         [Route("movesoftype/{type}")]
         [HttpGet]
         public IHttpActionResult GetMovesOfType(MoveType type)
@@ -29,6 +30,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(moves);
         }
 
+        [Authorize(Roles = "Basic")]
         [Route("moves")]
         [HttpGet]
         public IHttpActionResult GetMovesOfName([FromUri]string name)
@@ -39,6 +41,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(moves);
         }
 
+        [Authorize(Roles = "Basic")]
         [Route("moves/{id}")]
         [HttpGet]
         public IHttpActionResult GetMove(int id)
