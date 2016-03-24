@@ -1356,7 +1356,7 @@ a.text-success:focus {
   color: #e6e6e6;
 }
 .text-info {
-  color: #ececec;
+  color: #ffffff;
 }
 a.text-info:hover,
 a.text-info:focus {
@@ -2559,8 +2559,8 @@ output {
   padding: 10px 15px;
   font-size: 15px;
   line-height: 1.42857143;
-  color: #ececec;
-  background-color: #ececec;
+  color: #000000;
+  background-color: #ffffff;
   background-image: none;
   border: 1px solid #dce4ec;
   border-radius: 4px;
