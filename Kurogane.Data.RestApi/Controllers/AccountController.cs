@@ -9,6 +9,7 @@ using System.Web.Http;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [RoutePrefix("api/account")]
     public class AccountController : BaseApiController
     {
@@ -19,7 +20,6 @@ namespace Kurogane.Data.RestApi.Controllers
             _repo = new AuthRepository();
         }
 
-        [Authorize(Roles = "Admin")]
         [Route("users")]
         public IHttpActionResult GetUsers()
         {
@@ -28,7 +28,6 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(AppUserManager.Users.ToList().Select(u => TheModelFactory.Create(u)));
         }
 
-        [Authorize(Roles = "Admin")]
         [Route("user/{id:guid}", Name = "GetUserById")]
         public async Task<IHttpActionResult> GetUser(string id)
         {
@@ -44,7 +43,6 @@ namespace Kurogane.Data.RestApi.Controllers
 
         }
 
-        [Authorize(Roles = "Admin")]
         [Route("user/{username}")]
         public async Task<IHttpActionResult> GetUserByName(string username)
         {
@@ -84,7 +82,6 @@ namespace Kurogane.Data.RestApi.Controllers
         //    return Ok();
         //}
 
-        [Authorize(Roles = "Admin")]
         [AllowAnonymous]
         [Route("create")]
         public async Task<IHttpActionResult> CreateUser(CreateUserBindingModel createUserModel)
@@ -113,13 +110,13 @@ namespace Kurogane.Data.RestApi.Controllers
                 return GetErrorResult(addUserResult);
             }
 
-            var code = await AppUserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            //var code = await AppUserManager.GenerateEmailConfirmationTokenAsync(user.Id);
 
-            var callbackUrl = new Uri(Url.Link("ConfirmEmailRoute", new { userId = user.Id, code }));
+            //var callbackUrl = new Uri(Url.Link("ConfirmEmailRoute", new { userId = user.Id, code }));
 
-            await AppUserManager.SendEmailAsync(user.Id,
-                                                    "Confirm your account",
-                                                    "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+            //await AppUserManager.SendEmailAsync(user.Id,
+            //                                        "Confirm your account",
+            //                                        "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
             var locationHeader = new Uri(Url.Link("GetUserById", new { id = user.Id }));
 
@@ -150,7 +147,6 @@ namespace Kurogane.Data.RestApi.Controllers
         //    }
         //}
 
-        [Authorize(Roles = "Admin")]
         [Route("ChangePassword")]
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
         {
@@ -169,7 +165,6 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok();
         }
 
-        [Authorize(Roles = "Admin")]
         [Route("user/{id:guid}")]
         public async Task<IHttpActionResult> DeleteUser(string id)
         {
@@ -195,7 +190,6 @@ namespace Kurogane.Data.RestApi.Controllers
 
         }
 
-        [Authorize(Roles = "Admin")]
         [Route("user/{id:guid}/roles")]
         [HttpPut]
         public async Task<IHttpActionResult> AssignRolesToUser([FromUri] string id, [FromBody] string[] rolesToAssign)
@@ -239,7 +233,6 @@ namespace Kurogane.Data.RestApi.Controllers
 
         }
 
-        [Authorize(Roles = "Admin")]
         [Route("user/{id:guid}/assignclaims")]
         [HttpPut]
         public async Task<IHttpActionResult> AssignClaimsToUser([FromUri] string id, [FromBody] List<ClaimBindingModel> claimsToAssign)
@@ -271,7 +264,6 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok();
         }
 
-        [Authorize(Roles = "Admin")]
         [Route("user/{id:guid}/removeclaims")]
         [HttpPut]
         public async Task<IHttpActionResult> RemoveClaimsFromUser([FromUri] string id, [FromBody] List<ClaimBindingModel> claimsToRemove)
