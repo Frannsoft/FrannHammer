@@ -94,7 +94,7 @@ app.config(function ($routeProvider, $httpProvider) {
         templateUrl: "app/views/signup.html"
     });
     
-    $routeProvider.otherwise({ redirectTo: "/" });
+    $routeProvider.otherwise({ redirectTo: "/home" });
 
     
 });
