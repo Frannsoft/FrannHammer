@@ -1,6 +1,8 @@
 ﻿using Kurogane.Data.RestApi.DTOs;
 using System.Web.Http;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Security;
 using Kurogane.Data.RestApi.Models;
 using Kurogane.Data.RestApi.Services;
 
@@ -20,6 +22,7 @@ namespace Kurogane.Data.RestApi.Controllers
             _moveStatService = moveStatService;
         }
 
+        [Authorize(Roles = "Basic")]
         [Route("characters")]
         [HttpGet]
         public IHttpActionResult GetRoster()
@@ -31,6 +34,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(characterDtOs);
         }
 
+        [Authorize(Roles = "Basic")]
         [Route("characters/{id}")]
         [HttpGet]
         public IHttpActionResult GetCharacter(int id)
@@ -40,6 +44,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(charDto);
         }
 
+        [Authorize(Roles = "Basic")]
         [Route("characters/{id}/movement")]
         [HttpGet]
         public IHttpActionResult GetMovementForRoster(int id)
@@ -49,6 +54,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(movementStats);
         }
 
+        [Authorize(Roles = "Basic")]
         [Route("characters/{id}/moves")]
         [HttpGet]
         public IHttpActionResult GetMoves(int id)

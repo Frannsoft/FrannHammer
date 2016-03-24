@@ -30,6 +30,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(movementsResult);
         }
 
+        [Authorize(Roles = "Basic")]
         [Route("movement/{id}")]
         [HttpGet]
         public IHttpActionResult GetMovementStat(int id)
@@ -39,6 +40,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(movementDto);
         }
 
+        [Authorize(Roles = "Basic")]
         [Route("movement")]
         [HttpGet]
         public IEnumerable<MovementStatDTO> GetAllMovementOfName([FromUri]string name)
