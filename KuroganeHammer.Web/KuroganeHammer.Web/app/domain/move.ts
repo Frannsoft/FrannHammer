@@ -14,6 +14,7 @@
             public angle: number,
             public baseKnockBackSetKnockback: string,
             public knockbackGrowth: string,
+            public type: string,
             public landingLag: string,
             public autoCancel: string,
             public id?: number,
