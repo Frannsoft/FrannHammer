@@ -122,7 +122,7 @@ namespace KurograneTransferDBTool
 
                 //load character
                 var charStat = new CharacterStat(character.Name,
-                    character.OwnerId, character.Style, character.MainImageUrl, thumbnail.Url, character.Description);
+                    character.OwnerId, character.Style, character.MainImageUrl, thumbnail.Url, character.ColorHex, character.Description);
 
                 var result = await LoggedInClient.PostAsJsonAsync(Baseuri + "characters", charStat);
                 Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
