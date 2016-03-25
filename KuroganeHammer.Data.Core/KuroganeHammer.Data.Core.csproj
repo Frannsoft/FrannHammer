@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CharacterAttributes.cs" />
     <Compile Include="CharacterUtility.cs" />
     <Compile Include="EntityBusinessConverter.cs" />
     <Compile Include="CharacterConstants.cs" />

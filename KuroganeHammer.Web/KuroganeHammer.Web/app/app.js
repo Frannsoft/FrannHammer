@@ -30,7 +30,7 @@ app.config(function ($routeProvider, $httpProvider) {
     }(document, 'script', 'twitter-wjs'));
 
     $routeProvider.when("/home", {
-        controller: "homeController",
+        controller: "homeController as vm",
         templateUrl: "app/views/home.html"
     });
 
