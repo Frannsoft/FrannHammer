@@ -25,7 +25,7 @@ namespace KurograneTransferDBTool
             {
                 new KeyValuePair<string, string>("grant_type", "password"),
                 new KeyValuePair<string, string>("username", "KuroUser"),
-                new KeyValuePair<string, string>("password", "")
+                new KeyValuePair<string, string>("password", "CrazyHand71!")
             });
 
             LoggedInBasicClient = new HttpClient { BaseAddress = new Uri(Baseuri) };
@@ -33,7 +33,7 @@ namespace KurograneTransferDBTool
             {
                 new KeyValuePair<string, string>("grant_type", "password"),
                 new KeyValuePair<string, string>("username", "GETuser"),
-                new KeyValuePair<string, string>("password", "")
+                new KeyValuePair<string, string>("password", "GETpassword")
             });
 
             var adminresponse = LoggedInAdminClient.PostAsync(tokenUri, admincontent).Result;
