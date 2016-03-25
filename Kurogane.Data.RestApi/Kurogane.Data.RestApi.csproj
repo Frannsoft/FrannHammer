@@ -188,14 +188,18 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\CharacterAttributeConfiguration.cs" />
     <Compile Include="Configuration\CharacterStatConfiguration.cs" />
     <Compile Include="Configuration\MovementStatConfiguration.cs" />
     <Compile Include="Configuration\MoveStatConfiguration.cs" />
+    <Compile Include="Controllers\CharacterAttributeController.cs" />
+    <Compile Include="DTOs\CharacterAttributeDTO.cs" />
     <Compile Include="Infrastructure\ApplicationRoleManager.cs" />
     <Compile Include="Infrastructure\ApplicationUser.cs" />
     <Compile Include="Infrastructure\ApplicationUserManager.cs" />
     <Compile Include="Infrastructure\AuthContext.cs" />
     <Compile Include="Infrastructure\AuthRepository.cs" />
+    <Compile Include="Infrastructure\CharacterAttributeRepository.cs" />
     <Compile Include="Infrastructure\CharacterStatRepository.cs" />
     <Compile Include="Infrastructure\DbFactory.cs" />
     <Compile Include="Infrastructure\Disposable.cs" />
@@ -216,9 +220,26 @@
     <Compile Include="Migrations\201603240209582_added color theme hex string to character.Designer.cs">
       <DependentUpon>201603240209582_added color theme hex string to character.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603250227525_added support for character attributes.cs" />
+    <Compile Include="Migrations\201603250227525_added support for character attributes.Designer.cs">
+      <DependentUpon>201603250227525_added support for character attributes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603250231126_property adding support for character attributes.cs" />
+    <Compile Include="Migrations\201603250231126_property adding support for character attributes.Designer.cs">
+      <DependentUpon>201603250231126_property adding support for character attributes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603250233021_trying to add attribute support again.cs" />
+    <Compile Include="Migrations\201603250233021_trying to add attribute support again.Designer.cs">
+      <DependentUpon>201603250233021_trying to add attribute support again.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603250309057_adding stronger support for attribute type flags.cs" />
+    <Compile Include="Migrations\201603250309057_adding stronger support for attribute type flags.Designer.cs">
+      <DependentUpon>201603250309057_adding stronger support for attribute type flags.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AerialStat.cs" />
+    <Compile Include="Models\CharacterAttribute.cs" />
     <Compile Include="Models\CharacterStat.cs" />
     <Compile Include="Models\ClaimBindingModel.cs" />
     <Compile Include="Models\GroundStat.cs" />
@@ -246,6 +267,7 @@
     <Compile Include="Providers\CustomJwtFormat.cs" />
     <Compile Include="Providers\CustomOAuthProvider.cs" />
     <Compile Include="Providers\SimpleAuthorizationServerProvider.cs" />
+    <Compile Include="Services\CharacterAttributeService.cs" />
     <Compile Include="Services\CharacterService.cs" />
     <Compile Include="Services\MovementStatService.cs" />
     <Compile Include="Services\MoveService.cs" />
@@ -276,6 +298,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603240209582_added color theme hex string to character.resx">
       <DependentUpon>201603240209582_added color theme hex string to character.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603250227525_added support for character attributes.resx">
+      <DependentUpon>201603250227525_added support for character attributes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603250231126_property adding support for character attributes.resx">
+      <DependentUpon>201603250231126_property adding support for character attributes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603250233021_trying to add attribute support again.resx">
+      <DependentUpon>201603250233021_trying to add attribute support again.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603250309057_adding stronger support for attribute type flags.resx">
+      <DependentUpon>201603250309057_adding stronger support for attribute type flags.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
