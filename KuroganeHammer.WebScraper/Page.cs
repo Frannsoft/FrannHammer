@@ -12,10 +12,12 @@ namespace KuroganeHammer.WebScraper
         protected string Url { get; }
         private readonly HtmlDocument _doc;
         private readonly int _ownerId;
+        private readonly string _urlTail;
 
         public Page(string url, int ownerId)
         {
             Url = url;
+            _urlTail = GetUrlTail();
             var web = new HtmlWeb();
             _doc = web.Load(Url);
             _ownerId = ownerId;
@@ -24,6 +26,7 @@ namespace KuroganeHammer.WebScraper
         public Page(string url)
         {
             Url = url;
+            _urlTail = GetUrlTail();
             var web = new HtmlWeb();
             _doc = web.Load(Url);
         }
@@ -94,7 +97,7 @@ namespace KuroganeHammer.WebScraper
                 var cells = t.SelectNodes(StatConstants.XpathTableCells);
 
                 var attributes = cells.Select((t1, k) =>
-                    new AttributeValue(headers[k], t1.InnerText))
+                    new AttributeValue(headers[k], t1.InnerText, _urlTail))
                     .ToList();
                 attributesRows.Add(new AttributeValueRow(attributes));
             }
@@ -102,6 +105,12 @@ namespace KuroganeHammer.WebScraper
             var attrValueCollection = new AttributeValueRowCollection(attributesRows);
 
             return attrValueCollection;
+        }
+
+        private string GetUrlTail()
+        {
+            var tail = Url.Split('/').Last(); //get the key off of the url tail
+            return tail;
         }
 
         private void AddItem(ref Dictionary<string, Stat> items, Stat stat)
