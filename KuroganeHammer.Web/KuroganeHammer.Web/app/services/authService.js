@@ -4,21 +4,21 @@ app.factory('authService', ['$http', '$q', 'localStorageService', function ($htt
     var serviceBase = 'http://localhost:53410/';
     var authServiceFactory = {};
 
-    var _authentication = {
+    var authentication = {
         isAuth: false,
         userName: ""
     };
 
-    var _saveRegistration = function (registration) {
+    var saveRegistration = function (registration) {
 
-        _logOut();
+        logOut();
 
         return $http.post(serviceBase + 'account/register', registration).then(function (response) {
             return response;
         });
     };
 
-    var _login = function (loginData) {
+    var login = function (loginData) {
 
         var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password;
         var deferred = $q.defer();
@@ -27,41 +27,41 @@ app.factory('authService', ['$http', '$q', 'localStorageService', function ($htt
 
             localStorageService.set('authorizationData', { token: response.access_token, userName: loginData.userName });
 
-            _authentication.isAuth = true;
-            _authentication.userName = loginData.userName;
+            authentication.isAuth = true;
+            authentication.userName = loginData.userName;
 
             deferred.resolve(response);
 
         }).error(function (err, status) {
-            _logOut();
+            logOut();
             deferred.reject(err);
         });
 
         return deferred.promise;
     };
 
-    var _logOut = function () {
+    var logOut = function () {
 
         localStorageService.remove('authorizationData');
 
-        _authentication.isAuth = false;
-        _authentication.userName = "";
+        authentication.isAuth = false;
+        authentication.userName = "";
     };
 
-    var _fillAuthData = function () {
+    var fillAuthData = function () {
 
         var authData = localStorageService.get('authorizationData');
         if (authData) {
-            _authentication.isAuth = true;
-            _authentication.userName = authData.userName;
+            authentication.isAuth = true;
+            authentication.userName = authData.userName;
         }
     }
 
-    authServiceFactory.saveRegistration = _saveRegistration;
-    authServiceFactory.login = _login;
-    authServiceFactory.logOut = _logOut;
-    authServiceFactory.fillAuthData = _fillAuthData;
-    authServiceFactory.authentication = _authentication;
+    authServiceFactory.saveRegistration = saveRegistration;
+    authServiceFactory.login = login;
+    authServiceFactory.logOut = logOut;
+    authServiceFactory.fillAuthData = fillAuthData;
+    authServiceFactory.authentication = authentication;
 
     return authServiceFactory;
 }]);
