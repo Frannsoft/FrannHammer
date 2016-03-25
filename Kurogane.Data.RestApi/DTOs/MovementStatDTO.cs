@@ -23,13 +23,11 @@ namespace Kurogane.Data.RestApi.DTOs
             var retVal = false;
             var compMovement = obj as MovementStatDTO;
 
-            if (compMovement != null)
+            if (compMovement == null) return retVal;
+            if (Value.Equals(compMovement.Value) &&
+                base.Equals(compMovement))
             {
-                if (Value.Equals(compMovement.Value) &&
-                    base.Equals(compMovement))
-                {
-                    retVal = true;
-                }
+                retVal = true;
             }
 
             return retVal;
