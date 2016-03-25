@@ -98,6 +98,130 @@ namespace KurograneTransferDBTool
         }
 
         [Test]
+        [Explicit("Actually reloads Character Attributes in the DB")]
+        //[TestCase("http://kuroganehammer.com/Smash4/ItemTossBack")] - abnormal tables
+        //[TestCase("http://kuroganehammer.com/Smash4/ItemTossDash")] - includes 'everyone else' which I'm not handling
+        //[TestCase("http://kuroganehammer.com/Smash4/ItemTossDown")] - this url doesn't exist anymore
+        //[TestCase("http://kuroganehammer.com/Smash4/ItemTossForward")] - abnormal tables
+        //[TestCase("http://kuroganehammer.com/Smash4/ItemTossUp")] - abnormal tables
+        //[TestCase("http://kuroganehammer.com/Smash4/LedgeJump")] - abnormal table values
+        //[TestCase("http://kuroganehammer.com/Smash4/Tech")] - abnormal tables
+        [TestCase("http://kuroganehammer.com/Smash4/AirAcceleration")]
+        [TestCase("http://kuroganehammer.com/Smash4/Airdodge")]
+        [TestCase("http://kuroganehammer.com/Smash4/AirSpeed")]
+        [TestCase("http://kuroganehammer.com/Smash4/FallSpeed")]
+        [TestCase("http://kuroganehammer.com/Smash4/Gravity")]
+        [TestCase("http://kuroganehammer.com/Smash4/ItemToss")]
+        [TestCase("http://kuroganehammer.com/Smash4/Jumpsquat")]
+        [TestCase("http://kuroganehammer.com/Smash4/LedgeAttack")]
+        [TestCase("http://kuroganehammer.com/Smash4/LedgeGetup")]
+        [TestCase("http://kuroganehammer.com/Smash4/LedgeRoll")]
+        [TestCase("http://kuroganehammer.com/Smash4/Rolls")]
+        [TestCase("http://kuroganehammer.com/Smash4/DashSpeed")]
+        [TestCase("http://kuroganehammer.com/Smash4/Spotdodge")]
+        [TestCase("http://kuroganehammer.com/Smash4/WalkSpeed")]
+        [TestCase("http://kuroganehammer.com/Smash4/Weight")]
+        public async Task ReloadCharacterAttribute(string url)
+        {
+            var page = new Page(url);
+            var attributesFromPage = page.GetAttributes();
+
+            var fullAtts = new List<CharacterAttribute>();
+            foreach (var attributeRow in attributesFromPage.AttributeValues)
+            {
+                var rank = attributeRow.Values.First(a => a.Name.ToLower() == "rank").Value;
+                var characterName = MapCharacterName(attributeRow.Values.First(a => a.Name.ToLower() == "character").Value);
+
+                if(string.IsNullOrEmpty(characterName))
+                { continue; } //if no characterName was found there is a high probability this table row was a decorator rather than a real value
+
+                var specificValues = (from attr in attributeRow.Values.Where(a => a.Name.ToLower() != "rank" &&
+                                                                                 a.Name.ToLower() != "character")
+                                     select attr).ToList();
+
+                for (var i = 0; i < specificValues.Count(); i++)
+                {
+                    var attributeName = specificValues[i].Name;
+                    var attributeType = (CharacterAttributes)Enum.Parse(typeof(CharacterAttributes), specificValues[i].AttributeFlag, true);
+                    var value = specificValues[i].Value;
+
+                    var characterAttribute = new CharacterAttribute(rank, characterName, attributeName, value,
+                        attributeType);
+                    fullAtts.Add(characterAttribute);
+                    
+                    var postResult = await LoggedInAdminClient.PostAsJsonAsync(Baseuri + "attributes", characterAttribute);
+                    Assert.AreEqual(HttpStatusCode.OK, postResult.StatusCode);
+                }
+                Assert.That(fullAtts.Count > 0);
+            }
+        }
+
+        /// <summary>
+        /// Not all values in the character field match values in enum.  Manually map those that don't.
+        /// </summary>
+        /// <param name="rawName"></param>
+        /// <returns></returns>
+        private string MapCharacterName(string rawName)
+        {
+            string retVal;
+
+            rawName = rawName.Replace(".", string.Empty)
+                .Replace("(Default size)", string.Empty)
+                .Replace(" ", string.Empty)
+                .Replace("(", string.Empty)
+                .Replace(")", string.Empty)
+                .Replace("-", string.Empty)
+                .Replace("&", string.Empty);
+
+            if (rawName.Equals("Dedede"))
+            {
+                retVal = Characters.Kingdedede.ToString();
+            }
+            else if (rawName.Equals("MrGameWatch") || rawName.Equals("GameWatch"))
+            {
+                retVal = Characters.Mrgamewatch.ToString();
+            }
+            else if (rawName.Equals("Rosalina"))
+            {
+                retVal = Characters.Rosalinaluma.ToString();
+            }
+            else if (rawName.Equals("DuckHuntDog") || rawName.Equals("DuckHuntDuo"))
+            {
+                retVal = Characters.Duckhunt.ToString();
+            }
+            else if (rawName.Equals("Diddy"))
+            {
+                retVal = Characters.Diddykong.ToString();
+            }
+            else if (rawName.Equals("GreninjaForward") || rawName.Equals("GreninjaBack"))
+            {
+                retVal = Characters.Greninja.ToString();
+            }
+            else if (rawName.Equals("Lucina'sworthlessgrandfather"))
+            {
+                retVal = Characters.Marth.ToString();
+            }
+            else if (rawName.Equals("Marth'sworthlessgranddaughter"))
+            {
+                retVal = Characters.Lucina.ToString();
+            }
+            else if (rawName.Equals("EbolaBackThrow"))
+            {
+                retVal = Characters.Ness.ToString();
+            }
+            else if (rawName.Equals("MiiSwordspider"))
+            {
+                retVal = Characters.Miiswordfighter.ToString();
+            }
+            else
+            {
+                retVal = rawName;
+            }
+            
+            return retVal;
+        }
+
+        [Test]
         [Explicit("Actually reloads all data")]
         public async Task ReloadAllCharacterData()
         {
@@ -129,7 +253,7 @@ namespace KurograneTransferDBTool
 
                 //load moves
                 var moves = from move in character.FrameData.Values.OfType<MoveStat>()
-                    select move;
+                            select move;
 
                 foreach (var move in moves)
                 {
@@ -138,7 +262,7 @@ namespace KurograneTransferDBTool
                 }
 
                 var movements = from movement in character.FrameData.Values.OfType<MovementStat>()
-                    select movement;
+                                select movement;
 
                 foreach (var movement in movements)
                 {
