@@ -1,8 +1,6 @@
 ﻿using Kurogane.Data.RestApi.DTOs;
 using System.Web.Http;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Security;
 using Kurogane.Data.RestApi.Models;
 using Kurogane.Data.RestApi.Services;
 
@@ -14,12 +12,15 @@ namespace Kurogane.Data.RestApi.Controllers
         private readonly ICharacterStatService _characterStatService;
         private readonly IMovementStatService _movementStatService;
         private readonly IMoveStatService _moveStatService;
+        private readonly ICharacterAttributeService _characterAttributeService;
 
-        public CharacterController(ICharacterStatService characterStatService, IMovementStatService movementStatService, IMoveStatService moveStatService)
+        public CharacterController(ICharacterStatService characterStatService, IMovementStatService movementStatService, IMoveStatService moveStatService,
+            ICharacterAttributeService characterAttributeService)
         {
             _characterStatService = characterStatService;
             _movementStatService = movementStatService;
             _moveStatService = moveStatService;
+            _characterAttributeService = characterAttributeService;
         }
 
         [Authorize(Roles = "Basic")]
@@ -64,6 +65,18 @@ namespace Kurogane.Data.RestApi.Controllers
                         select new MoveDTO(move, _characterStatService);
 
             return Ok(moves);
+        }
+
+        [Authorize(Roles = "Basic")]
+        [Route("characters/{id}/attributes")]
+        [HttpGet]
+        public IHttpActionResult GetAttributesForCharacter(int id)
+        {
+            var attributes = from attribute in _characterAttributeService.GetCharacterAttributesByCharacter(id)
+                             where attribute.OwnerId == id
+                             select new CharacterAttributeDTO(attribute);
+
+            return Ok(attributes);
         }
 
         //[Route("characters/{id}/moves/{type}")]
