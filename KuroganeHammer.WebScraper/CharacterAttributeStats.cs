@@ -23,11 +23,13 @@ namespace KuroganeHammer.WebScraper
     {
         public readonly string Name;
         public readonly string Value;
+        public string AttributeFlag { get; }
 
-        public AttributeValue(string name, string value)
+        public AttributeValue(string name, string value, string flag)
         {
             Name = name;
             Value = value;
+            AttributeFlag = flag;
         }
     }
 
