@@ -11,7 +11,7 @@
 </head>
 <body>
     <header class="container">
-            <div class="navbar navbar-default">
+            <div class="navbar navbar-default" data-ng-controller="indexController">
                 <ul class="nav navbar-nav navbar-left" id="menu">
                     <li><a href="#home">Home</a></li>
                     <li><a href="#smash4">Smash 4</a></li>
@@ -19,10 +19,11 @@
                     <li><a href="#glossary">Glossary</a></li>
                     <li><a href="#api">API</a></li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right" id="menu">
+                <ul class="nav navbar-nav navbar-right" style="margin-right: auto;" id="menu">
                     <li data-ng-hide="authentication.isAuth"><a href="#login">Login</a></li>
+                    <li data-ng-hide="!authentication.isAuth"><a href="">{{authentication.userName}}</a></li>
                     <li data-ng-show="authentication.isAuth"><a href="" ng-click="logOut()">Logout</a></li>
-                    <li><a href="#signup">Signup</a></li>
+                    <li data-ng-show="!authentication.isAuth"><a href="#signup">Signup</a></li>
                 </ul>
             </div>
     </header>
