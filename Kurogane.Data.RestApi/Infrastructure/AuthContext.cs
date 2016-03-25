@@ -34,6 +34,7 @@ namespace Kurogane.Data.RestApi.Infrastructure
             modelBuilder.Configurations.Add(new MovementStatConfiguration());
             modelBuilder.Configurations.Add(new MoveStatConfiguration());
             modelBuilder.Configurations.Add(new CharacterStatConfiguration());
+            modelBuilder.Configurations.Add(new CharacterAttributeConfiguration());
         }
     }
 }

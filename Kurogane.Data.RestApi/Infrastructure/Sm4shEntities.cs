@@ -9,6 +9,7 @@ namespace Kurogane.Data.RestApi.Infrastructure
         public DbSet<MovementStat> MovementStats { get; set; }
         public DbSet<MoveStat> Moves { get; set; }
         public DbSet<CharacterStat> Characters { get; set; }
+        public DbSet<CharacterAttribute> CharacterAttributes { get; set; }
 
         public Sm4ShEntities()
             : base("Sm4shEntities")
@@ -26,9 +27,11 @@ namespace Kurogane.Data.RestApi.Infrastructure
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Configurations.Add(new MovementStatConfiguration());
             modelBuilder.Configurations.Add(new MoveStatConfiguration());
             modelBuilder.Configurations.Add(new CharacterStatConfiguration());
+            modelBuilder.Configurations.Add(new CharacterAttributeConfiguration());
         }
     }
 }
