@@ -4,6 +4,7 @@ using NUnit.Framework;
 using System.Threading.Tasks;
 using System.Net;
 using System.Net.Http;
+using System.Linq;
 using KuroganeHammer.Data.Core;
 using KuroganeHammer.WebScraper;
 using Kurogane.Data.RestApi.DTOs;
@@ -139,13 +140,114 @@ namespace KurograneTransferDBTool
         [TestCase("http://kuroganehammer.com/Smash4/Tech")]
         [TestCase("http://kuroganehammer.com/Smash4/WalkSpeed")]
         [TestCase("http://kuroganehammer.com/Smash4/Weight")]
-        public void CanIGetAttributes(string url)
+        public void CanIGetAttributesFromPage(string url)
         {
             var page = new Page(url);
             var attributes = page.GetAttributes();
 
             Assert.That(attributes != null);
             Assert.That(attributes.AttributeValues.Count > 0);
+        }
+
+        [Test]
+        [TestCase(CharacterAttributes.AirAcceleration)]
+        [TestCase(CharacterAttributes.Airdodge)]
+        [TestCase(CharacterAttributes.AirSpeed)]
+        [TestCase(CharacterAttributes.DashSpeed)]
+        [TestCase(CharacterAttributes.FallSpeed)]
+        [TestCase(CharacterAttributes.Gravity)]
+        [TestCase(CharacterAttributes.ItemToss)]
+        [TestCase(CharacterAttributes.Jumpsquat)]
+        [TestCase(CharacterAttributes.LedgeAttack)]
+        [TestCase(CharacterAttributes.LedgeGetup)]
+        [TestCase(CharacterAttributes.LedgeRoll)]
+        [TestCase(CharacterAttributes.Rolls)]
+        [TestCase(CharacterAttributes.Spotdodge)]
+        [TestCase(CharacterAttributes.WalkSpeed)]
+        [TestCase(CharacterAttributes.Weight)]
+        public async Task CanGetAllCharacterAttributesOfType(CharacterAttributes attributeType)
+        {
+            var url = Baseuri + "attributes?attributeType=" + attributeType;
+            var getResponse = await LoggedInBasicClient.GetAsync(url);
+
+            Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+
+            var attributes = await getResponse.Content.ReadAsAsync<List<CharacterAttributeDTO>>();
+
+            Assert.That(attributes != null, "attributes is null");
+            Assert.That(attributes.Count > 0, "There were no attributes found");
+        }
+
+        [Test]
+        [TestCase(Characters.Bayonetta)]
+        [TestCase(Characters.Bowser)]
+        [TestCase(Characters.Bowserjr)]
+        [TestCase(Characters.Captainfalcon)]
+        [TestCase(Characters.Charizard)]
+        [TestCase(Characters.Cloud)]
+        [TestCase(Characters.Corrin)]
+        [TestCase(Characters.Darkpit)]
+        [TestCase(Characters.Diddykong)]
+        [TestCase(Characters.Donkeykong)]
+        [TestCase(Characters.Drmario)]
+        [TestCase(Characters.Duckhunt)]
+        [TestCase(Characters.Falco)]
+        [TestCase(Characters.Fox)]
+        [TestCase(Characters.Ganondorf)]
+        [TestCase(Characters.Greninja)]
+        [TestCase(Characters.Ike)]
+        [TestCase(Characters.Jigglypuff)]
+        [TestCase(Characters.Kingdedede)]
+        [TestCase(Characters.Kirby)]
+        [TestCase(Characters.Link)]
+        [TestCase(Characters.Littlemac)]
+        [TestCase(Characters.Lucario)]
+        [TestCase(Characters.Lucas)]
+        [TestCase(Characters.Lucina)]
+        [TestCase(Characters.Luigi)]
+        [TestCase(Characters.Mario)]
+        [TestCase(Characters.Marth)]
+        [TestCase(Characters.Megaman)]
+        [TestCase(Characters.Metaknight)]
+        [TestCase(Characters.Mewtwo)]
+        [TestCase(Characters.Miibrawler)]
+        [TestCase(Characters.Miigunner)]
+        [TestCase(Characters.Miiswordfighter)]
+        [TestCase(Characters.Mrgamewatch)]
+        [TestCase(Characters.Ness)]
+        [TestCase(Characters.Olimar)]
+        [TestCase(Characters.Pacman)]
+        [TestCase(Characters.Palutena)]
+        [TestCase(Characters.Peach)]
+        [TestCase(Characters.Pikachu)]
+        [TestCase(Characters.Pit)]
+        [TestCase(Characters.Rob)]
+        [TestCase(Characters.Robin)]
+        [TestCase(Characters.Rosalinaluma)]
+        [TestCase(Characters.Roy)]
+        [TestCase(Characters.Ryu)]
+        [TestCase(Characters.Samus)]
+        [TestCase(Characters.Sheik)]
+        [TestCase(Characters.Shulk)]
+        [TestCase(Characters.Sonic)]
+        [TestCase(Characters.Toonlink)]
+        [TestCase(Characters.Villager)]
+        [TestCase(Characters.Wario)]
+        [TestCase(Characters.Wiifittrainer)]
+        [TestCase(Characters.Yoshi)]
+        [TestCase(Characters.Zelda)]
+        [TestCase(Characters.Zerosuitsamus)]
+        public async Task CanGetAllCharacterAttributesOfCharacter(Characters characterType)
+        {
+            var url = Baseuri + "characters/" + (int)characterType + "/attributes";
+            var getResponse = await LoggedInBasicClient.GetAsync(url);
+
+            Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+
+            var attributes = await getResponse.Content.ReadAsAsync<List<CharacterAttributeDTO>>();
+
+            Assert.That(attributes != null, "attributes is null");
+            Assert.That(attributes.Count > 0, "There were no attributes found");
         }
     }
 }
