@@ -1,17 +1,17 @@
 ﻿<div class="col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-md-offset-2">
-    <h2>{{vm.moveName}}</h2>
+    <h2>{{vm.moveName | uppercase}}</h2>
     <br/>
     <br/>
     <!--<a href="https://twitter.com/share" class="twitter-share-button" data-via="jpol711" data-dnt="true">Tweet</a>-->
     <br />
     <br />
     <h6>Sorting by: {{vm.predicate}}</h6>
-    <table class="table table-hover">
+    <table class="table table-hover table-striped">
         <thead>
             <tr>
                 <th>
                     <a href="" ng-click="vm.order('characterName')">Character</a>
-                    <span ng-show="vm.predicate === 'characterName'" ng-class="{vm.reverse:vm.reverse}"></span>
+                    <span ng-show="vm.predicate === 'character'" ng-class="{vm.reverse:vm.reverse}"></span>
                 </th>
                 <th>
                     <a href="" ng-click="vm.order('hitboxActive')">HitboxActive</a>
