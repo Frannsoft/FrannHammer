@@ -63,7 +63,7 @@
         }
 
         goToMoveRanking(rowItem: IMove): void {
-            this.$location.path('/moveRanking').search({ name: rowItem.name });
+            this.$location.path('/moveranking').search({ name: rowItem.name });
         }
 
         order(predicate: string): void {
