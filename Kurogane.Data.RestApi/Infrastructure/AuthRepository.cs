@@ -29,6 +29,7 @@ namespace Kurogane.Data.RestApi.Infrastructure
         //    return result;
         //}
 
+      
         public async Task<ApplicationUser> FindUser(string userName, string password)
         {
             var user = await _userManager.FindAsync(userName, password);

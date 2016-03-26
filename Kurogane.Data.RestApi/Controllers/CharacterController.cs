@@ -23,7 +23,7 @@ namespace Kurogane.Data.RestApi.Controllers
             _characterAttributeService = characterAttributeService;
         }
 
-        [Authorize(Roles = "Basic")]
+        [Authorize(Roles = "Admin, Basic")]
         [Route("characters")]
         [HttpGet]
         public IHttpActionResult GetRoster()

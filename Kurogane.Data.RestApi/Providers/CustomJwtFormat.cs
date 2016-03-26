@@ -7,6 +7,7 @@ using Thinktecture.IdentityModel.Tokens;
 
 namespace Kurogane.Data.RestApi.Providers
 {
+    [Obsolete]
     public class CustomJwtFormat : ISecureDataFormat<AuthenticationTicket>
     {
 
@@ -25,21 +26,13 @@ namespace Kurogane.Data.RestApi.Providers
             }
 
             var audienceId = ConfigurationManager.AppSettings["as:AudienceId"];
-
             var symmetricKeyAsBase64 = ConfigurationManager.AppSettings["as:AudienceSecret"];
-
             var keyByteArray = TextEncodings.Base64Url.Decode(symmetricKeyAsBase64);
-
             var signingKey = new HmacSigningCredentials(keyByteArray);
-
             var issued = data.Properties.IssuedUtc;
-
             var expires = data.Properties.ExpiresUtc;
-
             var token = new JwtSecurityToken(_issuer, audienceId, data.Identity.Claims, issued.Value.UtcDateTime, expires.Value.UtcDateTime, signingKey);
-
             var handler = new JwtSecurityTokenHandler();
-
             var jwt = handler.WriteToken(token);
 
             return jwt;

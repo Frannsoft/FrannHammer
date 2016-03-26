@@ -1,4 +1,6 @@
-﻿using Kurogane.Data.RestApi.Infrastructure;
+﻿using System;
+using System.Security.Claims;
+using Kurogane.Data.RestApi.Infrastructure;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
@@ -6,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Kurogane.Data.RestApi.Providers
 {
+    [Obsolete]
     public class CustomOAuthProvider : OAuthAuthorizationServerProvider
     {
-
         public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
             context.Validated();
@@ -24,7 +26,7 @@ namespace Kurogane.Data.RestApi.Providers
 
             var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
 
-            var user = await userManager.FindAsync(context.UserName, context.Password);
+            ApplicationUser user = await userManager.FindAsync(context.UserName, context.Password);
 
             if (user == null)
             {
@@ -38,7 +40,7 @@ namespace Kurogane.Data.RestApi.Providers
                 return;
             }
 
-            var oAuthIdentity = await user.GenerateUserIdentityAsync(userManager, "JWT");
+            ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(userManager, "JWT");
 
             var ticket = new AuthenticationTicket(oAuthIdentity, null);
 
