@@ -5,18 +5,19 @@ namespace Kurogane.Data.RestApi.Models
 {
     public class MovementStat : Stat
     {
-        public double Value { get; set; }
+        public string Value { get; set; }
 
         public MovementStat(string name, int ownerId, string value)
             : base(name, ownerId)
         {
             value = value.Replace(" ", string.Empty);
 
-            double result;
-            if(double.TryParse(value, out result))
-            {
-                Value = Convert.ToDouble(result);
-            }
+            Value = value;
+            //double result;
+            //if(double.TryParse(value, out result))
+            //{
+            //    Value = Convert.ToDouble(result);
+            //}
         }
 
         public MovementStat()

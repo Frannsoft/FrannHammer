@@ -244,6 +244,10 @@
     <Compile Include="Migrations\201603261754203_removed client model property.Designer.cs">
       <DependentUpon>201603261754203_removed client model property.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603261941167_new changes.cs" />
+    <Compile Include="Migrations\201603261941167_new changes.Designer.cs">
+      <DependentUpon>201603261941167_new changes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AerialStat.cs" />
@@ -326,6 +330,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603261754203_removed client model property.resx">
       <DependentUpon>201603261754203_removed client model property.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603261941167_new changes.resx">
+      <DependentUpon>201603261941167_new changes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
