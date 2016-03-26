@@ -41,6 +41,7 @@ namespace Kurogane.Data.RestApi.Migrations
 
             var adminUser = manager.FindByName("KuroUser");
             manager.AddToRoles(adminUser.Id, "Admin");
+            manager.AddToRoles(adminUser.Id, "Basic");
         }
     }
 }

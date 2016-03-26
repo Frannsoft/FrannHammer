@@ -268,6 +268,7 @@
     <Compile Include="Models\MoveStat.cs" />
     <Compile Include="Models\MoveType.cs" />
     <Compile Include="Models\RoleBindingModels.cs" />
+    <Compile Include="Models\RolesConstants.cs" />
     <Compile Include="Models\SpecialStat.cs" />
     <Compile Include="Models\Stat.cs" />
     <Compile Include="Models\UserModel.cs" />
