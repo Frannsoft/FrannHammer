@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
@@ -24,16 +25,16 @@ namespace KurograneTransferDBTool
             var admincontent = new FormUrlEncodedContent(new[]
             {
                 new KeyValuePair<string, string>("grant_type", "password"),
-                new KeyValuePair<string, string>("username", "KuroUser"),
-                new KeyValuePair<string, string>("password", "CrazyHand71!")
+                new KeyValuePair<string, string>("username", ConfigurationManager.AppSettings["adminusername"]),
+                new KeyValuePair<string, string>("password", ConfigurationManager.AppSettings["adminpassword"])
             });
 
             LoggedInBasicClient = new HttpClient { BaseAddress = new Uri(Baseuri) };
             var basiccontent = new FormUrlEncodedContent(new[]
             {
                 new KeyValuePair<string, string>("grant_type", "password"),
-                new KeyValuePair<string, string>("username", "GETuser"),
-                new KeyValuePair<string, string>("password", "GETpassword")
+                new KeyValuePair<string, string>("username", ConfigurationManager.AppSettings["basicusername"]),
+                new KeyValuePair<string, string>("password", ConfigurationManager.AppSettings["basicpassword"])
             });
 
             var adminresponse = LoggedInAdminClient.PostAsync(tokenUri, admincontent).Result;
