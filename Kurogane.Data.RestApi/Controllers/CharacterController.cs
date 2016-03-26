@@ -3,6 +3,7 @@ using System.Web.Http;
 using System.Linq;
 using Kurogane.Data.RestApi.Models;
 using Kurogane.Data.RestApi.Services;
+using static Kurogane.Data.RestApi.Models.RolesConstants;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
@@ -23,7 +24,7 @@ namespace Kurogane.Data.RestApi.Controllers
             _characterAttributeService = characterAttributeService;
         }
 
-        [Authorize(Roles = "Admin, Basic")]
+        [Authorize(Roles = Basic)]
         [Route("characters")]
         [HttpGet]
         public IHttpActionResult GetRoster()
@@ -35,7 +36,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(characterDtOs);
         }
 
-        [Authorize(Roles = "Basic")]
+        [Authorize(Roles = Basic)]
         [Route("characters/{id}")]
         [HttpGet]
         public IHttpActionResult GetCharacter(int id)
@@ -45,7 +46,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(charDto);
         }
 
-        [Authorize(Roles = "Basic")]
+        [Authorize(Roles = Basic)]
         [Route("characters/{id}/movement")]
         [HttpGet]
         public IHttpActionResult GetMovementForRoster(int id)
@@ -55,7 +56,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(movementStats);
         }
 
-        [Authorize(Roles = "Basic")]
+        [Authorize(Roles = Basic)]
         [Route("characters/{id}/moves")]
         [HttpGet]
         public IHttpActionResult GetMoves(int id)
@@ -67,7 +68,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(moves);
         }
 
-        [Authorize(Roles = "Basic")]
+        [Authorize(Roles = Basic)]
         [Route("characters/{id}/attributes")]
         [HttpGet]
         public IHttpActionResult GetAttributesForCharacter(int id)
@@ -91,7 +92,7 @@ namespace Kurogane.Data.RestApi.Controllers
         //    return Ok(moves);
         //}
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = Admin)]
         [Route("characters")]
         [HttpPost]
         public IHttpActionResult Post([FromBody]CharacterStat value)
@@ -114,7 +115,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(value);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = Admin)]
         [Route("characters/{id}")]
         [HttpPut]
         public IHttpActionResult Put(int id, [FromBody]CharacterStat value)
@@ -144,7 +145,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(value);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = Admin)]
         [Route("characters/{id}")]
         [HttpDelete]
         public IHttpActionResult Delete(int id)

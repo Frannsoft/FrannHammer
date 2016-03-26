@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Http;
 using Kurogane.Data.RestApi.Services;
+using static Kurogane.Data.RestApi.Models.RolesConstants;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
@@ -19,7 +20,7 @@ namespace Kurogane.Data.RestApi.Controllers
             _characterStatService = characterStatService;
         }
 
-        [Authorize(Roles = "Basic")]
+        [Authorize(Roles = Basic)]
         [Route("movesoftype/{type}")]
         [HttpGet]
         public IHttpActionResult GetMovesOfType(MoveType type)
@@ -30,7 +31,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(moves);
         }
 
-        [Authorize(Roles = "Basic")]
+        [Authorize(Roles = Basic)]
         [Route("moves")]
         [HttpGet]
         public IHttpActionResult GetMovesOfName([FromUri]string name)
@@ -41,7 +42,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(moves);
         }
 
-        [Authorize(Roles = "Basic")]
+        [Authorize(Roles = Basic)]
         [Route("moves/{id}")]
         [HttpGet]
         public IHttpActionResult GetMove(int id)
@@ -51,7 +52,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(moveDTO);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = Admin)]
         [Route("moves")]
         [HttpPost]
         public IHttpActionResult Post([FromBody]MoveStat value)
@@ -75,7 +76,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(value);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = Admin)]
         [Route("moves/{id}")]
         [HttpPut]
         public IHttpActionResult Put(int id, [FromBody]MoveStat value)
@@ -114,7 +115,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = Admin)]
         [Route("moves/{id}")]
         [HttpDelete]
         public IHttpActionResult Delete(int id)
