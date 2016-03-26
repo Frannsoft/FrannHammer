@@ -9,23 +9,22 @@ using Autofac.Integration.WebApi;
 using System.Web.Http.Dispatcher;
 using Kurogane.Data.RestApi.Controllers;
 using Kurogane.Data.RestApi.Infrastructure;
-using System.Configuration;
 using Kurogane.Data.RestApi.Services;
-using Microsoft.Owin.Security.DataHandler.Encoder;
-using Microsoft.Owin.Security.Jwt;
-using Microsoft.Owin.Security;
+using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security.Cookies;
 
 [assembly: OwinStartup(typeof(Kurogane.Data.RestApi.Startup))]
 namespace Kurogane.Data.RestApi
 {
-
     public class Startup
     {
+        public static OAuthBearerAuthenticationOptions OAuthBearerOptions { get; private set; }
+        public static OAuthAuthorizationServerOptions OAuthServerOptions { get; private set; }
+        public static string PublicClientId { get; private set; }
+
         public void Configuration(IAppBuilder app)
         {
-            //ConfigureOAuth(app);
-            ConfigureOAuthTokenGeneration(app);
-            ConfigureOAuthTokenConsumption(app);
+            ConfigureAuth(app);
 
             var config = new HttpConfiguration();
             config.Services.Replace(typeof(IAssembliesResolver), new CustomAssembliesResolver());
@@ -35,10 +34,10 @@ namespace Kurogane.Data.RestApi
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
 
             var builder = new ContainerBuilder();
-            //builder.RegisterControllers(Assembly.GetExecutingAssembly());
             builder.RegisterApiControllers(typeof(CharacterController).Assembly);
             builder.RegisterApiControllers(typeof(MoveController).Assembly);
             builder.RegisterApiControllers(typeof(MovementController).Assembly);
+            builder.RegisterApiControllers(typeof (CharacterAttributeController).Assembly);
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerRequest();
             builder.RegisterType<DbFactory>().As<IDbFactory>().InstancePerRequest();
 
@@ -55,6 +54,10 @@ namespace Kurogane.Data.RestApi
                 .Where(t => t.Name.EndsWith("Repository"))
                 .AsImplementedInterfaces().InstancePerRequest();
 
+            builder.RegisterAssemblyTypes(typeof (CharacterAttributeRepository).Assembly)
+                .Where(t => t.Name.EndsWith("Repository"))
+                .AsImplementedInterfaces().InstancePerRequest();
+
             //services
             builder.RegisterAssemblyTypes(typeof(CharacterService).Assembly)
                 .Where(t => t.Name.EndsWith("Service"))
@@ -68,65 +71,60 @@ namespace Kurogane.Data.RestApi
                 .Where(t => t.Name.EndsWith("Service"))
                 .AsImplementedInterfaces().InstancePerRequest();
 
+            builder.RegisterAssemblyTypes(typeof (CharacterAttributeService).Assembly)
+                .Where(t => t.Name.EndsWith("Service"))
+                .AsImplementedInterfaces().InstancePerRequest();
+
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
 
             app.UseWebApi(config);
         }
 
-        public void ConfigureOAuth(IAppBuilder app)
+        public void ConfigureAuth(IAppBuilder app)
         {
-            var oAuthServerOptions = new OAuthAuthorizationServerOptions()
-            {
-                AllowInsecureHttp = true,
-                TokenEndpointPath = new PathString("/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
-                Provider = new SimpleAuthorizationServerProvider()
-            };
-
-            // Token Generation
-            app.UseOAuthAuthorizationServer(oAuthServerOptions);
-            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
-        }
-
-        private void ConfigureOAuthTokenGeneration(IAppBuilder app)
-        {
-            //configure the db context and user manager to use a single instance per request
+            // Configure the db context and user manager to use a single instance per request
             app.CreatePerOwinContext(AuthContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
-            app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
 
-            var oAuthServerOptions = new OAuthAuthorizationServerOptions
+            // Enable the application to use a cookie to store information for the signed in user
+            // and to use a cookie to temporarily store information about a user logging in with a third party login provider
+            app.UseCookieAuthentication(new CookieAuthenticationOptions());
+            app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
+
+            // Configure the application for OAuth based flow
+            PublicClientId = "self";
+            OAuthServerOptions = new OAuthAuthorizationServerOptions
             {
-                AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/oauth/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
-                Provider = new CustomOAuthProvider(),
-                AccessTokenFormat = new CustomJwtFormat("http://localhost/")
+                Provider = new ApplicationOAuthProvider(PublicClientId),
+                AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
+                // In production mode set AllowInsecureHttp = false
+                AllowInsecureHttp = true
             };
 
-            app.UseOAuthAuthorizationServer(oAuthServerOptions);
+            // Enable the application to use bearer tokens to authenticate users
+            app.UseOAuthBearerTokens(OAuthServerOptions);
+
+            // Uncomment the following lines to enable logging in with third party login providers
+            //app.UseMicrosoftAccountAuthentication(
+            //    clientId: "",
+            //    clientSecret: "");
+
+            //app.UseTwitterAuthentication(
+            //    consumerKey: "",
+            //    consumerSecret: "");
+
+            //app.UseFacebookAuthentication(
+            //    appId: "",
+            //    appSecret: "");
+
+            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            //{
+            //    ClientId = "",
+            //    ClientSecret = ""
+            //});
         }
-
-        private void ConfigureOAuthTokenConsumption(IAppBuilder app)
-        {
-
-            var issuer = "http://localhost/";
-            var audienceId = ConfigurationManager.AppSettings["as:AudienceId"];
-            var audienceSecret = TextEncodings.Base64Url.Decode(ConfigurationManager.AppSettings["as:AudienceSecret"]);
-
-            // Api controllers with an [Authorize] attribute will be validated with JWT
-            app.UseJwtBearerAuthentication(
-                new JwtBearerAuthenticationOptions
-                {
-                    AuthenticationMode = AuthenticationMode.Active,
-                    AllowedAudiences = new[] { audienceId },
-                    IssuerSecurityTokenProviders = new IIssuerSecurityTokenProvider[]
-                    {
-                        new SymmetricKeyIssuerSecurityTokenProvider(issuer, audienceSecret)
-                    }
-                });
-        }
-
     }
 }

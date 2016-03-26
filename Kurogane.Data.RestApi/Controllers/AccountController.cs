@@ -58,7 +58,6 @@ namespace Kurogane.Data.RestApi.Controllers
 
         }
 
-
         //// POST api/Account/Register
         //[Authorize(Roles = "Admin")]
         //[AllowAnonymous]
@@ -293,7 +292,7 @@ namespace Kurogane.Data.RestApi.Controllers
         }
 
 
-    protected override void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
