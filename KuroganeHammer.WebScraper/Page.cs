@@ -242,7 +242,7 @@ namespace KuroganeHammer.WebScraper
                 var name = GetStatName(nameCell);
                 var valueCell = nameCell.SelectSingleNode(StatConstants.XpathTableCellvalues);
 
-                var rawValueText = valueCell.InnerText;
+                var rawValueText = valueCell.InnerText;//.Replace(" frames", string.Empty);
                 string value;
 
                 if (rawValueText.Contains("["))
