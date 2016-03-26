@@ -2326,7 +2326,7 @@ th {
   background-color: #f9f9f9;
 }
 .table-hover > tbody > tr:hover {
-  background-color: #ecf0f1;
+  background-color: #96CDEB;
 }
 table col[class*="col-"] {
   position: static;
