@@ -42,7 +42,7 @@ var app;
                 this.$location.path('/movement').search({ name: rowItem.name });
             };
             CharacterCtrl.prototype.goToMoveRanking = function (rowItem) {
-                this.$location.path('/moveRanking').search({ name: rowItem.name });
+                this.$location.path('/moveranking').search({ name: rowItem.name });
             };
             CharacterCtrl.prototype.order = function (predicate) {
                 this.reverse = (this.predicate === predicate) ? !this.reverse : false;
