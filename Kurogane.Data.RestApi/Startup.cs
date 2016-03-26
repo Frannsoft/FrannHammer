@@ -78,6 +78,7 @@ namespace Kurogane.Data.RestApi
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
 
+            
             app.UseWebApi(config);
         }
 
