@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
+using static Kurogane.Data.RestApi.Models.RolesConstants;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = Admin)]
     [RoutePrefix("api/account")]
     public class AccountController : BaseApiController
     {
@@ -208,7 +209,7 @@ namespace Kurogane.Data.RestApi.Controllers
             if (rolesNotExists.Any())
             {
 
-                ModelState.AddModelError("", $"Roles '{string.Join(",", rolesNotExists)}' does not exixts in the system");
+                ModelState.AddModelError("", $"Roles '{string.Join(",", rolesNotExists)}' does not exist in the system");
                 return BadRequest(ModelState);
             }
 

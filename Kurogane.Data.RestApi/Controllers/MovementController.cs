@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using Kurogane.Data.RestApi.Models;
 using Kurogane.Data.RestApi.Services;
+using static Kurogane.Data.RestApi.Models.RolesConstants;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
@@ -20,7 +21,7 @@ namespace Kurogane.Data.RestApi.Controllers
             _characterStatService = characterStatService;
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = Admin)]
         [Route("movements")]
         [HttpGet]
         public IHttpActionResult GetMovements()
@@ -30,7 +31,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(movementsResult);
         }
 
-        [Authorize(Roles = "Basic")]
+        [Authorize(Roles = Basic)]
         [Route("movement/{id}")]
         [HttpGet]
         public IHttpActionResult GetMovementStat(int id)
@@ -40,7 +41,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(movementDto);
         }
 
-        [Authorize(Roles = "Basic")]
+        [Authorize(Roles = Basic)]
         [Route("movement")]
         [HttpGet]
         public IEnumerable<MovementStatDTO> GetAllMovementOfName([FromUri]string name)
@@ -49,7 +50,7 @@ namespace Kurogane.Data.RestApi.Controllers
                    select new MovementStatDTO(movements, _characterStatService);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = Admin)]
         [Route("movement")]
         [HttpPost]
         public IHttpActionResult Post([FromBody]MovementStat value)
@@ -73,7 +74,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(value);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = Admin)]
         [Route("movement/{id}")]
         [HttpPut]
         public IHttpActionResult Put(int id, [FromBody]MovementStat value)
@@ -101,7 +102,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = Admin)]
         [Route("movement/{id}")]
         [HttpDelete]
         public IHttpActionResult Delete(int id)

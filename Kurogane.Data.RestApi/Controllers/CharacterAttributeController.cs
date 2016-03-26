@@ -4,6 +4,7 @@ using Kurogane.Data.RestApi.DTOs;
 using Kurogane.Data.RestApi.Models;
 using Kurogane.Data.RestApi.Services;
 using KuroganeHammer.Data.Core;
+using static Kurogane.Data.RestApi.Models.RolesConstants;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
@@ -17,7 +18,7 @@ namespace Kurogane.Data.RestApi.Controllers
             _characterAttributeService = characterAttributeService;
         }
 
-        [Authorize(Roles = "Basic")]
+        [Authorize(Roles = Basic)]
         [Route("attributes")]
         [HttpGet]
         public IHttpActionResult GetAttributes([FromUri] CharacterAttributes attributeType)
@@ -28,7 +29,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(attributes);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = Admin)]
         [Route("attributes")]
         [HttpPost]
         public IHttpActionResult Post([FromBody]CharacterAttribute value)
@@ -51,7 +52,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(value);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = Admin)]
         [Route("attribute/{id}")]
         [HttpPut]
         public IHttpActionResult Put(int id, [FromBody]CharacterAttribute value)
@@ -81,7 +82,7 @@ namespace Kurogane.Data.RestApi.Controllers
             return Ok(value);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = Admin)]
         [Route("attributes/{id}")]
         [HttpDelete]
         public IHttpActionResult Delete(int id)
