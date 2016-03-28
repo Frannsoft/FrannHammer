@@ -108,6 +108,7 @@ namespace KurograneTransferDBTool
         }
 
         [Test]
+        [Ignore("This test shouldn't rely on a hardcoded ID")]
         public async Task GetMoveById()
         {
             var getResult = await LoggedInBasicClient.GetAsync(Baseuri + "moves/" + 9562);

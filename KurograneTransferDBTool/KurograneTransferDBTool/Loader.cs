@@ -230,6 +230,8 @@ namespace KurograneTransferDBTool
             var thumbnails = new HomePage("http://kuroganehammer.com/Smash4/")
                 .GetThumbnailData();
 
+            
+
             foreach (var character in charIds.Select(i => new Character((Characters)i)))
             {
                 string val;
