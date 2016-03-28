@@ -3,12 +3,9 @@ using KuroganeHammer.Data.Core;
 
 namespace Kurogane.Data.RestApi.Models
 {
-    public class CharacterAttribute
+    public class CharacterAttribute : Stat
     {
-        public int Id { get; set; }
         public string Rank { get; set; }
-        public int OwnerId { get; set; }
-        public string Name { get; set; }
         public string Value { get; set; }
         public CharacterAttributes AttributeType { get; set; }
 
