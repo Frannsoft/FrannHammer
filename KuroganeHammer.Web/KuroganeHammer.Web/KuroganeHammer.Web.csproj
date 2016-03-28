@@ -60,6 +60,8 @@
     <Content Include="app\views\adminCharacter.html" />
     <Content Include="app\views\adminNewCharacter.html" />
     <Content Include="app\views\apidocs.html" />
+    <Content Include="app\views\attributeRanks.html" />
+    <Content Include="app\views\attributes.html" />
     <Content Include="app\views\character.html" />
     <Content Include="app\views\charactersRoster.html" />
     <Content Include="app\views\contactus.html" />
@@ -79,6 +81,27 @@
     <Content Include="content\css\sortorder.css" />
     <Content Include="content\css\ui-bootstrap-csp.css" />
     <Content Include="content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="content\images\characterattributes\attribute-airspeed.png" />
+    <Content Include="content\images\characterattributes\attribute-airacceleration.png" />
+    <Content Include="content\images\characterattributes\attribute-dashspeed.png" />
+    <Content Include="content\images\characterattributes\attribute-fallspeed.png" />
+    <Content Include="content\images\characterattributes\attribute-gravity.png" />
+    <Content Include="content\images\characterattributes\attribute-itemtoss.png" />
+    <Content Include="content\images\characterattributes\attribute-itemtossback.png" />
+    <Content Include="content\images\characterattributes\attribute-itemtossdash.png" />
+    <Content Include="content\images\characterattributes\attribute-itemtossdown.png" />
+    <Content Include="content\images\characterattributes\attribute-itemtossforward.png" />
+    <Content Include="content\images\characterattributes\attribute-itemtossup.png" />
+    <Content Include="content\images\characterattributes\attribute-jumpsquat.png" />
+    <Content Include="content\images\characterattributes\attribute-ledgeattack.png" />
+    <Content Include="content\images\characterattributes\attribute-ledgegetup.png" />
+    <Content Include="content\images\characterattributes\attribute-ledgejump.png" />
+    <Content Include="content\images\characterattributes\attribute-ledgeroll.png" />
+    <Content Include="content\images\characterattributes\attribute-rolls.png" />
+    <Content Include="content\images\characterattributes\attribute-spotdodge.png" />
+    <Content Include="content\images\characterattributes\attribute-techs.png" />
+    <Content Include="content\images\characterattributes\attribute-walkspeed.png" />
+    <Content Include="content\images\characterattributes\attribute-weight.png" />
     <Content Include="index.html" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
@@ -879,11 +902,15 @@
   <ItemGroup>
     <TypeScriptCompile Include="app\controllers\adminCharacterCtrl.ts" />
     <TypeScriptCompile Include="app\controllers\adminNewCharacterCtrl.ts" />
+    <TypeScriptCompile Include="app\controllers\characterAttributeRosterCtrl.ts" />
+    <TypeScriptCompile Include="app\controllers\characterAttributeCtrl.ts" />
     <TypeScriptCompile Include="app\controllers\characterCtrl.ts" />
     <TypeScriptCompile Include="app\controllers\movementRankCtrl.ts" />
     <TypeScriptCompile Include="app\controllers\moveRankCtrl.ts" />
     <TypeScriptCompile Include="app\domain\character.ts" />
     <TypeScriptCompile Include="app\controllers\characterRosterCtrl.ts" />
+    <TypeScriptCompile Include="app\domain\characterAttribute.ts" />
+    <TypeScriptCompile Include="app\domain\characterAttributeRow.ts" />
     <TypeScriptCompile Include="app\domain\charactermetadata.ts" />
     <TypeScriptCompile Include="app\domain\move.ts" />
     <TypeScriptCompile Include="app\domain\movement.ts" />
@@ -945,6 +972,7 @@
   <ItemGroup>
     <None Include="Properties\PublishProfiles\frannhammertest.pubxml" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
