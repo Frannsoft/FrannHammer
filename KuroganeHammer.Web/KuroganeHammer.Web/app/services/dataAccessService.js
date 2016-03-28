@@ -34,6 +34,9 @@ var app;
             DataAccessService.prototype.getMovementsOfCharacter = function (characterId) {
                 return this.$resource(this.baseUrl + "/characters/:characterId/movement", { characterId: characterId }, { update: this.updateAction });
             };
+            DataAccessService.prototype.getAttributesOfType = function (attributeType) {
+                return this.$resource(this.baseUrl + "/attributes?name=" + attributeType, { attributeType: attributeType }, { update: this.updateAction });
+            };
             DataAccessService.$inject = ["$resource"];
             return DataAccessService;
         })();
