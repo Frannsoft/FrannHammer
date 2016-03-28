@@ -54,6 +54,16 @@ app.config(function ($routeProvider, $httpProvider) {
         templateUrl: "/app/views/moveRanks.html"
     });
 
+    $routeProvider.when('/attributes', {
+        controller: "CharacterAttributeRosterCtrl as vm",
+        templateUrl: "/app/views/attributes.html"
+    });
+
+    $routeProvider.when('/attributeranking', {
+        controller: "CharacterAttributeCtrl as vm",
+        templateUrl: "/app/views/attributeRanks.html"
+    });
+
     $routeProvider.when("/contactus", {
         controller: "",
         templateUrl: "app/views/contactus.html"

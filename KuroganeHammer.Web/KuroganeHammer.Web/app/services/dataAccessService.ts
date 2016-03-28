@@ -11,6 +11,7 @@ module app.common {
         getMovesOfName(name: string): IMoveResource;
         getMovesOfCharacter(characterId: number): IMoveResource;
         getMovementsOfCharacter(characterId: number): IMovementResource;
+        getAttributesOfType(attributeType: string): ICharacterAttributeRowResource;
     }
 
     export interface ICharacterResource extends ng.resource.IResourceClass<domain.ICharacter> {
@@ -23,6 +24,10 @@ module app.common {
 
     export interface IMoveResource extends ng.resource.IResourceClass<domain.IMove> {
         update(IMove): domain.IMove;
+    }
+
+    export interface ICharacterAttributeRowResource extends ng.resource.IResourceClass<domain.ICharacterAttributeRow> {
+        update(ICharacterAttributeRow): domain.ICharacterAttributeRow;
     }
 
     export class DataAccessService implements IDataAccessService {
@@ -78,6 +83,12 @@ module app.common {
         getMovementsOfCharacter(characterId: number): IMovementResource {
             return <IMovementResource> this.$resource(this.baseUrl + "/characters/:characterId/movement",
                 { characterId: characterId },
+                { update: this.updateAction });
+        }
+
+        getAttributesOfType(attributeType: string): ICharacterAttributeRowResource {
+            return <ICharacterAttributeRowResource>this.$resource(this.baseUrl + "/attributes?name=" + attributeType,
+                { attributeType: attributeType },
                 { update: this.updateAction });
         }
     }
