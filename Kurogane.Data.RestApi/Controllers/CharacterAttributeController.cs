@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 using Kurogane.Data.RestApi.DTOs;
 using Kurogane.Data.RestApi.Models;
@@ -12,10 +13,12 @@ namespace Kurogane.Data.RestApi.Controllers
     public class CharacterAttributeController : ApiController
     {
         private readonly ICharacterAttributeService _characterAttributeService;
+        private readonly ICharacterStatService _characterStatService;
 
-        public CharacterAttributeController(ICharacterAttributeService characterAttributeService)
+        public CharacterAttributeController(ICharacterAttributeService characterAttributeService, ICharacterStatService characterStatService)
         {
             _characterAttributeService = characterAttributeService;
+            _characterStatService = characterStatService;
         }
 
         [Authorize(Roles = Basic)]
@@ -23,8 +26,10 @@ namespace Kurogane.Data.RestApi.Controllers
         [HttpGet]
         public IHttpActionResult GetAttributes([FromUri] CharacterAttributes attributeType)
         {
-            var attributes = from attribute in _characterAttributeService.GetCharacterAttributesByType(attributeType)
-                             select new CharacterAttributeDTO(attribute);
+            var attributes = _characterAttributeService.GetCharacterAttributesByType(attributeType)
+                .GroupBy(a => a.OwnerId)
+                .Select(g => new CharacterAttributeRowDTO(g.First().Rank, g.First().AttributeType, g.Key, g.Select(at => at.Name),
+                g.Select(at => at.Value), _characterStatService));
 
             return Ok(attributes);
         }

@@ -73,9 +73,10 @@ namespace Kurogane.Data.RestApi.Controllers
         [HttpGet]
         public IHttpActionResult GetAttributesForCharacter(int id)
         {
-            var attributes = from attribute in _characterAttributeService.GetCharacterAttributesByCharacter(id)
-                             where attribute.OwnerId == id
-                             select new CharacterAttributeDTO(attribute);
+            var attributes = _characterAttributeService.GetCharacterAttributesByCharacter(id)
+                .GroupBy(a => a.OwnerId)
+                .Select(g => new CharacterAttributeRowDTO(g.First().Rank, g.First().AttributeType, g.Key, g.Select(at => at.Name),
+                g.Select(at => at.Value), _characterStatService));
 
             return Ok(attributes);
         }
