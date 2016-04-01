@@ -17,8 +17,8 @@ var app;
                 var characterResource = dataAccessService.getCharacterResource($routeParams.characterId);
                 characterResource.get(function (data) {
                     _this.character = data;
-                    _this.getMovementData(_this.character.ownerId);
-                    _this.getMoveData(_this.character.ownerId);
+                    _this.getMovementData(_this.character.id);
+                    _this.getMoveData(_this.character.id);
                 });
             }
             CharacterCtrl.prototype.getMovementData = function (id) {

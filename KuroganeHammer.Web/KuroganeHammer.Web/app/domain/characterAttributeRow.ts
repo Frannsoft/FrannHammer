@@ -11,7 +11,7 @@
         ownerId: string;
         characterName: string;
         thumbnailUrl: string;
-        headers: string[];
-        values: string[];
+        rawHeaders: string[];
+        rawValues: ICharacterAttribute[];
     }
 }

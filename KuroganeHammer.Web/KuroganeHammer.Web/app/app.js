@@ -3,9 +3,10 @@ var app = angular.module('KuroganeHammerApp', ['ngRoute', 'ngResource', 'ui.boot
     'ngAnimate', 'common.services'])
 .run(function ($rootScope) {
     //$rootScope.APIROUTE = 'http://fransm4shtest.azurewebsites.net/api/'
-    $rootScope.APIROUTE = 'http://localhost:53410/api/';
+    //$rootScope.APIROUTE = 'http://localhost/KHapi/';
+        $rootScope.APIROUTE = 'http://localhost:62072/api';
 
-    $rootScope.BASEURL = 'http://localhost:58934/%23/';
+    $rootScope.BASEURL = 'http://localhost:8080/%23/';
     //$rootScope.BASEURL = 'http://frannhammertest.azurewebsites.net/%23/';
 });
 
@@ -56,10 +57,10 @@ app.config(function ($routeProvider, $httpProvider) {
 
     $routeProvider.when('/attributes', {
         controller: "CharacterAttributeRosterCtrl as vm",
-        templateUrl: "/app/views/attributes.html"
+        templateUrl: "/app/views/attributeRoster.html"
     });
 
-    $routeProvider.when('/attributeranking', {
+    $routeProvider.when('/attributes/:attributeType/ranking', {
         controller: "CharacterAttributeCtrl as vm",
         templateUrl: "/app/views/attributeRanks.html"
     });
@@ -68,6 +69,11 @@ app.config(function ($routeProvider, $httpProvider) {
         controller: "",
         templateUrl: "app/views/contactus.html"
     });
+
+    $routeProvider.when("/admin/editattributes", {
+        controller: 'AdminAttributeCtrl as vm',
+        templateUrl: "app/views/adminAttributeRanks.html"
+    })
 
     $routeProvider.when("/admin/editcharacter/:characterId", {
         controller: 'AdminCharacterCtrl as vm',

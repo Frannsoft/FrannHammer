@@ -15,7 +15,11 @@ var app;
                 var attributesResource = dataAccessService.getAttributesOfType(this.attributeType);
                 attributesResource.query(function (data) {
                     _this.attributes = data;
-                    _this.headers = _this.attributes[0].headers;
+                    _this.headers = _this.attributes[0].rawHeaders;
+                });
+                var attributeTypesResource = dataAccessService.getSmash4AttributeTypes(this.attributeType);
+                attributeTypesResource.get(function (data) {
+                    _this.attributeTypeName = data.name;
                 });
             }
             CharacterAttributeCtrl.prototype.order = function (predicate) {
