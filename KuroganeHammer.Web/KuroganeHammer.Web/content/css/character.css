@@ -62,17 +62,16 @@ img {
 .ryu h3{color: #160607;}
 
 .ike table th{background:#c44737;}
-.ike table th{color:#e7b5af;}
+.ike table th a{color:#e7b5af;}
 .ike .table-hover > tbody > tr:hover { background-color: #c44737; }
 /*.ike table td{background:#f9eceb;}*/
 /*.ike > table-striped > tbody > tr:nth-of-type(odd) { background-color: #c44737; }*/
-
 .ike h1{color: #270e0b;}
 .ike h2{color: #270e0b;}
 .ike h3{color: #270e0b;}
 
 .bowser table th{background:#32765C;}
-.bowser table th{color:#adc8bd;}
+.bowser table th a{color:#adc8bd;}
 /*.bowser .table-striped > tbody > tr:nth-of-type(odd) { background-color: #adc8bd; }*/
 .bowser .table-hover > tbody > tr:hover { background-color: #32765C; }
 .bowser h1{color: #050b09;}
@@ -80,42 +79,43 @@ img {
 .bowser h3{color: #050b09;}
 
 .metaknight table th{background:#2D3D7A;}
-.metaknight table th{color:#969ebc;}
-.metaknight table td{background:#eaebf1;}
+.metaknight table th a{color:#969ebc;}
+/*.metaknight table td{background:#eaebf1;}*/
+/*.metaknight .table-hover > tbody > tr:hover { background-color: #2D3D7A; }*/
 .metaknight h1{color: #04060c;}
 .metaknight h2{color: #04060c;}
 .metaknight h3{color: #04060c;}
 
 .sonic table th{background:#579DF2;}
-.sonic table th{color:#cce1fb;}
-.sonic table td{background:#eef5fd;}
+.sonic table th a{color:#cce1fb;}
+/*.sonic table td{background:#eef5fd;}*/
 .sonic h1{color: #080f18;}
 .sonic h2{color: #080f18;}
 .sonic h3{color: #080f18;}
 
 .zelda table th{background:#AA74BA;}
-.zelda table th{color:#ddc7e3;}
-.zelda table td{background:#f6f1f8;}
+.zelda table th a{color:#ddc7e3;}
+/*.zelda table td{background:#f6f1f8;}*/
 .zelda h1{color: #110b12;}
 .zelda h2{color: #110b12;}
 .zelda h3{color: #110b12;}
 
 .olimar table th{background:#C3F1A9;}
-.olimar table th{color:#4e6043;}
-.olimar table td{background:#f9fdf6;}
+.olimar table th a{color:#4e6043;}
+/*.olimar table td{background:#f9fdf6;}*/
 .olimar h1{color: #131810;}
 .olimar h2{color: #131810;}
 .olimar h3{color: #131810;}
 
-.zerosuit table th{background:#005AAA;}
-.zerosuit table th{color:#7facd4;}
-.zerosuit table td{background:#e5eef6;}
-.zerosuit h1{color: #000911;}
-.zerosuit h2{color: #000911;}
-.zerosuit h3{color: #000911;}
+.zerosuitsamussamus table th{background:#005AAA;}
+.zerosuitsamus table th a{color:#7facd4;}
+/*.zerosuitsamus table td{background:#e5eef6;}*/
+.zerosuitsamus h1{color: #000911;}
+.zerosuitsamus h2{color: #000911;}
+.zerosuitsamus h3{color: #000911;}
 
 .wario table th{background:#FECB4C;}
-.wario table th{color:#65511e;}
+.wario table th a{color:#65511e;}
 /*.wario .table-striped > tbody > tr:nth-of-type(odd) { background-color: #fef9ed;}*/
 .wario .table-hover > tbody > tr:hover { background-color: #FECB4C; }
 
@@ -123,22 +123,22 @@ img {
 .wario h2{color: #191407;}
 .wario h3{color: #191407;}
 
-.gamewatch table th{background:#a6a390;}
-.gamewatch table th{color:#21201c;}
-.gamewatch table td{background:#f6f5f3;}
-.gamewatch h1{color: #10100e;}
-.gamewatch h2{color: #10100e;}
-.gamewatch h3{color: #10100e;}
+.mrgamewatch table th{background:#a6a390;}
+.mrgamewatch table th a{color:#21201c;}
+/*.mrgamewatch table td{background:#f6f5f3;}*/
+.mrgamewatch h1{color: #10100e;}
+.mrgamewatch h2{color: #10100e;}
+.mrgamewatch h3{color: #10100e;}
 
-.diddy table th{background:#F24D49;}
-.diddy table th{color:#f9b7b6;}
-.diddy table td{background:#fdedec;}
-.diddy h1{color: #180707;}
-.diddy h2{color: #180707;}
-.diddy h3{color: #180707;}
+.diddykong table th{background:#F24D49;}
+.diddykong table th a{color:#f9b7b6;}
+/*.diddykong table td{background:#fdedec;}*/
+.diddykong h1{color: #180707;}
+.diddykong h2{color: #180707;}
+.diddykong h3{color: #180707;}
 
 .link table th{background:#BED163;}
-.link table th{color:#4c5327;}
+.link table th a{color:#4c5327;}
 .link .table-striped > tbody > tr:nth-of-type(odd) { background-color: #f8faef; }
 .link .table-hover > tbody > tr:hover { background-color: #BED163; }
 
@@ -147,323 +147,316 @@ img {
 .link h3{color: #131409;}
 
 .toonlink table th{background:#98d44b;}
-.toonlink table th{color:#3c541e;}
-.toonlink table td{background:#f4faed;}
+.toonlink table th a{color:#3c541e;}
+/*.toonlink table td{background:#f4faed;}*/
 .toonlink h1{color: #0f1507;}
 .toonlink h2{color: #0f1507;}
 .toonlink h3{color: #0f1507;}
 
-.dk table th{background:#FEDA00;}
-.dk table th{color:#4c4100;}
-.dk table td{background:#f4faed;}
-.dk h1{color: #191500;}
-.dk h2{color: #191500;}
-.dk h3{color: #191500;}
+.donkeykong table th{background:#FEDA00;}
+.donkeykong table th a{color:#4c4100;}
+/*.donkeykong table td{background:#f4faed;}*/
+.donkeykong h1{color: #191500;}
+.donkeykong h2{color: #191500;}
+.donkeykong h3{color: #191500;}
 
-.wiifit table th{background:#86d776;}
-.wiifit table th{color:#1a2b17;}
-.wiifit table td{background:#f2fbf1;}
-.wiifit h1{color: #0d150b;}
-.wiifit h2{color: #0d150b;}
-.wiifit h3{color: #0d150b;}
+.wiifittrainer table th{background:#86d776;}
+.wiifittrainer table th a{color:#1a2b17;}
+/*.wiifittrainer table td{background:#f2fbf1;}*/
+.wiifittrainer h1{color: #0d150b;}
+.wiifittrainer h2{color: #0d150b;}
+.wiifittrainer h3{color: #0d150b;}
 
-.dedede table th{background:#FFE966;}
-.dedede table th{color:#665d28;}
-.dedede table td{background:#fffcef;}
-.dedede h1{color: #19170a;}
-.dedede h2{color: #19170a;}
-.dedede h3{color: #19170a;}
+.kingdedede table th{background:#FFE966;}
+.kingdedede table th a{color:#665d28;}
+/*.kingdedede table td{background:#fffcef;}*/
+.kingdedede h1{color: #19170a;}
+.kingdedede h2{color: #19170a;}
+.kingdedede h3{color: #19170a;}
 
 .rob table th{background:#B2B9BF;}
-.rob table th{color:#353739;}
-.rob table td{background:#f7f8f8;}
+.rob table th a{color:#353739;}
+/*.rob table td{background:#f7f8f8;}*/
 .rob h1{color: #111213;}
 .rob h2{color: #111213;}
 .rob h3{color: #111213;}
 
-.purin table th{background:#F283EC;}
-.purin table th{color:#fbd9f9}
-.purin table td{background:#fdf2fd;}
-.purin h1{color: #180d17;}
-.purin h2{color: #180D17;}
-.purin h3{color: #180D17;}
+.jigglypuff table th{background:#F283EC;}
+.jigglypuff table th a{color:#fbd9f9}
+/*.jigglypuff table td{background:#fdf2fd;}*/
+.jigglypuff h1{color: #180d17;}
+.jigglypuff h2{color: #180D17;}
+.jigglypuff h3{color: #180D17;}
 
 .lucario table th{background:#AEE4FF;}
-.lucario table th{color:#688899;}
-.lucario table td{background:#F6FCFF;}
+.lucario table th a{color:#688899;}
+/*.lucario table td{background:#F6FCFF;}*/
 .lucario h1{color: #111619;}
 .lucario h2{color: #111619;}
 .lucario h3{color: #111619;}
 
 .lucas table th{background:#F05F1B;}
-.lucas table th{color:#60260a;}
-.lucas table td{background:#fdefe8;}
+.lucas table th a{color:#60260a;}
+/*.lucas table td{background:#fdefe8;}*/
 .lucas h1{color: #180902;}
 .lucas h2{color: #180902;}
 .lucas h3{color: #180902;}
 
 .bowserjr table th{background:#CECD3A;}
-.bowserjr table th{color:#65661E;}
-.bowserjr table td{background:#F9FAEB;}
+.bowserjr table th a{color:#65661E;}
+/*.bowserjr table td{background:#F9FAEB;}*/
 .bowserjr h1{color: #141406;}
 .bowserjr h2{color: #141406;}
 .bowserjr h3{color: #141406;}
 
-.falcon table th{background:#9088E2;}
-.falcon table th{color:#D2CFF3;}
-.falcon table td{background:#F3F3FC;}
-.falcon h1{color: #0E0D16;}
-.falcon h2{color: #0E0D16;}
-.falcon h3{color: #0E0D16;}
+.captainfalcon table th{background:#9088E2;}
+.captainfalcon table th a{color:#D2CFF3;}
+/*.captainfalcon table td{background:#F3F3FC;}*/
+.captainfalcon h1{color: #0E0D16;}
+.captainfalcon h2{color: #0E0D16;}
+.captainfalcon h3{color: #0E0D16;}
 
-.lizardon table th{background:#F66624;}
-.lizardon table th{color:#fcd1bd;}
-.lizardon table td{background:#FEEFE9;}
-.lizardon h1{color: #180A03;}
-.lizardon h2{color: #180A03;}
-.lizardon h3{color: #180A03;}
+.charizard table th{background:#F66624;}
+.charizard table th a{color:#fcd1bd;}
+/*.charizard table td{background:#FEEFE9;}*/
+.charizard h1{color: #180A03;}
+.charizard h2{color: #180A03;}
+.charizard h3{color: #180A03;}
 
 .darkpit table th{background:#AF6CE9;}
-.darkpit table th{color:#4625BD;}
-.darkpit table td{background:#F7F0FC;}
+.darkpit table th a{color:#4625BD;}
+/*.darkpit table td{background:#F7F0FC;}*/
 .darkpit h1{color: #110A17;}
 .darkpit h2{color: #110A17;}
 .darkpit h3{color: #110A17;}
 
 .duckhunt table th{background:#935A33;}
-.duckhunt table th{color:#C9AC99;}
-.duckhunt table td{background:#F4EEEA;}
+.duckhunt table th a{color:#C9AC99;}
+/*.duckhunt table td{background:#F4EEEA;}*/
 .duckhunt h1{color: #0E0905;}
 .duckhunt h2{color: #0E0905;}
 .duckhunt h3{color: #0E0905;}
 
 .fox table th{background:#036AC9;}
-.fox table th{color:#013564;}
-.fox table td{background:#E5F0F9;}
+.fox table th a{color:#013564;}
+/*.fox table td{background:#E5F0F9;}*/
 .fox h1{color: #000A14;}
 .fox h2{color: #000A14;}
 .fox h3{color: #000A14;}
 
-.ganondork table th{background:#7D7898;}
-.ganondork table th{color:#e5e4ea;}
-.ganondork table td{background:#F2F1F4;}
-.ganondork h1{color: #0C0C0F;}
-.ganondork h2{color: #0C0C0F;}
-.ganondork h3{color: #0C0C0F;}
+.ganondorf table th{background:#7D7898;}
+.ganondorf table th a{color:#e5e4ea;}
+/*.ganondorf table td{background:#F2F1F4;}*/
+.ganondorf h1{color: #0C0C0F;}
+.ganondorf h2{color: #0C0C0F;}
+.ganondorf h3{color: #0C0C0F;}
 
-.frog table th{background:#5073A9;}
-.frog table th{color:#202E43;}
-.frog table td{background:#EDF1F6;}
-.frog h1{color: #080B10;}
-.frog h2{color: #080B10;}
-.frog h3{color: #080B10;}
+.greninja table th{background:#5073A9;}
+.greninja table th a{color:#202E43;}
+/*.greninja table td{background:#EDF1F6;}*/
+.greninja h1{color: #080B10;}
+.greninja h2{color: #080B10;}
+.greninja h3{color: #080B10;}
 
-.rosaliniandganon table th{background:#89E0D5;}
-.rosaliniandganon table th{color:#3e4847;}
-.rosaliniandganon table td{background:#F3FBFA;}
-.rosaliniandganon h1{color: #0D1615;}
-.rosaliniandganon h2{color: #0D1615;}
-.rosaliniandganon h3{color: #0D1615;}
+.rosalinaluma table th{background:#89E0D5;}
+.rosalinaluma table th a{color:#3e4847;}
+/*.rosalinaluma table td{background:#F3FBFA;}*/
+.rosalinaluma h1{color: #0D1615;}
+.rosalinaluma h2{color: #0D1615;}
+.rosalinaluma h3{color: #0D1615;}
 
 .palutena table th{background:#74E8BF;}
-.palutena table th{color:#224539;}
-.palutena table td{background:#f1fcf8;}
+.palutena table th a{color:#224539;}
+/*.palutena table td{background:#f1fcf8;}*/
 .palutena h1{color: #0b1713;}
 .palutena h2{color: #0b1713;}
 .palutena h3{color: #0b1713;}
 
 .lucina table th{background:#74A7CA;}
-.lucina table th{color:#2e4250;}
-.lucina table td{background:#f1f6f9;}
+.lucina table th a{color:#2e4250;}
+/*.lucina table td{background:#f1f6f9;}*/
 .lucina h1{color: #0b1014;}
 .lucina h2{color: #0b1014;}
 .lucina h3{color: #0b1014;}
 
 .marth table th{background:#3EAACC;}
-.marth table th{color:#184451;}
-.marth table td{background:#ebf6f9;}
+.marth table th a{color:#184451;}
+/*.marth table td{background:#ebf6f9;}*/
 .marth h1{color: #061114;}
 .marth h2{color: #061114;}
 .marth h3{color: #061114;}
 
 .mii table th{background:#5cc1e6;}
-.mii table th{color:#244d5c;}
-.mii table td{background:#eef8fc;}
+.mii table th a{color:#244d5c;}
+/*.mii table td{background:#eef8fc;}*/
 .mii h1{color: #091317;}
 .mii h2{color: #091317;}
 .mii h3{color: #091317;}
 
-.weegee table th{background:#41A732;}
-.weegee table th{color:#b3dbad;}
-.weegee table td{background:#ecf6ea;}
-.weegee h1{color: #061005;}
-.weegee h2{color: #061005;}
-.weegee h3{color: #061005;}
+.luigi table th{background:#41A732;}
+.luigi table th a{color:#b3dbad;}
+/*.luigi table td{background:#ecf6ea;}*/
+.luigi h1{color: #061005;}
+.luigi h2{color: #061005;}
+.luigi h3{color: #061005;}
 
-.cancer table th{background:#68D154;}
-.cancer table th{color:#1f3e19;}
-.cancer table td{background:#effaed;}
-.cancer h1{color: #0a1408;}
-.cancer h2{color: #0a1408;}
-.cancer h3{color: #0a1408;}
+.yoshi table th{background:#68D154;}
+.yoshi table th a{color:#1f3e19;}
+/*.yoshi table td{background:#effaed;}*/
+.yoshi h1{color: #0a1408;}
+.yoshi h2{color: #0a1408;}
+.yoshi h3{color: #0a1408;}
 
 .falco table th{background:#52B2E4;}
-.falco table th{color:#183544;}
-.falco table td{background:#edf7fc;}
+.falco table th a{color:#183544;}
+/*.falco table td{background:#edf7fc;}*/
 .falco h1{color: #081116;}
 .falco h2{color: #081116;}
 .falco h3{color: #081116;}
 
 .megaman table th{background:#75C2E3;}
-.megaman table th{color:#2e4d5a;}
-.megaman table td{background:#f1f8fc;}
+.megaman table th a{color:#2e4d5a;}
+/*.megaman table td{background:#f1f8fc;}*/
 .megaman h1{color: #0b1316;}
 .megaman h2{color: #0b1316;}
 .megaman h3{color: #0b1316;}
 
-.googers table th{background:#CFCE37;}
-.googers table th{color:#525216;}
-.googers table td{background:#fafaeb;}
-.googers h1{color: #141405;}
-.googers h2{color: #141405;}
-.googers h3{color: #141405;}
-
 .villager table th{background:#3BAC6C;}
-.villager table th{color:#b0ddc4;}
-.villager table td{background:#ebf6f0;}
+.villager table th a{color:#b0ddc4;}
+/*.villager table td{background:#ebf6f0;}*/
 .villager h1{color: #05110a;}
 .villager h2{color: #05110a;}
 .villager h3{color: #05110a;}
 
 .kirby table th{background:#FBBEC3;}
-.kirby table th{color:#644c4e;}
-.kirby table td{background:#fef8f9;}
+.kirby table th a{color:#644c4e;}
+/*.kirby table td{background:#fef8f9;}*/
 .kirby h1{color: #191313;}
 .kirby h2{color: #191313;}
 .kirby h3{color: #191313;}
 
-.doctor table th{background:#F96269;}
-.doctor table th{color:#63272a;}
-.doctor table td{background:#feeff0;}
-.doctor h1{color: #18090a;}
-.doctor h2{color: #18090a;}
-.doctor h3{color: #18090a;}
+.drmario table th{background:#F96269;}
+.drmario table th a{color:#63272a;}
+/*.drmario table td{background:#feeff0;}*/
+.drmario h1{color: #18090a;}
+.drmario h2{color: #18090a;}
+.drmario h3{color: #18090a;}
 
-.dog table th{background:#945B33;}
-.dog table th{color:#d4bdad;}
-.dog table td{background:#f4eeea;}
-.dog h1{color: #0e0905;}
-.dog h2{color: #0e0905;}
-.dog h3{color: #0e0905;}
+.duckhunt table th{background:#945B33;}
+.duckhunt table th a{color:#d4bdad;}
+/*.duckhunt table td{background:#f4eeea;}*/
+.duckhunt h1{color: #0e0905;}
+.duckhunt h2{color: #0e0905;}
+.duckhunt h3{color: #0e0905;}
 
-.feelingit table th{background:#E55B79;}
-.feelingit table th{color:#f7cdd6;}
-.feelingit table td{background:#fceef1;}
-.feelingit h1{color: #16090c;}
-.feelingit h2{color: #16090c;}
-.feelingit h3{color: #16090c;}
+.shulk table th{background:#E55B79;}
+.shulk table th a{color:#f7cdd6;}
+/*.shulk table td{background:#fceef1;}*/
+.shulk h1{color: #16090c;}
+.shulk h2{color: #16090c;}
+.shulk h3{color: #16090c;}
 
 .sheik table th{background:#786CD7;}
-.sheik table th{color:#d6d2f3;}
-.sheik table td{background:#f1f0fb;}
+.sheik table th a{color:#d6d2f3;}
+/*.sheik table td{background:#f1f0fb;}*/
 .sheik h1{color: #0c0a15;}
 .sheik h2{color: #0c0a15;}
 .sheik h3{color: #0c0a15;}
 
 .samus table th{background:#333f58;}
-/*.samus table th{color:#adb2bc;}*/
+.samus table th a{color:#adb2bc;}
 /*.samus table td{background:#eaebee;}*/
 .samus h1{color: #050608;}
 .samus h2{color: #050608;}
 .samus h3{color: #050608;}
 
-.firemarth table th{background:#5CB94D;}
-.firemarth table th{color:#244a1e;}
-.firemarth table td{background:#eef8ed;}
-.firemarth h1{color: #091207;}
-.firemarth h2{color: #091207;}
-.firemarth h3{color: #091207;}
+.roy table th{background:#5CB94D;}
+.roy table th a{color:#244a1e;}
+/*.roy table td{background:#eef8ed;}*/
+.roy h1{color: #091207;}
+.roy h2{color: #091207;}
+.roy h3{color: #091207;}
 
-.ebola table th{background:#F02C33;}
-.ebola table th{color:#f9aaad;}
-.ebola table td{background:#fde9ea;}
-.ebola h1{color: #180405;}
-.ebola h2{color: #180405;}
-.ebola h3{color: #180405;}
+.ness table th{background:#F02C33;}
+.ness table th a{color:#f9aaad;}
+/*.ness table td{background:#fde9ea;}*/
+.ness h1{color: #180405;}
+.ness h2{color: #180405;}
+.ness h3{color: #180405;}
 
-.magicmarth table th{background:#ce82de;}
-.magicmarth table th{color:#523458;}
-.magicmarth table td{background:#faf2fb;}
-.magicmarth h1{color: #140d16;}
-.magicmarth h2{color: #140d16;}
-.magicmarth h3{color: #140d16;}
+.robin table th{background:#ce82de;}
+.robin table th a{color:#523458;}
+/*.robin table td{background:#faf2fb;}*/
+.robin h1{color: #140d16;}
+.robin h2{color: #140d16;}
+.robin h3{color: #140d16;}
 
 .pit table th{background:#70b5d7;}
-.pit table th{color:#2c4856;}
-.pit table td{background:#f0f7fb;}
+.pit table th a{color:#2c4856;}
+/*.pit table td{background:#f0f7fb;}*/
 .pit h1{color: #0b1215;}
 .pit h2{color: #0b1215;}
 .pit h3{color: #0b1215;}
 
 .mewtwo table th{background:#8054C3;}
-.mewtwo table th{color:#d8cbed;}
-.mewtwo table td{background:#f2edf9;}
+.mewtwo table th a{color:#d8cbed;}
+/*.mewtwo table td{background:#f2edf9;}*/
 .mewtwo h1{color: #0c0813;}
 .mewtwo h2{color: #0c0813;}
 .mewtwo h3{color: #0c0813;}
 
-.annoyingyellowrat table th{background:#FFC000;}
-.annoyingyellowrat table th{color:#664c00;}
-.annoyingyellowrat table td{background:#fff8e5;}
-.annoyingyellowrat h1{color: #191300;}
-.annoyingyellowrat h2{color: #191300;}
-.annoyingyellowrat h3{color: #191300;}
+.pikachu table th{background:#FFC000;}
+.pikachu table th a{color:#664c00;}
+/*.pikachu table td{background:#fff8e5;}*/
+.pikachu h1{color: #191300;}
+.pikachu h2{color: #191300;}
+.pikachu h3{color: #191300;}
 
 .pacman table th{background:#F9B038;}
-.pacman table th{color:#634616;}
-.pacman table td{background:#fef7eb;}
+.pacman table th a{color:#634616;}
+/*.pacman table td{background:#fef7eb;}*/
 .pacman h1{color: #181105;}
 .pacman h2{color: #181105;}
 .pacman h3{color: #181105;}
 
-.petch table th{background:#FEC6F3;}
-.petch table th{color:#654f61;}
-.petch table td{background:#fef9fd;}
-.petch h1{color: #191318;}
-.petch h2{color: #191318;}
-.petch h3{color: #191318;}
+.peach table th{background:#FEC6F3;}
+.peach table th a{color:#654f61;}
+/*.peach table td{background:#fef9fd;}*/
+.peach h1{color: #191318;}
+.peach h2{color: #191318;}
+.peach h3{color: #191318;}
 
 .mario table th{background:#E03F44;}
-.mario table th{color:#f2b2b4;}
-.mario table td{background:#fbebec;}
+.mario table th a{color:#f2b2b4;}
+/*.mario table td{background:#fbebec;}*/
 .mario h1{color: #160606;}
 .mario h2{color: #160606;}
 .mario h3{color: #160606;}
 
-.smallpenis table th{background:#39775A;}
-.smallpenis table th{color:#c3d6cd;}
-.smallpenis table td{background:#ebf1ee;}
-.smallpenis h1{color: #050b09;}
-.smallpenis h2{color: #050b09;}
-.smallpenis h3{color: #050b09;}
+.littlemac table th{background:#39775A;}
+.littlemac table th a{color:#c3d6cd;}
+/*.littlemac table td{background:#ebf1ee;}*/
+.littlemac h1{color: #050b09;}
+.littlemac h2{color: #050b09;}
+.littlemac h3{color: #050b09;}
 
 .cloud table th{background:#009684;}
-.cloud table th{color:#003c34;}
-.cloud table td{background:#e5f4f2;}
+.cloud table th a{color:#003c34;}
+/*.cloud table td{background:#e5f4f2;}*/
 .cloud h1{color: #000f0d;}
 .cloud h2{color: #000f0d;}
 .cloud h3{color: #000f0d;}
 
-.bazza table th{background:#A79FE5;}
-.bazza table th{color:#423f5b;}
-.bazza table td{background:#f6f5fc;}
-.bazza h1{color: #100f16;}
-.bazza h2{color: #100f16;}
-.bazza h3{color: #100f16;}
+.bayonetta table th{background:#A79FE5;}
+.bayonetta table th a{color:#423f5b;}
+/*.bayonetta table td{background:#f6f5fc;}*/
+.bayonetta h1{color: #100f16;}
+.bayonetta h2{color: #100f16;}
+.bayonetta h3{color: #100f16;}
 
 .corrin table th{background:#4ba9c3;}
-.corrin table th{color:#1e434e;}
-.corrin table td{background:#edf6f9;}
+.corrin table th a{color:#1e434e;}
+/*.corrin table td{background:#edf6f9;}*/
 .corrin h1{color: #071013;}
 .corrin h2{color: #071013;}
 .corrin h3{color: #071013;}

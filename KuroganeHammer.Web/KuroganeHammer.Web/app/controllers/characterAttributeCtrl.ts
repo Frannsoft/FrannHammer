@@ -3,7 +3,8 @@
     interface ICharacterAttributeModel {
         attributes: domain.ICharacterAttributeRow[];
         headers: string[];
-        attributeType: string;
+        attributeType: number;
+        attributeTypeName: string;
         predicate: string;
         reverse: boolean;
         order(predicate: string): void;
@@ -11,12 +12,13 @@
     }    
 
     interface ICharacterAttributeParams extends ng.route.IRouteParamsService {
-        attributeType: string;
+        attributeType: number;
     }
 
     class CharacterAttributeCtrl implements ICharacterAttributeModel {
         
-        attributeType: string;
+        attributeType: number;
+        attributeTypeName: string;
         headers: string[];
         attributes: domain.ICharacterAttributeRow[];
         predicate: string = 'rank';
@@ -33,7 +35,12 @@
             var attributesResource = dataAccessService.getAttributesOfType(this.attributeType);
             attributesResource.query((data: domain.ICharacterAttributeRow[]) => {
                 this.attributes = data;
-                this.headers = this.attributes[0].headers;
+                this.headers = this.attributes[0].rawHeaders;
+            });
+
+            var attributeTypesResource = dataAccessService.getSmash4AttributeTypes(this.attributeType);
+            attributeTypesResource.get((data: domain.ISmashAttributeType) => {
+                this.attributeTypeName = data.name;
             });
         }
 

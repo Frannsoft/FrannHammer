@@ -11,7 +11,8 @@ module app.common {
         getMovesOfName(name: string): IMoveResource;
         getMovesOfCharacter(characterId: number): IMoveResource;
         getMovementsOfCharacter(characterId: number): IMovementResource;
-        getAttributesOfType(attributeType: string): ICharacterAttributeRowResource;
+        getAttributesOfType(id: number): ICharacterAttributeRowResource;
+        getSmash4AttributeTypes(): ISmashAttributeTypeResource;
     }
 
     export interface ICharacterResource extends ng.resource.IResourceClass<domain.ICharacter> {
@@ -30,9 +31,14 @@ module app.common {
         update(ICharacterAttributeRow): domain.ICharacterAttributeRow;
     }
 
+    export interface ISmashAttributeTypeResource extends ng.resource.IResourceClass<domain.ISmashAttributeType> {
+        update(ISmashAttributeType): domain.ISmashAttributeType;
+    }
+
     export class DataAccessService implements IDataAccessService {
 
-        baseUrl = "http://localhost:53410/api";
+        //baseUrl = "http://localhost/KHapi";
+        baseUrl = "http://localhost:62072/api";
         updateAction: ng.resource.IActionDescriptor;
 
         static $inject = ["$resource"];
@@ -43,15 +49,14 @@ module app.common {
             };
         }
 
-
         getCharacterResource(characterId?: number): ICharacterResource {
-            return <ICharacterResource>this.$resource(this.baseUrl + "/characters/:characterId",
+            return <ICharacterResource>this.$resource(this.baseUrl + "/CharacterModels/:characterId",
                 { characterId: characterId },
                 { update: this.updateAction });
         }
 
         getMovementResource(movementId?: number): IMovementResource {
-            return <IMovementResource> this.$resource(this.baseUrl + "/movement/:movementId",
+            return <IMovementResource> this.$resource(this.baseUrl + "/movements/:movementId",
                 { movementId: movementId },
                 { update: this.updateAction });
         }
@@ -63,7 +68,7 @@ module app.common {
         }
 
         getMovementsOfName(name: string): IMovementResource {
-            return <IMovementResource> this.$resource(this.baseUrl + "/movement/",
+            return <IMovementResource> this.$resource(this.baseUrl + "/movements/",
                 { name: name },
                 { update: this.updateAction });
         }
@@ -75,20 +80,26 @@ module app.common {
         }
 
         getMovesOfCharacter(characterId: number): IMoveResource {
-            return <IMoveResource> this.$resource(this.baseUrl + "/characters/:characterId/moves",
+            return <IMoveResource>this.$resource(this.baseUrl + "/CharacterModels/:characterId/moves",
                 { characterId: characterId },
                 { update: this.updateAction });
         }
 
         getMovementsOfCharacter(characterId: number): IMovementResource {
-            return <IMovementResource> this.$resource(this.baseUrl + "/characters/:characterId/movement",
+            return <IMovementResource>this.$resource(this.baseUrl + "/CharacterModels/:characterId/movement",
                 { characterId: characterId },
                 { update: this.updateAction });
         }
 
-        getAttributesOfType(attributeType: string): ICharacterAttributeRowResource {
-            return <ICharacterAttributeRowResource>this.$resource(this.baseUrl + "/attributes?name=" + attributeType,
-                { attributeType: attributeType },
+        getAttributesOfType(id: number): ICharacterAttributeRowResource {
+            return <ICharacterAttributeRowResource>this.$resource(this.baseUrl + "/CharacterAttributeModels/:id",
+                { id: id },
+                { update: this.updateAction });
+        }
+
+        getSmash4AttributeTypes(id?: number): ISmashAttributeTypeResource {
+            return <ISmashAttributeTypeResource>this.$resource(this.baseUrl + "/SmashAttributeTypes/:id",
+                { id: id },
                 { update: this.updateAction });
         }
     }

@@ -57,11 +57,12 @@
     <Content Include="app\services\authInterceptorService.js" />
     <Content Include="app\services\authService.js" />
     <Content Include="app\views\aboutus.html" />
+    <Content Include="app\views\adminAttributeRanks.html" />
     <Content Include="app\views\adminCharacter.html" />
     <Content Include="app\views\adminNewCharacter.html" />
     <Content Include="app\views\apidocs.html" />
     <Content Include="app\views\attributeRanks.html" />
-    <Content Include="app\views\attributes.html" />
+    <Content Include="app\views\attributeRoster.html" />
     <Content Include="app\views\character.html" />
     <Content Include="app\views\charactersRoster.html" />
     <Content Include="app\views\contactus.html" />
@@ -900,6 +901,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="app\controllers\adminAttributeCtrl.ts" />
     <TypeScriptCompile Include="app\controllers\adminCharacterCtrl.ts" />
     <TypeScriptCompile Include="app\controllers\adminNewCharacterCtrl.ts" />
     <TypeScriptCompile Include="app\controllers\characterAttributeRosterCtrl.ts" />
@@ -914,6 +916,7 @@
     <TypeScriptCompile Include="app\domain\charactermetadata.ts" />
     <TypeScriptCompile Include="app\domain\move.ts" />
     <TypeScriptCompile Include="app\domain\movement.ts" />
+    <TypeScriptCompile Include="app\domain\smashAttributeType.ts" />
     <TypeScriptCompile Include="app\services\dataAccessService.ts" />
     <TypeScriptCompile Include="app\services\common.services.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />

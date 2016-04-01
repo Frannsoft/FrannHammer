@@ -8,7 +8,6 @@
         thumbnailUrl: string;
         colortheme: string;
         description: string;
-        ownerId: number;
         style: string;
     }
 }
