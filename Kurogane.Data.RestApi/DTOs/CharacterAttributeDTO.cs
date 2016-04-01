@@ -2,28 +2,29 @@
 using System.Diagnostics.CodeAnalysis;
 using Kurogane.Data.RestApi.Models;
 using Kurogane.Data.RestApi.Services;
-using KuroganeHammer.Data.Core;
 
 namespace Kurogane.Data.RestApi.DTOs
 {
     public class CharacterAttributeRowDTO
     {
         public string Rank { get; set; }
-        public string AttributeType { get; set; }
-        public string CharacterName { get; set; }
+        public int SmashAttributeType { get; set; }
         public int OwnerId { get; set; }
+        public string CharacterName { get; set; }
         public string ThumbnailUrl { get; set; }
-        public IEnumerable<string> Headers { get; set; }
-        public IEnumerable<string> Values { get; set; }
+        public IEnumerable<string> RawHeaders { get; set; }
+        public IEnumerable<CharacterAttribute> RawValues { get; set; }
+        public Dictionary<string, CharacterAttribute> ParsedValues { get; set; }
 
-        public CharacterAttributeRowDTO(string rank, CharacterAttributes attributeType, int ownerId, IEnumerable<string> headers, IEnumerable<string> values
-            , ICharacterStatService characterStatService)
+        public CharacterAttributeRowDTO(string rank, int attributeType, int ownerId, Dictionary<string, CharacterAttribute> values,
+            ICharacterStatService characterStatService)
         {
             Rank = rank;
-            AttributeType = attributeType.ToString();
+            SmashAttributeType = attributeType;
             OwnerId = ownerId;
-            Headers = headers;
-            Values = values;
+            ParsedValues = values;
+            RawHeaders = values.Keys;
+            RawValues = values.Values;
 
             var character = characterStatService.GetCharacter(ownerId);
             CharacterName = character.Name;
@@ -42,7 +43,7 @@ namespace Kurogane.Data.RestApi.DTOs
         {
             Rank = attribute.Rank;
             Value = attribute.Value;
-            AttributeType = attribute.AttributeType.ToString();
+            AttributeType = attribute.SmashAttributeTypeId.ToString();
         }
 
         public CharacterAttributeDTO()

@@ -1,4 +1,5 @@
-﻿using Kurogane.Data.RestApi.DTOs;
+﻿using System;
+using Kurogane.Data.RestApi.DTOs;
 using System.Web.Http;
 using System.Linq;
 using Kurogane.Data.RestApi.Models;
@@ -7,7 +8,6 @@ using static Kurogane.Data.RestApi.Models.RolesConstants;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
-    [RoutePrefix("api")]
     public class CharacterController : ApiController
     {
         private readonly ICharacterStatService _characterStatService;
@@ -15,7 +15,8 @@ namespace Kurogane.Data.RestApi.Controllers
         private readonly IMoveStatService _moveStatService;
         private readonly ICharacterAttributeService _characterAttributeService;
 
-        public CharacterController(ICharacterStatService characterStatService, IMovementStatService movementStatService, IMoveStatService moveStatService,
+        public CharacterController(ICharacterStatService characterStatService, IMovementStatService movementStatService, 
+            IMoveStatService moveStatService,
             ICharacterAttributeService characterAttributeService)
         {
             _characterStatService = characterStatService;
@@ -27,13 +28,17 @@ namespace Kurogane.Data.RestApi.Controllers
         [Authorize(Roles = Basic)]
         [Route("characters")]
         [HttpGet]
-        public IHttpActionResult GetRoster()
+        public IHttpActionResult GetCharacters()
         {
-            var characterDtOs = from characters in _characterStatService.GetCharacters()
-                                orderby characters.Name ascending
-                                select new CharacterDTO(characters);
+            //var characterDtOs = from characters in _characterStatService.GetCharacters()
+            //                    orderby characters.Name ascending
+            //                    select new CharacterDTO(characters);
 
-            return Ok(characterDtOs);
+            //return Ok(characterDtOs);
+
+            var characters = _characterStatService.GetCharacters();
+
+            return Ok(characters);
         }
 
         [Authorize(Roles = Basic)]
@@ -43,7 +48,7 @@ namespace Kurogane.Data.RestApi.Controllers
         {
             var character = _characterStatService.GetCharacter(id);
             var charDto = new CharacterDTO(character);
-            return Ok(charDto);
+            return Ok(character);
         }
 
         [Authorize(Roles = Basic)]
@@ -75,8 +80,7 @@ namespace Kurogane.Data.RestApi.Controllers
         {
             var attributes = _characterAttributeService.GetCharacterAttributesByCharacter(id)
                 .GroupBy(a => a.OwnerId)
-                .Select(g => new CharacterAttributeRowDTO(g.First().Rank, g.First().AttributeType, g.Key, g.Select(at => at.Name),
-                g.Select(at => at.Value), _characterStatService));
+                .Select(g => new CharacterAttributeRowDTO(g.First().Rank, g.First().SmashAttributeTypeId, g.Key, g.ToDictionary(at => at.Name, at => at), _characterStatService));
 
             return Ok(attributes);
         }
@@ -113,7 +117,7 @@ namespace Kurogane.Data.RestApi.Controllers
                 return BadRequest();
             }
 
-            return Ok(value);
+            return CreatedAtRoute("DefaultApi", new {controller = "Character", id = value.Id}, value);
         }
 
         [Authorize(Roles = Admin)]
@@ -126,12 +130,12 @@ namespace Kurogane.Data.RestApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != value.OwnerId)
+            if (id != value.Id)
             {
                 return BadRequest();
             }
 
-            var foundChar = _characterStatService.GetCharacter(value.OwnerId);
+            var foundChar = _characterStatService.GetCharacter(value.Id);
             if (foundChar != null)
             {
                 foundChar.Description = value.Description;
@@ -139,6 +143,7 @@ namespace Kurogane.Data.RestApi.Controllers
                 foundChar.Name = value.Name;
                 foundChar.Style = value.Style;
                 foundChar.ThumbnailUrl = value.ThumbnailUrl;
+                foundChar.LastModified = DateTime.Now;
 
                 _characterStatService.UpdateCharacter(foundChar);
             }

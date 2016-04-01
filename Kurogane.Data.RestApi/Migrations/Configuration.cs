@@ -22,16 +22,28 @@ namespace Kurogane.Data.RestApi.Migrations
             var user = new ApplicationUser()
             {
                 UserName = "KuroUser",
-                Email = "Frannsoftdev@outlook.com",
+                Email = "testemail@mymail.com",
                 EmailConfirmed = true,
                 FirstName = "Kurogane",
                 LastName = "Hammer",
                 Level = 1,
                 JoinDate = DateTime.Now,
-                
             };
             
-            manager.Create(user, "MySuperP@ssword!");
+            manager.Create(user, "MasterHand7118!");
+
+            var getuser = new ApplicationUser()
+            {
+                UserName = "GETuser",
+                Email = "getuser@mymail.com",
+                EmailConfirmed = true,
+                FirstName = "GET",
+                LastName = "user",
+                Level = 1,
+                JoinDate = DateTime.Now
+            };
+
+            manager.Create(getuser, "GETpassword");
 
             if(!roleManager.Roles.Any())
             {
@@ -42,6 +54,9 @@ namespace Kurogane.Data.RestApi.Migrations
             var adminUser = manager.FindByName("KuroUser");
             manager.AddToRoles(adminUser.Id, "Admin");
             manager.AddToRoles(adminUser.Id, "Basic");
+
+            var getUser = manager.FindByName("GETuser");
+            manager.AddToRoles(getUser.Id, "Basic");
         }
     }
 }

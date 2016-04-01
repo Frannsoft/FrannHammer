@@ -9,7 +9,7 @@ namespace Kurogane.Data.RestApi.Services
     {
         CharacterAttribute GetCharacterAttribute(int id);
         IEnumerable<CharacterAttribute> GetCharacterAttributesByName(string name);
-        IEnumerable<CharacterAttribute> GetCharacterAttributesByType(CharacterAttributes attributeType);
+        IEnumerable<CharacterAttribute> GetCharacterAttributesByTypeId(int id);
         IEnumerable<CharacterAttribute> GetCharacterAttributesByCharacter(int ownerId);
         void CreateCharacterAttribute(CharacterAttribute attribute);
         void UpdateCharacterAttribute(CharacterAttribute attribute);
@@ -40,9 +40,9 @@ namespace Kurogane.Data.RestApi.Services
             return attributes;
         }
 
-        public IEnumerable<CharacterAttribute> GetCharacterAttributesByType(CharacterAttributes attributeType)
+        public IEnumerable<CharacterAttribute> GetCharacterAttributesByTypeId(int id)
         {
-            var attributes = _characterAttributeRepository.GetCharacterAttributesByAttributeType(attributeType);
+            var attributes = _characterAttributeRepository.GetCharacterAttributesByAttributeTypeId(id);
             return attributes;
         }
 

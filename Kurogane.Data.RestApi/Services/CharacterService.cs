@@ -33,7 +33,7 @@ namespace Kurogane.Data.RestApi.Services
 
         public CharacterStat GetCharacter(int id)
         {
-            var character = _characterStatRepository.GetCharacter(id);
+            var character = _characterStatRepository.GetById(id);
             return character;
         }
 

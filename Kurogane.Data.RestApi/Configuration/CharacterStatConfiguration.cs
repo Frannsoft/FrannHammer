@@ -9,7 +9,7 @@ namespace Kurogane.Data.RestApi.Configuration
         {
             ToTable("characters");
             Property(c => c.Name).IsRequired();
-            Property(c => c.OwnerId).IsRequired();
+            //Property(c => c.).IsRequired();
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Kurogane.Data.RestApi.Configuration
             ToTable("attributes");
             Property(a => a.Name).IsRequired();
             Property(a => a.Value).IsRequired();
-            Property(a => a.AttributeType).IsRequired();
+            Property(a => a.SmashAttributeTypeId).IsRequired();
         }
     }
 }

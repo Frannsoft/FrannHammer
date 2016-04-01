@@ -10,7 +10,7 @@ namespace Kurogane.Data.RestApi.Infrastructure
         CharacterAttribute GetAttribute(int id);
         List<CharacterAttribute> GetCharacterAttributesByName(string name);
         List<CharacterAttribute> GetCharacterAttributesByCharacter(int ownerId);
-        List<CharacterAttribute> GetCharacterAttributesByAttributeType(CharacterAttributes attributeType);
+        List<CharacterAttribute> GetCharacterAttributesByAttributeTypeId(int id);
     }
 
     public class CharacterAttributeRepository : RepositoryBase<CharacterAttribute>, ICharacterAttributeRepository
@@ -53,14 +53,13 @@ namespace Kurogane.Data.RestApi.Infrastructure
             return attributes;
         }
 
-        public List<CharacterAttribute> GetCharacterAttributesByAttributeType(CharacterAttributes attributeType)
+        public List<CharacterAttribute> GetCharacterAttributesByAttributeTypeId(int id)
         {
             List<CharacterAttribute> attributes;
 
-            var attributeAsString = attributeType.ToString();  //EF only support primitive comparisons at this level
             using (var context = new Sm4ShEntities())
             {
-                attributes = context.CharacterAttributes.Where(a => a.AttributeType.ToString().Equals(attributeAsString))
+                attributes = context.CharacterAttributes.Where(a => a.SmashAttributeTypeId == id)
                     .ToList();
             }
 

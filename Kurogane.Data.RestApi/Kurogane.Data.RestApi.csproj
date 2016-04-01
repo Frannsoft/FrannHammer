@@ -14,7 +14,7 @@
     <RootNamespace>Kurogane.Data.RestApi</RootNamespace>
     <AssemblyName>Kurogane.Data.RestApi</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -130,6 +130,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.3\lib\net45\System.Web.Cors.dll</HintPath>
@@ -192,7 +193,9 @@
     <Compile Include="Configuration\CharacterStatConfiguration.cs" />
     <Compile Include="Configuration\MovementStatConfiguration.cs" />
     <Compile Include="Configuration\MoveStatConfiguration.cs" />
+    <Compile Include="Configuration\SmashAttributeConfiguration.cs" />
     <Compile Include="Controllers\CharacterAttributeController.cs" />
+    <Compile Include="Controllers\SmashAttributeController.cs" />
     <Compile Include="DTOs\CharacterAttributeDTO.cs" />
     <Compile Include="Infrastructure\ApplicationRoleManager.cs" />
     <Compile Include="Infrastructure\ApplicationUser.cs" />
@@ -211,6 +214,7 @@
     <Compile Include="Infrastructure\MoveStatRepository.cs" />
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\Sm4shEntities.cs" />
+    <Compile Include="Infrastructure\SmashAttributeRepository.cs" />
     <Compile Include="Infrastructure\UnitOfWork.cs" />
     <Compile Include="Migrations\201602142029336_properseedsuperuserpd.cs" />
     <Compile Include="Migrations\201602142029336_properseedsuperuserpd.Designer.cs">
@@ -248,6 +252,22 @@
     <Compile Include="Migrations\201603261941167_new changes.Designer.cs">
       <DependentUpon>201603261941167_new changes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603290256394_add smashattributetype table.cs" />
+    <Compile Include="Migrations\201603290256394_add smashattributetype table.Designer.cs">
+      <DependentUpon>201603290256394_add smashattributetype table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603290257592_renamed the smash attribute type table.cs" />
+    <Compile Include="Migrations\201603290257592_renamed the smash attribute type table.Designer.cs">
+      <DependentUpon>201603290257592_renamed the smash attribute type table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603292222127_redoing character table to omit ownerid.cs" />
+    <Compile Include="Migrations\201603292222127_redoing character table to omit ownerid.Designer.cs">
+      <DependentUpon>201603292222127_redoing character table to omit ownerid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603300248305_changed characterattribute to ref smashattributetype id instead of enum.cs" />
+    <Compile Include="Migrations\201603300248305_changed characterattribute to ref smashattributetype id instead of enum.Designer.cs">
+      <DependentUpon>201603300248305_changed characterattribute to ref smashattributetype id instead of enum.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AerialStat.cs" />
@@ -273,6 +293,7 @@
     <Compile Include="Models\MoveType.cs" />
     <Compile Include="Models\RoleBindingModels.cs" />
     <Compile Include="Models\RolesConstants.cs" />
+    <Compile Include="Models\SmashAttributeType.cs" />
     <Compile Include="Models\SpecialStat.cs" />
     <Compile Include="Models\Stat.cs" />
     <Compile Include="Models\UserModel.cs" />
@@ -283,6 +304,7 @@
     <Compile Include="Providers\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="Services\CharacterAttributeService.cs" />
     <Compile Include="Services\CharacterService.cs" />
+    <Compile Include="Services\SmashAttributeService.cs" />
     <Compile Include="Services\MovementStatService.cs" />
     <Compile Include="Services\MoveService.cs" />
     <Compile Include="Startup.cs" />
@@ -334,6 +356,18 @@
     <EmbeddedResource Include="Migrations\201603261941167_new changes.resx">
       <DependentUpon>201603261941167_new changes.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603290256394_add smashattributetype table.resx">
+      <DependentUpon>201603290256394_add smashattributetype table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603290257592_renamed the smash attribute type table.resx">
+      <DependentUpon>201603290257592_renamed the smash attribute type table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603292222127_redoing character table to omit ownerid.resx">
+      <DependentUpon>201603292222127_redoing character table to omit ownerid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603300248305_changed characterattribute to ref smashattributetype id instead of enum.resx">
+      <DependentUpon>201603300248305_changed characterattribute to ref smashattributetype id instead of enum.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -350,7 +384,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>53410</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:53410/</IISUrl>
+          <IISUrl>http://localhost/KHApi</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

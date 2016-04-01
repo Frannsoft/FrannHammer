@@ -10,6 +10,7 @@ namespace Kurogane.Data.RestApi.Infrastructure
         public DbSet<MoveStat> Moves { get; set; }
         public DbSet<CharacterStat> Characters { get; set; }
         public DbSet<CharacterAttribute> CharacterAttributes { get; set; }
+        public DbSet<SmashAttributeType> SmashAttributes { get; set; }
 
         public Sm4ShEntities()
             : base("Sm4shEntities")
@@ -32,6 +33,7 @@ namespace Kurogane.Data.RestApi.Infrastructure
             modelBuilder.Configurations.Add(new MoveStatConfiguration());
             modelBuilder.Configurations.Add(new CharacterStatConfiguration());
             modelBuilder.Configurations.Add(new CharacterAttributeConfiguration());
+            modelBuilder.Configurations.Add(new SmashAttributeConfiguration());
         }
     }
 }
