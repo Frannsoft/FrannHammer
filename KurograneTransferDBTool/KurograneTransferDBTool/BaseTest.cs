@@ -13,14 +13,15 @@ namespace KurograneTransferDBTool
         protected HttpClient LoggedInAdminClient;
         protected HttpClient LoggedInBasicClient;
         protected HttpClient AnonymousClient;
-        protected const string Baseuri = "http://localhost:53410/api/";
+        protected string Baseuri { get; private set; }
         private string _adminauthToken;
         private string _basicauthToken;
 
         [SetUp]
         public void SetUp()
         {
-            const string tokenUri = "http://localhost:53410/oauth/token";
+            Baseuri = ConfigurationManager.AppSettings["site"];
+            var tokenUri = Baseuri + "/Token";
             LoggedInAdminClient = new HttpClient {BaseAddress = new Uri(Baseuri)};
             var admincontent = new FormUrlEncodedContent(new[]
             {

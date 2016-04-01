@@ -13,42 +13,49 @@ using System.Threading.Tasks;
 
 namespace KurograneTransferDBTool
 {
+    //order to load:
+    //1) characters
+    //2) smash attribute types
+    //3) movements
+    //4) moves
+    //5) attribute values
+
     public class Loader : BaseTest
     {
-        [Test]
-        [Explicit("Updates character data")]
-        public async Task UpdateCharacterData()
-        {
-            var charIds = (int[])Enum.GetValues(typeof(Characters));
+        //[Test]
+        //[Explicit("Updates character data")]
+        //public async Task UpdateCharacterData()
+        //{
+        //    var charIds = (int[])Enum.GetValues(typeof(Characters));
 
-            var response = await LoggedInAdminClient.GetAsync(Baseuri + "characters");
-            var characters = await response.Content.ReadAsAsync<CharacterDTO[]>();
+        //    var response = await LoggedInAdminClient.GetAsync(Baseuri + "characters");
+        //    var characters = await response.Content.ReadAsAsync<CharacterDTO[]>();
 
-            foreach (var i in charIds)
-            {
-                var character = new Character((Characters)i);
+        //    foreach (var i in charIds)
+        //    {
+        //        var character = new Character((Characters)i);
 
-                var characterStatFromDB = characters.FirstOrDefault(c => c.OwnerId == character.OwnerId);
-                if (characterStatFromDB == null)
-                { throw new InvalidOperationException("Character from page data could not be found in db"); }
+        //        //var characterStatFromDB = characters.FirstOrDefault(c => c.Id == character.i;
+        //        if (characterStatFromDB == null)
+        //        { throw new InvalidOperationException("Character from page data could not be found in db"); }
 
-                var cachedHashCode = characterStatFromDB.GetHashCode();
-                PropertyUpdateHelper.UpdateProperty(character, characterStatFromDB);
+        //        var cachedHashCode = characterStatFromDB.GetHashCode();
+        //        PropertyUpdateHelper.UpdateProperty(character, characterStatFromDB);
 
-                var newHashCode = characterStatFromDB.GetHashCode();
+        //        var newHashCode = characterStatFromDB.GetHashCode();
 
-                //if updated version has differences, push update to server
-                if (cachedHashCode != newHashCode)
-                {
-                    //submit update post
-                    var updateResponse = await LoggedInAdminClient.PutAsJsonAsync(Baseuri + "characters/" + characterStatFromDB.Id, characterStatFromDB);
+        //        //if updated version has differences, push update to server
+        //        if (cachedHashCode != newHashCode)
+        //        {
+        //            //submit update post
+        //            var updateResponse = await LoggedInAdminClient.PutAsJsonAsync(Baseuri + "characters/" + characterStatFromDB.Id, characterStatFromDB);
 
-                    //check if OK - 200 //if not, stop updating
-                    Assert.AreEqual(HttpStatusCode.OK, updateResponse.StatusCode);
-                }
+        //            //check if OK - 200 //if not, stop updating
+        //            Assert.AreEqual(HttpStatusCode.OK, updateResponse.StatusCode);
+        //        }
 
-            }
-        }
+        //    }
+        //}
 
         [Test]
         [Explicit("Updates movement data")]
@@ -97,64 +104,211 @@ namespace KurograneTransferDBTool
             }
         }
 
+        //[Test]
+        //[Explicit("Actually reloads Character Attributes in the DB")]
+        ////[TestCase("http://kuroganehammer.com/Smash4/ItemTossBack")] - abnormal tables
+        ////[TestCase("http://kuroganehammer.com/Smash4/ItemTossDash")] - includes 'everyone else' which I'm not handling
+        ////[TestCase("http://kuroganehammer.com/Smash4/ItemTossDown")] - this url doesn't exist anymore
+        ////[TestCase("http://kuroganehammer.com/Smash4/ItemTossForward")] - abnormal tables
+        ////[TestCase("http://kuroganehammer.com/Smash4/ItemTossUp")] - abnormal tables
+        ////[TestCase("http://kuroganehammer.com/Smash4/LedgeJump")] - abnormal table values
+        ////[TestCase("http://kuroganehammer.com/Smash4/Tech")] - abnormal tables
+        //[TestCase("http://kuroganehammer.com/Smash4/AirAcceleration")]
+        //[TestCase("http://kuroganehammer.com/Smash4/Airdodge")]
+        //[TestCase("http://kuroganehammer.com/Smash4/AirSpeed")]
+        //[TestCase("http://kuroganehammer.com/Smash4/FallSpeed")]
+        //[TestCase("http://kuroganehammer.com/Smash4/Gravity")]
+        //[TestCase("http://kuroganehammer.com/Smash4/ItemToss")]
+        //[TestCase("http://kuroganehammer.com/Smash4/Jumpsquat")]
+        //[TestCase("http://kuroganehammer.com/Smash4/LedgeAttack")]
+        //[TestCase("http://kuroganehammer.com/Smash4/LedgeGetup")]
+        //[TestCase("http://kuroganehammer.com/Smash4/LedgeRoll")]
+        //[TestCase("http://kuroganehammer.com/Smash4/Rolls")]
+        //[TestCase("http://kuroganehammer.com/Smash4/DashSpeed")]
+        //[TestCase("http://kuroganehammer.com/Smash4/Spotdodge")]
+        //[TestCase("http://kuroganehammer.com/Smash4/WalkSpeed")]
+        //[TestCase("http://kuroganehammer.com/Smash4/Weight")]
+        //public async Task ReloadCharacterAttribute(string url)
+        //{
+        //    var page = new Page(url);
+        //    var attributesFromPage = page.GetAttributes();
+
+        //    var fullAtts = new List<CharacterAttribute>();
+        //    foreach (var attributeRow in attributesFromPage.AttributeValues)
+        //    {
+        //        var rank = attributeRow.Values.First(a => a.Name.ToLower() == "rank").Value;
+        //        var characterName = MapCharacterName(attributeRow.Values.First(a => a.Name.ToLower() == "character").Value);
+
+        //        if (string.IsNullOrEmpty(characterName))
+        //        { continue; } //if no characterName was found there is a high probability this table row was a decorator rather than a real value
+
+        //        var specificValues = (from attr in attributeRow.Values.Where(a => a.Name.ToLower() != "rank" &&
+        //                                                                         a.Name.ToLower() != "character")
+        //                              select attr).ToList();
+
+        //        for (var i = 0; i < specificValues.Count(); i++)
+        //        {
+        //            var attributeName = specificValues[i].Name;
+        //            var attributeType = (CharacterAttributes)Enum.Parse(typeof(CharacterAttributes), specificValues[i].AttributeFlag, true);
+        //            var value = specificValues[i].Value;
+
+        //            var characterAttribute = new CharacterAttribute(rank, characterName, attributeName, value,
+        //                attributeType);
+        //            fullAtts.Add(characterAttribute);
+
+        //            var postResult = await LoggedInAdminClient.PostAsJsonAsync(Baseuri + "attributes", characterAttribute);
+        //            Assert.AreEqual(HttpStatusCode.OK, postResult.StatusCode);
+        //        }
+        //        Assert.That(fullAtts.Count > 0);
+        //    }
+        //}
+
         [Test]
-        [Explicit("Actually reloads Character Attributes in the DB")]
-        //[TestCase("http://kuroganehammer.com/Smash4/ItemTossBack")] - abnormal tables
-        //[TestCase("http://kuroganehammer.com/Smash4/ItemTossDash")] - includes 'everyone else' which I'm not handling
-        //[TestCase("http://kuroganehammer.com/Smash4/ItemTossDown")] - this url doesn't exist anymore
-        //[TestCase("http://kuroganehammer.com/Smash4/ItemTossForward")] - abnormal tables
-        //[TestCase("http://kuroganehammer.com/Smash4/ItemTossUp")] - abnormal tables
-        //[TestCase("http://kuroganehammer.com/Smash4/LedgeJump")] - abnormal table values
-        //[TestCase("http://kuroganehammer.com/Smash4/Tech")] - abnormal tables
-        [TestCase("http://kuroganehammer.com/Smash4/AirAcceleration")]
-        [TestCase("http://kuroganehammer.com/Smash4/Airdodge")]
-        [TestCase("http://kuroganehammer.com/Smash4/AirSpeed")]
-        [TestCase("http://kuroganehammer.com/Smash4/FallSpeed")]
-        [TestCase("http://kuroganehammer.com/Smash4/Gravity")]
-        [TestCase("http://kuroganehammer.com/Smash4/ItemToss")]
-        [TestCase("http://kuroganehammer.com/Smash4/Jumpsquat")]
-        [TestCase("http://kuroganehammer.com/Smash4/LedgeAttack")]
-        [TestCase("http://kuroganehammer.com/Smash4/LedgeGetup")]
-        [TestCase("http://kuroganehammer.com/Smash4/LedgeRoll")]
-        [TestCase("http://kuroganehammer.com/Smash4/Rolls")]
-        [TestCase("http://kuroganehammer.com/Smash4/DashSpeed")]
-        [TestCase("http://kuroganehammer.com/Smash4/Spotdodge")]
-        [TestCase("http://kuroganehammer.com/Smash4/WalkSpeed")]
-        [TestCase("http://kuroganehammer.com/Smash4/Weight")]
-        public async Task ReloadCharacterAttribute(string url)
+        [Explicit("Reloads character data")]
+        public async Task ReloadCharacters()
         {
-            var page = new Page(url);
-            var attributesFromPage = page.GetAttributes();
+            var charIds = (int[])Enum.GetValues(typeof(Characters));
 
-            var fullAtts = new List<CharacterAttribute>();
-            foreach (var attributeRow in attributesFromPage.AttributeValues)
+            var thumbnails = new HomePage("http://kuroganehammer.com/Smash4/")
+                .GetThumbnailData();
+
+            foreach (var character in charIds.Select(i => new Character((Characters)i)))
             {
-                var rank = attributeRow.Values.First(a => a.Name.ToLower() == "rank").Value;
-                var characterName = MapCharacterName(attributeRow.Values.First(a => a.Name.ToLower() == "character").Value);
-
-                if(string.IsNullOrEmpty(characterName))
-                { continue; } //if no characterName was found there is a high probability this table row was a decorator rather than a real value
-
-                var specificValues = (from attr in attributeRow.Values.Where(a => a.Name.ToLower() != "rank" &&
-                                                                                 a.Name.ToLower() != "character")
-                                     select attr).ToList();
-
-                for (var i = 0; i < specificValues.Count(); i++)
+                string val;
+                if (character.Name.Contains("Mii") || character.Name.Contains("MII"))
                 {
-                    var attributeName = specificValues[i].Name;
-                    var attributeType = (CharacterAttributes)Enum.Parse(typeof(CharacterAttributes), specificValues[i].AttributeFlag, true);
-                    var value = specificValues[i].Value;
-
-                    var characterAttribute = new CharacterAttribute(rank, characterName, attributeName, value,
-                        attributeType);
-                    fullAtts.Add(characterAttribute);
-                    
-                    var postResult = await LoggedInAdminClient.PostAsJsonAsync(Baseuri + "attributes", characterAttribute);
-                    Assert.AreEqual(HttpStatusCode.OK, postResult.StatusCode);
+                    val = "MIIFIGHTERS";
                 }
-                Assert.That(fullAtts.Count > 0);
+                else
+                {
+                    val = character.Name;
+                }
+
+                var thumbnail = thumbnails.FirstOrDefault(t => t.Key.Equals(val, StringComparison.OrdinalIgnoreCase));
+
+                //load character
+                var charStat = new CharacterStat(character.Id, character.Name,
+                    character.Style, character.MainImageUrl, thumbnail.Url, character.ColorHex,
+                    character.Description, DateTime.Now);
+
+                var result = await LoggedInAdminClient.PostAsJsonAsync(Baseuri + "/Characters", charStat);
+                Assert.AreEqual(HttpStatusCode.Created, result.StatusCode);
             }
         }
+
+        [Test]
+        [Explicit("Reloads smash attribute types")]
+        public async Task ReloadSmashAttributeTypes()
+        {
+            var thumbnails = new HomePage("http://kuroganehammer.com/Smash4/Attributes")
+               .GetThumbnailData();
+
+            foreach (var attributeType in thumbnails
+                .Select(thumbnail => new SmashAttributeType
+                { Name = thumbnail.Key }))
+            {
+                var result = await LoggedInAdminClient.PostAsJsonAsync(Baseuri + "/SmashAttributeTypes", attributeType);
+                Assert.AreEqual(HttpStatusCode.Created, result.StatusCode);
+            }
+        }
+
+        [Test]
+        [Explicit("Reloads movement data")]
+        public async Task ReloadMovements()
+        {
+            var characters = LoggedInBasicClient.GetAsync(Baseuri + "/Characters")
+                .Result.Content.ReadAsAsync<List<CharacterStat>>().Result;
+
+            foreach (var character in characters.Select(i => new Character(i.Name)))
+            {
+                var movements = from movement in character.FrameData.Values.OfType<MovementStat>()
+                    select movement;
+
+                foreach (var movement in movements)
+                {
+                    movement.LastModified = DateTime.Now;
+                    var movementResult = await LoggedInAdminClient.PostAsJsonAsync(Baseuri + "/movements", movement);
+                    Assert.AreEqual(HttpStatusCode.Created, movementResult.StatusCode);
+                }
+            }
+        }
+
+        [Test]
+        [Explicit("Reloads move data - LARGE")]
+        public async Task ReloadMoves()
+        {
+            var characters = LoggedInBasicClient.GetAsync(Baseuri + "/Characters")
+                .Result.Content.ReadAsAsync<List<CharacterStat>>().Result;
+
+            foreach (var character in characters.Select(i => new Character(i.Name)))
+            {
+                //load moves
+                var moves = from move in character.FrameData.Values.OfType<MoveStat>()
+                            select move;
+
+                foreach (var move in moves)
+                {
+                    move.LastModified = DateTime.Now;
+                    var moveResult = await LoggedInAdminClient.PostAsJsonAsync(Baseuri + "/moves", move);
+                    Assert.AreEqual(HttpStatusCode.Created, moveResult.StatusCode);
+                }
+            }
+        }
+
+        [Test]
+        [Explicit("Reloads sm4sh character attribute values")]
+        public async Task ReloadSmash4CharacterAttributeValues()
+        {
+            //get all attributeTypes in db
+            var attributeTypes = LoggedInAdminClient.GetAsync(Baseuri + "/attributes")
+                .Result.Content.ReadAsAsync<List<SmashAttributeType>>().Result;
+
+            var baseUrl = "http://kuroganehammer.com/Smash4/";
+
+            foreach (var attributeType in attributeTypes)
+            {
+                if(attributeType.Name.Contains("ITEMTOSS") ||
+                    attributeType.Name.Equals("LEDGEJUMP") ||
+                    attributeType.Name.Equals("TECH") ||
+                    attributeType.Name.Equals("RUNSPEED"))
+                { continue; } //skip these for now since the tables are problematic
+
+                var page = new Page(baseUrl + attributeType.Name);
+                Console.WriteLine(attributeType.Name);
+                var attributesFromPage = page.GetAttributes();
+
+                var fullAtts = new List<CharacterAttribute>();
+                foreach (var attributeRow in attributesFromPage.AttributeValues)
+                {
+                    var rank = attributeRow.Values.First(a => a.Name.ToLower() == "rank").Value;
+                    var characterName = MapCharacterName(attributeRow.Values.First(a => a.Name.ToLower() == "character").Value);
+
+                    if (string.IsNullOrEmpty(characterName))
+                    { continue; } //if no characterName was found there is a high probability this table row was a decorator rather than a real value
+
+                    var specificValues = (from attr in attributeRow.Values.Where(a => a.Name.ToLower() != "rank" &&
+                                                                                     a.Name.ToLower() != "character")
+                                          select attr).ToList();
+
+                    for (var i = 0; i < specificValues.Count(); i++)
+                    {
+                        var attributeName = specificValues[i].Name;
+                        var dbAttributeType = attributeTypes.Find(a => a.Name.Equals(specificValues[i].AttributeFlag)); //   (CharacterAttributes)Enum.Parse(typeof(CharacterAttributes), specificValues[i].AttributeFlag, true);
+                        var value = specificValues[i].Value;
+                        var characterAttribute = new CharacterAttribute(rank, characterName, attributeName, value,
+                            dbAttributeType);
+                        fullAtts.Add(characterAttribute);
+
+                        characterAttribute.LastModified = DateTime.Now;
+                        var postResult = await LoggedInAdminClient.PostAsJsonAsync(Baseuri + "/characterattributes", characterAttribute);
+                        Assert.AreEqual(HttpStatusCode.Created, postResult.StatusCode);
+                    }
+                    Assert.That(fullAtts.Count > 0);
+                }
+            }
+        }
+            
+
 
         /// <summary>
         /// Not all values in the character field match values in enum.  Manually map those that don't.
@@ -217,7 +371,7 @@ namespace KurograneTransferDBTool
             {
                 retVal = rawName;
             }
-            
+
             return retVal;
         }
 
@@ -229,8 +383,6 @@ namespace KurograneTransferDBTool
 
             var thumbnails = new HomePage("http://kuroganehammer.com/Smash4/")
                 .GetThumbnailData();
-
-            
 
             foreach (var character in charIds.Select(i => new Character((Characters)i)))
             {
@@ -247,8 +399,9 @@ namespace KurograneTransferDBTool
                 var thumbnail = thumbnails.FirstOrDefault(t => t.Key.Equals(val, StringComparison.OrdinalIgnoreCase));
 
                 //load character
-                var charStat = new CharacterStat(character.Name,
-                    character.OwnerId, character.Style, character.MainImageUrl, thumbnail.Url, character.ColorHex, character.Description);
+                var charStat = new CharacterStat(character.Id, character.Name,
+                    character.Style, character.MainImageUrl, thumbnail.Url,
+                    character.ColorHex, character.Description, DateTime.Now);
 
                 var result = await LoggedInAdminClient.PostAsJsonAsync(Baseuri + "characters", charStat);
                 Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
