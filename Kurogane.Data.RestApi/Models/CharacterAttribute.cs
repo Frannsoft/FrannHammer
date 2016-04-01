@@ -7,16 +7,16 @@ namespace Kurogane.Data.RestApi.Models
     {
         public string Rank { get; set; }
         public string Value { get; set; }
-        public CharacterAttributes AttributeType { get; set; }
+        public int SmashAttributeTypeId { get; set; }
 
         public CharacterAttribute(string rank, string characterName,
-            string name, string value, CharacterAttributes attributeType)
+            string name, string value, SmashAttributeType smashAttributeType)
         {
             Rank = rank;
             OwnerId = GetOwnerIdFromCharacterName(characterName);
             Name = name;
             Value = value;
-            AttributeType = attributeType;
+            SmashAttributeTypeId = smashAttributeType.Id;
         }
 
         public CharacterAttribute()

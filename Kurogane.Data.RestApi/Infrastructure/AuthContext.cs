@@ -10,6 +10,8 @@ namespace Kurogane.Data.RestApi.Infrastructure
         public DbSet<MovementStat> MovementStats { get; set; }
         public DbSet<MoveStat> Moves { get; set; }
         public DbSet<CharacterStat> Characters { get; set; }
+        public DbSet<CharacterAttribute> CharacterAttributes { get; set; }
+        public DbSet<SmashAttributeType> SmashAttributes { get; set; }
 
         public AuthContext()
             : base("AuthContext", throwIfV1Schema: false)
@@ -35,6 +37,7 @@ namespace Kurogane.Data.RestApi.Infrastructure
             modelBuilder.Configurations.Add(new MoveStatConfiguration());
             modelBuilder.Configurations.Add(new CharacterStatConfiguration());
             modelBuilder.Configurations.Add(new CharacterAttributeConfiguration());
+            modelBuilder.Configurations.Add(new SmashAttributeConfiguration());
         }
     }
 }

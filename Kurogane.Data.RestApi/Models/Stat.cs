@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+
 namespace Kurogane.Data.RestApi.Models
 {
     public class Stat
@@ -6,6 +7,7 @@ namespace Kurogane.Data.RestApi.Models
         public string Name { get; set; }
         public int OwnerId { get; set; }
         public int Id { get; set; }
+        public DateTime LastModified { get; set; }
 
         public Stat(string name, int ownerId)
         {

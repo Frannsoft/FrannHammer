@@ -37,7 +37,8 @@ namespace Kurogane.Data.RestApi
             builder.RegisterApiControllers(typeof(CharacterController).Assembly);
             builder.RegisterApiControllers(typeof(MoveController).Assembly);
             builder.RegisterApiControllers(typeof(MovementController).Assembly);
-            builder.RegisterApiControllers(typeof (CharacterAttributeController).Assembly);
+            builder.RegisterApiControllers(typeof(CharacterAttributeController).Assembly);
+            builder.RegisterApiControllers(typeof(SmashAttributeController).Assembly);
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerRequest();
             builder.RegisterType<DbFactory>().As<IDbFactory>().InstancePerRequest();
 
@@ -54,7 +55,11 @@ namespace Kurogane.Data.RestApi
                 .Where(t => t.Name.EndsWith("Repository"))
                 .AsImplementedInterfaces().InstancePerRequest();
 
-            builder.RegisterAssemblyTypes(typeof (CharacterAttributeRepository).Assembly)
+            builder.RegisterAssemblyTypes(typeof(CharacterAttributeRepository).Assembly)
+                .Where(t => t.Name.EndsWith("Repository"))
+                .AsImplementedInterfaces().InstancePerRequest();
+
+            builder.RegisterAssemblyTypes(typeof(SmashAttributeRepository).Assembly)
                 .Where(t => t.Name.EndsWith("Repository"))
                 .AsImplementedInterfaces().InstancePerRequest();
 
@@ -71,14 +76,17 @@ namespace Kurogane.Data.RestApi
                 .Where(t => t.Name.EndsWith("Service"))
                 .AsImplementedInterfaces().InstancePerRequest();
 
-            builder.RegisterAssemblyTypes(typeof (CharacterAttributeService).Assembly)
+            builder.RegisterAssemblyTypes(typeof(CharacterAttributeService).Assembly)
+                .Where(t => t.Name.EndsWith("Service"))
+                .AsImplementedInterfaces().InstancePerRequest();
+
+            builder.RegisterAssemblyTypes(typeof(SmashAttributeService).Assembly)
                 .Where(t => t.Name.EndsWith("Service"))
                 .AsImplementedInterfaces().InstancePerRequest();
 
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
 
-            
             app.UseWebApi(config);
         }
 

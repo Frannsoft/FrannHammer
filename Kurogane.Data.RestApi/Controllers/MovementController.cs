@@ -9,7 +9,6 @@ using static Kurogane.Data.RestApi.Models.RolesConstants;
 
 namespace Kurogane.Data.RestApi.Controllers
 {
-    [RoutePrefix("api")]
     public class MovementController : ApiController
     {
         private readonly IMovementStatService _movementStatService;
@@ -71,7 +70,7 @@ namespace Kurogane.Data.RestApi.Controllers
                 return BadRequest();
             }
 
-            return Ok(value);
+            return CreatedAtRoute("DefaultApi", new { controller = "Movement", id = value.Id }, value);
         }
 
         [Authorize(Roles = Admin)]

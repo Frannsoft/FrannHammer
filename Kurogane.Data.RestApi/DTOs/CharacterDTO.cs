@@ -8,7 +8,7 @@ namespace Kurogane.Data.RestApi.DTOs
         public int Id { get; set; }
         public string ThumbnailUrl { get; set; }
         public string ColorTheme { get; set; }
-        public int OwnerId { get; set; }
+        //public int OwnerId { get; set; }
         public string Name { get; set; }
         public string Style { get; set; }
         public string MainImageUrl { get; set; }
@@ -22,7 +22,7 @@ namespace Kurogane.Data.RestApi.DTOs
             Id = stat.Id;
             ThumbnailUrl = stat.ThumbnailUrl;
             ColorTheme = stat.ColorTheme;
-            OwnerId = stat.OwnerId;
+            //OwnerId = stat.OwnerId;
             Name = stat.Name;
         }
 
@@ -41,7 +41,7 @@ namespace Kurogane.Data.RestApi.DTOs
                     MainImageUrl.Equals(compDto.MainImageUrl) &&
                     Name.Equals(compDto.Name) &&
                     ColorTheme.Equals(compDto.ColorTheme) &&
-                    OwnerId.Equals(compDto.OwnerId) &&
+                    //OwnerId.Equals(compDto.OwnerId) &&
                     Style.Equals(compDto.Style) &&
                     ThumbnailUrl.Equals(compDto.ThumbnailUrl))
                 {
@@ -60,7 +60,7 @@ namespace Kurogane.Data.RestApi.DTOs
                 Description,
                 MainImageUrl,
                 Name,
-                OwnerId,
+                //OwnerId,
                 Style,
                 ThumbnailUrl
             }.GetHashCode();
