@@ -2,6 +2,7 @@
 using Kurogane.Data.RestApi.Models;
 using KuroganeHammer.Data.Core;
 using Newtonsoft.Json;
+using System.Linq;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -30,7 +31,7 @@ namespace KuroganeHammer.WebScraper
         public string Name { get; private set; }
 
         [JsonProperty]
-        public int OwnerId { get; set; }
+        public int Id { get; set; }
 
         [JsonProperty]
         public string ColorHex { get; private set; }
@@ -46,8 +47,18 @@ namespace KuroganeHammer.WebScraper
         {
             Name = character.ToString();
             _urlTail = CharacterUtility.GetEnumDescription(character);
-            OwnerId = (int)character;
-            _page = new Page(UrlBase + _urlTail, OwnerId);
+            Id = (int)character;
+            _page = new Page(UrlBase + _urlTail, Id);
+            GetData();
+        }
+
+        public Character(string characterName)
+        {
+            Name = characterName;
+            var enumValue = (Characters)Enum.Parse(typeof(Characters), characterName, true);
+            _urlTail = CharacterUtility.GetEnumDescription(enumValue);
+            Id = (int)enumValue;
+            _page = new Page(UrlBase + _urlTail, Id);
             GetData();
         }
 
