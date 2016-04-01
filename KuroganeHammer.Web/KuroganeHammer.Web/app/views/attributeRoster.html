@@ -1,0 +1,176 @@
+﻿<div class="col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-md-offset-2" style="text-align: center;">
+    <br /><br />
+    <img src="http://kuroganehammer.com/Smash4/character/logo2.png" />
+    <br /><br />
+    <ul>
+        <li ng-repeat="attrType in vm.attributeTypes" class="box fade-in one" style="display: inline-block; float: left; margin: 5px;">
+            <div ng-click="vm.goToAttribute(attrType.id)">
+                <a href="">
+                    <img src="/content/images/characterattributes/attribute-{{attrType.name}}.png" alt="{{attrType.name}}" />
+                </a>
+            </div>
+        </li>
+        <!--<li class="box fade-in one" style="display: inline-block; float: left; margin: 5px;">
+            <div ng-click="vm.goToAttribute('airacceleration')">
+                <a href="">
+                    <img src="/content/images/characterattributes/attribute-airacceleration.png" alt="airacceleration"/>
+                </a>
+            </div>
+        </li>
+        <li class="box fade-in one" style="display: inline-block; float: left; margin: 5px;">
+            <div ng-click="vm.goToAttribute('airdodge')">
+                <a href="">
+                    <img src="/content/images/characterattributes/attribute-airdodge.png" alt="airdodge"/>
+                </a>
+            </div>
+        </li>
+        <li class="box fade-in one" style="display: inline-block; float: left; margin: 5px;">
+            <div ng-click="vm.goToAttribute('airspeed')">
+                <a href="">
+                    <img src="/content/images/characterattributes/attribute-airspeed.png" alt="airspeed"/>
+                </a>
+            </div>
+        </li>
+        <li class="box fade-in one" style="display: inline-block; float: left; margin: 5px;">
+            <div ng-click="vm.goToAttribute('dashspeed')">
+                <a href="">
+                    <img src="/content/images/characterattributes/attribute-dashspeed.png" alt="dashspeed"/>
+                </a>
+            </div>
+        </li>
+        <li class="box fade-in one" style="display: inline-block; float: left; margin: 5px;">
+            <div ng-click="vm.goToAttribute('fallspeed')">
+                <a href="">
+                    <img src="/content/images/characterattributes/attribute-fallspeed.png" alt="fallspeed"/>
+                </a>
+            </div>
+        </li>
+        <li class="box fade-in one" style="display: inline-block; float: left; margin: 5px;">
+            <div ng-click="vm.goToAttribute('gravity')">
+                <a href="">
+                    <img src="/content/images/characterattributes/attribute-gravity.png" alt="gravity"/>
+                </a>
+            </div>
+        </li>
+        <li class="box fade-in one" style="display: inline-block; float: left; margin: 5px;">
+            <div ng-click="vm.goToAttribute('itemtoss')">
+                <a href="">
+                    <img src="/content/images/characterattributes/attribute-itemtoss.png" alt="itemtoss"/>
+                </a>
+            </div>
+        </li>
+        <li class="box fade-in one" style="display: inline-block; float: left; margin: 5px;">
+            <div ng-click="vm.goToAttribute('itemtossback')">
+                <a href="">
+                    <img src="/content/images/characterattributes/attribute-itemtossback.png" alt="itemtossback"/>
+                </a>
+            </div>
+        </li>
+        <li class="box fade-in one" style="display: inline-block; float: left; margin: 5px;">
+            <div ng-click="vm.goToAttribute('itemtossdash')">
+                <a href="">
+                    <img src="/content/images/characterattributes/attribute-itemtossdash.png" alt="itemtossdash"/>
+                </a>
+            </div>
+        </li>
+        <li class="box fade-in one" style="display: inline-block; float: left; margin: 5px;">
+            <div ng-click="vm.goToAttribute('itemtossdown')">
+                <a href="">
+                    <img src="/content/images/characterattributes/attribute-itemtossdown.png" alt="itemtossdown"/>
+                </a>
+            </div>
+        </li>
+        <li class="box fade-in one" style="display: inline-block; float: left; margin: 5px;">
+            <div ng-click="vm.goToAttribute('itemtossforward')">
+                <a href="">
+                    <img src="/content/images/characterattributes/attribute-itemtossforward.png" alt="itemtossforward"/>
+                </a>
+            </div>
+        </li>
+        <li class="box fade-in one" style="display: inline-block; float: left; margin: 5px;">
+            <div ng-click="vm.goToAttribute('itemtossup')">
+                <a href="">
+                    <img src="/content/images/characterattributes/attribute-itemtossup.png" alt="itemtossup"/>
+                </a>
+            </div>
+        </li>
+        <li class="box fade-in one" style="display: inline-block; float: left; margin: 5px;">
+            <div ng-click="vm.goToAttribute('jumpsquat')">
+                <a href="">
+                    <img src="/content/images/characterattributes/attribute-jumpsquat.png" alt="jumpsquat"/>
+                </a>
+            </div>
+        </li>
+        <li class="box fade-in one" style="display: inline-block; float: left; margin: 5px;">
+            <div ng-click="vm.goToAttribute('ledgeattack')">
+                <a href="">
+                    <img src="/content/images/characterattributes/attribute-ledgeattack.png" alt="ledgeattack"/>
+                </a>
+            </div>
+        </li>
+        <li class="box fade-in one" style="display: inline-block; float: left; margin: 5px;">
+            <div ng-click="vm.goToAttribute('ledgegetup')">
+                <a href="">
+                    <img src="/content/images/characterattributes/attribute-ledgegetup.png" alt="ledgegetup"/>
+                </a>
+            </div>
+        </li>
+        <li class="box fade-in one" style="display: inline-block; float: left; margin: 5px;">
+            <div ng-click="vm.goToAttribute('ledgejump')">
+                <a href="">
+                    <img src="/content/images/characterattributes/attribute-ledgejump.png" alt="ledgejump"/>
+                </a>
+            </div>
+        </li>
+        <li class="box fade-in one" style="display: inline-block; float: left; margin: 5px;">
+            <div ng-click="vm.goToAttribute('ledgeroll')">
+                <a href="">
+                    <img src="/content/images/characterattributes/attribute-ledgeroll.png" alt="ledgeroll"/>
+                </a>
+            </div>
+        </li>
+        <li class="box fade-in one" style="display: inline-block; float: left; margin: 5px;">
+            <div ng-click="vm.goToAttribute('rolls')">
+                <a href="">
+                    <img src="/content/images/characterattributes/attribute-rolls.png" alt="rolls"/>
+                </a>
+            </div>
+        </li>
+        <li class="box fade-in one" style="display: inline-block; float: left; margin: 5px;">
+            <div ng-click="vm.goToAttribute('spotdodge')">
+                <a href="">
+                    <img src="/content/images/characterattributes/attribute-spotdodge.png" alt="spotdodge"/>
+                </a>
+            </div>
+        </li>
+        <li class="box fade-in one" style="display: inline-block; float: left; margin: 5px;">
+            <div ng-click="vm.goToAttribute('techs')">
+                <a href="">
+                    <img src="/content/images/characterattributes/attribute-techs.png" alt="techs"/>
+                </a>
+            </div>
+        </li>
+        <li class="box fade-in one" style="display: inline-block; float: left; margin: 5px;">
+            <div ng-click="vm.goToAttribute('walkspeed')">
+                <a href="">
+                    <img src="/content/images/characterattributes/attribute-walkspeed.png" alt="walkspeed"/>
+                </a>
+            </div>
+        </li>
+        <li class="box fade-in one" style="display: inline-block; float: left; margin: 5px;">
+            <div ng-click="vm.goToAttribute('weight')">
+                <a href="">
+                    <img src="/content/images/characterattributes/attribute-weight.png" alt="weight"/>
+                </a>
+            </div>
+        </li>-->
+        <!--<li ng-repeat="character in vm.characters" class="box fade-in one" style="display: inline-block; float: left; margin: 5px;">
+            <div ng-click="vm.goToCharacter(character)">
+                <a href="">
+                    <img data-ng-src="{{character.thumbnailUrl}}"
+                         title="{{character.name}}"/>
+                </a>
+            </div>
+        </li>-->
+    </ul>
+</div>
