@@ -16,6 +16,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KurograneTransferDBTool", "
 		{2904D4E7-8989-46BD-AC0A-B4356F190A15} = {2904D4E7-8989-46BD-AC0A-B4356F190A15}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kurgane.Data.RestApi.Tests", "Kurgane.Data.RestApi.Tests\Kurgane.Data.RestApi.Tests.csproj", "{7ACFEE5B-BB97-4FFB-BFC4-7E6B6E70A956}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,10 @@ Global
 		{BBA304DE-3510-4B40-99CD-74338C6108F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBA304DE-3510-4B40-99CD-74338C6108F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BBA304DE-3510-4B40-99CD-74338C6108F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7ACFEE5B-BB97-4FFB-BFC4-7E6B6E70A956}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ACFEE5B-BB97-4FFB-BFC4-7E6B6E70A956}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ACFEE5B-BB97-4FFB-BFC4-7E6B6E70A956}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7ACFEE5B-BB97-4FFB-BFC4-7E6B6E70A956}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
