@@ -125,10 +125,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\BaseControllerTest.cs" />
+    <Compile Include="Controllers\CharacterAttributeControllerTest.cs" />
     <Compile Include="Controllers\CharacterControllerTest.cs" />
+    <Compile Include="Controllers\MoveControllerTest.cs" />
+    <Compile Include="Controllers\MovementsControllerTest.cs" />
+    <Compile Include="Controllers\SmashAttributeTypesControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Controllers\HomeControllerTest.cs" />
-    <Compile Include="Controllers\ValuesControllerTest.cs" />
+    <Compile Include="TestObjects.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
