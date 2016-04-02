@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
@@ -11,6 +12,15 @@ namespace KuroganeHammer.Data.Api.Controllers
     public class SmashAttributeTypesController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+
+        public SmashAttributeTypesController()
+        { }
+
+        public SmashAttributeTypesController(ApplicationDbContext context)
+        {
+            db = context;
+        }
+
 
         // GET: api/SmashAttributeTypes
         public IQueryable<SmashAttributeType> GetSmashAttributeTypes()
@@ -45,6 +55,7 @@ namespace KuroganeHammer.Data.Api.Controllers
                 return BadRequest();
             }
 
+            smashAttributeType.LastModified = DateTime.Now;
             db.Entry(smashAttributeType).State = EntityState.Modified;
 
             try
@@ -75,6 +86,7 @@ namespace KuroganeHammer.Data.Api.Controllers
                 return BadRequest(ModelState);
             }
 
+            smashAttributeType.LastModified = DateTime.Now;
             db.SmashAttributeTypes.Add(smashAttributeType);
             db.SaveChanges();
 

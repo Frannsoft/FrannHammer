@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
@@ -11,6 +12,14 @@ namespace KuroganeHammer.Data.Api.Controllers
     public class CharacterAttributesController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+
+        public CharacterAttributesController()
+        { }
+
+        public CharacterAttributesController(ApplicationDbContext context)
+        {
+            db = context;
+        }
 
         // GET: api/CharacterAttributes
         public IQueryable<CharacterAttribute> GetCharacterAttributes()
@@ -40,6 +49,7 @@ namespace KuroganeHammer.Data.Api.Controllers
                 return BadRequest(ModelState);
             }
 
+            characterAttribute.LastModified = DateTime.Now;
             if (id != characterAttribute.Id)
             {
                 return BadRequest();
@@ -75,6 +85,7 @@ namespace KuroganeHammer.Data.Api.Controllers
                 return BadRequest(ModelState);
             }
 
+            characterAttribute.LastModified = DateTime.Now;
             db.CharacterAttributes.Add(characterAttribute);
             db.SaveChanges();
 

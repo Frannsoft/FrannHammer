@@ -5,6 +5,7 @@ using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
 using KuroganeHammer.Data.Api.Models;
+using System;
 
 namespace KuroganeHammer.Data.Api.Controllers
 {
@@ -65,6 +66,7 @@ namespace KuroganeHammer.Data.Api.Controllers
                 return BadRequest();
             }
 
+            character.LastModified = DateTime.Now;
             db.Entry(character).State = EntityState.Modified;
 
             try

@@ -5,6 +5,7 @@ using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
 using KuroganeHammer.Data.Api.Models;
+using System;
 
 namespace KuroganeHammer.Data.Api.Controllers
 {
@@ -53,6 +54,7 @@ namespace KuroganeHammer.Data.Api.Controllers
                 return BadRequest();
             }
 
+            movement.LastModified = DateTime.Now;
             db.Entry(movement).State = EntityState.Modified;
 
             try
@@ -83,6 +85,7 @@ namespace KuroganeHammer.Data.Api.Controllers
                 return BadRequest(ModelState);
             }
 
+            movement.LastModified = DateTime.Now;
             db.Movements.Add(movement);
             db.SaveChanges();
 
