@@ -7,15 +7,14 @@ var app;
         var DataAccessService = (function () {
             function DataAccessService($resource) {
                 this.$resource = $resource;
-                //baseUrl = "http://localhost/KHapi";
-                this.baseUrl = "http://localhost:62072/api";
+                this.baseUrl = "http://localhost/KHapi/api";
                 this.updateAction = {
                     method: 'PUT',
                     isArray: false,
                 };
             }
             DataAccessService.prototype.getCharacterResource = function (characterId) {
-                return this.$resource(this.baseUrl + "/CharacterModels/:characterId", { characterId: characterId }, { update: this.updateAction });
+                return this.$resource(this.baseUrl + "/Characters/:characterId", { characterId: characterId }, { update: this.updateAction });
             };
             DataAccessService.prototype.getMovementResource = function (movementId) {
                 return this.$resource(this.baseUrl + "/movements/:movementId", { movementId: movementId }, { update: this.updateAction });
@@ -30,13 +29,13 @@ var app;
                 return this.$resource(this.baseUrl + "/moves/", { name: name }, { update: this.updateAction });
             };
             DataAccessService.prototype.getMovesOfCharacter = function (characterId) {
-                return this.$resource(this.baseUrl + "/CharacterModels/:characterId/moves", { characterId: characterId }, { update: this.updateAction });
+                return this.$resource(this.baseUrl + "/Characters/:characterId/moves", { characterId: characterId }, { update: this.updateAction });
             };
             DataAccessService.prototype.getMovementsOfCharacter = function (characterId) {
-                return this.$resource(this.baseUrl + "/CharacterModels/:characterId/movement", { characterId: characterId }, { update: this.updateAction });
+                return this.$resource(this.baseUrl + "/Characters/:characterId/movement", { characterId: characterId }, { update: this.updateAction });
             };
             DataAccessService.prototype.getAttributesOfType = function (id) {
-                return this.$resource(this.baseUrl + "/CharacterAttributeModels/:id", { id: id }, { update: this.updateAction });
+                return this.$resource(this.baseUrl + "/CharacterAttribute/:id", { id: id }, { update: this.updateAction });
             };
             DataAccessService.prototype.getSmash4AttributeTypes = function (id) {
                 return this.$resource(this.baseUrl + "/SmashAttributeTypes/:id", { id: id }, { update: this.updateAction });

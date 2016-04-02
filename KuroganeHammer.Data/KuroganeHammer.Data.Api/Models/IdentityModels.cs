@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Data.Common;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -23,20 +24,20 @@ namespace KuroganeHammer.Data.Api.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
+
+        public ApplicationDbContext(DbConnection connection)
+            : base(connection, true)
+        { }
         
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<KuroganeHammer.Data.Api.Models.Character> Characters { get; set; }
-
-        public System.Data.Entity.DbSet<KuroganeHammer.Data.Api.Models.CharacterAttribute> CharacterAttributes { get; set; }
-
-        public System.Data.Entity.DbSet<KuroganeHammer.Data.Api.Models.Move> Moves { get; set; }
-
-        public System.Data.Entity.DbSet<KuroganeHammer.Data.Api.Models.Movement> Movements { get; set; }
-
-        public System.Data.Entity.DbSet<KuroganeHammer.Data.Api.Models.SmashAttributeType> SmashAttributeTypes { get; set; }
+        public virtual System.Data.Entity.IDbSet<Character> Characters { get; set; }
+        public virtual System.Data.Entity.IDbSet<CharacterAttribute> CharacterAttributes { get; set; }
+        public virtual System.Data.Entity.IDbSet<Move> Moves { get; set; }
+        public virtual System.Data.Entity.IDbSet<Movement> Movements { get; set; }
+        public virtual System.Data.Entity.IDbSet<SmashAttributeType> SmashAttributeTypes { get; set; }
     }
 }

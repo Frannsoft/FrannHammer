@@ -37,8 +37,7 @@ module app.common {
 
     export class DataAccessService implements IDataAccessService {
 
-        //baseUrl = "http://localhost/KHapi";
-        baseUrl = "http://localhost:62072/api";
+        baseUrl = "http://localhost/KHapi/api";
         updateAction: ng.resource.IActionDescriptor;
 
         static $inject = ["$resource"];
@@ -50,7 +49,7 @@ module app.common {
         }
 
         getCharacterResource(characterId?: number): ICharacterResource {
-            return <ICharacterResource>this.$resource(this.baseUrl + "/CharacterModels/:characterId",
+            return <ICharacterResource>this.$resource(this.baseUrl + "/Characters/:characterId",
                 { characterId: characterId },
                 { update: this.updateAction });
         }
@@ -80,19 +79,19 @@ module app.common {
         }
 
         getMovesOfCharacter(characterId: number): IMoveResource {
-            return <IMoveResource>this.$resource(this.baseUrl + "/CharacterModels/:characterId/moves",
+            return <IMoveResource>this.$resource(this.baseUrl + "/Characters/:characterId/moves",
                 { characterId: characterId },
                 { update: this.updateAction });
         }
 
         getMovementsOfCharacter(characterId: number): IMovementResource {
-            return <IMovementResource>this.$resource(this.baseUrl + "/CharacterModels/:characterId/movement",
+            return <IMovementResource>this.$resource(this.baseUrl + "/Characters/:characterId/movement",
                 { characterId: characterId },
                 { update: this.updateAction });
         }
 
         getAttributesOfType(id: number): ICharacterAttributeRowResource {
-            return <ICharacterAttributeRowResource>this.$resource(this.baseUrl + "/CharacterAttributeModels/:id",
+            return <ICharacterAttributeRowResource>this.$resource(this.baseUrl + "/CharacterAttribute/:id",
                 { id: id },
                 { update: this.updateAction });
         }

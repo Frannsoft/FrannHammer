@@ -12,6 +12,14 @@ namespace KuroganeHammer.Data.Api.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        public MovesController()
+        { }
+
+        public MovesController(ApplicationDbContext context)
+        {
+            db = context;
+        }
+
         // GET: api/Moves
         public IQueryable<Move> GetMoves()
         {
