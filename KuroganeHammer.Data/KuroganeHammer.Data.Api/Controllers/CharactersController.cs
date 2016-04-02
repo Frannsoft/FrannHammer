@@ -12,6 +12,14 @@ namespace KuroganeHammer.Data.Api.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        public CharactersController()
+        { }
+
+        public CharactersController(ApplicationDbContext context)
+        {
+            db = context;
+        }
+
         // GET: api/Characters
         public IQueryable<Character> GetCharacters()
         {
@@ -29,6 +37,18 @@ namespace KuroganeHammer.Data.Api.Controllers
             }
 
             return Ok(character);
+        }
+
+        [Route("Characters/{id}/movements")]
+        public IQueryable<Movement> GetMovementsForCharacter(int id)
+        {
+            return db.Movements.Where(m => m.OwnerId == id);
+        }
+
+        [Route("Characters/{id}/moves")]
+        public IQueryable<Move> GetMovesForCharacter(int id)
+        {
+            return db.Moves.Where(m => m.OwnerId == id);
         }
 
         // PUT: api/Characters/5
