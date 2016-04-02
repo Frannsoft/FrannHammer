@@ -1,4 +1,6 @@
-﻿namespace KuroganeHammer.Data.Api.Models
+﻿using System;
+
+namespace KuroganeHammer.Data.Api.Models
 {
     public class CharacterAttribute
     {
@@ -7,7 +9,7 @@
         public string Value { get; set; }
         public string Name { get; set; }
         public int Id { get; set; }
-
+        public DateTime LastModified { get; set; }
         public SmashAttributeType SmashAttributeType { get; set; }
 
         //public CharacterAttribute(string rank, string characterName,
