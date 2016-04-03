@@ -25,6 +25,8 @@ namespace KuroganeHammer.Data.Api.Controllers
 
         // GET: api/Moves
         [Authorize(Roles = Basic)]
+        [ResponseType(typeof(IQueryable<Move>))]
+        [Route("moves")]
         public IQueryable<Move> GetMoves()
         {
             return db.Moves;
@@ -33,6 +35,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         // GET: api/Moves/5
         [Authorize(Roles = Basic)]
         [ResponseType(typeof(Move))]
+        [Route("moves/{id}")]
         public IHttpActionResult GetMove(int id)
         {
             Move move = db.Moves.Find(id);
@@ -47,6 +50,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         // PUT: api/Moves/5
         [Authorize(Roles = Admin)]
         [ResponseType(typeof(void))]
+        [Route("moves/{id}")]
         public IHttpActionResult PutMove(int id, Move move)
         {
             if (!ModelState.IsValid)
@@ -84,6 +88,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         // POST: api/Moves
         [Authorize(Roles = Admin)]
         [ResponseType(typeof(Move))]
+        [Route("moves")]
         public IHttpActionResult PostMove(Move move)
         {
             if (!ModelState.IsValid)
@@ -95,12 +100,13 @@ namespace KuroganeHammer.Data.Api.Controllers
             db.Moves.Add(move);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = move.Id }, move);
+            return CreatedAtRoute("DefaultApi", new { controller= "Moves", id = move.Id }, move);
         }
 
         // DELETE: api/Moves/5
         [Authorize(Roles = Admin)]
         [ResponseType(typeof(Move))]
+        [Route("moves/{id}")]
         public IHttpActionResult DeleteMove(int id)
         {
             Move move = db.Moves.Find(id);
