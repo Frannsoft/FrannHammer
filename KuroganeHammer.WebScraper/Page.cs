@@ -1,9 +1,9 @@
 ﻿using HtmlAgilityPack;
-using Kurogane.Data.RestApi.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using KuroganeHammer.Data.Core;
 
 namespace KuroganeHammer.WebScraper
 {

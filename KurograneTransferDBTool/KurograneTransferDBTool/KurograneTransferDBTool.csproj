@@ -40,8 +40,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Kurogane.Data.RestApi">
-      <HintPath>E:\Development\C#projects\Kurogane.Data\Kurogane.Data.RestApi\bin\Kurogane.Data.RestApi.dll</HintPath>
+    <Reference Include="KuroganeHammer.Data.Api, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\KuroganeHammer.Data\KuroganeHammer.Data.Api\bin\KuroganeHammer.Data.Api.dll</HintPath>
     </Reference>
     <Reference Include="KuroganeHammer.Data.Core">
       <HintPath>E:\Development\C#projects\Kurogane.Data\KuroganeHammer.Data.Core\bin\Debug\KuroganeHammer.Data.Core.dll</HintPath>
@@ -76,7 +77,6 @@
     <Compile Include="BaseTest.cs" />
     <Compile Include="Loader.cs" />
     <Compile Include="PropertyUpdateHelper.cs" />
-    <Compile Include="Smoke.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

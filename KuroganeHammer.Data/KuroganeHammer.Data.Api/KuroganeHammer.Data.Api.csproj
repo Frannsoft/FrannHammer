@@ -216,6 +216,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\CustomAssembliesResolver.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -361,6 +362,12 @@
     <EmbeddedResource Include="Migrations\201604031319408_added lastmodified props to remaining models.resx">
       <DependentUpon>201604031319408_added lastmodified props to remaining models.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\KuroganeHammer.Data.Core\KuroganeHammer.Data.Core.csproj">
+      <Project>{2904d4e7-8989-46bd-ac0a-b4356f190a15}</Project>
+      <Name>KuroganeHammer.Data.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

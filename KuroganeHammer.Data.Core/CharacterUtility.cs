@@ -25,5 +25,11 @@ namespace KuroganeHammer.Data.Core
                 return value.ToString();
             }
         }
+
+        public static int GetCharacterIdFromName(string characterName)
+        {
+            var characterId = (Characters)Enum.Parse(typeof(Characters), characterName, true);
+            return (int)characterId;
+        }
     }
 }

@@ -1,8 +1,6 @@
 ﻿using System;
-using Kurogane.Data.RestApi.Models;
 using KuroganeHammer.Data.Core;
 using Newtonsoft.Json;
-using System.Linq;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;

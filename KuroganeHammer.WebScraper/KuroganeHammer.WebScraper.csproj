@@ -65,10 +65,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Kurogane.Data.RestApi\Kurogane.Data.RestApi.csproj">
-      <Project>{e1b5e9ba-8808-4b98-b6aa-385a7438abd3}</Project>
-      <Name>Kurogane.Data.RestApi</Name>
-    </ProjectReference>
     <ProjectReference Include="..\KuroganeHammer.Data.Core\KuroganeHammer.Data.Core.csproj">
       <Project>{2904d4e7-8989-46bd-ac0a-b4356f190a15}</Project>
       <Name>KuroganeHammer.Data.Core</Name>

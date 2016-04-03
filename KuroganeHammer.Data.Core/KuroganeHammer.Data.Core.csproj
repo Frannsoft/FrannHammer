@@ -56,11 +56,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AerialStat.cs" />
     <Compile Include="CharacterAttributes.cs" />
+    <Compile Include="CharacterStat.cs" />
     <Compile Include="CharacterUtility.cs" />
     <Compile Include="EntityBusinessConverter.cs" />
     <Compile Include="CharacterConstants.cs" />
+    <Compile Include="GroundStat.cs" />
+    <Compile Include="MovementStat.cs" />
+    <Compile Include="MoveStat.cs" />
+    <Compile Include="MoveType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpecialStat.cs" />
+    <Compile Include="Stat.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
