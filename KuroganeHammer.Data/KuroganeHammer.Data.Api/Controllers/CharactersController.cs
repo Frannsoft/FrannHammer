@@ -25,6 +25,7 @@ namespace KuroganeHammer.Data.Api.Controllers
 
         // GET: api/Characters
         [Authorize(Roles = Basic)]
+        [Route("characters")]
         public IQueryable<Character> GetCharacters()
         {
             return db.Characters;
@@ -33,6 +34,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         // GET: api/Characters/5
         [Authorize(Roles = Basic)]
         [ResponseType(typeof(Character))]
+        [Route("characters/{id}")]
         public IHttpActionResult GetCharacter(int id)
         {
             Character character = db.Characters.Find(id);
@@ -62,6 +64,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         // PUT: api/Characters/5
         [Authorize(Roles = Admin)]
         [ResponseType(typeof(void))]
+        [Route("characters/{id}")]
         public IHttpActionResult PutCharacter(int id, Character character)
         {
             if (!ModelState.IsValid)
@@ -99,6 +102,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         // POST: api/Characters
         [Authorize(Roles = Admin)]
         [ResponseType(typeof(Character))]
+        [Route("characters")]
         public IHttpActionResult PostCharacter(Character character)
         {
             if (!ModelState.IsValid)
@@ -115,6 +119,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         // DELETE: api/Characters/5
         [Authorize(Roles = Admin)]
         [ResponseType(typeof(Character))]
+        [Route("characters/{id}")]
         public IHttpActionResult DeleteCharacter(int id)
         {
             Character character = db.Characters.Find(id);

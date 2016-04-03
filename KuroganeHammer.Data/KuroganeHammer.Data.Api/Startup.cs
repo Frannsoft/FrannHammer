@@ -12,6 +12,8 @@ namespace KuroganeHammer.Data.Api
         {
             ConfigureAuth(app);
             app.UseCors(CorsOptions.AllowAll);
+
+           
         }
     }
 }
