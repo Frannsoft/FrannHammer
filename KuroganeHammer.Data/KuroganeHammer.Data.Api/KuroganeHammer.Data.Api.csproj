@@ -262,6 +262,10 @@
     <Compile Include="Migrations\201604010102430_initial design.Designer.cs">
       <DependentUpon>201604010102430_initial design.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604031319408_added lastmodified props to remaining models.cs" />
+    <Compile Include="Migrations\201604031319408_added lastmodified props to remaining models.Designer.cs">
+      <DependentUpon>201604031319408_added lastmodified props to remaining models.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -272,6 +276,7 @@
     <Compile Include="Models\Movement.cs" />
     <Compile Include="Models\MoveType.cs" />
     <Compile Include="Models\RoleBindingModel.cs" />
+    <Compile Include="Models\RolesConstants.cs" />
     <Compile Include="Models\SmashAttributeType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
@@ -352,6 +357,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201604010102430_initial design.resx">
       <DependentUpon>201604010102430_initial design.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604031319408_added lastmodified props to remaining models.resx">
+      <DependentUpon>201604031319408_added lastmodified props to remaining models.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
