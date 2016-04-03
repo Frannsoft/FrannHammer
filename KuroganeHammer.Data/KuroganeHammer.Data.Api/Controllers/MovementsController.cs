@@ -4,11 +4,13 @@ using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
+using static KuroganeHammer.Data.Api.Models.RolesConstants;
 using KuroganeHammer.Data.Api.Models;
 using System;
 
 namespace KuroganeHammer.Data.Api.Controllers
 {
+    [RoutePrefix("api")]
     public class MovementsController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -22,12 +24,14 @@ namespace KuroganeHammer.Data.Api.Controllers
         }
 
         // GET: api/Movements
+        [Authorize(Roles = Basic)]
         public IQueryable<Movement> GetMovements()
         {
             return db.Movements;
         }
 
         // GET: api/Movements/5
+        [Authorize(Roles = Basic)]
         [ResponseType(typeof(Movement))]
         public IHttpActionResult GetMovement(int id)
         {
@@ -41,6 +45,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         }
 
         // PUT: api/Movements/5
+        [Authorize(Roles = Admin)]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutMovement(int id, Movement movement)
         {
@@ -77,6 +82,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         }
 
         // POST: api/Movements
+        [Authorize(Roles = Admin)]
         [ResponseType(typeof(Movement))]
         public IHttpActionResult PostMovement(Movement movement)
         {
@@ -93,6 +99,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         }
 
         // DELETE: api/Movements/5
+        [Authorize(Roles = Admin)]
         [ResponseType(typeof(Movement))]
         public IHttpActionResult DeleteMovement(int id)
         {

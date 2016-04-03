@@ -5,10 +5,12 @@ using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
+using static KuroganeHammer.Data.Api.Models.RolesConstants;
 using KuroganeHammer.Data.Api.Models;
 
 namespace KuroganeHammer.Data.Api.Controllers
 {
+    [RoutePrefix("api")]
     public class CharacterAttributesController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -22,12 +24,14 @@ namespace KuroganeHammer.Data.Api.Controllers
         }
 
         // GET: api/CharacterAttributes
+        [Authorize(Roles = Basic)]
         public IQueryable<CharacterAttribute> GetCharacterAttributes()
         {
             return db.CharacterAttributes;
         }
 
         // GET: api/CharacterAttributes/5
+        [Authorize(Roles = Basic)]
         [ResponseType(typeof(CharacterAttribute))]
         public IHttpActionResult GetCharacterAttribute(int id)
         {
@@ -41,6 +45,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         }
 
         // PUT: api/CharacterAttributes/5
+        [Authorize(Roles = Admin)]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutCharacterAttribute(int id, CharacterAttribute characterAttribute)
         {
@@ -77,6 +82,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         }
 
         // POST: api/CharacterAttributes
+        [Authorize(Roles = Admin)]
         [ResponseType(typeof(CharacterAttribute))]
         public IHttpActionResult PostCharacterAttribute(CharacterAttribute characterAttribute)
         {
@@ -93,6 +99,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         }
 
         // DELETE: api/CharacterAttributes/5
+        [Authorize(Roles = Admin)]
         [ResponseType(typeof(CharacterAttribute))]
         public IHttpActionResult DeleteCharacterAttribute(int id)
         {
