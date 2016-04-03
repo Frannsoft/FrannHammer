@@ -85,7 +85,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="item in vm.moveData | orderBy:vm.predicate:vm.reverse | filter : {type: 'Ground'} : true" ng-click="vm.goToMoveRanking(item)">
+                <tr ng-repeat="item in vm.moveData | orderBy:vm.predicate:vm.reverse | filter : {type: 0} : true" ng-click="vm.goToMoveRanking(item)">
                     <td nowrap>{{item.name}}</td>
                     <td nowrap>{{item.hitboxActive}}</td>
                     <td nowrap>{{item.firstActionableFrame}}</td>
@@ -148,7 +148,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="item in vm.moveData | orderBy:vm.predicate:vm.reverse | filter : {type: 'Aerial'} : true" ng-click="vm.goToMoveRanking(item)">
+                <tr ng-repeat="item in vm.moveData | orderBy:vm.predicate:vm.reverse | filter : {type: 1} : true" ng-click="vm.goToMoveRanking(item)">
                     <td nowrap>{{item.name}}</td>
                     <td nowrap>{{item.hitboxActive}}</td>
                     <td nowrap>{{item.firstActionableFrame}}</td>
@@ -212,7 +212,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="item in vm.moveData | orderBy:vm.predicate:vm.reverse | filter : {type: 'Special'} : true" ng-click="vm.goToMoveRanking(item)">
+                <tr ng-repeat="item in vm.moveData | orderBy:vm.predicate:vm.reverse | filter : {type: 2} : true" ng-click="vm.goToMoveRanking(item)">
                     <td nowrap>{{item.name}}</td>
                     <td nowrap>{{item.hitboxActive}}</td>
                     <td nowrap>{{item.firstActionableFrame}}</td>

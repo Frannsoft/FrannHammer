@@ -32,10 +32,13 @@ var app;
                 return this.$resource(this.baseUrl + "/Characters/:characterId/moves", { characterId: characterId }, { update: this.updateAction });
             };
             DataAccessService.prototype.getMovementsOfCharacter = function (characterId) {
-                return this.$resource(this.baseUrl + "/Characters/:characterId/movement", { characterId: characterId }, { update: this.updateAction });
+                return this.$resource(this.baseUrl + "/Characters/:characterId/movements", { characterId: characterId }, { update: this.updateAction });
             };
-            DataAccessService.prototype.getAttributesOfType = function (id) {
-                return this.$resource(this.baseUrl + "/CharacterAttribute/:id", { id: id }, { update: this.updateAction });
+            DataAccessService.prototype.getCharacterAttributes = function (id) {
+                return this.$resource(this.baseUrl + "/CharacterAttributes/:id", { id: id }, { update: this.updateAction });
+            };
+            DataAccessService.prototype.getCharacterAttributesOfSmashAttributeType = function (id) {
+                return this.$resource(this.baseUrl + "/smashattributetypes/:id/characterattributes", { id: id });
             };
             DataAccessService.prototype.getSmash4AttributeTypes = function (id) {
                 return this.$resource(this.baseUrl + "/SmashAttributeTypes/:id", { id: id }, { update: this.updateAction });

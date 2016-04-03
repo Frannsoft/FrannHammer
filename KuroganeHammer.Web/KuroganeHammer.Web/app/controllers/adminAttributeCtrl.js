@@ -10,14 +10,14 @@ var app;
                 this.$routeParams = $routeParams;
                 this.attributes = [];
                 this.attributeType = $routeParams.attributeType;
-                var attributesResource = dataAccessService.getAttributesOfType(this.attributeType);
+                var attributesResource = dataAccessService.getCharacterAttributes(this.attributeType);
                 attributesResource.query(function (data) {
                     _this.attributes = data;
                     _this.headers = _this.attributes[0].rawHeaders;
                 });
             }
             AdminAttributeCtrl.prototype.saveAttribute = function (attribute) {
-                var attributesResource = this.dataAccessService.getAttributesOfType(this.attributeType);
+                var attributesResource = this.dataAccessService.getCharacterAttributes(this.attributeType);
                 attributesResource.save({ id: attribute.id }, attribute);
             };
             AdminAttributeCtrl.$inject = ["dataAccessService", "$location", "$routeParams"];
