@@ -260,7 +260,7 @@ namespace KurograneTransferDBTool
         public async Task ReloadSmash4CharacterAttributeValues()
         {
             //get all attributeTypes in db
-            var attributeTypes = LoggedInAdminClient.GetAsync(Baseuri + "/attributes")
+            var attributeTypes = LoggedInAdminClient.GetAsync(Baseuri + "/smashattributetypes")
                 .Result.Content.ReadAsAsync<List<SmashAttributeType>>().Result;
 
             var baseUrl = "http://kuroganehammer.com/Smash4/";
