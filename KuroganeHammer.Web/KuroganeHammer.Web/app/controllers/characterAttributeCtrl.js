@@ -12,7 +12,7 @@ var app;
                 this.reverse = true;
                 this.attributes = [];
                 this.attributeType = $routeParams.attributeType;
-                var attributesResource = dataAccessService.getAttributesOfType(this.attributeType);
+                var attributesResource = dataAccessService.getCharacterAttributesOfSmashAttributeType(this.attributeType);
                 attributesResource.query(function (data) {
                     _this.attributes = data;
                     _this.headers = _this.attributes[0].rawHeaders;

@@ -11,7 +11,8 @@ module app.common {
         getMovesOfName(name: string): IMoveResource;
         getMovesOfCharacter(characterId: number): IMoveResource;
         getMovementsOfCharacter(characterId: number): IMovementResource;
-        getAttributesOfType(id: number): ICharacterAttributeRowResource;
+        getCharacterAttributes(id: number): ICharacterAttributeRowResource;
+        getCharacterAttributesOfSmashAttributeType(id: number): ICharacterAttributeRowResource;
         getSmash4AttributeTypes(): ISmashAttributeTypeResource;
     }
 
@@ -85,15 +86,20 @@ module app.common {
         }
 
         getMovementsOfCharacter(characterId: number): IMovementResource {
-            return <IMovementResource>this.$resource(this.baseUrl + "/Characters/:characterId/movement",
+            return <IMovementResource>this.$resource(this.baseUrl + "/Characters/:characterId/movements",
                 { characterId: characterId },
                 { update: this.updateAction });
         }
 
-        getAttributesOfType(id: number): ICharacterAttributeRowResource {
-            return <ICharacterAttributeRowResource>this.$resource(this.baseUrl + "/CharacterAttribute/:id",
+        getCharacterAttributes(id: number): ICharacterAttributeRowResource {
+            return <ICharacterAttributeRowResource>this.$resource(this.baseUrl + "/CharacterAttributes/:id",
                 { id: id },
                 { update: this.updateAction });
+        }
+
+        getCharacterAttributesOfSmashAttributeType(id: number): ICharacterAttributeRowResource {
+            return <ICharacterAttributeRowResource>this.$resource(this.baseUrl + "/smashattributetypes/:id/characterattributes",
+            { id: id });
         }
 
         getSmash4AttributeTypes(id?: number): ISmashAttributeTypeResource {

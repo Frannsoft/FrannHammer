@@ -32,7 +32,7 @@
             this.attributes = [];
             this.attributeType = $routeParams.attributeType;
 
-            var attributesResource = dataAccessService.getAttributesOfType(this.attributeType);
+            var attributesResource = dataAccessService.getCharacterAttributesOfSmashAttributeType(this.attributeType);
             attributesResource.query((data: domain.ICharacterAttributeRow[]) => {
                 this.attributes = data;
                 this.headers = this.attributes[0].rawHeaders;

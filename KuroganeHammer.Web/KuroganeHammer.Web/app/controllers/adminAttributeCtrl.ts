@@ -27,7 +27,7 @@
             this.attributes = [];
             this.attributeType = $routeParams.attributeType;
 
-            var attributesResource = dataAccessService.getAttributesOfType(this.attributeType);
+            var attributesResource = dataAccessService.getCharacterAttributes(this.attributeType);
             attributesResource.query((data: domain.ICharacterAttributeRow[]) => {
                 this.attributes = data;
                 this.headers = this.attributes[0].rawHeaders;
@@ -35,7 +35,7 @@
         }
 
         saveAttribute(attribute: ICharacterAttribute): void {
-            var attributesResource = this.dataAccessService.getAttributesOfType(this.attributeType);
+            var attributesResource = this.dataAccessService.getCharacterAttributes(this.attributeType);
             attributesResource.save({ id: attribute.id }, attribute);
         }
 
