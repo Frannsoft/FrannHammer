@@ -195,3 +195,4 @@ FakesAssemblies/
 # Visual Studio 6 workspace options file
 *.opt
 KurograneTransferDBTool/KurograneTransferDBTool/app.config
+KuroganeHammer.Data/KuroganeHammer.Data.Api.Tests/App.config
