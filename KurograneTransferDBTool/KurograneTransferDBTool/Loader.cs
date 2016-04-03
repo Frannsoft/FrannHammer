@@ -300,7 +300,7 @@ namespace KurograneTransferDBTool
                             LastModified = DateTime.Now,
                             Name = attributeName,
                             OwnerId = CharacterUtility.GetCharacterIdFromName(characterName),
-                            SmashAttributeType = dbAttributeType,
+                            SmashAttributeTypeId = dbAttributeType.Id,
                             Value = value
                         }; 
                         fullAtts.Add(characterAttribute);
