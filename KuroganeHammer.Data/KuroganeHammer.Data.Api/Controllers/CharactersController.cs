@@ -113,7 +113,7 @@ namespace KuroganeHammer.Data.Api.Controllers
             db.Characters.Add(character);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = character.Id }, character);
+            return CreatedAtRoute("DefaultApi", new { controller = "Characters", id = character.Id }, character);
         }
 
         // DELETE: api/Characters/5

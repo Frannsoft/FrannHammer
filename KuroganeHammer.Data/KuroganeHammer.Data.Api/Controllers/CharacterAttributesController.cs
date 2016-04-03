@@ -25,6 +25,7 @@ namespace KuroganeHammer.Data.Api.Controllers
 
         // GET: api/CharacterAttributes
         [Authorize(Roles = Basic)]
+        [Route("characterattributes")]
         public IQueryable<CharacterAttribute> GetCharacterAttributes()
         {
             return db.CharacterAttributes;
@@ -33,6 +34,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         // GET: api/CharacterAttributes/5
         [Authorize(Roles = Basic)]
         [ResponseType(typeof(CharacterAttribute))]
+        [Route("characterattributes/{id}")]
         public IHttpActionResult GetCharacterAttribute(int id)
         {
             CharacterAttribute characterAttribute = db.CharacterAttributes.Find(id);
@@ -47,6 +49,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         // PUT: api/CharacterAttributes/5
         [Authorize(Roles = Admin)]
         [ResponseType(typeof(void))]
+        [Route("characterattributes/{id}")]
         public IHttpActionResult PutCharacterAttribute(int id, CharacterAttribute characterAttribute)
         {
             if (!ModelState.IsValid)
@@ -83,7 +86,7 @@ namespace KuroganeHammer.Data.Api.Controllers
 
         // POST: api/CharacterAttributes
         [Authorize(Roles = Admin)]
-        [ResponseType(typeof(CharacterAttribute))]
+        [Route("characterattributes")]
         public IHttpActionResult PostCharacterAttribute(CharacterAttribute characterAttribute)
         {
             if (!ModelState.IsValid)
@@ -95,12 +98,14 @@ namespace KuroganeHammer.Data.Api.Controllers
             db.CharacterAttributes.Add(characterAttribute);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = characterAttribute.Id }, characterAttribute);
+            var result = CreatedAtRoute("DefaultApi", new { controller="CharacterAttributes", id = characterAttribute.Id }, characterAttribute);
+            return result;
         }
 
         // DELETE: api/CharacterAttributes/5
         [Authorize(Roles = Admin)]
         [ResponseType(typeof(CharacterAttribute))]
+        [Route("characterattributes/{id}")]
         public IHttpActionResult DeleteCharacterAttribute(int id)
         {
             CharacterAttribute characterAttribute = db.CharacterAttributes.Find(id);
