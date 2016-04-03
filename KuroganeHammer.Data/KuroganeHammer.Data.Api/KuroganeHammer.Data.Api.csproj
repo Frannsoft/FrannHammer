@@ -255,6 +255,9 @@
     <Compile Include="Controllers\MovementsController.cs" />
     <Compile Include="Controllers\MovesController.cs" />
     <Compile Include="Controllers\SmashAttributeTypesController.cs" />
+    <Compile Include="DTOs\CharacterAttributeDto.cs" />
+    <Compile Include="DTOs\CharacterAttributeRowDto.cs" />
+    <Compile Include="DTOs\SmashAttributeTypeDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -265,6 +268,10 @@
     <Compile Include="Migrations\201604031319408_added lastmodified props to remaining models.cs" />
     <Compile Include="Migrations\201604031319408_added lastmodified props to remaining models.Designer.cs">
       <DependentUpon>201604031319408_added lastmodified props to remaining models.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604031759278_added smashattributetypeid prop to characterattribute model.cs" />
+    <Compile Include="Migrations\201604031759278_added smashattributetypeid prop to characterattribute model.Designer.cs">
+      <DependentUpon>201604031759278_added smashattributetypeid prop to characterattribute model.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -360,6 +367,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201604031319408_added lastmodified props to remaining models.resx">
       <DependentUpon>201604031319408_added lastmodified props to remaining models.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604031759278_added smashattributetypeid prop to characterattribute model.resx">
+      <DependentUpon>201604031759278_added smashattributetypeid prop to characterattribute model.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
