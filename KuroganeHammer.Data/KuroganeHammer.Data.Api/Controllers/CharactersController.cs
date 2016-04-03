@@ -5,10 +5,12 @@ using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
 using KuroganeHammer.Data.Api.Models;
+using static KuroganeHammer.Data.Api.Models.RolesConstants;
 using System;
 
 namespace KuroganeHammer.Data.Api.Controllers
 {
+    [RoutePrefix("api")]
     public class CharactersController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -22,12 +24,14 @@ namespace KuroganeHammer.Data.Api.Controllers
         }
 
         // GET: api/Characters
+        [Authorize(Roles = Basic)]
         public IQueryable<Character> GetCharacters()
         {
             return db.Characters;
         }
 
         // GET: api/Characters/5
+        [Authorize(Roles = Basic)]
         [ResponseType(typeof(Character))]
         public IHttpActionResult GetCharacter(int id)
         {
@@ -40,12 +44,15 @@ namespace KuroganeHammer.Data.Api.Controllers
             return Ok(character);
         }
 
+        [Authorize(Roles = Basic)]
         [Route("Characters/{id}/movements")]
+        [HttpGet]
         public IQueryable<Movement> GetMovementsForCharacter(int id)
         {
             return db.Movements.Where(m => m.OwnerId == id);
         }
 
+        [Authorize(Roles = Basic)]
         [Route("Characters/{id}/moves")]
         public IQueryable<Move> GetMovesForCharacter(int id)
         {
@@ -53,6 +60,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         }
 
         // PUT: api/Characters/5
+        [Authorize(Roles = Admin)]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutCharacter(int id, Character character)
         {
@@ -89,6 +97,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         }
 
         // POST: api/Characters
+        [Authorize(Roles = Admin)]
         [ResponseType(typeof(Character))]
         public IHttpActionResult PostCharacter(Character character)
         {
@@ -104,6 +113,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         }
 
         // DELETE: api/Characters/5
+        [Authorize(Roles = Admin)]
         [ResponseType(typeof(Character))]
         public IHttpActionResult DeleteCharacter(int id)
         {

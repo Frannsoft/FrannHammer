@@ -5,10 +5,12 @@ using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
+using static KuroganeHammer.Data.Api.Models.RolesConstants;
 using KuroganeHammer.Data.Api.Models;
 
 namespace KuroganeHammer.Data.Api.Controllers
 {
+    [RoutePrefix("api")]
     public class SmashAttributeTypesController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -23,12 +25,14 @@ namespace KuroganeHammer.Data.Api.Controllers
 
 
         // GET: api/SmashAttributeTypes
+        [Authorize(Roles = Basic)]
         public IQueryable<SmashAttributeType> GetSmashAttributeTypes()
         {
             return db.SmashAttributeTypes;
         }
 
         // GET: api/SmashAttributeTypes/5
+        [Authorize(Roles = Basic)]
         [ResponseType(typeof(SmashAttributeType))]
         public IHttpActionResult GetSmashAttributeType(int id)
         {
@@ -42,6 +46,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         }
 
         // PUT: api/SmashAttributeTypes/5
+        [Authorize(Roles = Admin)]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutSmashAttributeType(int id, SmashAttributeType smashAttributeType)
         {
@@ -78,6 +83,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         }
 
         // POST: api/SmashAttributeTypes
+        [Authorize(Roles = Admin)]
         [ResponseType(typeof(SmashAttributeType))]
         public IHttpActionResult PostSmashAttributeType(SmashAttributeType smashAttributeType)
         {
@@ -94,6 +100,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         }
 
         // DELETE: api/SmashAttributeTypes/5
+        [Authorize(Roles = Admin)]
         [ResponseType(typeof(SmashAttributeType))]
         public IHttpActionResult DeleteSmashAttributeType(int id)
         {
