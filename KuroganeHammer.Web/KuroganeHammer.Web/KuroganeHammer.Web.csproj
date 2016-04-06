@@ -78,6 +78,7 @@
     <Content Include="content\css\bootstrap.min.css" />
     <Content Include="content\css\character.css" />
     <Content Include="content\css\cyborg.css" />
+    <Content Include="content\css\login\login.css" />
     <Content Include="content\css\Site.css" />
     <Content Include="content\css\sortorder.css" />
     <Content Include="content\css\ui-bootstrap-csp.css" />
