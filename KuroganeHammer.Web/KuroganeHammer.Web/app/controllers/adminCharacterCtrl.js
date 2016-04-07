@@ -41,12 +41,12 @@ var app;
                 characterResource.update(this.character);
             };
             AdminCharacterCtrl.prototype.saveMovementRow = function (rowItem) {
-                var movementResource = this.dataAccessService.getMovementResource(this.character.id);
-                movementResource.save({ id: rowItem.id }, rowItem);
+                var movementResource = this.dataAccessService.getMovementResource(rowItem.id);
+                movementResource.update(rowItem);
             };
             AdminCharacterCtrl.prototype.saveMoveRow = function (rowItem) {
-                var moveResource = this.dataAccessService.getMoveResource(this.character.id);
-                moveResource.save({ id: rowItem.id }, rowItem);
+                var moveResource = this.dataAccessService.getMoveResource(rowItem.id);
+                moveResource.update(rowItem);
             };
             AdminCharacterCtrl.prototype.createNewMovementStat = function () {
                 this.newMovementStat.ownerId = this.character.id;
