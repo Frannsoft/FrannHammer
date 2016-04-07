@@ -45,7 +45,7 @@ module app.common {
         constructor(private $resource: ng.resource.IResourceService) {
             this.updateAction = {
                 method: 'PUT',
-                isArray: false,
+                isArray: false
             };
         }
 

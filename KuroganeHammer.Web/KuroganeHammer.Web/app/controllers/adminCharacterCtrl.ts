@@ -69,13 +69,13 @@
         }
 
         saveMovementRow(rowItem: domain.IMovement): void {
-            var movementResource = this.dataAccessService.getMovementResource(this.character.id);
-            movementResource.save({ id: rowItem.id }, rowItem);
+            var movementResource = this.dataAccessService.getMovementResource(rowItem.id);
+            movementResource.update(rowItem);
         }
 
         saveMoveRow(rowItem: domain.IMove): void {
-            var moveResource = this.dataAccessService.getMoveResource(this.character.id);
-            moveResource.save({ id: rowItem.id }, rowItem);
+            var moveResource = this.dataAccessService.getMoveResource(rowItem.id);
+            moveResource.update(rowItem);
         }
 
         createNewMovementStat(): void {
