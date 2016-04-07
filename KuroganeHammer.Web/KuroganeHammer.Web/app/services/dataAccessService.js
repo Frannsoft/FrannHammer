@@ -10,7 +10,7 @@ var app;
                 this.baseUrl = "http://localhost/KHapi/api";
                 this.updateAction = {
                     method: 'PUT',
-                    isArray: false,
+                    isArray: false
                 };
             }
             DataAccessService.prototype.getCharacterResource = function (characterId) {
