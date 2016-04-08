@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace KuroganeHammer.Data.Api.DTOs
+﻿namespace KuroganeHammer.Data.Api.DTOs
 {
     public class CharacterAttributeDto
     {
@@ -16,5 +11,5 @@ namespace KuroganeHammer.Data.Api.DTOs
         public int SmashAttributeTypeId { get; set; }
     }
 
-    
+
 }

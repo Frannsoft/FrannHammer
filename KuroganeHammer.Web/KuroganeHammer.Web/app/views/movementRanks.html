@@ -5,7 +5,7 @@
     <!--<a href="https://twitter.com/share" class="twitter-share-button" data-via="jpol711" data-dnt="true">Tweet</a>-->
     <br />
     <br />
-    <table class="table table-hover table-striped">
+    <table class="table table-hover  table-striped table-responsive" style="width: 50%; margin: auto; ">
         <thead>
             <tr>
                 <th>
@@ -20,7 +20,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="item in vm.movementData | orderBy:vm.predicate:vm.reverse" ng-click="vm.goToCharacter(item)">
-                <td><img width="70" height="70" ng-src="{{item.thumbnailUrl}}" /></td>
+                <td>{{item.thumbnailUrl}}<!--<img width="50" height="50" ng-src="{{item.thumbnailUrl}}" />--></td>
                 <td>{{item.value}}</td>
             </tr>
     </table>
