@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Http.Results;
+using KuroganeHammer.Data.Api.DTOs;
 using KuroganeHammer.Data.Api.Models;
 using NUnit.Framework;
 
@@ -9,6 +10,15 @@ namespace KuroganeHammer.Data.Api.Tests.Controllers
     [TestFixture]
     public class MovementsControllerTest : BaseControllerTest
     {
+        private Character _loadedCharacter;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _loadedCharacter = TestObjects.Character();
+            CharactersController.PostCharacter(_loadedCharacter);
+        }
+
 
         [Test]
         public void ShouldGetMovements()
@@ -16,7 +26,7 @@ namespace KuroganeHammer.Data.Api.Tests.Controllers
             var movement = TestObjects.Movement();
             MovementsController.PostMovement(movement);
 
-            var result = MovementsController.GetMovement(movement.Id) as OkNegotiatedContentResult<Movement>;
+            var result = MovementsController.GetMovement(movement.Id) as OkNegotiatedContentResult<MovementDto>;
 
             Assert.That(result, Is.Not.Null);
         }
@@ -30,6 +40,29 @@ namespace KuroganeHammer.Data.Api.Tests.Controllers
             var results = MovementsController.GetMovements();
 
             Assert.That(results.Count(), Is.EqualTo(1));
+        }
+
+        [Test]
+        [TestCase("Weight")]
+        public void ShouldGetAllMovementsByName(string name)
+        {
+            var movement = TestObjects.Movement();
+            var movement2 = new Movement
+            {
+                Id = 2,
+                LastModified = DateTime.Now,
+                Name = name,
+                OwnerId = _loadedCharacter.Id,
+                Value = "3"
+            };
+
+            MovementsController.PostMovement(movement);
+            MovementsController.PostMovement(movement2);
+
+            var results = MovementsController.GetMovementsByName(name);
+
+            Assert.That(results.Count(), Is.EqualTo(1));
+            Assert.That(results.First().Name, Is.EqualTo(name));
         }
 
         [Test]
@@ -60,7 +93,7 @@ namespace KuroganeHammer.Data.Api.Tests.Controllers
                 MovementsController.PutMovement(returnedMovements.Content.Id, returnedMovements.Content);
             }
 
-            var updatedMovements = MovementsController.GetMovement(movement.Id) as OkNegotiatedContentResult<Movement>;
+            var updatedMovements = MovementsController.GetMovement(movement.Id) as OkNegotiatedContentResult<MovementDto>;
 
             Assert.That(updatedMovements?.Content.Name, Is.EqualTo(expectedName));
             Assert.That(updatedMovements?.Content.LastModified, Is.GreaterThan(dateTime));

@@ -7,9 +7,11 @@ using System.Web.Http.Description;
 using static KuroganeHammer.Data.Api.Models.RolesConstants;
 using KuroganeHammer.Data.Api.Models;
 using System;
+using KuroganeHammer.Data.Api.DTOs;
 
 namespace KuroganeHammer.Data.Api.Controllers
 {
+    
     [RoutePrefix("api")]
     public class MovementsController : ApiController
     {
@@ -23,18 +25,34 @@ namespace KuroganeHammer.Data.Api.Controllers
             db = context;
         }
 
-        // GET: api/Movements
+        /// <summary>
+        /// Get all movement data.
+        /// </summary>
         [Authorize(Roles = Basic)]
-        [ResponseType(typeof(IQueryable<Movement>))]
+        [ResponseType(typeof(IQueryable<MovementDto>))]
         [Route("movements")]
-        public IQueryable<Movement> GetMovements()
+        public IQueryable<MovementDto> GetMovements()
         {
-            return db.Movements;
+            return (from movement in db.Movements.ToList()
+                    select new MovementDto(movement,
+                    db.Characters.First(c => c.Id == movement.OwnerId))
+                ).AsQueryable();
+        }
+
+        [Authorize(Roles = Basic)]
+        [ResponseType(typeof(IQueryable<MovementDto>))]
+        [Route("movements", Name = "GetMovementsByName")]
+        public IQueryable<MovementDto> GetMovementsByName([FromUri] string name)
+        {
+            return (from movement in db.Movements.Where(m => m.Name.Equals(name)).ToList()
+                    select new MovementDto(movement,
+                    db.Characters.First(c => c.Id == movement.OwnerId))
+                ).AsQueryable();
         }
 
         // GET: api/Movements/5
         [Authorize(Roles = Basic)]
-        [ResponseType(typeof(Movement))]
+        [ResponseType(typeof(MovementDto))]
         [Route("movements/{id}")]
         public IHttpActionResult GetMovement(int id)
         {
@@ -44,10 +62,12 @@ namespace KuroganeHammer.Data.Api.Controllers
                 return NotFound();
             }
 
-            return Ok(movement);
+            var dto = new MovementDto(movement,
+                db.Characters.First(c => c.Id == movement.OwnerId));
+            return Ok(dto);
         }
 
-        // PUT: api/Movements/5
+        // PUT: api/movement/5
         [Authorize(Roles = Admin)]
         [ResponseType(typeof(void))]
         [Route("movements/{id}")]
@@ -100,7 +120,9 @@ namespace KuroganeHammer.Data.Api.Controllers
             db.Movements.Add(movement);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { controller="Movements", id = movement.Id }, movement);
+            //var dto = new MovementDto(movement,
+            //    db.Characters.First(c => c.Id == movement.OwnerId));
+            return CreatedAtRoute("DefaultApi", new { controller = "Movements", id = movement.Id }, movement);
         }
 
         // DELETE: api/Movements/5

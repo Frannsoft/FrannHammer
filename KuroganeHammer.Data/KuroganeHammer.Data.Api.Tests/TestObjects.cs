@@ -11,6 +11,7 @@ namespace KuroganeHammer.Data.Api.Tests
         private int _smashAttributeTypeCounter;
         private int _characterAttributeCounter;
 
+
         public Move Move()
         {
             var move = new Move
@@ -26,7 +27,7 @@ namespace KuroganeHammer.Data.Api.Tests
                 LandingLag = "11",
                 LastModified = DateTime.Now,
                 Name = "falco phantasm",
-                OwnerId = 1,
+                OwnerId = _characterCounter,
                 TotalHitboxActiveLength = 30,
                 Type = MoveType.Special
             };
@@ -43,7 +44,7 @@ namespace KuroganeHammer.Data.Api.Tests
                 Id = _movementCounter,
                 LastModified = DateTime.Now,
                 Name = "jab 1",
-                OwnerId = 1,
+                OwnerId = _characterCounter,
                 Value = "3 frames"
             };
 
