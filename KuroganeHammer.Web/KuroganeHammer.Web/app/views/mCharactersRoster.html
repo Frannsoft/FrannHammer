@@ -1,12 +1,14 @@
 ﻿<div class="col-xs-12 col-sm-12 col-md-offset-2 col-md-8 col-md-offset-2">
-    <table ng-repeat="character in vm.characters" class="table table-hover box fade-in one">
+    <a href="#attributes">Character Attributes</a>
+    <br /><br />
+    <table ng-repeat="character in vm.characters" class="table table-hover table-responsive table-striped box fade-in one">
         <tr ng-click="vm.goToCharacter(character)">
             <td>
                 <img width="50" height="50" data-ng-src="{{character.thumbnailUrl}}"
-                     title="{{character.name}}" />
+                     title="{{character.name}}"/>
                 <!--<a href="#character/{{character.id}}">
 
-            </a>-->
+                </a>-->
                 <label>{{character.name}}</label>
             </td>
         </tr>
