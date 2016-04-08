@@ -104,6 +104,7 @@
     <Content Include="content\images\characterattributes\attribute-techs.png" />
     <Content Include="content\images\characterattributes\attribute-walkspeed.png" />
     <Content Include="content\images\characterattributes\attribute-weight.png" />
+    <Content Include="content\images\characterattributes\character-attributes.png" />
     <Content Include="index.html" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
