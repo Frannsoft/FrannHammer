@@ -4,6 +4,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using KuroganeHammer.Data.Api.Models;
 using NUnit.Framework;
+using System.Linq;
+using KuroganeHammer.Data.Api.DTOs;
 
 namespace KuroganeHammer.Data.Api.Tests.Smoke
 {
@@ -24,6 +26,21 @@ namespace KuroganeHammer.Data.Api.Tests.Smoke
         {
             CollectionAssert.AllItemsAreNotNull(_movements);
             CollectionAssert.AllItemsAreUnique(_movements);
+        }
+
+        [Test]
+        [TestCase("Weight")]
+        public async Task ShouldGetAllMovementsByName(string name)
+        {
+            var results = await LoggedInBasicClient.GetAsync(Baseuri + MovementsRoute + "?name=" + name);
+
+            Assert.IsTrue(results.IsSuccessStatusCode);
+
+            var movements = await results.Content.ReadAsAsync<List<MovementDto>>();
+
+            Assert.That(movements != null);
+            Assert.That(movements.Count > 0);
+            Assert.That(movements.All(m => m.Name.Equals(name)));
         }
 
         [Test]

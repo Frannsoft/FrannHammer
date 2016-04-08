@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Http.Results;
+using KuroganeHammer.Data.Api.DTOs;
 using KuroganeHammer.Data.Api.Models;
 using NUnit.Framework;
 
@@ -9,6 +10,14 @@ namespace KuroganeHammer.Data.Api.Tests.Controllers
     [TestFixture]
     public class MoveControllerTest : BaseControllerTest
     {
+        private Character _loadedCharacter;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _loadedCharacter = TestObjects.Character();
+            CharactersController.PostCharacter(_loadedCharacter);
+        }
 
         [Test]
         public void ShouldGetMove()
@@ -16,7 +25,7 @@ namespace KuroganeHammer.Data.Api.Tests.Controllers
             var move = TestObjects.Move();
             MovesController.PostMove(move);
 
-            var result = MovesController.GetMove(move.Id) as OkNegotiatedContentResult<Move>;
+            var result = MovesController.GetMove(move.Id) as OkNegotiatedContentResult<MoveDto>;
 
             Assert.That(result, Is.Not.Null);
         }
@@ -30,6 +39,32 @@ namespace KuroganeHammer.Data.Api.Tests.Controllers
             var results = MovesController.GetMoves();
 
             Assert.That(results.Count(), Is.EqualTo(1));
+        }
+
+        [Test]
+        [TestCase("Jab+2")]
+        public void ShouldGetAllMovesByName(string name)
+        {
+            //arrange
+
+            var move = TestObjects.Move();
+            var move2 = new Move
+            {
+                Id = 2,
+                LastModified = DateTime.Now,
+                Name = name,
+                OwnerId = _loadedCharacter.Id
+            };
+
+            MovesController.PostMove(move);
+            MovesController.PostMove(move2);
+
+            //act
+            var results = MovesController.GetMovesByName(name);
+
+            //assert
+            Assert.That(results.Count(), Is.EqualTo(1));
+            Assert.That(results.First().Name, Is.EqualTo(name));
         }
 
         [Test]
@@ -59,7 +94,7 @@ namespace KuroganeHammer.Data.Api.Tests.Controllers
                 MovesController.PutMove(returnedMove.Content.Id, returnedMove.Content);
             }
 
-            var updatedMove = MovesController.GetMove(move.Id) as OkNegotiatedContentResult<Move>;
+            var updatedMove = MovesController.GetMove(move.Id) as OkNegotiatedContentResult<MoveDto>;
 
             Assert.That(updatedMove?.Content.Name, Is.EqualTo(expectedName));
             Assert.That(updatedMove?.Content.LastModified, Is.GreaterThan(dateTime));

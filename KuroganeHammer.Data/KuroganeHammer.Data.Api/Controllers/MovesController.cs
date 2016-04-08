@@ -7,6 +7,7 @@ using System.Web.Http.Description;
 using KuroganeHammer.Data.Api.Models;
 using static KuroganeHammer.Data.Api.Models.RolesConstants;
 using System;
+using KuroganeHammer.Data.Api.DTOs;
 
 namespace KuroganeHammer.Data.Api.Controllers
 {
@@ -25,16 +26,30 @@ namespace KuroganeHammer.Data.Api.Controllers
 
         // GET: api/Moves
         [Authorize(Roles = Basic)]
-        [ResponseType(typeof(IQueryable<Move>))]
+        [ResponseType(typeof(IQueryable<MoveDto>))]
         [Route("moves")]
-        public IQueryable<Move> GetMoves()
+        public IQueryable<MoveDto> GetMoves()
         {
-            return db.Moves;
+            return (from move in db.Moves.ToList()
+                    select new MoveDto(move,
+                        db.Characters.First(c => c.Id == move.OwnerId))
+                ).AsQueryable();
+        }
+
+        [Authorize(Roles = Basic)]
+        [ResponseType(typeof(IQueryable<MoveDto>))]
+        [Route("moves")]
+        public IQueryable<MoveDto> GetMovesByName([FromUri] string name)
+        {
+            return (from move in db.Moves.Where(m => m.Name.Equals(name)).ToList()
+                    select new MoveDto(move,
+                        db.Characters.First(c => c.Id == move.OwnerId))
+                ).AsQueryable();
         }
 
         // GET: api/Moves/5
         [Authorize(Roles = Basic)]
-        [ResponseType(typeof(Move))]
+        [ResponseType(typeof(MoveDto))]
         [Route("moves/{id}")]
         public IHttpActionResult GetMove(int id)
         {
@@ -44,7 +59,9 @@ namespace KuroganeHammer.Data.Api.Controllers
                 return NotFound();
             }
 
-            return Ok(move);
+            var dto = new MoveDto(move,
+                db.Characters.First(c => c.Id == move.OwnerId));
+            return Ok(dto);
         }
 
         // PUT: api/Moves/5
@@ -100,7 +117,7 @@ namespace KuroganeHammer.Data.Api.Controllers
             db.Moves.Add(move);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { controller= "Moves", id = move.Id }, move);
+            return CreatedAtRoute("DefaultApi", new { controller = "Moves", id = move.Id }, move);
         }
 
         // DELETE: api/Moves/5
