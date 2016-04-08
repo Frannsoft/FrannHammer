@@ -35,6 +35,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>App_Data/XmlDocument.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -266,6 +267,8 @@
     <Compile Include="Controllers\SmashAttributeTypesController.cs" />
     <Compile Include="DTOs\CharacterAttributeDto.cs" />
     <Compile Include="DTOs\CharacterAttributeRowDto.cs" />
+    <Compile Include="DTOs\MoveDto.cs" />
+    <Compile Include="DTOs\MovementDto.cs" />
     <Compile Include="DTOs\SmashAttributeTypeDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
