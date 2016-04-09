@@ -39,6 +39,7 @@ namespace KuroganeHammer.Data.Api.DTOs
             LastModified = move.LastModified;
             CharacterName = character.Name;
             ThumbnailUrl = character.ThumbnailUrl;
+            OwnerId = character.Id;
         }
 
         public MoveDto()
