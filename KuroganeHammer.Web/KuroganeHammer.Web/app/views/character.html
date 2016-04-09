@@ -71,8 +71,8 @@
                         <span ng-show="vm.predicate === 'knockbackGrowth'" ng-class="{vm.reverse:vm.reverse}"></span>
                     </th>
                     <th>
-                        <a href="" ng-click="vm.order('type')">Type</a>
-                        <span ng-show="vm.predicate === 'type'" ng-class="{vm.reverse:vm.reverse}"></span>
+                        <a href="" ng-click="vm.order('moveType')">Type</a>
+                        <span ng-show="vm.predicate === 'moveType'" ng-class="{vm.reverse:vm.reverse}"></span>
                     </th>
                     <th title="Landing Lag">
                         <a href="" ng-click="vm.order('landingLag')">LandingLag</a>
@@ -85,7 +85,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="item in vm.moveData | orderBy:vm.predicate:vm.reverse | filter : {type: 0} : true" ng-click="vm.goToMoveRanking(item)">
+                <tr ng-repeat="item in vm.moveData | orderBy:vm.predicate:vm.reverse | filter : {moveType: 'Ground'} : true" ng-click="vm.goToMoveRanking(item)">
                     <td nowrap>{{item.name}}</td>
                     <td nowrap>{{item.hitboxActive}}</td>
                     <td nowrap>{{item.firstActionableFrame}}</td>
@@ -93,7 +93,7 @@
                     <td nowrap>{{item.angle}}</td>
                     <td nowrap>{{item.baseKnockBackSetKnockback}}</td>
                     <td nowrap>{{item.knockbackGrowth}}</td>
-                    <td nowrap>{{item.type}}</td>
+                    <td nowrap>{{item.moveType}}</td>
                     <td nowrap>{{item.landingLag}}</td>
                     <td nowrap>{{item.autoCancel}}</td>
                 </tr>
@@ -134,8 +134,8 @@
                         <span ng-show="vm.predicate === 'knockbackGrowth'" ng-class="{vm.reverse:vm.reverse}"></span>
                     </th>
                     <th>
-                        <a href="" ng-click="vm.order('type')">Type</a>
-                        <span ng-show="vm.predicate === 'type'" ng-class="{vm.reverse:vm.reverse}"></span>
+                        <a href="" ng-click="vm.order('moveType')">Type</a>
+                        <span ng-show="vm.predicate === 'moveType'" ng-class="{vm.reverse:vm.reverse}"></span>
                     </th>
                     <th title="Landing Lag">
                         <a href="" ng-click="vm.order('landingLag')">LandingLag</a>
@@ -148,7 +148,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="item in vm.moveData | orderBy:vm.predicate:vm.reverse | filter : {type: 1} : true" ng-click="vm.goToMoveRanking(item)">
+                <tr ng-repeat="item in vm.moveData | orderBy:vm.predicate:vm.reverse | filter : {moveType: 'Aerial'} : true" ng-click="vm.goToMoveRanking(item)">
                     <td nowrap>{{item.name}}</td>
                     <td nowrap>{{item.hitboxActive}}</td>
                     <td nowrap>{{item.firstActionableFrame}}</td>
@@ -156,7 +156,7 @@
                     <td nowrap>{{item.angle}}</td>
                     <td nowrap>{{item.baseKnockBackSetKnockback}}</td>
                     <td nowrap>{{item.knockbackGrowth}}</td>
-                    <td nowrap>{{item.type}}</td>
+                    <td nowrap>{{item.moveType}}</td>
                     <td nowrap>{{item.landingLag}}</td>
                     <td nowrap>{{item.autoCancel}}</td>
                 </tr>
@@ -198,8 +198,8 @@
                         <span ng-show="vm.predicate === 'knockbackGrowth'" ng-class="{vm.reverse:vm.reverse}"></span>
                     </th>
                     <th>
-                        <a href="" ng-click="vm.order('type')">Type</a>
-                        <span ng-show="vm.predicate === 'type'" ng-class="{vm.reverse:vm.reverse}"></span>
+                        <a href="" ng-click="vm.order('moveType')">Type</a>
+                        <span ng-show="vm.predicate === 'moveType'" ng-class="{vm.reverse:vm.reverse}"></span>
                     </th>
                     <th title="Landing Lag">
                         <a href="" ng-click="vm.order('landingLag')">LandingLag</a>
@@ -212,7 +212,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="item in vm.moveData | orderBy:vm.predicate:vm.reverse | filter : {type: 2} : true" ng-click="vm.goToMoveRanking(item)">
+                <tr ng-repeat="item in vm.moveData | orderBy:vm.predicate:vm.reverse | filter : {moveType: 'Special'} : true" ng-click="vm.goToMoveRanking(item)">
                     <td nowrap>{{item.name}}</td>
                     <td nowrap>{{item.hitboxActive}}</td>
                     <td nowrap>{{item.firstActionableFrame}}</td>
@@ -220,7 +220,7 @@
                     <td nowrap>{{item.angle}}</td>
                     <td nowrap>{{item.baseKnockBackSetKnockback}}</td>
                     <td nowrap>{{item.knockbackGrowth}}</td>
-                    <td nowrap>{{item.type}}</td>
+                    <td nowrap>{{item.moveType}}</td>
                     <td nowrap>{{item.landingLag}}</td>
                     <td nowrap>{{item.autoCancel}}</td>
                 </tr>

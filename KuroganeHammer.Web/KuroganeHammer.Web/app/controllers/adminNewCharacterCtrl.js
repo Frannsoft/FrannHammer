@@ -77,7 +77,7 @@ var app;
                 this.clearTempMovementStat();
             };
             AdminNewCharacterCtrl.prototype.addTempMove = function () {
-                var move = new domain.Move(this.newMoveStat.name, this.newMoveStat.hitboxActive, this.newMoveStat.firstActionableFrame, this.newMoveStat.baseDamage, this.newMoveStat.angle, this.newMoveStat.baseKnockBackSetKnockback, this.newMoveStat.knockbackGrowth, this.newMoveStat.type, this.newMoveStat.landingLag, this.newMoveStat.autoCancel);
+                var move = new domain.Move(this.newMoveStat.name, this.newMoveStat.hitboxActive, this.newMoveStat.firstActionableFrame, this.newMoveStat.baseDamage, this.newMoveStat.angle, this.newMoveStat.baseKnockBackSetKnockback, this.newMoveStat.knockbackGrowth, this.newMoveStat.moveType, this.newMoveStat.landingLag, this.newMoveStat.autoCancel);
                 this.tempMoveData.push(move);
                 this.clearTempMoveStat();
             };
