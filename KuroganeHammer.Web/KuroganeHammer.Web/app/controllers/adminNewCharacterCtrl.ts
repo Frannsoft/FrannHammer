@@ -119,7 +119,7 @@
                 this.newMoveStat.angle,
                 this.newMoveStat.baseKnockBackSetKnockback,
                 this.newMoveStat.knockbackGrowth,
-                this.newMoveStat.type,
+                this.newMoveStat.moveType,
                 this.newMoveStat.landingLag,
                 this.newMoveStat.autoCancel);
 

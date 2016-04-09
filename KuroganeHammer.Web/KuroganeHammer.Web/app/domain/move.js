@@ -3,7 +3,7 @@ var app;
     var domain;
     (function (domain) {
         var Move = (function () {
-            function Move(name, hitboxActive, firstActionableFrame, baseDamage, angle, baseKnockBackSetKnockback, knockbackGrowth, type, landingLag, autoCancel, id, ownerId, characterName) {
+            function Move(name, hitboxActive, firstActionableFrame, baseDamage, angle, baseKnockBackSetKnockback, knockbackGrowth, moveType, landingLag, autoCancel, id, ownerId, characterName) {
                 this.name = name;
                 this.hitboxActive = hitboxActive;
                 this.firstActionableFrame = firstActionableFrame;
@@ -11,7 +11,7 @@ var app;
                 this.angle = angle;
                 this.baseKnockBackSetKnockback = baseKnockBackSetKnockback;
                 this.knockbackGrowth = knockbackGrowth;
-                this.type = type;
+                this.moveType = moveType;
                 this.landingLag = landingLag;
                 this.autoCancel = autoCancel;
                 this.id = id;
