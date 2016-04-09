@@ -7,6 +7,7 @@ using System.Web.Http.Description;
 using KuroganeHammer.Data.Api.Models;
 using static KuroganeHammer.Data.Api.Models.RolesConstants;
 using System;
+using KuroganeHammer.Data.Api.DTOs;
 
 namespace KuroganeHammer.Data.Api.Controllers
 {
@@ -49,16 +50,22 @@ namespace KuroganeHammer.Data.Api.Controllers
         [Authorize(Roles = Basic)]
         [Route("Characters/{id}/movements")]
         [HttpGet]
-        public IQueryable<Movement> GetMovementsForCharacter(int id)
+        public IQueryable<MovementDto> GetMovementsForCharacter(int id)
         {
-            return db.Movements.Where(m => m.OwnerId == id);
+            return (from movement in db.Movements.Where(m => m.OwnerId == id).ToList()
+                    select new MovementDto(movement,
+                    db.Characters.First(c => c.Id == movement.OwnerId))
+               ).AsQueryable();
         }
 
         [Authorize(Roles = Basic)]
         [Route("Characters/{id}/moves")]
-        public IQueryable<Move> GetMovesForCharacter(int id)
+        public IQueryable<MoveDto> GetMovesForCharacter(int id)
         {
-            return db.Moves.Where(m => m.OwnerId == id);
+            return (from move in db.Moves.Where(m => m.OwnerId == id).ToList()
+                    select new MoveDto(move,
+                        db.Characters.First(c => c.Id == move.OwnerId))
+                ).AsQueryable();
         }
 
         // PUT: api/Characters/5
