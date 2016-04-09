@@ -269,6 +269,7 @@ namespace KurograneTransferDBTool
                 if(attributeType.Name.Contains("ITEMTOSS") ||
                     attributeType.Name.Equals("LEDGEJUMP") ||
                     attributeType.Name.Equals("TECH") ||
+                    attributeType.Name.Equals("DASHLENGTH") ||
                     attributeType.Name.Equals("RUNSPEED"))
                 { continue; } //skip these for now since the tables are problematic
 

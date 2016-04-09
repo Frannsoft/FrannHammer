@@ -30,6 +30,7 @@ namespace KuroganeHammer.WebScraper
         /// </summary>
         internal const string XpathTableNodeAttributeHeadersWithNoDescription = @"//*[@id='AutoNumber1'][1]/thead/tr";
         internal const string XpathTableNodeGroundStats = @"(//*/table[@id='AutoNumber1'])[2]";
+        internal const string XpathTableNodeGroundStatsAdjusted = @"(//*/table[@id='AutoNumber1'])[3]";
         internal const string XpathTableNodeAerialStats = @"(//*/table[@id='AutoNumber2'])[1]";
         internal const string XpathTableNodeSpecialStats = @"(//*/table[@id='AutoNumber3'])[1]";
         internal const string XpathTableRows = "tbody/tr";

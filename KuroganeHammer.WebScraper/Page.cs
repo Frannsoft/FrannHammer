@@ -56,28 +56,55 @@ namespace KuroganeHammer.WebScraper
         {
             var items = new Dictionary<string, Stat>();
 
-            foreach (var stat in GetStats<MovementStat>(StatConstants.XpathTableNodeMovementStats))
+
+            var allTables = GetTables();
+            foreach (var stat in GetStats<MovementStat>(allTables[0]))
             {
                 AddItem(ref items, stat);
             }
 
-            foreach (var stat in GetStats<GroundStat>(StatConstants.XpathTableNodeGroundStats))
+            foreach (var stat in GetStats<GroundStat>(allTables[1]))
             {
                 AddItem(ref items, stat);
             }
 
-            foreach (var stat in GetStats<AerialStat>(StatConstants.XpathTableNodeAerialStats))
+            foreach (var stat in GetStats<AerialStat>(allTables[2]))
             {
                 AddItem(ref items, stat);
             }
 
-            foreach (var stat in GetStats<SpecialStat>(StatConstants.XpathTableNodeSpecialStats))
+            foreach (var stat in GetStats<SpecialStat>(allTables[3]))
             {
                 //remove after done writing out class move files
                 AddItem(ref items, stat);
             }
-
             return items;
+        }
+
+        private List<HtmlNodeCollection> GetTables()
+        {
+            var movements = GetRows(StatConstants.XpathTableNodeMovementStats);
+            HtmlNodeCollection grounds;
+            if (_doc.DocumentNode.SelectNodes(StatConstants.XpathTableNodeGroundStats + "//thead/tr/*").Count > 4) //account for new info table
+            {
+                grounds = GetRows(StatConstants.XpathTableNodeGroundStats);
+            }
+            else
+            {
+                grounds = GetRows(StatConstants.XpathTableNodeGroundStatsAdjusted);
+            }
+
+            var aerials = GetRows(StatConstants.XpathTableNodeAerialStats);
+            var specials = GetRows(StatConstants.XpathTableNodeSpecialStats);
+
+            var allTables = new List<HtmlNodeCollection>
+            {
+                movements,
+                grounds,
+                aerials,
+                specials
+            };
+            return allTables;
         }
 
         /// <summary>
@@ -176,11 +203,11 @@ namespace KuroganeHammer.WebScraper
             return retVal;
         }
 
-        private List<T> GetStats<T>(string xpathToTable)
+        private List<T> GetStats<T>(HtmlNodeCollection rows)
             where T : Stat
         {
             var stats = new List<T>();
-            var rows = GetRows(xpathToTable);
+            //var rows = GetRows(xpathToTable);
 
             if (typeof(T) == typeof(MovementStat))
             {
@@ -196,6 +223,28 @@ namespace KuroganeHammer.WebScraper
 
             return stats;
         }
+
+        //[Obsolete]
+        //private List<T> GetStats<T>(string xpathToTable)
+        //    where T : Stat
+        //{
+        //    var stats = new List<T>();
+        //    var rows = GetRows(xpathToTable);
+
+        //    if (typeof(T) == typeof(MovementStat))
+        //    {
+        //        stats.AddRange(rows.SelectMany(row => row.SelectNodes(StatConstants.XpathTableCellkeynames),
+        //            (row, statName) => (T)GetStat<T>(statName)).Where(stat => stat != null));
+        //    }
+        //    else if (typeof(T) == typeof(GroundStat)
+        //        || typeof(T) == typeof(AerialStat)
+        //        || typeof(T) == typeof(SpecialStat))
+        //    {
+        //        stats.AddRange(rows.Select(row => (T)GetStat<T>(row.SelectNodes(StatConstants.XpathTableCells))));
+        //    }
+
+        //    return stats;
+        //}
 
         private Stat GetStat<T>(HtmlNode nameCell)
            where T : Stat
