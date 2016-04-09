@@ -16,10 +16,11 @@ using Microsoft.Owin.Security.OAuth;
 using KuroganeHammer.Data.Api.Models;
 using KuroganeHammer.Data.Api.Providers;
 using KuroganeHammer.Data.Api.Results;
+using static KuroganeHammer.Data.Api.Models.RolesConstants;
 
 namespace KuroganeHammer.Data.Api.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = Admin)]
     [RoutePrefix("api/Account")]
     [ApiExplorerSettings(IgnoreApi = true)]
     public class AccountController : ApiController
