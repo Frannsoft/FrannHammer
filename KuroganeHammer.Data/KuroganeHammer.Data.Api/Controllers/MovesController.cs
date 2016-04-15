@@ -16,6 +16,7 @@ namespace KuroganeHammer.Data.Api.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+
         public MovesController()
         { }
 
@@ -42,7 +43,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         public IQueryable<MoveDto> GetMovesByName([FromUri] string name)
         {
             return (from move in db.Moves.Where(m => m.Name.Equals(name)).ToList()
-                    select new MoveDto(move,
+                    select  new MoveDto(move,
                         db.Characters.First(c => c.Id == move.OwnerId))
                 ).AsQueryable();
         }
