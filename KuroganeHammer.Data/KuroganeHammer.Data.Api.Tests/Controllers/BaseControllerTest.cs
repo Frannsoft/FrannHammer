@@ -60,9 +60,7 @@ namespace KuroganeHammer.Data.Api.Tests.Controllers
         }
 
         protected virtual void PostSetup(TestServer server)
-        {
-
-        }
+        { }
 
         protected virtual async Task<HttpResponseMessage> GetAsync(string requestUri)
         {

@@ -4,7 +4,7 @@ using System.Web.Http.Results;
 using KuroganeHammer.Data.Api.Models;
 using NUnit.Framework;
 
-namespace KuroganeHammer.Data.Api.Tests.Controllers
+namespace KuroganeHammer.Data.Api.Tests.Controllers.SmashAttributeTypes
 {
     [TestFixture]
     public class SmashAttributeTypesControllerTest : BaseControllerTest

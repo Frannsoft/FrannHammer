@@ -4,10 +4,10 @@ using System.Web.Http.Results;
 using KuroganeHammer.Data.Api.Models;
 using NUnit.Framework;
 
-namespace KuroganeHammer.Data.Api.Tests.Controllers
+namespace KuroganeHammer.Data.Api.Tests.Controllers.CharacterAttributes
 {
     [TestFixture]
-    public class CharacterAttributeControllerTest : BaseControllerTest
+    public class CharacterAttributeCrudControllerTest : BaseControllerTest
     {
         [Test]
         public void ShouldGetCharacterAttribute()

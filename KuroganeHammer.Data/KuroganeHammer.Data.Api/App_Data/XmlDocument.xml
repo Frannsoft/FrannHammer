@@ -603,6 +603,56 @@
             Get all movement data.
             </summary>
         </member>
+        <member name="T:KuroganeHammer.Data.Api.Controllers.SmashAttributeTypesController">
+            <summary>
+            Handles the more broad types that can be assigned to other metadata in the DB.
+            </summary>
+        </member>
+        <member name="M:KuroganeHammer.Data.Api.Controllers.SmashAttributeTypesController.GetSmashAttributeTypes">
+            <summary>
+            Get all of the stored <see cref="T:KuroganeHammer.Data.Api.Models.SmashAttributeType"/>s.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:KuroganeHammer.Data.Api.Controllers.SmashAttributeTypesController.GetSmashAttributeType(System.Int32)">
+            <summary>
+            Get a specific <see cref="T:KuroganeHammer.Data.Api.Models.SmashAttributeType"/>.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:KuroganeHammer.Data.Api.Controllers.SmashAttributeTypesController.GetAllCharacterAttributeOfSmashAttributeType(System.Int32)">
+            <summary>
+            Get back all of the <see cref="T:KuroganeHammer.Data.Api.Models.SmashAttributeType"/>s of a specific id
+            as <see cref="T:KuroganeHammer.Data.Api.Models.CharacterAttribute"/> objects.  This call parses the returned 
+            <see cref="T:KuroganeHammer.Data.Api.Models.CharacterAttribute"/>s into <see cref="T:KuroganeHammer.Data.Api.DTOs.CharacterAttributeRowDto"/>, 
+            similar to how they are displayed on KuroganeHammer.com.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:KuroganeHammer.Data.Api.Controllers.SmashAttributeTypesController.PutSmashAttributeType(System.Int32,KuroganeHammer.Data.Api.Models.SmashAttributeType)">
+            <summary>
+            Update an existing <see cref="T:KuroganeHammer.Data.Api.Models.SmashAttributeType"/>.
+            </summary>
+            <param name="id"></param>
+            <param name="smashAttributeType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:KuroganeHammer.Data.Api.Controllers.SmashAttributeTypesController.PostSmashAttributeType(KuroganeHammer.Data.Api.Models.SmashAttributeType)">
+            <summary>
+            Create a new <see cref="T:KuroganeHammer.Data.Api.Models.SmashAttributeType"/>.
+            </summary>
+            <param name="smashAttributeType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:KuroganeHammer.Data.Api.Controllers.SmashAttributeTypesController.DeleteSmashAttributeType(System.Int32)">
+            <summary>
+            Delete an existing <see cref="T:KuroganeHammer.Data.Api.Models.SmashAttributeType"/>.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="T:KuroganeHammer.Data.Api.DTOs.CharacterAttributeRowDto">
             <summary>
             Contains the concept of a 'row' of <see cref="T:KuroganeHammer.Data.Api.Models.CharacterAttribute"/> data.

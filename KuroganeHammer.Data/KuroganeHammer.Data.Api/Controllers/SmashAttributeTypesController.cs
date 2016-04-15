@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
@@ -10,10 +8,12 @@ using System.Web.Http.Description;
 using KuroganeHammer.Data.Api.DTOs;
 using static KuroganeHammer.Data.Api.Models.RolesConstants;
 using KuroganeHammer.Data.Api.Models;
-using Newtonsoft.Json;
 
 namespace KuroganeHammer.Data.Api.Controllers
 {
+    /// <summary>
+    /// Handles the more broad types that can be assigned to other metadata in the DB.
+    /// </summary>
     [RoutePrefix("api")]
     public class SmashAttributeTypesController : ApiController
     {
@@ -28,7 +28,10 @@ namespace KuroganeHammer.Data.Api.Controllers
         }
 
 
-        // GET: api/SmashAttributeTypes
+        /// <summary>
+        /// Get all of the stored <see cref="SmashAttributeType"/>s.
+        /// </summary>
+        /// <returns></returns>
         [Authorize(Roles = Basic)]
         [ResponseType(typeof(IQueryable<SmashAttributeType>))]
         [Route("smashattributetypes")]
@@ -37,7 +40,11 @@ namespace KuroganeHammer.Data.Api.Controllers
             return db.SmashAttributeTypes;
         }
 
-        // GET: api/SmashAttributeTypes/5
+        /// <summary>
+        /// Get a specific <see cref="SmashAttributeType"/>.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = Basic)]
         [ResponseType(typeof(SmashAttributeType))]
         [Route("smashattributetypes/{id}")]
@@ -52,6 +59,14 @@ namespace KuroganeHammer.Data.Api.Controllers
             return Ok(smashAttributeType);
         }
 
+        /// <summary>
+        /// Get back all of the <see cref="SmashAttributeType"/>s of a specific id
+        /// as <see cref="CharacterAttribute"/> objects.  This call parses the returned 
+        /// <see cref="CharacterAttribute"/>s into <see cref="CharacterAttributeRowDto"/>, 
+        /// similar to how they are displayed on KuroganeHammer.com.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = Basic)]
         [Route("smashattributetypes/{id}/characterattributes")]
         public IHttpActionResult GetAllCharacterAttributeOfSmashAttributeType(int id)
@@ -93,7 +108,12 @@ namespace KuroganeHammer.Data.Api.Controllers
             return Ok(characterAttributeRows);
         }
 
-        // PUT: api/SmashAttributeTypes/5
+        /// <summary>
+        /// Update an existing <see cref="SmashAttributeType"/>.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="smashAttributeType"></param>
+        /// <returns></returns>
         [Authorize(Roles = Admin)]
         [ResponseType(typeof(void))]
         [Route("smashattributetypes/{id}")]
@@ -131,7 +151,11 @@ namespace KuroganeHammer.Data.Api.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/SmashAttributeTypes
+        /// <summary>
+        /// Create a new <see cref="SmashAttributeType"/>.
+        /// </summary>
+        /// <param name="smashAttributeType"></param>
+        /// <returns></returns>
         [Authorize(Roles = Admin)]
         [ResponseType(typeof(SmashAttributeType))]
         [Route("smashattributetypes")]
@@ -146,10 +170,14 @@ namespace KuroganeHammer.Data.Api.Controllers
             db.SmashAttributeTypes.Add(smashAttributeType);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { controller="SmashAttributeTypes", id = smashAttributeType.Id }, smashAttributeType);
+            return CreatedAtRoute("DefaultApi", new { controller = "SmashAttributeTypes", id = smashAttributeType.Id }, smashAttributeType);
         }
 
-        // DELETE: api/SmashAttributeTypes/5
+        /// <summary>
+        /// Delete an existing <see cref="SmashAttributeType"/>.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = Admin)]
         [ResponseType(typeof(SmashAttributeType))]
         [Route("smashattributetypes/{id}")]
