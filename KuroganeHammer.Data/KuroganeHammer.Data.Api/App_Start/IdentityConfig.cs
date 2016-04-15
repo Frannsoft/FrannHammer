@@ -12,8 +12,7 @@ namespace KuroganeHammer.Data.Api
     {
         public ApplicationUserManager(IUserStore<ApplicationUser> store)
             : base(store)
-        {
-        }
+        { }
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
@@ -39,6 +38,21 @@ namespace KuroganeHammer.Data.Api
                 manager.UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
             return manager;
+        }
+    }
+
+    public class ApplicationRoleManager : RoleManager<IdentityRole>
+    {
+        public ApplicationRoleManager(IRoleStore<IdentityRole, string> roleStore)
+            : base(roleStore)
+        { }
+
+        public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager> options, IOwinContext context)
+        {
+            var appDbContext = context.Get<ApplicationDbContext>();
+            var appRoleManager = new ApplicationRoleManager(new RoleStore<IdentityRole>(appDbContext));
+
+            return appRoleManager;
         }
     }
 }
