@@ -261,16 +261,19 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\CharacterAttributesController.cs" />
     <Compile Include="Controllers\CharactersController.cs" />
     <Compile Include="Controllers\MovementsController.cs" />
     <Compile Include="Controllers\MovesController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SmashAttributeTypesController.cs" />
     <Compile Include="DTOs\CharacterAttributeDto.cs" />
     <Compile Include="DTOs\CharacterAttributeRowDto.cs" />
     <Compile Include="DTOs\MoveDto.cs" />
     <Compile Include="DTOs\MovementDto.cs" />
     <Compile Include="DTOs\SmashAttributeTypeDto.cs" />
+    <Compile Include="DTOs\UserDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -286,12 +289,17 @@
     <Compile Include="Migrations\201604031759278_added smashattributetypeid prop to characterattribute model.Designer.cs">
       <DependentUpon>201604031759278_added smashattributetypeid prop to characterattribute model.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604120141485_added actual username to registerbindingmodel.cs" />
+    <Compile Include="Migrations\201604120141485_added actual username to registerbindingmodel.Designer.cs">
+      <DependentUpon>201604120141485_added actual username to registerbindingmodel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CharacterAttribute.cs" />
     <Compile Include="Models\Character.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ModelFactory.cs" />
     <Compile Include="Models\Move.cs" />
     <Compile Include="Models\Movement.cs" />
     <Compile Include="Models\MoveType.cs" />
@@ -392,6 +400,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201604031759278_added smashattributetypeid prop to characterattribute model.resx">
       <DependentUpon>201604031759278_added smashattributetypeid prop to characterattribute model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604120141485_added actual username to registerbindingmodel.resx">
+      <DependentUpon>201604120141485_added actual username to registerbindingmodel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

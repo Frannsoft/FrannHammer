@@ -16,3 +16,4 @@ KuroganeHammer.Data.Core/bin/
 KuroganeHammer.Web/KuroganeHammer.Web/bin/
 KurograneTransferDBTool/KurograneTransferDBTool/app.config
 KuroganeHammer.Data/KuroganeHammer.Data.Api.Tests/App.config
+KuroganeHammer.Data/KuroganeHammer.Data.Api/Web.config
