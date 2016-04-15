@@ -1,9 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net;
+using System.Threading.Tasks;
 using KuroganeHammer.Data.Api.Models;
 using NUnit.Framework;
-using System.Net;
 
-namespace KuroganeHammer.Data.Api.Tests.Controllers
+namespace KuroganeHammer.Data.Api.Tests.Controllers.Accounts
 {
     [TestFixture]
     public class AccountsControllerTest : BaseControllerTest

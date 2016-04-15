@@ -5,10 +5,10 @@ using KuroganeHammer.Data.Api.DTOs;
 using KuroganeHammer.Data.Api.Models;
 using NUnit.Framework;
 
-namespace KuroganeHammer.Data.Api.Tests.Controllers
+namespace KuroganeHammer.Data.Api.Tests.Controllers.Moves
 {
     [TestFixture]
-    public class MoveControllerTest : BaseControllerTest
+    public class MoveCrudControllerTest : BaseControllerTest
     {
         private Character _loadedCharacter;
 

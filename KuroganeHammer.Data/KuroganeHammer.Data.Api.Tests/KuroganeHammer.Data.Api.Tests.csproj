@@ -132,15 +132,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Asserts\CollectionPropertyAssert.cs" />
-    <Compile Include="Controllers\AccountsAuthenticatedControllerTest.cs" />
-    <Compile Include="Controllers\AccountsControllerTest.cs" />
+    <Compile Include="Controllers\Accounts\AccountsAuthenticatedControllerTest.cs" />
+    <Compile Include="Controllers\Accounts\AccountsControllerTest.cs" />
     <Compile Include="Controllers\BaseAuthenticatedTest.cs" />
     <Compile Include="Controllers\BaseControllerTest.cs" />
-    <Compile Include="Controllers\CharacterAttributeControllerTest.cs" />
-    <Compile Include="Controllers\CharacterControllerTest.cs" />
-    <Compile Include="Controllers\MoveControllerTest.cs" />
-    <Compile Include="Controllers\MovementsControllerTest.cs" />
-    <Compile Include="Controllers\SmashAttributeTypesControllerTest.cs" />
+    <Compile Include="Controllers\CharacterAttributes\CharacterAttributeAnonymousControllerTest.cs" />
+    <Compile Include="Controllers\CharacterAttributes\CharacterAttributeCrudControllerTest.cs" />
+    <Compile Include="Controllers\CharacterAttributes\CharacterAttributesAuthenticatedControllerTest.cs" />
+    <Compile Include="Controllers\Characters\CharacterAuthenticatedControllerTest.cs" />
+    <Compile Include="Controllers\Characters\CharacterCrudControllerTest.cs" />
+    <Compile Include="Controllers\Characters\CharacterAnonymousControllerTest.cs" />
+    <Compile Include="Controllers\Movements\MovementsAnonymousControllerTest.cs" />
+    <Compile Include="Controllers\Movements\MovementsAuthenticatedControllerTest.cs" />
+    <Compile Include="Controllers\Moves\MoveAnonymousControllerTest.cs" />
+    <Compile Include="Controllers\Moves\MoveAuthenticatedControllerTest.cs" />
+    <Compile Include="Controllers\Moves\MoveCrudControllerTest.cs" />
+    <Compile Include="Controllers\Movements\MovementsCrudControllerTest.cs" />
+    <Compile Include="Controllers\SmashAttributeTypes\SmashAttributeTypeAnonymousControllerTest.cs" />
+    <Compile Include="Controllers\SmashAttributeTypes\SmashAttributeTypesControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Smoke\CharacterAttributeSmokeTest.cs" />
     <Compile Include="Smoke\CharacterSmokeTest.cs" />
