@@ -26,7 +26,7 @@ namespace KuroganeHammer.Data.Api.Tests.Smoke
         public virtual void SetUp()
         {
             Baseuri = ConfigurationManager.AppSettings["site"];
-            var tokenUri = Baseuri + "/Token";
+            var tokenUri = Baseuri + "Token";
             LoggedInAdminClient = new HttpClient { BaseAddress = new Uri(Baseuri) };
             var admincontent = new FormUrlEncodedContent(new[]
             {
