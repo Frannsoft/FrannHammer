@@ -12,8 +12,6 @@ namespace KuroganeHammer.Data.Api.Tests.Controllers.Moves
         [Test]
         [TestCase(BaseUri)]
         [TestCase(BaseUri + "/2")]
-        [TestCase(BaseUri + "/4/movements")]
-        [TestCase(BaseUri + "/10/moves")]
         public async Task ShouldGetUnauthorizedWithoutLogin_GET(string uri)
         {
             var response = await GetAsync(uri);
