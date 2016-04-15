@@ -10,34 +10,49 @@ using KuroganeHammer.Data.Api.Models;
 
 namespace KuroganeHammer.Data.Api.Controllers
 {
+    /// <summary>
+    /// Handles all individual <see cref="CharacterAttribute"/> operations.  
+    /// </summary>
     [RoutePrefix("api")]
-    public class CharacterAttributesController : ApiController
+    public class CharacterAttributesController : BaseApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
 
+        /// <summary>
+        /// Create a new <see cref="CharacterAttribute"/> controller to interact with the server.
+        /// </summary>
         public CharacterAttributesController()
         { }
 
+        /// <summary>
+        /// Create a new <see cref="CharacterAttribute"/> controller to interact with the server using a specific 
+        /// <see cref="ApplicationDbContext"/>.
+        /// </summary>
         public CharacterAttributesController(ApplicationDbContext context)
-        {
-            db = context;
-        }
+            : base(context)
+        { }
 
-        // GET: api/CharacterAttributes
+        /// <summary>
+        /// Get all <see cref="CharacterAttribute"/>s.
+        /// </summary>
+        /// <returns></returns>
         [Authorize(Roles = Basic)]
         [Route("characterattributes")]
         public IQueryable<CharacterAttribute> GetCharacterAttributes()
         {
-            return db.CharacterAttributes;
+            return Db.CharacterAttributes;
         }
 
-        // GET: api/CharacterAttributes/5
+        /// <summary>
+        /// Get a specific <see cref="CharacterAttribute"/> by its id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = Basic)]
         [ResponseType(typeof(CharacterAttribute))]
         [Route("characterattributes/{id}")]
         public IHttpActionResult GetCharacterAttribute(int id)
         {
-            CharacterAttribute characterAttribute = db.CharacterAttributes.Find(id);
+            CharacterAttribute characterAttribute = Db.CharacterAttributes.Find(id);
             if (characterAttribute == null)
             {
                 return NotFound();
@@ -46,7 +61,12 @@ namespace KuroganeHammer.Data.Api.Controllers
             return Ok(characterAttribute);
         }
 
-        // PUT: api/CharacterAttributes/5
+        /// <summary>
+        /// Update a <see cref="CharacterAttribute"/>
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="characterAttribute"></param>
+        /// <returns></returns>
         [Authorize(Roles = Admin)]
         [ResponseType(typeof(void))]
         [Route("characterattributes/{id}")]
@@ -63,11 +83,11 @@ namespace KuroganeHammer.Data.Api.Controllers
                 return BadRequest();
             }
 
-            db.Entry(characterAttribute).State = EntityState.Modified;
+            Db.Entry(characterAttribute).State = EntityState.Modified;
 
             try
             {
-                db.SaveChanges();
+                Db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -84,7 +104,11 @@ namespace KuroganeHammer.Data.Api.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/CharacterAttributes
+        /// <summary>
+        /// Create a new <see cref="CharacterAttribute"/>.
+        /// </summary>
+        /// <param name="characterAttribute"></param>
+        /// <returns></returns>
         [Authorize(Roles = Admin)]
         [Route("characterattributes")]
         public IHttpActionResult PostCharacterAttribute(CharacterAttribute characterAttribute)
@@ -95,43 +119,38 @@ namespace KuroganeHammer.Data.Api.Controllers
             }
 
             characterAttribute.LastModified = DateTime.Now;
-            db.CharacterAttributes.Add(characterAttribute);
-            db.SaveChanges();
+            Db.CharacterAttributes.Add(characterAttribute);
+            Db.SaveChanges();
 
             var result = CreatedAtRoute("DefaultApi", new { controller="CharacterAttributes", id = characterAttribute.Id }, characterAttribute);
             return result;
         }
 
-        // DELETE: api/CharacterAttributes/5
+        /// <summary>
+        /// Delete a <see cref="CharacterAttribute"/>.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = Admin)]
         [ResponseType(typeof(CharacterAttribute))]
         [Route("characterattributes/{id}")]
         public IHttpActionResult DeleteCharacterAttribute(int id)
         {
-            CharacterAttribute characterAttribute = db.CharacterAttributes.Find(id);
+            CharacterAttribute characterAttribute = Db.CharacterAttributes.Find(id);
             if (characterAttribute == null)
             {
                 return NotFound();
             }
 
-            db.CharacterAttributes.Remove(characterAttribute);
-            db.SaveChanges();
+            Db.CharacterAttributes.Remove(characterAttribute);
+            Db.SaveChanges();
 
             return Ok(characterAttribute);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         private bool CharacterAttributeExists(int id)
         {
-            return db.CharacterAttributes.Count(e => e.Id == id) > 0;
+            return Db.CharacterAttributes.Count(e => e.Id == id) > 0;
         }
     }
 }

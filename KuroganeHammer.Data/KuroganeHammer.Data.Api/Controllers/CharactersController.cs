@@ -11,34 +11,50 @@ using KuroganeHammer.Data.Api.DTOs;
 
 namespace KuroganeHammer.Data.Api.Controllers
 {
+    /// <summary>
+    /// Handles server operations dealing with <see cref="Character"/>s.
+    /// </summary>
     [RoutePrefix("api")]
-    public class CharactersController : ApiController
+    public class CharactersController : BaseApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
 
+        /// <summary>
+        /// Create a new <see cref="CharactersController"/> to interact with the server.
+        /// </summary>
         public CharactersController()
         { }
 
+        /// <summary>
+        /// Create a new <see cref="CharactersController"/> to interact with the server using 
+        /// a specific <see cref="ApplicationDbContext"/>
+        /// </summary>
+        /// <param name="context"></param>
         public CharactersController(ApplicationDbContext context)
-        {
-            db = context;
-        }
+            : base(context)
+        { }
 
-        // GET: api/Characters
+        /// <summary>
+        /// Get all of the <see cref="Character"/> details.
+        /// </summary>
+        /// <returns></returns>
         [Authorize(Roles = Basic)]
         [Route("characters")]
         public IQueryable<Character> GetCharacters()
         {
-            return db.Characters;
+            return Db.Characters;
         }
 
-        // GET: api/Characters/5
+        /// <summary>
+        /// Get a specific <see cref="Character"/>s details.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = Basic)]
         [ResponseType(typeof(Character))]
         [Route("characters/{id}")]
         public IHttpActionResult GetCharacter(int id)
         {
-            Character character = db.Characters.Find(id);
+            Character character = Db.Characters.Find(id);
             if (character == null)
             {
                 return NotFound();
@@ -47,28 +63,43 @@ namespace KuroganeHammer.Data.Api.Controllers
             return Ok(character);
         }
 
+        /// <summary>
+        /// Get all the <see cref="Movement"/> data for a specific <see cref="Character"/>
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = Basic)]
         [Route("Characters/{id}/movements")]
         [HttpGet]
         public IQueryable<MovementDto> GetMovementsForCharacter(int id)
         {
-            return (from movement in db.Movements.Where(m => m.OwnerId == id).ToList()
+            return (from movement in Db.Movements.Where(m => m.OwnerId == id).ToList()
                     select new MovementDto(movement,
-                    db.Characters.First(c => c.Id == movement.OwnerId))
+                    Db.Characters.First(c => c.Id == movement.OwnerId))
                ).AsQueryable();
         }
 
+        /// <summary>
+        /// Get all the <see cref="Move"/> data for a specific <see cref="Character"/>.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = Basic)]
         [Route("Characters/{id}/moves")]
         public IQueryable<MoveDto> GetMovesForCharacter(int id)
         {
-            return (from move in db.Moves.Where(m => m.OwnerId == id).ToList()
+            return (from move in Db.Moves.Where(m => m.OwnerId == id).ToList()
                     select new MoveDto(move,
-                        db.Characters.First(c => c.Id == move.OwnerId))
+                        Db.Characters.First(c => c.Id == move.OwnerId))
                 ).AsQueryable();
         }
 
-        // PUT: api/Characters/5
+        /// <summary>
+        /// Update a <see cref="Character"/>.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="character"></param>
+        /// <returns></returns>
         [Authorize(Roles = Admin)]
         [ResponseType(typeof(void))]
         [Route("characters/{id}")]
@@ -85,11 +116,11 @@ namespace KuroganeHammer.Data.Api.Controllers
             }
 
             character.LastModified = DateTime.Now;
-            db.Entry(character).State = EntityState.Modified;
+            Db.Entry(character).State = EntityState.Modified;
 
             try
             {
-                db.SaveChanges();
+                Db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -106,7 +137,11 @@ namespace KuroganeHammer.Data.Api.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Characters
+        /// <summary>
+        /// Create a new <see cref="Character"/>.
+        /// </summary>
+        /// <param name="character"></param>
+        /// <returns></returns>
         [Authorize(Roles = Admin)]
         [ResponseType(typeof(Character))]
         [Route("characters")]
@@ -117,42 +152,37 @@ namespace KuroganeHammer.Data.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Characters.Add(character);
-            db.SaveChanges();
+            Db.Characters.Add(character);
+            Db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { controller = "Characters", id = character.Id }, character);
         }
 
-        // DELETE: api/Characters/5
+        /// <summary>
+        /// Delete a <see cref="Character"/>.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = Admin)]
         [ResponseType(typeof(Character))]
         [Route("characters/{id}")]
         public IHttpActionResult DeleteCharacter(int id)
         {
-            Character character = db.Characters.Find(id);
+            Character character = Db.Characters.Find(id);
             if (character == null)
             {
                 return NotFound();
             }
 
-            db.Characters.Remove(character);
-            db.SaveChanges();
+            Db.Characters.Remove(character);
+            Db.SaveChanges();
 
             return Ok(character);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         private bool CharacterExists(int id)
         {
-            return db.Characters.Count(e => e.Id == id) > 0;
+            return Db.Characters.Count(e => e.Id == id) > 0;
         }
     }
 }
