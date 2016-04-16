@@ -17,4 +17,10 @@ namespace KuroganeHammer.Data.Api.Models
         public List<string> EnrolledUsers { get; set; }
         public List<string> RemovedUsers { get; set; }
     }
+
+    public class UserToRoleModel
+    {
+        public string UserId { get; set; }
+        public string RoleId { get; set; }
+    }
 }
