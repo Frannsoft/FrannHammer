@@ -21,7 +21,6 @@ using static KuroganeHammer.Data.Api.Models.RolesConstants;
 
 namespace KuroganeHammer.Data.Api.Controllers
 {
-    [Authorize(Roles = Admin)]
     [RoutePrefix("api/Account")]
     [ApiExplorerSettings(IgnoreApi = true)]
     public class AccountController : BaseApiController
@@ -42,6 +41,7 @@ namespace KuroganeHammer.Data.Api.Controllers
 
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
+        [Authorize(Roles = Admin)]
         [HttpGet]
         [ResponseType(typeof(IEnumerable<UserReturnModel>))]
         [Route("users")]
@@ -52,6 +52,7 @@ namespace KuroganeHammer.Data.Api.Controllers
             return Ok(UserManager.Users.ToList().Select(u => TheModelFactory.Create(u)));
         }
 
+        [Authorize(Roles = Admin)]
         [HttpGet]
         [ResponseType(typeof(UserReturnModel))]
         [Route("user/{id:guid}")]
@@ -69,6 +70,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         }
 
         // GET api/Account/UserInfo
+        [Authorize(Roles = Admin)]
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("UserInfo")]
         public UserInfoViewModel GetUserInfo()
@@ -84,6 +86,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         }
 
         // POST api/Account/Logout
+        [Authorize(Roles = Admin)]
         [Route("Logout")]
         public IHttpActionResult Logout()
         {
@@ -92,6 +95,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         }
 
         // GET api/Account/ManageInfo?returnUrl=%2F&generateState=true
+        [Authorize(Roles = Admin)]
         [Route("ManageInfo")]
         public async Task<ManageInfoViewModel> GetManageInfo(string returnUrl, bool generateState = false)
         {
@@ -132,6 +136,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         }
 
         // POST api/Account/ChangePassword
+        [Authorize(Roles = Admin)]
         [Route("ChangePassword")]
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
         {
@@ -151,7 +156,8 @@ namespace KuroganeHammer.Data.Api.Controllers
             return Ok();
         }
 
-        // POST api/Account/SetPassword
+        // POST api/Account/SetPassword.
+        [Authorize(Roles = Admin)]
         [Route("SetPassword")]
         public async Task<IHttpActionResult> SetPassword(SetPasswordBindingModel model)
         {
@@ -171,6 +177,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         }
 
         // POST api/Account/RemoveLogin
+        [Authorize(Roles = Admin)]
         [Route("RemoveLogin")]
         public async Task<IHttpActionResult> RemoveLogin(RemoveLoginBindingModel model)
         {
@@ -219,12 +226,13 @@ namespace KuroganeHammer.Data.Api.Controllers
             }
 
             var dto = new UserDto(user);
-            return CreatedAtRoute("Register", new { controller = "Account", id = user.Id}, dto);
+            return Ok(dto);
         }
 
 
         #region External Login
         // POST api/Account/AddExternalLogin
+        [Authorize(Roles = Admin)]
         [Route("AddExternalLogin")]
         public async Task<IHttpActionResult> AddExternalLogin(AddExternalLoginBindingModel model)
         {
@@ -395,10 +403,6 @@ namespace KuroganeHammer.Data.Api.Controllers
 
 
         #endregion
-
-       
-       
-
 
         #region Helpers
 

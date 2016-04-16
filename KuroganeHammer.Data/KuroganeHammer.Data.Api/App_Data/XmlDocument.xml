@@ -603,6 +603,20 @@
             Get all movement data.
             </summary>
         </member>
+        <member name="M:KuroganeHammer.Data.Api.Controllers.RolesController.AddUserToRole(KuroganeHammer.Data.Api.Models.UserToRoleModel)">
+            <summary>
+            Add a user to a role via <see cref="T:KuroganeHammer.Data.Api.Models.UserToRoleModel"/>.
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:KuroganeHammer.Data.Api.Controllers.RolesController.RemoveUserFromRole(KuroganeHammer.Data.Api.Models.UserToRoleModel)">
+            <summary>
+            Removes a user from the role specified in the passed in <see cref="T:KuroganeHammer.Data.Api.Models.UserToRoleModel"/>.
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
         <member name="T:KuroganeHammer.Data.Api.Controllers.SmashAttributeTypesController">
             <summary>
             Handles the more broad types that can be assigned to other metadata in the DB.
