@@ -79,6 +79,77 @@ namespace KuroganeHammer.Data.Api.Controllers
             return NotFound();
         }
 
+        /// <summary>
+        /// Add a user to a role via <see cref="UserToRoleModel"/>.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [Route("AddUserToRole")]
+        public async Task<IHttpActionResult> AddUserToRole(UserToRoleModel model)
+        {
+            var role = await RoleManager.FindByIdAsync(model.RoleId);
+
+            if (role == null)
+            {
+                ModelState.AddModelError("", "Role does not exist");
+                return BadRequest(ModelState);
+            }
+
+            var user = await UserManager.FindByIdAsync(model.UserId);
+
+            if(!UserManager.IsInRole(user.Id, role.Name))
+            {
+                var result = await UserManager.AddToRoleAsync(user.Id, role.Name);
+
+                if (!result.Succeeded)
+                {
+                    ModelState.AddModelError("", $"User: {user} could not be added to role");
+                }
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// Removes a user from the role specified in the passed in <see cref="UserToRoleModel"/>.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [Route("RemoveUserFromRole")]
+        public async Task<IHttpActionResult> RemoveUserFromRole(UserToRoleModel model)
+        {
+            var role = await RoleManager.FindByIdAsync(model.RoleId);
+
+            if (role == null)
+            {
+                ModelState.AddModelError("", "Role does not exist");
+                return BadRequest(ModelState);
+            }
+
+            var user = await UserManager.FindByIdAsync(model.UserId);
+
+            if (UserManager.IsInRole(user.Id, role.Name))
+            {
+                var result = await UserManager.RemoveFromRoleAsync(user.Id, role.Name);
+                if (!result.Succeeded)
+                {
+                    ModelState.AddModelError("", $"User: {user} could not be added to role");
+                }
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            return Ok();
+        }
+
         [Route("ManageUsersInRole")]
         public async Task<IHttpActionResult> ManageUsersInRole(UsersInRoleModel model)
         {
