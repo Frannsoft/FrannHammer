@@ -63,6 +63,7 @@
     <Compile Include="EntityBusinessConverter.cs" />
     <Compile Include="CharacterConstants.cs" />
     <Compile Include="GroundStat.cs" />
+    <Compile Include="Guard.cs" />
     <Compile Include="MovementStat.cs" />
     <Compile Include="MoveStat.cs" />
     <Compile Include="MoveType.cs" />
