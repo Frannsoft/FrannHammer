@@ -6,7 +6,7 @@ using System.Net.Http.Headers;
 using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
-using WebApiThrottle;
+using Swashbuckle.Application;
 
 namespace KuroganeHammer.Data.Api
 {
@@ -22,6 +22,7 @@ namespace KuroganeHammer.Data.Api
             // Configure Web API to use only bearer token authentication.
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
+
 
             // Web API routes
             config.MapHttpAttributeRoutes();
@@ -44,6 +45,17 @@ namespace KuroganeHammer.Data.Api
                 Repository = new CacheRepository()
             });
 #endif
+
+            config.EnableSwagger(c =>
+            {
+                c.SingleApiVersion("v1", "FrannHammer Api");
+                c.IncludeXmlComments($@"{AppDomain.CurrentDomain.BaseDirectory}\App_Data\XmlDocument.XML");
+            })
+                .EnableSwaggerUi(c =>
+                {
+                    c.InjectJavaScript(typeof(WebApiConfig).Assembly,
+                        "KuroganeHammer.Data.Api.SwaggerExtensions.onComplete.js");
+                });
 
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();

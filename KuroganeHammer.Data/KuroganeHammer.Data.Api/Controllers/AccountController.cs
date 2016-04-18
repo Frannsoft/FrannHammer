@@ -41,6 +41,10 @@ namespace KuroganeHammer.Data.Api.Controllers
 
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
+        /// <summary>
+        /// Get all users.
+        /// </summary>
+        /// <returns></returns>
         [Authorize(Roles = Admin)]
         [HttpGet]
         [ResponseType(typeof(IEnumerable<UserReturnModel>))]
@@ -52,6 +56,11 @@ namespace KuroganeHammer.Data.Api.Controllers
             return Ok(UserManager.Users.ToList().Select(u => TheModelFactory.Create(u)));
         }
 
+        /// <summary>
+        /// Get a specific user.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = Admin)]
         [HttpGet]
         [ResponseType(typeof(UserReturnModel))]
@@ -135,7 +144,11 @@ namespace KuroganeHammer.Data.Api.Controllers
             };
         }
 
-        // POST api/Account/ChangePassword
+        /// <summary>
+        /// Change a user's password.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [Authorize(Roles = Admin)]
         [Route("ChangePassword")]
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
@@ -157,26 +170,30 @@ namespace KuroganeHammer.Data.Api.Controllers
         }
 
         // POST api/Account/SetPassword.
-        [Authorize(Roles = Admin)]
-        [Route("SetPassword")]
-        public async Task<IHttpActionResult> SetPassword(SetPasswordBindingModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //[Authorize(Roles = Admin)]
+        //[Route("SetPassword")]
+        //public async Task<IHttpActionResult> SetPassword(SetPasswordBindingModel model)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            IdentityResult result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
+        //    IdentityResult result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
 
-            if (!result.Succeeded)
-            {
-                return GetErrorResult(result);
-            }
+        //    if (!result.Succeeded)
+        //    {
+        //        return GetErrorResult(result);
+        //    }
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
 
-        // POST api/Account/RemoveLogin
+        /// <summary>
+        /// Remove the ability for a user to login.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [Authorize(Roles = Admin)]
         [Route("RemoveLogin")]
         public async Task<IHttpActionResult> RemoveLogin(RemoveLoginBindingModel model)
@@ -206,7 +223,11 @@ namespace KuroganeHammer.Data.Api.Controllers
             return Ok();
         }
 
-        // POST api/Account/Register
+        /// <summary>
+        /// Register a brand new user.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
