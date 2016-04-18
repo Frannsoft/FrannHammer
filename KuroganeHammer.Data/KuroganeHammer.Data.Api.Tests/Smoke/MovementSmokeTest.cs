@@ -32,7 +32,7 @@ namespace KuroganeHammer.Data.Api.Tests.Smoke
         [TestCase("Weight")]
         public async Task ShouldGetAllMovementsByName(string name)
         {
-            var results = await LoggedInBasicClient.GetAsync(Baseuri + MovementsRoute + "?name=" + name);
+            var results = await LoggedInBasicClient.GetAsync(Baseuri + MovementsRoute + "/byname" + "?name=" + name);
 
             Assert.IsTrue(results.IsSuccessStatusCode);
 

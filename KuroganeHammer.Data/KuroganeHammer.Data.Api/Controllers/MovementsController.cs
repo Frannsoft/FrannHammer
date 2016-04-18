@@ -30,7 +30,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         /// </summary>
         [Authorize(Roles = Basic)]
         [ResponseType(typeof(IQueryable<MovementDto>))]
-        [Route("movements")]
+        [Route("movements", Name = "GetAllMovements")]
         public IQueryable<MovementDto> GetMovements()
         {
             return (from movement in db.Movements.ToList()
@@ -39,9 +39,14 @@ namespace KuroganeHammer.Data.Api.Controllers
                 ).AsQueryable();
         }
 
+        /// <summary>
+        /// Get all of the <see cref="MovementDto"/> data that is a specific name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         [Authorize(Roles = Basic)]
         [ResponseType(typeof(IQueryable<MovementDto>))]
-        [Route("movements", Name = "GetMovementsByName")]
+        [Route("movements/byname", Name = "GetMovementsByName")]
         public IQueryable<MovementDto> GetMovementsByName([FromUri] string name)
         {
             return (from movement in db.Movements.Where(m => m.Name.Equals(name)).ToList()
@@ -50,7 +55,11 @@ namespace KuroganeHammer.Data.Api.Controllers
                 ).AsQueryable();
         }
 
-        // GET: api/Movements/5
+        /// <summary>
+        /// Get a specific <see cref="MovementDto"/>.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = Basic)]
         [ResponseType(typeof(MovementDto))]
         [Route("movements/{id}")]
@@ -67,7 +76,12 @@ namespace KuroganeHammer.Data.Api.Controllers
             return Ok(dto);
         }
 
-        // PUT: api/movement/5
+        /// <summary>
+        /// Update a specific <see cref="Movement"/>.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="movement"></param>
+        /// <returns></returns>
         [Authorize(Roles = Admin)]
         [ResponseType(typeof(void))]
         [Route("movements/{id}")]
@@ -105,7 +119,11 @@ namespace KuroganeHammer.Data.Api.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Movements
+        /// <summary>
+        /// Create a new <see cref="Movement"/>.
+        /// </summary>
+        /// <param name="movement"></param>
+        /// <returns></returns>
         [Authorize(Roles = Admin)]
         [ResponseType(typeof(Movement))]
         [Route("movements")]
@@ -125,7 +143,11 @@ namespace KuroganeHammer.Data.Api.Controllers
             return CreatedAtRoute("DefaultApi", new { controller = "Movements", id = movement.Id }, movement);
         }
 
-        // DELETE: api/Movements/5
+        /// <summary>
+        /// Delete a <see cref="Movement"/>.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = Admin)]
         [ResponseType(typeof(Movement))]
         [Route("movements/{id}")]
