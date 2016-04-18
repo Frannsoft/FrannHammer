@@ -18,7 +18,11 @@ namespace KuroganeHammer.Data.Api.Tests.Smoke
         public override void SetUp()
         {
             base.SetUp();
-            _moves = LoggedInBasicClient.GetAsync(Baseuri + MovesRoute).Result.Content.ReadAsAsync<List<Move>>().Result;
+
+            var response = LoggedInBasicClient.GetAsync(Baseuri + MovesRoute).Result;
+            response.EnsureSuccessStatusCode();
+
+            _moves = response.Content.ReadAsAsync<List<Move>>().Result;
         }
 
         [Test]
@@ -32,7 +36,7 @@ namespace KuroganeHammer.Data.Api.Tests.Smoke
         [TestCase("Jab 2")]
         public async Task ShouldGetAllMovesByName(string name)
         {
-            var results = await LoggedInBasicClient.GetAsync(Baseuri + MovesRoute + "?name=" + name);
+            var results = await LoggedInBasicClient.GetAsync(Baseuri + MovesRoute + "/byname" + "?name=" + name);
 
             Assert.IsTrue(results.IsSuccessStatusCode);
 
