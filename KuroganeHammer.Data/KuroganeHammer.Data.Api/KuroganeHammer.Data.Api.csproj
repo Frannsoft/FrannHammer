@@ -273,6 +273,18 @@
     <Compile Include="Migrations\201604120141485_added actual username to registerbindingmodel.Designer.cs">
       <DependentUpon>201604120141485_added actual username to registerbindingmodel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604260239054_notation.cs" />
+    <Compile Include="Migrations\201604260239054_notation.Designer.cs">
+      <DependentUpon>201604260239054_notation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604260239349_notation on attrType.cs" />
+    <Compile Include="Migrations\201604260239349_notation on attrType.Designer.cs">
+      <DependentUpon>201604260239349_notation on attrType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604260246316_nullable int post creation.cs" />
+    <Compile Include="Migrations\201604260246316_nullable int post creation.Designer.cs">
+      <DependentUpon>201604260246316_nullable int post creation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -283,6 +295,7 @@
     <Compile Include="Models\Move.cs" />
     <Compile Include="Models\Movement.cs" />
     <Compile Include="Models\MoveType.cs" />
+    <Compile Include="Models\Notation.cs" />
     <Compile Include="Models\RoleBindingModel.cs" />
     <Compile Include="Models\RolesConstants.cs" />
     <Compile Include="Models\SmashAttributeType.cs" />
@@ -330,6 +343,15 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <EmbeddedResource Include="Migrations\201604260239054_notation.resx">
+      <DependentUpon>201604260239054_notation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604260239349_notation on attrType.resx">
+      <DependentUpon>201604260239349_notation on attrType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604260246316_nullable int post creation.resx">
+      <DependentUpon>201604260246316_nullable int post creation.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SwaggerExtensions\onComplete.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

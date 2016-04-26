@@ -62,6 +62,32 @@ namespace KuroganeHammer.Data.Api.Migrations
 
             var getUser = manager.FindByName("GETuser");
             manager.AddToRoles(getUser.Id, "Basic");
+
+            //seed notations
+            if (!context.Notations.Any())
+            {
+                var floatNotation = new Notation
+                {
+                    Name = "FLOAT",
+                    NotationType = NotationTypes.Float
+                };
+
+                var framesNotation = new Notation
+                {
+                    Name = "FRAMES",
+                    NotationType = NotationTypes.Frames
+                };
+
+                var booleanNotation = new Notation
+                {
+                    Name = "BOOLEAN",
+                    NotationType = NotationTypes.Boolean
+                };
+
+                context.Notations.Add(floatNotation);
+                context.Notations.Add(framesNotation);
+                context.Notations.Add(booleanNotation);
+            }
         }
     }
 }
