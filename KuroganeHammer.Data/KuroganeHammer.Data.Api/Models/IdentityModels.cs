@@ -1,4 +1,5 @@
 ﻿using System.Data.Common;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -34,10 +35,11 @@ namespace KuroganeHammer.Data.Api.Models
             return new ApplicationDbContext();
         }
 
-        public virtual System.Data.Entity.IDbSet<Character> Characters { get; set; }
-        public virtual System.Data.Entity.IDbSet<CharacterAttribute> CharacterAttributes { get; set; }
-        public virtual System.Data.Entity.IDbSet<Move> Moves { get; set; }
-        public virtual System.Data.Entity.IDbSet<Movement> Movements { get; set; }
-        public virtual System.Data.Entity.IDbSet<SmashAttributeType> SmashAttributeTypes { get; set; }
+        public virtual IDbSet<Character> Characters { get; set; }
+        public virtual IDbSet<CharacterAttribute> CharacterAttributes { get; set; }
+        public virtual IDbSet<Move> Moves { get; set; }
+        public virtual IDbSet<Movement> Movements { get; set; }
+        public virtual IDbSet<SmashAttributeType> SmashAttributeTypes { get; set; }
+        public virtual IDbSet<Notation> Notations { get; set; } 
     }
 }
