@@ -41,5 +41,6 @@ namespace KuroganeHammer.Data.Api.Models
         public virtual IDbSet<Movement> Movements { get; set; }
         public virtual IDbSet<SmashAttributeType> SmashAttributeTypes { get; set; }
         public virtual IDbSet<Notation> Notations { get; set; } 
+        public virtual IDbSet<CharacterAttributeType> CharacterAttributeTypes { get; set; }
     }
 }

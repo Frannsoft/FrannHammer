@@ -1,3 +1,4 @@
+using System;
 using KuroganeHammer.Data.Api.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -17,17 +18,6 @@ namespace KuroganeHammer.Data.Api.Migrations
         protected override void Seed(ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
 
             var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
@@ -69,25 +59,53 @@ namespace KuroganeHammer.Data.Api.Migrations
                 var floatNotation = new Notation
                 {
                     Name = "FLOAT",
-                    NotationType = NotationTypes.Float
+                    NotationType = NotationTypes.Float,
+                    LastModified = DateTime.Now
                 };
 
                 var framesNotation = new Notation
                 {
                     Name = "FRAMES",
-                    NotationType = NotationTypes.Frames
+                    NotationType = NotationTypes.Frames,
+                    LastModified = DateTime.Now
                 };
 
                 var booleanNotation = new Notation
                 {
                     Name = "BOOLEAN",
-                    NotationType = NotationTypes.Boolean
+                    NotationType = NotationTypes.Boolean,
+                    LastModified = DateTime.Now
                 };
 
                 context.Notations.Add(floatNotation);
                 context.Notations.Add(framesNotation);
                 context.Notations.Add(booleanNotation);
             }
+
+            if (context.CharacterAttributes.Any() && !context.CharacterAttributeTypes.Any())
+            {
+                var charAttributeNames = context.CharacterAttributes.Select(c => c.Name).Distinct();//get names
+
+                //add char attribute type ids
+                foreach (var name in charAttributeNames)
+                {
+                    var charAttributeType = new CharacterAttributeType
+                    {
+                        Name = name
+                    };
+                    context.CharacterAttributeTypes.Add(charAttributeType);
+                }
+                context.SaveChanges();
+
+                //now set the characterattributes
+                foreach (var characterAttribute in context.CharacterAttributes.ToList())
+                {
+                    characterAttribute.CharacterAttributeTypeId = context.CharacterAttributeTypes.Single(c => c.Name.Equals(characterAttribute.Name)).Id;
+                    context.CharacterAttributes.AddOrUpdate(characterAttribute);
+                }
+            }
+
+
         }
     }
 }
