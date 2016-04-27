@@ -24,6 +24,8 @@ namespace KuroganeHammer.Data.Api.Tests.Controllers
         protected MovementsController MovementsController;
         protected SmashAttributeTypesController SmashAttributeTypesController;
         protected CharacterAttributesController CharacterAttributesController;
+        protected CharacterAttributeTypesController CharacterAttributeTypesController;
+        protected NotationsController NotationsController;
         protected TestObjects TestObjects;
 
         [SetUp]
@@ -36,6 +38,8 @@ namespace KuroganeHammer.Data.Api.Tests.Controllers
             MovementsController = new MovementsController(DbContext);
             SmashAttributeTypesController = new SmashAttributeTypesController(DbContext);
             CharacterAttributesController = new CharacterAttributesController(DbContext);
+            CharacterAttributeTypesController = new CharacterAttributeTypesController(DbContext);
+            NotationsController = new NotationsController(DbContext);
             TestObjects = new TestObjects();
 
             _server = TestServer.Create(app =>

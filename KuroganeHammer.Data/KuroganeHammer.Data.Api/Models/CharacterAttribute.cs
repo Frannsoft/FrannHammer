@@ -12,6 +12,8 @@ namespace KuroganeHammer.Data.Api.Models
         public DateTime LastModified { get; set; }
         public SmashAttributeType SmashAttributeType { get; set; }
         public int SmashAttributeTypeId { get; set; }
+        public CharacterAttributeType CharacterAttributeType { get; set; }
+        public int? CharacterAttributeTypeId { get; set; }
 
         //public CharacterAttribute(string rank, string characterName,
         //    string name, string value, SmashAttributeType smashAttributeType)
