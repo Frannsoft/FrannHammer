@@ -42,5 +42,12 @@ namespace KuroganeHammer.Data.Api.Models
         public virtual IDbSet<SmashAttributeType> SmashAttributeTypes { get; set; }
         public virtual IDbSet<Notation> Notations { get; set; } 
         public virtual IDbSet<CharacterAttributeType> CharacterAttributeTypes { get; set; }
+        public virtual IDbSet<Hitbox> Hitbox { get; set; }
+        public virtual IDbSet<BaseDamage> BaseDamage { get; set; }
+        public virtual IDbSet<Angle> Angle { get; set; }
+        public virtual IDbSet<BaseKnockbackSetKnockback> BaseKnockbackSetKnockback { get; set; }
+        public virtual IDbSet<KnockbackGrowth> KnockbackGrowth { get; set; }
+        public virtual IDbSet<LandingLag> LandingLag { get; set; }
+        public virtual IDbSet<Autocancel> Autocancel { get; set; }
     }
 }
