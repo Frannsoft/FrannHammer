@@ -105,7 +105,7 @@ namespace KuroganeHammer.Data.Api.Migrations
                 }
             }
 
-
+            
         }
     }
 }

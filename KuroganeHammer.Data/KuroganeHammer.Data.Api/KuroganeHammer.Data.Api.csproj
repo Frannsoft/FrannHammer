@@ -307,12 +307,25 @@
     <Compile Include="Migrations\201604270116385_adding datetime to new models.Designer.cs">
       <DependentUpon>201604270116385_adding datetime to new models.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604290123001_adding tables for moves data.cs" />
+    <Compile Include="Migrations\201604290123001_adding tables for moves data.Designer.cs">
+      <DependentUpon>201604290123001_adding tables for moves data.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604290128586_fk characterid.cs" />
+    <Compile Include="Migrations\201604290128586_fk characterid.Designer.cs">
+      <DependentUpon>201604290128586_fk characterid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604290131313_renaming move data tables.cs" />
+    <Compile Include="Migrations\201604290131313_renaming move data tables.Designer.cs">
+      <DependentUpon>201604290131313_renaming move data tables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CharacterAttribute.cs" />
     <Compile Include="Models\Character.cs" />
     <Compile Include="Models\CharacterAttributeType.cs" />
+    <Compile Include="Models\MoveMetadataModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ModelFactory.cs" />
     <Compile Include="Models\Move.cs" />
@@ -389,6 +402,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201604270116385_adding datetime to new models.resx">
       <DependentUpon>201604270116385_adding datetime to new models.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604290123001_adding tables for moves data.resx">
+      <DependentUpon>201604290123001_adding tables for moves data.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604290128586_fk characterid.resx">
+      <DependentUpon>201604290128586_fk characterid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604290131313_renaming move data tables.resx">
+      <DependentUpon>201604290131313_renaming move data tables.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SwaggerExtensions\onComplete.js" />
     <Content Include="Web.config" />
