@@ -29,6 +29,10 @@ namespace KuroganeHammer.Data.Api.Models
         public ApplicationDbContext(DbConnection connection)
             : base(connection, true)
         { }
+
+        protected ApplicationDbContext(string connectionString)
+            : base(connectionString)
+        { }
         
         public static ApplicationDbContext Create()
         {
