@@ -19,3 +19,7 @@ KuroganeHammer.Data/KuroganeHammer.Data.Api.Tests/App.config
 KuroganeHammer.Data/KuroganeHammer.Data.Api/Web.config
 KuroganeHammer.AccountRegistration/AccountRegistrationTool/obj/
 KuroganeHammer.AccountRegistration/AccountRegistrationTool/bin/
+KuroganeHammer.DataSynchro/ConsoleApplication1/App.config
+KuroganeHammer.DataSynchro/App.config
+KuroganeHammer.DataSynchro/bin/
+KuroganeHammer.DataSynchro/obj/

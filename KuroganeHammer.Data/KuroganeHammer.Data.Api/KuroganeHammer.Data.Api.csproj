@@ -319,10 +319,14 @@
     <Compile Include="Migrations\201604290131313_renaming move data tables.Designer.cs">
       <DependentUpon>201604290131313_renaming move data tables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604300246188_updating meta models.cs" />
+    <Compile Include="Migrations\201604300246188_updating meta models.Designer.cs">
+      <DependentUpon>201604300246188_updating meta models.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\CharacterAttribute.cs" />
+    <Compile Include="Models\CharacterAttributeModels.cs" />
     <Compile Include="Models\Character.cs" />
     <Compile Include="Models\CharacterAttributeType.cs" />
     <Compile Include="Models\MoveMetadataModels.cs" />
@@ -411,6 +415,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201604290131313_renaming move data tables.resx">
       <DependentUpon>201604290131313_renaming move data tables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604300246188_updating meta models.resx">
+      <DependentUpon>201604300246188_updating meta models.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SwaggerExtensions\onComplete.js" />
     <Content Include="Web.config" />
