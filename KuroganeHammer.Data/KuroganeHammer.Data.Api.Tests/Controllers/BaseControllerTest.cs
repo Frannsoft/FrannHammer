@@ -26,6 +26,7 @@ namespace KuroganeHammer.Data.Api.Tests.Controllers
         protected CharacterAttributesController CharacterAttributesController;
         protected CharacterAttributeTypesController CharacterAttributeTypesController;
         protected NotationsController NotationsController;
+        protected CalculatorController CalculatorController;
         protected TestObjects TestObjects;
 
         [SetUp]
@@ -40,6 +41,7 @@ namespace KuroganeHammer.Data.Api.Tests.Controllers
             CharacterAttributesController = new CharacterAttributesController(DbContext);
             CharacterAttributeTypesController = new CharacterAttributeTypesController(DbContext);
             NotationsController = new NotationsController(DbContext);
+            CalculatorController = new CalculatorController(DbContext);
             TestObjects = new TestObjects();
 
             _server = TestServer.Create(app =>

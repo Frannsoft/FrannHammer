@@ -136,6 +136,7 @@
     <Compile Include="Controllers\Accounts\AccountsControllerTest.cs" />
     <Compile Include="Controllers\BaseAuthenticatedTest.cs" />
     <Compile Include="Controllers\BaseControllerTest.cs" />
+    <Compile Include="Controllers\Calculator\CalculatorCrudControllerTest.cs" />
     <Compile Include="Controllers\CharacterAttributes\CharacterAttributeAnonymousControllerTest.cs" />
     <Compile Include="Controllers\CharacterAttributes\CharacterAttributeCrudControllerTest.cs" />
     <Compile Include="Controllers\CharacterAttributes\CharacterAttributesAuthenticatedControllerTest.cs" />
@@ -170,6 +171,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\KuroganeHammer.Data.Core\KuroganeHammer.Data.Core.csproj">
+      <Project>{2904D4E7-8989-46BD-AC0A-B4356F190A15}</Project>
+      <Name>KuroganeHammer.Data.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KuroganeHammer.Data.Api\KuroganeHammer.Data.Api.csproj">
       <Project>{470ADA5B-56B2-45D3-8162-AB65B0350C68}</Project>
       <Name>KuroganeHammer.Data.Api</Name>
