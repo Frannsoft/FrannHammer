@@ -18,7 +18,7 @@ namespace KuroganeHammer.Data.Core.Calculations
 
     public static class ModifierHelper
     {
-        public static double GetModifierValue(this Modifiers modifier)
+        public static double GetModifierValue(this Enum modifier)
         {
             var modifierName = modifier.ToString();
             var type = modifier.GetType();
@@ -46,7 +46,10 @@ namespace KuroganeHammer.Data.Core.Calculations
 
     public enum ElectricModifier
     {
+        [ModifierValue(1.0)]
         NormalAttack,
+
+        [ModifierValue(1.5)]
         ElectricAttack
     }
 
