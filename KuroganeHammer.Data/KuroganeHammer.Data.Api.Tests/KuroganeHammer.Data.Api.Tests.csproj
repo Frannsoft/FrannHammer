@@ -139,6 +139,7 @@
     <Compile Include="Controllers\CharacterAttributes\CharacterAttributeAnonymousControllerTest.cs" />
     <Compile Include="Controllers\CharacterAttributes\CharacterAttributeCrudControllerTest.cs" />
     <Compile Include="Controllers\CharacterAttributes\CharacterAttributesAuthenticatedControllerTest.cs" />
+    <Compile Include="Controllers\CharacterAttributeTypes\CharacterAttributeTypeCrudControllerTest.cs" />
     <Compile Include="Controllers\Characters\CharacterAuthenticatedControllerTest.cs" />
     <Compile Include="Controllers\Characters\CharacterCrudControllerTest.cs" />
     <Compile Include="Controllers\Characters\CharacterAnonymousControllerTest.cs" />
@@ -148,6 +149,7 @@
     <Compile Include="Controllers\Moves\MoveAuthenticatedControllerTest.cs" />
     <Compile Include="Controllers\Moves\MoveCrudControllerTest.cs" />
     <Compile Include="Controllers\Movements\MovementsCrudControllerTest.cs" />
+    <Compile Include="Controllers\Notations\NotationCrudControllerTest.cs" />
     <Compile Include="Controllers\SmashAttributeTypes\SmashAttributeTypeAnonymousControllerTest.cs" />
     <Compile Include="Controllers\SmashAttributeTypes\SmashAttributeTypeAuthenticatedControllerTest.cs" />
     <Compile Include="Controllers\SmashAttributeTypes\SmashAttributeTypesControllerTest.cs" />

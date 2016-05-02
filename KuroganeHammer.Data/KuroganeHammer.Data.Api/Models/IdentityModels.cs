@@ -1,4 +1,5 @@
 ﻿using System.Data.Common;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -28,16 +29,29 @@ namespace KuroganeHammer.Data.Api.Models
         public ApplicationDbContext(DbConnection connection)
             : base(connection, true)
         { }
+
+        protected ApplicationDbContext(string connectionString)
+            : base(connectionString)
+        { }
         
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
 
-        public virtual System.Data.Entity.IDbSet<Character> Characters { get; set; }
-        public virtual System.Data.Entity.IDbSet<CharacterAttribute> CharacterAttributes { get; set; }
-        public virtual System.Data.Entity.IDbSet<Move> Moves { get; set; }
-        public virtual System.Data.Entity.IDbSet<Movement> Movements { get; set; }
-        public virtual System.Data.Entity.IDbSet<SmashAttributeType> SmashAttributeTypes { get; set; }
+        public virtual IDbSet<Character> Characters { get; set; }
+        public virtual IDbSet<CharacterAttribute> CharacterAttributes { get; set; }
+        public virtual IDbSet<Move> Moves { get; set; }
+        public virtual IDbSet<Movement> Movements { get; set; }
+        public virtual IDbSet<SmashAttributeType> SmashAttributeTypes { get; set; }
+        public virtual IDbSet<Notation> Notations { get; set; } 
+        public virtual IDbSet<CharacterAttributeType> CharacterAttributeTypes { get; set; }
+        public virtual IDbSet<Hitbox> Hitbox { get; set; }
+        public virtual IDbSet<BaseDamage> BaseDamage { get; set; }
+        public virtual IDbSet<Angle> Angle { get; set; }
+        public virtual IDbSet<BaseKnockbackSetKnockback> BaseKnockbackSetKnockback { get; set; }
+        public virtual IDbSet<KnockbackGrowth> KnockbackGrowth { get; set; }
+        public virtual IDbSet<LandingLag> LandingLag { get; set; }
+        public virtual IDbSet<Autocancel> Autocancel { get; set; }
     }
 }
