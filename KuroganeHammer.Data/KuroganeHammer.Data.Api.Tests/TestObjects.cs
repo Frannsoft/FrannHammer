@@ -10,7 +10,23 @@ namespace KuroganeHammer.Data.Api.Tests
         private int _characterCounter;
         private int _smashAttributeTypeCounter;
         private int _characterAttributeCounter;
+        private int _characterAttributeTypeCounter;
+        private int _notationCounter;
 
+        public Notation Notation()
+        {
+            var notation = new Notation
+            {
+                Id = _notationCounter,
+                LastModified = DateTime.Now,
+                Name = "notation",
+                NotationType = NotationTypes.Float
+            };
+
+            _notationCounter++;
+
+            return notation;
+        }
 
         public Move Move()
         {
@@ -35,6 +51,28 @@ namespace KuroganeHammer.Data.Api.Tests
             _moveCounter++;
 
             return move;
+        }
+
+        internal CharacterAttributeType CharacterAttributeType()
+        {
+            var characterAttributeType = new CharacterAttributeType
+            {
+                Id = _characterAttributeTypeCounter,
+                LastModified = DateTime.Now,
+                Name = "attr name",
+                Notation = new Notation
+                {
+                    Id = _notationCounter,
+                    LastModified = DateTime.Now,
+                    Name = "notation",
+                    NotationType = NotationTypes.Frames
+                },
+                NotationId = _notationCounter
+            };
+
+            _characterAttributeTypeCounter++;
+
+            return characterAttributeType;
         }
 
         public Movement Movement()
