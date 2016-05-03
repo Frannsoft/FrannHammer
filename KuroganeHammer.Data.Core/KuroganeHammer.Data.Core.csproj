@@ -62,6 +62,7 @@
     <Compile Include="AerialStat.cs" />
     <Compile Include="Calculations\Calculator.cs" />
     <Compile Include="Calculations\Modifiers.cs" />
+    <Compile Include="Calculations\ProblemModels.cs" />
     <Compile Include="CharacterAttributes.cs" />
     <Compile Include="CharacterStat.cs" />
     <Compile Include="CharacterUtility.cs" />
