@@ -7,27 +7,79 @@ namespace KuroganeHammer.Data.Core.Tests
     public class CalculateTest
     {
         private Calculator _calculator;
+        private TrainingModeKnockbackProblemData _trainingModeKnockbackData;
+        private VersusModeKnockbackProblemData _versusModeKnockbackData;
 
         [SetUp]
         public void SetUp()
         {
             _calculator = new Calculator();
+            _trainingModeKnockbackData = new TrainingModeKnockbackProblemData
+            {
+                VictimPercent = 100,
+                BaseDamage = 20,
+                TargetWeight = 80,
+                KnockbackGrowth = 10,
+                BaseKnockbackSetKnockback = 31,
+                StanceModifier = 1
+            };
+
+            _versusModeKnockbackData = new VersusModeKnockbackProblemData
+            {
+                VictimPercent = 100,
+                BaseDamage = 20,
+                TargetWeight = 80,
+                KnockbackGrowth = 10,
+                BaseKnockbackSetKnockback = 31,
+                StanceModifier = 1,
+                StaleMoveMultiplier = 0
+            };
         }
 
         [Test]
         public void ShouldGetExpectedTrainingModeKnockback()
         {
-            var result = _calculator.TrainingModeKnockback(100, 20, 80, 10, 31, 1);
-
+            var result = _calculator.TrainingModeKnockback(_trainingModeKnockbackData);
             Assert.That(result, Is.EqualTo(53.333333333333336d));
         }
 
         [Test]
         public void ShouldGetExpectedVersusModeKnockback()
         {
-            var result = _calculator.VersusModeKnockback(100, 20, 0, 80, 10, 31, 1);
-
+            var result = _calculator.VersusModeKnockback(_versusModeKnockbackData);
             Assert.That(result, Is.EqualTo(49.080386473429961d));
+        }
+
+        [Test]
+        public void ShouldGetExpectedTrainingModeHitstun()
+        {
+            var trainingModeKnockback = _calculator.TrainingModeKnockback(_trainingModeKnockbackData);
+            var result = _calculator.Hitstun(trainingModeKnockback);
+            Assert.That(result, Is.EqualTo(20));
+        }
+
+        [Test]
+        public void ShouldGetExpectedVersusModeHitstun()
+        {
+            var versusModeKnockback = _calculator.VersusModeKnockback(_versusModeKnockbackData);
+            var result = _calculator.Hitstun(versusModeKnockback);
+            Assert.That(result, Is.EqualTo(18));
+        }
+
+        [Test]
+        [TestCase(8.0, 6)]
+        [TestCase(25.5, 16)]
+        public void ShouldGetExpectedShieldstun_Normal(double damage, int expectedShieldstun)
+        {
+            var result = _calculator.ShieldStunNormal(damage);
+            Assert.That(result, Is.EqualTo(expectedShieldstun));
+        }
+
+        [Test]
+        public void ShouldGetExpectedRage()
+        {
+            var result = _calculator.Rage(100);
+            Assert.That(result, Is.EqualTo(1.0847826086956522d));
         }
 
         [Test]
