@@ -16,7 +16,7 @@ namespace KuroganeHammer.Data.Api.Models
         public double Staleness { get; set; }
         public Modifiers Modifiers { get; set; }
         public ElectricModifier ElectricModifier { get; set; }
-        public HitlagModifierType HitlagModifierType { get; set; }
+        public CrouchingModifier CrouchingModifier { get; set; }
         public ShieldAdvantageModifier ShieldAdvantageModifier { get; set; }
     }
 
