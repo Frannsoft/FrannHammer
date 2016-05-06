@@ -4,6 +4,7 @@ using KuroganeHammer.Data.Api.Models;
 using KuroganeHammer.Data.Core.Calculations;
 using static KuroganeHammer.Data.Api.Models.RolesConstants;
 using System.Linq;
+using KuroganeHammer.Data.Api.DTOs;
 using KuroganeHammer.Data.Core;
 
 namespace KuroganeHammer.Data.Api.Controllers
@@ -77,7 +78,13 @@ namespace KuroganeHammer.Data.Api.Controllers
                 VictimPercent = model.VictimDamagePercent
             });
 
-            return Ok(result);
+            var calcResult = new CompletedCalculationResponseDto
+            {
+                MoveName = Db.Moves.Find(model.MoveId).Name,
+                CalculatedValue = result
+            };
+
+            return Ok(calcResult);
         }
 
 

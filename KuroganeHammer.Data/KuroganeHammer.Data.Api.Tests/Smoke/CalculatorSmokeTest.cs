@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
+using KuroganeHammer.Data.Api.DTOs;
 using KuroganeHammer.Data.Api.Models;
 using KuroganeHammer.Data.Core.Calculations;
 using NUnit.Framework;
@@ -30,9 +31,10 @@ namespace KuroganeHammer.Data.Api.Tests.Smoke
 
             Assert.That(response.IsSuccessStatusCode);
 
-            var result = await response.Content.ReadAsAsync<double>();
+            var result = await response.Content.ReadAsAsync<CompletedCalculationResponseDto>();
 
-
+            Assert.That(result.MoveName, Is.EqualTo("Dash Attack"));
+            Assert.That(result.CalculatedValue, Is.EqualTo(469.38543478260868d));
         }
     }
 }

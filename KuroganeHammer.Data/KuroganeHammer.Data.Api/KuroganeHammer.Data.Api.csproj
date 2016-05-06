@@ -251,6 +251,7 @@
     <Compile Include="Controllers\NotationsController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SmashAttributeTypesController.cs" />
+    <Compile Include="DTOs\CalculatorDtos.cs" />
     <Compile Include="DTOs\CharacterAttributeDto.cs" />
     <Compile Include="DTOs\CharacterAttributeRowDto.cs" />
     <Compile Include="DTOs\MoveDto.cs" />
