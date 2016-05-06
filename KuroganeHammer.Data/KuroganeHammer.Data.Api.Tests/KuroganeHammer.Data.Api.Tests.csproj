@@ -155,6 +155,7 @@
     <Compile Include="Controllers\SmashAttributeTypes\SmashAttributeTypeAuthenticatedControllerTest.cs" />
     <Compile Include="Controllers\SmashAttributeTypes\SmashAttributeTypesControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Smoke\CalculatorSmokeTest.cs" />
     <Compile Include="Smoke\CharacterAttributeSmokeTest.cs" />
     <Compile Include="Smoke\CharacterSmokeTest.cs" />
     <Compile Include="Smoke\LoginSmokeTest.cs" />

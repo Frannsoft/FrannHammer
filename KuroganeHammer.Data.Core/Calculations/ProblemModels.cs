@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KuroganeHammer.Data.Core.Calculations
+﻿namespace KuroganeHammer.Data.Core.Calculations
 {
     public class TrainingModeKnockbackProblemData
     {
@@ -16,10 +10,16 @@ namespace KuroganeHammer.Data.Core.Calculations
         public double StanceModifier { get; set; }
     }
 
+    public class RageProblemData
+    {
+        public double AttackerPercent { get; set; }
+    }
+
     public class VersusModeKnockbackProblemData
     {
+        public double AttackerPercent { get; set; }
         public double VictimPercent { get; set; }
-        public int BaseDamage { get; set; }
+        public double BaseDamage { get; set; }
         public double TargetWeight { get; set; }
         public double KnockbackGrowth { get; set; }
         public int BaseKnockbackSetKnockback { get; set; }

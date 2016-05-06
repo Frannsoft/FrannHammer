@@ -39,4 +39,18 @@ namespace KuroganeHammer.Data.Api.Models
         public int ShieldStun_PowershieldProjectile { get; set; }
     }
 
+    public class CalculatorMoveModel
+    {
+        public int MoveId { get; set; }
+        public int AttackerDamagePercent { get; set; }
+        public int VictimDamagePercent { get; set; }
+        public int TargetWeight { get; set; }
+        public StaleMoveNegationMultipler StaleMoveNegationMultiplier { get; set; } = StaleMoveNegationMultipler.S1;
+        public ElectricModifier ElectricModifier { get; set; } = ElectricModifier.NormalAttack;
+        public CrouchingModifier CrouchingModifier { get; set; } = CrouchingModifier.NotCrouching;
+        public ShieldAdvantageModifier ShieldAdvantageModifier { get; set; } = ShieldAdvantageModifier.Regular;
+        public Modifiers Modifiers { get; set; } = Modifiers.Standing;
+        public HitboxOptions HitboxOption { get; set; } = HitboxOptions.First;
+    }
+
 }

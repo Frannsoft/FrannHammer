@@ -29,6 +29,19 @@ namespace KuroganeHammer.Data.Core.Calculations
         }
     }
 
+    /// <summary>
+    /// Determines which hitbox is having data resolved in the equation.  Really important at the 
+    /// public request level in the api.  Otherwise it would be nightmare to act on all of them.
+    /// </summary>
+    public enum HitboxOptions
+    {
+        First,
+        Second,
+        Third,
+        Fourth,
+        Fifth
+    }
+
     public enum Modifiers
     {
         [ModifierValue(1.0)]
@@ -65,7 +78,7 @@ namespace KuroganeHammer.Data.Core.Calculations
     public enum ShieldAdvantageModifier
     {
         Regular,
-        Projectile_NotHitlag
+        ProjectileNotHitlag
     }
 
     public enum ControllerInput
