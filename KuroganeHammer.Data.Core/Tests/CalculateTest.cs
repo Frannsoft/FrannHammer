@@ -201,7 +201,7 @@ namespace KuroganeHammer.Data.Core.Tests
                 HitFrame = 20,
                 Hitlag = 11,
                 ShieldStun = 13,
-                ShieldAdvantageModifier = ShieldAdvantageModifier.Projectile_NotHitlag,
+                ShieldAdvantageModifier = ShieldAdvantageModifier.ProjectileNotHitlag,
                 HitlagData = new HitlagProblemData
                 {
                     CrouchingModifier = CrouchingModifier.NotCrouching,
@@ -218,7 +218,7 @@ namespace KuroganeHammer.Data.Core.Tests
         [Test]
         public void ShouldGetExpectedRage()
         {
-            var result = _calculator.Rage(100);
+            var result = _calculator.Rage(new RageProblemData { AttackerPercent = 100 });
             Assert.That(result, Is.EqualTo(1.0847826086956522d));
         }
 

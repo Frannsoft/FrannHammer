@@ -20,20 +20,19 @@ namespace KuroganeHammer.Data.Core.Calculations
                                (data.VictimPercent + data.BaseDamage * data.StaleMoveMultiplier) * data.BaseDamage *
                                (1 - (1 - data.StaleMoveMultiplier) * 0.3) / 20)
                               * 1.4 * (200 / (data.TargetWeight + 100)) + 18) * (data.KnockbackGrowth / 100) + data.BaseKnockbackSetKnockback) *
-                            data.StanceModifier * Rage(data.VictimPercent);
+                            data.StanceModifier * Rage(new RageProblemData {AttackerPercent = data.AttackerPercent});
 
             return result;
         }
 
-        public double Rage(double percent)
+        public double Rage(RageProblemData data)
         {
-
             double result = 0;
 
-            if (percent > 35 &&
-                percent < 150)
+            if (data.AttackerPercent > 35 &&
+                data.AttackerPercent < 150)
             {
-                result = 1 + (percent - 35) * (1.15 - 1) / (150 - 35);
+                result = 1 + (data.AttackerPercent - 35) * (1.15 - 1) / (150 - 35);
             }
 
             return result;
@@ -122,7 +121,7 @@ namespace KuroganeHammer.Data.Core.Calculations
 
             switch (data.ShieldAdvantageModifier)
             {
-                case ShieldAdvantageModifier.Projectile_NotHitlag:
+                case ShieldAdvantageModifier.ProjectileNotHitlag:
                     {
                         var hitlag = Hitlag(data.HitlagData);
                         shieldAdvantage = shieldAdvantage + hitlag;//(int)(Convert.ToDouble(shieldAdvantage) + Math.Round(hitlag));

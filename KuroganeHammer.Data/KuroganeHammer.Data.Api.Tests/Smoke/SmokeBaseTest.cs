@@ -21,6 +21,7 @@ namespace KuroganeHammer.Data.Api.Tests.Smoke
         protected const string MovesRoute = "moves";
         protected const string SmashAttributeTypeRoute = "smashattributetypes";
         protected const string CharacterAttributeRoute = "characterattributes";
+        protected const string CalculatorRoute = "calculator";
 
         [SetUp]
         public virtual void SetUp()
@@ -44,6 +45,9 @@ namespace KuroganeHammer.Data.Api.Tests.Smoke
             });
 
             var adminresponse = LoggedInAdminClient.PostAsync(tokenUri, admincontent).Result;
+
+            var json = adminresponse.Content.ReadAsStringAsync().Result;
+
             _adminauthToken =
                 JsonConvert.DeserializeObject<dynamic>(adminresponse.Content.ReadAsStringAsync().Result).access_token;
             LoggedInAdminClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _adminauthToken);
