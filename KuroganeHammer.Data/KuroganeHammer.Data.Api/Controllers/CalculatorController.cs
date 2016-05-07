@@ -78,10 +78,45 @@ namespace KuroganeHammer.Data.Api.Controllers
                 VictimPercent = model.VictimDamagePercent
             });
 
+            var ownerId = Db.Moves.First(m => m.Id == model.MoveId).OwnerId;
             var calcResult = new CompletedCalculationResponseDto
             {
+                CalculatedValueName = "VsModeKnockback",
+                CharacterName = Db.Characters.First(c => c.Id == ownerId).Name,
                 MoveName = Db.Moves.Find(model.MoveId).Name,
                 CalculatedValue = result
+            };
+
+            return Ok(calcResult);
+        }
+
+        [Route(CalculatorRoutePrefix + "/moves/shieldstunnormal")]
+        [Authorize(Roles = Basic)]
+        [HttpPost]
+        public IHttpActionResult PostMoveShieldStunNormal(CalculatorMoveModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var calculator = new Calculator();
+            var move = Db.Moves.Find(model.MoveId);
+
+            if (move == null)
+            {
+                return BadRequest($"Unable to find move with id: {model.MoveId}");
+            }
+
+            var damageAsDouble = Convert.ToDouble(move.BaseDamage);
+            var result = calculator.ShieldStunNormal(damageAsDouble);
+
+            var calcResult = new CompletedCalculationResponseDto
+            {
+                CalculatedValueName = "ShieldStunNormal",
+                CalculatedValue = result,
+                CharacterName = Db.Characters.Find(move.OwnerId).Name,
+                MoveName = move.Name
             };
 
             return Ok(calcResult);
