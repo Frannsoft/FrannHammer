@@ -9,23 +9,36 @@ using KuroganeHammer.Data.Core;
 
 namespace KuroganeHammer.Data.Api.Controllers
 {
+    /// <summary>
+    /// Controller used for calculating data off of character attributes and properties such as moves.
+    /// </summary>
     [RoutePrefix("api")]
     public class CalculatorController : BaseApiController
     {
         private const string CalculatorRoutePrefix = "calculator";
 
+        /// <summary>
+        /// Creates a <see cref="CalculatorController"/> with the default <see cref="ApplicationDbContext"/>.
+        /// </summary>
         public CalculatorController()
         { }
 
+        /// <summary>
+        /// Creates a <see cref="CalculatorController"/> with the specified <see cref="ApplicationDbContext"/>.
+        /// </summary>
+        /// <param name="context"></param>
         public CalculatorController(ApplicationDbContext context)
             : base(context)
         { }
 
-
+        /// <summary>
+        /// Calculate Rage based on passed in data.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         [Route(CalculatorRoutePrefix + "/rage")]
-        [Authorize(Roles = Basic)]
-        [HttpGet]
-        public IHttpActionResult GetRage(RageProblemData data)
+        [HttpPost]
+        public IHttpActionResult PostRage(RageProblemData data)
         {
             if (!ModelState.IsValid)
             {
@@ -38,24 +51,28 @@ namespace KuroganeHammer.Data.Api.Controllers
             return Ok(result);
         }
 
-        [Route(CalculatorRoutePrefix + "/moves/rage")]
-        [Authorize(Roles = Basic)]
-        [HttpGet]
-        public IHttpActionResult GetMoveRage(CalculatorMoveModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //[Route(CalculatorRoutePrefix + "/moves/rage")]
+        //[Authorize(Roles = Basic)]
+        //[HttpGet]
+        //public IHttpActionResult GetMoveRage(CalculatorMoveModel model)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            var calculator = new Calculator();
-            var result = calculator.Rage(new RageProblemData { AttackerPercent = model.AttackerDamagePercent });
+        //    var calculator = new Calculator();
+        //    var result = calculator.Rage(new RageProblemData { AttackerPercent = model.AttackerDamagePercent });
 
-            return Ok(result);
-        }
+        //    return Ok(result);
+        //}
 
+        /// <summary>
+        /// Calculate Vs mode knockback of a specific character's move.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [Route(CalculatorRoutePrefix + "/moves/vsknockback")]
-        [Authorize(Roles = Basic)]
         [HttpPost]
         public IHttpActionResult PostMoveVsKnockback(CalculatorMoveModel model)
         {
@@ -90,8 +107,12 @@ namespace KuroganeHammer.Data.Api.Controllers
             return Ok(calcResult);
         }
 
+        /// <summary>
+        /// Calculate the Normal Shield stun of a specific character's move.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [Route(CalculatorRoutePrefix + "/moves/shieldstunnormal")]
-        [Authorize(Roles = Basic)]
         [HttpPost]
         public IHttpActionResult PostMoveShieldStunNormal(CalculatorMoveModel model)
         {

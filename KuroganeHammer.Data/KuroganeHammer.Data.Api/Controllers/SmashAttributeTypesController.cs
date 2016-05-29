@@ -32,7 +32,6 @@ namespace KuroganeHammer.Data.Api.Controllers
         /// Get all of the stored <see cref="SmashAttributeType"/>s.
         /// </summary>
         /// <returns></returns>
-        [Authorize(Roles = Basic)]
         [ResponseType(typeof(IQueryable<SmashAttributeType>))]
         [Route("smashattributetypes")]
         public IQueryable<SmashAttributeType> GetSmashAttributeTypes()
@@ -45,7 +44,6 @@ namespace KuroganeHammer.Data.Api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Authorize(Roles = Basic)]
         [ResponseType(typeof(SmashAttributeType))]
         [Route("smashattributetypes/{id}")]
         public IHttpActionResult GetSmashAttributeType(int id)
@@ -67,7 +65,6 @@ namespace KuroganeHammer.Data.Api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Authorize(Roles = Basic)]
         [Route("smashattributetypes/{id}/characterattributes")]
         public IHttpActionResult GetAllCharacterAttributeOfSmashAttributeType(int id)
         {

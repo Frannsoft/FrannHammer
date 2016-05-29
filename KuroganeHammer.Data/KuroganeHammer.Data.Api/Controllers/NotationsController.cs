@@ -34,7 +34,6 @@ namespace KuroganeHammer.Data.Api.Controllers
         /// Get all <see cref="Notation"/>s.
         /// </summary>
         /// <returns></returns>
-        [Authorize(Roles = Basic)]
         [Route("notations")]
         public IQueryable<Notation> GetNotations()
         {
@@ -46,7 +45,6 @@ namespace KuroganeHammer.Data.Api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Authorize(Roles = Basic)]
         [ResponseType(typeof(Notation))]
         [Route("notations/{id}")]
         public IHttpActionResult GetNotation(int id)
@@ -66,7 +64,6 @@ namespace KuroganeHammer.Data.Api.Controllers
         /// <param name="id"></param>
         /// <param name="notation"></param>
         /// <returns></returns>
-        [Authorize(Roles = Admin)]
         [ResponseType(typeof(void))]
         [Route("notations/{id}")]
         public IHttpActionResult PutNotation(int id, Notation notation)

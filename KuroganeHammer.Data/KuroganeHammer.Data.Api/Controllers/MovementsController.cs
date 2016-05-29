@@ -28,7 +28,6 @@ namespace KuroganeHammer.Data.Api.Controllers
         /// <summary>
         /// Get all movement data.
         /// </summary>
-        [Authorize(Roles = Basic)]
         [ResponseType(typeof(IQueryable<MovementDto>))]
         [Route("movements", Name = "GetAllMovements")]
         public IQueryable<MovementDto> GetMovements()
@@ -44,7 +43,6 @@ namespace KuroganeHammer.Data.Api.Controllers
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        [Authorize(Roles = Basic)]
         [ResponseType(typeof(IQueryable<MovementDto>))]
         [Route("movements/byname", Name = "GetMovementsByName")]
         public IQueryable<MovementDto> GetMovementsByName([FromUri] string name)
@@ -60,7 +58,6 @@ namespace KuroganeHammer.Data.Api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Authorize(Roles = Basic)]
         [ResponseType(typeof(MovementDto))]
         [Route("movements/{id}")]
         public IHttpActionResult GetMovement(int id)
