@@ -29,7 +29,6 @@ namespace KuroganeHammer.Data.Api.Controllers
         /// Get all moves.  Not sure if this is sticking around.
         /// </summary>
         /// <returns></returns>
-        [Authorize(Roles = Basic)]
         [ResponseType(typeof(IQueryable<MoveDto>))]
         [Route("moves")]
         public IQueryable<MoveDto> GetMoves()
@@ -45,7 +44,6 @@ namespace KuroganeHammer.Data.Api.Controllers
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        [Authorize(Roles = Basic)]
         [ResponseType(typeof(IQueryable<MoveDto>))]
         [Route("moves/byname")]
         public IQueryable<MoveDto> GetMovesByName([FromUri] string name)
@@ -61,7 +59,6 @@ namespace KuroganeHammer.Data.Api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Authorize(Roles = Basic)]
         [ResponseType(typeof(MoveDto))]
         [Route("moves/{id}")]
         public IHttpActionResult GetMove(int id)
@@ -84,7 +81,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         /// <param name="move"></param>
         /// <returns></returns>
         [Authorize(Roles = Admin)]
-        [ResponseType(typeof(void))]
+        [ResponseType(typeof(IHttpActionResult))]
         [Route("moves/{id}")]
         public IHttpActionResult PutMove(int id, Move move)
         {

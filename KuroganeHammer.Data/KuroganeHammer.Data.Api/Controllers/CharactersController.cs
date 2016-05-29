@@ -37,7 +37,6 @@ namespace KuroganeHammer.Data.Api.Controllers
         /// Get all of the <see cref="Character"/> details.
         /// </summary>
         /// <returns></returns>
-        [Authorize(Roles = Basic)]
         [Route("characters")]
         public IQueryable<Character> GetCharacters()
         {
@@ -49,7 +48,6 @@ namespace KuroganeHammer.Data.Api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Authorize(Roles = Basic)]
         [ResponseType(typeof(Character))]
         [Route("characters/{id}")]
         public IHttpActionResult GetCharacter(int id)
@@ -68,7 +66,6 @@ namespace KuroganeHammer.Data.Api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Authorize(Roles = Basic)]
         [Route("Characters/{id}/movements")]
         [HttpGet]
         public IQueryable<MovementDto> GetMovementsForCharacter(int id)
@@ -84,7 +81,6 @@ namespace KuroganeHammer.Data.Api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Authorize(Roles = Basic)]
         [Route("Characters/{id}/moves")]
         public IQueryable<MoveDto> GetMovesForCharacter(int id)
         {
