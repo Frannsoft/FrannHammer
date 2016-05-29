@@ -1,5 +1,6 @@
 ﻿using KuroganeHammer.Data.Api.Models;
 using System;
+using KuroganeHammer.Data.Core.Calculations;
 
 namespace KuroganeHammer.Data.Api.Tests
 {
@@ -140,5 +141,23 @@ namespace KuroganeHammer.Data.Api.Tests
 
             return characterAttribute;
         }
+
+        //public CalculatorRequestModel CalcRequest()
+        //{
+        //    return new CalculatorRequestModel
+        //    {
+        //        AttackerPercent = 100,
+        //        VictimPercent = 100,
+        //        BaseDamage = 20,
+        //        TargetWeight = 80,
+        //        KnockbackGrowth = 10,
+        //        BaseKnockbackSetKnockback = 31,
+        //        HitlagModifier = 1,
+        //        HitFrame = 4,
+        //        FirstActiveFrame = 12,
+        //        Staleness = 0, 
+        //        Modifiers = Modifiers.Standing,
+        //    };
+        //}
     }
 }

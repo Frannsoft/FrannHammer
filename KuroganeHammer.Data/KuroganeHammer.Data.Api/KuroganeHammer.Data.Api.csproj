@@ -242,6 +242,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
+    <Compile Include="Controllers\CalculatorController.cs" />
     <Compile Include="Controllers\CharacterAttributesController.cs" />
     <Compile Include="Controllers\CharacterAttributeTypesController.cs" />
     <Compile Include="Controllers\CharactersController.cs" />
@@ -250,6 +251,7 @@
     <Compile Include="Controllers\NotationsController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SmashAttributeTypesController.cs" />
+    <Compile Include="DTOs\CalculatorDtos.cs" />
     <Compile Include="DTOs\CharacterAttributeDto.cs" />
     <Compile Include="DTOs\CharacterAttributeRowDto.cs" />
     <Compile Include="DTOs\MoveDto.cs" />
@@ -326,6 +328,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CalculatorModels.cs" />
     <Compile Include="Models\CharacterAttributeModels.cs" />
     <Compile Include="Models\Character.cs" />
     <Compile Include="Models\CharacterAttributeType.cs" />
