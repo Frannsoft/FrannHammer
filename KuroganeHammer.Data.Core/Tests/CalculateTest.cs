@@ -50,7 +50,7 @@ namespace KuroganeHammer.Data.Core.Tests
         public void ShouldGetExpectedVersusModeKnockback()
         {
             var result = _calculator.VersusModeKnockback(_versusModeKnockbackData);
-            Assert.That(result, Is.EqualTo(49.080386473429961d));
+            Assert.That(result, Is.EqualTo(45.244444444444447d));
         }
 
         [Test]
@@ -66,7 +66,7 @@ namespace KuroganeHammer.Data.Core.Tests
         {
             var versusModeKnockback = _calculator.VersusModeKnockback(_versusModeKnockbackData);
             var result = _calculator.Hitstun(versusModeKnockback);
-            Assert.That(result, Is.EqualTo(18));
+            Assert.That(result, Is.EqualTo(17));
         }
 
         [Test]

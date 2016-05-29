@@ -35,7 +35,6 @@ namespace KuroganeHammer.Data.Api.Controllers
         /// Get all of the <see cref="CharacterAttributeType"/> details.
         /// </summary>
         /// <returns></returns>
-        [Authorize(Roles = Basic)]
         [Route("characterattributetypes")]
         public IQueryable<CharacterAttributeType> GetCharacterAttributeTypes()
         {
@@ -47,7 +46,6 @@ namespace KuroganeHammer.Data.Api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Authorize(Roles = Basic)]
         [ResponseType(typeof(CharacterAttributeType))]
         [Route("characterattributetypes/{id}")]
         public IHttpActionResult GetCharacterAttributeType(int id)
