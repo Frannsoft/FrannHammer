@@ -55,11 +55,11 @@ namespace KuroganeHammer.Data.Api.Tests.Smoke
             Assert.That(movement.Name.Length > 0);
         }
 
-        [Test]
-        public async Task ShouldNotGetAllMovementsDueToNoAuth()
-        {
-            var result = await AnonymousClient.GetAsync(Baseuri + MovementsRoute);
-            Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
-        }
+        //[Test]
+        //public async Task ShouldNotGetAllMovementsDueToNoAuth()
+        //{
+        //    var result = await AnonymousClient.GetAsync(Baseuri + MovementsRoute);
+        //    Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
+        //}
     }
 }

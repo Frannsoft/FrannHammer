@@ -45,6 +45,7 @@ namespace KuroganeHammer.Data.Api.Tests.Smoke
         }
 
         [Test]
+        [Explicit("Writes to csv file")]
         public async Task WriteToCSVTest_VsModeKnockback()
         {
             var responses = new List<CompletedCalculationResponseDto>();
@@ -76,16 +77,13 @@ namespace KuroganeHammer.Data.Api.Tests.Smoke
 
                 //Assert.That(response.IsSuccessStatusCode);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    var result = await response.Content.ReadAsAsync<CompletedCalculationResponseDto>();
+                if (!response.IsSuccessStatusCode) continue;
+                var result = await response.Content.ReadAsAsync<CompletedCalculationResponseDto>();
 
-                    responses.Add(result);
-
-                }
+                responses.Add(result);
             }
 
-            using (StreamWriter writer = File.CreateText("test.csv"))
+            using (var writer = File.CreateText("test.csv"))
             {
                 foreach (var result in responses)
                 {
@@ -98,6 +96,7 @@ namespace KuroganeHammer.Data.Api.Tests.Smoke
         }
 
         [Test]
+        [Explicit("Writes to csv file")]
         public async Task WriteToCSVTest_Shieldstun_Normal()
         {
             var responses = new List<CompletedCalculationResponseDto>();
@@ -129,16 +128,13 @@ namespace KuroganeHammer.Data.Api.Tests.Smoke
 
                 //Assert.That(response.IsSuccessStatusCode);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    var result = await response.Content.ReadAsAsync<CompletedCalculationResponseDto>();
+                if (!response.IsSuccessStatusCode) continue;
+                var result = await response.Content.ReadAsAsync<CompletedCalculationResponseDto>();
 
-                    responses.Add(result);
-
-                }
+                responses.Add(result);
             }
 
-            using (StreamWriter writer = File.CreateText("test.csv"))
+            using (var writer = File.CreateText("test.csv"))
             {
                 foreach (var result in responses)
                 {
