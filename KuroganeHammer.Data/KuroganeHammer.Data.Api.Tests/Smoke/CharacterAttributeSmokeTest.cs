@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using KuroganeHammer.Data.Api.DTOs;
@@ -27,7 +26,7 @@ namespace KuroganeHammer.Data.Api.Tests.Smoke
         {
             CollectionAssert.AllItemsAreNotNull(_attributes);
             CollectionAssert.AllItemsAreUnique(_attributes);
-            CollectionPropertyAssert.AllPropertiesNotNullInCollection(_attributes, "SmashAttributeType");
+            CollectionPropertyAssert.AllPropertiesNotNullInCollection(_attributes, "CharacterAttributeType", "SmashAttributeType");
         }
 
         [Test]
@@ -65,11 +64,11 @@ namespace KuroganeHammer.Data.Api.Tests.Smoke
             CollectionAssert.AllItemsAreUnique(characterAttributeRows);
         }
 
-        [Test]
-        public async Task ShouldNotGetAllCharacterAttributesDueToNoAuth()
-        {
-            var result = await AnonymousClient.GetAsync(Baseuri + CharacterAttributeRoute);
-            Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
-        }
+        //[Test]
+        //public async Task ShouldNotGetAllCharacterAttributesDueToNoAuth()
+        //{
+        //    var result = await AnonymousClient.GetAsync(Baseuri + CharacterAttributeRoute);
+        //    Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
+        //}
     }
 }

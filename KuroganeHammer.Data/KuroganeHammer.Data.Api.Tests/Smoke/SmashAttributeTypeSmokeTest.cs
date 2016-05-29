@@ -38,11 +38,11 @@ namespace KuroganeHammer.Data.Api.Tests.Smoke
             Assert.That(attributeType.Name.Length > 0);
         }
 
-        [Test]
-        public async Task ShouldNotGetAllSmashAttributeTypesDueToNoAuth()
-        {
-            var result = await AnonymousClient.GetAsync(Baseuri + SmashAttributeTypeRoute);
-            Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
-        }
+        //[Test]
+        //public async Task ShouldNotGetAllSmashAttributeTypesDueToNoAuth()
+        //{
+        //    var result = await AnonymousClient.GetAsync(Baseuri + SmashAttributeTypeRoute);
+        //    Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
+        //}
     }
 }
