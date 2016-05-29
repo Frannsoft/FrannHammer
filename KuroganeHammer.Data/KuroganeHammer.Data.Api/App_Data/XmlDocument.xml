@@ -38,6 +38,43 @@
             <param name="model"></param>
             <returns></returns>
         </member>
+        <member name="T:KuroganeHammer.Data.Api.Controllers.CalculatorController">
+            <summary>
+            Controller used for calculating data off of character attributes and properties such as moves.
+            </summary>
+        </member>
+        <member name="M:KuroganeHammer.Data.Api.Controllers.CalculatorController.#ctor">
+            <summary>
+            Creates a <see cref="T:KuroganeHammer.Data.Api.Controllers.CalculatorController"/> with the default <see cref="T:KuroganeHammer.Data.Api.Models.ApplicationDbContext"/>.
+            </summary>
+        </member>
+        <member name="M:KuroganeHammer.Data.Api.Controllers.CalculatorController.#ctor(KuroganeHammer.Data.Api.Models.ApplicationDbContext)">
+            <summary>
+            Creates a <see cref="T:KuroganeHammer.Data.Api.Controllers.CalculatorController"/> with the specified <see cref="T:KuroganeHammer.Data.Api.Models.ApplicationDbContext"/>.
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:KuroganeHammer.Data.Api.Controllers.CalculatorController.PostRage(KuroganeHammer.Data.Core.Calculations.RageProblemData)">
+            <summary>
+            Calculate Rage based on passed in data.
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:KuroganeHammer.Data.Api.Controllers.CalculatorController.PostMoveVsKnockback(KuroganeHammer.Data.Api.Models.CalculatorMoveModel)">
+            <summary>
+            Calculate Vs mode knockback of a specific character's move.
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:KuroganeHammer.Data.Api.Controllers.CalculatorController.PostMoveShieldStunNormal(KuroganeHammer.Data.Api.Models.CalculatorMoveModel)">
+            <summary>
+            Calculate the Normal Shield stun of a specific character's move.
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
         <member name="T:KuroganeHammer.Data.Api.Controllers.CharacterAttributesController">
             <summary>
             Handles all individual <see cref="T:KuroganeHammer.Data.Api.Models.CharacterAttribute"/> operations.  
@@ -417,6 +454,63 @@
              to change in the future it's fairly straightforward to do so on the back and the frontend won't 
             need to change as much (if at all).
             
+            </summary>
+        </member>
+        <member name="T:KuroganeHammer.Data.Api.Models.CalculatorMoveModel">
+            <summary>
+            Model used for performing calculations on character moves.
+            </summary>
+        </member>
+        <member name="P:KuroganeHammer.Data.Api.Models.CalculatorMoveModel.MoveId">
+            <summary>
+            The Id of the Move in question.
+            </summary>
+        </member>
+        <member name="P:KuroganeHammer.Data.Api.Models.CalculatorMoveModel.AttackerDamagePercent">
+            <summary>
+            The damage percent the attacker has.
+            </summary>
+        </member>
+        <member name="P:KuroganeHammer.Data.Api.Models.CalculatorMoveModel.VictimDamagePercent">
+            <summary>
+            The damage percent the target being hit has.
+            </summary>
+        </member>
+        <member name="P:KuroganeHammer.Data.Api.Models.CalculatorMoveModel.TargetWeight">
+            <summary>
+            The weight of the target.
+            </summary>
+        </member>
+        <member name="P:KuroganeHammer.Data.Api.Models.CalculatorMoveModel.StaleMoveNegationMultiplier">
+            <summary>
+            The stale move negation level.  More details on this found at: http://kuroganehammer.com/Smash4/Formulas.  
+            Default in no staleness on a move.
+            </summary>
+        </member>
+        <member name="P:KuroganeHammer.Data.Api.Models.CalculatorMoveModel.ElectricModifier">
+            <summary>
+            What type of attack is being performed.  More details on this found at: http://kuroganehammer.com/Smash4/Formulas.   
+            </summary>
+        </member>
+        <member name="P:KuroganeHammer.Data.Api.Models.CalculatorMoveModel.CrouchingModifier">
+            <summary>
+            Whether or not the target being hit is crouching or otherwise.  More details on this found at: http://kuroganehammer.com/Smash4/Formulas.  
+            </summary>
+        </member>
+        <member name="P:KuroganeHammer.Data.Api.Models.CalculatorMoveModel.ShieldAdvantageModifier">
+            <summary>
+            Shield advantage modifier based on normal or projectile.  More details on this found at: http://kuroganehammer.com/Smash4/Formulas.  
+            </summary>
+        </member>
+        <member name="P:KuroganeHammer.Data.Api.Models.CalculatorMoveModel.Modifiers">
+            <summary>
+            Whether or not the victim is doing something other than standing when hit. More details on this found at: http://kuroganehammer.com/Smash4/Formulas.  
+            </summary>
+        </member>
+        <member name="P:KuroganeHammer.Data.Api.Models.CalculatorMoveModel.HitboxOption">
+            <summary>
+            The specific hitbox frames for this moves.  Since some moves have multiple frames with multiple hitboxes, specify which hitbox data should be 
+            used.  
             </summary>
         </member>
     </members>
