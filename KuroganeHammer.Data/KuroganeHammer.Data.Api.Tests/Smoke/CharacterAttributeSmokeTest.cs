@@ -2,8 +2,8 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using KuroganeHammer.Data.Api.DTOs;
-using KuroganeHammer.Data.Api.Models;
 using KuroganeHammer.Data.Api.Tests.Asserts;
+using KuroganeHammer.Data.Core.Models;
 using Newtonsoft.Json;
 using NUnit.Framework;
 

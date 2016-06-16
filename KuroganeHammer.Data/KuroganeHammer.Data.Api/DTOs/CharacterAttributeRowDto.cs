@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using KuroganeHammer.Data.Api.Models;
+using KuroganeHammer.Data.Core.Models;
 
 namespace KuroganeHammer.Data.Api.DTOs
 {

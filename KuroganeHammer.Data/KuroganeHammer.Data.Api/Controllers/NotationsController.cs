@@ -5,6 +5,7 @@ using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
 using KuroganeHammer.Data.Api.Models;
+using KuroganeHammer.Data.Core.Models;
 using static KuroganeHammer.Data.Api.Models.RolesConstants;
 
 namespace KuroganeHammer.Data.Api.Controllers

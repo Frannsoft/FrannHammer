@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Web.Http;
-using KuroganeHammer.Data.Api.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using static KuroganeHammer.Data.Api.Models.RolesConstants;
 using System.Linq;
 using System.Web.Http.Description;
+using KuroganeHammer.Data.Core.Models;
 
 namespace KuroganeHammer.Data.Api.Controllers
 {

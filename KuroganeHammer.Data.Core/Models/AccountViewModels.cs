@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace KuroganeHammer.Data.Api.Models
+namespace KuroganeHammer.Data.Core.Models
 {
     // Models returned by AccountController actions.
 

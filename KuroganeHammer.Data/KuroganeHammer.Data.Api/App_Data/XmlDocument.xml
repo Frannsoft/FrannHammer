@@ -17,21 +17,21 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:KuroganeHammer.Data.Api.Controllers.AccountController.ChangePassword(KuroganeHammer.Data.Api.Models.ChangePasswordBindingModel)">
+        <member name="M:KuroganeHammer.Data.Api.Controllers.AccountController.ChangePassword(KuroganeHammer.Data.Core.Models.ChangePasswordBindingModel)">
             <summary>
             Change a user's password.
             </summary>
             <param name="model"></param>
             <returns></returns>
         </member>
-        <member name="M:KuroganeHammer.Data.Api.Controllers.AccountController.RemoveLogin(KuroganeHammer.Data.Api.Models.RemoveLoginBindingModel)">
+        <member name="M:KuroganeHammer.Data.Api.Controllers.AccountController.RemoveLogin(KuroganeHammer.Data.Core.Models.RemoveLoginBindingModel)">
             <summary>
             Remove the ability for a user to login.
             </summary>
             <param name="model"></param>
             <returns></returns>
         </member>
-        <member name="M:KuroganeHammer.Data.Api.Controllers.AccountController.Register(KuroganeHammer.Data.Api.Models.RegisterBindingModel)">
+        <member name="M:KuroganeHammer.Data.Api.Controllers.AccountController.Register(KuroganeHammer.Data.Core.Models.RegisterBindingModel)">
             <summary>
             Register a brand new user.
             </summary>
@@ -61,14 +61,14 @@
             <param name="data"></param>
             <returns></returns>
         </member>
-        <member name="M:KuroganeHammer.Data.Api.Controllers.CalculatorController.PostMoveVsKnockback(KuroganeHammer.Data.Api.Models.CalculatorMoveModel)">
+        <member name="M:KuroganeHammer.Data.Api.Controllers.CalculatorController.PostMoveVsKnockback(KuroganeHammer.Data.Core.Models.CalculatorMoveModel)">
             <summary>
             Calculate Vs mode knockback of a specific character's move.
             </summary>
             <param name="model"></param>
             <returns></returns>
         </member>
-        <member name="M:KuroganeHammer.Data.Api.Controllers.CalculatorController.PostMoveShieldStunNormal(KuroganeHammer.Data.Api.Models.CalculatorMoveModel)">
+        <member name="M:KuroganeHammer.Data.Api.Controllers.CalculatorController.PostMoveShieldStunNormal(KuroganeHammer.Data.Core.Models.CalculatorMoveModel)">
             <summary>
             Calculate the Normal Shield stun of a specific character's move.
             </summary>
@@ -77,58 +77,58 @@
         </member>
         <member name="T:KuroganeHammer.Data.Api.Controllers.CharacterAttributesController">
             <summary>
-            Handles all individual <see cref="T:KuroganeHammer.Data.Api.Models.CharacterAttribute"/> operations.  
+            Handles all individual <see cref="T:KuroganeHammer.Data.Core.Models.CharacterAttribute"/> operations.  
             </summary>
         </member>
         <member name="M:KuroganeHammer.Data.Api.Controllers.CharacterAttributesController.#ctor">
             <summary>
-            Create a new <see cref="T:KuroganeHammer.Data.Api.Models.CharacterAttribute"/> controller to interact with the server.
+            Create a new <see cref="T:KuroganeHammer.Data.Core.Models.CharacterAttribute"/> controller to interact with the server.
             </summary>
         </member>
         <member name="M:KuroganeHammer.Data.Api.Controllers.CharacterAttributesController.#ctor(KuroganeHammer.Data.Api.Models.ApplicationDbContext)">
             <summary>
-            Create a new <see cref="T:KuroganeHammer.Data.Api.Models.CharacterAttribute"/> controller to interact with the server using a specific 
+            Create a new <see cref="T:KuroganeHammer.Data.Core.Models.CharacterAttribute"/> controller to interact with the server using a specific 
             <see cref="T:KuroganeHammer.Data.Api.Models.ApplicationDbContext"/>.
             </summary>
         </member>
         <member name="M:KuroganeHammer.Data.Api.Controllers.CharacterAttributesController.GetCharacterAttributes">
             <summary>
-            Get all <see cref="T:KuroganeHammer.Data.Api.Models.CharacterAttribute"/>s.
+            Get all <see cref="T:KuroganeHammer.Data.Core.Models.CharacterAttribute"/>s.
             </summary>
             <returns></returns>
         </member>
         <member name="M:KuroganeHammer.Data.Api.Controllers.CharacterAttributesController.GetCharacterAttribute(System.Int32)">
             <summary>
-            Get a specific <see cref="T:KuroganeHammer.Data.Api.Models.CharacterAttribute"/> by its id.
+            Get a specific <see cref="T:KuroganeHammer.Data.Core.Models.CharacterAttribute"/> by its id.
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:KuroganeHammer.Data.Api.Controllers.CharacterAttributesController.PutCharacterAttribute(System.Int32,KuroganeHammer.Data.Api.Models.CharacterAttribute)">
+        <member name="M:KuroganeHammer.Data.Api.Controllers.CharacterAttributesController.PutCharacterAttribute(System.Int32,KuroganeHammer.Data.Core.Models.CharacterAttribute)">
             <summary>
-            Update a <see cref="T:KuroganeHammer.Data.Api.Models.CharacterAttribute"/>
+            Update a <see cref="T:KuroganeHammer.Data.Core.Models.CharacterAttribute"/>
             </summary>
             <param name="id"></param>
             <param name="characterAttribute"></param>
             <returns></returns>
         </member>
-        <member name="M:KuroganeHammer.Data.Api.Controllers.CharacterAttributesController.PostCharacterAttribute(KuroganeHammer.Data.Api.Models.CharacterAttribute)">
+        <member name="M:KuroganeHammer.Data.Api.Controllers.CharacterAttributesController.PostCharacterAttribute(KuroganeHammer.Data.Core.Models.CharacterAttribute)">
             <summary>
-            Create a new <see cref="T:KuroganeHammer.Data.Api.Models.CharacterAttribute"/>.
+            Create a new <see cref="T:KuroganeHammer.Data.Core.Models.CharacterAttribute"/>.
             </summary>
             <param name="characterAttribute"></param>
             <returns></returns>
         </member>
         <member name="M:KuroganeHammer.Data.Api.Controllers.CharacterAttributesController.DeleteCharacterAttribute(System.Int32)">
             <summary>
-            Delete a <see cref="T:KuroganeHammer.Data.Api.Models.CharacterAttribute"/>.
+            Delete a <see cref="T:KuroganeHammer.Data.Core.Models.CharacterAttribute"/>.
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
         <member name="T:KuroganeHammer.Data.Api.Controllers.CharacterAttributeTypesController">
             <summary>
-            Handles the backing types of <see cref="T:KuroganeHammer.Data.Api.Models.CharacterAttribute"/>s.
+            Handles the backing types of <see cref="T:KuroganeHammer.Data.Core.Models.CharacterAttribute"/>s.
             </summary>
         </member>
         <member name="M:KuroganeHammer.Data.Api.Controllers.CharacterAttributeTypesController.#ctor">
@@ -145,42 +145,42 @@
         </member>
         <member name="M:KuroganeHammer.Data.Api.Controllers.CharacterAttributeTypesController.GetCharacterAttributeTypes">
             <summary>
-            Get all of the <see cref="T:KuroganeHammer.Data.Api.Models.CharacterAttributeType"/> details.
+            Get all of the <see cref="T:KuroganeHammer.Data.Core.Models.CharacterAttributeType"/> details.
             </summary>
             <returns></returns>
         </member>
         <member name="M:KuroganeHammer.Data.Api.Controllers.CharacterAttributeTypesController.GetCharacterAttributeType(System.Int32)">
             <summary>
-            Get a specific <see cref="T:KuroganeHammer.Data.Api.Models.CharacterAttributeType"/>s details.
+            Get a specific <see cref="T:KuroganeHammer.Data.Core.Models.CharacterAttributeType"/>s details.
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:KuroganeHammer.Data.Api.Controllers.CharacterAttributeTypesController.PutCharacterAttributeType(System.Int32,KuroganeHammer.Data.Api.Models.CharacterAttributeType)">
+        <member name="M:KuroganeHammer.Data.Api.Controllers.CharacterAttributeTypesController.PutCharacterAttributeType(System.Int32,KuroganeHammer.Data.Core.Models.CharacterAttributeType)">
             <summary>
-            Update a <see cref="T:KuroganeHammer.Data.Api.Models.CharacterAttributeType"/>.
+            Update a <see cref="T:KuroganeHammer.Data.Core.Models.CharacterAttributeType"/>.
             </summary>
             <param name="id"></param>
             <param name="characterAttributeType"></param>
             <returns></returns>
         </member>
-        <member name="M:KuroganeHammer.Data.Api.Controllers.CharacterAttributeTypesController.PostCharacterAttributeType(KuroganeHammer.Data.Api.Models.CharacterAttributeType)">
+        <member name="M:KuroganeHammer.Data.Api.Controllers.CharacterAttributeTypesController.PostCharacterAttributeType(KuroganeHammer.Data.Core.Models.CharacterAttributeType)">
             <summary>
-            Create a new <see cref="T:KuroganeHammer.Data.Api.Models.CharacterAttributeType"/>.
+            Create a new <see cref="T:KuroganeHammer.Data.Core.Models.CharacterAttributeType"/>.
             </summary>
             <param name="characterAttributeType"></param>
             <returns></returns>
         </member>
         <member name="M:KuroganeHammer.Data.Api.Controllers.CharacterAttributeTypesController.DeleteCharacterAttributeType(System.Int32)">
             <summary>
-            Delete a <see cref="T:KuroganeHammer.Data.Api.Models.CharacterAttributeType"/>.
+            Delete a <see cref="T:KuroganeHammer.Data.Core.Models.CharacterAttributeType"/>.
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
         <member name="T:KuroganeHammer.Data.Api.Controllers.CharactersController">
             <summary>
-            Handles server operations dealing with <see cref="T:KuroganeHammer.Data.Api.Models.Character"/>s.
+            Handles server operations dealing with <see cref="T:KuroganeHammer.Data.Core.Models.Character"/>s.
             </summary>
         </member>
         <member name="M:KuroganeHammer.Data.Api.Controllers.CharactersController.#ctor">
@@ -197,49 +197,49 @@
         </member>
         <member name="M:KuroganeHammer.Data.Api.Controllers.CharactersController.GetCharacters">
             <summary>
-            Get all of the <see cref="T:KuroganeHammer.Data.Api.Models.Character"/> details.
+            Get all of the <see cref="T:KuroganeHammer.Data.Core.Models.Character"/> details.
             </summary>
             <returns></returns>
         </member>
         <member name="M:KuroganeHammer.Data.Api.Controllers.CharactersController.GetCharacter(System.Int32)">
             <summary>
-            Get a specific <see cref="T:KuroganeHammer.Data.Api.Models.Character"/>s details.
+            Get a specific <see cref="T:KuroganeHammer.Data.Core.Models.Character"/>s details.
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:KuroganeHammer.Data.Api.Controllers.CharactersController.GetMovementsForCharacter(System.Int32)">
             <summary>
-            Get all the <see cref="T:KuroganeHammer.Data.Api.Models.Movement"/> data for a specific <see cref="T:KuroganeHammer.Data.Api.Models.Character"/>
+            Get all the <see cref="T:KuroganeHammer.Data.Core.Models.Movement"/> data for a specific <see cref="T:KuroganeHammer.Data.Core.Models.Character"/>
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:KuroganeHammer.Data.Api.Controllers.CharactersController.GetMovesForCharacter(System.Int32)">
             <summary>
-            Get all the <see cref="T:KuroganeHammer.Data.Api.Models.Move"/> data for a specific <see cref="T:KuroganeHammer.Data.Api.Models.Character"/>.
+            Get all the <see cref="T:KuroganeHammer.Data.Core.Models.Move"/> data for a specific <see cref="T:KuroganeHammer.Data.Core.Models.Character"/>.
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:KuroganeHammer.Data.Api.Controllers.CharactersController.PutCharacter(System.Int32,KuroganeHammer.Data.Api.Models.Character)">
+        <member name="M:KuroganeHammer.Data.Api.Controllers.CharactersController.PutCharacter(System.Int32,KuroganeHammer.Data.Core.Models.Character)">
             <summary>
-            Update a <see cref="T:KuroganeHammer.Data.Api.Models.Character"/>.
+            Update a <see cref="T:KuroganeHammer.Data.Core.Models.Character"/>.
             </summary>
             <param name="id"></param>
             <param name="character"></param>
             <returns></returns>
         </member>
-        <member name="M:KuroganeHammer.Data.Api.Controllers.CharactersController.PostCharacter(KuroganeHammer.Data.Api.Models.Character)">
+        <member name="M:KuroganeHammer.Data.Api.Controllers.CharactersController.PostCharacter(KuroganeHammer.Data.Core.Models.Character)">
             <summary>
-            Create a new <see cref="T:KuroganeHammer.Data.Api.Models.Character"/>.
+            Create a new <see cref="T:KuroganeHammer.Data.Core.Models.Character"/>.
             </summary>
             <param name="character"></param>
             <returns></returns>
         </member>
         <member name="M:KuroganeHammer.Data.Api.Controllers.CharactersController.DeleteCharacter(System.Int32)">
             <summary>
-            Delete a <see cref="T:KuroganeHammer.Data.Api.Models.Character"/>.
+            Delete a <see cref="T:KuroganeHammer.Data.Core.Models.Character"/>.
             </summary>
             <param name="id"></param>
             <returns></returns>
@@ -263,24 +263,24 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:KuroganeHammer.Data.Api.Controllers.MovementsController.PutMovement(System.Int32,KuroganeHammer.Data.Api.Models.Movement)">
+        <member name="M:KuroganeHammer.Data.Api.Controllers.MovementsController.PutMovement(System.Int32,KuroganeHammer.Data.Core.Models.Movement)">
             <summary>
-            Update a specific <see cref="T:KuroganeHammer.Data.Api.Models.Movement"/>.
+            Update a specific <see cref="T:KuroganeHammer.Data.Core.Models.Movement"/>.
             </summary>
             <param name="id"></param>
             <param name="movement"></param>
             <returns></returns>
         </member>
-        <member name="M:KuroganeHammer.Data.Api.Controllers.MovementsController.PostMovement(KuroganeHammer.Data.Api.Models.Movement)">
+        <member name="M:KuroganeHammer.Data.Api.Controllers.MovementsController.PostMovement(KuroganeHammer.Data.Core.Models.Movement)">
             <summary>
-            Create a new <see cref="T:KuroganeHammer.Data.Api.Models.Movement"/>.
+            Create a new <see cref="T:KuroganeHammer.Data.Core.Models.Movement"/>.
             </summary>
             <param name="movement"></param>
             <returns></returns>
         </member>
         <member name="M:KuroganeHammer.Data.Api.Controllers.MovementsController.DeleteMovement(System.Int32)">
             <summary>
-            Delete a <see cref="T:KuroganeHammer.Data.Api.Models.Movement"/>.
+            Delete a <see cref="T:KuroganeHammer.Data.Core.Models.Movement"/>.
             </summary>
             <param name="id"></param>
             <returns></returns>
@@ -305,31 +305,31 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:KuroganeHammer.Data.Api.Controllers.MovesController.PutMove(System.Int32,KuroganeHammer.Data.Api.Models.Move)">
+        <member name="M:KuroganeHammer.Data.Api.Controllers.MovesController.PutMove(System.Int32,KuroganeHammer.Data.Core.Models.Move)">
             <summary>
-            Update a <see cref="T:KuroganeHammer.Data.Api.Models.Move"/>.
+            Update a <see cref="T:KuroganeHammer.Data.Core.Models.Move"/>.
             </summary>
             <param name="id"></param>
             <param name="move"></param>
             <returns></returns>
         </member>
-        <member name="M:KuroganeHammer.Data.Api.Controllers.MovesController.PostMove(KuroganeHammer.Data.Api.Models.Move)">
+        <member name="M:KuroganeHammer.Data.Api.Controllers.MovesController.PostMove(KuroganeHammer.Data.Core.Models.Move)">
             <summary>
-            Create a new <see cref="T:KuroganeHammer.Data.Api.Models.Move"/>.
+            Create a new <see cref="T:KuroganeHammer.Data.Core.Models.Move"/>.
             </summary>
             <param name="move"></param>
             <returns></returns>
         </member>
         <member name="M:KuroganeHammer.Data.Api.Controllers.MovesController.DeleteMove(System.Int32)">
             <summary>
-            Delete a <see cref="T:KuroganeHammer.Data.Api.Models.Move"/>.
+            Delete a <see cref="T:KuroganeHammer.Data.Core.Models.Move"/>.
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
         <member name="T:KuroganeHammer.Data.Api.Controllers.NotationsController">
             <summary>
-            Handles operations dealing with <see cref="T:KuroganeHammer.Data.Api.Models.Notation"/>s.
+            Handles operations dealing with <see cref="T:KuroganeHammer.Data.Core.Models.Notation"/>s.
             </summary>
         </member>
         <member name="M:KuroganeHammer.Data.Api.Controllers.NotationsController.#ctor">
@@ -346,49 +346,49 @@
         </member>
         <member name="M:KuroganeHammer.Data.Api.Controllers.NotationsController.GetNotations">
             <summary>
-            Get all <see cref="T:KuroganeHammer.Data.Api.Models.Notation"/>s.
+            Get all <see cref="T:KuroganeHammer.Data.Core.Models.Notation"/>s.
             </summary>
             <returns></returns>
         </member>
         <member name="M:KuroganeHammer.Data.Api.Controllers.NotationsController.GetNotation(System.Int32)">
             <summary>
-            Get a specific <see cref="T:KuroganeHammer.Data.Api.Models.Notation"/>s details.
+            Get a specific <see cref="T:KuroganeHammer.Data.Core.Models.Notation"/>s details.
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:KuroganeHammer.Data.Api.Controllers.NotationsController.PutNotation(System.Int32,KuroganeHammer.Data.Api.Models.Notation)">
+        <member name="M:KuroganeHammer.Data.Api.Controllers.NotationsController.PutNotation(System.Int32,KuroganeHammer.Data.Core.Models.Notation)">
             <summary>
-            Update a <see cref="T:KuroganeHammer.Data.Api.Models.Notation"/>.
+            Update a <see cref="T:KuroganeHammer.Data.Core.Models.Notation"/>.
             </summary>
             <param name="id"></param>
             <param name="notation"></param>
             <returns></returns>
         </member>
-        <member name="M:KuroganeHammer.Data.Api.Controllers.NotationsController.PostNotation(KuroganeHammer.Data.Api.Models.Notation)">
+        <member name="M:KuroganeHammer.Data.Api.Controllers.NotationsController.PostNotation(KuroganeHammer.Data.Core.Models.Notation)">
             <summary>
-            Create a new <see cref="T:KuroganeHammer.Data.Api.Models.Notation"/>.
+            Create a new <see cref="T:KuroganeHammer.Data.Core.Models.Notation"/>.
             </summary>
             <param name="notation"></param>
             <returns></returns>
         </member>
         <member name="M:KuroganeHammer.Data.Api.Controllers.NotationsController.DeleteNotation(System.Int32)">
             <summary>
-            Delete a <see cref="T:KuroganeHammer.Data.Api.Models.Notation"/>.
+            Delete a <see cref="T:KuroganeHammer.Data.Core.Models.Notation"/>.
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:KuroganeHammer.Data.Api.Controllers.RolesController.AddUserToRole(KuroganeHammer.Data.Api.Models.UserToRoleModel)">
+        <member name="M:KuroganeHammer.Data.Api.Controllers.RolesController.AddUserToRole(KuroganeHammer.Data.Core.Models.UserToRoleModel)">
             <summary>
-            Add a user to a role via <see cref="T:KuroganeHammer.Data.Api.Models.UserToRoleModel"/>.
+            Add a user to a role via <see cref="T:KuroganeHammer.Data.Core.Models.UserToRoleModel"/>.
             </summary>
             <param name="model"></param>
             <returns></returns>
         </member>
-        <member name="M:KuroganeHammer.Data.Api.Controllers.RolesController.RemoveUserFromRole(KuroganeHammer.Data.Api.Models.UserToRoleModel)">
+        <member name="M:KuroganeHammer.Data.Api.Controllers.RolesController.RemoveUserFromRole(KuroganeHammer.Data.Core.Models.UserToRoleModel)">
             <summary>
-            Removes a user from the role specified in the passed in <see cref="T:KuroganeHammer.Data.Api.Models.UserToRoleModel"/>.
+            Removes a user from the role specified in the passed in <see cref="T:KuroganeHammer.Data.Core.Models.UserToRoleModel"/>.
             </summary>
             <param name="model"></param>
             <returns></returns>
@@ -400,117 +400,60 @@
         </member>
         <member name="M:KuroganeHammer.Data.Api.Controllers.SmashAttributeTypesController.GetSmashAttributeTypes">
             <summary>
-            Get all of the stored <see cref="T:KuroganeHammer.Data.Api.Models.SmashAttributeType"/>s.
+            Get all of the stored <see cref="T:KuroganeHammer.Data.Core.Models.SmashAttributeType"/>s.
             </summary>
             <returns></returns>
         </member>
         <member name="M:KuroganeHammer.Data.Api.Controllers.SmashAttributeTypesController.GetSmashAttributeType(System.Int32)">
             <summary>
-            Get a specific <see cref="T:KuroganeHammer.Data.Api.Models.SmashAttributeType"/>.
+            Get a specific <see cref="T:KuroganeHammer.Data.Core.Models.SmashAttributeType"/>.
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:KuroganeHammer.Data.Api.Controllers.SmashAttributeTypesController.GetAllCharacterAttributeOfSmashAttributeType(System.Int32)">
             <summary>
-            Get back all of the <see cref="T:KuroganeHammer.Data.Api.Models.SmashAttributeType"/>s of a specific id
-            as <see cref="T:KuroganeHammer.Data.Api.Models.CharacterAttribute"/> objects.  This call parses the returned 
-            <see cref="T:KuroganeHammer.Data.Api.Models.CharacterAttribute"/>s into <see cref="T:KuroganeHammer.Data.Api.DTOs.CharacterAttributeRowDto"/>, 
+            Get back all of the <see cref="T:KuroganeHammer.Data.Core.Models.SmashAttributeType"/>s of a specific id
+            as <see cref="T:KuroganeHammer.Data.Core.Models.CharacterAttribute"/> objects.  This call parses the returned 
+            <see cref="T:KuroganeHammer.Data.Core.Models.CharacterAttribute"/>s into <see cref="T:KuroganeHammer.Data.Api.DTOs.CharacterAttributeRowDto"/>, 
             similar to how they are displayed on KuroganeHammer.com.
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:KuroganeHammer.Data.Api.Controllers.SmashAttributeTypesController.PutSmashAttributeType(System.Int32,KuroganeHammer.Data.Api.Models.SmashAttributeType)">
+        <member name="M:KuroganeHammer.Data.Api.Controllers.SmashAttributeTypesController.PutSmashAttributeType(System.Int32,KuroganeHammer.Data.Core.Models.SmashAttributeType)">
             <summary>
-            Update an existing <see cref="T:KuroganeHammer.Data.Api.Models.SmashAttributeType"/>.
+            Update an existing <see cref="T:KuroganeHammer.Data.Core.Models.SmashAttributeType"/>.
             </summary>
             <param name="id"></param>
             <param name="smashAttributeType"></param>
             <returns></returns>
         </member>
-        <member name="M:KuroganeHammer.Data.Api.Controllers.SmashAttributeTypesController.PostSmashAttributeType(KuroganeHammer.Data.Api.Models.SmashAttributeType)">
+        <member name="M:KuroganeHammer.Data.Api.Controllers.SmashAttributeTypesController.PostSmashAttributeType(KuroganeHammer.Data.Core.Models.SmashAttributeType)">
             <summary>
-            Create a new <see cref="T:KuroganeHammer.Data.Api.Models.SmashAttributeType"/>.
+            Create a new <see cref="T:KuroganeHammer.Data.Core.Models.SmashAttributeType"/>.
             </summary>
             <param name="smashAttributeType"></param>
             <returns></returns>
         </member>
         <member name="M:KuroganeHammer.Data.Api.Controllers.SmashAttributeTypesController.DeleteSmashAttributeType(System.Int32)">
             <summary>
-            Delete an existing <see cref="T:KuroganeHammer.Data.Api.Models.SmashAttributeType"/>.
+            Delete an existing <see cref="T:KuroganeHammer.Data.Core.Models.SmashAttributeType"/>.
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
         <member name="T:KuroganeHammer.Data.Api.DTOs.CharacterAttributeRowDto">
             <summary>
-            Contains the concept of a 'row' of <see cref="T:KuroganeHammer.Data.Api.Models.CharacterAttribute"/> data.
+            Contains the concept of a 'row' of <see cref="T:KuroganeHammer.Data.Core.Models.CharacterAttribute"/> data.
             
-            This is because each <see cref="T:KuroganeHammer.Data.Api.Models.CharacterAttribute"/> consists of a single attribute value
+            This is because each <see cref="T:KuroganeHammer.Data.Core.Models.CharacterAttribute"/> consists of a single attribute value
             rather than a row of attribute value that KH currently creates his attribute pages from.
             
-            The way <see cref="T:KuroganeHammer.Data.Api.Models.CharacterAttribute"/>'s are stored in the DB means if the individual values brought back need
+            The way <see cref="T:KuroganeHammer.Data.Core.Models.CharacterAttribute"/>'s are stored in the DB means if the individual values brought back need
              to change in the future it's fairly straightforward to do so on the back and the frontend won't 
             need to change as much (if at all).
             
-            </summary>
-        </member>
-        <member name="T:KuroganeHammer.Data.Api.Models.CalculatorMoveModel">
-            <summary>
-            Model used for performing calculations on character moves.
-            </summary>
-        </member>
-        <member name="P:KuroganeHammer.Data.Api.Models.CalculatorMoveModel.MoveId">
-            <summary>
-            The Id of the Move in question.
-            </summary>
-        </member>
-        <member name="P:KuroganeHammer.Data.Api.Models.CalculatorMoveModel.AttackerDamagePercent">
-            <summary>
-            The damage percent the attacker has.
-            </summary>
-        </member>
-        <member name="P:KuroganeHammer.Data.Api.Models.CalculatorMoveModel.VictimDamagePercent">
-            <summary>
-            The damage percent the target being hit has.
-            </summary>
-        </member>
-        <member name="P:KuroganeHammer.Data.Api.Models.CalculatorMoveModel.TargetWeight">
-            <summary>
-            The weight of the target.
-            </summary>
-        </member>
-        <member name="P:KuroganeHammer.Data.Api.Models.CalculatorMoveModel.StaleMoveNegationMultiplier">
-            <summary>
-            The stale move negation level.  More details on this found at: http://kuroganehammer.com/Smash4/Formulas.  
-            Default in no staleness on a move.
-            </summary>
-        </member>
-        <member name="P:KuroganeHammer.Data.Api.Models.CalculatorMoveModel.ElectricModifier">
-            <summary>
-            What type of attack is being performed.  More details on this found at: http://kuroganehammer.com/Smash4/Formulas.   
-            </summary>
-        </member>
-        <member name="P:KuroganeHammer.Data.Api.Models.CalculatorMoveModel.CrouchingModifier">
-            <summary>
-            Whether or not the target being hit is crouching or otherwise.  More details on this found at: http://kuroganehammer.com/Smash4/Formulas.  
-            </summary>
-        </member>
-        <member name="P:KuroganeHammer.Data.Api.Models.CalculatorMoveModel.ShieldAdvantageModifier">
-            <summary>
-            Shield advantage modifier based on normal or projectile.  More details on this found at: http://kuroganehammer.com/Smash4/Formulas.  
-            </summary>
-        </member>
-        <member name="P:KuroganeHammer.Data.Api.Models.CalculatorMoveModel.Modifiers">
-            <summary>
-            Whether or not the victim is doing something other than standing when hit. More details on this found at: http://kuroganehammer.com/Smash4/Formulas.  
-            </summary>
-        </member>
-        <member name="P:KuroganeHammer.Data.Api.Models.CalculatorMoveModel.HitboxOption">
-            <summary>
-            The specific hitbox frames for this moves.  Since some moves have multiple frames with multiple hitboxes, specify which hitbox data should be 
-            used.  
             </summary>
         </member>
     </members>

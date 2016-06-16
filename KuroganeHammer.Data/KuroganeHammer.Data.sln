@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KuroganeHammer.Data.Api", "KuroganeHammer.Data.Api\KuroganeHammer.Data.Api.csproj", "{470ADA5B-56B2-45D3-8162-AB65B0350C68}"
 EndProject
@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KurograneTransferDBTool", "
 		{470ADA5B-56B2-45D3-8162-AB65B0350C68} = {470ADA5B-56B2-45D3-8162-AB65B0350C68}
 		{2904D4E7-8989-46BD-AC0A-B4356F190A15} = {2904D4E7-8989-46BD-AC0A-B4356F190A15}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KuroganeHammer.DataSynchro", "..\KuroganeHammer.DataSynchro\KuroganeHammer.DataSynchro.csproj", "{9539A472-8C2A-4DD7-86E8-91BCDD6E2BFB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +46,10 @@ Global
 		{BBA304DE-3510-4B40-99CD-74338C6108F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBA304DE-3510-4B40-99CD-74338C6108F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BBA304DE-3510-4B40-99CD-74338C6108F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9539A472-8C2A-4DD7-86E8-91BCDD6E2BFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9539A472-8C2A-4DD7-86E8-91BCDD6E2BFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9539A472-8C2A-4DD7-86E8-91BCDD6E2BFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9539A472-8C2A-4DD7-86E8-91BCDD6E2BFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

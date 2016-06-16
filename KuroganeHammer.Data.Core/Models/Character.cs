@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace KuroganeHammer.Data.Api.Models
+namespace KuroganeHammer.Data.Core.Models
 {
     public class Character
     {

@@ -1,6 +1,6 @@
 ﻿using KuroganeHammer.Data.Core.Calculations;
 
-namespace KuroganeHammer.Data.Api.Models
+namespace KuroganeHammer.Data.Core.Models
 {
     ///// <summary>
     ///// Base model for making
