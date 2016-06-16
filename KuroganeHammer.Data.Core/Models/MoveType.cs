@@ -1,4 +1,4 @@
-﻿namespace KuroganeHammer.Data.Api.Models
+﻿namespace KuroganeHammer.Data.Core.Models
 {
     public enum MoveType
     {

@@ -1,85 +1,10 @@
 ﻿using System;
-using System.Configuration;
 using System.Linq;
-using KuroganeHammer.Data.Api.Models;
+using KuroganeHammer.Data.Core.Models;
 
-namespace ConsoleApplication1
+namespace KurograneTransferDBTool.Seeding
 {
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            using (AppDbContext context = new AppDbContext())
-            {
-                SyncData<Hitbox>(context);
-                SyncData<BaseKnockbackSetKnockback>(context);
-                SyncData<BaseDamage>(context);
-                SyncData<Angle>(context);
-                SyncData<Autocancel>(context);
-                SyncData<LandingLag>(context);
-                SyncData<KnockbackGrowth>(context);
-            }
-        }
-
-        private static void SyncData<T>(AppDbContext context)
-            where T : BaseMeta
-        {
-            if (!context.Set<T>().Any())
-            {
-                var moves = context.Moves.ToList();
-
-                foreach (var move in moves)
-                {
-                    var metaData = TransferMethods.MapDataThenSync<T>(move, context);
-                    Console.WriteLine($"Adding {metaData.GetType().Name} data for moveId: {move.Id}");
-                    context.Set<T>().Add(metaData);
-                }
-                context.SaveChanges();
-            }
-        }
-
-        //private static void SyncHitboxData(AppDbContext context)
-        //{
-        //    if (!context.Hitbox.Any())
-        //    {
-        //        var moves = context.Moves.ToList();
-
-        //        foreach (var move in moves)
-        //        {
-        //            var hitbox = TransferMethods.AddHitboxDataToHitboxTable(move, context);
-        //            Console.WriteLine($"Adding Hitbox data for moveId: {move.Id}");
-        //            context.Hitbox.Add(hitbox);
-        //        }
-        //        context.SaveChanges();
-        //    }
-        //}
-
-        //private static void SyncBaseKnockbackSetKnockbackData(AppDbContext context)
-        //{
-        //    if (!context.BaseKnockbackSetKnockback.Any())
-        //    {
-        //        var moves = context.Moves.ToList();
-
-        //        foreach (var move in moves)
-        //        {
-        //            var kbk = TransferMethods.AddBaseKnockbackSetKnockback_DataTo_BaseKnockbackSetKnockback_Table(move,
-        //                context);
-        //            Console.WriteLine($"Adding BaseKnockbackSetKnockback data for moveId: {move.Id}");
-        //            context.BaseKnockbackSetKnockback.Add(kbk);
-        //        }
-        //        context.SaveChanges();
-        //    }
-        //}
-    }
-
-    public class AppDbContext : ApplicationDbContext
-    {
-        public AppDbContext()
-            : base(ConfigurationManager.AppSettings["connection"])
-        { }
-    }
-
-    public class TransferMethods
+    internal class TransferMethods
     {
         internal static T MapDataThenSync<T>(Move move, AppDbContext context)
             where T : BaseMeta
@@ -104,13 +29,13 @@ namespace ConsoleApplication1
             {
                 return (T)(object)AddAutocancelDataToTable(move, context);
             }
-            if (typeof (T) == typeof (LandingLag))
+            if (typeof(T) == typeof(LandingLag))
             {
-                return (T) (object) AddLandingLagDataToTable(move, context);
+                return (T)(object)AddLandingLagDataToTable(move, context);
             }
-            if (typeof (T) == typeof (KnockbackGrowth))
+            if (typeof(T) == typeof(KnockbackGrowth))
             {
-                return (T) (object) AddKnockbackGrowthDataToTable(move, context);
+                return (T)(object)AddKnockbackGrowthDataToTable(move, context);
             }
             throw new Exception("No applicable type found");
         }
@@ -244,5 +169,4 @@ namespace ConsoleApplication1
             return hitbox;
         }
     }
-
 }

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace KuroganeHammer.Data.Api.Models
+namespace KuroganeHammer.Data.Core.Models
 {
     // Models used as parameters to AccountController actions.
 

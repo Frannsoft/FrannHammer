@@ -1,5 +1,6 @@
 using System;
 using KuroganeHammer.Data.Api.Models;
+using KuroganeHammer.Data.Core.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 

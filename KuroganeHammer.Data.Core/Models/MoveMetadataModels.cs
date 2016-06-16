@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace KuroganeHammer.Data.Api.Models
+namespace KuroganeHammer.Data.Core.Models
 {
     public abstract class BaseMeta
     {

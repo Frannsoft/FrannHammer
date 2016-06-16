@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Http.Results;
-using KuroganeHammer.Data.Api.Models;
+using KuroganeHammer.Data.Core.Models;
 using NUnit.Framework;
 
 namespace KuroganeHammer.Data.Api.Tests.Controllers.Characters

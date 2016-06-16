@@ -46,8 +46,6 @@ namespace KuroganeHammer.Data.Api.Tests.Smoke
 
             var adminresponse = LoggedInAdminClient.PostAsync(tokenUri, admincontent).Result;
 
-            var json = adminresponse.Content.ReadAsStringAsync().Result;
-
             _adminauthToken =
                 JsonConvert.DeserializeObject<dynamic>(adminresponse.Content.ReadAsStringAsync().Result).access_token;
             LoggedInAdminClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _adminauthToken);
