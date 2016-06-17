@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using KuroganeHammer.Data.Core.Models;
 using KuroganeHammer.Data.Core.Requests;
 using KuroganeHammer.DataSynchro.Models;
@@ -22,33 +24,16 @@ namespace KuroganeHammer.DataSynchro.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        private ObservableCollection<Move> _moves;
-        public ObservableCollection<Move> Moves
-        {
-            get { return _moves; }
-            private set
-            {
-                _moves = value;
-                OnPropertyChanged();
-            }
-        }
         #endregion
 
         public MainVm(UserModel user)
             : base(user)
         { }
 
-        public void RefreshCharacters()
+        public async Task RefreshCharacters()
         {
-            var characters = new CharacterRequest(LoggedInUser.LoggedInClient).GetCharacters();
+            var characters = await ExecuteAsync(async() => await new CharacterRequest(LoggedInUser.LoggedInClient).GetCharacters());
             Characters = new ObservableCollection<Character>(characters);
-        }
-
-        public void RefreshMoves()
-        {
-            var moves = new MovesRequest(LoggedInUser.LoggedInClient).GetMoves();
-            Moves = new ObservableCollection<Move>(moves);
         }
 
         public void Logout()

@@ -29,14 +29,21 @@ namespace KuroganeHammer.Data.Core.Models
                 LastModified.Equals(other.LastModified);
         }
 
-        public override Task<HttpResponseMessage> Update(HttpClient client)
+        public override async Task<HttpResponseMessage> Create(HttpClient client)
         {
-            return client.PutAsJsonAsync($"{client.BaseAddress.AbsoluteUri}/characters/{Id}", this);
+            var httpResponseMessage = await client.PostAsJsonAsync($"{client.BaseAddress.AbsoluteUri}/characters", this);
+            return httpResponseMessage;
         }
 
-        public override Task<HttpResponseMessage> Delete(HttpClient client)
+        public override async Task<HttpResponseMessage> Update(HttpClient client)
         {
-            return client.DeleteAsync($"{client.BaseAddress.AbsoluteUri}/characters/{Id}");
+            var httpResponseMessage = await client.PutAsJsonAsync($"{client.BaseAddress.AbsoluteUri}/characters/{Id}", this);
+            return httpResponseMessage;
+        }
+
+        public override async Task<HttpResponseMessage> Delete(HttpClient client)
+        {
+            return await client.DeleteAsync($"{client.BaseAddress.AbsoluteUri}/characters/{Id}");
         }
 
         public override bool Equals(object obj)

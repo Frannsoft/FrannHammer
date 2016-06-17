@@ -12,6 +12,12 @@ namespace KuroganeHammer.Data.Core.Models
         public DateTime LastModified { get; set; }
         public string Value { get; set; }
 
+        public override async Task<HttpResponseMessage> Create(HttpClient client)
+        {
+            var httpResponseMessage = await client.PostAsJsonAsync($"{client.BaseAddress.AbsoluteUri}/movements", this);
+            return httpResponseMessage;
+        }
+
         public override Task<HttpResponseMessage> Update(HttpClient client)
         {
             return client.PutAsJsonAsync(client.BaseAddress.AbsoluteUri + "/movements", this);

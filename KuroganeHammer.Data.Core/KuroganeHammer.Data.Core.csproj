@@ -74,6 +74,9 @@
     <Compile Include="CharacterAttributes.cs" />
     <Compile Include="CharacterStat.cs" />
     <Compile Include="CharacterUtility.cs" />
+    <Compile Include="DTOs\CharacterAttributeDto.cs" />
+    <Compile Include="DTOs\CharacterAttributeRowDto.cs" />
+    <Compile Include="DTOs\SmashAttributeTypeDto.cs" />
     <Compile Include="EntityBusinessConverter.cs" />
     <Compile Include="CharacterConstants.cs" />
     <Compile Include="GroundStat.cs" />
@@ -97,7 +100,9 @@
     <Compile Include="MoveType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\AccountRequest.cs" />
+    <Compile Include="Requests\CharacterAttributesRequest.cs" />
     <Compile Include="Requests\CharacterRequest.cs" />
+    <Compile Include="Requests\MovementsRequest.cs" />
     <Compile Include="Requests\MovesRequest.cs" />
     <Compile Include="Requests\Request.cs" />
     <Compile Include="SpecialStat.cs" />

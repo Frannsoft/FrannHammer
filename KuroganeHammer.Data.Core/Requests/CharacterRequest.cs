@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading.Tasks;
+using KuroganeHammer.Data.Core.DTOs;
 using KuroganeHammer.Data.Core.Models;
 
 namespace KuroganeHammer.Data.Core.Requests
@@ -13,25 +15,40 @@ namespace KuroganeHammer.Data.Core.Requests
             : base(client)
         { }
 
-        public IEnumerable<Character> GetCharacters()
+        public async Task<IEnumerable<Character>> GetCharacters()
         {
-            var response = Client.GetAsync(Client.BaseAddress.AbsoluteUri + "/characters").Result;
+            var response = await Client.GetAsync(Client.BaseAddress.AbsoluteUri + "/characters");
 
             response.EnsureSuccessStatusCode();
 
-            var characters = response.Content.ReadAsAsync<List<Character>>().Result;
+            var characters = await response.Content.ReadAsAsync<List<Character>>();
 
             return characters;
         }
 
-        public Character GetCharacter(int id)
+        public async Task<Character> GetCharacter(int id)
         {
-            var response = Client.GetAsync(Client.BaseAddress.AbsoluteUri + "/characters/" + id).Result;
+            var response = await Client.GetAsync(Client.BaseAddress.AbsoluteUri + "/characters/" + id);
             response.EnsureSuccessStatusCode();
 
-            var character = response.Content.ReadAsAsync<Character>().Result;
+            var character = await response.Content.ReadAsAsync<Character>();
 
             return character;
+        }
+
+        public async Task<IEnumerable<CharacterAttributeDto>> GetCharacterAttributesOfCharacter(int id)
+        {
+            var response =
+                await Client.GetAsync($"{Client.BaseAddress.AbsoluteUri}/characters/{id}/characterattributes");
+
+#if DEBUG
+            var json = response.Content.ReadAsStringAsync().Result;
+#endif
+            response.EnsureSuccessStatusCode();
+
+            var attributes = await response.Content.ReadAsAsync<List<CharacterAttributeDto>>();
+
+            return attributes;
         }
         
     }

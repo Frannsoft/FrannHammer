@@ -1,8 +1,6 @@
-﻿using KuroganeHammer.DataSynchro.Models;
-using KuroganeHammer.DataSynchro.ViewModels;
+﻿using KuroganeHammer.DataSynchro.ViewModels;
 using System;
 using System.Configuration;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -36,15 +34,11 @@ namespace KuroganeHammer.DataSynchro
             LoginCancelStackPanel.Visibility = Visibility.Hidden;
         }
 
-        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            DragMove();
-        }
-
-        private async void LoginButton_Click(object sender, RoutedEventArgs e)
+        private async Task Login()
         {
 #if DEBUG
-       
+            UsernameTextBox.Text = "KuroUser";
+            PasswordPasswordBox.Password = "MasterHand7118!";
 #endif
             var username = UsernameTextBox.Text;
             var password = PasswordPasswordBox.Password;
@@ -54,8 +48,7 @@ namespace KuroganeHammer.DataSynchro
             {
                 ShowLoggingInUi();
 
-                var user = default(UserModel);
-                user = await _loginVm.LoginAs(username, password, baseUrl);
+                var user = await _loginVm.LoginAs(username, password, baseUrl);
 
                 var mainWindow = new MainWindow(user);
                 mainWindow.Show();
@@ -68,9 +61,36 @@ namespace KuroganeHammer.DataSynchro
             }
         }
 
+        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
+        }
+
+        private async void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            await Login();
+        }
+
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private async void MetroWindow_KeyUp(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Enter:
+                    {
+                        await Login();
+                        break;
+                    }
+                case Key.Escape:
+                    {
+                        Close();
+                        break;
+                    }
+            }
         }
     }
 }

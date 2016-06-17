@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -17,32 +18,29 @@ namespace KuroganeHammer.DataSynchro
     {
         private readonly CharacterVm _characterVm;
         private readonly UserModel _user;
+        private readonly bool _isNewCharacter;
 
-        public CharacterWindow(Character character, UserModel user)
+        public CharacterWindow(Character character, UserModel user, bool isNewCharacter = false)
         {
             Guard.VerifyObjectNotNull(character, nameof(character));
             Guard.VerifyObjectNotNull(user, nameof(user));
 
             InitializeComponent();
 
+            _isNewCharacter = isNewCharacter;
             _user = user;
-            _characterVm = new CharacterVm(character, user);
+            _characterVm = new CharacterVm(character, user, isNewCharacter);
             DataContext = _characterVm;
             InitEditorControl(character, user);
         }
 
         private void InitEditorControl(BaseModel model, UserModel user)
         {
-            var editorControl = new EditorControl(model, user);
+            var editorControl = new EditorControl(model, user, _isNewCharacter);
             Grid.SetRow(editorControl, 0);
             Grid.SetColumn(editorControl, 0);
             Grid.SetColumnSpan(editorControl, 1);
             CharacterPropertiesGrid.Children.Add(editorControl);
-        }
-
-        public CharacterWindow()
-        {
-            InitializeComponent();
         }
 
         private void Execute(Action action)
@@ -63,32 +61,32 @@ namespace KuroganeHammer.DataSynchro
             {
                 const int characters = 0;
                 const int moves = 1;
+                const int movements = 2;
+                const int attributes = 3;
+
                 switch (MainTabControl.SelectedIndex)
                 {
                     case characters:
                         {
-                            Execute(() => _characterVm.RefreshCharacter());
+                            Execute(async () => await _characterVm.RefreshCharacter());
                             break;
                         }
                     case moves:
                         {
-                            Execute(() => _characterVm.RefreshMoves());
+                            Execute(async () => await _characterVm.RefreshMoves());
+                            break;
+                        }
+                    case movements:
+                        {
+                            Execute(async () => await _characterVm.RefreshMovements());
+                            break;
+                        }
+                    case attributes:
+                        {
+                            Execute(async () => await _characterVm.RefreshCharacterAttributes());
                             break;
                         }
                 }
-            }
-        }
-
-        private void MovesDataGrid_Row_DoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (MovesDataGrid.SelectedIndex != -1)
-            {
-                var move = MovesDataGrid.SelectedItem as Move;
-                if (move == null) return;
-
-                // Load character into new window to update
-                var editWindow = new EditWindow(move, _user);
-                editWindow.ShowDialog();
             }
         }
     }

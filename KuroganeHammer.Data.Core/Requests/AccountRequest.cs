@@ -53,9 +53,9 @@ namespace KuroganeHammer.Data.Core.Requests
             return loggedInClient;
         }
 
-        public void Logout()
+        public async Task Logout()
         {
-            Client.PostAsync(Client.BaseAddress.AbsoluteUri + "/Account/Logout", new StringContent(string.Empty));
+            await Client.PostAsync(Client.BaseAddress.AbsoluteUri + "/Account/Logout", new StringContent(string.Empty));
         }
 
 

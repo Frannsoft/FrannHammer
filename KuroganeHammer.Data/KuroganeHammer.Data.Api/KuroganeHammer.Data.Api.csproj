@@ -252,11 +252,8 @@
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SmashAttributeTypesController.cs" />
     <Compile Include="DTOs\CalculatorDtos.cs" />
-    <Compile Include="DTOs\CharacterAttributeDto.cs" />
-    <Compile Include="DTOs\CharacterAttributeRowDto.cs" />
     <Compile Include="DTOs\MoveDto.cs" />
     <Compile Include="DTOs\MovementDto.cs" />
-    <Compile Include="DTOs\SmashAttributeTypeDto.cs" />
     <Compile Include="DTOs\UserDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

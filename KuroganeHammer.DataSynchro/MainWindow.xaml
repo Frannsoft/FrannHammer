@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KuroganeHammer.DataSynchro"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:customControls="clr-namespace:KuroganeHammer.DataSynchro.Controls"
         mc:Ignorable="d"
         Title="{Binding Username, Mode=OneWay, StringFormat=DataSynchro - {0}}" Height="768" Width="1366" Closing="MetroWindow_Closing"
                       BorderThickness="0" GlowBrush="Black" Background="#FFEEEEEE">
@@ -20,9 +21,12 @@
                         <ColumnDefinition Width="100"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Name="CreateCharacterButton" Content="New Character" Grid.Row="0" Grid.Column="0" Margin="2"/>
-                    <DataGrid Name="CharactersDataGrid" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" AutoGenerateColumns="True"
+                    <Button Name="CreateCharacterButton" Content="New Character" Grid.Row="0" Grid.Column="0" Click="CreateCharacterButton_Click" Margin="2"/>
+                    <customControls:BusyControl Grid.Row="0" Grid.Column="1" Margin="2"/>
+                    <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" BorderBrush="SlateGray" BorderThickness="1">
+                        <DataGrid Name="CharactersDataGrid"  AutoGenerateColumns="True" IsReadOnly="True"
                               ItemsSource="{Binding Characters}" Margin="5" MouseDoubleClick="CharactersDataGrid_Row_DoubleClick"/>
+                    </Border>
                 </Grid>
             </TabItem>
             <!--<TabItem Name="MovesTabItem" Header="Moves">

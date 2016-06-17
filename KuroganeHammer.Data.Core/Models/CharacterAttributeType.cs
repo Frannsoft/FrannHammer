@@ -11,6 +11,11 @@ namespace KuroganeHammer.Data.Core.Models
         public Notation Notation { get; set; }
         public int? NotationId { get; set; }
         public DateTime LastModified { get; set; }
+        public override Task<HttpResponseMessage> Create(HttpClient client)
+        {
+            throw new NotImplementedException();
+        }
+
         public override Task<HttpResponseMessage> Update(HttpClient client)
         {
             throw new NotImplementedException();
