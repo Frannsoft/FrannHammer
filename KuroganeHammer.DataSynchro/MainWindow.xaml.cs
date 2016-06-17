@@ -32,24 +32,22 @@ namespace KuroganeHammer.DataSynchro
 
         private void MetroWindow_Closing(object sender, CancelEventArgs e) => Execute(() => _mainVm.Logout());
 
+
         private void MainTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            const int characters = 0;
-            const int moves = 1;
-            switch (MainTabControl.SelectedIndex)
+            //TODO: add characterattributetypes, smashattributetypes, notations at the very least
+            if (e.Source is TabControl)
             {
-                case characters:
-                    {
-                        Execute(() => _mainVm.RefreshCharacters());
-                        break;
-                    }
-                //case moves:
-                //    {
-                //        Execute(() => _mainVm.RefreshMoves());
-                //        break;
-                //    }
+                const int characters = 0;
+                switch (MainTabControl.SelectedIndex)
+                {
+                    case characters:
+                        {
+                            Execute(async () => await _mainVm.RefreshCharacters());
+                            break;
+                        }
+                }
             }
-
         }
 
         private void CharactersDataGrid_Row_DoubleClick(object sender, MouseButtonEventArgs e)
@@ -63,7 +61,7 @@ namespace KuroganeHammer.DataSynchro
                 //var editWindow = new EditWindow(character);
                 //editWindow.ShowDialog();
 
-                var characterWindow = new CharacterWindow(character, _user);
+                var characterWindow = new CharacterWindow(character, _user) {Owner = this};
                 characterWindow.ShowDialog();
             }
         }
@@ -80,9 +78,13 @@ namespace KuroganeHammer.DataSynchro
             }
         }
 
-        private void MovesDataGrid_Row_DoubleClick(object sender, MouseButtonEventArgs e)
+        private void CreateCharacterButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            var newCharacter = new Character();
+
+            var characterWindow = new CharacterWindow(newCharacter, _user, true) { Owner = this };
+            characterWindow.ShowDialog();
+
         }
     }
 }

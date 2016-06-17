@@ -22,6 +22,12 @@ namespace KuroganeHammer.Data.Core.Models
             throw new NotImplementedException("No support for deleting these individual attributes yet.  " +
                                               "To be clear, the controllers and API exist, just not the helper/wrapper methods");
         }
+
+
+        public override Task<HttpResponseMessage> Create(HttpClient client)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class AirAcceleration : BaseCharacterAttribute

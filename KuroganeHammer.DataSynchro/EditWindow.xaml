@@ -5,9 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KuroganeHammer.DataSynchro"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:controls1="clr-namespace:KuroganeHammer.DataSynchro.Controls"
         mc:Ignorable="d"
-        Title="Editing Object" Height="350" Width="400" ResizeMode="NoResize" BorderThickness="0" Background="#FFEEEEEE" GlowBrush="Black">
+        Title="Editing Object" Height="450" Width="400" ResizeMode="NoResize" BorderThickness="0" Background="#FFEEEEEE" GlowBrush="Black">
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

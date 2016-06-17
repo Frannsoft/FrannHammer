@@ -2,7 +2,7 @@
 using System.Linq;
 using KuroganeHammer.Data.Core.Models;
 
-namespace KuroganeHammer.Data.Api.DTOs
+namespace KuroganeHammer.Data.Core.DTOs
 {
     /// <summary>
     /// Contains the concept of a 'row' of <see cref="CharacterAttribute"/> data.

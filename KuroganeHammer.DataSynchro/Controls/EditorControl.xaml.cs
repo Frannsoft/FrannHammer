@@ -27,14 +27,14 @@ namespace KuroganeHammer.DataSynchro.Controls
             AssembleFields();
         }
 
-        public EditorControl(BaseModel model, UserModel user)
+        public EditorControl(BaseModel model, UserModel user, bool isNewObject)
         {
             Guard.VerifyObjectNotNull(model, nameof(model));
             Guard.VerifyObjectNotNull(user, nameof(user));
 
 
             InitializeComponent();
-            _editVm = new EditVm(model, user);
+            _editVm = new EditVm(model, user, isNewObject);
 
             DataContext = _editVm;
 

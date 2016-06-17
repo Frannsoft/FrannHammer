@@ -25,6 +25,11 @@ namespace KuroganeHammer.Data.Core.Models
             throw new NotImplementedException("No support for deleting these types of values through the API yet.  " +
                                               "This is a high priority");
         }
+
+        public override Task<HttpResponseMessage> Create(HttpClient client)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public abstract class BaseMoveHitboxMeta : BaseMeta

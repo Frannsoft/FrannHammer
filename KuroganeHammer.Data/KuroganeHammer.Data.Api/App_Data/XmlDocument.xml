@@ -222,6 +222,15 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:KuroganeHammer.Data.Api.Controllers.CharactersController.GetCharacterAttributesForCharacter(System.Int32)">
+            <summary>
+            Get all the <see cref="T:KuroganeHammer.Data.Core.Models.CharacterAttribute"/>s of a specific <see cref="T:KuroganeHammer.Data.Core.Models.Character"/>.
+            
+            These will be returned as <see cref="T:KuroganeHammer.Data.Core.DTOs.CharacterAttributeDto"/>s.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:KuroganeHammer.Data.Api.Controllers.CharactersController.PutCharacter(System.Int32,KuroganeHammer.Data.Core.Models.Character)">
             <summary>
             Update a <see cref="T:KuroganeHammer.Data.Core.Models.Character"/>.
@@ -415,7 +424,7 @@
             <summary>
             Get back all of the <see cref="T:KuroganeHammer.Data.Core.Models.SmashAttributeType"/>s of a specific id
             as <see cref="T:KuroganeHammer.Data.Core.Models.CharacterAttribute"/> objects.  This call parses the returned 
-            <see cref="T:KuroganeHammer.Data.Core.Models.CharacterAttribute"/>s into <see cref="T:KuroganeHammer.Data.Api.DTOs.CharacterAttributeRowDto"/>, 
+            <see cref="T:KuroganeHammer.Data.Core.Models.CharacterAttribute"/>s into <see cref="T:KuroganeHammer.Data.Core.DTOs.CharacterAttributeRowDto"/>, 
             similar to how they are displayed on KuroganeHammer.com.
             </summary>
             <param name="id"></param>
@@ -442,19 +451,6 @@
             </summary>
             <param name="id"></param>
             <returns></returns>
-        </member>
-        <member name="T:KuroganeHammer.Data.Api.DTOs.CharacterAttributeRowDto">
-            <summary>
-            Contains the concept of a 'row' of <see cref="T:KuroganeHammer.Data.Core.Models.CharacterAttribute"/> data.
-            
-            This is because each <see cref="T:KuroganeHammer.Data.Core.Models.CharacterAttribute"/> consists of a single attribute value
-            rather than a row of attribute value that KH currently creates his attribute pages from.
-            
-            The way <see cref="T:KuroganeHammer.Data.Core.Models.CharacterAttribute"/>'s are stored in the DB means if the individual values brought back need
-             to change in the future it's fairly straightforward to do so on the back and the frontend won't 
-            need to change as much (if at all).
-            
-            </summary>
         </member>
     </members>
 </doc>

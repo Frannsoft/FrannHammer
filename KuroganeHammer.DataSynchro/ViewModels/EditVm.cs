@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using KuroganeHammer.Data.Core.Models;
 using KuroganeHammer.DataSynchro.Controls;
 using System.Collections.ObjectModel;
+using System.Net.Http;
 using System.Threading.Tasks;
 using KuroganeHammer.DataSynchro.Models;
 
@@ -12,6 +14,7 @@ namespace KuroganeHammer.DataSynchro.ViewModels
     public class EditVm : BaseVm
     {
         private readonly BaseModel _model;
+        private readonly bool _isNewObject;
 
         private ObservableCollection<PropertyEssentials> _properties;
         public ObservableCollection<PropertyEssentials> Properties
@@ -24,11 +27,12 @@ namespace KuroganeHammer.DataSynchro.ViewModels
             }
         }
 
-        public EditVm(BaseModel model, UserModel user)
+        public EditVm(BaseModel model, UserModel user, bool isNewObject = false)
             : base(user)
         {
             _model = model;
             Properties = new ObservableCollection<PropertyEssentials>(GetModelProperties());
+            _isNewObject = isNewObject;
         }
 
         private List<PropertyEssentials> GetModelProperties()
@@ -56,7 +60,8 @@ namespace KuroganeHammer.DataSynchro.ViewModels
                 var propEssentialValue = Properties.SingleOrDefault(pe => pe.Name.Equals(prop.Name));
                 if (propEssentialValue != null && prop.CanWrite)
                 {
-                    prop.SetValue(_model, propEssentialValue.Value);
+                    var convertedValue = Convert.ChangeType(propEssentialValue.Value, prop.PropertyType);
+                    prop.SetValue(_model, convertedValue);
                 }
             });
         }
@@ -67,7 +72,16 @@ namespace KuroganeHammer.DataSynchro.ViewModels
             UpdateModelFromProperties();
 
             //now push the update
-            var response = await _model.Update(LoggedInUser.LoggedInClient);
+            HttpResponseMessage response;
+
+            if (_isNewObject)
+            {
+                response = await _model.Create(LoggedInUser.LoggedInClient);
+            }
+            else
+            {
+                response = await _model.Update(LoggedInUser.LoggedInClient);
+            }
 
             return response.IsSuccessStatusCode;
         }

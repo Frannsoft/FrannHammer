@@ -1,4 +1,4 @@
-﻿namespace KuroganeHammer.Data.Api.DTOs
+﻿namespace KuroganeHammer.Data.Core.DTOs
 {
     public class SmashAttributeTypeDto
     {
