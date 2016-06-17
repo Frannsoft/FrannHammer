@@ -31,7 +31,20 @@ namespace KuroganeHammer.Data.Core.Requests
             });
 
             var adminresponse = await loggedInClient.PostAsync(tokenUri, admincontent);
+
+#if DEBUG
+            var json = adminresponse.Content.ReadAsStringAsync().Result;
+            try
+            {
+                adminresponse.EnsureSuccessStatusCode();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message + Environment.NewLine + json, ex); //add raw response
+            }
+#else
             adminresponse.EnsureSuccessStatusCode();
+#endif
 
             var adminauthToken =
                 JsonConvert.DeserializeObject<dynamic>(adminresponse.Content.ReadAsStringAsync().Result).access_token.Value;

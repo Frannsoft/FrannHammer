@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using KuroganeHammer.Data.Core;
 using KuroganeHammer.Data.Core.Models;
 using KuroganeHammer.DataSynchro.Models;
 using KuroganeHammer.DataSynchro.ViewModels;
@@ -15,11 +16,15 @@ namespace KuroganeHammer.DataSynchro
     public partial class MainWindow
     {
         private readonly MainVm _mainVm;
+        private readonly UserModel _user;
 
         public MainWindow(UserModel user)
         {
+            Guard.VerifyObjectNotNull(user, nameof(user));
+
             InitializeComponent();
 
+            _user = user;
             _mainVm = new MainVm(user);
 
             DataContext = _mainVm;
@@ -28,7 +33,24 @@ namespace KuroganeHammer.DataSynchro
         private void MetroWindow_Closing(object sender, CancelEventArgs e) => Execute(() => _mainVm.Logout());
 
         private void MainTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-            => Execute(() => _mainVm.RefreshCharacters());
+        {
+            const int characters = 0;
+            const int moves = 1;
+            switch (MainTabControl.SelectedIndex)
+            {
+                case characters:
+                    {
+                        Execute(() => _mainVm.RefreshCharacters());
+                        break;
+                    }
+                //case moves:
+                //    {
+                //        Execute(() => _mainVm.RefreshMoves());
+                //        break;
+                //    }
+            }
+
+        }
 
         private void CharactersDataGrid_Row_DoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -37,7 +59,12 @@ namespace KuroganeHammer.DataSynchro
                 var character = CharactersDataGrid.SelectedItem as Character;
                 if (character == null) return;
 
-                //TODO: Load character into new window to update
+                // Load character into new window to update
+                //var editWindow = new EditWindow(character);
+                //editWindow.ShowDialog();
+
+                var characterWindow = new CharacterWindow(character, _user);
+                characterWindow.ShowDialog();
             }
         }
 
@@ -51,6 +78,11 @@ namespace KuroganeHammer.DataSynchro
             {
                 MessageBox.Show(ex.Message + Environment.NewLine + ex.StackTrace, "Error");
             }
+        }
+
+        private void MovesDataGrid_Row_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            
         }
     }
 }

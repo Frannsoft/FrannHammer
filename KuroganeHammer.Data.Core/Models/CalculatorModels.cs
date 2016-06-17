@@ -45,7 +45,7 @@ namespace KuroganeHammer.Data.Core.Models
     /// <summary>
     /// Model used for performing calculations on character moves.
     /// </summary>
-    public class CalculatorMoveModel
+    public class CalculatorMoveModel 
     {
         /// <summary>
         /// The Id of the Move in question.

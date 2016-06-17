@@ -1,13 +1,27 @@
 ﻿using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace KuroganeHammer.Data.Core.Models
 {
-    public abstract class BaseCharacterAttribute
+    public abstract class BaseCharacterAttribute : BaseModel
     {
         public int Id { get; set; }
         public Character Character { get; set; }
         public int CharacterId { get; set; }
         public DateTime LastModified { get; set; }
+
+        public override Task<HttpResponseMessage> Update(HttpClient client)
+        {
+            throw new NotImplementedException("No support for updating these individual attributes yet.  " +
+                                              "To be clear, the controllers and API exist, just not the helper/wrapper methods");
+        }
+
+        public override Task<HttpResponseMessage> Delete(HttpClient client)
+        {
+            throw new NotImplementedException("No support for deleting these individual attributes yet.  " +
+                                              "To be clear, the controllers and API exist, just not the helper/wrapper methods");
+        }
     }
 
     public class AirAcceleration : BaseCharacterAttribute

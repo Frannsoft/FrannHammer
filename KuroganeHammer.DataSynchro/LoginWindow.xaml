@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:KuroganeHammer.DataSynchro"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
-        Title="DataSynchro - Login" Height="200" Width="300" ResizeMode="NoResize" Background="#FFEEEEEE" WindowStyle="None" UseNoneWindowStyle="True" >
+        Title="DataSynchro - Login" Height="200" Width="300" ResizeMode="NoResize" Background="#FFEEEEEE" WindowStyle="None" UseNoneWindowStyle="True" 
+                      BorderThickness="0" GlowBrush="Black">
     <Grid MouseDown="Grid_MouseDown">
         <Grid.Background>
             <ImageBrush AlignmentY="Top" ImageSource="images/KH LOGO1.png" Opacity="0.2" Stretch="Uniform">

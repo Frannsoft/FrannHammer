@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web.Http;
 
 namespace KuroganeHammer.Data.Core.Models
 {
-    public class Character
+    public class Character : BaseModel
     {
         public string Style { get; set; }
         public string MainImageUrl { get; set; }
@@ -24,6 +27,16 @@ namespace KuroganeHammer.Data.Core.Models
                 string.Equals(Name, other.Name) && 
                 Id == other.Id && 
                 LastModified.Equals(other.LastModified);
+        }
+
+        public override Task<HttpResponseMessage> Update(HttpClient client)
+        {
+            return client.PutAsJsonAsync($"{client.BaseAddress.AbsoluteUri}/characters/{Id}", this);
+        }
+
+        public override Task<HttpResponseMessage> Delete(HttpClient client)
+        {
+            return client.DeleteAsync($"{client.BaseAddress.AbsoluteUri}/characters/{Id}");
         }
 
         public override bool Equals(object obj)
