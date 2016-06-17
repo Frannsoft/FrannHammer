@@ -44,7 +44,7 @@ namespace KuroganeHammer.DataSynchro
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
 #if DEBUG
-           
+       
 #endif
             var username = UsernameTextBox.Text;
             var password = PasswordPasswordBox.Password;
@@ -53,9 +53,9 @@ namespace KuroganeHammer.DataSynchro
             try
             {
                 ShowLoggingInUi();
-                
+
                 var user = default(UserModel);
-                    user = await _loginVm.LoginAs(username, password, baseUrl);
+                user = await _loginVm.LoginAs(username, password, baseUrl);
 
                 var mainWindow = new MainWindow(user);
                 mainWindow.Show();

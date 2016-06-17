@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace KuroganeHammer.Data.Core.Models
 {
-    public class Move
+    public class Move : BaseModel
     {
         public string HitboxActive { get; set; }
         public int TotalHitboxActiveLength { get; set; }
@@ -18,5 +20,15 @@ namespace KuroganeHammer.Data.Core.Models
         public int OwnerId { get; set; }
         public int Id { get; set; }
         public DateTime LastModified { get; set; }
+
+        public override Task<HttpResponseMessage> Update(HttpClient client)
+        {
+            return client.PutAsJsonAsync($"{client.BaseAddress.AbsoluteUri}/moves/{Id}", this);
+        }
+
+        public override Task<HttpResponseMessage> Delete(HttpClient client)
+        {
+            return client.DeleteAsync($"{client.BaseAddress.AbsoluteUri}/moves/{Id}");
+        }
     }
 }

@@ -24,7 +24,15 @@ namespace KuroganeHammer.Data.Core.Requests
             return characters;
         }
 
+        public Character GetCharacter(int id)
+        {
+            var response = Client.GetAsync(Client.BaseAddress.AbsoluteUri + "/characters/" + id).Result;
+            response.EnsureSuccessStatusCode();
 
+            var character = response.Content.ReadAsAsync<Character>().Result;
+
+            return character;
+        }
         
     }
 }

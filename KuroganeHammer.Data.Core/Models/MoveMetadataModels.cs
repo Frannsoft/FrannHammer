@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace KuroganeHammer.Data.Core.Models
 {
-    public abstract class BaseMeta
+    public abstract class BaseMeta : BaseModel
     {
         public int Id { get; set; }
         public Character Character { get; set; }
@@ -11,6 +13,18 @@ namespace KuroganeHammer.Data.Core.Models
         public int MoveId { get; set; }
         public string Notes { get; set; }
         public DateTime LastModified { get; set; }
+
+        public override Task<HttpResponseMessage> Update(HttpClient client)
+        {
+            throw new NotImplementedException("No support for updating these types of values through the API yet.  " +
+                                              "This is a high priority");
+        }
+
+        public override Task<HttpResponseMessage> Delete(HttpClient client)
+        {
+            throw new NotImplementedException("No support for deleting these types of values through the API yet.  " +
+                                              "This is a high priority");
+        }
     }
 
     public abstract class BaseMoveHitboxMeta : BaseMeta

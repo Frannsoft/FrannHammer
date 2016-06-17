@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace KuroganeHammer.Data.Core.Models
 {
@@ -9,11 +11,20 @@ namespace KuroganeHammer.Data.Core.Models
         Boolean
     }
 
-    public class Notation
+    public class Notation : BaseModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public NotationTypes NotationType { get; set; }
         public DateTime LastModified { get; set; }
+        public override Task<HttpResponseMessage> Update(HttpClient client)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Task<HttpResponseMessage> Delete(HttpClient client)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:KuroganeHammer.DataSynchro"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
-        Title="{Binding Username, Mode=OneWay, StringFormat=DataSynchro - {0}}" Height="768" Width="1366" Closing="MetroWindow_Closing">
+        Title="{Binding Username, Mode=OneWay, StringFormat=DataSynchro - {0}}" Height="768" Width="1366" Closing="MetroWindow_Closing"
+                      BorderThickness="0" GlowBrush="Black" Background="#FFEEEEEE">
     <Grid>
         <TabControl Name="MainTabControl" SelectionChanged="MainTabControl_SelectionChanged">
             <TabItem Name="CharactersTabItem" Header="Characters" >
@@ -23,8 +24,22 @@
                     <DataGrid Name="CharactersDataGrid" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" AutoGenerateColumns="True"
                               ItemsSource="{Binding Characters}" Margin="5" MouseDoubleClick="CharactersDataGrid_Row_DoubleClick"/>
                 </Grid>
-                
             </TabItem>
+            <!--<TabItem Name="MovesTabItem" Header="Moves">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Name="CreateMoveButton" Content="New Move" Grid.Row="0" Grid.Column="0" Margin="2"/>
+                    <DataGrid Name="MovesDataGrid" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" AutoGenerateColumns="True"
+                              ItemsSource="{Binding Moves}" Margin="5" MouseDoubleClick="MovesDataGrid_Row_DoubleClick"/>
+                </Grid>
+            </TabItem>-->
         </TabControl>
     </Grid>
 </controls:MetroWindow>
