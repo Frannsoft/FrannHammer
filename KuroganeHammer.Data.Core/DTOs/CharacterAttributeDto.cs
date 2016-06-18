@@ -16,7 +16,7 @@ namespace KuroganeHammer.Data.Core.DTOs
 
         public override async Task<HttpResponseMessage> Create(HttpClient client)
         {
-            var httpResponseMessage = await client.PostAsJsonAsync($"{client.BaseAddress.AbsoluteUri}/characterattributes/{Id}", this);
+            var httpResponseMessage = await client.PostAsJsonAsync($"{client.BaseAddress.AbsoluteUri}/characterattributes", this);
             return httpResponseMessage;
         }
 

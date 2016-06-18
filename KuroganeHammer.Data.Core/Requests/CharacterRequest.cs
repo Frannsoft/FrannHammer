@@ -11,15 +11,13 @@ namespace KuroganeHammer.Data.Core.Requests
     /// </summary>
     public class CharacterRequest : Request
     {
-        public CharacterRequest(HttpClient client) 
+        public CharacterRequest(HttpClient client)
             : base(client)
         { }
 
         public async Task<IEnumerable<Character>> GetCharacters()
         {
-            var response = await Client.GetAsync(Client.BaseAddress.AbsoluteUri + "/characters");
-
-            response.EnsureSuccessStatusCode();
+            var response = await ExecuteAsync(async () => await Client.GetAsync(Client.BaseAddress.AbsoluteUri + "/characters"));
 
             var characters = await response.Content.ReadAsAsync<List<Character>>();
 
@@ -28,8 +26,7 @@ namespace KuroganeHammer.Data.Core.Requests
 
         public async Task<Character> GetCharacter(int id)
         {
-            var response = await Client.GetAsync(Client.BaseAddress.AbsoluteUri + "/characters/" + id);
-            response.EnsureSuccessStatusCode();
+            var response = await ExecuteAsync(async () => await Client.GetAsync(Client.BaseAddress.AbsoluteUri + "/characters/" + id));
 
             var character = await response.Content.ReadAsAsync<Character>();
 
@@ -38,18 +35,13 @@ namespace KuroganeHammer.Data.Core.Requests
 
         public async Task<IEnumerable<CharacterAttributeDto>> GetCharacterAttributesOfCharacter(int id)
         {
-            var response =
-                await Client.GetAsync($"{Client.BaseAddress.AbsoluteUri}/characters/{id}/characterattributes");
-
-#if DEBUG
-            var json = response.Content.ReadAsStringAsync().Result;
-#endif
-            response.EnsureSuccessStatusCode();
+            var response = await ExecuteAsync(async () =>
+                await Client.GetAsync($"{Client.BaseAddress.AbsoluteUri}/characters/{id}/characterattributes"));
 
             var attributes = await response.Content.ReadAsAsync<List<CharacterAttributeDto>>();
 
             return attributes;
         }
-        
+
     }
 }

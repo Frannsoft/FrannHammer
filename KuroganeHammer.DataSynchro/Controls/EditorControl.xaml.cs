@@ -43,11 +43,6 @@ namespace KuroganeHammer.DataSynchro.Controls
 
         private void AssembleFields()
         {
-            // reflect to get public properties
-            //var props = _editVm.GetModelProperties();
-
-            //create a new overarching stackpanel
-            //var allPropsStackPanel = new StackPanel();
             var rowIndex = 1;
 
             foreach (var prop in _editVm.Properties)
@@ -72,20 +67,11 @@ namespace KuroganeHammer.DataSynchro.Controls
                 Grid.SetRow(propValue, rowIndex);
                 Grid.SetColumn(propValue, 1);
 
-                //add ui to this stackpanel
-                //propStackPanel.Children.Add(propLabel);
-                //propStackPanel.Children.Add(propValue);
-
-                //add the stackpanel to the overarching stackpanel
-                //allPropsStackPanel.Children.Add(propStackPanel);
-
                 MainControlGrid.Children.Add(propLabel);
                 MainControlGrid.Children.Add(propValue);
                 MainControlGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
                 rowIndex++;
             }
-            //add the stackpanel to the main stackpanel
-            //MainControlGrid.Children.Add(allPropsStackPanel);
         }
 
         private async Task Execute(Func<Task<bool>> operation)
@@ -126,20 +112,19 @@ namespace KuroganeHammer.DataSynchro.Controls
             SaveDeleteStackPanel.Visibility = Visibility.Hidden;
         }
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        private async void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             //Save teh item
-            Execute(async () => await _editVm.SaveModel());
+            await Execute(async () => await _editVm.SaveModel());
         }
 
-        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        private async void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             var result = MessageBox.Show("Are you sure?", "Confirm Delete", MessageBoxButton.YesNo);
 
             if (result == MessageBoxResult.Yes)
             {
-                //TODO: delete
-                Execute(async () => await _editVm.DeleteModel());
+                await Execute(async () => await _editVm.DeleteModel());
             }
         }
     }

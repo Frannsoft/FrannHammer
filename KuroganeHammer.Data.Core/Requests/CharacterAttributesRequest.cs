@@ -12,8 +12,12 @@ namespace KuroganeHammer.Data.Core.Requests
 
         public async Task<CharacterAttributeDto> GetCharacterAttribute(int id)
         {
-            var response = await Client.GetAsync(Client.BaseAddress.AbsoluteUri + "/characterattributes/" + id);
-            response.EnsureSuccessStatusCode();
+            var response =
+                await
+                    ExecuteAsync(
+                        async () => await Client.GetAsync($"{Client.BaseAddress.AbsoluteUri}/characterattributes/{id}"));
+            //var response = await Client.GetAsync(Client.BaseAddress.AbsoluteUri + "/characterattributes/" + id);
+            //response.EnsureSuccessStatusCode();
 
             var characterAttribute = await response.Content.ReadAsAsync<CharacterAttributeDto>();
 

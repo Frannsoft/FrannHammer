@@ -20,12 +20,12 @@ namespace KuroganeHammer.Data.Core.Models
 
         public override Task<HttpResponseMessage> Update(HttpClient client)
         {
-            return client.PutAsJsonAsync(client.BaseAddress.AbsoluteUri + "/movements", this);
+            return client.PutAsJsonAsync($"{client.BaseAddress.AbsoluteUri}/movements/{Id}", this);
         }
 
         public override Task<HttpResponseMessage> Delete(HttpClient client)
         {
-            return client.DeleteAsync(client.BaseAddress.AbsoluteUri + "/movements");
+            return client.DeleteAsync($"{client.BaseAddress.AbsoluteUri}/movements");
         }
     }
 }

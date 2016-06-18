@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:KuroganeHammer.DataSynchro"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
-        Title="Editing Object" Height="450" Width="400" ResizeMode="NoResize" BorderThickness="0" Background="#FFEEEEEE" GlowBrush="Black">
+        Title="Editing Object" Height="450" Width="400" ResizeMode="NoResize" BorderThickness="0" Background="#FFEEEEEE" GlowBrush="Black"
+                      WindowStartupLocation="CenterOwner">
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

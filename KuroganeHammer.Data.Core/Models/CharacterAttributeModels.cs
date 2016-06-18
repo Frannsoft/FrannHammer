@@ -23,10 +23,9 @@ namespace KuroganeHammer.Data.Core.Models
                                               "To be clear, the controllers and API exist, just not the helper/wrapper methods");
         }
 
-
-        public override Task<HttpResponseMessage> Create(HttpClient client)
+        public override async Task<HttpResponseMessage> Create(HttpClient client)
         {
-            throw new NotImplementedException();
+            return await client.PostAsJsonAsync($"{client.BaseAddress.AbsoluteUri}/characterattributes", this);
         }
     }
 
