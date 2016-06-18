@@ -1,5 +1,5 @@
 ﻿using System;
-using KuroganeHammer.Data.Api.Models;
+using KuroganeHammer.Data.Core.Models;
 
 namespace KuroganeHammer.Data.Api.DTOs
 {

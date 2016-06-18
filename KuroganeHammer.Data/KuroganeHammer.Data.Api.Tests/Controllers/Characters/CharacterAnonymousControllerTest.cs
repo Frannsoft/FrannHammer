@@ -9,17 +9,17 @@ namespace KuroganeHammer.Data.Api.Tests.Controllers.Characters
     {
         private const string BaseUri = "/api/characters";
 
-        [Test]
-        [TestCase(BaseUri)]
-        [TestCase(BaseUri + "/2")]
-        [TestCase(BaseUri + "/4/movements")]
-        [TestCase(BaseUri + "/10/moves")]
-        public async Task ShouldGetUnauthorizedWithoutLogin_GET(string uri)
-        {
-            var response = await GetAsync(uri);
+        //[Test]
+        //[TestCase(BaseUri)]
+        //[TestCase(BaseUri + "/2")]
+        //[TestCase(BaseUri + "/4/movements")]
+        //[TestCase(BaseUri + "/10/moves")]
+        //public async Task ShouldGetUnauthorizedWithoutLogin_GET(string uri)
+        //{
+        //    var response = await GetAsync(uri);
 
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
-        }
+        //    Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
+        //}
 
         [Test]
         [TestCase(BaseUri)]

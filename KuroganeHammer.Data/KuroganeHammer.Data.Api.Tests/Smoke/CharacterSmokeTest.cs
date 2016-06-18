@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using KuroganeHammer.Data.Api.Models;
+using KuroganeHammer.Data.Core.Models;
 using NUnit.Framework;
 
 namespace KuroganeHammer.Data.Api.Tests.Smoke
