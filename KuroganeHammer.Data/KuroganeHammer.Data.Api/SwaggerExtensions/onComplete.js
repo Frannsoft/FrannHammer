@@ -18,8 +18,9 @@
         var password = $('#input_password').val();
         if (username && username.trim() != "" && password && password.trim() != "") {
             $.ajax({
-                url: "http://localhost/KHApi/api/token",
+                //url: "http://localhost/KHApi/api/token",
                 //url: "http://admin.kuroganehammer.com/api/token",
+                url: "http://api.kuroganehammer.com/api/token",
                 type: "post",
                 contenttype: 'x-www-form-urlencoded',
                 data: "grant_type=password&username=" + username + "&password=" + password,
