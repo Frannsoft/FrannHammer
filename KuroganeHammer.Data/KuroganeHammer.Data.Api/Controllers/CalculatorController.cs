@@ -2,10 +2,10 @@
 using System.Web.Http;
 using KuroganeHammer.Data.Api.Models;
 using KuroganeHammer.Data.Core.Calculations;
-using static KuroganeHammer.Data.Api.Models.RolesConstants;
 using System.Linq;
 using KuroganeHammer.Data.Api.DTOs;
 using KuroganeHammer.Data.Core;
+using KuroganeHammer.Data.Core.Models;
 
 namespace KuroganeHammer.Data.Api.Controllers
 {

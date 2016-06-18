@@ -17,6 +17,7 @@ using Microsoft.Owin.Security.OAuth;
 using KuroganeHammer.Data.Api.Models;
 using KuroganeHammer.Data.Api.Providers;
 using KuroganeHammer.Data.Api.Results;
+using KuroganeHammer.Data.Core.Models;
 using static KuroganeHammer.Data.Api.Models.RolesConstants;
 
 namespace KuroganeHammer.Data.Api.Controllers

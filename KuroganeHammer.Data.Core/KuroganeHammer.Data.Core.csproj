@@ -51,7 +51,14 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\KuroganeHammer.Data\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.Http">
+      <HintPath>..\KuroganeHammer.Data\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -67,22 +74,48 @@
     <Compile Include="CharacterAttributes.cs" />
     <Compile Include="CharacterStat.cs" />
     <Compile Include="CharacterUtility.cs" />
+    <Compile Include="DTOs\CharacterAttributeDto.cs" />
+    <Compile Include="DTOs\CharacterAttributeRowDto.cs" />
+    <Compile Include="DTOs\SmashAttributeTypeDto.cs" />
     <Compile Include="EntityBusinessConverter.cs" />
     <Compile Include="CharacterConstants.cs" />
     <Compile Include="GroundStat.cs" />
     <Compile Include="Guard.cs" />
+    <Compile Include="Models\AccountBindingModels.cs" />
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\CalculatorModels.cs" />
+    <Compile Include="Models\Character.cs" />
+    <Compile Include="Models\CharacterAttributeModels.cs" />
+    <Compile Include="Models\CharacterAttributeType.cs" />
+    <Compile Include="Models\Move.cs" />
+    <Compile Include="Models\Movement.cs" />
+    <Compile Include="Models\MoveMetadataModels.cs" />
+    <Compile Include="Models\MoveType.cs" />
+    <Compile Include="Models\Notation.cs" />
+    <Compile Include="Models\RoleBindingModel.cs" />
+    <Compile Include="Models\SmashAttributeType.cs" />
     <Compile Include="MovementStat.cs" />
     <Compile Include="MoveStat.cs" />
     <Compile Include="MoveType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requests\AccountRequest.cs" />
+    <Compile Include="Requests\CharacterAttributesRequest.cs" />
+    <Compile Include="Requests\CharacterRequest.cs" />
+    <Compile Include="Requests\MovementsRequest.cs" />
+    <Compile Include="Requests\MovesRequest.cs" />
+    <Compile Include="Requests\Request.cs" />
     <Compile Include="SpecialStat.cs" />
     <Compile Include="Stat.cs" />
     <Compile Include="Tests\CalculateTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

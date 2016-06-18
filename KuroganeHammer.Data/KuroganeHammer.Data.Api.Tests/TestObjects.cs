@@ -1,6 +1,5 @@
-﻿using KuroganeHammer.Data.Api.Models;
-using System;
-using KuroganeHammer.Data.Core.Calculations;
+﻿using System;
+using KuroganeHammer.Data.Core.Models;
 
 namespace KuroganeHammer.Data.Api.Tests
 {

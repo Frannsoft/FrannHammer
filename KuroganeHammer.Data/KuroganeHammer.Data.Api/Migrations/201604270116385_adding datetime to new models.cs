@@ -1,6 +1,5 @@
 namespace KuroganeHammer.Data.Api.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
     
     public partial class addingdatetimetonewmodels : DbMigration

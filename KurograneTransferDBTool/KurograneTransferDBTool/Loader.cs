@@ -6,8 +6,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using KuroganeHammer.Data.Api.Models;
 using KuroganeHammer.Data.Core;
+using KuroganeHammer.Data.Core.Models;
 using Character = KuroganeHammer.WebScraper.Character;
 
 namespace KurograneTransferDBTool

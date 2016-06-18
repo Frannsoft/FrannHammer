@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Net;
 using System.Threading.Tasks;
-using KuroganeHammer.Data.Api.Models;
 using NUnit.Framework;
 using System.Net.Http;
 using System.Linq;
 using KuroganeHammer.Data.Api.DTOs;
+using KuroganeHammer.Data.Core.Models;
 
 namespace KuroganeHammer.Data.Api.Tests.Smoke
 {

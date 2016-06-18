@@ -8,6 +8,7 @@ using KuroganeHammer.Data.Api.Models;
 using static KuroganeHammer.Data.Api.Models.RolesConstants;
 using System;
 using KuroganeHammer.Data.Api.DTOs;
+using KuroganeHammer.Data.Core.Models;
 
 namespace KuroganeHammer.Data.Api.Controllers
 {
@@ -35,7 +36,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         {
             return (from move in db.Moves.ToList()
                     select new MoveDto(move,
-                        db.Characters.First(c => c.Id == move.OwnerId))
+                        db.Characters.Find(move.OwnerId))// .First(c => c.Id == move.OwnerId))
                 ).AsQueryable();
         }
 
@@ -49,7 +50,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         public IQueryable<MoveDto> GetMovesByName([FromUri] string name)
         {
             return (from move in db.Moves.Where(m => m.Name.Equals(name)).ToList()
-                    select  new MoveDto(move,
+                    select new MoveDto(move,
                         db.Characters.First(c => c.Id == move.OwnerId))
                 ).AsQueryable();
         }

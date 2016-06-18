@@ -7,7 +7,10 @@ using System.Web.Http.Description;
 using KuroganeHammer.Data.Api.Models;
 using static KuroganeHammer.Data.Api.Models.RolesConstants;
 using System;
+using System.Collections.Generic;
 using KuroganeHammer.Data.Api.DTOs;
+using KuroganeHammer.Data.Core.DTOs;
+using KuroganeHammer.Data.Core.Models;
 
 namespace KuroganeHammer.Data.Api.Controllers
 {
@@ -91,6 +94,34 @@ namespace KuroganeHammer.Data.Api.Controllers
         }
 
         /// <summary>
+        /// Get all the <see cref="CharacterAttribute"/>s of a specific <see cref="Character"/>.
+        /// 
+        /// These will be returned as <see cref="CharacterAttributeDto"/>s.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("characters/{id}/characterattributes")]
+        [ResponseType(typeof(IQueryable<CharacterAttributeDto>))]
+        public IQueryable<CharacterAttributeDto> GetCharacterAttributesForCharacter(int id)
+        {
+            return (from at in Db.CharacterAttributes.Where(a => a.OwnerId == id).ToList()
+                select new CharacterAttributeDto
+                {
+                    Id = at.Id,
+                    Name = at.Name,
+                    OwnerId = at.OwnerId,
+                    Rank = at.Rank,
+                    //SmashAttributeTypeDto = new SmashAttributeTypeDto
+                    //{
+                    //    Id = at.SmashAttributeType.Id,
+                    //    Name = at.Name
+                    //},
+                    SmashAttributeTypeId = at.SmashAttributeTypeId,
+                    Value = at.Value
+                }).AsQueryable();
+        }
+
+        /// <summary>
         /// Update a <see cref="Character"/>.
         /// </summary>
         /// <param name="id"></param>
@@ -148,6 +179,7 @@ namespace KuroganeHammer.Data.Api.Controllers
                 return BadRequest(ModelState);
             }
 
+            character.LastModified = DateTime.Now;
             Db.Characters.Add(character);
             Db.SaveChanges();
 

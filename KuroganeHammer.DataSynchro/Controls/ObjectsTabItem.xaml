@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="KuroganeHammer.DataSynchro.Controls.ObjectsTabItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:KuroganeHammer.DataSynchro.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Button Name="CreateObjectButton" Content="Create" Grid.Row="0" Grid.Column="0" Margin="2" Click="CreateObjectButton_Click"/>
+        <local:BusyControl Grid.Row="0" Grid.Column="1" Margin="2"/>
+        <DataGrid Name="ObjectsDataGrid" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" AutoGenerateColumns="True" IsReadOnly="True"
+                              ItemsSource="{Binding DataGridItemsSource}" Margin="5" MouseDoubleClick="ObjectsDataGrid_MouseDoubleClick"/>
+    </Grid>
+</UserControl>

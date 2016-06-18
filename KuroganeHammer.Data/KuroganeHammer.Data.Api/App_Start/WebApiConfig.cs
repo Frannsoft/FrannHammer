@@ -7,7 +7,6 @@ using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.Application;
-using WebApiThrottle;
 
 namespace KuroganeHammer.Data.Api
 {

@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using KuroganeHammer.Data.Api.Models;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
-using KuroganeHammer.Data.Api.Models;
 
 namespace KuroganeHammer.Data.Api
 {
