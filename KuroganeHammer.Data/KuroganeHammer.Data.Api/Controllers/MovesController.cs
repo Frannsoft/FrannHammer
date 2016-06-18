@@ -36,7 +36,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         {
             return (from move in db.Moves.ToList()
                     select new MoveDto(move,
-                        db.Characters.First(c => c.Id == move.OwnerId))
+                        db.Characters.Find(move.OwnerId))// .First(c => c.Id == move.OwnerId))
                 ).AsQueryable();
         }
 
