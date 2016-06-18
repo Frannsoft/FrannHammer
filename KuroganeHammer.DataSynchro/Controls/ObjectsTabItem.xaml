@@ -15,7 +15,7 @@
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Button Name="CreateMoveButton" Content="New Move" Grid.Row="0" Grid.Column="0" Margin="2"/>
+        <Button Name="CreateObjectButton" Content="Create" Grid.Row="0" Grid.Column="0" Margin="2" Click="CreateObjectButton_Click"/>
         <local:BusyControl Grid.Row="0" Grid.Column="1" Margin="2"/>
         <DataGrid Name="ObjectsDataGrid" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" AutoGenerateColumns="True" IsReadOnly="True"
                               ItemsSource="{Binding DataGridItemsSource}" Margin="5" MouseDoubleClick="ObjectsDataGrid_MouseDoubleClick"/>

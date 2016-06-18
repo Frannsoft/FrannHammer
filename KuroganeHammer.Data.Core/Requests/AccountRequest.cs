@@ -30,24 +30,10 @@ namespace KuroganeHammer.Data.Core.Requests
                 new KeyValuePair<string, string>("password", password)
             });
 
-            var adminresponse = await loggedInClient.PostAsync(tokenUri, admincontent);
-
-#if DEBUG
-            var json = adminresponse.Content.ReadAsStringAsync().Result;
-            try
-            {
-                adminresponse.EnsureSuccessStatusCode();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message + Environment.NewLine + json, ex); //add raw response
-            }
-#else
-            adminresponse.EnsureSuccessStatusCode();
-#endif
+            var adminResponse = await ExecuteAsync(async () => await loggedInClient.PostAsync(tokenUri, admincontent));
 
             var adminauthToken =
-                JsonConvert.DeserializeObject<dynamic>(adminresponse.Content.ReadAsStringAsync().Result).access_token.Value;
+                JsonConvert.DeserializeObject<dynamic>(adminResponse.Content.ReadAsStringAsync().Result).access_token.Value;
             loggedInClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", adminauthToken);
 
             return loggedInClient;
@@ -55,7 +41,13 @@ namespace KuroganeHammer.Data.Core.Requests
 
         public async Task Logout()
         {
-            await Client.PostAsync(Client.BaseAddress.AbsoluteUri + "/Account/Logout", new StringContent(string.Empty));
+            await
+                ExecuteAsync(
+                    async () =>
+                        await
+                            Client.PostAsync($"{Client.BaseAddress.AbsoluteUri}/Account/Logout",
+                                new StringContent(string.Empty)));
+
         }
 
 

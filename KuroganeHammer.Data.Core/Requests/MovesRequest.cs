@@ -13,9 +13,7 @@ namespace KuroganeHammer.Data.Core.Requests
 
         public async Task<IEnumerable<Move>> GetMoves()
         {
-            var response = await Client.GetAsync(Client.BaseAddress.AbsoluteUri + "/moves");
-
-            response.EnsureSuccessStatusCode();
+            var response = await ExecuteAsync(async () => await Client.GetAsync(Client.BaseAddress.AbsoluteUri + "/moves"));
 
             var moves = await response.Content.ReadAsAsync<List<Move>>();
 
@@ -26,7 +24,7 @@ namespace KuroganeHammer.Data.Core.Requests
         {
             Guard.VerifyObjectNotNull(id, nameof(id));
 
-            var response = await Client.GetAsync($"{Client.BaseAddress.AbsoluteUri}/characters/{id}/moves");
+            var response = await ExecuteAsync(async () => await Client.GetAsync($"{Client.BaseAddress.AbsoluteUri}/characters/{id}/moves"));
             response.EnsureSuccessStatusCode();
 
             var moves = await response.Content.ReadAsAsync<List<Move>>();

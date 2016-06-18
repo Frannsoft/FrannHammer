@@ -13,8 +13,8 @@ namespace KuroganeHammer.Data.Core.Requests
 
         public async Task<Movement> GetMovement(int id)
         {
-            var response = await Client.GetAsync(Client.BaseAddress.AbsoluteUri + "/movements/" + id);
-            response.EnsureSuccessStatusCode();
+            var response = await ExecuteAsync(async() => await Client.GetAsync(
+                $"{Client.BaseAddress.AbsoluteUri}/movements/{id}"));
 
             var movement = await response.Content.ReadAsAsync<Movement>();
 
@@ -25,8 +25,7 @@ namespace KuroganeHammer.Data.Core.Requests
         {
             Guard.VerifyObjectNotNull(id, nameof(id));
 
-            var response = await Client.GetAsync($"{Client.BaseAddress.AbsoluteUri}/characters/{id}/movements");
-            response.EnsureSuccessStatusCode();
+            var response = await ExecuteAsync(async () => await Client.GetAsync($"{Client.BaseAddress.AbsoluteUri}/characters/{id}/movements"));
 
             var movements = await response.Content.ReadAsAsync<List<Movement>>();
 

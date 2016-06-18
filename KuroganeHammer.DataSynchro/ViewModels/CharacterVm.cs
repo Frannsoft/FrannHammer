@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using KuroganeHammer.Data.Core;
 using KuroganeHammer.Data.Core.DTOs;
@@ -55,6 +56,17 @@ namespace KuroganeHammer.DataSynchro.ViewModels
             }
         }
 
+        private CharacterMetadataTypes _selectedType;
+        public CharacterMetadataTypes SelectedType
+        {
+            get { return _selectedType; }
+            private set
+            {
+                _selectedType = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         private readonly bool _isNewCharacter;
@@ -72,6 +84,36 @@ namespace KuroganeHammer.DataSynchro.ViewModels
             _character = character;
         }
 
+        public void SetSelectedDataType(CharacterMetadataTypes type) => SelectedType = type;
+
+        public BaseModel CreateNewType()
+        {
+            var model = default(BaseModel);
+            switch (SelectedType)
+            {
+                case CharacterMetadataTypes.CharacterAttributes:
+                    {
+                        model = new CharacterAttributeDto();
+                        break;
+                    }
+                case CharacterMetadataTypes.Movements:
+                    {
+                        model = new Movement();
+                        break;
+                    }
+                case CharacterMetadataTypes.Moves:
+                    {
+                        model = new Move();
+                        break;
+                    }
+                default:
+                {
+                    throw new InvalidOperationException("Unable to determine the type of object to be created.");
+                }
+            }
+
+            return model;
+        }
 
         public async Task RefreshCharacter()
         {

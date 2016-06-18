@@ -69,21 +69,25 @@ namespace KuroganeHammer.DataSynchro
                     case characters:
                         {
                             Execute(async () => await _characterVm.RefreshCharacter());
+                            _characterVm.SetSelectedDataType(CharacterMetadataTypes.Details);
                             break;
                         }
                     case moves:
                         {
                             Execute(async () => await _characterVm.RefreshMoves());
+                            _characterVm.SetSelectedDataType(CharacterMetadataTypes.Moves);
                             break;
                         }
                     case movements:
                         {
                             Execute(async () => await _characterVm.RefreshMovements());
+                            _characterVm.SetSelectedDataType(CharacterMetadataTypes.Movements);
                             break;
                         }
                     case attributes:
                         {
                             Execute(async () => await _characterVm.RefreshCharacterAttributes());
+                            _characterVm.SetSelectedDataType(CharacterMetadataTypes.CharacterAttributes);
                             break;
                         }
                 }

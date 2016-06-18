@@ -84,7 +84,7 @@ namespace KuroganeHammer.DataSynchro
 
             var characterWindow = new CharacterWindow(newCharacter, _user, true) { Owner = this };
             characterWindow.ShowDialog();
-
+            Execute(async () => await _mainVm.RefreshCharacters()); //reload character to pick up changes
         }
     }
 }

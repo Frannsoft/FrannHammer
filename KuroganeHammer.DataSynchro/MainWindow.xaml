@@ -8,7 +8,7 @@
         xmlns:customControls="clr-namespace:KuroganeHammer.DataSynchro.Controls"
         mc:Ignorable="d"
         Title="{Binding Username, Mode=OneWay, StringFormat=DataSynchro - {0}}" Height="768" Width="1366" Closing="MetroWindow_Closing"
-                      BorderThickness="0" GlowBrush="Black" Background="#FFEEEEEE">
+                      BorderThickness="0" GlowBrush="Black" Background="#FFEEEEEE" WindowStartupLocation="CenterScreen">
     <Grid>
         <TabControl Name="MainTabControl" SelectionChanged="MainTabControl_SelectionChanged">
             <TabItem Name="CharactersTabItem" Header="Characters" >

@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Input;
+using KuroganeHammer.Data.Core.DTOs;
 using KuroganeHammer.Data.Core.Models;
 using KuroganeHammer.DataSynchro.ViewModels;
 
@@ -54,7 +56,6 @@ namespace KuroganeHammer.DataSynchro.Controls
             {
                 newValueINotifyCollectionChanged.CollectionChanged += NewValueINotifyCollectionChanged_CollectionChanged;
             }
-
         }
 
         private void NewValueINotifyCollectionChanged_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -75,6 +76,18 @@ namespace KuroganeHammer.DataSynchro.Controls
                 var editWindow = new EditWindow(model, vm.LoggedInUser);
                 editWindow.ShowDialog();
             }
+        }
+
+        private void CreateObjectButton_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO: last thing I need to figure out
+            var vm = DataContext as CharacterVm;
+            if (vm == null) return;
+
+            var model = vm.CreateNewType();
+
+            var editWindow = new EditWindow(model, vm.LoggedInUser, true);
+            editWindow.ShowDialog();
         }
     }
 }
