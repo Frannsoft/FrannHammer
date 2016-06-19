@@ -8,6 +8,7 @@ using KuroganeHammer.Data.Api.Models;
 using static KuroganeHammer.Data.Api.Models.RolesConstants;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using KuroganeHammer.Data.Api.DTOs;
 using KuroganeHammer.Data.Core.DTOs;
 using KuroganeHammer.Data.Core.Models;
@@ -55,7 +56,29 @@ namespace KuroganeHammer.Data.Api.Controllers
         [Route("characters/{id}")]
         public IHttpActionResult GetCharacter(int id)
         {
-            Character character = Db.Characters.Find(id);
+            var character = Db.Characters.Find(id);
+            if (character == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(character);
+        }
+
+        /// <summary>
+        /// Get a specific <see cref="Character"/>s details by their name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        [ResponseType(typeof(Character))]
+        [Route("characters/name/{name}")]
+        public IHttpActionResult GetCharacterByName(string name)
+        {
+            if (!string.IsNullOrEmpty(name))
+            { return BadRequest($"Parameter {nameof(name)} cannot be empty."); }
+
+            Character character = Db.Characters.FirstOrDefault(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+
             if (character == null)
             {
                 return NotFound();

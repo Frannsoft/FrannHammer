@@ -10,7 +10,7 @@ namespace KuroganeHammer.Data.Api.Tests.Smoke
     public class CharacterSmokeTest : BaseSmokeTest
     {
         [Test]
-        public async Task GetAllSingleCharacters()
+        public async Task GetAllSingleCharactersById()
         {
             var characters = await LoggedInBasicClient.GetAsync(Baseuri + CharactersRoute).Result.Content.ReadAsAsync<List<Character>>();
 
@@ -22,6 +22,24 @@ namespace KuroganeHammer.Data.Api.Tests.Smoke
                 var foundCharacter = await getResult.Content.ReadAsAsync<Character>();
                 Assert.IsTrue(foundCharacter != null);
             }
+        }
+
+        [Test]
+        public async Task GetAllSingleCharactersByName()
+        {
+            var characters =
+                await
+                    LoggedInBasicClient.GetAsync(Baseuri + CharactersRoute)
+                        .Result.Content.ReadAsAsync<List<Character>>();
+
+            characters.ForEach(async c =>
+            {
+                var getResult = await LoggedInBasicClient.GetAsync(Baseuri + CharactersRoute + "/name/" + c.Name);
+                Assert.AreEqual(HttpStatusCode.OK, getResult.StatusCode);
+
+                var foundCharacter = await getResult.Content.ReadAsAsync<Character>();
+                Assert.IsTrue(foundCharacter != null);
+            });
         }
 
         [Test]

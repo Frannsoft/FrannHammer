@@ -208,6 +208,13 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:KuroganeHammer.Data.Api.Controllers.CharactersController.GetCharacterByName(System.String)">
+            <summary>
+            Get a specific <see cref="T:KuroganeHammer.Data.Core.Models.Character"/>s details by their name.
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
         <member name="M:KuroganeHammer.Data.Api.Controllers.CharactersController.GetMovementsForCharacter(System.Int32)">
             <summary>
             Get all the <see cref="T:KuroganeHammer.Data.Core.Models.Movement"/> data for a specific <see cref="T:KuroganeHammer.Data.Core.Models.Character"/>
