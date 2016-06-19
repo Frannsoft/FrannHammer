@@ -11,7 +11,7 @@ namespace KuroganeHammer.Data.Api.Tests.Controllers.Characters
     {
 
         [Test]
-        public void ShouldGetCharacter()
+        public void ShouldGetCharacterById()
         {
             var character = TestObjects.Character();
             CharactersController.PostCharacter(character);
@@ -19,6 +19,19 @@ namespace KuroganeHammer.Data.Api.Tests.Controllers.Characters
             var result = CharactersController.GetCharacter(character.Id) as OkNegotiatedContentResult<Character>;
 
             Assert.That(result?.Content, Is.Not.Null);
+        }
+
+        [Test]
+        public void ShouldGetCharacterByName()
+        {
+            const string expected = "falco";
+
+            var character = TestObjects.Character();
+            CharactersController.PostCharacter(character);
+
+            var result = CharactersController.GetCharacterByName(expected) as OkNegotiatedContentResult<Character>;
+            Assert.That(result?.Content, Is.Not.Null);
+            Assert.That(result?.Content.Name, Is.EqualTo(expected));
         }
 
         [Test]
