@@ -56,6 +56,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         [Route("characters/{id}")]
         public IHttpActionResult GetCharacter(int id)
         {
+            //TODO: error check for invalid param to give better feedback
             var character = Db.Characters.Find(id);
             if (character == null)
             {
@@ -74,7 +75,7 @@ namespace KuroganeHammer.Data.Api.Controllers
         [Route("characters/name/{name}")]
         public IHttpActionResult GetCharacterByName(string name)
         {
-            if (!string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(name))
             { return BadRequest($"Parameter {nameof(name)} cannot be empty."); }
 
             Character character = Db.Characters.FirstOrDefault(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
