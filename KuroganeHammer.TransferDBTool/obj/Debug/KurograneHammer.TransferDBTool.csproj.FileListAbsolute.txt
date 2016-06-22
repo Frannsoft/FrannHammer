@@ -48,8 +48,6 @@ E:\Development\C#projects\FrannHammer\KuroganeHammer.TransferDBTool\bin\Debug\Mi
 E:\Development\C#projects\FrannHammer\KuroganeHammer.TransferDBTool\bin\Debug\Microsoft.Owin.Cors.dll
 E:\Development\C#projects\FrannHammer\KuroganeHammer.TransferDBTool\bin\Debug\System.Web.Http.WebHost.dll
 E:\Development\C#projects\FrannHammer\KuroganeHammer.TransferDBTool\bin\Debug\HtmlAgilityPack.dll
-E:\Development\C#projects\FrannHammer\KuroganeHammer.TransferDBTool\bin\Debug\Microsoft.Web.Infrastructure.dll
-E:\Development\C#projects\FrannHammer\KuroganeHammer.TransferDBTool\bin\Debug\System.Web.Razor.dll
 E:\Development\C#projects\FrannHammer\KuroganeHammer.TransferDBTool\bin\Debug\System.Web.WebPages.Razor.dll
 E:\Development\C#projects\FrannHammer\KuroganeHammer.TransferDBTool\bin\Debug\System.Web.WebPages.dll
 E:\Development\C#projects\FrannHammer\KuroganeHammer.TransferDBTool\bin\Debug\System.Web.WebPages.Deployment.dll
@@ -73,7 +71,6 @@ E:\Development\C#projects\FrannHammer\KuroganeHammer.TransferDBTool\bin\Debug\Mi
 E:\Development\C#projects\FrannHammer\KuroganeHammer.TransferDBTool\bin\Debug\System.Web.Http.WebHost.xml
 E:\Development\C#projects\FrannHammer\KuroganeHammer.TransferDBTool\bin\Debug\HtmlAgilityPack.pdb
 E:\Development\C#projects\FrannHammer\KuroganeHammer.TransferDBTool\bin\Debug\HtmlAgilityPack.xml
-E:\Development\C#projects\FrannHammer\KuroganeHammer.TransferDBTool\bin\Debug\System.Web.Razor.xml
 E:\Development\C#projects\FrannHammer\KuroganeHammer.TransferDBTool\bin\Debug\System.Web.WebPages.Razor.xml
 E:\Development\C#projects\FrannHammer\KuroganeHammer.TransferDBTool\bin\Debug\System.Web.WebPages.xml
 E:\Development\C#projects\FrannHammer\KuroganeHammer.TransferDBTool\bin\Debug\System.Web.WebPages.Deployment.xml
