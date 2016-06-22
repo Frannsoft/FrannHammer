@@ -1,0 +1,416 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FrannHammer.Core</name>
+    </assembly>
+    <members>
+        <member name="T:FrannHammer.Core.Calculations.Calculator">
+            <summary>
+            Handles all calculations dealing with actionable move data.
+            </summary>
+        </member>
+        <member name="M:FrannHammer.Core.Calculations.Calculator.TrainingModeKnockback(FrannHammer.Core.Calculations.TrainingModeKnockbackProblemData)">
+            <summary>
+            Returns the knockback as if in training mode.
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Core.Calculations.Calculator.VersusModeKnockback(FrannHammer.Core.Calculations.VersusModeKnockbackProblemData)">
+            <summary>
+            Returns the knockback as if in versus mode.
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Core.Calculations.Calculator.Rage(FrannHammer.Core.Calculations.RageProblemData)">
+            <summary>
+            Returns the calculated rage.
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Core.Calculations.Calculator.Hitstun(System.Double)">
+            <summary>
+            Returns the calculated Hitstun.
+            </summary>
+            <param name="knockbackGrowth"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Core.Calculations.Calculator.ShieldStunNormal(System.Double)">
+            <summary>
+            Returns the calculated Normal Shield stun.
+            </summary>
+            <param name="damage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Core.Calculations.Calculator.ShieldStunPowerShield(System.Double)">
+            <summary>
+            Returns the calculated Power shielded Shield stun.
+            </summary>
+            <param name="damage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Core.Calculations.Calculator.ShieldStunProjectile(System.Double)">
+            <summary>
+            Returns the calculated Projectile Shield stun.
+            </summary>
+            <param name="damage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Core.Calculations.Calculator.ShieldStunPowerShieldProjectile(System.Double)">
+            <summary>
+            Returns the calculated Power shielded projectile Shield stun.
+            </summary>
+            <param name="damage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Core.Calculations.Calculator.Hitlag(FrannHammer.Core.Calculations.HitlagProblemData)">
+            <summary>
+            Returns the calculated Hitlag.
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Core.Calculations.Calculator.LedgeIntangibility(FrannHammer.Core.Calculations.LedgeIntangiblityProblemData)">
+            <summary>
+            Returns the calculated LedgeIntangibility.
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Core.Calculations.Calculator.ShieldAdvantage(FrannHammer.Core.Calculations.ShieldAdvantageProblemData)">
+            <summary>
+            Returns the calculated shield advantage.
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Core.Calculations.Calculator.GrabDuration(FrannHammer.Core.Calculations.GrabDurationProblemData)">
+            <summary>
+            Returns the calculated grab duration frames.
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Core.Calculations.Calculator.PikminGrabDuration(FrannHammer.Core.Calculations.PikminGrabDurationProblemData)">
+            <summary>
+            Returns the calculated Pikmin grab durations frames.
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Core.Calculations.Calculator.SmashCharge(FrannHammer.Core.Calculations.SmashChargeProblemData)">
+            <summary>
+            Returns the calculated Smash charge frames.
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="T:FrannHammer.Core.Calculations.ModifierValueAttribute">
+            <summary>
+            Used to contain the actual value being used in the Core enum modifiers.
+            </summary>
+        </member>
+        <member name="P:FrannHammer.Core.Calculations.ModifierValueAttribute.Value">
+            <summary>
+            The value of the modifier used in calculations.
+            </summary>
+        </member>
+        <member name="M:FrannHammer.Core.Calculations.ModifierValueAttribute.#ctor(System.Double)">
+            <summary>
+            Create a new <see cref="T:FrannHammer.Core.Calculations.ModifierValueAttribute"/> using the passed in value.
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="T:FrannHammer.Core.Calculations.ModifierHelper">
+            <summary>
+            Small helper class to get the <see cref="T:FrannHammer.Core.Calculations.ModifierValueAttribute"/> data from an <see cref="T:System.Enum"/>.
+            </summary>
+        </member>
+        <member name="M:FrannHammer.Core.Calculations.ModifierHelper.GetModifierValue(System.Enum)">
+            <summary>
+            Get the value of the <see cref="T:FrannHammer.Core.Calculations.ModifierValueAttribute"/> if it exists.
+            </summary>
+            <param name="modifier"></param>
+            <returns></returns>
+        </member>
+        <member name="T:FrannHammer.Core.Calculations.HitboxOptions">
+            <summary>
+            Determines which hitbox is having data resolved in the equation.  Really important at the 
+            public request level in the api.  Otherwise it would be nightmare to act on all of them.
+            </summary>
+        </member>
+        <member name="F:FrannHammer.Core.Calculations.HitboxOptions.First">
+            <summary>
+            First hitbox.
+            </summary>
+        </member>
+        <member name="F:FrannHammer.Core.Calculations.HitboxOptions.Second">
+            <summary>
+            Second hitbox
+            </summary>
+        </member>
+        <member name="F:FrannHammer.Core.Calculations.HitboxOptions.Third">
+            <summary>
+            Third hitbox
+            </summary>
+        </member>
+        <member name="F:FrannHammer.Core.Calculations.HitboxOptions.Fourth">
+            <summary>
+            Fourth hitbox
+            </summary>
+        </member>
+        <member name="F:FrannHammer.Core.Calculations.HitboxOptions.Fifth">
+            <summary>
+            Fifth hitbox
+            </summary>
+        </member>
+        <member name="T:FrannHammer.Core.Calculations.Modifiers">
+            <summary>
+            What the attack victim is doing when hit.
+            </summary>
+        </member>
+        <member name="F:FrannHammer.Core.Calculations.Modifiers.Standing">
+            <summary>
+            Just standing = 1.0
+            </summary>
+        </member>
+        <member name="F:FrannHammer.Core.Calculations.Modifiers.ChargingSmash">
+            <summary>
+            Charging a smash attack = 1.2
+            </summary>
+        </member>
+        <member name="F:FrannHammer.Core.Calculations.Modifiers.CrouchCancelling">
+            <summary>
+            Crouching = 0.85
+            </summary>
+        </member>
+        <member name="F:FrannHammer.Core.Calculations.Modifiers.GroundedMeteor">
+            <summary>
+            Grounded Meteor = 0.8
+            </summary>
+        </member>
+        <member name="T:FrannHammer.Core.Calculations.ElectricModifier">
+            <summary>
+            Whether or not the attack is electric.  
+            Depending on whether or not more factors come out for this in the future it can be a bool instead.
+            </summary>
+        </member>
+        <member name="F:FrannHammer.Core.Calculations.ElectricModifier.NormalAttack">
+            <summary>
+            A normal, non-elemental attack = 1.0
+            </summary>
+        </member>
+        <member name="F:FrannHammer.Core.Calculations.ElectricModifier.ElectricAttack">
+            <summary>
+            An electric attack = 1.5
+            </summary>
+        </member>
+        <member name="T:FrannHammer.Core.Calculations.CrouchingModifier">
+            <summary>
+            Whether or not the attacker is crouching.  Might be able to be a bool in the future.
+            </summary>
+        </member>
+        <member name="F:FrannHammer.Core.Calculations.CrouchingModifier.Crouching">
+            <summary>
+            Is Crouching = 0.67
+            </summary>
+        </member>
+        <member name="F:FrannHammer.Core.Calculations.CrouchingModifier.NotCrouching">
+            <summary>
+            Is not crouching = 1.0
+            </summary>
+        </member>
+        <member name="T:FrannHammer.Core.Calculations.ShieldAdvantageModifier">
+            <summary>
+            The type of shield advantage.
+            </summary>
+        </member>
+        <member name="F:FrannHammer.Core.Calculations.ShieldAdvantageModifier.Regular">
+            <summary>
+            Default.
+            </summary>
+        </member>
+        <member name="F:FrannHammer.Core.Calculations.ShieldAdvantageModifier.ProjectileNotHitlag">
+            <summary>
+            From projectile.
+            </summary>
+        </member>
+        <member name="T:FrannHammer.Core.Calculations.ControllerInput">
+            <summary>
+            ControllerInput used.  Typically used with mashing out or determining grab duration.
+            </summary>
+        </member>
+        <member name="F:FrannHammer.Core.Calculations.ControllerInput.LStick">
+            <summary>
+            Using the Left stick = 8.0
+            </summary>
+        </member>
+        <member name="F:FrannHammer.Core.Calculations.ControllerInput.Button">
+            <summary>
+            Using buttons = 14.3
+            </summary>
+        </member>
+        <member name="T:FrannHammer.Core.Calculations.PikminGrabControllerInput">
+            <summary>
+            Controller input used when dealing with Pikmin grab duration.
+            </summary>
+        </member>
+        <member name="F:FrannHammer.Core.Calculations.PikminGrabControllerInput.LStick">
+            <summary>
+            Left stick = 7.0
+            </summary>
+        </member>
+        <member name="F:FrannHammer.Core.Calculations.PikminGrabControllerInput.Button">
+            <summary>
+            Using buttons = 12.5
+            </summary>
+        </member>
+        <member name="T:FrannHammer.Core.Calculations.SmashChargeModifier">
+            <summary>
+            The smash charge modifier.  Default is for holding a standard charge smash rather than no charge smash.  
+            </summary>
+        </member>
+        <member name="F:FrannHammer.Core.Calculations.SmashChargeModifier.Default">
+            <summary>
+            Default = 150.
+            </summary>
+        </member>
+        <member name="F:FrannHammer.Core.Calculations.SmashChargeModifier.MegamanFSmash">
+            <summary>
+            Megaman's forward smash = 86.
+            </summary>
+        </member>
+        <member name="T:FrannHammer.Core.Calculations.StaleMoveNegationMultipler">
+            <summary>
+            The staleness of a move.  The higher the level the more stale the move is.
+            </summary>
+        </member>
+        <member name="F:FrannHammer.Core.Calculations.StaleMoveNegationMultipler.S1">
+            <summary>
+            S1 = 8.0
+            </summary>
+        </member>
+        <member name="F:FrannHammer.Core.Calculations.StaleMoveNegationMultipler.S2">
+            <summary>
+            S2 = 7.594
+            </summary>
+        </member>
+        <member name="F:FrannHammer.Core.Calculations.StaleMoveNegationMultipler.S3">
+            <summary>
+            S3 = 6.782
+            </summary>
+        </member>
+        <member name="F:FrannHammer.Core.Calculations.StaleMoveNegationMultipler.S4">
+            <summary>
+            S4 = 6.028
+            </summary>
+        </member>
+        <member name="F:FrannHammer.Core.Calculations.StaleMoveNegationMultipler.S5">
+            <summary>
+            S5 = 5.274
+            </summary>
+        </member>
+        <member name="F:FrannHammer.Core.Calculations.StaleMoveNegationMultipler.S6">
+            <summary>
+            S6 = 4.462
+            </summary>
+        </member>
+        <member name="F:FrannHammer.Core.Calculations.StaleMoveNegationMultipler.S7">
+            <summary>
+            S7 = 3.766
+            </summary>
+        </member>
+        <member name="F:FrannHammer.Core.Calculations.StaleMoveNegationMultipler.S8">
+            <summary>
+            S8 = 2.954
+            </summary>
+        </member>
+        <member name="F:FrannHammer.Core.Calculations.StaleMoveNegationMultipler.S9">
+            <summary>
+            S9 = 2.2
+            </summary>
+        </member>
+        <member name="T:FrannHammer.Core.DTOs.CharacterAttributeRowDto">
+            <summary>
+            Contains the concept of a 'row' of <see cref="T:FrannHammer.Core.Models.CharacterAttribute"/> data.
+            
+            This is because each <see cref="T:FrannHammer.Core.Models.CharacterAttribute"/> consists of a single attribute value
+            rather than a row of attribute value that KH currently creates his attribute pages from.
+            
+            The way <see cref="T:FrannHammer.Core.Models.CharacterAttribute"/>'s are stored in the DB means if the individual values brought back need
+             to change in the future it's fairly straightforward to do so on the back and the frontend won't 
+            need to change as much (if at all).
+            
+            </summary>
+        </member>
+        <member name="T:FrannHammer.Core.Models.CalculatorMoveModel">
+            <summary>
+            Model used for performing calculations on character moves.
+            </summary>
+        </member>
+        <member name="P:FrannHammer.Core.Models.CalculatorMoveModel.MoveId">
+            <summary>
+            The Id of the Move in question.
+            </summary>
+        </member>
+        <member name="P:FrannHammer.Core.Models.CalculatorMoveModel.AttackerDamagePercent">
+            <summary>
+            The damage percent the attacker has.
+            </summary>
+        </member>
+        <member name="P:FrannHammer.Core.Models.CalculatorMoveModel.VictimDamagePercent">
+            <summary>
+            The damage percent the target being hit has.
+            </summary>
+        </member>
+        <member name="P:FrannHammer.Core.Models.CalculatorMoveModel.TargetWeight">
+            <summary>
+            The weight of the target.
+            </summary>
+        </member>
+        <member name="P:FrannHammer.Core.Models.CalculatorMoveModel.StaleMoveNegationMultiplier">
+            <summary>
+            The stale move negation level.  More details on this found at: http://kuroganehammer.com/Smash4/Formulas.  
+            Default in no staleness on a move.
+            </summary>
+        </member>
+        <member name="P:FrannHammer.Core.Models.CalculatorMoveModel.ElectricModifier">
+            <summary>
+            What type of attack is being performed.  More details on this found at: http://kuroganehammer.com/Smash4/Formulas.   
+            </summary>
+        </member>
+        <member name="P:FrannHammer.Core.Models.CalculatorMoveModel.CrouchingModifier">
+            <summary>
+            Whether or not the target being hit is crouching or otherwise.  More details on this found at: http://kuroganehammer.com/Smash4/Formulas.  
+            </summary>
+        </member>
+        <member name="P:FrannHammer.Core.Models.CalculatorMoveModel.ShieldAdvantageModifier">
+            <summary>
+            Shield advantage modifier based on normal or projectile.  More details on this found at: http://kuroganehammer.com/Smash4/Formulas.  
+            </summary>
+        </member>
+        <member name="P:FrannHammer.Core.Models.CalculatorMoveModel.Modifiers">
+            <summary>
+            Whether or not the victim is doing something other than standing when hit. More details on this found at: http://kuroganehammer.com/Smash4/Formulas.  
+            </summary>
+        </member>
+        <member name="P:FrannHammer.Core.Models.CalculatorMoveModel.HitboxOption">
+            <summary>
+            The specific hitbox frames for this moves.  Since some moves have multiple frames with multiple hitboxes, specify which hitbox data should be 
+            used.  
+            </summary>
+        </member>
+        <member name="T:FrannHammer.Core.Requests.AccountRequest">
+            <summary>
+            Assists with creating calls to the Account API methods.
+            </summary>
+        </member>
+        <member name="T:FrannHammer.Core.Requests.CharacterRequest">
+            <summary>
+            Assists with creating Character API methods.
+            </summary>
+        </member>
+    </members>
+</doc>

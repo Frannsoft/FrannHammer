@@ -1,0 +1,17 @@
+E:\Development\C#projects\Kurogane.Data\KuroganeHammer.WebScraper\bin\Release\FrannHammer.WebScraper.dll.config
+E:\Development\C#projects\Kurogane.Data\KuroganeHammer.WebScraper\bin\Release\FrannHammer.WebScraper.dll
+E:\Development\C#projects\Kurogane.Data\KuroganeHammer.WebScraper\bin\Release\FrannHammer.WebScraper.pdb
+E:\Development\C#projects\Kurogane.Data\KuroganeHammer.WebScraper\bin\Release\FrannHammer.Core.dll
+E:\Development\C#projects\Kurogane.Data\KuroganeHammer.WebScraper\bin\Release\HtmlAgilityPack.dll
+E:\Development\C#projects\Kurogane.Data\KuroganeHammer.WebScraper\bin\Release\Newtonsoft.Json.dll
+E:\Development\C#projects\Kurogane.Data\KuroganeHammer.WebScraper\bin\Release\nunit.framework.dll
+E:\Development\C#projects\Kurogane.Data\KuroganeHammer.WebScraper\bin\Release\System.Net.Http.Formatting.dll
+E:\Development\C#projects\Kurogane.Data\KuroganeHammer.WebScraper\bin\Release\FrannHammer.Core.pdb
+E:\Development\C#projects\Kurogane.Data\KuroganeHammer.WebScraper\bin\Release\HtmlAgilityPack.pdb
+E:\Development\C#projects\Kurogane.Data\KuroganeHammer.WebScraper\bin\Release\HtmlAgilityPack.xml
+E:\Development\C#projects\Kurogane.Data\KuroganeHammer.WebScraper\bin\Release\Newtonsoft.Json.xml
+E:\Development\C#projects\Kurogane.Data\KuroganeHammer.WebScraper\bin\Release\nunit.framework.xml
+E:\Development\C#projects\Kurogane.Data\KuroganeHammer.WebScraper\bin\Release\System.Net.Http.Formatting.xml
+E:\Development\C#projects\Kurogane.Data\KuroganeHammer.WebScraper\obj\Release\FrannHammer.WebScraper.csprojResolveAssemblyReference.cache
+E:\Development\C#projects\Kurogane.Data\KuroganeHammer.WebScraper\obj\Release\FrannHammer.WebScraper.dll
+E:\Development\C#projects\Kurogane.Data\KuroganeHammer.WebScraper\obj\Release\FrannHammer.WebScraper.pdb

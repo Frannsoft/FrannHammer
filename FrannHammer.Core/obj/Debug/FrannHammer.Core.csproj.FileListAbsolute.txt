@@ -1,0 +1,12 @@
+E:\Development\C#projects\FrannHammer\FrannHammer.Core\bin\Debug\FrannHammer.Core.dll.config
+E:\Development\C#projects\FrannHammer\FrannHammer.Core\bin\Debug\FrannHammer.Core.xml
+E:\Development\C#projects\FrannHammer\FrannHammer.Core\bin\Debug\FrannHammer.Core.dll
+E:\Development\C#projects\FrannHammer\FrannHammer.Core\bin\Debug\FrannHammer.Core.pdb
+E:\Development\C#projects\FrannHammer\FrannHammer.Core\bin\Debug\Newtonsoft.Json.dll
+E:\Development\C#projects\FrannHammer\FrannHammer.Core\bin\Debug\nunit.framework.dll
+E:\Development\C#projects\FrannHammer\FrannHammer.Core\bin\Debug\System.Net.Http.Formatting.dll
+E:\Development\C#projects\FrannHammer\FrannHammer.Core\bin\Debug\Newtonsoft.Json.xml
+E:\Development\C#projects\FrannHammer\FrannHammer.Core\bin\Debug\nunit.framework.xml
+E:\Development\C#projects\FrannHammer\FrannHammer.Core\bin\Debug\System.Net.Http.Formatting.xml
+E:\Development\C#projects\FrannHammer\FrannHammer.Core\obj\Debug\FrannHammer.Core.dll
+E:\Development\C#projects\FrannHammer\FrannHammer.Core\obj\Debug\FrannHammer.Core.pdb

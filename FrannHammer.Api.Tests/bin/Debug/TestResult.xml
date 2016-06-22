@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="E:\Development\C#projects\Kurogane.Data\KuroganeHammer.Data\KuroganeHammer.Data.Api.Tests\bin\Debug\KuroganeHammer.Data.Api.Tests.dll" total="1" errors="0" failures="1" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2016-06-19" time="18:55:37">
+  <environment nunit-version="2.6.4.14350" clr-version="2.0.50727.8689" os-version="Microsoft Windows NT 6.2.9200.0" platform="Win32NT" cwd="E:\Development\Utilities\NUnit-2.6.4\bin" machine-name="***REMOVED***" user="Jordan" user-domain="***REMOVED***" />
+  <culture-info current-culture="en-US" current-uiculture="en-US" />
+  <test-suite type="Assembly" name="E:\Development\C#projects\Kurogane.Data\KuroganeHammer.Data\KuroganeHammer.Data.Api.Tests\bin\Debug\KuroganeHammer.Data.Api.Tests.dll" executed="True" result="Failure" success="False" time="24.643" asserts="0">
+    <results>
+      <test-suite type="Namespace" name="KuroganeHammer" executed="True" result="Failure" success="False" time="24.636" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="Data" executed="True" result="Failure" success="False" time="24.631" asserts="0">
+            <results>
+              <test-suite type="Namespace" name="Api" executed="True" result="Failure" success="False" time="24.628" asserts="0">
+                <results>
+                  <test-suite type="Namespace" name="Tests" executed="True" result="Failure" success="False" time="24.628" asserts="0">
+                    <results>
+                      <test-suite type="Namespace" name="Smoke" executed="True" result="Failure" success="False" time="24.627" asserts="0">
+                        <results>
+                          <test-suite type="TestFixture" name="CharacterSmokeTest" executed="True" result="Failure" success="False" time="24.614" asserts="0">
+                            <results>
+                              <test-case name="KuroganeHammer.Data.Api.Tests.Smoke.CharacterSmokeTest.GetAllSingleCharactersById" executed="True" result="Failure" success="False" time="24.608" asserts="1">
+                                <failure>
+                                  <message><![CDATA[  Expected: OK
+  But was:  InternalServerError
+]]></message>
+                                  <stack-trace><![CDATA[at KuroganeHammer.Data.Api.Tests.Smoke.CharacterSmokeTest.<GetAllSingleCharactersById>d__0.MoveNext() in E:\Development\C#projects\Kurogane.Data\KuroganeHammer.Data\KuroganeHammer.Data.Api.Tests\Smoke\CharacterSmokeTest.cs:line 20
+at NUnit.Framework.AsyncInvocationRegion.AsyncTaskInvocationRegion.WaitForPendingOperationsToComplete(Object invocationResult)
+at NUnit.Core.NUnitAsyncTestMethod.RunTestMethod()
+]]></stack-trace>
+                                </failure>
+                              </test-case>
+                            </results>
+                          </test-suite>
+                        </results>
+                      </test-suite>
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>
