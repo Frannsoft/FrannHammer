@@ -1,6 +1,7 @@
 language: csharp
 solution: FrannHammer.Master.sln
 install:
+  - sudo apt-get install -y gtk-sharp2
   - nuget restore FrannHammer.Master.sln
   - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
 script:
