@@ -1,10 +1,9 @@
 language: csharp
-solution: FrannHammer.Master.sln
+solution: FrannHammer.Api.sln
 install:
-  - sudo apt-get install -y gtk-sharp2
   - nuget restore FrannHammer.Master.sln
-  - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
+  #- nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
 script:
   - xbuild /p:Configuration=Release FrannHammer.Master.sln
-  - mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe ./FrannHammer.Api.Tests/bin/Release/FrannHammer.Api.Tests.dll
+  #- mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe ./FrannHammer.Api.Tests/bin/Release/FrannHammer.Api.Tests.dll
   
