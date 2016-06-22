@@ -8,8 +8,8 @@ using FrannHammer.AccountRegistrationTool.Models;
 using FrannHammer.Core;
 using FrannHammer.Core.Models;
 using Newtonsoft.Json;
-using Microsoft.AspNet.Identity.EntityFramework;
 using FrannHammer.Api.DTOs;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace FrannHammer.AccountRegistrationTool
 {
