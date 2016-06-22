@@ -30,3 +30,4 @@ FrannHammer.AccountRegistration/obj/
 FrannHammer.Api/obj/
 FrannHammer.Core/obj/
 *.force
+FrannHammer.DataSynchro/obj/
