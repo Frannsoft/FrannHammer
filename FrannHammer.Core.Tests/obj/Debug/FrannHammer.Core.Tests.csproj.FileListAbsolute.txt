@@ -1,0 +1,14 @@
+E:\Development\C#projects\FrannHammer\FrannHammer.Core.Tests\bin\Debug\FrannHammer.Core.Tests.dll
+E:\Development\C#projects\FrannHammer\FrannHammer.Core.Tests\bin\Debug\FrannHammer.Core.Tests.pdb
+E:\Development\C#projects\FrannHammer\FrannHammer.Core.Tests\bin\Debug\FrannHammer.Core.dll
+E:\Development\C#projects\FrannHammer\FrannHammer.Core.Tests\bin\Debug\nunit.framework.dll
+E:\Development\C#projects\FrannHammer\FrannHammer.Core.Tests\bin\Debug\Newtonsoft.Json.dll
+E:\Development\C#projects\FrannHammer\FrannHammer.Core.Tests\bin\Debug\System.Net.Http.Formatting.dll
+E:\Development\C#projects\FrannHammer\FrannHammer.Core.Tests\bin\Debug\FrannHammer.Core.pdb
+E:\Development\C#projects\FrannHammer\FrannHammer.Core.Tests\bin\Debug\FrannHammer.Core.xml
+E:\Development\C#projects\FrannHammer\FrannHammer.Core.Tests\bin\Debug\nunit.framework.xml
+E:\Development\C#projects\FrannHammer\FrannHammer.Core.Tests\bin\Debug\Newtonsoft.Json.xml
+E:\Development\C#projects\FrannHammer\FrannHammer.Core.Tests\bin\Debug\System.Net.Http.Formatting.xml
+E:\Development\C#projects\FrannHammer\FrannHammer.Core.Tests\obj\Debug\FrannHammer.Core.Tests.csprojResolveAssemblyReference.cache
+E:\Development\C#projects\FrannHammer\FrannHammer.Core.Tests\obj\Debug\FrannHammer.Core.Tests.dll
+E:\Development\C#projects\FrannHammer\FrannHammer.Core.Tests\obj\Debug\FrannHammer.Core.Tests.pdb

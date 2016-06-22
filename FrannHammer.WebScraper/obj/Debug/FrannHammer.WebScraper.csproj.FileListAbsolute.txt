@@ -4,14 +4,12 @@ E:\Development\C#projects\FrannHammer\FrannHammer.WebScraper\bin\Debug\FrannHamm
 E:\Development\C#projects\FrannHammer\FrannHammer.WebScraper\bin\Debug\FrannHammer.Core.dll
 E:\Development\C#projects\FrannHammer\FrannHammer.WebScraper\bin\Debug\HtmlAgilityPack.dll
 E:\Development\C#projects\FrannHammer\FrannHammer.WebScraper\bin\Debug\Newtonsoft.Json.dll
-E:\Development\C#projects\FrannHammer\FrannHammer.WebScraper\bin\Debug\nunit.framework.dll
 E:\Development\C#projects\FrannHammer\FrannHammer.WebScraper\bin\Debug\System.Net.Http.Formatting.dll
 E:\Development\C#projects\FrannHammer\FrannHammer.WebScraper\bin\Debug\FrannHammer.Core.pdb
 E:\Development\C#projects\FrannHammer\FrannHammer.WebScraper\bin\Debug\FrannHammer.Core.xml
 E:\Development\C#projects\FrannHammer\FrannHammer.WebScraper\bin\Debug\HtmlAgilityPack.pdb
 E:\Development\C#projects\FrannHammer\FrannHammer.WebScraper\bin\Debug\HtmlAgilityPack.xml
 E:\Development\C#projects\FrannHammer\FrannHammer.WebScraper\bin\Debug\Newtonsoft.Json.xml
-E:\Development\C#projects\FrannHammer\FrannHammer.WebScraper\bin\Debug\nunit.framework.xml
 E:\Development\C#projects\FrannHammer\FrannHammer.WebScraper\bin\Debug\System.Net.Http.Formatting.xml
 E:\Development\C#projects\FrannHammer\FrannHammer.WebScraper\obj\Debug\FrannHammer.WebScraper.csprojResolveAssemblyReference.cache
 E:\Development\C#projects\FrannHammer\FrannHammer.WebScraper\obj\Debug\FrannHammer.WebScraper.dll

@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.WebScraper", "F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KurograneHammer.TransferDBTool", "KuroganeHammer.TransferDBTool\KurograneHammer.TransferDBTool.csproj", "{BBA304DE-3510-4B40-99CD-74338C6108F5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.Core.Tests", "FrannHammer.Core.Tests\FrannHammer.Core.Tests.csproj", "{6035B71B-F48B-4051-A9C4-6789D689DF04}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{BBA304DE-3510-4B40-99CD-74338C6108F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBA304DE-3510-4B40-99CD-74338C6108F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BBA304DE-3510-4B40-99CD-74338C6108F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6035B71B-F48B-4051-A9C4-6789D689DF04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6035B71B-F48B-4051-A9C4-6789D689DF04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6035B71B-F48B-4051-A9C4-6789D689DF04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6035B71B-F48B-4051-A9C4-6789D689DF04}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
