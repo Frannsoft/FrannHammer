@@ -40,3 +40,4 @@ FrannHammer.DataSynchro/bin/
 KuroganeHammer.TransferDBTool/bin/
 FrannHammer.WebScraper/obj/Release/FrannHammer.WebScraper.csproj.FileListAbsolute.txt
 KuroganeHammer.TransferDBTool/obj/Release/KurograneHammer.TransferDBTool.csproj.FileListAbsolute.txt
+packages/
