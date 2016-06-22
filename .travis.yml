@@ -1,0 +1,9 @@
+language: csharp
+solution: FrannHammer.Master.sln
+install:
+  - nuget restore FrannHammer.Master.sln
+  - nuget install NUnit.Runners -OutputDirectory testrunner
+script:
+  - xbuild /p:Configuration=Release FrannHammer.Master.sln
+  - mono ./testrunner/NUnit.Runners.2.6.4/tools/tools/nunit-console.exe ./FrannHammer.Api.Tests/bin/Release/FrannHammer.Api.Tests.dll
+  
