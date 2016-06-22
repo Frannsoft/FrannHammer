@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2904D4E7-8989-46BD-AC0A-B4356F190A15}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FrannHammer.Core</RootNamespace>
+    <AssemblyName>FrannHammer.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\FrannHammer.Core.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AerialStat.cs" />
+    <Compile Include="Calculations\Calculator.cs" />
+    <Compile Include="Calculations\Modifiers.cs" />
+    <Compile Include="Calculations\ProblemModels.cs" />
+    <Compile Include="CharacterAttributes.cs" />
+    <Compile Include="CharacterStat.cs" />
+    <Compile Include="CharacterUtility.cs" />
+    <Compile Include="DTOs\CharacterAttributeDto.cs" />
+    <Compile Include="DTOs\CharacterAttributeRowDto.cs" />
+    <Compile Include="DTOs\SmashAttributeTypeDto.cs" />
+    <Compile Include="EntityBusinessConverter.cs" />
+    <Compile Include="CharacterConstants.cs" />
+    <Compile Include="GroundStat.cs" />
+    <Compile Include="Guard.cs" />
+    <Compile Include="Models\AccountBindingModels.cs" />
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\CalculatorModels.cs" />
+    <Compile Include="Models\Character.cs" />
+    <Compile Include="Models\CharacterAttributeModels.cs" />
+    <Compile Include="Models\CharacterAttributeType.cs" />
+    <Compile Include="Models\Move.cs" />
+    <Compile Include="Models\Movement.cs" />
+    <Compile Include="Models\MoveMetadataModels.cs" />
+    <Compile Include="Models\MoveType.cs" />
+    <Compile Include="Models\Notation.cs" />
+    <Compile Include="Models\RoleBindingModel.cs" />
+    <Compile Include="Models\SmashAttributeType.cs" />
+    <Compile Include="MovementStat.cs" />
+    <Compile Include="MoveStat.cs" />
+    <Compile Include="MoveType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requests\AccountRequest.cs" />
+    <Compile Include="Requests\CharacterAttributesRequest.cs" />
+    <Compile Include="Requests\CharacterRequest.cs" />
+    <Compile Include="Requests\MovementsRequest.cs" />
+    <Compile Include="Requests\MovesRequest.cs" />
+    <Compile Include="Requests\Request.cs" />
+    <Compile Include="SpecialStat.cs" />
+    <Compile Include="Stat.cs" />
+    <Compile Include="Tests\CalculateTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

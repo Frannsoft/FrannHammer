@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VisualState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ShowCheckBoxes="false">
+  <TopNode>[0-1135]KuroganeHammer.Data.Api.Tests.Controllers.CharacterAttributes</TopNode>
+  <SelectedNode>[0-1009]KuroganeHammer.Data.Api.Tests.Smoke.CharacterSmokeTest.GetAllSingleCharactersById</SelectedNode>
+  <ExcludeCategories>false</ExcludeCategories>
+  <Nodes>
+    <Node UniqueName="[0-1122]E:\Development\C#projects\Kurogane.Data\KuroganeHammer.Data\KuroganeHammer.Data.Api.Tests\bin\Debug\KuroganeHammer.Data.Api.Tests.dll" Expanded="true" />
+    <Node UniqueName="[0-1123]KuroganeHammer" Expanded="true" />
+    <Node UniqueName="[0-1124]KuroganeHammer.Data" Expanded="true" />
+    <Node UniqueName="[0-1125]KuroganeHammer.Data.Api" Expanded="true" />
+    <Node UniqueName="[0-1126]KuroganeHammer.Data.Api.Tests" Expanded="true" />
+    <Node UniqueName="[0-1128]KuroganeHammer.Data.Api.Tests.Controllers" Expanded="true" />
+    <Node UniqueName="[0-1137]KuroganeHammer.Data.Api.Tests.Controllers.Accounts" Expanded="true" />
+    <Node UniqueName="[0-1136]KuroganeHammer.Data.Api.Tests.Controllers.Calculator" Expanded="true" />
+    <Node UniqueName="[0-1135]KuroganeHammer.Data.Api.Tests.Controllers.CharacterAttributes" Expanded="true" />
+    <Node UniqueName="[0-1134]KuroganeHammer.Data.Api.Tests.Controllers.CharacterAttributeTypes" Expanded="true" />
+    <Node UniqueName="[0-1133]KuroganeHammer.Data.Api.Tests.Controllers.Characters" Expanded="true" />
+    <Node UniqueName="[0-1132]KuroganeHammer.Data.Api.Tests.Controllers.Movements" Expanded="true" />
+    <Node UniqueName="[0-1131]KuroganeHammer.Data.Api.Tests.Controllers.Moves" Expanded="true" />
+    <Node UniqueName="[0-1130]KuroganeHammer.Data.Api.Tests.Controllers.Notations" Expanded="true" />
+    <Node UniqueName="[0-1129]KuroganeHammer.Data.Api.Tests.Controllers.SmashAttributeTypes" Expanded="true" />
+    <Node UniqueName="[0-1127]KuroganeHammer.Data.Api.Tests.Smoke" Expanded="true" />
+    <Node UniqueName="[0-1008]KuroganeHammer.Data.Api.Tests.Smoke.CharacterSmokeTest" Expanded="true" />
+  </Nodes>
+</VisualState>

@@ -1,0 +1,406 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WebApiThrottle</name>
+    </assembly>
+    <members>
+        <member name="T:WebApiThrottle.PolicyMemoryCacheRepository">
+            <summary>
+            Stores policy in runtime cache, intended for OWIN self host.
+            </summary>
+        </member>
+        <member name="T:WebApiThrottle.PolicyCacheRepository">
+            <summary>
+            Stores policy in asp.net cache
+            </summary>
+        </member>
+        <member name="T:WebApiThrottle.ConcurrentDictionaryRepository">
+            <summary>
+            Stores throttle metrics in a thread safe dictionary, has no clean-up mechanism, expired counters are deleted on renewal
+            </summary>
+        </member>
+        <member name="T:WebApiThrottle.IThrottleRepository">
+            <summary>
+            Implement this interface if you want to create a persistent store for the throttle metrics
+            </summary>
+        </member>
+        <member name="M:WebApiThrottle.ConcurrentDictionaryRepository.FirstOrDefault(System.String)">
+            <summary>
+            Insert or update
+            </summary>
+            <param name="id">
+            The id.
+            </param>
+            <returns>
+            The <see cref="T:WebApiThrottle.ThrottleCounter"/>.
+            </returns>
+        </member>
+        <member name="T:WebApiThrottle.IPAddressRange">
+            <summary>
+            IP v4 and v6 range helper by jsakamoto
+            Fork from https://github.com/jsakamoto/ipaddressrange
+            </summary>
+            <example>
+            "192.168.0.0/24" 
+            "fe80::/10" 
+            "192.168.0.0/255.255.255.0" 
+            "192.168.0.0-192.168.0.255"
+            </example>
+        </member>
+        <member name="T:WebApiThrottle.IThrottleLogger">
+            <summary>
+            Log requests that exceed the limit
+            </summary>
+        </member>
+        <member name="T:WebApiThrottle.IThrottlePolicyProvider">
+            <summary>
+            Implement this interface if you want to load the policy rules from a persistent store
+            </summary>
+        </member>
+        <member name="T:WebApiThrottle.MemoryCacheRepository">
+            <summary>
+            Stors throttle metrics in runtime cache, intented for owin self host.
+            </summary>
+        </member>
+        <member name="M:WebApiThrottle.MemoryCacheRepository.Save(System.String,WebApiThrottle.ThrottleCounter,System.TimeSpan)">
+            <summary>
+            Insert or update
+            </summary>
+        </member>
+        <member name="T:WebApiThrottle.ThrottleCounter">
+            <summary>
+            Stores the initial access time and the numbers of calls made from that point
+            </summary>
+        </member>
+        <member name="M:WebApiThrottle.ThrottlingMiddleware.#ctor(Microsoft.Owin.OwinMiddleware)">
+            <summary>
+            Initializes a new instance of the <see cref="T:WebApiThrottle.ThrottlingMiddleware"/> class. 
+            By default, the <see cref="P:WebApiThrottle.ThrottlingMiddleware.QuotaExceededResponseCode"/> property 
+            is set to 429 (Too Many Requests).
+            </summary>
+        </member>
+        <member name="M:WebApiThrottle.ThrottlingMiddleware.#ctor(Microsoft.Owin.OwinMiddleware,WebApiThrottle.ThrottlePolicy,WebApiThrottle.IPolicyRepository,WebApiThrottle.IThrottleRepository,WebApiThrottle.IThrottleLogger,WebApiThrottle.Net.IIpAddressParser)">
+            <summary>
+            Initializes a new instance of the <see cref="T:WebApiThrottle.ThrottlingMiddleware"/> class.
+            Persists the policy object in cache using <see cref="T:WebApiThrottle.IPolicyRepository"/> implementation.
+            The policy object can be updated by <see cref="T:WebApiThrottle.ThrottleManager"/> at runtime. 
+            </summary>
+            <param name="policy">
+            The policy.
+            </param>
+            <param name="policyRepository">
+            The policy repository.
+            </param>
+            <param name="repository">
+            The repository.
+            </param>
+            <param name="logger">
+            The logger.
+            </param>
+            <param name="ipAddressParser">
+            The IpAddressParser
+            </param>
+        </member>
+        <member name="P:WebApiThrottle.ThrottlingMiddleware.PolicyRepository">
+            <summary>
+             Gets or sets the throttling rate limits policy repository
+            </summary>
+        </member>
+        <member name="P:WebApiThrottle.ThrottlingMiddleware.Policy">
+            <summary>
+            Gets or sets the throttling rate limits policy
+            </summary>
+        </member>
+        <member name="P:WebApiThrottle.ThrottlingMiddleware.Repository">
+            <summary>
+            Gets or sets the throttle metrics storage
+            </summary>
+        </member>
+        <member name="P:WebApiThrottle.ThrottlingMiddleware.Logger">
+            <summary>
+            Gets or sets an instance of <see cref="T:WebApiThrottle.IThrottleLogger"/> that logs traffic and blocked requests
+            </summary>
+        </member>
+        <member name="P:WebApiThrottle.ThrottlingMiddleware.QuotaExceededMessage">
+            <summary>
+            Gets or sets a value that will be used as a formatter for the QuotaExceeded response message.
+            If none specified the default will be: 
+            API calls quota exceeded! maximum admitted {0} per {1}
+            </summary>
+        </member>
+        <member name="P:WebApiThrottle.ThrottlingMiddleware.QuotaExceededResponseCode">
+            <summary>
+            Gets or sets the value to return as the HTTP status 
+            code when a request is rejected because of the
+            throttling policy. The default value is 429 (Too Many Requests).
+            </summary>
+        </member>
+        <member name="T:WebApiThrottle.ThrottleManager">
+            <summary>
+            Allows changing the cache keys prefix and suffix, exposes ways to refresh the policy object at runtime.
+            </summary>
+        </member>
+        <member name="M:WebApiThrottle.ThrottleManager.GetThrottleKey">
+            <summary>
+            Returns key prefix for rate limits
+            </summary>
+            <returns>
+            The throttle key.
+            </returns>
+        </member>
+        <member name="M:WebApiThrottle.ThrottleManager.GetPolicyKey">
+            <summary>
+            Returns the policy key (global prefix + policy key suffix)
+            </summary>
+            <returns>
+            The policy key.
+            </returns>
+        </member>
+        <member name="M:WebApiThrottle.ThrottleManager.UpdatePolicy(WebApiThrottle.ThrottlePolicy,WebApiThrottle.IPolicyRepository)">
+            <summary>
+            Updates the policy object cached value
+            </summary>
+            <param name="policy">
+            The policy.
+            </param>
+            <param name="cacheRepository">
+            The policy repository.
+            </param>
+        </member>
+        <member name="M:WebApiThrottle.ThrottleManager.UpdatePolicy(WebApiThrottle.IThrottlePolicyProvider,WebApiThrottle.IPolicyRepository)">
+            <summary>
+            Reads the policy object from store and updates the cache
+            </summary>
+            <param name="storeProvider">
+            The store provider.
+            </param>
+            <param name="cacheRepository">
+            The cache repository.
+            </param>
+        </member>
+        <member name="P:WebApiThrottle.ThrottleManager.ApplicationName">
+            <summary>
+            Gets or sets the global prefix
+            </summary>
+        </member>
+        <member name="P:WebApiThrottle.ThrottleManager.ThrottleKey">
+            <summary>
+            Gets or sets the key prefix for rate limits
+            </summary>
+        </member>
+        <member name="P:WebApiThrottle.ThrottleManager.PolicyKey">
+            <summary>
+            Gets or sets the policy key suffix
+            </summary>
+        </member>
+        <member name="T:WebApiThrottle.ThrottlePolicy">
+            <summary>
+            Rate limits policy
+            </summary>
+        </member>
+        <member name="M:WebApiThrottle.ThrottlePolicy.#ctor(System.Nullable{System.Int64},System.Nullable{System.Int64},System.Nullable{System.Int64},System.Nullable{System.Int64},System.Nullable{System.Int64})">
+            <summary>
+            Configure default request limits per second, minute, hour or day
+            </summary>
+        </member>
+        <member name="P:WebApiThrottle.ThrottlePolicy.IpThrottling">
+            <summary>
+            Gets or sets a value indicating whether IP throttling is enabled.
+            </summary>
+        </member>
+        <member name="P:WebApiThrottle.ThrottlePolicy.ClientThrottling">
+            <summary>
+            Gets or sets a value indicating whether client key throttling is enabled.
+            </summary>
+        </member>
+        <member name="P:WebApiThrottle.ThrottlePolicy.EndpointThrottling">
+            <summary>
+            Gets or sets a value indicating whether route throttling is enabled
+            </summary>
+        </member>
+        <member name="P:WebApiThrottle.ThrottlePolicy.StackBlockedRequests">
+            <summary>
+            Gets or sets a value indicating whether all requests, including the rejected ones, should be stacked in this order: day, hour, min, sec
+            </summary>
+        </member>
+        <member name="T:WebApiThrottle.CacheRepository">
+            <summary>
+            Stores throttle metrics in asp.net cache
+            </summary>
+        </member>
+        <member name="M:WebApiThrottle.CacheRepository.Save(System.String,WebApiThrottle.ThrottleCounter,System.TimeSpan)">
+            <summary>
+            Insert or update
+            </summary>
+            <param name="id">
+            The id.
+            </param>
+            <param name="throttleCounter">
+            The throttle Counter.
+            </param>
+            <param name="expirationTime">
+            The expiration Time.
+            </param>
+        </member>
+        <member name="T:WebApiThrottle.RequestIdentity">
+            <summary>
+            Stores the client IP, key and endpoint
+            </summary>
+        </member>
+        <member name="T:WebApiThrottle.ThrottlingCore">
+            <summary>
+            Common code shared between ThrottlingHandler and ThrottlingFilter
+            </summary>
+        </member>
+        <member name="T:WebApiThrottle.ThrottlingFilter">
+            <summary>
+            Throttle action filter
+            </summary>
+        </member>
+        <member name="M:WebApiThrottle.ThrottlingFilter.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:WebApiThrottle.ThrottlingFilter"/> class.
+            By default, the <see cref="P:WebApiThrottle.ThrottlingFilter.QuotaExceededResponseCode"/> property 
+            is set to 429 (Too Many Requests).
+            </summary>
+        </member>
+        <member name="M:WebApiThrottle.ThrottlingFilter.#ctor(WebApiThrottle.ThrottlePolicy,WebApiThrottle.IPolicyRepository,WebApiThrottle.IThrottleRepository,WebApiThrottle.IThrottleLogger,WebApiThrottle.Net.IIpAddressParser)">
+            <summary>
+            Initializes a new instance of the <see cref="T:WebApiThrottle.ThrottlingFilter"/> class.
+            Persists the policy object in cache using <see cref="T:WebApiThrottle.IPolicyRepository"/> implementation.
+            The policy object can be updated by <see cref="T:WebApiThrottle.ThrottleManager"/> at runtime. 
+            </summary>
+            <param name="policy">
+            The policy.
+            </param>
+            <param name="policyRepository">
+            The policy repository.
+            </param>
+            <param name="repository">
+            The repository.
+            </param>
+            <param name="logger">
+            The logger.
+            </param>
+            <param name="ipAddressParser">
+            The ip address provider
+            </param>
+        </member>
+        <member name="P:WebApiThrottle.ThrottlingFilter.PolicyRepository">
+            <summary>
+             Gets or sets a repository used to access throttling rate limits policy.
+            </summary>
+        </member>
+        <member name="P:WebApiThrottle.ThrottlingFilter.Policy">
+            <summary>
+            Gets or sets the throttling rate limits policy
+            </summary>
+        </member>
+        <member name="P:WebApiThrottle.ThrottlingFilter.Repository">
+            <summary>
+            Gets or sets the throttle metrics storage
+            </summary>
+        </member>
+        <member name="P:WebApiThrottle.ThrottlingFilter.Logger">
+            <summary>
+            Gets or sets an instance of <see cref="T:WebApiThrottle.IThrottleLogger"/> that will log blocked requests
+            </summary>
+        </member>
+        <member name="P:WebApiThrottle.ThrottlingFilter.QuotaExceededMessage">
+            <summary>
+            Gets or sets a value that will be used as a formatter for the QuotaExceeded response message.
+            If none specified the default will be: 
+            API calls quota exceeded! maximum admitted {0} per {1}
+            </summary>
+        </member>
+        <member name="P:WebApiThrottle.ThrottlingFilter.QuotaExceededContent">
+            <summary>
+            Gets or sets a value that will be used as a formatter for the QuotaExceeded response message.
+            If none specified the default will be: 
+            API calls quota exceeded! maximum admitted {0} per {1}
+            </summary>
+        </member>
+        <member name="P:WebApiThrottle.ThrottlingFilter.QuotaExceededResponseCode">
+            <summary>
+            Gets or sets the value to return as the HTTP status 
+            code when a request is rejected because of the
+            throttling policy. The default value is 429 (Too Many Requests).
+            </summary>
+        </member>
+        <member name="T:WebApiThrottle.ThrottlingHandler">
+            <summary>
+            Throttle message handler
+            </summary>
+        </member>
+        <member name="M:WebApiThrottle.ThrottlingHandler.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:WebApiThrottle.ThrottlingHandler"/> class. 
+            By default, the <see cref="P:WebApiThrottle.ThrottlingHandler.QuotaExceededResponseCode"/> property 
+            is set to 429 (Too Many Requests).
+            </summary>
+        </member>
+        <member name="M:WebApiThrottle.ThrottlingHandler.#ctor(WebApiThrottle.ThrottlePolicy,WebApiThrottle.IPolicyRepository,WebApiThrottle.IThrottleRepository,WebApiThrottle.IThrottleLogger,WebApiThrottle.Net.IIpAddressParser)">
+            <summary>
+            Initializes a new instance of the <see cref="T:WebApiThrottle.ThrottlingHandler"/> class.
+            Persists the policy object in cache using <see cref="T:WebApiThrottle.IPolicyRepository"/> implementation.
+            The policy object can be updated by <see cref="T:WebApiThrottle.ThrottleManager"/> at runtime. 
+            </summary>
+            <param name="policy">
+            The policy.
+            </param>
+            <param name="policyRepository">
+            The policy repository.
+            </param>
+            <param name="repository">
+            The repository.
+            </param>
+            <param name="logger">
+            The logger.
+            </param>
+            <param name="ipAddressParser">
+            The IpAddressParser
+            </param>
+        </member>
+        <member name="P:WebApiThrottle.ThrottlingHandler.PolicyRepository">
+            <summary>
+             Gets or sets the throttling rate limits policy repository
+            </summary>
+        </member>
+        <member name="P:WebApiThrottle.ThrottlingHandler.Policy">
+            <summary>
+            Gets or sets the throttling rate limits policy
+            </summary>
+        </member>
+        <member name="P:WebApiThrottle.ThrottlingHandler.Repository">
+            <summary>
+            Gets or sets the throttle metrics storage
+            </summary>
+        </member>
+        <member name="P:WebApiThrottle.ThrottlingHandler.Logger">
+            <summary>
+            Gets or sets an instance of <see cref="T:WebApiThrottle.IThrottleLogger"/> that logs traffic and blocked requests
+            </summary>
+        </member>
+        <member name="P:WebApiThrottle.ThrottlingHandler.QuotaExceededMessage">
+            <summary>
+            Gets or sets a value that will be used as a formatter for the QuotaExceeded response message.
+            If none specified the default will be: 
+            API calls quota exceeded! maximum admitted {0} per {1}
+            </summary>
+        </member>
+        <member name="P:WebApiThrottle.ThrottlingHandler.QuotaExceededContent">
+            <summary>
+            Gets or sets a value that will be used as a formatter for the QuotaExceeded response message.
+            If none specified the default will be: 
+            API calls quota exceeded! maximum admitted {0} per {1}
+            </summary>
+        </member>
+        <member name="P:WebApiThrottle.ThrottlingHandler.QuotaExceededResponseCode">
+            <summary>
+            Gets or sets the value to return as the HTTP status 
+            code when a request is rejected because of the
+            throttling policy. The default value is 429 (Too Many Requests).
+            </summary>
+        </member>
+    </members>
+</doc>
