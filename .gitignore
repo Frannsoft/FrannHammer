@@ -25,3 +25,8 @@ KuroganeHammer.DataSynchro/bin/
 KuroganeHammer.DataSynchro/obj/
 KuroganeHammer.Data/KuroganeHammer.Data.Models/obj/
 KuroganeHammer.Data/KuroganeHammer.Data.Models/bin/
+FrannHammer.Api.Tests/obj/
+FrannHammer.AccountRegistration/obj/
+FrannHammer.Api/obj/
+FrannHammer.Core/obj/
+*.force
