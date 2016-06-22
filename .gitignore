@@ -31,3 +31,12 @@ FrannHammer.Api/obj/
 FrannHammer.Core/obj/
 *.force
 FrannHammer.DataSynchro/obj/
+FrannHammer.AccountRegistration/bin/
+FrannHammer.Core.Tests/obj/
+FrannHammer.Core.Tests/bin/
+FrannHammer.Core/bin/
+FrannHammer.WebScraper/bin/
+FrannHammer.DataSynchro/bin/
+KuroganeHammer.TransferDBTool/bin/
+FrannHammer.WebScraper/obj/Release/FrannHammer.WebScraper.csproj.FileListAbsolute.txt
+KuroganeHammer.TransferDBTool/obj/Release/KurograneHammer.TransferDBTool.csproj.FileListAbsolute.txt
