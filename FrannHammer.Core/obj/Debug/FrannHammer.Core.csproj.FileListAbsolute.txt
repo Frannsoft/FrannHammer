@@ -8,3 +8,4 @@ E:\Development\C#projects\FrannHammer\FrannHammer.Core\bin\Debug\Newtonsoft.Json
 E:\Development\C#projects\FrannHammer\FrannHammer.Core\bin\Debug\System.Net.Http.Formatting.xml
 E:\Development\C#projects\FrannHammer\FrannHammer.Core\obj\Debug\FrannHammer.Core.dll
 E:\Development\C#projects\FrannHammer\FrannHammer.Core\obj\Debug\FrannHammer.Core.pdb
+E:\Development\C#projects\FrannHammer\FrannHammer.Core\obj\Debug\FrannHammer.Core.csprojResolveAssemblyReference.cache
