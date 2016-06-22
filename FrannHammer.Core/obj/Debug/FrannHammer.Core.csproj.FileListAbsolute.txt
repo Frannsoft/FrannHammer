@@ -1,3 +1,4 @@
+E:\Development\C#projects\FrannHammer\FrannHammer.Core\obj\Debug\FrannHammer.Core.csprojResolveAssemblyReference.cache
 E:\Development\C#projects\FrannHammer\FrannHammer.Core\bin\Debug\FrannHammer.Core.dll.config
 E:\Development\C#projects\FrannHammer\FrannHammer.Core\bin\Debug\FrannHammer.Core.xml
 E:\Development\C#projects\FrannHammer\FrannHammer.Core\bin\Debug\FrannHammer.Core.dll
