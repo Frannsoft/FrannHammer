@@ -53,7 +53,6 @@ E:\Development\C#projects\FrannHammer\FrannHammer.Api\bin\System.Web.Optimizatio
 E:\Development\C#projects\FrannHammer\FrannHammer.Api\bin\System.Web.WebPages.dll
 E:\Development\C#projects\FrannHammer\FrannHammer.Api\bin\System.Web.WebPages.Razor.dll
 E:\Development\C#projects\FrannHammer\FrannHammer.Api\bin\WebApiThrottle.dll
-E:\Development\C#projects\FrannHammer\FrannHammer.Api\bin\nunit.framework.dll
 E:\Development\C#projects\FrannHammer\FrannHammer.Api\bin\System.Web.WebPages.Deployment.dll
 E:\Development\C#projects\FrannHammer\FrannHammer.Api\bin\FrannHammer.Core.pdb
 E:\Development\C#projects\FrannHammer\FrannHammer.Api\bin\FrannHammer.Core.xml
@@ -78,7 +77,6 @@ E:\Development\C#projects\FrannHammer\FrannHammer.Api\bin\Microsoft.Owin.Securit
 E:\Development\C#projects\FrannHammer\FrannHammer.Api\bin\Microsoft.Owin.Security.Cookies.xml
 E:\Development\C#projects\FrannHammer\FrannHammer.Api\bin\Microsoft.Owin.Security.OAuth.xml
 E:\Development\C#projects\FrannHammer\FrannHammer.Api\bin\System.Web.Http.Owin.xml
-E:\Development\C#projects\FrannHammer\FrannHammer.Api\bin\nunit.framework.xml
 E:\Development\C#projects\FrannHammer\FrannHammer.Api\bin\System.Web.WebPages.Deployment.xml
 E:\Development\C#projects\FrannHammer\FrannHammer.Api\obj\Debug\FrannHammer.Api.csprojResolveAssemblyReference.cache
 E:\Development\C#projects\FrannHammer\FrannHammer.Api\obj\Debug\FrannHammer.Api.Migrations.notation.resources

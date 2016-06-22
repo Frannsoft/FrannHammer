@@ -3,13 +3,11 @@ E:\Development\C#projects\FrannHammer\FrannHammer.DataSynchro\bin\Debug\FrannHam
 E:\Development\C#projects\FrannHammer\FrannHammer.DataSynchro\bin\Debug\FrannHammer.DataSynchro.pdb
 E:\Development\C#projects\FrannHammer\FrannHammer.DataSynchro\bin\Debug\FrannHammer.Core.dll
 E:\Development\C#projects\FrannHammer\FrannHammer.DataSynchro\bin\Debug\Newtonsoft.Json.dll
-E:\Development\C#projects\FrannHammer\FrannHammer.DataSynchro\bin\Debug\nunit.framework.dll
 E:\Development\C#projects\FrannHammer\FrannHammer.DataSynchro\bin\Debug\System.Net.Http.Formatting.dll
 E:\Development\C#projects\FrannHammer\FrannHammer.DataSynchro\bin\Debug\System.Windows.Interactivity.dll
 E:\Development\C#projects\FrannHammer\FrannHammer.DataSynchro\bin\Debug\FrannHammer.Core.pdb
 E:\Development\C#projects\FrannHammer\FrannHammer.DataSynchro\bin\Debug\FrannHammer.Core.xml
 E:\Development\C#projects\FrannHammer\FrannHammer.DataSynchro\bin\Debug\Newtonsoft.Json.xml
-E:\Development\C#projects\FrannHammer\FrannHammer.DataSynchro\bin\Debug\nunit.framework.xml
 E:\Development\C#projects\FrannHammer\FrannHammer.DataSynchro\bin\Debug\System.Net.Http.Formatting.xml
 E:\Development\C#projects\FrannHammer\FrannHammer.DataSynchro\bin\Debug\de\System.Windows.Interactivity.resources.dll
 E:\Development\C#projects\FrannHammer\FrannHammer.DataSynchro\bin\Debug\en\System.Windows.Interactivity.resources.dll
