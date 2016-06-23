@@ -22,6 +22,7 @@ namespace FrannHammer.Api.Tests.Smoke
         }
 
         [Test]
+        [Ignore("Still working to setup Owin self hosting")]
         public void ShouldGetAllMovements()
         {
             CollectionAssert.AllItemsAreNotNull(_movements);
@@ -30,6 +31,7 @@ namespace FrannHammer.Api.Tests.Smoke
 
         [Test]
         [TestCase("Weight")]
+        [Ignore("Still working to setup Owin self hosting")]
         public async Task ShouldGetAllMovementsByName(string name)
         {
             var results = await LoggedInBasicClient.GetAsync(Baseuri + MovementsRoute + "/byname" + "?name=" + name);
@@ -44,6 +46,7 @@ namespace FrannHammer.Api.Tests.Smoke
         }
 
         [Test]
+        [Ignore("Still working to setup Owin self hosting")]
         public async Task ShouldGetMovement()
         {
             var result = await LoggedInBasicClient.GetAsync(Baseuri + MovementsRoute + "/" + _movements[0].Id);
