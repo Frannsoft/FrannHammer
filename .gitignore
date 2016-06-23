@@ -43,3 +43,6 @@ KuroganeHammer.TransferDBTool/obj/Release/KurograneHammer.TransferDBTool.csproj.
 packages/
 FrannHammer.AccountRegistrationTool.Tests/bin/
 FrannHammer.AccountRegistrationTool.Tests/obj/
+FrannHammer.Api.Tests/bin/
+FrannHammer.Api/bin/
+KuroganeHammer.TransferDBTool/obj/Debug/KurograneHammer.TransferDBTool.csproj.FileListAbsolute.txt

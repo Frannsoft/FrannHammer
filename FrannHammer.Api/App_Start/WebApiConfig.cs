@@ -68,7 +68,6 @@ namespace FrannHammer.Api
         {
             T retVal = default(T);
             var configValue = ConfigurationManager.AppSettings[key];
-
             if (string.IsNullOrEmpty(configValue))
             { throw new Exception($"Unable to find key of {key}"); }
 
