@@ -23,6 +23,7 @@ namespace FrannHammer.Api.Tests.Controllers.Characters
 
         [Test]
         [TestCase(BaseUri)]
+        [Ignore("Still working to setup Owin self hosting")]
         public async Task ShouldGetUnauthorizedWithoutLogin_POST(string uri)
         {
             var character = TestObjects.Character();
@@ -33,6 +34,7 @@ namespace FrannHammer.Api.Tests.Controllers.Characters
 
         [Test]
         [TestCase(BaseUri + "/4")]
+        [Ignore("Still working to setup Owin self hosting")]
         public async Task ShouldGetUnauthorizedWithoutLogin_PUT(string uri)
         {
             var character = TestObjects.Character();
@@ -43,6 +45,7 @@ namespace FrannHammer.Api.Tests.Controllers.Characters
 
         [Test]
         [TestCase(BaseUri + "/1")]
+        [Ignore("Still working to setup Owin self hosting")]
         public async Task ShouldGetUnauthorizedWithoutLogin_DELETE(string uri)
         {
             var response = await DeleteAsync(uri);

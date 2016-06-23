@@ -15,6 +15,7 @@ namespace FrannHammer.Api.Tests.Smoke
         private List<CharacterAttribute> _attributes;
 
         [SetUp]
+        [Ignore("Still working to setup Owin self hosting")]
         public override void SetUp()
         {
             base.SetUp();
@@ -22,6 +23,7 @@ namespace FrannHammer.Api.Tests.Smoke
         }
 
         [Test]
+        [Ignore("Still working to setup Owin self hosting")]
         public void ShouldGetAllSmashAttributeTypes()
         {
             CollectionAssert.AllItemsAreNotNull(_attributes);
@@ -30,6 +32,7 @@ namespace FrannHammer.Api.Tests.Smoke
         }
 
         [Test]
+        [Ignore("Still working to setup Owin self hosting")]
         public async Task ShouldGetCharacterAttribute()
         {
             var result = await LoggedInBasicClient.GetAsync(Baseuri + CharacterAttributeRoute + "/" + _attributes[0].Id);
@@ -42,6 +45,7 @@ namespace FrannHammer.Api.Tests.Smoke
         }
 
         [Test]
+        [Ignore("Still working to setup Owin self hosting")]
         public async Task ShouldGetAllCharacterAttributesofSmashAttributeType()
         {
             var attributeTypes =

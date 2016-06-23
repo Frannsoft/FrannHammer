@@ -14,6 +14,7 @@ namespace FrannHammer.Api.Tests.Smoke
         private List<Move> _moves;
 
         [SetUp]
+        [Ignore("Still working to setup Owin self hosting")]
         public override void SetUp()
         {
             base.SetUp();
@@ -25,6 +26,7 @@ namespace FrannHammer.Api.Tests.Smoke
         }
 
         [Test]
+        [Ignore("Still working to setup Owin self hosting")]
         public void ShouldGetAllMoves()
         {
             CollectionAssert.AllItemsAreNotNull(_moves);
@@ -33,6 +35,7 @@ namespace FrannHammer.Api.Tests.Smoke
 
         [Test]
         [TestCase("Jab 2")]
+        [Ignore("Still working to setup Owin self hosting")]
         public async Task ShouldGetAllMovesByName(string name)
         {
             var results = await LoggedInBasicClient.GetAsync(Baseuri + MovesRoute + "/byname" + "?name=" + name);
@@ -47,6 +50,7 @@ namespace FrannHammer.Api.Tests.Smoke
         }
 
         [Test]
+        [Ignore("Still working to setup Owin self hosting")]
         public async Task ShouldGetMove()
         {
             var result = await LoggedInBasicClient.GetAsync(Baseuri + MovesRoute + "/" + _moves[0].Id);
