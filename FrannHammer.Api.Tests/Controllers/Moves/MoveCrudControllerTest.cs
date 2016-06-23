@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using System.Web.Http.Results;
 using FrannHammer.Api.DTOs;
 using FrannHammer.Core.Models;
@@ -85,7 +86,7 @@ namespace FrannHammer.Api.Tests.Controllers.Moves
             var move = TestObjects.Move();
 
             var dateTime = DateTime.Now;
-
+            Thread.Sleep(100);
             var returnedMove = MovesController.PostMove(move) as CreatedAtRouteNegotiatedContentResult<Move>;
 
             if (returnedMove != null)
