@@ -1,7 +1,13 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Effort.DataLoaders;
+using FrannHammer.Api.Models;
 using FrannHammer.Core.Models;
+using Microsoft.Owin.Testing;
 using NUnit.Framework;
+using Owin;
 
 namespace FrannHammer.Api.Tests.Controllers.Accounts
 {
@@ -27,6 +33,21 @@ namespace FrannHammer.Api.Tests.Controllers.Accounts
 
             var response = await PostAsync(_uri, model);
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        }
+
+        [Test]
+        public void EffortSetupTEST()
+        {
+            var path = AppDomain.CurrentDomain.BaseDirectory;
+            IDataLoader loader = new CsvDataLoader($"{path}/fakeDb");
+
+            using (var conn = Effort.DbConnectionFactory.CreateTransient(loader))
+            {
+                var context = new ApplicationDbContext(conn);
+                var character = context.Characters.Find(1);
+
+                Assert.That(character, Is.Not.Null);
+            }
         }
     }
 }
