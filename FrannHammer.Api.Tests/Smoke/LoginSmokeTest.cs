@@ -5,6 +5,7 @@ namespace FrannHammer.Api.Tests.Smoke
     public class LoginBaseSmokeTest : BaseSmokeTest
     {
         [Test]
+        [Ignore("Still working to setup Owin self hosting")]
         public void ShouldBeAbleToLoginWithBasicUser()
         {
             Assert.IsTrue(LoggedInBasicClient != null);
@@ -13,6 +14,7 @@ namespace FrannHammer.Api.Tests.Smoke
         }
 
         [Test]
+        [Ignore("Still working to setup Owin self hosting")]
         public void ShouldBeAbleToLoginWithAdminUser()
         {
             Assert.That(LoggedInAdminClient != null);
