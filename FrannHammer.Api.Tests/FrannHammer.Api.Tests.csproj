@@ -120,18 +120,18 @@
     <Compile Include="Controllers\BaseAuthenticatedTest.cs" />
     <Compile Include="Controllers\BaseControllerTest.cs" />
     <Compile Include="Controllers\CharacterAttributes\CharacterAttributeAnonymousControllerTest.cs" />
-    <Compile Include="Controllers\CharacterAttributes\CharacterAttributeControllerTest.cs" />
+    <Compile Include="Controllers\CharacterAttributeControllerTest.cs" />
     <Compile Include="Controllers\CharacterAttributeTypes\CharacterAttributeTypeControllerTest.cs" />
     <Compile Include="Controllers\Characters\CharacterControllerTest.cs" />
     <Compile Include="Controllers\Characters\CharacterRequestAuthenticationTest.cs" />
-    <Compile Include="Controllers\Characters\CharacterTests.cs" />
+    <Compile Include="Controllers\CharacterTests.cs" />
     <Compile Include="Controllers\Movements\MovementsAnonymousControllerTest.cs" />
     <Compile Include="Controllers\Moves\MoveAnonymousControllerTest.cs" />
-    <Compile Include="Controllers\Moves\MoveControllerTest.cs" />
-    <Compile Include="Controllers\Movements\MovementsControllerTest.cs" />
-    <Compile Include="Controllers\Notations\NotationControllerTest.cs" />
+    <Compile Include="Controllers\MoveControllerTest.cs" />
+    <Compile Include="Controllers\MovementsControllerTest.cs" />
+    <Compile Include="Controllers\NotationControllerTest.cs" />
     <Compile Include="Controllers\SmashAttributeTypes\SmashAttributeTypeAnonymousControllerTest.cs" />
-    <Compile Include="Controllers\SmashAttributeTypes\SmashAttributeTypesControllerTest.cs" />
+    <Compile Include="Controllers\SmashAttributeTypesControllerTest.cs" />
     <Compile Include="EffortBaseTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Smoke\CalculatorSmokeTest.cs" />
@@ -233,6 +233,9 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\Notations\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

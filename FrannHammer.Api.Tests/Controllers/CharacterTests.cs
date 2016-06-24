@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading;
 using System.Web.Http.Results;
-using NUnit.Framework;
 using FrannHammer.Api.Controllers;
-using FrannHammer.Core.Models;
 using FrannHammer.Api.DTOs;
+using FrannHammer.Core.Models;
+using NUnit.Framework;
 
-namespace FrannHammer.Api.Tests.Controllers.Characters
+namespace FrannHammer.Api.Tests.Controllers
 {
     [TestFixture]
     public class CharacterTests : EffortBaseTest

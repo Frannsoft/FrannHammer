@@ -6,7 +6,7 @@ using FrannHammer.Api.DTOs;
 using FrannHammer.Core.Models;
 using NUnit.Framework;
 
-namespace FrannHammer.Api.Tests.Controllers.Moves
+namespace FrannHammer.Api.Tests.Controllers
 {
     [TestFixture]
     public class MoveControllerTest : EffortBaseTest
