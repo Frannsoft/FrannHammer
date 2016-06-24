@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using System.Web.Http.Results;
 using FrannHammer.Api.Controllers;
 using FrannHammer.Core.Models;
@@ -57,7 +58,7 @@ namespace FrannHammer.Api.Tests.Controllers.CharacterAttributeTypes
             var characterAttributeType = TestObjects.CharacterAttributeType();
 
             var dateTime = DateTime.Now;
-
+            Thread.Sleep(100);
             //arrange
             var returnedCharacter =
                 ExecuteAndReturnCreatedAtRouteContent<CharacterAttributeType>(() => _controller.PostCharacterAttributeType(characterAttributeType));
