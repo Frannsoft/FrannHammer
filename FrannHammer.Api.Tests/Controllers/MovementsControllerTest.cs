@@ -1,13 +1,13 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Web.Http.Results;
 using FrannHammer.Api.Controllers;
 using FrannHammer.Api.DTOs;
 using FrannHammer.Core.Models;
 using NUnit.Framework;
-using System.Linq;
 
-namespace FrannHammer.Api.Tests.Controllers.Movements
+namespace FrannHammer.Api.Tests.Controllers
 {
     [TestFixture]
     public class MovementsControllerTest : EffortBaseTest
