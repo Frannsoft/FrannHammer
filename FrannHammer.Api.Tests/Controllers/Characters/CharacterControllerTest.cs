@@ -6,8 +6,13 @@ using NUnit.Framework;
 
 namespace FrannHammer.Api.Tests.Controllers.Characters
 {
+    /// <summary>
+    /// TODO: These tests will soon become obsolete as they are built on an empty Effort DB.  The tests in CharacterTests will replace them
+    /// TODO: as those tests are built with the prepopulated Effort db.
+    /// </summary>
     [TestFixture]
-    public class CharacterCrudControllerTest : BaseControllerTest
+    [Obsolete("Replaced with CharacterTests tests")]
+    public class CharacterControllerTest : BaseControllerTest
     {
 
         [Test]

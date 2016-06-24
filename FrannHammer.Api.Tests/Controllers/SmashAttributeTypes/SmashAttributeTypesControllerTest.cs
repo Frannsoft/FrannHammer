@@ -1,46 +1,66 @@
 ﻿using System;
-using System.Linq;
 using System.Web.Http.Results;
+using FrannHammer.Api.Controllers;
 using FrannHammer.Core.Models;
 using NUnit.Framework;
 
 namespace FrannHammer.Api.Tests.Controllers.SmashAttributeTypes
 {
     [TestFixture]
-    public class SmashAttributeTypesControllerTest : BaseControllerTest
+    public class SmashAttributeTypesControllerTest : EffortBaseTest
     {
+        private SmashAttributeTypesController _controller;
+
+        private SmashAttributeType Post(SmashAttributeType smashAttributeType)
+        {
+            return ExecuteAndReturnCreatedAtRouteContent<SmashAttributeType>(
+                () => _controller.PostSmashAttributeType(smashAttributeType));
+        }
+
+        private SmashAttributeType Get(int id)
+        {
+            return ExecuteAndReturnContent<SmashAttributeType>(
+                () => _controller.GetSmashAttributeType(id));
+        }
+
+        [TestFixtureSetUp]
+        public override void TestFixtureSetUp()
+        {
+            base.TestFixtureSetUp();
+            _controller = new SmashAttributeTypesController(Context);
+        }
+
+        [TestFixtureTearDown]
+        public override void TestFixtureTearDown()
+        {
+            _controller.Dispose();
+            base.TestFixtureTearDown();
+        }
 
         [Test]
         public void ShouldGetSmashAttributeTypes()
         {
             var smashAttributeType = TestObjects.SmashAttributeType();
-            SmashAttributeTypesController.PostSmashAttributeType(smashAttributeType);
-
-            var result = SmashAttributeTypesController.GetSmashAttributeType(smashAttributeType.Id) as OkNegotiatedContentResult<SmashAttributeType>;
-
-            Assert.That(result, Is.Not.Null);
+            Post(smashAttributeType);
+            Get(smashAttributeType.Id);
         }
 
         [Test]
         public void ShouldGetAllSmashAttributeTypes()
         {
-            var smashAttributeType = TestObjects.SmashAttributeType();
-            SmashAttributeTypesController.PostSmashAttributeType(smashAttributeType);
-
-            var results = SmashAttributeTypesController.GetSmashAttributeTypes();
-
-            Assert.That(results.Count(), Is.EqualTo(1));
+            var results = _controller.GetSmashAttributeTypes();
+            CollectionAssert.AllItemsAreNotNull(results);
+            CollectionAssert.AllItemsAreUnique(results);
+            CollectionAssert.AllItemsAreInstancesOfType(results, typeof(SmashAttributeType));
         }
 
         [Test]
         public void ShouldAddSmashAttributeTypes()
         {
             var smashAttributeType = TestObjects.SmashAttributeType();
-            var result = SmashAttributeTypesController.PostSmashAttributeType(smashAttributeType) as CreatedAtRouteNegotiatedContentResult<SmashAttributeType>;
+            var result = Post(smashAttributeType);
 
-            Assert.That(result, Is.Not.Null);
-            Assert.That(result?.Content, Is.Not.Null);
-            Assert.AreEqual(smashAttributeType, result?.Content);
+            Assert.AreEqual(smashAttributeType, result);
         }
 
         [Test]
@@ -51,30 +71,29 @@ namespace FrannHammer.Api.Tests.Controllers.SmashAttributeTypes
 
             var dateTime = DateTime.Now;
 
-            var returnedSmashAttributeTypes =
-                SmashAttributeTypesController.PostSmashAttributeType(smashAttributeType) as CreatedAtRouteNegotiatedContentResult<SmashAttributeType>;
+            var returnedSmashAttributeTypes = Post(smashAttributeType);
 
             if (returnedSmashAttributeTypes != null)
             {
-                returnedSmashAttributeTypes.Content.Name = expectedName;
-                SmashAttributeTypesController.PutSmashAttributeType(returnedSmashAttributeTypes.Content.Id, returnedSmashAttributeTypes.Content);
+                returnedSmashAttributeTypes.Name = expectedName;
+                ExecuteAndReturn<StatusCodeResult>(() => _controller.PutSmashAttributeType(returnedSmashAttributeTypes.Id, returnedSmashAttributeTypes));
             }
 
-            var updatedSmashAttributeTypes = SmashAttributeTypesController.GetSmashAttributeType(smashAttributeType.Id) as OkNegotiatedContentResult<SmashAttributeType>;
+            var updatedSmashAttributeTypes = Get(smashAttributeType.Id);
 
-            Assert.That(updatedSmashAttributeTypes?.Content.Name, Is.EqualTo(expectedName));
-            Assert.That(updatedSmashAttributeTypes?.Content.LastModified, Is.GreaterThan(dateTime));
+            Assert.That(updatedSmashAttributeTypes?.Name, Is.EqualTo(expectedName));
+            Assert.That(updatedSmashAttributeTypes?.LastModified, Is.GreaterThan(dateTime));
         }
 
         [Test]
         public void ShouldDeleteSmashAttributeTypes()
         {
             var smashAttributeType = TestObjects.SmashAttributeType();
-            SmashAttributeTypesController.PostSmashAttributeType(smashAttributeType);
+            Post(smashAttributeType);
 
-            SmashAttributeTypesController.DeleteSmashAttributeType(smashAttributeType.Id);
+            _controller.DeleteSmashAttributeType(smashAttributeType.Id);
 
-            var result = SmashAttributeTypesController.GetSmashAttributeType(smashAttributeType.Id) as NotFoundResult;
+            var result = ExecuteAndReturn<NotFoundResult>(() => _controller.GetSmashAttributeType(smashAttributeType.Id));
             Assert.That(result, Is.Not.Null);
         }
     }
