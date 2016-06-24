@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Web.Http.Results;
 using FrannHammer.Api.Controllers;
 using FrannHammer.Core.Models;
@@ -70,7 +71,7 @@ namespace FrannHammer.Api.Tests.Controllers.SmashAttributeTypes
             var smashAttributeType = TestObjects.SmashAttributeType();
 
             var dateTime = DateTime.Now;
-
+            Thread.Sleep(100);
             var returnedSmashAttributeTypes = Post(smashAttributeType);
 
             if (returnedSmashAttributeTypes != null)

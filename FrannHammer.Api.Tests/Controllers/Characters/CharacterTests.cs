@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Web.Http.Results;
 using NUnit.Framework;
 using FrannHammer.Api.Controllers;
@@ -115,7 +116,7 @@ namespace FrannHammer.Api.Tests.Controllers.Characters
             var character = TestObjects.Character();
 
             var dateTime = DateTime.Now;
-
+            Thread.Sleep(100);
             //arrange
             var returnedCharacter =
                 ExecuteAndReturnCreatedAtRouteContent<Character>(() => _controller.PostCharacter(character));

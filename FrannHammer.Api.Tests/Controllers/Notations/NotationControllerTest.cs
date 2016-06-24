@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Web.Http.Results;
 using FrannHammer.Api.Controllers;
 using FrannHammer.Core.Models;
@@ -69,7 +70,7 @@ namespace FrannHammer.Api.Tests.Controllers.Notations
             var notation = TestObjects.Notation();
 
             var dateTime = DateTime.Now;
-
+            Thread.Sleep(100);
             //arrange
             var returnedNotation = Post(notation);
             //act
