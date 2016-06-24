@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace FrannHammer.Api.Tests.Controllers.Characters
 {
     [TestFixture]
-    public class CharacterAnonymousControllerTest : BaseControllerTest
+    public class CharacterRequestAuthenticationTest : BaseControllerTest
     {
         private const string BaseUri = "/api/characters";
 
