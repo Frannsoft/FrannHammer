@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using FrannHammer.Api.Models;
@@ -96,7 +96,7 @@ namespace FrannHammer.Api.Migrations
                 }
             }
 
-            
+
         }
     }
 }
