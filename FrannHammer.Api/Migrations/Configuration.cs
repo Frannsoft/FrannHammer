@@ -22,15 +22,6 @@ namespace FrannHammer.Api.Migrations
             var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
 
-            var user = new ApplicationUser()
-            {
-                UserName = "KuroUser",
-                Email = "testemail@mymail.com",
-                EmailConfirmed = true,
-            };
-
-            manager.Create(user, "***REMOVED***");
-
             var getuser = new ApplicationUser()
             {
                 UserName = "GETuser",
