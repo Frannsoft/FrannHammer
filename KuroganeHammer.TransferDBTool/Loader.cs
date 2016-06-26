@@ -22,24 +22,6 @@ namespace KurograneHammer.TransferDBTool
     public class Loader : BaseTest
     {
         [Test]
-        [Explicit("Actually creates a new user")]
-        [TestCase("mytestemail", "mytestuser", "password")]
-        public async Task CreateNewUser(string email, string username, string password)
-        {
-            RegisterBindingModel userModel = new RegisterBindingModel
-            {
-                UserName = username,
-                Email = email,
-                Password = password,
-                ConfirmPassword = password
-            };
-
-            var postResult = await LoggedInAdminClient.PostAsJsonAsync(Baseuri + "account/register", userModel);
-
-            Assert.That(postResult.IsSuccessStatusCode);
-        }
-        
-        [Test]
         [Explicit("Reloads character data")]
         public async Task ReloadCharacters()
         {
