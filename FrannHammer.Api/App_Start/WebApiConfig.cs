@@ -38,20 +38,7 @@ namespace FrannHammer.Api
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            var builder = new ContainerBuilder();
-
-            builder.RegisterType<ApplicationDbContext>()
-                .As<IApplicationDbContext>();
-
-            builder.RegisterApiControllers();
-
-            builder.RegisterSource(new AnyConcreteTypeNotAlreadyRegisteredSource());
-            builder.RegisterType<IApplicationDbContext>()
-                .AsImplementedInterfaces()
-                .InstancePerLifetimeScope();
-
-            Startup.Container = builder.Build();
-            config.DependencyResolver = new AutofacWebApiDependencyResolver(Startup.Container);
+            config.DependencyResolver = new AutofacWebApiDependencyResolver(Container.Instance.AutoFacContainer);
 
 #if !DEBUG
             int throttleRequestsPerSecond = GetConfigValue<int>(KeyThrottleRequestsPerSecond);

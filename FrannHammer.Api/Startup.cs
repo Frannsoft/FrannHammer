@@ -1,5 +1,8 @@
 ﻿using Autofac;
+using Autofac.Features.ResolveAnything;
+using Autofac.Integration.WebApi;
 using FrannHammer.Api;
+using FrannHammer.Api.Models;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Owin;
@@ -13,7 +16,7 @@ namespace FrannHammer.Api
         public void Configuration(IAppBuilder app)
         {
             app.UseCors(CorsOptions.AllowAll);
-            ConfigureAuth(app, Container);
+            ConfigureAuth(app, Container.Instance.AutoFacContainer);
         }
     }
 }
