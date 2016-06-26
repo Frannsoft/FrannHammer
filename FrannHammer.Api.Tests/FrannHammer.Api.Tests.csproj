@@ -33,6 +33,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.3.5.0\lib\net40\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Autofac.Integration.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.Owin.3.1.0\lib\net45\Autofac.Integration.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Autofac.Integration.WebApi, Version=3.4.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.WebApi2.3.4.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Autofac.Integration.WebApi.Owin, Version=3.3.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.WebApi2.Owin.3.3.0\lib\net45\Autofac.Integration.WebApi.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Effort, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6a46696d54971e6d, processorArchitecture=MSIL">
       <HintPath>..\packages\Effort.EF6.1.1.5\lib\net45\Effort.dll</HintPath>
       <Private>True</Private>
@@ -66,6 +82,14 @@
       <HintPath>..\packages\Microsoft.Owin.Hosting.3.0.1\lib\net45\Microsoft.Owin.Hosting.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Owin.Testing, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Testing.3.0.1\lib\net45\Microsoft.Owin.Testing.dll</HintPath>
       <Private>True</Private>
@@ -92,6 +116,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.3\lib\net45\System.Web.Cors.dll</HintPath>
       <Private>True</Private>
@@ -117,20 +142,20 @@
     <Compile Include="Asserts\CollectionPropertyAssert.cs" />
     <Compile Include="Controllers\Accounts\AccountsAuthenticatedControllerTest.cs" />
     <Compile Include="Controllers\Accounts\AccountsControllerTest.cs" />
-    <Compile Include="Controllers\BaseAuthenticatedTest.cs" />
+    <Compile Include="Controllers\BaseAuthenticationTest.cs" />
     <Compile Include="Controllers\BaseControllerTest.cs" />
-    <Compile Include="Controllers\CharacterAttributes\CharacterAttributeAnonymousControllerTest.cs" />
+    <Compile Include="Controllers\CharacterAttributes\CharacterAttributeAuthControllerTest.cs" />
     <Compile Include="Controllers\CharacterAttributeControllerTest.cs" />
     <Compile Include="Controllers\CharacterAttributeTypes\CharacterAttributeTypeControllerTest.cs" />
     <Compile Include="Controllers\Characters\CharacterControllerTest.cs" />
-    <Compile Include="Controllers\Characters\CharacterRequestAuthenticationTest.cs" />
+    <Compile Include="Controllers\Characters\CharactersAuthenticationTest.cs" />
     <Compile Include="Controllers\CharacterTests.cs" />
-    <Compile Include="Controllers\Movements\MovementsAnonymousControllerTest.cs" />
-    <Compile Include="Controllers\Moves\MoveAnonymousControllerTest.cs" />
+    <Compile Include="Controllers\Movements\MovementsAuthControllerTest.cs" />
+    <Compile Include="Controllers\Moves\MoveAuthControllerTest.cs" />
     <Compile Include="Controllers\MoveControllerTest.cs" />
     <Compile Include="Controllers\MovementsControllerTest.cs" />
     <Compile Include="Controllers\NotationControllerTest.cs" />
-    <Compile Include="Controllers\SmashAttributeTypes\SmashAttributeTypeAnonymousControllerTest.cs" />
+    <Compile Include="Controllers\SmashAttributeTypes\SmashAttributeTypeAuthControllerTest.cs" />
     <Compile Include="Controllers\SmashAttributeTypesControllerTest.cs" />
     <Compile Include="EffortBaseTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -234,9 +259,7 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\Notations\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

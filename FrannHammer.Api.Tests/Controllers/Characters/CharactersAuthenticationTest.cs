@@ -2,16 +2,18 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace FrannHammer.Api.Tests.Controllers.Movements
+namespace FrannHammer.Api.Tests.Controllers.Characters
 {
     [TestFixture]
-    public class MovementsAnonymousControllerTest : BaseControllerTest
+    public class CharactersAuthenticationTest : BaseAuthenticationTest
     {
-        private const string BaseUri = "/api/movements";
+        private const string BaseUri = "/api/characters";
 
         //[Test]
         //[TestCase(BaseUri)]
         //[TestCase(BaseUri + "/2")]
+        //[TestCase(BaseUri + "/4/movements")]
+        //[TestCase(BaseUri + "/10/moves")]
         //public async Task ShouldGetUnauthorizedWithoutLogin_GET(string uri)
         //{
         //    var response = await GetAsync(uri);
@@ -21,29 +23,26 @@ namespace FrannHammer.Api.Tests.Controllers.Movements
 
         [Test]
         [TestCase(BaseUri)]
-        [Ignore("Still working to setup Owin self hosting")]
         public async Task ShouldGetUnauthorizedWithoutLogin_POST(string uri)
         {
-            var movement = TestObjects.Movement();
+            var character = TestObjects.Character();
 
-            var response = await PostAsync(uri, movement);
+            var response = await PostAsync(uri, character);
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
         }
 
         [Test]
         [TestCase(BaseUri + "/4")]
-        [Ignore("Still working to setup Owin self hosting")]
         public async Task ShouldGetUnauthorizedWithoutLogin_PUT(string uri)
         {
-            var movement = TestObjects.Movement();
+            var character = TestObjects.Character();
 
-            var response = await PutAsync(uri, movement);
+            var response = await PutAsync(uri, character);
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
         }
 
         [Test]
         [TestCase(BaseUri + "/1")]
-        [Ignore("Still working to setup Owin self hosting")]
         public async Task ShouldGetUnauthorizedWithoutLogin_DELETE(string uri)
         {
             var response = await DeleteAsync(uri);

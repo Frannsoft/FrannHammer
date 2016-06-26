@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Data.Common;
+using Autofac;
 using FrannHammer.Api.Models;
 using FrannHammer.Api.Providers;
 using Microsoft.AspNet.Identity;
@@ -14,12 +16,14 @@ namespace FrannHammer.Api
         public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
 
         public static string PublicClientId { get; private set; }
+        internal static IContainer Container { get; set; }
 
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
-        public void ConfigureAuth(IAppBuilder app)
+        public void ConfigureAuth(IAppBuilder app, IContainer container = null)
         {
             // Configure the db context and user manager to use a single instance per request
-            app.CreatePerOwinContext(ApplicationDbContext.Create);
+            //app.CreatePerOwinContext(() => ApplicationDbContext.Create(connect));
+            app.CreatePerOwinContext(container.Resolve<ApplicationDbContext>);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
 
@@ -62,6 +66,8 @@ namespace FrannHammer.Api
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+
+            
         }
     }
 }

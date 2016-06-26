@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading;
 using System.Web.Http.Results;
 using FrannHammer.Api.Controllers;

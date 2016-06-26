@@ -43,11 +43,6 @@
             Controller used for calculating data off of character attributes and properties such as moves.
             </summary>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CalculatorController.#ctor">
-            <summary>
-            Creates a <see cref="T:FrannHammer.Api.Controllers.CalculatorController"/> with the default <see cref="T:FrannHammer.Api.Models.ApplicationDbContext"/>.
-            </summary>
-        </member>
         <member name="M:FrannHammer.Api.Controllers.CalculatorController.#ctor(FrannHammer.Api.Models.ApplicationDbContext)">
             <summary>
             Creates a <see cref="T:FrannHammer.Api.Controllers.CalculatorController"/> with the specified <see cref="T:FrannHammer.Api.Models.ApplicationDbContext"/>.
@@ -78,11 +73,6 @@
         <member name="T:FrannHammer.Api.Controllers.CharacterAttributesController">
             <summary>
             Handles all individual <see cref="T:FrannHammer.Core.Models.CharacterAttribute"/> operations.  
-            </summary>
-        </member>
-        <member name="M:FrannHammer.Api.Controllers.CharacterAttributesController.#ctor">
-            <summary>
-            Create a new <see cref="T:FrannHammer.Core.Models.CharacterAttribute"/> controller to interact with the server.
             </summary>
         </member>
         <member name="M:FrannHammer.Api.Controllers.CharacterAttributesController.#ctor(FrannHammer.Api.Models.ApplicationDbContext)">
@@ -131,11 +121,6 @@
             Handles the backing types of <see cref="T:FrannHammer.Core.Models.CharacterAttribute"/>s.
             </summary>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharacterAttributeTypesController.#ctor">
-            <summary>
-            Create a new <see cref="T:FrannHammer.Api.Controllers.CharacterAttributeTypesController"/>.
-            </summary>
-        </member>
         <member name="M:FrannHammer.Api.Controllers.CharacterAttributeTypesController.#ctor(FrannHammer.Api.Models.ApplicationDbContext)">
             <summary>
             Create a new <see cref="T:FrannHammer.Api.Controllers.CharacterAttributeTypesController"/> using
@@ -181,11 +166,6 @@
         <member name="T:FrannHammer.Api.Controllers.CharactersController">
             <summary>
             Handles server operations dealing with <see cref="T:FrannHammer.Core.Models.Character"/>s.
-            </summary>
-        </member>
-        <member name="M:FrannHammer.Api.Controllers.CharactersController.#ctor">
-            <summary>
-            Create a new <see cref="T:FrannHammer.Api.Controllers.CharactersController"/> to interact with the server.
             </summary>
         </member>
         <member name="M:FrannHammer.Api.Controllers.CharactersController.#ctor(FrannHammer.Api.Models.ApplicationDbContext)">
@@ -348,11 +328,6 @@
             Handles operations dealing with <see cref="T:FrannHammer.Core.Models.Notation"/>s.
             </summary>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.NotationsController.#ctor">
-            <summary>
-            Create a new <see cref="T:FrannHammer.Api.Controllers.NotationsController"/> to interact with the server.
-            </summary>
-        </member>
         <member name="M:FrannHammer.Api.Controllers.NotationsController.#ctor(FrannHammer.Api.Models.ApplicationDbContext)">
             <summary>
             Create a new <see cref="T:FrannHammer.Api.Controllers.NotationsController"/> to interact with the server using 
@@ -411,7 +386,7 @@
         </member>
         <member name="T:FrannHammer.Api.Controllers.SmashAttributeTypesController">
             <summary>
-            Handles the more broad types that can be assigned to other metadata in the DB.
+            Handles the more broad types that can be assigned to other metadata in the Db.
             </summary>
         </member>
         <member name="M:FrannHammer.Api.Controllers.SmashAttributeTypesController.GetSmashAttributeTypes">

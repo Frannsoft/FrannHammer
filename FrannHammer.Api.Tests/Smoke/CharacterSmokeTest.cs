@@ -10,7 +10,7 @@ namespace FrannHammer.Api.Tests.Smoke
     public class CharacterSmokeTest : BaseSmokeTest
     {
         [Test]
-        [Ignore("Still working to setup Owin self hosting")]
+        //[Ignore("Still working to setup Owin self hosting")]
         public async Task GetAllSingleCharactersById()
         {
             var characters = await LoggedInBasicClient.GetAsync(Baseuri + CharactersRoute).Result.Content.ReadAsAsync<List<Character>>();
@@ -26,7 +26,6 @@ namespace FrannHammer.Api.Tests.Smoke
         }
 
         [Test]
-        [Ignore("Still working to setup Owin self hosting")]
         public async Task GetAllSingleCharactersByName()
         {
             var characters =
@@ -45,7 +44,6 @@ namespace FrannHammer.Api.Tests.Smoke
         }
 
         [Test]
-        [Ignore("Still working to setup Owin self hosting")]
         public async Task GetAllCharacters()
         {
             var getResult = await LoggedInBasicClient.GetAsync(Baseuri + CharactersRoute);
@@ -56,7 +54,6 @@ namespace FrannHammer.Api.Tests.Smoke
         }
 
         [Test]
-        [Ignore("Still working to setup Owin self hosting")]
         public async Task GetAllCharacterMovement()
         {
             var characters = await LoggedInBasicClient.GetAsync(Baseuri + CharactersRoute).Result.Content.ReadAsAsync<List<Character>>();
@@ -72,7 +69,6 @@ namespace FrannHammer.Api.Tests.Smoke
         }
 
         [Test]
-        [Ignore("Still working to setup Owin self hosting")]
         public async Task GetAllCharacterMoves()
         {
             var characters = await LoggedInBasicClient.GetAsync(Baseuri + CharactersRoute).Result.Content.ReadAsAsync<List<Character>>();
