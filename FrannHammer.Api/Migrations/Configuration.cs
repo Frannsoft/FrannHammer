@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using FrannHammer.Api.Models;
@@ -21,15 +21,6 @@ namespace FrannHammer.Api.Migrations
 
             var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
-
-            var user = new ApplicationUser()
-            {
-                UserName = "KuroUser",
-                Email = "testemail@mymail.com",
-                EmailConfirmed = true,
-            };
-
-            manager.Create(user, "MasterHand7118!");
 
             var getuser = new ApplicationUser()
             {
@@ -105,7 +96,7 @@ namespace FrannHammer.Api.Migrations
                 }
             }
 
-            
+
         }
     }
 }

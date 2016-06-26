@@ -1,4 +1,5 @@
-﻿using FrannHammer.Api;
+﻿using Autofac;
+using FrannHammer.Api;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Owin;
@@ -12,7 +13,7 @@ namespace FrannHammer.Api
         public void Configuration(IAppBuilder app)
         {
             app.UseCors(CorsOptions.AllowAll);
-            ConfigureAuth(app);
+            ConfigureAuth(app, Container);
         }
     }
 }

@@ -18,13 +18,6 @@ namespace FrannHammer.Api.Controllers
     [RoutePrefix("api")]
     public class CharactersController : BaseApiController
     {
-
-        /// <summary>
-        /// Create a new <see cref="CharactersController"/> to interact with the server.
-        /// </summary>
-        public CharactersController()
-        { }
-
         /// <summary>
         /// Create a new <see cref="CharactersController"/> to interact with the server using 
         /// a specific <see cref="ApplicationDbContext"/>

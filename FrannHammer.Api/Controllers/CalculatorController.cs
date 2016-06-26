@@ -18,12 +18,6 @@ namespace FrannHammer.Api.Controllers
         private const string CalculatorRoutePrefix = "calculator";
 
         /// <summary>
-        /// Creates a <see cref="CalculatorController"/> with the default <see cref="ApplicationDbContext"/>.
-        /// </summary>
-        public CalculatorController()
-        { }
-
-        /// <summary>
         /// Creates a <see cref="CalculatorController"/> with the specified <see cref="ApplicationDbContext"/>.
         /// </summary>
         /// <param name="context"></param>

@@ -43,7 +43,7 @@ namespace FrannHammer.Api.Tests
                 LandingLag = "11",
                 LastModified = DateTime.Now,
                 Name = "falco phantasm",
-                OwnerId = _characterCounter,
+                OwnerId = 1,
                 TotalHitboxActiveLength = 30,
                 Type = MoveType.Special
             };
@@ -82,7 +82,7 @@ namespace FrannHammer.Api.Tests
                 Id = _movementCounter,
                 LastModified = DateTime.Now,
                 Name = "jab 1",
-                OwnerId = _characterCounter,
+                OwnerId = 1,
                 Value = "3 frames"
             };
 
