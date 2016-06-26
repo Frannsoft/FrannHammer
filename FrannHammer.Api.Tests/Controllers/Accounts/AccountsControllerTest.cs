@@ -12,7 +12,7 @@ using Owin;
 namespace FrannHammer.Api.Tests.Controllers.Accounts
 {
     [TestFixture]
-    public class AccountsControllerTest : BaseControllerTest
+    public class AccountsControllerTest : BaseAuthenticationTest
     {
         private string _uriBase = "/api/account";
         private string _uri = string.Empty;

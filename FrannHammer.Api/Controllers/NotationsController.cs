@@ -16,12 +16,6 @@ namespace FrannHammer.Api.Controllers
     public class NotationsController : BaseApiController
     {
         /// <summary>
-        /// Create a new <see cref="NotationsController"/> to interact with the server.
-        /// </summary>
-        public NotationsController()
-        { }
-
-        /// <summary>
         /// Create a new <see cref="NotationsController"/> to interact with the server using 
         /// a specific <see cref="ApplicationDbContext"/>
         /// </summary>

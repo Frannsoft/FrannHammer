@@ -46,3 +46,5 @@ FrannHammer.AccountRegistrationTool.Tests/obj/
 FrannHammer.Api.Tests/bin/
 FrannHammer.Api/bin/
 KuroganeHammer.TransferDBTool/obj/Debug/KurograneHammer.TransferDBTool.csproj.FileListAbsolute.txt
+TestResults/FrannHammer.Master.TE.Tests.mdf
+TestResults/FrannHammer.Master.TE.Tests_log.ldf
