@@ -31,7 +31,7 @@ namespace FrannHammer.Api.Tests
         public virtual void TestFixtureTearDown()
         {
             _connection.Close();
-            Context.Dispose();
+            Context?.Dispose();
         }
 
         protected T ExecuteAndReturn<T>(Func<IHttpActionResult> op)
