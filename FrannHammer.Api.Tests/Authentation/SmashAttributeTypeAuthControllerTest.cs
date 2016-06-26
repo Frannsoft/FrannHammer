@@ -2,30 +2,20 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace FrannHammer.Api.Tests.Controllers.Movements
+namespace FrannHammer.Api.Tests.Authentation
 {
     [TestFixture]
-    public class MovementsAuthControllerTest : BaseAuthenticationTest
+    public class SmashAttributeTypeAuthControllerTest : BaseAuthenticationTest
     {
-        private const string BaseUri = "/api/movements";
-
-        //[Test]
-        //[TestCase(BaseUri)]
-        //[TestCase(BaseUri + "/2")]
-        //public async Task ShouldGetUnauthorizedWithoutLogin_GET(string uri)
-        //{
-        //    var response = await GetAsync(uri);
-
-        //    Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
-        //}
+        private const string BaseUri = "/api/smashattributetypes";
 
         [Test]
         [TestCase(BaseUri)]
         public async Task ShouldGetUnauthorizedWithoutLogin_POST(string uri)
         {
-            var movement = TestObjects.Movement();
+            var smashAttributeType = TestObjects.SmashAttributeType();
 
-            var response = await PostAsync(uri, movement);
+            var response = await PostAsync(uri, smashAttributeType);
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
         }
 
@@ -33,9 +23,9 @@ namespace FrannHammer.Api.Tests.Controllers.Movements
         [TestCase(BaseUri + "/4")]
         public async Task ShouldGetUnauthorizedWithoutLogin_PUT(string uri)
         {
-            var movement = TestObjects.Movement();
+            var smashAttributeType = TestObjects.SmashAttributeType();
 
-            var response = await PutAsync(uri, movement);
+            var response = await PutAsync(uri, smashAttributeType);
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
         }
 

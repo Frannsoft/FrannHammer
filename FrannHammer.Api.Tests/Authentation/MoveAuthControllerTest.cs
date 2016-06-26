@@ -2,20 +2,20 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace FrannHammer.Api.Tests.Controllers.CharacterAttributes
+namespace FrannHammer.Api.Tests.Authentation
 {
     [TestFixture]
-    public class CharacterAttributeAuthControllerTest : BaseAuthenticationTest
+    public class MoveAuthControllerTest : BaseAuthenticationTest
     {
-        private const string BaseUri = "/api/characterattributes";
+        private const string BaseUri = "/api/moves";
 
         [Test]
         [TestCase(BaseUri)]
         public async Task ShouldGetUnauthorizedWithoutLogin_POST(string uri)
         {
-            var characterAttribute = TestObjects.CharacterAttribute();
+            var move = TestObjects.Move();
 
-            var response = await PostAsync(uri, characterAttribute);
+            var response = await PostAsync(uri, move);
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
         }
 
@@ -23,9 +23,9 @@ namespace FrannHammer.Api.Tests.Controllers.CharacterAttributes
         [TestCase(BaseUri + "/4")]
         public async Task ShouldGetUnauthorizedWithoutLogin_PUT(string uri)
         {
-            var characterAttribute = TestObjects.CharacterAttribute();
+            var move = TestObjects.Move();
 
-            var response = await PutAsync(uri, characterAttribute);
+            var response = await PutAsync(uri, move);
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
         }
 

@@ -140,33 +140,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Asserts\CollectionPropertyAssert.cs" />
-    <Compile Include="Controllers\Accounts\AccountsAuthenticatedControllerTest.cs" />
-    <Compile Include="Controllers\Accounts\AccountsControllerTest.cs" />
-    <Compile Include="Controllers\BaseAuthenticationTest.cs" />
+    <Compile Include="Authentation\AccountsAuthenticatedControllerTest.cs" />
+    <Compile Include="Authentation\BaseAuthenticationTest.cs" />
     <Compile Include="Controllers\BaseControllerTest.cs" />
-    <Compile Include="Controllers\CharacterAttributes\CharacterAttributeAuthControllerTest.cs" />
+    <Compile Include="Authentation\CharacterAttributeAuthControllerTest.cs" />
     <Compile Include="Controllers\CharacterAttributeControllerTest.cs" />
-    <Compile Include="Controllers\CharacterAttributeTypes\CharacterAttributeTypeControllerTest.cs" />
-    <Compile Include="Controllers\Characters\CharacterControllerTest.cs" />
-    <Compile Include="Controllers\Characters\CharactersAuthenticationTest.cs" />
+    <Compile Include="Authentation\CharacterAttributeTypeControllerTest.cs" />
+    <Compile Include="Controllers\CharacterControllerTest.cs" />
+    <Compile Include="Authentation\CharactersAuthenticationTest.cs" />
     <Compile Include="Controllers\CharacterTests.cs" />
-    <Compile Include="Controllers\Movements\MovementsAuthControllerTest.cs" />
-    <Compile Include="Controllers\Moves\MoveAuthControllerTest.cs" />
+    <Compile Include="Authentation\MovementsAuthControllerTest.cs" />
+    <Compile Include="Authentation\MoveAuthControllerTest.cs" />
     <Compile Include="Controllers\MoveControllerTest.cs" />
     <Compile Include="Controllers\MovementsControllerTest.cs" />
     <Compile Include="Controllers\NotationControllerTest.cs" />
-    <Compile Include="Controllers\SmashAttributeTypes\SmashAttributeTypeAuthControllerTest.cs" />
+    <Compile Include="Authentation\SmashAttributeTypeAuthControllerTest.cs" />
     <Compile Include="Controllers\SmashAttributeTypesControllerTest.cs" />
     <Compile Include="EffortBaseTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Smoke\CalculatorSmokeTest.cs" />
-    <Compile Include="Smoke\CharacterAttributeSmokeTest.cs" />
-    <Compile Include="Smoke\CharacterSmokeTest.cs" />
-    <Compile Include="Smoke\LoginSmokeTest.cs" />
-    <Compile Include="Smoke\MovementSmokeTest.cs" />
-    <Compile Include="Smoke\MoveSmokeTest.cs" />
-    <Compile Include="Smoke\SmashAttributeTypeSmokeTest.cs" />
-    <Compile Include="Smoke\SmokeBaseTest.cs" />
     <Compile Include="TestObjects.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,9 +1,10 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
+using FrannHammer.Api.Tests.Controllers;
 using FrannHammer.Core.Models;
 using NUnit.Framework;
 
-namespace FrannHammer.Api.Tests.Controllers.Accounts
+namespace FrannHammer.Api.Tests.Authentation
 {
     public class AccountsAuthenticationControllerTest : BaseAuthenticationTest
     {
