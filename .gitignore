@@ -48,3 +48,4 @@ FrannHammer.Api/bin/
 KuroganeHammer.TransferDBTool/obj/Debug/KurograneHammer.TransferDBTool.csproj.FileListAbsolute.txt
 TestResults/FrannHammer.Master.TE.Tests.mdf
 TestResults/FrannHammer.Master.TE.Tests_log.ldf
+FrannHammer.Api/dist/
