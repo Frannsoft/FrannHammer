@@ -166,6 +166,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Container.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\CalculatorController.cs" />
@@ -181,6 +182,9 @@
     <Compile Include="DTOs\MoveDto.cs" />
     <Compile Include="DTOs\MovementDto.cs" />
     <Compile Include="DTOs\UserDto.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201604010102430_initial design.cs" />
     <Compile Include="Migrations\201604010102430_initial design.Designer.cs">
       <DependentUpon>201604010102430_initial design.cs</DependentUpon>
@@ -257,6 +261,7 @@
   <ItemGroup>
     <Content Include="App_Data\XmlDocument.xml" />
     <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\Api.KuroganeHammer.com.pubxml" />
