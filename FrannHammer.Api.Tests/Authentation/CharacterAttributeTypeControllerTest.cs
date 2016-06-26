@@ -5,7 +5,7 @@ using FrannHammer.Api.Controllers;
 using FrannHammer.Core.Models;
 using NUnit.Framework;
 
-namespace FrannHammer.Api.Tests.Controllers.CharacterAttributeTypes
+namespace FrannHammer.Api.Tests.Authentation
 {
     [TestFixture]
     public class CharacterAttributeTypeControllerTest : EffortBaseTest
