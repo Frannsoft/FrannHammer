@@ -1,43 +1,57 @@
-﻿using System.Data.Common;
+﻿using System;
+using System.Data.Common;
 using System.Data.Entity;
-using System.Security.Claims;
-using System.Threading.Tasks;
+using System.Data.Entity.Infrastructure;
 using FrannHammer.Core.Models;
-using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace FrannHammer.Api.Models
 {
-    // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
-    public class ApplicationUser : IdentityUser
+    public interface IApplicationDbContext : IDisposable
     {
-        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
-        {
-            // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
-            var userIdentity = await manager.CreateIdentityAsync(this, authenticationType);
-            // Add custom user claims here
-            return userIdentity;
-        }
+        IDbSet<Character> Characters { get; set; }
+        IDbSet<CharacterAttribute> CharacterAttributes { get; set; }
+        IDbSet<Move> Moves { get; set; }
+        IDbSet<Movement> Movements { get; set; }
+        IDbSet<SmashAttributeType> SmashAttributeTypes { get; set; }
+        IDbSet<Notation> Notations { get; set; }
+        IDbSet<CharacterAttributeType> CharacterAttributeTypes { get; set; }
+        IDbSet<Hitbox> Hitbox { get; set; }
+        IDbSet<BaseDamage> BaseDamage { get; set; }
+        IDbSet<Angle> Angle { get; set; }
+        IDbSet<BaseKnockbackSetKnockback> BaseKnockbackSetKnockback { get; set; }
+        IDbSet<KnockbackGrowth> KnockbackGrowth { get; set; }
+        IDbSet<LandingLag> LandingLag { get; set; }
+        IDbSet<Autocancel> Autocancel { get; set; }
+        IDbSet<ApplicationUser> Users { get; set; }
+        IDbSet<IdentityRole> Roles { get; set; }
+        bool RequireUniqueEmail { get; set; }
+
+        DbEntityEntry Entry(object entity);
+        int SaveChanges();
+        void Dispose();
     }
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplicationDbContext
     {
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
-        {
-        }
+        { }
 
-        public ApplicationDbContext(DbConnection connection)
-            : base(connection, true)
+        public ApplicationDbContext(DbConnection existingConnection)
+            : base(existingConnection, true)
         { }
 
         protected ApplicationDbContext(string connectionString)
             : base(connectionString)
         { }
-        
-        public static ApplicationDbContext Create()
+
+        public static ApplicationDbContext Create(DbConnection connect = null)
         {
-            return new ApplicationDbContext();
+            var context = connect == null ? new ApplicationDbContext() :
+             new ApplicationDbContext(connect);
+
+            return context;
         }
 
         public virtual IDbSet<Character> Characters { get; set; }
@@ -45,7 +59,7 @@ namespace FrannHammer.Api.Models
         public virtual IDbSet<Move> Moves { get; set; }
         public virtual IDbSet<Movement> Movements { get; set; }
         public virtual IDbSet<SmashAttributeType> SmashAttributeTypes { get; set; }
-        public virtual IDbSet<Notation> Notations { get; set; } 
+        public virtual IDbSet<Notation> Notations { get; set; }
         public virtual IDbSet<CharacterAttributeType> CharacterAttributeTypes { get; set; }
         public virtual IDbSet<Hitbox> Hitbox { get; set; }
         public virtual IDbSet<BaseDamage> BaseDamage { get; set; }

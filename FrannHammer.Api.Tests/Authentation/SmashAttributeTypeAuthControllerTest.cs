@@ -2,27 +2,15 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace FrannHammer.Api.Tests.Controllers.SmashAttributeTypes
+namespace FrannHammer.Api.Tests.Authentation
 {
     [TestFixture]
-    public class SmashAttributeTypeAnonymousControllerTest : BaseControllerTest
+    public class SmashAttributeTypeAuthControllerTest : BaseAuthenticationTest
     {
         private const string BaseUri = "/api/smashattributetypes";
 
-        //[Test]
-        //[TestCase(BaseUri)]
-        //[TestCase(BaseUri + "/2")]
-        //[TestCase(BaseUri + "/10/characterattributes")]
-        //public async Task ShouldGetUnauthorizedWithoutLogin_GET(string uri)
-        //{
-        //    var response = await GetAsync(uri);
-
-        //    Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
-        //}
-
         [Test]
         [TestCase(BaseUri)]
-        [Ignore("Still working to setup Owin self hosting")]
         public async Task ShouldGetUnauthorizedWithoutLogin_POST(string uri)
         {
             var smashAttributeType = TestObjects.SmashAttributeType();
@@ -33,7 +21,6 @@ namespace FrannHammer.Api.Tests.Controllers.SmashAttributeTypes
 
         [Test]
         [TestCase(BaseUri + "/4")]
-        [Ignore("Still working to setup Owin self hosting")]
         public async Task ShouldGetUnauthorizedWithoutLogin_PUT(string uri)
         {
             var smashAttributeType = TestObjects.SmashAttributeType();
@@ -44,7 +31,6 @@ namespace FrannHammer.Api.Tests.Controllers.SmashAttributeTypes
 
         [Test]
         [TestCase(BaseUri + "/1")]
-        [Ignore("Still working to setup Owin self hosting")]
         public async Task ShouldGetUnauthorizedWithoutLogin_DELETE(string uri)
         {
             var response = await DeleteAsync(uri);

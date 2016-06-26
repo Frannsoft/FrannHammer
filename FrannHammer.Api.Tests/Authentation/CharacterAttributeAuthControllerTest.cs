@@ -2,26 +2,15 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace FrannHammer.Api.Tests.Controllers.CharacterAttributes
+namespace FrannHammer.Api.Tests.Authentation
 {
     [TestFixture]
-    public class CharacterAttributeAnonymousControllerTest : BaseControllerTest
+    public class CharacterAttributeAuthControllerTest : BaseAuthenticationTest
     {
         private const string BaseUri = "/api/characterattributes";
 
-        //[Test]
-        //[TestCase(BaseUri)]
-        //[TestCase(BaseUri + "/2")]
-        //public async Task ShouldGetUnauthorizedWithoutLogin_GET(string uri)
-        //{
-        //    var response = await GetAsync(uri);
-
-        //    Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
-        //}
-
         [Test]
         [TestCase(BaseUri)]
-        [Ignore("Still working to setup Owin self hosting")]
         public async Task ShouldGetUnauthorizedWithoutLogin_POST(string uri)
         {
             var characterAttribute = TestObjects.CharacterAttribute();
@@ -32,7 +21,6 @@ namespace FrannHammer.Api.Tests.Controllers.CharacterAttributes
 
         [Test]
         [TestCase(BaseUri + "/4")]
-        [Ignore("Still working to setup Owin self hosting")]
         public async Task ShouldGetUnauthorizedWithoutLogin_PUT(string uri)
         {
             var characterAttribute = TestObjects.CharacterAttribute();
@@ -43,7 +31,6 @@ namespace FrannHammer.Api.Tests.Controllers.CharacterAttributes
 
         [Test]
         [TestCase(BaseUri + "/1")]
-        [Ignore("Still working to setup Owin self hosting")]
         public async Task ShouldGetUnauthorizedWithoutLogin_DELETE(string uri)
         {
             var response = await DeleteAsync(uri);

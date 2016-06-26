@@ -12,21 +12,14 @@ using FrannHammer.Core.Models;
 namespace FrannHammer.Api.Controllers
 {
     /// <summary>
-    /// Handles the more broad types that can be assigned to other metadata in the DB.
+    /// Handles the more broad types that can be assigned to other metadata in the Db.
     /// </summary>
     [RoutePrefix("api")]
-    public class SmashAttributeTypesController : ApiController
+    public class SmashAttributeTypesController : BaseApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-
-        public SmashAttributeTypesController()
-        { }
-
         public SmashAttributeTypesController(ApplicationDbContext context)
-        {
-            db = context;
-        }
-
+            : base(context)
+        { }
 
         /// <summary>
         /// Get all of the stored <see cref="SmashAttributeType"/>s.
@@ -36,7 +29,7 @@ namespace FrannHammer.Api.Controllers
         [Route("smashattributetypes")]
         public IQueryable<SmashAttributeType> GetSmashAttributeTypes()
         {
-            return db.SmashAttributeTypes;
+            return Db.SmashAttributeTypes;
         }
 
         /// <summary>
@@ -48,7 +41,7 @@ namespace FrannHammer.Api.Controllers
         [Route("smashattributetypes/{id}")]
         public IHttpActionResult GetSmashAttributeType(int id)
         {
-            SmashAttributeType smashAttributeType = db.SmashAttributeTypes.Find(id);
+            SmashAttributeType smashAttributeType = Db.SmashAttributeTypes.Find(id);
             if (smashAttributeType == null)
             {
                 return NotFound();
@@ -68,7 +61,7 @@ namespace FrannHammer.Api.Controllers
         [Route("smashattributetypes/{id}/characterattributes")]
         public IHttpActionResult GetAllCharacterAttributeOfSmashAttributeType(int id)
         {
-            SmashAttributeType smashAttributeType = db.SmashAttributeTypes.Find(id);
+            SmashAttributeType smashAttributeType = Db.SmashAttributeTypes.Find(id);
             if (smashAttributeType == null)
             {
                 return NotFound();
@@ -77,7 +70,7 @@ namespace FrannHammer.Api.Controllers
             //create a 'row' from each pulled back characterattribute since a characterattribute only represents
             //a single cell of a row in the existing KH site.
             var characterAttributeRows =
-                db.CharacterAttributes.Where(c => c.SmashAttributeType.Id == smashAttributeType.Id)
+                Db.CharacterAttributes.Where(c => c.SmashAttributeType.Id == smashAttributeType.Id)
                     .ToList() //execute query and bring into memory so I can continue to query against the data below
                     .GroupBy(a => a.OwnerId)
                     .Select(g => new CharacterAttributeRowDto(g.First().Rank, smashAttributeType.Id,
@@ -99,7 +92,7 @@ namespace FrannHammer.Api.Controllers
                                 Value = at.Value
                             }
                         }).ToList(),
-                        db.Characters.Find(g.Key).Name, db.Characters.Find(g.Key).ThumbnailUrl))
+                        Db.Characters.Find(g.Key).Name, Db.Characters.Find(g.Key).ThumbnailUrl))
                         .ToList();
 
             return Ok(characterAttributeRows);
@@ -127,11 +120,11 @@ namespace FrannHammer.Api.Controllers
             }
 
             smashAttributeType.LastModified = DateTime.Now;
-            db.Entry(smashAttributeType).State = EntityState.Modified;
+            Db.Entry(smashAttributeType).State = EntityState.Modified;
 
             try
             {
-                db.SaveChanges();
+                Db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -164,8 +157,8 @@ namespace FrannHammer.Api.Controllers
             }
 
             smashAttributeType.LastModified = DateTime.Now;
-            db.SmashAttributeTypes.Add(smashAttributeType);
-            db.SaveChanges();
+            Db.SmashAttributeTypes.Add(smashAttributeType);
+            Db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { controller = "SmashAttributeTypes", id = smashAttributeType.Id }, smashAttributeType);
         }
@@ -180,14 +173,14 @@ namespace FrannHammer.Api.Controllers
         [Route("smashattributetypes/{id}")]
         public IHttpActionResult DeleteSmashAttributeType(int id)
         {
-            SmashAttributeType smashAttributeType = db.SmashAttributeTypes.Find(id);
+            SmashAttributeType smashAttributeType = Db.SmashAttributeTypes.Find(id);
             if (smashAttributeType == null)
             {
                 return NotFound();
             }
 
-            db.SmashAttributeTypes.Remove(smashAttributeType);
-            db.SaveChanges();
+            Db.SmashAttributeTypes.Remove(smashAttributeType);
+            Db.SaveChanges();
 
             return Ok(smashAttributeType);
         }
@@ -196,14 +189,14 @@ namespace FrannHammer.Api.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                Db.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool SmashAttributeTypeExists(int id)
         {
-            return db.SmashAttributeTypes.Count(e => e.Id == id) > 0;
+            return Db.SmashAttributeTypes.Count(e => e.Id == id) > 0;
         }
     }
 }

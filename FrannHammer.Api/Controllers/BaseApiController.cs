@@ -36,12 +36,10 @@ namespace FrannHammer.Api.Controllers
         private ModelFactory _modelFactory;
         protected ModelFactory TheModelFactory => _modelFactory ?? (_modelFactory = new ModelFactory(Request, UserManager));
 
-        protected readonly ApplicationDbContext Db = new ApplicationDbContext();
+        protected readonly IApplicationDbContext Db = new ApplicationDbContext();
 
-        protected BaseApiController()
-        { }
-
-        protected BaseApiController(ApplicationDbContext context)
+       
+        protected BaseApiController(IApplicationDbContext context)
         {
             Db = context;    
         }
