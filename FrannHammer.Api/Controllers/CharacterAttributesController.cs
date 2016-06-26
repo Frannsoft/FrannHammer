@@ -18,12 +18,6 @@ namespace FrannHammer.Api.Controllers
     {
 
         /// <summary>
-        /// Create a new <see cref="CharacterAttribute"/> controller to interact with the server.
-        /// </summary>
-        public CharacterAttributesController()
-        { }
-
-        /// <summary>
         /// Create a new <see cref="CharacterAttribute"/> controller to interact with the server using a specific 
         /// <see cref="ApplicationDbContext"/>.
         /// </summary>

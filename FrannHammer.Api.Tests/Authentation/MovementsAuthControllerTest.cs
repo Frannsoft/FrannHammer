@@ -2,10 +2,10 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace FrannHammer.Api.Tests.Controllers.Movements
+namespace FrannHammer.Api.Tests.Authentation
 {
     [TestFixture]
-    public class MovementsAnonymousControllerTest : BaseControllerTest
+    public class MovementsAuthControllerTest : BaseAuthenticationTest
     {
         private const string BaseUri = "/api/movements";
 
@@ -21,7 +21,6 @@ namespace FrannHammer.Api.Tests.Controllers.Movements
 
         [Test]
         [TestCase(BaseUri)]
-        [Ignore("Still working to setup Owin self hosting")]
         public async Task ShouldGetUnauthorizedWithoutLogin_POST(string uri)
         {
             var movement = TestObjects.Movement();
@@ -32,7 +31,6 @@ namespace FrannHammer.Api.Tests.Controllers.Movements
 
         [Test]
         [TestCase(BaseUri + "/4")]
-        [Ignore("Still working to setup Owin self hosting")]
         public async Task ShouldGetUnauthorizedWithoutLogin_PUT(string uri)
         {
             var movement = TestObjects.Movement();
@@ -43,7 +41,6 @@ namespace FrannHammer.Api.Tests.Controllers.Movements
 
         [Test]
         [TestCase(BaseUri + "/1")]
-        [Ignore("Still working to setup Owin self hosting")]
         public async Task ShouldGetUnauthorizedWithoutLogin_DELETE(string uri)
         {
             var response = await DeleteAsync(uri);

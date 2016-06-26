@@ -16,6 +16,10 @@ namespace FrannHammer.Api.Controllers
     public class RolesController : BaseApiController
     {
 
+        public RolesController(IApplicationDbContext context)
+            : base(context)
+        { }
+
         [Route("{id:guid}", Name = "GetRoleById")]
         public async Task<IHttpActionResult> GetRole(string id)
         {

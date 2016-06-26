@@ -13,16 +13,11 @@ namespace FrannHammer.Api.Controllers
 {
     
     [RoutePrefix("api")]
-    public class MovementsController : ApiController
+    public class MovementsController : BaseApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-
-        public MovementsController()
-        { }
-
         public MovementsController(ApplicationDbContext context)
+            : base(context)
         {
-            db = context;
         }
 
         /// <summary>
@@ -32,9 +27,9 @@ namespace FrannHammer.Api.Controllers
         [Route("movements", Name = "GetAllMovements")]
         public IQueryable<MovementDto> GetMovements()
         {
-            return (from movement in db.Movements.ToList()
+            return (from movement in Db.Movements.ToList()
                     select new MovementDto(movement,
-                    db.Characters.First(c => c.Id == movement.OwnerId))
+                    Db.Characters.First(c => c.Id == movement.OwnerId))
                 ).AsQueryable();
         }
 
@@ -47,9 +42,9 @@ namespace FrannHammer.Api.Controllers
         [Route("movements/byname", Name = "GetMovementsByName")]
         public IQueryable<MovementDto> GetMovementsByName([FromUri] string name)
         {
-            return (from movement in db.Movements.Where(m => m.Name.Equals(name)).ToList()
+            return (from movement in Db.Movements.Where(m => m.Name.Equals(name)).ToList()
                     select new MovementDto(movement,
-                    db.Characters.First(c => c.Id == movement.OwnerId))
+                    Db.Characters.First(c => c.Id == movement.OwnerId))
                 ).AsQueryable();
         }
 
@@ -62,14 +57,14 @@ namespace FrannHammer.Api.Controllers
         [Route("movements/{id}")]
         public IHttpActionResult GetMovement(int id)
         {
-            Movement movement = db.Movements.Find(id);
+            Movement movement = Db.Movements.Find(id);
             if (movement == null)
             {
                 return NotFound();
             }
 
             var dto = new MovementDto(movement,
-                db.Characters.First(c => c.Id == movement.OwnerId));
+                Db.Characters.First(c => c.Id == movement.OwnerId));
             return Ok(dto);
         }
 
@@ -95,11 +90,11 @@ namespace FrannHammer.Api.Controllers
             }
 
             movement.LastModified = DateTime.Now;
-            db.Entry(movement).State = EntityState.Modified;
+            Db.Entry(movement).State = EntityState.Modified;
 
             try
             {
-                db.SaveChanges();
+                Db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -132,8 +127,8 @@ namespace FrannHammer.Api.Controllers
             }
 
             movement.LastModified = DateTime.Now;
-            db.Movements.Add(movement);
-            db.SaveChanges();
+            Db.Movements.Add(movement);
+            Db.SaveChanges();
 
             //var dto = new MovementDto(movement,
             //    db.Characters.First(c => c.Id == movement.OwnerId));
@@ -150,14 +145,14 @@ namespace FrannHammer.Api.Controllers
         [Route("movements/{id}")]
         public IHttpActionResult DeleteMovement(int id)
         {
-            Movement movement = db.Movements.Find(id);
+            Movement movement = Db.Movements.Find(id);
             if (movement == null)
             {
                 return NotFound();
             }
 
-            db.Movements.Remove(movement);
-            db.SaveChanges();
+            Db.Movements.Remove(movement);
+            Db.SaveChanges();
 
             return Ok(movement);
         }
@@ -166,14 +161,14 @@ namespace FrannHammer.Api.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                Db.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool MovementExists(int id)
         {
-            return db.Movements.Count(e => e.Id == id) > 0;
+            return Db.Movements.Count(e => e.Id == id) > 0;
         }
     }
 }

@@ -12,18 +12,11 @@ using FrannHammer.Core.Models;
 namespace FrannHammer.Api.Controllers
 {
     [RoutePrefix("api")]
-    public class MovesController : ApiController
+    public class MovesController : BaseApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-
-
-        public MovesController()
-        { }
-
         public MovesController(ApplicationDbContext context)
-        {
-            db = context;
-        }
+            : base(context)
+        { }
 
         /// <summary>
         /// Get all moves.  Not sure if this is sticking around.
@@ -33,9 +26,9 @@ namespace FrannHammer.Api.Controllers
         [Route("moves")]
         public IQueryable<MoveDto> GetMoves()
         {
-            return (from move in db.Moves.ToList()
+            return (from move in Db.Moves.ToList()
                     select new MoveDto(move,
-                        db.Characters.Find(move.OwnerId))// .First(c => c.Id == move.OwnerId))
+                        Db.Characters.Find(move.OwnerId))// .First(c => c.Id == move.OwnerId))
                 ).AsQueryable();
         }
 
@@ -48,9 +41,9 @@ namespace FrannHammer.Api.Controllers
         [Route("moves/byname")]
         public IQueryable<MoveDto> GetMovesByName([FromUri] string name)
         {
-            return (from move in db.Moves.Where(m => m.Name.Equals(name)).ToList()
+            return (from move in Db.Moves.Where(m => m.Name.Equals(name)).ToList()
                     select new MoveDto(move,
-                        db.Characters.First(c => c.Id == move.OwnerId))
+                        Db.Characters.First(c => c.Id == move.OwnerId))
                 ).AsQueryable();
         }
 
@@ -63,14 +56,14 @@ namespace FrannHammer.Api.Controllers
         [Route("moves/{id}")]
         public IHttpActionResult GetMove(int id)
         {
-            Move move = db.Moves.Find(id);
+            Move move = Db.Moves.Find(id);
             if (move == null)
             {
                 return NotFound();
             }
 
             var dto = new MoveDto(move,
-                db.Characters.First(c => c.Id == move.OwnerId));
+                Db.Characters.First(c => c.Id == move.OwnerId));
             return Ok(dto);
         }
 
@@ -96,11 +89,11 @@ namespace FrannHammer.Api.Controllers
             }
 
             move.LastModified = DateTime.Now;
-            db.Entry(move).State = EntityState.Modified;
+            Db.Entry(move).State = EntityState.Modified;
 
             try
             {
-                db.SaveChanges();
+                Db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -133,8 +126,8 @@ namespace FrannHammer.Api.Controllers
             }
 
             move.LastModified = DateTime.Now;
-            db.Moves.Add(move);
-            db.SaveChanges();
+            Db.Moves.Add(move);
+            Db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { controller = "Moves", id = move.Id }, move);
         }
@@ -149,14 +142,14 @@ namespace FrannHammer.Api.Controllers
         [Route("moves/{id}")]
         public IHttpActionResult DeleteMove(int id)
         {
-            Move move = db.Moves.Find(id);
+            Move move = Db.Moves.Find(id);
             if (move == null)
             {
                 return NotFound();
             }
 
-            db.Moves.Remove(move);
-            db.SaveChanges();
+            Db.Moves.Remove(move);
+            Db.SaveChanges();
 
             return Ok(move);
         }
@@ -165,14 +158,14 @@ namespace FrannHammer.Api.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                Db.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool MoveExists(int id)
         {
-            return db.Moves.Count(e => e.Id == id) > 0;
+            return Db.Moves.Count(e => e.Id == id) > 0;
         }
     }
 }
