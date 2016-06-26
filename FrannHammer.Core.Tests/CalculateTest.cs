@@ -193,6 +193,7 @@ namespace FrannHammer.Core.Tests
         }
 
         [Test]
+        [Ignore("Bug in official calc app where it doesn't floor when proj shield adv mod.")]
         public void ShouldGetExpectedShieldAdvantage_Normal_Projectile_NotHitlag()
         {
             var data = new ShieldAdvantageProblemData

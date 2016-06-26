@@ -4,6 +4,11 @@ using System.Linq;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Web.Http;
+using System.Web.Mvc;
+using Autofac;
+using Autofac.Features.ResolveAnything;
+using Autofac.Integration.WebApi;
+using FrannHammer.Api.Models;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.Application;
@@ -24,7 +29,6 @@ namespace FrannHammer.Api
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
-
             // Web API routes
             config.MapHttpAttributeRoutes();
 
@@ -33,6 +37,21 @@ namespace FrannHammer.Api
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            var builder = new ContainerBuilder();
+
+            builder.RegisterType<ApplicationDbContext>()
+                .As<IApplicationDbContext>();
+
+            builder.RegisterApiControllers();
+
+            builder.RegisterSource(new AnyConcreteTypeNotAlreadyRegisteredSource());
+            builder.RegisterType<IApplicationDbContext>()
+                .AsImplementedInterfaces()
+                .InstancePerLifetimeScope();
+
+            Startup.Container = builder.Build();
+            config.DependencyResolver = new AutofacWebApiDependencyResolver(Startup.Container);
 
 #if !DEBUG
             int throttleRequestsPerSecond = GetConfigValue<int>(KeyThrottleRequestsPerSecond);
@@ -68,7 +87,6 @@ namespace FrannHammer.Api
         {
             T retVal = default(T);
             var configValue = ConfigurationManager.AppSettings[key];
-
             if (string.IsNullOrEmpty(configValue))
             { throw new Exception($"Unable to find key of {key}"); }
 

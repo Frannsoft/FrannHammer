@@ -1,4 +1,7 @@
 # FrannHammer
+
+Develop: [![Build status](https://ci.appveyor.com/api/projects/status/ruxmxhiutxe9q8v9/branch/develop?svg=true)](https://ci.appveyor.com/project/Frannsoft/frannhammer-0uqqq/branch/develop)
+
 Full stack web site, rest api and database layer for Sm4sh frame data as told by KuroganeHammer.
 
 This is being worked on with KuroganeHammer's permission.  All credit for the actual data that is stored and retrieved goes to him and 

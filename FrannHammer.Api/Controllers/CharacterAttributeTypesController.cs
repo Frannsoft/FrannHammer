@@ -17,12 +17,6 @@ namespace FrannHammer.Api.Controllers
     public class CharacterAttributeTypesController : BaseApiController
     {
         /// <summary>
-        /// Create a new <see cref="CharacterAttributeTypesController"/>.
-        /// </summary>
-        public CharacterAttributeTypesController()
-        { }
-
-        /// <summary>
         /// Create a new <see cref="CharacterAttributeTypesController"/> using
         /// a specific <see cref="ApplicationDbContext"/>.
         /// </summary>
