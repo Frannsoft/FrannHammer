@@ -1,14 +1,17 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
-using FrannHammer.Api.Tests.Controllers;
 using FrannHammer.Core.Models;
 using NUnit.Framework;
 
 namespace FrannHammer.Api.Tests.Authentation
 {
+    [TestFixture]
     public class AccountsAuthenticationControllerTest : BaseAuthenticationTest
     {
         private const string UriBase = "api/account/";
+
+        [Test]
+        public async Task CanLogin() => await Login();
 
         [Test]
         [TestCase(UriBase + "users")]

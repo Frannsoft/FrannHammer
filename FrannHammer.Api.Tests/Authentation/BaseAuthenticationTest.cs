@@ -54,7 +54,7 @@ namespace FrannHammer.Api.Tests.Authentation
         }
 
         [TestFixtureTearDown]
-        public void TearDown()
+        public void TestFixtureTearDown()
         {
             _server?.Dispose();
         }
@@ -124,7 +124,7 @@ namespace FrannHammer.Api.Tests.Authentation
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
 
-        protected void Login()
+        protected async Task Login()
         {
             var tokenDetails = new FormUrlEncodedContent(new[]
             {
@@ -133,11 +133,11 @@ namespace FrannHammer.Api.Tests.Authentation
                 new KeyValuePair<string, string>("password", Password)
             });
 
-            var tokenResult = _server.HttpClient.PostAsync("api/token", tokenDetails).Result;
+            var tokenResult = await _server.HttpClient.PostAsync("api/token", tokenDetails);
 
             Assert.That(tokenResult.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-            var body = JObject.Parse(tokenResult.Content.ReadAsStringAsync().Result);
+            var body = JObject.Parse(await tokenResult.Content.ReadAsStringAsync());
 
             Token = (string)body["access_token"];
 
