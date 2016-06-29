@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using FrannHammer.Core.Models;
+using FrannHammer.Models;
 
 namespace FrannHammer.Core.Requests
 {

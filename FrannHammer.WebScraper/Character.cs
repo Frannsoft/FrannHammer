@@ -4,8 +4,8 @@ using System.Drawing;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
-using FrannHammer.Core;
 using Newtonsoft.Json;
+using Stat = FrannHammer.WebScraper.Stats.Stat;
 
 namespace FrannHammer.WebScraper
 {

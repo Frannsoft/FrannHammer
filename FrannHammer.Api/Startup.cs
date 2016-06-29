@@ -1,8 +1,4 @@
-﻿using Autofac;
-using Autofac.Features.ResolveAnything;
-using Autofac.Integration.WebApi;
-using FrannHammer.Api;
-using FrannHammer.Api.Models;
+﻿using FrannHammer.Api;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Owin;

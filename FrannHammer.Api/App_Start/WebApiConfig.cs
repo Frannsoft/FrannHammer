@@ -4,15 +4,10 @@ using System.Linq;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Web.Http;
-using System.Web.Mvc;
-using Autofac;
-using Autofac.Features.ResolveAnything;
 using Autofac.Integration.WebApi;
-using FrannHammer.Api.Models;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.Application;
-using WebApiThrottle;
 
 namespace FrannHammer.Api
 {

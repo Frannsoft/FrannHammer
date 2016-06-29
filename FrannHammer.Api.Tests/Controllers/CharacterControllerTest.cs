@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Http.Results;
-using FrannHammer.Core.Models;
+using FrannHammer.Models;
 using NUnit.Framework;
 
 namespace FrannHammer.Api.Tests.Controllers.Characters

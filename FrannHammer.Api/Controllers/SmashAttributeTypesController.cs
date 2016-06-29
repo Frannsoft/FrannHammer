@@ -6,8 +6,8 @@ using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
 using FrannHammer.Api.Models;
-using FrannHammer.Core.DTOs;
-using FrannHammer.Core.Models;
+using FrannHammer.Models;
+using FrannHammer.Models.DTOs;
 
 namespace FrannHammer.Api.Controllers
 {

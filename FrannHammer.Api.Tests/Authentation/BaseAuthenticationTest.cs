@@ -12,6 +12,7 @@ using Autofac.Integration.WebApi;
 using Effort.DataLoaders;
 using FrannHammer.Api.Models;
 using FrannHammer.Api.Tests.Controllers;
+using FrannHammer.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Cors;

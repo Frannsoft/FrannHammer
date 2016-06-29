@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Web.Http.Routing;
+using FrannHammer.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace FrannHammer.Api.Models

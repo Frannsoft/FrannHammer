@@ -6,9 +6,9 @@ using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using FrannHammer.AccountRegistrationTool.Models;
 using FrannHammer.Core;
-using FrannHammer.Core.Models;
+using FrannHammer.Models;
+using FrannHammer.Models.DTOs;
 using Newtonsoft.Json;
-using FrannHammer.Api.DTOs;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace FrannHammer.AccountRegistrationTool

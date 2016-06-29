@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Web.Http.Results;
 using FrannHammer.Api.Controllers;
-using FrannHammer.Core.Models;
+using FrannHammer.Models;
 using NUnit.Framework;
 
 namespace FrannHammer.Api.Tests.Authentation

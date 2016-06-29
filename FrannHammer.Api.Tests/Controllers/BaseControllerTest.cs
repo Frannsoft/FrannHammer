@@ -1,15 +1,8 @@
 ﻿using System.Data.Common;
-using System.Net.Http;
-using System.Net.Http.Formatting;
-using System.Threading.Tasks;
-using System.Web.Http;
 using Effort;
 using FrannHammer.Api.Controllers;
 using FrannHammer.Api.Models;
-using Microsoft.Owin.Cors;
-using Microsoft.Owin.Testing;
 using NUnit.Framework;
-using Owin;
 
 namespace FrannHammer.Api.Tests.Controllers
 {

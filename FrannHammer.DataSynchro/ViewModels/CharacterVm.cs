@@ -2,10 +2,10 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using FrannHammer.Core;
-using FrannHammer.Core.DTOs;
-using FrannHammer.Core.Models;
 using FrannHammer.Core.Requests;
 using FrannHammer.DataSynchro.Models;
+using FrannHammer.Models;
+using FrannHammer.Models.DTOs;
 
 namespace FrannHammer.DataSynchro.ViewModels
 {

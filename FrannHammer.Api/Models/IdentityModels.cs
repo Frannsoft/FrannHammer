@@ -2,7 +2,7 @@
 using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using FrannHammer.Core.Models;
+using FrannHammer.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace FrannHammer.Api.Models

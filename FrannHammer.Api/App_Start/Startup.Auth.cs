@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data.Common;
 using Autofac;
 using FrannHammer.Api.Models;
 using FrannHammer.Api.Providers;

@@ -1,4 +1,5 @@
 ﻿using System;
+using FrannHammer.Models;
 
 namespace FrannHammer.Core.Calculations
 {

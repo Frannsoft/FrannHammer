@@ -178,10 +178,6 @@
     <Compile Include="Controllers\NotationsController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SmashAttributeTypesController.cs" />
-    <Compile Include="DTOs\CalculatorDtos.cs" />
-    <Compile Include="DTOs\MoveDto.cs" />
-    <Compile Include="DTOs\MovementDto.cs" />
-    <Compile Include="DTOs\UserDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -250,7 +246,6 @@
       <DependentUpon>201604300246188_updating meta models.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ModelFactory.cs" />
     <Compile Include="Models\RolesConstants.cs" />
@@ -350,6 +345,10 @@
     <ProjectReference Include="..\FrannHammer.Core\FrannHammer.Core.csproj">
       <Project>{2904d4e7-8989-46bd-ac0a-b4356f190a15}</Project>
       <Name>FrannHammer.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.Models\FrannHammer.Models.csproj">
+      <Project>{e4f0c134-6288-438f-b5d0-c53638e866e3}</Project>
+      <Name>FrannHammer.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

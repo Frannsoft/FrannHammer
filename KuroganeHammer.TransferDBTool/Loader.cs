@@ -4,9 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using FrannHammer.Core;
-using FrannHammer.Core.Models;
+using FrannHammer.Models;
 using FrannHammer.WebScraper;
+using FrannHammer.WebScraper.Stats;
 using NUnit.Framework;
 using Character = FrannHammer.WebScraper.Character;
 

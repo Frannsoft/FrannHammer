@@ -49,3 +49,5 @@ KuroganeHammer.TransferDBTool/obj/Debug/KurograneHammer.TransferDBTool.csproj.Fi
 TestResults/FrannHammer.Master.TE.Tests.mdf
 TestResults/FrannHammer.Master.TE.Tests_log.ldf
 FrannHammer.Api/dist/
+*/**/bin
+*/**/obj

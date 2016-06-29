@@ -1,5 +1,5 @@
 ﻿using System;
-using FrannHammer.Core.Models;
+using FrannHammer.Models;
 
 namespace FrannHammer.Api.Tests
 {
