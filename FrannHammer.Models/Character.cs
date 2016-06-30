@@ -13,7 +13,7 @@ namespace FrannHammer.Models
         public string Description { get; set; }
         public string ColorTheme { get; set; }
         public string Name { get; set; }
-        public string DisplayName { get; set; }
+        //public string DisplayName { get; set; }
         public int Id { get; set; }
         public DateTime LastModified { get; set; }
 
@@ -24,7 +24,7 @@ namespace FrannHammer.Models
                 string.Equals(ThumbnailUrl, other.ThumbnailUrl) && 
                 string.Equals(Description, other.Description) && 
                 string.Equals(ColorTheme, other.ColorTheme) && 
-                string.Equals(DisplayName, other.DisplayName) &&
+                //string.Equals(DisplayName, other.DisplayName) &&
                 string.Equals(Name, other.Name) && 
                 Id == other.Id && 
                 LastModified.Equals(other.LastModified);
@@ -66,7 +66,7 @@ namespace FrannHammer.Models
                 hashCode = (hashCode * 397) ^ (Description?.GetHashCode() ?? 0);
                 hashCode = (hashCode * 397) ^ (ColorTheme?.GetHashCode() ?? 0);
                 hashCode = (hashCode * 397) ^ (Name?.GetHashCode() ?? 0);
-                hashCode = (hashCode*397) ^ (DisplayName?.GetHashCode() ?? 0);
+                //hashCode = (hashCode*397) ^ (DisplayName?.GetHashCode() ?? 0);
                 hashCode = (hashCode * 397) ^ Id;
                 hashCode = (hashCode * 397) ^ LastModified.GetHashCode();
                 return hashCode;
