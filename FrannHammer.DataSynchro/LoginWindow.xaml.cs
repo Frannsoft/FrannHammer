@@ -32,7 +32,7 @@ namespace FrannHammer.DataSynchro
             LoggingInStackPanel.Visibility = Visibility.Visible;
             CredentialsDockPanel.Visibility = Visibility.Hidden;
             LoginCancelStackPanel.Visibility = Visibility.Hidden;
-        }
+        } 
 
         private async Task Login()
         {
