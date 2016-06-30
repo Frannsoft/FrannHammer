@@ -83,6 +83,7 @@
     <Compile Include="DTOs\CalculatorDtos.cs" />
     <Compile Include="DTOs\CharacterAttributeDto.cs" />
     <Compile Include="DTOs\CharacterAttributeRowDto.cs" />
+    <Compile Include="DTOs\CharacterDto.cs" />
     <Compile Include="DTOs\MoveDto.cs" />
     <Compile Include="DTOs\MovementDto.cs" />
     <Compile Include="DTOs\SmashAttributeTypeDto.cs" />

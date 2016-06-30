@@ -5,6 +5,8 @@ using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
 using FrannHammer.Models.DTOs;
@@ -27,13 +29,19 @@ namespace FrannHammer.Api.Controllers
         { }
 
         /// <summary>
-        /// Get all of the <see cref="Character"/> details.
+        /// Get all of the <see cref="CharacterDto"/> details.
         /// </summary>
         /// <returns></returns>
         [Route("characters")]
-        public IQueryable<Character> GetCharacters()
+        public IQueryable<CharacterDto> GetCharacters()
         {
-            return Db.Characters;
+            return Db.Characters.ProjectTo<CharacterDto>();
+        }
+
+        [Route("test")]
+        public IQueryable<ADto> GetADto()
+        {
+            return new[] {new A {Name = "test"}}.AsQueryable().ProjectTo<ADto>();
         }
 
         /// <summary>
@@ -41,7 +49,7 @@ namespace FrannHammer.Api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [ResponseType(typeof(Character))]
+        [ResponseType(typeof(CharacterDto))]
         [Route("characters/{id}")]
         public IHttpActionResult GetCharacter(int id)
         {
@@ -52,7 +60,8 @@ namespace FrannHammer.Api.Controllers
                 return NotFound();
             }
 
-            return Ok(character);
+            var dto = Mapper.Map<Character, CharacterDto>(character);
+            return Ok(dto);
         }
 
         /// <summary>

@@ -35,6 +35,8 @@ namespace FrannHammer.Api.Tests.Controllers
             NotationsController = new NotationsController(DbContext);
             CalculatorController = new CalculatorController(DbContext);
             TestObjects = new TestObjects();
+
+            Startup.ConfigureAutoMapping();
         }
 
 

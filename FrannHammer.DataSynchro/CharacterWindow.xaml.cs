@@ -29,7 +29,7 @@ namespace FrannHammer.DataSynchro
             _user = user;
             _characterVm = new CharacterVm(character, user, isNewCharacter);
             DataContext = _characterVm;
-            InitEditorControl(character, user);
+            //InitEditorControl(character, user);
         }
 
         private void InitEditorControl(BaseModel model, UserModel user)

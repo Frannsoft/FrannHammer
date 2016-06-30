@@ -1,6 +1,9 @@
 ﻿using System.Web.Http;
 using System.Web.Mvc;
+using AutoMapper;
 using FrannHammer.Api;
+using FrannHammer.Models;
+using FrannHammer.Models.DTOs;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Owin;
@@ -19,6 +22,16 @@ namespace FrannHammer.Api
 
             app.UseCors(CorsOptions.AllowAll);
             ConfigureAuth(app, Container.Instance.AutoFacContainer);
+
+            ConfigureAutoMapping();
+        }
+
+        internal static void ConfigureAutoMapping()
+        {
+            Mapper.Initialize(cfg => cfg.CreateMap<Character, CharacterDto>()
+               .ConstructProjectionUsing(c => new CharacterDto(c.Name)));//("name", x => x.MapFrom(c => c.Name)));
+
+            Mapper.Configuration.AssertConfigurationIsValid();
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Http.Results;
+using AutoMapper;
 using FrannHammer.Models;
+using FrannHammer.Models.DTOs;
 using NUnit.Framework;
 
 namespace FrannHammer.Api.Tests.Controllers.Characters
@@ -21,7 +23,7 @@ namespace FrannHammer.Api.Tests.Controllers.Characters
             var character = TestObjects.Character();
             CharactersController.PostCharacter(character);
 
-            var result = CharactersController.GetCharacter(character.Id) as OkNegotiatedContentResult<Character>;
+            var result = CharactersController.GetCharacter(character.Id) as OkNegotiatedContentResult<CharacterDto>;
 
             Assert.That(result?.Content, Is.Not.Null);
         }
@@ -37,6 +39,14 @@ namespace FrannHammer.Api.Tests.Controllers.Characters
             var result = CharactersController.GetCharacterByName(expected) as OkNegotiatedContentResult<Character>;
             Assert.That(result?.Content, Is.Not.Null);
             Assert.That(result?.Content.Name, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void AutoMapperIssue()
+        {
+            var result = CharactersController.GetADto();
+
+
         }
 
         [Test]

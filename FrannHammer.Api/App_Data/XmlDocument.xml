@@ -177,7 +177,7 @@
         </member>
         <member name="M:FrannHammer.Api.Controllers.CharactersController.GetCharacters">
             <summary>
-            Get all of the <see cref="T:FrannHammer.Models.Character"/> details.
+            Get all of the <see cref="T:FrannHammer.Models.DTOs.CharacterDto"/> details.
             </summary>
             <returns></returns>
         </member>
