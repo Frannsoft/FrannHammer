@@ -38,7 +38,7 @@ namespace FrannHammer.DataSynchro
         {
 #if DEBUG
             UsernameTextBox.Text = "KuroUser";
-            PasswordPasswordBox.Password = "MasterHand7118!";
+            PasswordPasswordBox.Password = "";
 #endif
             var username = UsernameTextBox.Text;
             var password = PasswordPasswordBox.Password;

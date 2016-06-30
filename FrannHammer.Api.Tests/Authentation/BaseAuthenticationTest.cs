@@ -29,7 +29,7 @@ namespace FrannHammer.Api.Tests.Authentation
         private IContainer _container;
 
         protected virtual string Username => "GETuser";
-        protected virtual string Password => "GETpassword";
+        protected virtual string Password => "";
 
         protected string Token;
 
