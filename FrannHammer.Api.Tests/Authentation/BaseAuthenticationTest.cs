@@ -123,7 +123,7 @@ namespace FrannHammer.Api.Tests.Authentation
             jsonFormatter.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
-
+         
         protected async Task Login()
         {
             var password = ConfigurationManager.AppSettings["basicpassword"];
