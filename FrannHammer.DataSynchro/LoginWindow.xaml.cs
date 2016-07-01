@@ -36,10 +36,6 @@ namespace FrannHammer.DataSynchro
 
         private async Task Login()
         {
-#if DEBUG
-            UsernameTextBox.Text = "KuroUser";
-            PasswordPasswordBox.Password = "";
-#endif
             var username = UsernameTextBox.Text;
             var password = PasswordPasswordBox.Password;
             var baseUrl = ConfigurationManager.AppSettings["site"];
