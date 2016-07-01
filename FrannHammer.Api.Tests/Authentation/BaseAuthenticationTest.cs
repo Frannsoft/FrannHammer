@@ -126,7 +126,7 @@ namespace FrannHammer.Api.Tests.Authentation
 
         protected async Task Login()
         {
-            var password = ConfigurationManager.AppSettings["adminpassword"];
+            var password = ConfigurationManager.AppSettings["basicpassword"];
             var tokenDetails = new FormUrlEncodedContent(new[]
             {
                 new KeyValuePair<string, string>("grant_type", "password"),
