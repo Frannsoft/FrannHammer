@@ -49,5 +49,10 @@ KuroganeHammer.TransferDBTool/obj/Debug/KurograneHammer.TransferDBTool.csproj.Fi
 TestResults/FrannHammer.Master.TE.Tests.mdf
 TestResults/FrannHammer.Master.TE.Tests_log.ldf
 FrannHammer.Api/dist/
-*/**/bin
-*/**/obj
+FrannHammer.WebScraper/obj/
+KuroganeHammer.TransferDBTool/obj/
+FrannHammer.Api/Web.Debug.config
+FrannHammer.Api/Web.Release.config
+FrannHammer.Api/ConnectionStrings.config
+appsettings.config
+appsettings.config.enc

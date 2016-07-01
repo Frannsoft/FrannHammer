@@ -29,7 +29,7 @@ namespace FrannHammer.Api.Migrations
                 EmailConfirmed = true,
             };
 
-            manager.Create(getuser, "***REMOVED***");
+            manager.Create(getuser, "");
 
             if (!roleManager.Roles.Any())
             {

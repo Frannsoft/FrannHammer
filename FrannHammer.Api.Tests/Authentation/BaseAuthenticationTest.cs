@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -30,7 +31,6 @@ namespace FrannHammer.Api.Tests.Authentation
         private IContainer _container;
 
         protected virtual string Username => "GETuser";
-        protected virtual string Password => "***REMOVED***";
 
         protected string Token;
 
@@ -124,14 +124,15 @@ namespace FrannHammer.Api.Tests.Authentation
             jsonFormatter.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
-
+         
         protected async Task Login()
         {
+            var password = ConfigurationManager.AppSettings["basicpassword"];
             var tokenDetails = new FormUrlEncodedContent(new[]
             {
                 new KeyValuePair<string, string>("grant_type", "password"),
                 new KeyValuePair<string, string>("username", Username),
-                new KeyValuePair<string, string>("password", Password)
+                new KeyValuePair<string, string>("password", password)
             });
 
             var tokenResult = await _server.HttpClient.PostAsync("api/token", tokenDetails);
