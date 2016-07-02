@@ -55,6 +55,5 @@ FrannHammer.Api/Web.Debug.config
 FrannHammer.Api/Web.Release.config
 FrannHammer.Api/ConnectionStrings.config
 appsettings.config
-appsettings.config.enc
 FrannHammer.Models/bin/
 FrannHammer.Models/obj/
