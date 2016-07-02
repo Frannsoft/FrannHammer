@@ -8,6 +8,7 @@ using Autofac.Integration.WebApi;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.Application;
+using WebApiThrottle;
 
 namespace FrannHammer.Api
 {
