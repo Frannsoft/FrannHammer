@@ -1,5 +1,8 @@
-﻿namespace FrannHammer.Models.DTOs
+﻿using System;
+
+namespace FrannHammer.Models.DTOs
 {
+    [Obsolete("No point in using this right now")]
     public class SmashAttributeTypeDto
     {
         public int Id { get; set; }

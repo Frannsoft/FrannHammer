@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FrannHammer.Models
 {
-    public class Character //: BaseModel
+    public class Character : BaseModel
     {
         public string Style { get; set; }
         public string MainImageUrl { get; set; }
@@ -30,19 +30,19 @@ namespace FrannHammer.Models
                 LastModified.Equals(other.LastModified);
         }
 
-        public  async Task<HttpResponseMessage> Create(HttpClient client)
+        public override async Task<HttpResponseMessage> Create(HttpClient client)
         {
             var httpResponseMessage = await client.PostAsJsonAsync($"{client.BaseAddress.AbsoluteUri}/characters", this);
             return httpResponseMessage;
         }
 
-        public  async Task<HttpResponseMessage> Update(HttpClient client)
+        public override async Task<HttpResponseMessage> Update(HttpClient client)
         {
             var httpResponseMessage = await client.PutAsJsonAsync($"{client.BaseAddress.AbsoluteUri}/characters/{Id}", this);
             return httpResponseMessage;
         }
 
-        public  async Task<HttpResponseMessage> Delete(HttpClient client)
+        public override async Task<HttpResponseMessage> Delete(HttpClient client)
         {
             return await client.DeleteAsync($"{client.BaseAddress.AbsoluteUri}/characters/{Id}");
         }

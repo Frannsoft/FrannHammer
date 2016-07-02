@@ -11,19 +11,21 @@ namespace FrannHammer.Models
         public Notation Notation { get; set; }
         public int? NotationId { get; set; }
         public DateTime LastModified { get; set; }
-        public override Task<HttpResponseMessage> Create(HttpClient client)
+
+        public override async Task<HttpResponseMessage> Create(HttpClient client)
         {
-            throw new NotImplementedException();
+            var httpResponseMessage = await client.PostAsJsonAsync($"{client.BaseAddress.AbsoluteUri}/characterattributes", this);
+            return httpResponseMessage;
         }
 
         public override Task<HttpResponseMessage> Update(HttpClient client)
         {
-            throw new NotImplementedException();
+            return client.PutAsJsonAsync($"{client.BaseAddress.AbsoluteUri}/characterattributes/{Id}", this);
         }
 
         public override Task<HttpResponseMessage> Delete(HttpClient client)
         {
-            throw new NotImplementedException();
+            return client.DeleteAsync($"{client.BaseAddress.AbsoluteUri}/characterattributes/{Id}");
         }
     }
 }

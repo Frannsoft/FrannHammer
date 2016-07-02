@@ -22,7 +22,7 @@ namespace FrannHammer.Models.DTOs
         public string CharacterName { get; set; }
         public string ThumbnailUrl { get; set; }
         public List<string> RawHeaders { get; set; }
-        public List<CharacterAttributeDto> RawValues { get; set; }
+        public List<CharacterAttribute> RawValues { get; set; }
         public List<CharacterAttributeKeyValuePair> ParsedValues { get; set; }
 
         public CharacterAttributeRowDto(string rank, int attributeType, int ownerId, List<CharacterAttributeKeyValuePair> values, string characterName, string thumbnailUrl)
@@ -32,7 +32,7 @@ namespace FrannHammer.Models.DTOs
             OwnerId = ownerId;
             ParsedValues = values;
             RawHeaders = values.Select(v => v.KeyName).ToList();
-            RawValues = values.Select(v => v.ValueCharacterAttributeDto).ToList();
+            RawValues = values.Select(v => v.ValueCharacterAttribute).ToList();
             CharacterName = characterName;
             ThumbnailUrl = thumbnailUrl;
         }
@@ -44,6 +44,6 @@ namespace FrannHammer.Models.DTOs
     public class CharacterAttributeKeyValuePair
     {
         public string KeyName { get; set; }
-        public CharacterAttributeDto ValueCharacterAttributeDto { get; set; }
+        public CharacterAttribute ValueCharacterAttribute { get; set; }
     }
 }

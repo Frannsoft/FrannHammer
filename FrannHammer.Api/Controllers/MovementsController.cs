@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
@@ -7,11 +8,10 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
-using FrannHammer.Models.DTOs;
 
 namespace FrannHammer.Api.Controllers
 {
-    
+
     [RoutePrefix("api")]
     public class MovementsController : BaseApiController
     {
@@ -20,40 +20,40 @@ namespace FrannHammer.Api.Controllers
         {
         }
 
-        /// <summary>
-        /// Get all movement data.
-        /// </summary>
-        [ResponseType(typeof(IQueryable<MovementDto>))]
-        [Route("movements", Name = "GetAllMovements")]
-        public IQueryable<MovementDto> GetMovements()
-        {
-            return (from movement in Db.Movements.ToList()
-                    select new MovementDto(movement,
-                    Db.Characters.First(c => c.Id == movement.OwnerId))
-                ).AsQueryable();
-        }
+        //Query too big to be useful.
+        ///// <summary>
+        ///// Get all movement data.
+        ///// </summary>
+        //[ResponseType(typeof(IQueryable<Movement>))]
+        //[Route("movements", Name = "GetAllMovements")]
+        //public IQueryable<Movement> GetMovements()
+        //{
+        //    return Db.Movements;
+
+        //    return (from movement in Db.Movements.ToList()
+        //            select new MovementDto(movement,
+        //            Db.Characters.First(c => c.Id == movement.OwnerId))
+        //        ).AsQueryable();
+        //}
 
         /// <summary>
-        /// Get all of the <see cref="MovementDto"/> data that is a specific name.
+        /// Get all of the <see cref="Movement"/> data that is a specific name.
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        [ResponseType(typeof(IQueryable<MovementDto>))]
+        [ResponseType(typeof(IQueryable<Movement>))]
         [Route("movements/byname", Name = "GetMovementsByName")]
-        public IQueryable<MovementDto> GetMovementsByName([FromUri] string name)
+        public IQueryable<Movement> GetMovementsByName([FromUri] string name)
         {
-            return (from movement in Db.Movements.Where(m => m.Name.Equals(name)).ToList()
-                    select new MovementDto(movement,
-                    Db.Characters.First(c => c.Id == movement.OwnerId))
-                ).AsQueryable();
+            return Db.Movements.Where(m => m.Name.Equals(name));
         }
 
         /// <summary>
-        /// Get a specific <see cref="MovementDto"/>.
+        /// Get a specific <see cref="Movement"/>.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [ResponseType(typeof(MovementDto))]
+        [ResponseType(typeof(Movement))]
         [Route("movements/{id}")]
         public IHttpActionResult GetMovement(int id)
         {
@@ -63,9 +63,7 @@ namespace FrannHammer.Api.Controllers
                 return NotFound();
             }
 
-            var dto = new MovementDto(movement,
-                Db.Characters.First(c => c.Id == movement.OwnerId));
-            return Ok(dto);
+            return Ok(movement);
         }
 
         /// <summary>

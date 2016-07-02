@@ -86,11 +86,6 @@ namespace FrannHammer.Api.Tests.Authentation
 
         private void Register(HttpConfiguration config)
         {
-            //// Web API configuration and services
-            //// Configure Web API to use only bearer token authentication.
-            //config.SuppressDefaultHostAuthentication();
-            //config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
-
             var builder = new ContainerBuilder();
 
             var path = AppDomain.CurrentDomain.BaseDirectory;

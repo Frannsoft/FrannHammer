@@ -88,6 +88,7 @@
     <Compile Include="DTOs\MovementDto.cs" />
     <Compile Include="DTOs\SmashAttributeTypeDto.cs" />
     <Compile Include="DTOs\UserDto.cs" />
+    <Compile Include="EntityBusinessConverter.cs" />
     <Compile Include="Modifiers.cs" />
     <Compile Include="Move.cs" />
     <Compile Include="Movement.cs" />

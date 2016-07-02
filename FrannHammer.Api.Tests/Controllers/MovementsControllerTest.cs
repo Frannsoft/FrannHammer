@@ -4,7 +4,6 @@ using System.Threading;
 using System.Web.Http.Results;
 using FrannHammer.Api.Controllers;
 using FrannHammer.Models;
-using FrannHammer.Models.DTOs;
 using NUnit.Framework;
 
 namespace FrannHammer.Api.Tests.Controllers
@@ -20,9 +19,9 @@ namespace FrannHammer.Api.Tests.Controllers
                 () => _controller.PostMovement(movement));
         }
 
-        private MovementDto Get(int id)
+        private Movement Get(int id)
         {
-            return ExecuteAndReturnContent<MovementDto>(
+            return ExecuteAndReturnContent<Movement>(
                 () => _controller.GetMovement(id));
         }
 
@@ -43,23 +42,22 @@ namespace FrannHammer.Api.Tests.Controllers
         [Test]
         public void ShouldGetMovement()
         {
-
             var movement = TestObjects.Movement();
             Post(movement);
             Get(movement.Id);
         }
 
-        [Test]
-        [Ignore("This intermittently fails due to the size of the response.  Arguably, a call like this shouldn't even be exposed.")]
-        public void ShouldGetAllMovements()
-        {
-            //nunit seems a little slow when this isn't fully evaluated...
-            var results = _controller.GetMovements().ToList();
+        //[Test]
+        //[Ignore("This intermittently fails due to the size of the response.  Arguably, a call like this shouldn't even be exposed.")]
+        //public void ShouldGetAllMovements()
+        //{
+        //    //nunit seems a little slow when this isn't fully evaluated...
+        //    var results = _controller.GetMovements().ToList();
 
-            CollectionAssert.AllItemsAreNotNull(results);
-            CollectionAssert.AllItemsAreUnique(results);
-            CollectionAssert.AllItemsAreInstancesOfType(results, typeof(MovementDto));
-        }
+        //    CollectionAssert.AllItemsAreNotNull(results);
+        //    CollectionAssert.AllItemsAreUnique(results);
+        //    CollectionAssert.AllItemsAreInstancesOfType(results, typeof(Movement));
+        //}
 
         [Test]
         [TestCase("Weight")]
@@ -81,11 +79,11 @@ namespace FrannHammer.Api.Tests.Controllers
             Post(movement);
             Post(movement2);
 
-            var results = _controller.GetMovementsByName(name);
+            var results = _controller.GetMovementsByName(name).ToList();
 
             CollectionAssert.AllItemsAreNotNull(results);
             CollectionAssert.AllItemsAreUnique(results);
-            CollectionAssert.AllItemsAreInstancesOfType(results, typeof(MovementDto));
+            CollectionAssert.AllItemsAreInstancesOfType(results, typeof(Movement));
         }
 
         [Test]

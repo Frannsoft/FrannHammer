@@ -1,8 +1,10 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace FrannHammer.Models.DTOs
 {
+    [Obsolete("No point in using this right now")]
     public class CharacterAttributeDto : BaseModel
     {
         public int OwnerId { get; set; }

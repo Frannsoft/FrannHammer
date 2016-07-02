@@ -12,6 +12,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.Core", "FrannHammer.Core\FrannHammer.Core.csproj", "{2904D4E7-8989-46BD-AC0A-B4356F190A15}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.DataSynchro", "FrannHammer.DataSynchro\FrannHammer.DataSynchro.csproj", "{9539A472-8C2A-4DD7-86E8-91BCDD6E2BFB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E4F0C134-6288-438F-B5D0-C53638E866E3} = {E4F0C134-6288-438F-B5D0-C53638E866E3}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.WebScraper", "FrannHammer.WebScraper\FrannHammer.WebScraper.csproj", "{9D3C1343-F4B4-4538-B0E0-590D3B2F5DE3}"
 EndProject

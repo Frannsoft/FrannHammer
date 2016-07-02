@@ -77,13 +77,13 @@ namespace FrannHammer.Api.Controllers
                         g.Key, g.Select(at => new CharacterAttributeKeyValuePair()
                         {
                             KeyName = at.Name,
-                            ValueCharacterAttributeDto = new CharacterAttributeDto
+                            ValueCharacterAttribute = new CharacterAttribute
                             {
                                 Id = at.Id,
                                 Name = at.Name,
                                 OwnerId = at.OwnerId,
                                 Rank = at.Rank,
-                                SmashAttributeTypeDto = new SmashAttributeTypeDto
+                                SmashAttributeType = new SmashAttributeType
                                 {
                                     Id = at.SmashAttributeType.Id,
                                     Name = at.Name

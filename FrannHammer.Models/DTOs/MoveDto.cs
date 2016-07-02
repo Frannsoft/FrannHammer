@@ -2,6 +2,7 @@
 
 namespace FrannHammer.Models.DTOs
 {
+    [Obsolete("No point in using this right now")]
     public class MoveDto
     {
         public string HitboxActive { get; set; }

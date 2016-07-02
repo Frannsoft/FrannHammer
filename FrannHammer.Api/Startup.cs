@@ -23,15 +23,16 @@ namespace FrannHammer.Api
             app.UseCors(CorsOptions.AllowAll);
             ConfigureAuth(app, Container.Instance.AutoFacContainer);
 
-            ConfigureAutoMapping();
+           // ConfigureAutoMapping();
         }
 
-        internal static void ConfigureAutoMapping()
-        {
-            Mapper.Initialize(cfg => cfg.CreateMap<Character, CharacterDto>()
-               .ConstructProjectionUsing(c => new CharacterDto(c.Name)));//("name", x => x.MapFrom(c => c.Name)));
-
-            Mapper.Configuration.AssertConfigurationIsValid();
-        }
+        //internal static void ConfigureAutoMapping()
+        //{
+        //    Mapper.Initialize(cfg =>
+        //    {
+        //        cfg.CreateMap<Character, CharacterDto>();
+        //        cfg.CreateMap<Movement, MovementDto>();
+        //    });
+        //}
     }
 }
