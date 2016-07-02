@@ -1,6 +1,6 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
-using FrannHammer.Core.Models;
+using FrannHammer.Models;
 using NUnit.Framework;
 
 namespace FrannHammer.Api.Tests.Authentation

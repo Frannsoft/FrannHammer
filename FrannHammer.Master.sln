@@ -12,6 +12,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.Core", "FrannHammer.Core\FrannHammer.Core.csproj", "{2904D4E7-8989-46BD-AC0A-B4356F190A15}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.DataSynchro", "FrannHammer.DataSynchro\FrannHammer.DataSynchro.csproj", "{9539A472-8C2A-4DD7-86E8-91BCDD6E2BFB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E4F0C134-6288-438F-B5D0-C53638E866E3} = {E4F0C134-6288-438F-B5D0-C53638E866E3}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.WebScraper", "FrannHammer.WebScraper\FrannHammer.WebScraper.csproj", "{9D3C1343-F4B4-4538-B0E0-590D3B2F5DE3}"
 EndProject
@@ -20,6 +23,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.Core.Tests", "FrannHammer.Core.Tests\FrannHammer.Core.Tests.csproj", "{6035B71B-F48B-4051-A9C4-6789D689DF04}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.AccountRegistrationTool.Tests", "FrannHammer.AccountRegistrationTool.Tests\FrannHammer.AccountRegistrationTool.Tests.csproj", "{7548CF7E-87D7-40A2-8741-F90C07C6AB2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.Models", "FrannHammer.Models\FrannHammer.Models.csproj", "{E4F0C134-6288-438F-B5D0-C53638E866E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +68,10 @@ Global
 		{7548CF7E-87D7-40A2-8741-F90C07C6AB2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7548CF7E-87D7-40A2-8741-F90C07C6AB2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7548CF7E-87D7-40A2-8741-F90C07C6AB2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4F0C134-6288-438F-B5D0-C53638E866E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4F0C134-6288-438F-B5D0-C53638E866E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4F0C134-6288-438F-B5D0-C53638E866E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4F0C134-6288-438F-B5D0-C53638E866E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

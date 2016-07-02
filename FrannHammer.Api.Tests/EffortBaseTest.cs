@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data.Common;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Results;
 using Effort.DataLoaders;
@@ -25,6 +24,7 @@ namespace FrannHammer.Api.Tests
             _connection = Effort.DbConnectionFactory.CreateTransient(loader);
             Context = new ApplicationDbContext(_connection);
             TestObjects = new TestObjects();
+            //Startup.ConfigureAutoMapping();
         }
 
         [TestFixtureTearDown]

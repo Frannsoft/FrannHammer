@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using FrannHammer.AccountRegistrationTool.Properties;
-using FrannHammer.Core.Models;
+using FrannHammer.Models;
 
 namespace FrannHammer.AccountRegistrationTool.Models
 {

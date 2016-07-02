@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Web.Http.Results;
 using FrannHammer.Api.Controllers;
-using FrannHammer.Api.DTOs;
-using FrannHammer.Core.Models;
+using FrannHammer.Models;
 using NUnit.Framework;
 
 namespace FrannHammer.Api.Tests.Controllers
@@ -88,7 +88,7 @@ namespace FrannHammer.Api.Tests.Controllers
             var movements = _controller.GetMovementsForCharacter(1);
             CollectionAssert.AllItemsAreNotNull(movements);
             CollectionAssert.AllItemsAreUnique(movements);
-            CollectionAssert.AllItemsAreInstancesOfType(movements, typeof(MovementDto));
+            CollectionAssert.AllItemsAreInstancesOfType(movements, typeof(Movement));
         }
 
         [Test]
@@ -97,7 +97,7 @@ namespace FrannHammer.Api.Tests.Controllers
             var moves = _controller.GetMovesForCharacter(1);
             CollectionAssert.AllItemsAreNotNull(moves);
             CollectionAssert.AllItemsAreUnique(moves);
-            CollectionAssert.AllItemsAreInstancesOfType(moves, typeof(MoveDto));
+            CollectionAssert.AllItemsAreInstancesOfType(moves, typeof(Move));
         }
 
         [Test]

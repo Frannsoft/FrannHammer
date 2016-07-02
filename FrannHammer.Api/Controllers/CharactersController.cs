@@ -1,14 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
-using FrannHammer.Api.DTOs;
 using FrannHammer.Api.Models;
-using FrannHammer.Core.DTOs;
-using FrannHammer.Core.Models;
+using FrannHammer.Models;
+using FrannHammer.Models.DTOs;
 
 namespace FrannHammer.Api.Controllers
 {
@@ -23,7 +23,7 @@ namespace FrannHammer.Api.Controllers
         /// a specific <see cref="ApplicationDbContext"/>
         /// </summary>
         /// <param name="context"></param>
-        public CharactersController(ApplicationDbContext context)
+        public CharactersController(IApplicationDbContext context)
             : base(context)
         { }
 
@@ -85,12 +85,10 @@ namespace FrannHammer.Api.Controllers
         /// <returns></returns>
         [Route("Characters/{id}/movements")]
         [HttpGet]
-        public IQueryable<MovementDto> GetMovementsForCharacter(int id)
+        public IQueryable<Movement> GetMovementsForCharacter(int id)
         {
-            return (from movement in Db.Movements.Where(m => m.OwnerId == id).ToList()
-                    select new MovementDto(movement,
-                    Db.Characters.First(c => c.Id == movement.OwnerId))
-               ).AsQueryable();
+            var movements = Db.Movements.Where(m => m.OwnerId == id);
+            return movements;
         }
 
         /// <summary>
@@ -99,40 +97,28 @@ namespace FrannHammer.Api.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [Route("Characters/{id}/moves")]
-        public IQueryable<MoveDto> GetMovesForCharacter(int id)
+        public IQueryable<Move> GetMovesForCharacter(int id)
         {
-            return (from move in Db.Moves.Where(m => m.OwnerId == id).ToList()
-                    select new MoveDto(move,
-                        Db.Characters.First(c => c.Id == move.OwnerId))
-                ).AsQueryable();
+            var moves = Db.Moves.Where(m => m.OwnerId == id);
+
+            return moves;
         }
 
         /// <summary>
         /// Get all the <see cref="CharacterAttribute"/>s of a specific <see cref="Character"/>.
         /// 
-        /// These will be returned as <see cref="CharacterAttributeDto"/>s.
+        /// These will be returned as <see cref="CharacterAttribute"/>s.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [Route("characters/{id}/characterattributes")]
-        [ResponseType(typeof(IQueryable<CharacterAttributeDto>))]
-        public IQueryable<CharacterAttributeDto> GetCharacterAttributesForCharacter(int id)
+        [ResponseType(typeof(IQueryable<CharacterAttribute>))]
+        public IQueryable<CharacterAttribute> GetCharacterAttributesForCharacter(int id)
         {
-            return (from at in Db.CharacterAttributes.Where(a => a.OwnerId == id).ToList()
-                select new CharacterAttributeDto
-                {
-                    Id = at.Id,
-                    Name = at.Name,
-                    OwnerId = at.OwnerId,
-                    Rank = at.Rank,
-                    //SmashAttributeTypeDto = new SmashAttributeTypeDto
-                    //{
-                    //    Id = at.SmashAttributeType.Id,
-                    //    Name = at.Name
-                    //},
-                    SmashAttributeTypeId = at.SmashAttributeTypeId,
-                    Value = at.Value
-                }).AsQueryable();
+            var attrs = Db.CharacterAttributes.Where(a => a.OwnerId == id);
+            //var dtos = Mapper.Map<IEnumerable<CharacterAttributeDto>>(attrs);
+
+            return attrs;
         }
 
         /// <summary>

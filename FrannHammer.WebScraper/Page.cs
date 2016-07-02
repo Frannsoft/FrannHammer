@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using FrannHammer.Core;
 using HtmlAgilityPack;
+using AerialStat = FrannHammer.WebScraper.Stats.AerialStat;
+using GroundStat = FrannHammer.WebScraper.Stats.GroundStat;
+using MovementStat = FrannHammer.WebScraper.Stats.MovementStat;
+using SpecialStat = FrannHammer.WebScraper.Stats.SpecialStat;
+using Stat = FrannHammer.WebScraper.Stats.Stat;
 
 namespace FrannHammer.WebScraper
 {

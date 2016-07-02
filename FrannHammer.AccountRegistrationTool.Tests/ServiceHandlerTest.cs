@@ -1,6 +1,5 @@
 ﻿using System;
 using FrannHammer.AccountRegistrationTool.Models;
-using FrannHammer.Core.Models;
 using NUnit.Framework;
 
 namespace FrannHammer.AccountRegistrationTool.Tests

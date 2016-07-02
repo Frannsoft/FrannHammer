@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using FrannHammer.Api.Models;
-using FrannHammer.Core.Models;
+using FrannHammer.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 

@@ -2,8 +2,7 @@
 using System.Threading;
 using System.Web.Http.Results;
 using FrannHammer.Api.Controllers;
-using FrannHammer.Api.DTOs;
-using FrannHammer.Core.Models;
+using FrannHammer.Models;
 using NUnit.Framework;
 
 namespace FrannHammer.Api.Tests.Controllers
@@ -19,9 +18,9 @@ namespace FrannHammer.Api.Tests.Controllers
                 () => _controller.PostMove(move));
         }
 
-        private MoveDto Get(int id)
+        private Move Get(int id)
         {
-            return ExecuteAndReturnContent<MoveDto>(
+            return ExecuteAndReturnContent<Move>(
                 () => _controller.GetMove(id));
         }
 
@@ -47,15 +46,15 @@ namespace FrannHammer.Api.Tests.Controllers
             Get(move.Id);
         }
 
-        [Test]
-        [Ignore("This intermittently fails due to the size of the response.  Arguably, a call like this shouldn't even be exposed.")]
-        public void ShouldGetAllMoves()
-        {
-            var results = _controller.GetMoves();
-            CollectionAssert.AllItemsAreNotNull(results);
-            CollectionAssert.AllItemsAreUnique(results);
-            CollectionAssert.AllItemsAreInstancesOfType(results, typeof(MoveDto));
-        }
+        //[Test]
+        //[Ignore("This intermittently fails due to the size of the response.  Arguably, a call like this shouldn't even be exposed.")]
+        //public void ShouldGetAllMoves()
+        //{
+        //    var results = _controller.GetMoves();
+        //    CollectionAssert.AllItemsAreNotNull(results);
+        //    CollectionAssert.AllItemsAreUnique(results);
+        //    CollectionAssert.AllItemsAreInstancesOfType(results, typeof(Move));
+        //}
 
         [Test]
         [TestCase("Jab+2")]
@@ -83,7 +82,7 @@ namespace FrannHammer.Api.Tests.Controllers
             //assert
             CollectionAssert.AllItemsAreNotNull(results);
             CollectionAssert.AllItemsAreUnique(results);
-            CollectionAssert.AllItemsAreInstancesOfType(results, typeof(MoveDto));
+            CollectionAssert.AllItemsAreInstancesOfType(results, typeof(Move));
         }
 
         [Test]

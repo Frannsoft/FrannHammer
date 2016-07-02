@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using FrannHammer.Core.Models;
+using FrannHammer.Models;
 
 namespace KurograneHammer.TransferDBTool.Seeding
 {

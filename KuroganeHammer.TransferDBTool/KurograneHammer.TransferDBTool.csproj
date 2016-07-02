@@ -88,7 +88,6 @@
     <Compile Include="Seeding\AppDbContext.cs" />
     <Compile Include="BaseTest.cs" />
     <Compile Include="Loader.cs" />
-    <Compile Include="PropertyUpdateHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Seeding\Seeder.cs" />
     <Compile Include="Seeding\TransferMethods.cs" />
@@ -105,6 +104,10 @@
     <ProjectReference Include="..\FrannHammer.Api\FrannHammer.Api.csproj">
       <Project>{470ada5b-56b2-45d3-8162-ab65b0350c68}</Project>
       <Name>FrannHammer.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.Models\FrannHammer.Models.csproj">
+      <Project>{e4f0c134-6288-438f-b5d0-c53638e866e3}</Project>
+      <Name>FrannHammer.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\FrannHammer.WebScraper\FrannHammer.WebScraper.csproj">
       <Project>{9d3c1343-f4b4-4538-b0e0-590d3b2f5de3}</Project>

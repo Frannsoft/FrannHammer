@@ -2,10 +2,10 @@
 using System.Windows;
 using System.Windows.Controls;
 using FrannHammer.Core;
-using FrannHammer.Core.Models;
 using FrannHammer.DataSynchro.Controls;
 using FrannHammer.DataSynchro.Models;
 using FrannHammer.DataSynchro.ViewModels;
+using FrannHammer.Models;
 
 namespace FrannHammer.DataSynchro
 {
@@ -29,7 +29,7 @@ namespace FrannHammer.DataSynchro
             _user = user;
             _characterVm = new CharacterVm(character, user, isNewCharacter);
             DataContext = _characterVm;
-            InitEditorControl(character, user);
+            //InitEditorControl(character, user);
         }
 
         private void InitEditorControl(BaseModel model, UserModel user)

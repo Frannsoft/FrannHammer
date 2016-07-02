@@ -17,21 +17,21 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.AccountController.ChangePassword(FrannHammer.Core.Models.ChangePasswordBindingModel)">
+        <member name="M:FrannHammer.Api.Controllers.AccountController.ChangePassword(FrannHammer.Models.ChangePasswordBindingModel)">
             <summary>
             Change a user's password.
             </summary>
             <param name="model"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.AccountController.RemoveLogin(FrannHammer.Core.Models.RemoveLoginBindingModel)">
+        <member name="M:FrannHammer.Api.Controllers.AccountController.RemoveLogin(FrannHammer.Models.RemoveLoginBindingModel)">
             <summary>
             Remove the ability for a user to login.
             </summary>
             <param name="model"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.AccountController.Register(FrannHammer.Core.Models.RegisterBindingModel)">
+        <member name="M:FrannHammer.Api.Controllers.AccountController.Register(FrannHammer.Models.RegisterBindingModel)">
             <summary>
             Register a brand new user.
             </summary>
@@ -49,21 +49,21 @@
             </summary>
             <param name="context"></param>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CalculatorController.PostRage(FrannHammer.Core.Calculations.RageProblemData)">
+        <member name="M:FrannHammer.Api.Controllers.CalculatorController.PostRage(FrannHammer.Models.RageProblemData)">
             <summary>
             Calculate Rage based on passed in data.
             </summary>
             <param name="data"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CalculatorController.PostMoveVsKnockback(FrannHammer.Core.Models.CalculatorMoveModel)">
+        <member name="M:FrannHammer.Api.Controllers.CalculatorController.PostMoveVsKnockback(FrannHammer.Models.CalculatorMoveModel)">
             <summary>
             Calculate Vs mode knockback of a specific character's move.
             </summary>
             <param name="model"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CalculatorController.PostMoveShieldStunNormal(FrannHammer.Core.Models.CalculatorMoveModel)">
+        <member name="M:FrannHammer.Api.Controllers.CalculatorController.PostMoveShieldStunNormal(FrannHammer.Models.CalculatorMoveModel)">
             <summary>
             Calculate the Normal Shield stun of a specific character's move.
             </summary>
@@ -72,53 +72,53 @@
         </member>
         <member name="T:FrannHammer.Api.Controllers.CharacterAttributesController">
             <summary>
-            Handles all individual <see cref="T:FrannHammer.Core.Models.CharacterAttribute"/> operations.  
+            Handles all individual <see cref="T:FrannHammer.Models.CharacterAttribute"/> operations.  
             </summary>
         </member>
         <member name="M:FrannHammer.Api.Controllers.CharacterAttributesController.#ctor(FrannHammer.Api.Models.ApplicationDbContext)">
             <summary>
-            Create a new <see cref="T:FrannHammer.Core.Models.CharacterAttribute"/> controller to interact with the server using a specific 
+            Create a new <see cref="T:FrannHammer.Models.CharacterAttribute"/> controller to interact with the server using a specific 
             <see cref="T:FrannHammer.Api.Models.ApplicationDbContext"/>.
             </summary>
         </member>
         <member name="M:FrannHammer.Api.Controllers.CharacterAttributesController.GetCharacterAttributes">
             <summary>
-            Get all <see cref="T:FrannHammer.Core.Models.CharacterAttribute"/>s.
+            Get all <see cref="T:FrannHammer.Models.CharacterAttribute"/>s.
             </summary>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.CharacterAttributesController.GetCharacterAttribute(System.Int32)">
             <summary>
-            Get a specific <see cref="T:FrannHammer.Core.Models.CharacterAttribute"/> by its id.
+            Get a specific <see cref="T:FrannHammer.Models.CharacterAttribute"/> by its id.
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharacterAttributesController.PutCharacterAttribute(System.Int32,FrannHammer.Core.Models.CharacterAttribute)">
+        <member name="M:FrannHammer.Api.Controllers.CharacterAttributesController.PutCharacterAttribute(System.Int32,FrannHammer.Models.CharacterAttribute)">
             <summary>
-            Update a <see cref="T:FrannHammer.Core.Models.CharacterAttribute"/>
+            Update a <see cref="T:FrannHammer.Models.CharacterAttribute"/>
             </summary>
             <param name="id"></param>
             <param name="characterAttribute"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharacterAttributesController.PostCharacterAttribute(FrannHammer.Core.Models.CharacterAttribute)">
+        <member name="M:FrannHammer.Api.Controllers.CharacterAttributesController.PostCharacterAttribute(FrannHammer.Models.CharacterAttribute)">
             <summary>
-            Create a new <see cref="T:FrannHammer.Core.Models.CharacterAttribute"/>.
+            Create a new <see cref="T:FrannHammer.Models.CharacterAttribute"/>.
             </summary>
             <param name="characterAttribute"></param>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.CharacterAttributesController.DeleteCharacterAttribute(System.Int32)">
             <summary>
-            Delete a <see cref="T:FrannHammer.Core.Models.CharacterAttribute"/>.
+            Delete a <see cref="T:FrannHammer.Models.CharacterAttribute"/>.
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
         <member name="T:FrannHammer.Api.Controllers.CharacterAttributeTypesController">
             <summary>
-            Handles the backing types of <see cref="T:FrannHammer.Core.Models.CharacterAttribute"/>s.
+            Handles the backing types of <see cref="T:FrannHammer.Models.CharacterAttribute"/>s.
             </summary>
         </member>
         <member name="M:FrannHammer.Api.Controllers.CharacterAttributeTypesController.#ctor(FrannHammer.Api.Models.ApplicationDbContext)">
@@ -130,45 +130,45 @@
         </member>
         <member name="M:FrannHammer.Api.Controllers.CharacterAttributeTypesController.GetCharacterAttributeTypes">
             <summary>
-            Get all of the <see cref="T:FrannHammer.Core.Models.CharacterAttributeType"/> details.
+            Get all of the <see cref="T:FrannHammer.Models.CharacterAttributeType"/> details.
             </summary>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.CharacterAttributeTypesController.GetCharacterAttributeType(System.Int32)">
             <summary>
-            Get a specific <see cref="T:FrannHammer.Core.Models.CharacterAttributeType"/>s details.
+            Get a specific <see cref="T:FrannHammer.Models.CharacterAttributeType"/>s details.
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharacterAttributeTypesController.PutCharacterAttributeType(System.Int32,FrannHammer.Core.Models.CharacterAttributeType)">
+        <member name="M:FrannHammer.Api.Controllers.CharacterAttributeTypesController.PutCharacterAttributeType(System.Int32,FrannHammer.Models.CharacterAttributeType)">
             <summary>
-            Update a <see cref="T:FrannHammer.Core.Models.CharacterAttributeType"/>.
+            Update a <see cref="T:FrannHammer.Models.CharacterAttributeType"/>.
             </summary>
             <param name="id"></param>
             <param name="characterAttributeType"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharacterAttributeTypesController.PostCharacterAttributeType(FrannHammer.Core.Models.CharacterAttributeType)">
+        <member name="M:FrannHammer.Api.Controllers.CharacterAttributeTypesController.PostCharacterAttributeType(FrannHammer.Models.CharacterAttributeType)">
             <summary>
-            Create a new <see cref="T:FrannHammer.Core.Models.CharacterAttributeType"/>.
+            Create a new <see cref="T:FrannHammer.Models.CharacterAttributeType"/>.
             </summary>
             <param name="characterAttributeType"></param>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.CharacterAttributeTypesController.DeleteCharacterAttributeType(System.Int32)">
             <summary>
-            Delete a <see cref="T:FrannHammer.Core.Models.CharacterAttributeType"/>.
+            Delete a <see cref="T:FrannHammer.Models.CharacterAttributeType"/>.
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
         <member name="T:FrannHammer.Api.Controllers.CharactersController">
             <summary>
-            Handles server operations dealing with <see cref="T:FrannHammer.Core.Models.Character"/>s.
+            Handles server operations dealing with <see cref="T:FrannHammer.Models.Character"/>s.
             </summary>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharactersController.#ctor(FrannHammer.Api.Models.ApplicationDbContext)">
+        <member name="M:FrannHammer.Api.Controllers.CharactersController.#ctor(FrannHammer.Api.Models.IApplicationDbContext)">
             <summary>
             Create a new <see cref="T:FrannHammer.Api.Controllers.CharactersController"/> to interact with the server using 
             a specific <see cref="T:FrannHammer.Api.Models.ApplicationDbContext"/>
@@ -177,114 +177,103 @@
         </member>
         <member name="M:FrannHammer.Api.Controllers.CharactersController.GetCharacters">
             <summary>
-            Get all of the <see cref="T:FrannHammer.Core.Models.Character"/> details.
+            Get all of the <see cref="T:FrannHammer.Models.Character"/> details.
             </summary>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.CharactersController.GetCharacter(System.Int32)">
             <summary>
-            Get a specific <see cref="T:FrannHammer.Core.Models.Character"/>s details.
+            Get a specific <see cref="T:FrannHammer.Models.Character"/>s details.
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.CharactersController.GetCharacterByName(System.String)">
             <summary>
-            Get a specific <see cref="T:FrannHammer.Core.Models.Character"/>s details by their name.
+            Get a specific <see cref="T:FrannHammer.Models.Character"/>s details by their name.
             </summary>
             <param name="name"></param>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.CharactersController.GetMovementsForCharacter(System.Int32)">
             <summary>
-            Get all the <see cref="T:FrannHammer.Core.Models.Movement"/> data for a specific <see cref="T:FrannHammer.Core.Models.Character"/>
+            Get all the <see cref="T:FrannHammer.Models.Movement"/> data for a specific <see cref="T:FrannHammer.Models.Character"/>
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.CharactersController.GetMovesForCharacter(System.Int32)">
             <summary>
-            Get all the <see cref="T:FrannHammer.Core.Models.Move"/> data for a specific <see cref="T:FrannHammer.Core.Models.Character"/>.
+            Get all the <see cref="T:FrannHammer.Models.Move"/> data for a specific <see cref="T:FrannHammer.Models.Character"/>.
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.CharactersController.GetCharacterAttributesForCharacter(System.Int32)">
             <summary>
-            Get all the <see cref="T:FrannHammer.Core.Models.CharacterAttribute"/>s of a specific <see cref="T:FrannHammer.Core.Models.Character"/>.
+            Get all the <see cref="T:FrannHammer.Models.CharacterAttribute"/>s of a specific <see cref="T:FrannHammer.Models.Character"/>.
             
-            These will be returned as <see cref="T:FrannHammer.Core.DTOs.CharacterAttributeDto"/>s.
+            These will be returned as <see cref="T:FrannHammer.Models.CharacterAttribute"/>s.
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharactersController.PutCharacter(System.Int32,FrannHammer.Core.Models.Character)">
+        <member name="M:FrannHammer.Api.Controllers.CharactersController.PutCharacter(System.Int32,FrannHammer.Models.Character)">
             <summary>
-            Update a <see cref="T:FrannHammer.Core.Models.Character"/>.
+            Update a <see cref="T:FrannHammer.Models.Character"/>.
             </summary>
             <param name="id"></param>
             <param name="character"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharactersController.PostCharacter(FrannHammer.Core.Models.Character)">
+        <member name="M:FrannHammer.Api.Controllers.CharactersController.PostCharacter(FrannHammer.Models.Character)">
             <summary>
-            Create a new <see cref="T:FrannHammer.Core.Models.Character"/>.
+            Create a new <see cref="T:FrannHammer.Models.Character"/>.
             </summary>
             <param name="character"></param>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.CharactersController.DeleteCharacter(System.Int32)">
             <summary>
-            Delete a <see cref="T:FrannHammer.Core.Models.Character"/>.
+            Delete a <see cref="T:FrannHammer.Models.Character"/>.
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.MovementsController.GetMovements">
-            <summary>
-            Get all movement data.
-            </summary>
-        </member>
         <member name="M:FrannHammer.Api.Controllers.MovementsController.GetMovementsByName(System.String)">
             <summary>
-            Get all of the <see cref="T:FrannHammer.Api.DTOs.MovementDto"/> data that is a specific name.
+            Get all of the <see cref="T:FrannHammer.Models.Movement"/> data that is a specific name.
             </summary>
             <param name="name"></param>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.MovementsController.GetMovement(System.Int32)">
             <summary>
-            Get a specific <see cref="T:FrannHammer.Api.DTOs.MovementDto"/>.
+            Get a specific <see cref="T:FrannHammer.Models.Movement"/>.
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.MovementsController.PutMovement(System.Int32,FrannHammer.Core.Models.Movement)">
+        <member name="M:FrannHammer.Api.Controllers.MovementsController.PutMovement(System.Int32,FrannHammer.Models.Movement)">
             <summary>
-            Update a specific <see cref="T:FrannHammer.Core.Models.Movement"/>.
+            Update a specific <see cref="T:FrannHammer.Models.Movement"/>.
             </summary>
             <param name="id"></param>
             <param name="movement"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.MovementsController.PostMovement(FrannHammer.Core.Models.Movement)">
+        <member name="M:FrannHammer.Api.Controllers.MovementsController.PostMovement(FrannHammer.Models.Movement)">
             <summary>
-            Create a new <see cref="T:FrannHammer.Core.Models.Movement"/>.
+            Create a new <see cref="T:FrannHammer.Models.Movement"/>.
             </summary>
             <param name="movement"></param>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.MovementsController.DeleteMovement(System.Int32)">
             <summary>
-            Delete a <see cref="T:FrannHammer.Core.Models.Movement"/>.
+            Delete a <see cref="T:FrannHammer.Models.Movement"/>.
             </summary>
             <param name="id"></param>
-            <returns></returns>
-        </member>
-        <member name="M:FrannHammer.Api.Controllers.MovesController.GetMoves">
-            <summary>
-            Get all moves.  Not sure if this is sticking around.
-            </summary>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.MovesController.GetMovesByName(System.String)">
@@ -296,36 +285,36 @@
         </member>
         <member name="M:FrannHammer.Api.Controllers.MovesController.GetMove(System.Int32)">
             <summary>
-            Get a specific <see cref="T:FrannHammer.Api.DTOs.MoveDto"/>.
+            Get a specific <see cref="T:FrannHammer.Models.Move"/>.
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.MovesController.PutMove(System.Int32,FrannHammer.Core.Models.Move)">
+        <member name="M:FrannHammer.Api.Controllers.MovesController.PutMove(System.Int32,FrannHammer.Models.Move)">
             <summary>
-            Update a <see cref="T:FrannHammer.Core.Models.Move"/>.
+            Update a <see cref="T:FrannHammer.Models.Move"/>.
             </summary>
             <param name="id"></param>
             <param name="move"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.MovesController.PostMove(FrannHammer.Core.Models.Move)">
+        <member name="M:FrannHammer.Api.Controllers.MovesController.PostMove(FrannHammer.Models.Move)">
             <summary>
-            Create a new <see cref="T:FrannHammer.Core.Models.Move"/>.
+            Create a new <see cref="T:FrannHammer.Models.Move"/>.
             </summary>
             <param name="move"></param>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.MovesController.DeleteMove(System.Int32)">
             <summary>
-            Delete a <see cref="T:FrannHammer.Core.Models.Move"/>.
+            Delete a <see cref="T:FrannHammer.Models.Move"/>.
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
         <member name="T:FrannHammer.Api.Controllers.NotationsController">
             <summary>
-            Handles operations dealing with <see cref="T:FrannHammer.Core.Models.Notation"/>s.
+            Handles operations dealing with <see cref="T:FrannHammer.Models.Notation"/>s.
             </summary>
         </member>
         <member name="M:FrannHammer.Api.Controllers.NotationsController.#ctor(FrannHammer.Api.Models.ApplicationDbContext)">
@@ -337,49 +326,49 @@
         </member>
         <member name="M:FrannHammer.Api.Controllers.NotationsController.GetNotations">
             <summary>
-            Get all <see cref="T:FrannHammer.Core.Models.Notation"/>s.
+            Get all <see cref="T:FrannHammer.Models.Notation"/>s.
             </summary>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.NotationsController.GetNotation(System.Int32)">
             <summary>
-            Get a specific <see cref="T:FrannHammer.Core.Models.Notation"/>s details.
+            Get a specific <see cref="T:FrannHammer.Models.Notation"/>s details.
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.NotationsController.PutNotation(System.Int32,FrannHammer.Core.Models.Notation)">
+        <member name="M:FrannHammer.Api.Controllers.NotationsController.PutNotation(System.Int32,FrannHammer.Models.Notation)">
             <summary>
-            Update a <see cref="T:FrannHammer.Core.Models.Notation"/>.
+            Update a <see cref="T:FrannHammer.Models.Notation"/>.
             </summary>
             <param name="id"></param>
             <param name="notation"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.NotationsController.PostNotation(FrannHammer.Core.Models.Notation)">
+        <member name="M:FrannHammer.Api.Controllers.NotationsController.PostNotation(FrannHammer.Models.Notation)">
             <summary>
-            Create a new <see cref="T:FrannHammer.Core.Models.Notation"/>.
+            Create a new <see cref="T:FrannHammer.Models.Notation"/>.
             </summary>
             <param name="notation"></param>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.NotationsController.DeleteNotation(System.Int32)">
             <summary>
-            Delete a <see cref="T:FrannHammer.Core.Models.Notation"/>.
+            Delete a <see cref="T:FrannHammer.Models.Notation"/>.
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.RolesController.AddUserToRole(FrannHammer.Core.Models.UserToRoleModel)">
+        <member name="M:FrannHammer.Api.Controllers.RolesController.AddUserToRole(FrannHammer.Models.UserToRoleModel)">
             <summary>
-            Add a user to a role via <see cref="T:FrannHammer.Core.Models.UserToRoleModel"/>.
+            Add a user to a role via <see cref="T:FrannHammer.Models.UserToRoleModel"/>.
             </summary>
             <param name="model"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.RolesController.RemoveUserFromRole(FrannHammer.Core.Models.UserToRoleModel)">
+        <member name="M:FrannHammer.Api.Controllers.RolesController.RemoveUserFromRole(FrannHammer.Models.UserToRoleModel)">
             <summary>
-            Removes a user from the role specified in the passed in <see cref="T:FrannHammer.Core.Models.UserToRoleModel"/>.
+            Removes a user from the role specified in the passed in <see cref="T:FrannHammer.Models.UserToRoleModel"/>.
             </summary>
             <param name="model"></param>
             <returns></returns>
@@ -391,45 +380,45 @@
         </member>
         <member name="M:FrannHammer.Api.Controllers.SmashAttributeTypesController.GetSmashAttributeTypes">
             <summary>
-            Get all of the stored <see cref="T:FrannHammer.Core.Models.SmashAttributeType"/>s.
+            Get all of the stored <see cref="T:FrannHammer.Models.SmashAttributeType"/>s.
             </summary>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.SmashAttributeTypesController.GetSmashAttributeType(System.Int32)">
             <summary>
-            Get a specific <see cref="T:FrannHammer.Core.Models.SmashAttributeType"/>.
+            Get a specific <see cref="T:FrannHammer.Models.SmashAttributeType"/>.
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.SmashAttributeTypesController.GetAllCharacterAttributeOfSmashAttributeType(System.Int32)">
             <summary>
-            Get back all of the <see cref="T:FrannHammer.Core.Models.SmashAttributeType"/>s of a specific id
-            as <see cref="T:FrannHammer.Core.Models.CharacterAttribute"/> objects.  This call parses the returned 
-            <see cref="T:FrannHammer.Core.Models.CharacterAttribute"/>s into <see cref="T:FrannHammer.Core.DTOs.CharacterAttributeRowDto"/>, 
+            Get back all of the <see cref="T:FrannHammer.Models.SmashAttributeType"/>s of a specific id
+            as <see cref="T:FrannHammer.Models.CharacterAttribute"/> objects.  This call parses the returned 
+            <see cref="T:FrannHammer.Models.CharacterAttribute"/>s into <see cref="T:FrannHammer.Models.DTOs.CharacterAttributeRowDto"/>, 
             similar to how they are displayed on KuroganeHammer.com.
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.SmashAttributeTypesController.PutSmashAttributeType(System.Int32,FrannHammer.Core.Models.SmashAttributeType)">
+        <member name="M:FrannHammer.Api.Controllers.SmashAttributeTypesController.PutSmashAttributeType(System.Int32,FrannHammer.Models.SmashAttributeType)">
             <summary>
-            Update an existing <see cref="T:FrannHammer.Core.Models.SmashAttributeType"/>.
+            Update an existing <see cref="T:FrannHammer.Models.SmashAttributeType"/>.
             </summary>
             <param name="id"></param>
             <param name="smashAttributeType"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.SmashAttributeTypesController.PostSmashAttributeType(FrannHammer.Core.Models.SmashAttributeType)">
+        <member name="M:FrannHammer.Api.Controllers.SmashAttributeTypesController.PostSmashAttributeType(FrannHammer.Models.SmashAttributeType)">
             <summary>
-            Create a new <see cref="T:FrannHammer.Core.Models.SmashAttributeType"/>.
+            Create a new <see cref="T:FrannHammer.Models.SmashAttributeType"/>.
             </summary>
             <param name="smashAttributeType"></param>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.SmashAttributeTypesController.DeleteSmashAttributeType(System.Int32)">
             <summary>
-            Delete an existing <see cref="T:FrannHammer.Core.Models.SmashAttributeType"/>.
+            Delete an existing <see cref="T:FrannHammer.Models.SmashAttributeType"/>.
             </summary>
             <param name="id"></param>
             <returns></returns>

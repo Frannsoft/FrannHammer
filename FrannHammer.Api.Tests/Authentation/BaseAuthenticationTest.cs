@@ -13,6 +13,7 @@ using Autofac.Integration.WebApi;
 using Effort.DataLoaders;
 using FrannHammer.Api.Models;
 using FrannHammer.Api.Tests.Controllers;
+using FrannHammer.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Cors;
@@ -85,11 +86,6 @@ namespace FrannHammer.Api.Tests.Authentation
 
         private void Register(HttpConfiguration config)
         {
-            //// Web API configuration and services
-            //// Configure Web API to use only bearer token authentication.
-            //config.SuppressDefaultHostAuthentication();
-            //config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
-
             var builder = new ContainerBuilder();
 
             var path = AppDomain.CurrentDomain.BaseDirectory;

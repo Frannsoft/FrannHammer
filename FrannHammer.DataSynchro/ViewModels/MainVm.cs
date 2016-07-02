@@ -1,8 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using FrannHammer.Core.Models;
 using FrannHammer.Core.Requests;
 using FrannHammer.DataSynchro.Models;
+using FrannHammer.Models;
 
 namespace FrannHammer.DataSynchro.ViewModels
 {

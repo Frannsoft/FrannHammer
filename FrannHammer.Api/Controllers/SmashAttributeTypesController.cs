@@ -6,8 +6,8 @@ using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
 using FrannHammer.Api.Models;
-using FrannHammer.Core.DTOs;
-using FrannHammer.Core.Models;
+using FrannHammer.Models;
+using FrannHammer.Models.DTOs;
 
 namespace FrannHammer.Api.Controllers
 {
@@ -77,13 +77,13 @@ namespace FrannHammer.Api.Controllers
                         g.Key, g.Select(at => new CharacterAttributeKeyValuePair()
                         {
                             KeyName = at.Name,
-                            ValueCharacterAttributeDto = new CharacterAttributeDto
+                            ValueCharacterAttribute = new CharacterAttribute
                             {
                                 Id = at.Id,
                                 Name = at.Name,
                                 OwnerId = at.OwnerId,
                                 Rank = at.Rank,
-                                SmashAttributeTypeDto = new SmashAttributeTypeDto
+                                SmashAttributeType = new SmashAttributeType
                                 {
                                     Id = at.SmashAttributeType.Id,
                                     Name = at.Name
