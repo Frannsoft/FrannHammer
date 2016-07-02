@@ -180,70 +180,6 @@
     <Compile Include="Controllers\NotationsController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SmashAttributeTypesController.cs" />
-    <Compile Include="Migrations\201604010102430_initial design.cs" />
-    <Compile Include="Migrations\201604010102430_initial design.Designer.cs">
-      <DependentUpon>201604010102430_initial design.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604031319408_added lastmodified props to remaining models.cs" />
-    <Compile Include="Migrations\201604031319408_added lastmodified props to remaining models.Designer.cs">
-      <DependentUpon>201604031319408_added lastmodified props to remaining models.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604031759278_added smashattributetypeid prop to characterattribute model.cs" />
-    <Compile Include="Migrations\201604031759278_added smashattributetypeid prop to characterattribute model.Designer.cs">
-      <DependentUpon>201604031759278_added smashattributetypeid prop to characterattribute model.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604120141485_added actual username to registerbindingmodel.cs" />
-    <Compile Include="Migrations\201604120141485_added actual username to registerbindingmodel.Designer.cs">
-      <DependentUpon>201604120141485_added actual username to registerbindingmodel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604260239054_notation.cs" />
-    <Compile Include="Migrations\201604260239054_notation.Designer.cs">
-      <DependentUpon>201604260239054_notation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604260239349_notation on attrType.cs" />
-    <Compile Include="Migrations\201604260239349_notation on attrType.Designer.cs">
-      <DependentUpon>201604260239349_notation on attrType.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604260246316_nullable int post creation.cs" />
-    <Compile Include="Migrations\201604260246316_nullable int post creation.Designer.cs">
-      <DependentUpon>201604260246316_nullable int post creation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604270049012_add characterattributetype.cs" />
-    <Compile Include="Migrations\201604270049012_add characterattributetype.Designer.cs">
-      <DependentUpon>201604270049012_add characterattributetype.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604270051023_char attr type id fk.cs" />
-    <Compile Include="Migrations\201604270051023_char attr type id fk.Designer.cs">
-      <DependentUpon>201604270051023_char attr type id fk.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604270104390_null in.cs" />
-    <Compile Include="Migrations\201604270104390_null in.Designer.cs">
-      <DependentUpon>201604270104390_null in.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604270112562_notation on charattrtype now.cs" />
-    <Compile Include="Migrations\201604270112562_notation on charattrtype now.Designer.cs">
-      <DependentUpon>201604270112562_notation on charattrtype now.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604270116385_adding datetime to new models.cs" />
-    <Compile Include="Migrations\201604270116385_adding datetime to new models.Designer.cs">
-      <DependentUpon>201604270116385_adding datetime to new models.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604290123001_adding tables for moves data.cs" />
-    <Compile Include="Migrations\201604290123001_adding tables for moves data.Designer.cs">
-      <DependentUpon>201604290123001_adding tables for moves data.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604290128586_fk characterid.cs" />
-    <Compile Include="Migrations\201604290128586_fk characterid.Designer.cs">
-      <DependentUpon>201604290128586_fk characterid.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604290131313_renaming move data tables.cs" />
-    <Compile Include="Migrations\201604290131313_renaming move data tables.Designer.cs">
-      <DependentUpon>201604290131313_renaming move data tables.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604300246188_updating meta models.cs" />
-    <Compile Include="Migrations\201604300246188_updating meta models.Designer.cs">
-      <DependentUpon>201604300246188_updating meta models.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ModelFactory.cs" />
@@ -273,42 +209,6 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
-    <EmbeddedResource Include="Migrations\201604260239054_notation.resx">
-      <DependentUpon>201604260239054_notation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604260239349_notation on attrType.resx">
-      <DependentUpon>201604260239349_notation on attrType.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604260246316_nullable int post creation.resx">
-      <DependentUpon>201604260246316_nullable int post creation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604270049012_add characterattributetype.resx">
-      <DependentUpon>201604270049012_add characterattributetype.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604270051023_char attr type id fk.resx">
-      <DependentUpon>201604270051023_char attr type id fk.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604270104390_null in.resx">
-      <DependentUpon>201604270104390_null in.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604270112562_notation on charattrtype now.resx">
-      <DependentUpon>201604270112562_notation on charattrtype now.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604270116385_adding datetime to new models.resx">
-      <DependentUpon>201604270116385_adding datetime to new models.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604290123001_adding tables for moves data.resx">
-      <DependentUpon>201604290123001_adding tables for moves data.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604290128586_fk characterid.resx">
-      <DependentUpon>201604290128586_fk characterid.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604290131313_renaming move data tables.resx">
-      <DependentUpon>201604290131313_renaming move data tables.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604300246188_updating meta models.resx">
-      <DependentUpon>201604300246188_updating meta models.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="SwaggerExtensions\onComplete.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -324,20 +224,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201604010102430_initial design.resx">
-      <DependentUpon>201604010102430_initial design.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604031319408_added lastmodified props to remaining models.resx">
-      <DependentUpon>201604031319408_added lastmodified props to remaining models.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604031759278_added smashattributetypeid prop to characterattribute model.resx">
-      <DependentUpon>201604031759278_added smashattributetypeid prop to characterattribute model.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604120141485_added actual username to registerbindingmodel.resx">
-      <DependentUpon>201604120141485_added actual username to registerbindingmodel.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FrannHammer.Core\FrannHammer.Core.csproj">
