@@ -11,7 +11,6 @@ namespace FrannHammer.Api.Tests.Authentation
         private const string UriBase = "api/account/";
 
         [Test]
-        [Explicit]
         public async Task CanLogin() => await Login();
 
         [Test]
