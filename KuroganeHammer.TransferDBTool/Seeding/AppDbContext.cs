@@ -6,7 +6,7 @@ namespace KurograneHammer.TransferDBTool.Seeding
     internal class AppDbContext : ApplicationDbContext
     {
         public AppDbContext()
-            : base(ConfigurationManager.AppSettings["connection"])
+            : base(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString)
         { }
     }
 }
