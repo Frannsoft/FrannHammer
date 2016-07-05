@@ -180,9 +180,9 @@
     <Compile Include="Controllers\NotationsController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SmashAttributeTypesController.cs" />
-    <Compile Include="Migrations\201607030038565_character_displayname_added.cs" />
-    <Compile Include="Migrations\201607030038565_character_displayname_added.Designer.cs">
-      <DependentUpon>201607030038565_character_displayname_added.cs</DependentUpon>
+    <Compile Include="Migrations\201607050019265_schema_0_2_0_update.cs" />
+    <Compile Include="Migrations\201607050019265_schema_0_2_0_update.Designer.cs">
+      <DependentUpon>201607050019265_schema_0_2_0_update.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -213,8 +213,8 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
-    <EmbeddedResource Include="Migrations\201607030038565_character_displayname_added.resx">
-      <DependentUpon>201607030038565_character_displayname_added.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201607050019265_schema_0_2_0_update.resx">
+      <DependentUpon>201607050019265_schema_0_2_0_update.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SwaggerExtensions\onComplete.js" />
     <Content Include="Web.config" />

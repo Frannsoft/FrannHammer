@@ -7,12 +7,13 @@ namespace FrannHammer.Models
     public abstract class BaseMeta : BaseModel
     {
         public int Id { get; set; }
-        public Character Character { get; set; }
-        public int CharacterId { get; set; }
+        public Character Owner { get; set; }
+        public int OwnerId { get; set; }
         public Move Move { get; set; }
         public int MoveId { get; set; }
         public string Notes { get; set; }
         public DateTime LastModified { get; set; }
+        public string RawValue { get; set; }
 
         public override Task<HttpResponseMessage> Update(HttpClient client)
         {
@@ -39,6 +40,7 @@ namespace FrannHammer.Models
         public string Hitbox3 { get; set; }
         public string Hitbox4 { get; set; }
         public string Hitbox5 { get; set; }
+        public string Hitbox6 { get; set; }
     }
 
     public class Hitbox : BaseMoveHitboxMeta
@@ -50,8 +52,14 @@ namespace FrannHammer.Models
     public class Angle : BaseMoveHitboxMeta
     { }
 
-    public class BaseKnockbackSetKnockback : BaseMoveHitboxMeta
+    public class BaseKnockback : BaseMoveHitboxMeta
     { }
+
+    public class SetKnockback : BaseMoveHitboxMeta
+    { }
+
+    //public class BaseKnockbackSetKnockback : BaseMoveHitboxMeta
+    //{ }
 
     public class KnockbackGrowth : BaseMoveHitboxMeta
     { }

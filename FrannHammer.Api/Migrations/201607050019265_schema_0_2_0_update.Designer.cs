@@ -7,13 +7,13 @@ namespace FrannHammer.Api.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class character_displayname_added : IMigrationMetadata
+    public sealed partial class schema_0_2_0_update : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(character_displayname_added));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(schema_0_2_0_update));
         
         string IMigrationMetadata.Id
         {
-            get { return "201607030038565_character_displayname_added"; }
+            get { return "201607050019265_schema_0_2_0_update"; }
         }
         
         string IMigrationMetadata.Source

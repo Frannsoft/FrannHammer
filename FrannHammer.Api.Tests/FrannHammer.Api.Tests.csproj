@@ -149,7 +149,7 @@
     <Compile Include="Controllers\BaseControllerTest.cs" />
     <Compile Include="Authentation\CharacterAttributeAuthControllerTest.cs" />
     <Compile Include="Controllers\CharacterAttributeControllerTest.cs" />
-    <Compile Include="Authentation\CharacterAttributeTypeControllerTest.cs" />
+    <Compile Include="Controllers\CharacterAttributeTypeControllerTest.cs" />
     <Compile Include="Controllers\CharacterControllerTest.cs" />
     <Compile Include="Authentation\CharactersAuthenticationTest.cs" />
     <Compile Include="Controllers\CharacterTests.cs" />

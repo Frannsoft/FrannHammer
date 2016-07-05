@@ -6,8 +6,7 @@ namespace FrannHammer.Models.DTOs
     public class MoveDto
     {
         public string HitboxActive { get; set; }
-        public int TotalHitboxActiveLength { get; set; }
-        public int FirstActionableFrame { get; set; }
+        public string FirstActionableFrame { get; set; }
         public string BaseDamage { get; set; }
         public string Angle { get; set; }
         public string BaseKnockBackSetKnockback { get; set; }
@@ -25,7 +24,6 @@ namespace FrannHammer.Models.DTOs
         public MoveDto(Move move, Character character)
         {
             HitboxActive = move.HitboxActive;
-            TotalHitboxActiveLength = move.TotalHitboxActiveLength;
             FirstActionableFrame = move.FirstActionableFrame;
             BaseDamage = move.BaseDamage;
             Angle = move.Angle;

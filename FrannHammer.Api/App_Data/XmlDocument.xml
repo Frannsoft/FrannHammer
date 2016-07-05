@@ -56,20 +56,6 @@
             <param name="data"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CalculatorController.PostMoveVsKnockback(FrannHammer.Models.CalculatorMoveModel)">
-            <summary>
-            Calculate Vs mode knockback of a specific character's move.
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:FrannHammer.Api.Controllers.CalculatorController.PostMoveShieldStunNormal(FrannHammer.Models.CalculatorMoveModel)">
-            <summary>
-            Calculate the Normal Shield stun of a specific character's move.
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
         <member name="T:FrannHammer.Api.Controllers.CharacterAttributesController">
             <summary>
             Handles all individual <see cref="T:FrannHammer.Models.CharacterAttribute"/> operations.  

@@ -57,3 +57,4 @@ FrannHammer.Api/ConnectionStrings.config
 appsettings.config
 FrannHammer.Models/bin/
 FrannHammer.Models/obj/
+KuroganeHammer.TransferDBTool/ConnectionStrings.config
