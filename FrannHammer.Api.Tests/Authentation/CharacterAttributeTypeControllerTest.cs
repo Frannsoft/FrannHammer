@@ -78,13 +78,13 @@ namespace FrannHammer.Api.Tests.Authentation
         [Test]
         public void ShouldDeleteCharacterAttributeType()
         {
-            var characterAttribute = TestObjects.CharacterAttributeType();
-            ExecuteAndReturnCreatedAtRouteContent<CharacterAttributeType>(() => _controller.PostCharacterAttributeType(characterAttribute));
+            var characterAttributeType = TestObjects.CharacterAttributeType();
+            ExecuteAndReturnCreatedAtRouteContent<CharacterAttributeType>(() => _controller.PostCharacterAttributeType(characterAttributeType));
 
-            _controller.DeleteCharacterAttributeType(characterAttribute.Id);
+            ExecuteAndReturnContent<CharacterAttributeType>(() => _controller.DeleteCharacterAttributeType(characterAttributeType.Id));
 
-            var characterAttributeController = new CharacterAttributesController(Context);
-            ExecuteAndReturn<NotFoundResult>(() => characterAttributeController.GetCharacterAttribute(characterAttribute.Id));
+            var characterAttributeTypesController = new CharacterAttributeTypesController(Context);
+            ExecuteAndReturn<NotFoundResult>(() => characterAttributeTypesController.GetCharacterAttributeType(characterAttributeType.Id));
         }
     }
 }
