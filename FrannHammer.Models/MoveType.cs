@@ -4,6 +4,7 @@
     {
         Aerial,
         Ground,
-        Special
+        Special,
+        Throw
     }
 }
