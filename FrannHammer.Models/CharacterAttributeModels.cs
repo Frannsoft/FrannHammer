@@ -61,7 +61,8 @@ namespace FrannHammer.Models
         public string Intangible { get; set; }
         public int FirstActiveFrame { get; set; }
         public double DamageMultiplier { get; set; }
-        public BaseKnockbackSetKnockback BaseKnockbackSetKnockback { get; set; }
+        public BaseKnockback BaseKnockback { get; set; }
+        public SetKnockback SetKnockback { get; set; }
         public int BaseKnockbackSetKnockbackId { get; set; }
         public KnockbackGrowth KnockbackGrowth { get; set; }
         public int KnockbackGrowthId { get; set; }
