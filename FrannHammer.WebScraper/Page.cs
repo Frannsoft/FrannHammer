@@ -377,5 +377,16 @@ namespace FrannHammer.WebScraper
 
             return stat;
         }
+
+        public string GetCharacterFriendlyName()
+        {
+            var node = _doc.DocumentNode.SelectSingleNode(StatConstants.XpathFrameDataVersion);
+
+            var characterFriendlyName = node.InnerText.Split(new[] { " F" }, StringSplitOptions.None)[0];
+
+            //clean up and remove the "'s"
+            var retVal = characterFriendlyName.TrimEnd('s', '\'');// .Remove(characterFriendlyName.Length - 1, 2);
+            return retVal;
+        }
     }
 }
