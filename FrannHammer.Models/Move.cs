@@ -7,8 +7,7 @@ namespace FrannHammer.Models
     public class Move : BaseModel
     {
         public string HitboxActive { get; set; }
-        public int TotalHitboxActiveLength { get; set; }
-        public int FirstActionableFrame { get; set; }
+        public string FirstActionableFrame { get; set; }
         public string BaseDamage { get; set; }
         public string Angle { get; set; }
         public string BaseKnockBackSetKnockback { get; set; }
