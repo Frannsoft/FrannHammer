@@ -20,7 +20,6 @@ namespace FrannHammer.Api.Tests
                 Id = _notationCounter,
                 LastModified = DateTime.Now,
                 Name = "notation",
-                NotationType = NotationTypes.Float
             };
 
             _notationCounter++;
@@ -36,7 +35,7 @@ namespace FrannHammer.Api.Tests
                 AutoCancel = "3",
                 BaseDamage = "53",
                 BaseKnockBackSetKnockback = "60/25",
-                FirstActionableFrame = 2,
+                FirstActionableFrame = "2",
                 HitboxActive = "23-25",
                 Id = _moveCounter,
                 KnockbackGrowth = "89",
@@ -44,7 +43,6 @@ namespace FrannHammer.Api.Tests
                 LastModified = DateTime.Now,
                 Name = "falco phantasm",
                 OwnerId = 1,
-                TotalHitboxActiveLength = 30,
                 Type = MoveType.Special
             };
 
@@ -65,7 +63,6 @@ namespace FrannHammer.Api.Tests
                     Id = _notationCounter,
                     LastModified = DateTime.Now,
                     Name = "notation",
-                    NotationType = NotationTypes.Frames
                 },
                 NotationId = _notationCounter
             };
