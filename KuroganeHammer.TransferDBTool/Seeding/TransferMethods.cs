@@ -13,10 +13,11 @@ namespace KurograneHammer.TransferDBTool.Seeding
             {
                 return (T)(object)AddHitboxDataToHitboxTable(move, context);
             }
-            if (typeof(T) == typeof(BaseKnockbackSetKnockback))
-            {
-                return (T)(object)AddBaseKnockbackSetKnockback_DataTo_BaseKnockbackSetKnockback_Table(move, context);
-            }
+            //TODO: this table is going away and split into 'BaseKnockback' and 'SetKnockback' tables.  Need to figure out a way to parse into both of those from this.
+            //if (typeof(T) == typeof(BaseKnockbackSetKnockback))
+            //{
+            //    return (T)(object)AddBaseKnockbackSetKnockback_DataTo_BaseKnockbackSetKnockback_Table(move, context);
+            //}
             if (typeof(T) == typeof(BaseDamage))
             {
                 return (T)(object)AddBaseDamageDataToTable(move, context);
@@ -40,7 +41,7 @@ namespace KurograneHammer.TransferDBTool.Seeding
             throw new Exception("No applicable type found");
         }
 
-        private static KnockbackGrowth AddKnockbackGrowthDataToTable(Move move, AppDbContext context)
+        internal static KnockbackGrowth AddKnockbackGrowthDataToTable(Move move, AppDbContext context)
         {
             var knockbackGrowth = SetBaseHitboxData<KnockbackGrowth>(move.KnockbackGrowth, '/', move, context);
             return knockbackGrowth;
@@ -81,13 +82,18 @@ namespace KurograneHammer.TransferDBTool.Seeding
             var splitData = rawValue.Split(splitOn);
 
             var retVal = (T)Activator.CreateInstance(typeof(T));
-            retVal.Character = context.Characters.Single(c => c.Id == move.OwnerId);
-            retVal.CharacterId = context.Characters.Single(c => c.Id == move.OwnerId).Id;
+            retVal.RawValue = rawValue; //hard copy of data prior to parsing
+            retVal.Owner = context.Characters.Single(c => c.Id == move.OwnerId);
+            retVal.OwnerId = context.Characters.Single(c => c.Id == move.OwnerId).Id;
             retVal.LastModified = DateTime.Now;
             retVal.Move = move;
             retVal.MoveId = move.Id;
 
-            SetHitboxesData(retVal, splitData);
+            if (!rawValue.Contains("No") &&
+                !rawValue.Contains("Yes"))
+            {
+                SetHitboxesData(retVal, splitData);
+            }
 
             return retVal;
         }
@@ -109,14 +115,16 @@ namespace KurograneHammer.TransferDBTool.Seeding
                 frames = 0;
             }
 
+
             var landingLag = new LandingLag
             {
                 LastModified = DateTime.Now,
-                Character = context.Characters.Single(c => c.Id == move.OwnerId),
-                CharacterId = context.Characters.Single(c => c.Id == move.OwnerId).Id,
+                Owner = context.Characters.Single(c => c.Id == move.OwnerId),
+                OwnerId = context.Characters.Single(c => c.Id == move.OwnerId).Id,
                 Move = move,
                 MoveId = move.Id,
-                Frames = frames
+                Frames = frames,
+                RawValue = rawData
             };
 
             return landingLag;
@@ -131,10 +139,11 @@ namespace KurograneHammer.TransferDBTool.Seeding
             var autocancel = new Autocancel
             {
                 LastModified = DateTime.Now,
-                Character = context.Characters.Single(c => c.Id == move.OwnerId),
-                CharacterId = context.Characters.Single(c => c.Id == move.OwnerId).Id,
+                Owner = context.Characters.Single(c => c.Id == move.OwnerId),
+                OwnerId = context.Characters.Single(c => c.Id == move.OwnerId).Id,
                 Move = move,
-                MoveId = move.Id
+                MoveId = move.Id,
+                RawValue = rawData
             };
 
             if (splitData.Length > 0)
@@ -149,19 +158,32 @@ namespace KurograneHammer.TransferDBTool.Seeding
             return autocancel;
         }
 
-        private static BaseDamage AddBaseDamageDataToTable(Move move, AppDbContext context)
+        internal static BaseDamage AddBaseDamageDataToTable(Move move, AppDbContext context)
         {
             var baseDamage = SetBaseHitboxData<BaseDamage>(move.BaseDamage, '/', move, context);
             return baseDamage;
         }
 
-        private static BaseKnockbackSetKnockback AddBaseKnockbackSetKnockback_DataTo_BaseKnockbackSetKnockback_Table(
+        internal static BaseKnockback AddBaseKnockback_DataTo_BaseKnockback_Table(
             Move move, AppDbContext context)
         {
-            var kbk = SetBaseHitboxData<BaseKnockbackSetKnockback>(move.BaseKnockBackSetKnockback, '/', move, context);
-
-            return kbk;
+            //TODO: Need to figure out a way to parse move.BaseKnockbackSetKnock into a usable value for this
+            throw new NotImplementedException();
         }
+
+        internal static SetKnockback AddSetKnockback_DataTo_SetKnockback_Table(
+            Move move, AppDbContext context)
+        {
+            //TODO: Need to figure out a way to parse move.BaseKnockbackSetKnock into a usable value for this
+            throw new NotImplementedException();
+        }
+
+        //private static BaseKnockbackSetKnockback AddBaseKnockbackSetKnockback_DataTo_BaseKnockbackSetKnockback_Table(
+        //    Move move, AppDbContext context)
+        //{
+        //    var kbk = SetBaseHitboxData<BaseKnockbackSetKnockback>(move.BaseKnockBackSetKnockback, '/', move, context);
+        //    return kbk;
+        //}
 
         private static Hitbox AddHitboxDataToHitboxTable(Move move, AppDbContext context)
         {
