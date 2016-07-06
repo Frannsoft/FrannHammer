@@ -222,8 +222,12 @@
     <Content Include="fakeDb\SmashAttributeTypes.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="fakeDb\Throws.csv" />
-    <None Include="fakeDb\ThrowTypes.csv" />
+    <Content Include="fakeDb\Throws.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="fakeDb\ThrowTypes.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
