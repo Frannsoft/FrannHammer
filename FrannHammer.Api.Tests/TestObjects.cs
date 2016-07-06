@@ -12,6 +12,8 @@ namespace FrannHammer.Api.Tests
         private int _characterAttributeCounter;
         private int _characterAttributeTypeCounter;
         private int _notationCounter;
+        private int _throwCounter;
+        private int _throwTypeCounter;
 
         public Notation Notation()
         {
@@ -155,5 +157,34 @@ namespace FrannHammer.Api.Tests
         //        Modifiers = Modifiers.Standing,
         //    };
         //}
+
+        public ThrowType ThrowType()
+        {
+            return new ThrowType
+            {
+                Id = _throwCounter++,
+                Name = "ForwardThrow" + Guid.NewGuid().ToString()
+            };
+        }
+
+        public Throw Throw()
+        {
+            var move = Move();
+            var throwType = ThrowType();
+
+            var newThrow = new Throw
+            {
+                Id = _throwCounter,
+                Move = move,
+                MoveId = move.Id,
+                ThrowType = throwType,
+                ThrowTypeId = throwType.Id,
+                WeightDependent = true,
+                LastModified = DateTime.Now
+            };
+
+            _throwCounter++;
+            return newThrow;
+        }
     }
 }

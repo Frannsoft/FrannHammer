@@ -24,7 +24,6 @@ namespace FrannHammer.Api.Tests
             _connection = Effort.DbConnectionFactory.CreateTransient(loader);
             Context = new ApplicationDbContext(_connection);
             TestObjects = new TestObjects();
-            //Startup.ConfigureAutoMapping();
         }
 
         [TestFixtureTearDown]
@@ -69,23 +68,5 @@ namespace FrannHammer.Api.Tests
             Assert.That(retVal.Content, Is.Not.Null);
             return retVal.Content;
         }
-
-        //protected BadRequestErrorMessageResult ExecuteAndReturnBadRequestErrorMessageResult(Func<IHttpActionResult> op)
-        //{
-        //    var response = op();
-        //    var retVal = response as BadRequestErrorMessageResult;
-
-        //    Assert.That(retVal, Is.Not.Null);
-        //    return retVal;
-        //}
-
-        //protected NotFoundResult ExecuteAndReturnNotFoundResult(Func<IHttpActionResult> op)
-        //{
-        //    var response = op();
-        //    var retVal = response as NotFoundResult;
-
-        //    Assert.That(retVal, Is.Not.Null);
-        //    return retVal;
-        //}
     }
 }

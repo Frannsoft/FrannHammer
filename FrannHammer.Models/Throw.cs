@@ -4,12 +4,6 @@ using System.Threading.Tasks;
 
 namespace FrannHammer.Models
 {
-    public class ThrowType
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-    }
-
     public class Throw : BaseModel
     {
         public int Id { get; set; }
