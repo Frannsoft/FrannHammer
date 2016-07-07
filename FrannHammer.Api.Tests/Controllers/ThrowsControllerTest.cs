@@ -1,9 +1,9 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Web.Http.Results;
 using FrannHammer.Api.Controllers;
 using FrannHammer.Models;
 using NUnit.Framework;
+using System.Linq;
 
 namespace FrannHammer.Api.Tests.Controllers
 {
@@ -29,7 +29,7 @@ namespace FrannHammer.Api.Tests.Controllers
         [Test]
         public void CanGetThrowById()
         {
-            var Throw = ExecuteAndReturnContent<Throw>(() => _controller.GetThrow(1));
+            var Throw = ExecuteAndReturnContent<ThrowDto>(() => _controller.GetThrow(1));
             Assert.That(Throw, Is.Not.Null);
         }
 
@@ -47,29 +47,31 @@ namespace FrannHammer.Api.Tests.Controllers
 
             CollectionAssert.AllItemsAreNotNull(throws);
             CollectionAssert.AllItemsAreUnique(throws);
-            CollectionAssert.AllItemsAreInstancesOfType(throws, typeof(Throw));
+            CollectionAssert.AllItemsAreInstancesOfType(throws, typeof(ThrowDto));
         }
 
         [Test]
         public void ShouldAddThrow()
         {
             var newThrow = TestObjects.Throw();
-            var result = ExecuteAndReturnCreatedAtRouteContent<Throw>(() => _controller.PostThrow(newThrow));
+            var result = ExecuteAndReturnCreatedAtRouteContent<ThrowDto>(() => _controller.PostThrow(newThrow));
 
-            Assert.AreEqual(newThrow, result);
+            var latestThrow = _controller.GetThrows().ToList().Last();
+
+            Assert.AreEqual(result, latestThrow);
         }
 
         [Test]
         public void ShouldUpdateThrow()
         {
             const bool expectedBool = false;
-            var Throw = TestObjects.Throw();
+            var existingThrow = ExecuteAndReturnContent<ThrowDto>(() => _controller.GetThrow(1));
 
-            var dateTime = DateTime.Now;
             Thread.Sleep(100);
             //arrange
             var returnedThrow =
-                ExecuteAndReturnCreatedAtRouteContent<Throw>(() => _controller.PostThrow(Throw));
+                ExecuteAndReturnCreatedAtRouteContent<ThrowDto>(() => _controller.PostThrow(existingThrow));
+
             //act
             if (returnedThrow != null)
             {
@@ -77,19 +79,19 @@ namespace FrannHammer.Api.Tests.Controllers
                 ExecuteAndReturn<StatusCodeResult>(() => _controller.PutThrow(returnedThrow.Id, returnedThrow));
             }
 
-            var updatedThrow = ExecuteAndReturnContent<Throw>(() => _controller.GetThrow(Throw.Id));
+            var updatedThrow = ExecuteAndReturnContent<ThrowDto>(() => _controller.GetThrow(existingThrow.Id));
 
             //assert
             Assert.That(updatedThrow.WeightDependent, Is.EqualTo(expectedBool));
-            Assert.That(updatedThrow.LastModified, Is.GreaterThan(dateTime));
         }
 
         [Test]
         public void ShouldDeleteThrow()
         {
             var Throw = TestObjects.Throw();
-            ExecuteAndReturnCreatedAtRouteContent<Throw>(() => _controller.PostThrow(Throw));
-            ExecuteAndReturnContent<Throw>(() => _controller.DeleteThrow(Throw.Id));
+            ExecuteAndReturnCreatedAtRouteContent<ThrowDto>(() => _controller.PostThrow(Throw));
+            _controller.DeleteThrow(Throw.Id);
+
             ExecuteAndReturn<NotFoundResult>(() => _controller.GetThrow(Throw.Id));
         }
 

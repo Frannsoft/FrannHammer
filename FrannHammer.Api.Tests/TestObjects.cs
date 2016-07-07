@@ -13,7 +13,10 @@ namespace FrannHammer.Api.Tests
         private int _characterAttributeTypeCounter;
         private int _notationCounter;
         private int _throwCounter;
-        private int _throwTypeCounter;
+        private int _angleCounter;
+        private int _baseDamagesCounter;
+        private int _knockbackGrowthCounter;
+        private int _hitboxCounter;
 
         public Notation Notation()
         {
@@ -39,7 +42,7 @@ namespace FrannHammer.Api.Tests
                 BaseKnockBackSetKnockback = "60/25",
                 FirstActionableFrame = "2",
                 HitboxActive = "23-25",
-                Id = _moveCounter,
+                Id = ++_moveCounter,
                 KnockbackGrowth = "89",
                 LandingLag = "11",
                 LastModified = DateTime.Now,
@@ -47,8 +50,6 @@ namespace FrannHammer.Api.Tests
                 OwnerId = 1,
                 Type = MoveType.Special
             };
-
-            _moveCounter++;
 
             return move;
         }
@@ -158,33 +159,93 @@ namespace FrannHammer.Api.Tests
         //    };
         //}
 
-        public ThrowType ThrowType()
+        public AngleDto Angle()
         {
-            return new ThrowType
+            var move = Move();
+            return new AngleDto
             {
-                Id = _throwCounter++,
+                Id = ++_angleCounter,
+                MoveId = move.Id,
+                Notes = "dummynotes",
+                OwnerId = 1,
+                RawValue = "40/30/20"
+            };
+        }
+
+        public ThrowTypeDto ThrowType()
+        {
+            return new ThrowTypeDto
+            {
+                Id = ++_throwCounter,
                 Name = "ForwardThrow" + Guid.NewGuid().ToString()
             };
         }
 
-        public Throw Throw()
+        public ThrowDto Throw()
         {
             var move = Move();
             var throwType = ThrowType();
 
-            var newThrow = new Throw
+            var newThrow = new ThrowDto
             {
-                Id = _throwCounter,
-                Move = move,
+                Id = ++_throwCounter,
                 MoveId = move.Id,
-                ThrowType = throwType,
                 ThrowTypeId = throwType.Id,
                 WeightDependent = true,
-                LastModified = DateTime.Now
             };
 
-            _throwCounter++;
             return newThrow;
+        }
+
+        public BaseDamageDto BaseDamage()
+        {
+            var move = Move();
+            return new BaseDamageDto
+            {
+                Id = ++_baseDamagesCounter,
+                MoveId = move.Id,
+                Notes = "dummynotes",
+                OwnerId = 1,
+                RawValue = "20/30/10"
+            };
+        }
+
+        public KnockbackGrowthDto KnockbackGrowth()
+        {
+            var move = Move();
+            return new KnockbackGrowthDto
+            {
+                Id = ++_knockbackGrowthCounter,
+                MoveId = move.Id,
+                Notes = "dummynotes",
+                OwnerId = 1,
+                RawValue = "20/34/20",
+                Hitbox1 = "20",
+                Hitbox2 = "30",
+                Hitbox3 = "40",
+                Hitbox4 = "20",
+                Hitbox5 = "10",
+                Hitbox6 = "40"
+            };
+        }
+
+        public HitboxDto Hitbox()
+        {
+            var move = Move();
+            return new HitboxDto
+            {
+                Id = ++_hitboxCounter,
+                MoveId = move.Id,
+                Notes = "dummynotes",
+                OwnerId = 1,
+                RawValue = "20/34/20",
+                Hitbox1 = "2-4",
+                Hitbox2 = "5-6",
+                Hitbox3 = "9 - 12",
+                Hitbox4 = "14 - 15",
+                Hitbox5 = "17 - 20",
+                Hitbox6 = "20 - 22"
+            };
         }
     }
 }
