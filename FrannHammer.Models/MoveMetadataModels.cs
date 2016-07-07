@@ -43,14 +43,7 @@ namespace FrannHammer.Models
         public string Hitbox6 { get; set; }
     }
 
-    public class Hitbox : BaseMoveHitboxMeta
-    { }
-
-    public class BaseDamage : BaseMoveHitboxMeta
-    { }
-
-    public class Angle : BaseMoveHitboxMeta
-    { }
+    
 
     public class BaseKnockback : BaseMoveHitboxMeta
     { }
@@ -60,9 +53,6 @@ namespace FrannHammer.Models
 
     //public class BaseKnockbackSetKnockback : BaseMoveHitboxMeta
     //{ }
-
-    public class KnockbackGrowth : BaseMoveHitboxMeta
-    { }
 
     public class LandingLag : BaseMeta
     {

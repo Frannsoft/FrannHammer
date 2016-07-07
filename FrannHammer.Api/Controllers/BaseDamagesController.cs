@@ -4,67 +4,67 @@ using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
-using AutoMapper.QueryableExtensions;
 
 namespace FrannHammer.Api.Controllers
 {
     /// <summary>
-    /// Handles operations dealing with <see cref="Throw"/>s.
+    /// Handles operations dealing with <see cref="BaseDamage"/>s.
     /// </summary>
     [RoutePrefix("api")]
-    public class ThrowsController : BaseApiController
+    public class BaseDamagesController : BaseApiController
     {
-        private const string ThrowsRouteKey = "Throws";
+        private const string BaseDamagesRouteKey = "BaseDamages";
 
         /// <summary>
-        /// Create a new <see cref="ThrowsController"/> to interact with the server using 
+        /// Create a new <see cref="FrannHammer.Api.Controllers.BaseDamagesController"/> to interact with the server using 
         /// a specific <see cref="IApplicationDbContext"/>
         /// </summary>
         /// <param name="context"></param>
-        public ThrowsController(IApplicationDbContext context)
+        public BaseDamagesController(IApplicationDbContext context)
             : base(context)
         { }
 
         /// <summary>
-        /// Get all <see cref="ThrowDto"/>s.
+        /// Get all <see cref="BaseDamageDto"/>s.
         /// </summary>
         /// <returns></returns>
-        [Route(ThrowsRouteKey)]
-        public IQueryable<ThrowDto> GetThrows()
+        [Route(BaseDamagesRouteKey)]
+        public IQueryable<BaseDamageDto> GetBaseDamages()
         {
-            var throwTypes = Db.Throws.ProjectTo<ThrowDto>();
-            return throwTypes;
+            var baseDamageTypes = Db.BaseDamage.ProjectTo<BaseDamageDto>();
+            return baseDamageTypes;
         }
 
         /// <summary>
-        /// Get a specific <see cref="ThrowDto"/>s details.
+        /// Get a specific <see cref="BaseDamageDto"/>s details.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [ResponseType(typeof(ThrowDto))]
-        [Route(ThrowsRouteKey + "/{id}")]
-        public IHttpActionResult GetThrow(int id)
+        [ResponseType(typeof(BaseDamageDto))]
+        [Route(BaseDamagesRouteKey + "/{id}")]
+        public IHttpActionResult GetBaseDamage(int id)
         {
-            Throw retThrow = Db.Throws.Find(id);
-            if (retThrow == null)
+            BaseDamage retBaseDamage = Db.BaseDamage.Find(id);
+            if (retBaseDamage == null)
             {
                 return NotFound();
             }
 
-            var dto = Mapper.Map<Throw, ThrowDto>(retThrow);
+            var dto = Mapper.Map<BaseDamage, BaseDamageDto>(retBaseDamage);
             return Ok(dto);
         }
 
         /// <summary>
-        /// Update a <see cref="ThrowDto"/>.
+        /// Update a <see cref="BaseDamageDto"/>.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="dto"></param>
         /// <returns></returns>
-        [Route(ThrowsRouteKey + "/{id}")]
-        public IHttpActionResult PutThrow(int id, ThrowDto dto)
+        [Route(BaseDamagesRouteKey + "/{id}")]
+        public IHttpActionResult PutBaseDamage(int id, BaseDamageDto dto)
         {
             if (!ModelState.IsValid)
             {
@@ -76,12 +76,12 @@ namespace FrannHammer.Api.Controllers
                 return BadRequest();
             }
 
-            if (!ThrowExists(id))
+            if (!BaseDamageExists(id))
             {
                 return NotFound();
             }
 
-            var entity = Db.Throws.Find(id);
+            var entity = Db.BaseDamage.Find(id);
             entity = Mapper.Map(dto, entity);
 
             entity.LastModified = DateTime.Now;
@@ -93,54 +93,54 @@ namespace FrannHammer.Api.Controllers
         }
 
         /// <summary>
-        /// Create a new <see cref="ThrowDto"/>.
+        /// Create a new <see cref="BaseDamageDto"/>.
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
-        [ResponseType(typeof(ThrowDto))]
-        [Route(ThrowsRouteKey)]
-        public IHttpActionResult PostThrow(ThrowDto dto)
+        [ResponseType(typeof(BaseDamageDto))]
+        [Route(BaseDamagesRouteKey)]
+        public IHttpActionResult PostBaseDamage(BaseDamageDto dto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var entity = Mapper.Map<ThrowDto, Throw>(dto);
+            var entity = Mapper.Map<BaseDamageDto, BaseDamage>(dto);
             entity.LastModified = DateTime.Now;
 
-            Db.Throws.Add(entity);
+            Db.BaseDamage.Add(entity);
             Db.SaveChanges();
 
-            var newDto = Mapper.Map<Throw, ThrowDto>(entity);
-            return CreatedAtRoute("DefaultApi", new { controller = "Throws", id = newDto.Id }, newDto);
+            var newDto = Mapper.Map<BaseDamage, BaseDamageDto>(entity);
+            return CreatedAtRoute("DefaultApi", new { controller = "BaseDamages", id = newDto.Id }, newDto);
         }
 
         /// <summary>
-        /// Delete a <see cref="Throw"/>.
+        /// Delete a <see cref="BaseDamage"/>.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
-        [Route(ThrowsRouteKey + "/{id}")]
-        public IHttpActionResult DeleteThrow(int id)
+        [Route(BaseDamagesRouteKey + "/{id}")]
+        public IHttpActionResult DeleteBaseDamage(int id)
         {
-            Throw Throw = Db.Throws.Find(id);
-            if (Throw == null)
+            BaseDamage baseDamage = Db.BaseDamage.Find(id);
+            if (baseDamage == null)
             {
                 return NotFound();
             }
 
-            Db.Throws.Remove(Throw);
+            Db.BaseDamage.Remove(baseDamage);
             Db.SaveChanges();
 
             return StatusCode(HttpStatusCode.OK);
         }
 
-        private bool ThrowExists(int id)
+        private bool BaseDamageExists(int id)
         {
-            return Db.Throws.Count(e => e.Id == id) > 0;
+            return Db.BaseDamage.Count(e => e.Id == id) > 0;
         }
     }
 }

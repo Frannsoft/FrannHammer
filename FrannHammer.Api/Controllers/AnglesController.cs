@@ -4,67 +4,67 @@ using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
-using AutoMapper.QueryableExtensions;
 
 namespace FrannHammer.Api.Controllers
 {
     /// <summary>
-    /// Handles operations dealing with <see cref="Throw"/>s.
+    /// Handles operations dealing with <see cref="Angle"/>s.
     /// </summary>
     [RoutePrefix("api")]
-    public class ThrowsController : BaseApiController
+    public class AnglesController : BaseApiController
     {
-        private const string ThrowsRouteKey = "Throws";
+        private const string AnglesRouteKey = "Angles";
 
         /// <summary>
-        /// Create a new <see cref="ThrowsController"/> to interact with the server using 
+        /// Create a new <see cref="AnglesController"/> to interact with the server using 
         /// a specific <see cref="IApplicationDbContext"/>
         /// </summary>
         /// <param name="context"></param>
-        public ThrowsController(IApplicationDbContext context)
+        public AnglesController(IApplicationDbContext context)
             : base(context)
         { }
 
         /// <summary>
-        /// Get all <see cref="ThrowDto"/>s.
+        /// Get all <see cref="AngleDto"/>s.
         /// </summary>
         /// <returns></returns>
-        [Route(ThrowsRouteKey)]
-        public IQueryable<ThrowDto> GetThrows()
+        [Route(AnglesRouteKey)]
+        public IQueryable<AngleDto> GetAngles()
         {
-            var throwTypes = Db.Throws.ProjectTo<ThrowDto>();
-            return throwTypes;
+            var angleTypes = Db.Angle.ProjectTo<AngleDto>();
+            return angleTypes;
         }
 
         /// <summary>
-        /// Get a specific <see cref="ThrowDto"/>s details.
+        /// Get a specific <see cref="AngleDto"/>s details.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [ResponseType(typeof(ThrowDto))]
-        [Route(ThrowsRouteKey + "/{id}")]
-        public IHttpActionResult GetThrow(int id)
+        [ResponseType(typeof(AngleDto))]
+        [Route(AnglesRouteKey + "/{id}")]
+        public IHttpActionResult GetAngle(int id)
         {
-            Throw retThrow = Db.Throws.Find(id);
-            if (retThrow == null)
+            Angle retAngle = Db.Angle.Find(id);
+            if (retAngle == null)
             {
                 return NotFound();
             }
 
-            var dto = Mapper.Map<Throw, ThrowDto>(retThrow);
+            var dto = Mapper.Map<Angle, AngleDto>(retAngle);
             return Ok(dto);
         }
 
         /// <summary>
-        /// Update a <see cref="ThrowDto"/>.
+        /// Update a <see cref="AngleDto"/>.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="dto"></param>
         /// <returns></returns>
-        [Route(ThrowsRouteKey + "/{id}")]
-        public IHttpActionResult PutThrow(int id, ThrowDto dto)
+        [Route(AnglesRouteKey + "/{id}")]
+        public IHttpActionResult PutAngle(int id, AngleDto dto)
         {
             if (!ModelState.IsValid)
             {
@@ -76,12 +76,12 @@ namespace FrannHammer.Api.Controllers
                 return BadRequest();
             }
 
-            if (!ThrowExists(id))
+            if (!AngleExists(id))
             {
                 return NotFound();
             }
 
-            var entity = Db.Throws.Find(id);
+            var entity = Db.Angle.Find(id);
             entity = Mapper.Map(dto, entity);
 
             entity.LastModified = DateTime.Now;
@@ -93,54 +93,54 @@ namespace FrannHammer.Api.Controllers
         }
 
         /// <summary>
-        /// Create a new <see cref="ThrowDto"/>.
+        /// Create a new <see cref="AngleDto"/>.
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
-        [ResponseType(typeof(ThrowDto))]
-        [Route(ThrowsRouteKey)]
-        public IHttpActionResult PostThrow(ThrowDto dto)
+        [ResponseType(typeof(AngleDto))]
+        [Route(AnglesRouteKey)]
+        public IHttpActionResult PostAngle(AngleDto dto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var entity = Mapper.Map<ThrowDto, Throw>(dto);
+            var entity = Mapper.Map<AngleDto, Angle>(dto);
             entity.LastModified = DateTime.Now;
 
-            Db.Throws.Add(entity);
+            Db.Angle.Add(entity);
             Db.SaveChanges();
 
-            var newDto = Mapper.Map<Throw, ThrowDto>(entity);
-            return CreatedAtRoute("DefaultApi", new { controller = "Throws", id = newDto.Id }, newDto);
+            var newDto = Mapper.Map<Angle, AngleDto>(entity);
+            return CreatedAtRoute("DefaultApi", new { controller = "Angles", id = newDto.Id }, newDto);
         }
 
         /// <summary>
-        /// Delete a <see cref="Throw"/>.
+        /// Delete a <see cref="Angle"/>.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
-        [Route(ThrowsRouteKey + "/{id}")]
-        public IHttpActionResult DeleteThrow(int id)
+        [Route(AnglesRouteKey + "/{id}")]
+        public IHttpActionResult DeleteAngle(int id)
         {
-            Throw Throw = Db.Throws.Find(id);
-            if (Throw == null)
+            Angle angle = Db.Angle.Find(id);
+            if (angle == null)
             {
                 return NotFound();
             }
 
-            Db.Throws.Remove(Throw);
+            Db.Angle.Remove(angle);
             Db.SaveChanges();
 
             return StatusCode(HttpStatusCode.OK);
         }
 
-        private bool ThrowExists(int id)
+        private bool AngleExists(int id)
         {
-            return Db.Throws.Count(e => e.Id == id) > 0;
+            return Db.Angle.Count(e => e.Id == id) > 0;
         }
     }
 }

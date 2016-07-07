@@ -24,6 +24,7 @@ namespace FrannHammer.Api.Tests
             _connection = Effort.DbConnectionFactory.CreateTransient(loader);
             Context = new ApplicationDbContext(_connection);
             TestObjects = new TestObjects();
+            Startup.ConfigureAutoMapping();
         }
 
         [TestFixtureTearDown]
