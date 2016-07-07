@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
+using AutoMapper.QueryableExtensions;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
-using FrannHammer.Models.DTOs;
 
 namespace FrannHammer.Api.Controllers
 {
@@ -102,6 +101,22 @@ namespace FrannHammer.Api.Controllers
             var moves = Db.Moves.Where(m => m.OwnerId == id);
 
             return moves;
+        }
+
+        /// <summary>
+        /// Get all the <see cref="Throw"/>s for the specific <see cref="Character"/>.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [ResponseType(typeof(IQueryable<ThrowDto>))]
+        [Route("characters/{id}/throws")]
+        public IQueryable<ThrowDto> GetThrowsForCharacter(int id)
+        {
+            return (from throws in Db.Throws
+                    join moves in Db.Moves
+                        on throws.MoveId equals moves.Id
+                    where moves.OwnerId == id
+                    select throws).ProjectTo<ThrowDto>();
         }
 
         /// <summary>

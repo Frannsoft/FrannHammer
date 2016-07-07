@@ -289,6 +289,13 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:FrannHammer.Api.Controllers.CharactersController.GetThrowsForCharacter(System.Int32)">
+            <summary>
+            Get all the <see cref="T:FrannHammer.Models.Throw"/>s for the specific <see cref="T:FrannHammer.Models.Character"/>.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:FrannHammer.Api.Controllers.CharactersController.GetCharacterAttributesForCharacter(System.Int32)">
             <summary>
             Get all the <see cref="T:FrannHammer.Models.CharacterAttribute"/>s of a specific <see cref="T:FrannHammer.Models.Character"/>.
