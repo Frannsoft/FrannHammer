@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading;
 using System.Web.Http.Results;
 using FrannHammer.Api.Controllers;
@@ -70,6 +69,17 @@ namespace FrannHammer.Api.Tests.Controllers
         public void BadRequestReturned_WhenNullNameForFoundByName()
         {
             ExecuteAndReturn<BadRequestErrorMessageResult>(() => _controller.GetCharacterByName(null));
+        }
+
+        [Test]
+        public void ShouldGetAllCharacterThrows()
+        {
+            var throws = _controller.GetThrowsForCharacter(1);
+
+            Assert.That(throws, Is.Not.Empty);
+            CollectionAssert.AllItemsAreNotNull(throws);
+            CollectionAssert.AllItemsAreUnique(throws);
+            CollectionAssert.AllItemsAreInstancesOfType(throws, typeof(ThrowDto));
         }
 
         [Test]
