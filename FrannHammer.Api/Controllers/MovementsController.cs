@@ -23,15 +23,15 @@ namespace FrannHammer.Api.Controllers
         }
 
         //Query too big to be useful.
-        ///// <summary>
-        ///// Get all movement data.
-        ///// </summary>
-        //[ResponseType(typeof(IQueryable<Movement>))]
-        //[Route("movements", Name = "GetAllMovements")]
-        //public IQueryable<Movement> GetMovements()
-        //{
-        //    return Db.Movements;
-        //}
+        /// <summary>
+        /// Get all movement data.
+        /// </summary>
+        [ResponseType(typeof(IQueryable<Movement>))]
+        [Route("movements", Name = "GetAllMovements")]
+        public IQueryable<Movement> GetMovements()
+        {
+            return Db.Movements;
+        }
 
         /// <summary>
         /// Get all of the <see cref="Movement"/> data that is a specific name.

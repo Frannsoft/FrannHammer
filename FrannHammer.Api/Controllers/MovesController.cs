@@ -22,20 +22,16 @@ namespace FrannHammer.Api.Controllers
         { }
 
         //Too big to be useful
-        ///// <summary>
-        ///// Get all moves.  Not sure if this is sticking around.
-        ///// </summary>
-        ///// <returns></returns>
-        //[ResponseType(typeof(IQueryable<Move>))]
-        //[Route("moves")]
-        //public IQueryable<Move> GetMoves()
-        //{
-        //    return Db.Moves;
-        //    return (from move in Db.Moves.ToList()
-        //            select new MoveDto(move,
-        //                Db.Characters.Find(move.OwnerId))// .First(c => c.Id == move.OwnerId))
-        //        ).AsQueryable();
-        //}
+        /// <summary>
+        /// Get all moves.  Not sure if this is sticking around.
+        /// </summary>
+        /// <returns></returns>
+        [ResponseType(typeof(IQueryable<MoveDto>))]
+        [Route("moves")]
+        public IQueryable<MoveDto> GetMoves()
+        {
+            return Db.Moves.ProjectTo<MoveDto>();
+        }
 
         /// <summary>
         /// Get all moves that have a specific name.
