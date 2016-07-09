@@ -1,3 +1,3 @@
 Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName
-"e331ba09-7ed1-47b0-bcd2-1b754b51689a","getuser@mymail.com",True,"AF8Ig3wDCJOODa0uPxblldZa87LWaV7gZgljszS5UVGQ3e4aU9Hxgch0UaAbfzXMDg==","db776e54-382c-40e9-96cc-ccd35ba037b5",,False,False,,False,0,"GETuser"
-"f2c40bdf-67ad-429c-9590-67f4031f89e8","adminuser@myemail.com",True,"AFXyjTmYDCEx/MVtY7rpae3QszYQpn3JA1kDQVu+q1BeSzP7GLGgZvadVKWNT7fhOg==","352a1019-80bd-462f-96da-c7da3edbd19f",,False,False,,False,0,"KuroUser"
+"0cd43a30-cf44-4ebf-9c0b-5ec0eb44ec24","adminuser@myemail.com",True,"AIzbFo51jNr7I/ck8oSGUyFFvIQeBTODuqNkNP1E/3GM8UEWr0l1bFkPCEWgyaIS7A==","af6d2725-b265-4878-880c-79b70b6294e8",,False,False,,False,0,"KuroUser"
+"29acc1a1-c2e1-41bc-9fb9-6ffc10a279de","getuser@mymail.com",True,"AL6Tof/Ei9rFh5N40AXHvDUS61S8nPZv6HywrzA7kBSaT5OkVjQWxp1CSNUKtMX4PA==","d0654d47-5cf9-422d-b4eb-52e4c57b7709",,False,False,,False,0,"GETuser"

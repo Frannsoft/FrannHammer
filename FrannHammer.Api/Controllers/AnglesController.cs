@@ -32,7 +32,7 @@ namespace FrannHammer.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [Route(AnglesRouteKey)]
-        internal IQueryable<AngleDto> GetAngles()
+        public IQueryable<AngleDto> GetAngles()
         {
             var angleTypes = Db.Angle.ProjectTo<AngleDto>();
             return angleTypes;

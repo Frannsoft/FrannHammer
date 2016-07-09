@@ -447,6 +447,11 @@
             Handles server operations dealing with <see cref="T:FrannHammer.Models.Movement"/>s.
             </summary>
         </member>
+        <member name="M:FrannHammer.Api.Controllers.MovementsController.GetMovements">
+            <summary>
+            Get all movement data.
+            </summary>
+        </member>
         <member name="M:FrannHammer.Api.Controllers.MovementsController.GetMovementsByName(System.String)">
             <summary>
             Get all of the <see cref="T:FrannHammer.Models.Movement"/> data that is a specific name.
@@ -487,6 +492,12 @@
             <summary>
             Handles server operations dealing with <see cref="T:FrannHammer.Models.Move"/>s.
             </summary>
+        </member>
+        <member name="M:FrannHammer.Api.Controllers.MovesController.GetMoves">
+            <summary>
+            Get all moves.  Not sure if this is sticking around.
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.MovesController.GetMovesByName(System.String)">
             <summary>
