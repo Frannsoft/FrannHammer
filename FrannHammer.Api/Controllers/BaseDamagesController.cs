@@ -32,7 +32,7 @@ namespace FrannHammer.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [Route(BaseDamagesRouteKey)]
-        public IQueryable<BaseDamageDto> GetBaseDamages()
+        internal IQueryable<BaseDamageDto> GetBaseDamages()
         {
             var baseDamageTypes = Db.BaseDamage.ProjectTo<BaseDamageDto>();
             return baseDamageTypes;

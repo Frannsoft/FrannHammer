@@ -32,7 +32,7 @@ namespace FrannHammer.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [Route(HitboxesRouteKey)]
-        public IQueryable<HitboxDto> GetHitboxes()
+        internal IQueryable<HitboxDto> GetHitboxes()
         {
             var hitboxes = Db.Hitbox.ProjectTo<HitboxDto>();
             return hitboxes;
