@@ -93,17 +93,17 @@ namespace FrannHammer.DataSynchro.ViewModels
             {
                 case CharacterMetadataTypes.CharacterAttributes:
                     {
-                        model = new CharacterAttributeDto();
+                        //model = new CharacterAttributeDto();
                         break;
                     }
                 case CharacterMetadataTypes.Movements:
                     {
-                        model = new Movement();
+                        //model = new Movement();
                         break;
                     }
                 case CharacterMetadataTypes.Moves:
                     {
-                        model = new Move();
+                        //model = new Move();
                         break;
                     }
                 default:
