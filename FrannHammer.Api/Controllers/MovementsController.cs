@@ -1,17 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
 
 namespace FrannHammer.Api.Controllers
 {
-
+    /// <summary>
+    /// Handles server operations dealing with <see cref="Movement"/>s.
+    /// </summary>
     [RoutePrefix("api")]
     public class MovementsController : BaseApiController
     {
@@ -29,11 +31,6 @@ namespace FrannHammer.Api.Controllers
         //public IQueryable<Movement> GetMovements()
         //{
         //    return Db.Movements;
-
-        //    return (from movement in Db.Movements.ToList()
-        //            select new MovementDto(movement,
-        //            Db.Characters.First(c => c.Id == movement.OwnerId))
-        //        ).AsQueryable();
         //}
 
         /// <summary>
@@ -41,11 +38,12 @@ namespace FrannHammer.Api.Controllers
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        [ResponseType(typeof(IQueryable<Movement>))]
+        [ResponseType(typeof(IQueryable<MovementDto>))]
         [Route("movements/byname", Name = "GetMovementsByName")]
-        public IQueryable<Movement> GetMovementsByName([FromUri] string name)
+        public IQueryable<MovementDto> GetMovementsByName([FromUri] string name)
         {
-            return Db.Movements.Where(m => m.Name.Equals(name));
+            var movements = Db.Movements.Where(m => m.Name.Equals(name, StringComparison.OrdinalIgnoreCase)).ProjectTo<MovementDto>();
+            return movements;
         }
 
         /// <summary>
@@ -53,7 +51,7 @@ namespace FrannHammer.Api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [ResponseType(typeof(Movement))]
+        [ResponseType(typeof(MovementDto))]
         [Route("movements/{id}")]
         public IHttpActionResult GetMovement(int id)
         {
@@ -63,48 +61,45 @@ namespace FrannHammer.Api.Controllers
                 return NotFound();
             }
 
-            return Ok(movement);
+            var dto = Mapper.Map<Movement, MovementDto>(movement);
+
+            return Ok(dto);
         }
 
         /// <summary>
         /// Update a specific <see cref="Movement"/>.
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="movement"></param>
+        /// <param name="dto"></param>
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
         [ResponseType(typeof(void))]
         [Route("movements/{id}")]
-        public IHttpActionResult PutMovement(int id, Movement movement)
+        public IHttpActionResult PutMovement(int id, MovementDto dto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != movement.Id)
+            if (id != dto.Id)
             {
                 return BadRequest();
             }
 
-            movement.LastModified = DateTime.Now;
-            Db.Entry(movement).State = EntityState.Modified;
+            if (!MovementExists(id))
+            {
+                return NotFound();
+            }
 
-            try
-            {
-                Db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MovementExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            var entity = Db.Movements.Find(id);
+
+            entity = Mapper.Map(dto, entity);
+
+            entity.LastModified = DateTime.Now;
+            Db.Entry(entity).State = EntityState.Modified;
+
+            Db.SaveChanges();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -112,25 +107,25 @@ namespace FrannHammer.Api.Controllers
         /// <summary>
         /// Create a new <see cref="Movement"/>.
         /// </summary>
-        /// <param name="movement"></param>
+        /// <param name="dto"></param>
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
-        [ResponseType(typeof(Movement))]
+        [ResponseType(typeof(MovementDto))]
         [Route("movements")]
-        public IHttpActionResult PostMovement(Movement movement)
+        public IHttpActionResult PostMovement(MovementDto dto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            movement.LastModified = DateTime.Now;
-            Db.Movements.Add(movement);
+            var entity = Mapper.Map<MovementDto, Movement>(dto);
+            entity.LastModified = DateTime.Now;
+            Db.Movements.Add(entity);
             Db.SaveChanges();
 
-            //var dto = new MovementDto(movement,
-            //    db.Characters.First(c => c.Id == movement.OwnerId));
-            return CreatedAtRoute("DefaultApi", new { controller = "Movements", id = movement.Id }, movement);
+            var newDto = Mapper.Map<Movement, MovementDto>(entity);
+            return CreatedAtRoute("DefaultApi", new { controller = "Movements", id = newDto.Id }, newDto);
         }
 
         /// <summary>
@@ -139,7 +134,6 @@ namespace FrannHammer.Api.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
-        [ResponseType(typeof(Movement))]
         [Route("movements/{id}")]
         public IHttpActionResult DeleteMovement(int id)
         {
@@ -152,7 +146,7 @@ namespace FrannHammer.Api.Controllers
             Db.Movements.Remove(movement);
             Db.SaveChanges();
 
-            return Ok(movement);
+            return StatusCode(HttpStatusCode.OK);
         }
 
         protected override void Dispose(bool disposing)

@@ -10,8 +10,8 @@ namespace FrannHammer.Api.Tests
         private int _characterCounter;
         private int _smashAttributeTypeCounter;
         private int _characterAttributeCounter;
-        private int _characterAttributeTypeCounter;
-        private int _notationCounter;
+        private int _characterAttributeTypeCounter = 1;
+        private int _notationCounter = 1;
         private int _throwCounter;
         private int _angleCounter;
         private int _baseDamagesCounter;
@@ -32,9 +32,9 @@ namespace FrannHammer.Api.Tests
             return notation;
         }
 
-        public Move Move()
+        public MoveDto Move()
         {
-            var move = new Move
+            var move = new MoveDto
             {
                 Angle = "40",
                 AutoCancel = "3",
@@ -45,7 +45,6 @@ namespace FrannHammer.Api.Tests
                 Id = ++_moveCounter,
                 KnockbackGrowth = "89",
                 LandingLag = "11",
-                LastModified = DateTime.Now,
                 Name = "falco phantasm",
                 OwnerId = 1,
                 Type = MoveType.Special
@@ -54,20 +53,14 @@ namespace FrannHammer.Api.Tests
             return move;
         }
 
-        internal CharacterAttributeType CharacterAttributeType()
+        internal CharacterAttributeTypeDto CharacterAttributeType()
         {
-            var characterAttributeType = new CharacterAttributeType
+            var characterAttributeType = new CharacterAttributeTypeDto
             {
                 Id = _characterAttributeTypeCounter,
-                LastModified = DateTime.Now,
                 Name = "attr name",
-                Notation = new Notation
-                {
-                    Id = _notationCounter,
-                    LastModified = DateTime.Now,
-                    Name = "notation",
-                },
                 NotationId = _notationCounter
+                
             };
 
             _characterAttributeTypeCounter++;
@@ -75,12 +68,11 @@ namespace FrannHammer.Api.Tests
             return characterAttributeType;
         }
 
-        public Movement Movement()
+        public MovementDto Movement()
         {
-            var movement = new Movement
+            var movement = new MovementDto
             {
                 Id = _movementCounter,
-                LastModified = DateTime.Now,
                 Name = "jab 1",
                 OwnerId = 1,
                 Value = "3 frames"
@@ -91,14 +83,13 @@ namespace FrannHammer.Api.Tests
             return movement;
         }
 
-        public Character Character()
+        public CharacterDto Character()
         {
-            var character = new Character
+            var character = new CharacterDto
             {
                 ColorTheme = "#323423",
                 Description = "desc",
                 Id = _characterCounter,
-                LastModified = DateTime.Now,
                 MainImageUrl = "http://img.com/i.png",
                 Name = "falco",
                 Style = "prefers the air",
@@ -110,13 +101,12 @@ namespace FrannHammer.Api.Tests
             return character;
         }
 
-        public SmashAttributeType SmashAttributeType()
+        public SmashAttributeTypeDto SmashAttributeType()
         {
-            var smashAttributeType = new SmashAttributeType
+            var smashAttributeType = new SmashAttributeTypeDto
             {
                 Id = _smashAttributeTypeCounter,
                 Name = "max fall speed",
-                LastModified = DateTime.Now
             };
 
             _smashAttributeTypeCounter++;
@@ -124,15 +114,14 @@ namespace FrannHammer.Api.Tests
             return smashAttributeType;
         }
 
-        public CharacterAttribute CharacterAttribute()
+        public CharacterAttributeDto CharacterAttribute()
         {
-            var characterAttribute = new CharacterAttribute
+            var characterAttribute = new CharacterAttributeDto
             {
                 Id = _characterAttributeCounter,
                 Name = "attribute name",
                 OwnerId = 1,
                 Rank = "4",
-                SmashAttributeType = SmashAttributeType(),
                 Value = "5.43"
             };
 

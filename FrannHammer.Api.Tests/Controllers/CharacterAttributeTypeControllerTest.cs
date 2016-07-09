@@ -4,6 +4,7 @@ using System.Web.Http.Results;
 using FrannHammer.Api.Controllers;
 using FrannHammer.Models;
 using NUnit.Framework;
+using System.Linq;
 
 namespace FrannHammer.Api.Tests.Controllers
 {
@@ -29,7 +30,7 @@ namespace FrannHammer.Api.Tests.Controllers
         [Test]
         public void ShouldGetCharacterAttributeType()
         {
-            ExecuteAndReturnContent<CharacterAttributeType>(() => _controller.GetCharacterAttributeType(1));
+            ExecuteAndReturnContent<CharacterAttributeTypeDto>(() => _controller.GetCharacterAttributeType(1));
         }
 
         [Test]
@@ -38,53 +39,48 @@ namespace FrannHammer.Api.Tests.Controllers
             var characterAttributeTypes = _controller.GetCharacterAttributeTypes();
             CollectionAssert.AllItemsAreNotNull(characterAttributeTypes);
             CollectionAssert.AllItemsAreUnique(characterAttributeTypes);
-            CollectionAssert.AllItemsAreInstancesOfType(characterAttributeTypes, typeof(CharacterAttributeType));
+            CollectionAssert.AllItemsAreInstancesOfType(characterAttributeTypes, typeof(CharacterAttributeTypeDto));
         }
 
         [Test]
         public void ShouldAddCharacterAttributeType()
         {
             var characterAttributeType = TestObjects.CharacterAttributeType();
-            var result = ExecuteAndReturnCreatedAtRouteContent<CharacterAttributeType>(() => _controller.PostCharacterAttributeType(characterAttributeType));
+            var result = ExecuteAndReturnCreatedAtRouteContent<CharacterAttributeTypeDto>(() => _controller.PostCharacterAttributeType(characterAttributeType));
 
-            Assert.AreEqual(characterAttributeType, result);
+            var latestCharacterAttributeType = _controller.GetCharacterAttributeTypes().ToList().Last();
+            Assert.AreEqual(result, latestCharacterAttributeType);
         }
 
         [Test]
         public void ShouldUpdateCharacterAttributeType()
         {
             const string expectedName = "mewtwo";
-            var characterAttributeType = TestObjects.CharacterAttributeType();
+            var characterAttributeType = _controller.GetCharacterAttributeTypes().First();
 
-            var dateTime = DateTime.Now;
-            Thread.Sleep(100);
-            //arrange
-            var returnedCharacter =
-                ExecuteAndReturnCreatedAtRouteContent<CharacterAttributeType>(() => _controller.PostCharacterAttributeType(characterAttributeType));
             //act
-            if (returnedCharacter != null)
+            if (characterAttributeType != null)
             {
-                returnedCharacter.Name = expectedName;
-                _controller.PutCharacterAttributeType(returnedCharacter.Id, returnedCharacter);
+                characterAttributeType.Name = expectedName;
+                _controller.PutCharacterAttributeType(characterAttributeType.Id, characterAttributeType);
             }
 
-            var updatedCharacter = ExecuteAndReturnContent<CharacterAttributeType>(() => _controller.GetCharacterAttributeType(characterAttributeType.Id));
+            var updatedCharacter = ExecuteAndReturnContent<CharacterAttributeTypeDto>(() => _controller.GetCharacterAttributeType(characterAttributeType.Id));
 
             //assert
             Assert.That(updatedCharacter.Name, Is.EqualTo(expectedName));
-            Assert.That(updatedCharacter.LastModified, Is.GreaterThan(dateTime));
         }
 
         [Test]
         public void ShouldDeleteCharacterAttributeType()
         {
-            var characterAttributeType = TestObjects.CharacterAttributeType();
-            ExecuteAndReturnCreatedAtRouteContent<CharacterAttributeType>(() => _controller.PostCharacterAttributeType(characterAttributeType));
+            var characterAttributeType = _controller.GetCharacterAttributeTypes().ToList().First();
+            var newCharacterAttributeType = ExecuteAndReturnCreatedAtRouteContent<CharacterAttributeTypeDto>(() => _controller.PostCharacterAttributeType(characterAttributeType));
 
-            ExecuteAndReturnContent<CharacterAttributeType>(() => _controller.DeleteCharacterAttributeType(characterAttributeType.Id));
+            _controller.DeleteCharacterAttributeType(newCharacterAttributeType.Id);
 
             var characterAttributeTypesController = new CharacterAttributeTypesController(Context);
-            ExecuteAndReturn<NotFoundResult>(() => characterAttributeTypesController.GetCharacterAttributeType(characterAttributeType.Id));
+            ExecuteAndReturn<NotFoundResult>(() => characterAttributeTypesController.GetCharacterAttributeType(newCharacterAttributeType.Id));
         }
     }
 }

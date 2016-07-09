@@ -4,6 +4,7 @@ using System.Web.Http.Results;
 using FrannHammer.Api.Controllers;
 using FrannHammer.Models;
 using NUnit.Framework;
+using System.Linq;
 
 namespace FrannHammer.Api.Tests.Controllers
 {
@@ -12,15 +13,15 @@ namespace FrannHammer.Api.Tests.Controllers
     {
         private MovesController _controller;
 
-        private Move Post(Move move)
+        private MoveDto Post(MoveDto move)
         {
-            return ExecuteAndReturnCreatedAtRouteContent<Move>(
+            return ExecuteAndReturnCreatedAtRouteContent<MoveDto>(
                 () => _controller.PostMove(move));
         }
 
-        private Move Get(int id)
+        private MoveDto Get(int id)
         {
-            return ExecuteAndReturnContent<Move>(
+            return ExecuteAndReturnContent<MoveDto>(
                 () => _controller.GetMove(id));
         }
 
@@ -61,14 +62,12 @@ namespace FrannHammer.Api.Tests.Controllers
         public void ShouldGetAllMovesByName(string name)
         {
             //arrange
-            var character = ExecuteAndReturnCreatedAtRouteContent<Character>(
-                () => new CharactersController(Context).PostCharacter(TestObjects.Character()));
+            var character = new CharactersController(Context).GetCharacters().First();
 
             var move = TestObjects.Move();
-            var move2 = new Move
+            var move2 = new MoveDto
             {
                 Id = 2,
-                LastModified = DateTime.Now,
                 Name = name,
                 OwnerId = character.Id
             };
@@ -82,7 +81,7 @@ namespace FrannHammer.Api.Tests.Controllers
             //assert
             CollectionAssert.AllItemsAreNotNull(results);
             CollectionAssert.AllItemsAreUnique(results);
-            CollectionAssert.AllItemsAreInstancesOfType(results, typeof(Move));
+            CollectionAssert.AllItemsAreInstancesOfType(results, typeof(MoveDto));
         }
 
         [Test]
@@ -91,29 +90,26 @@ namespace FrannHammer.Api.Tests.Controllers
             var move = TestObjects.Move();
             var result = Post(move);
 
-            Assert.AreEqual(move, result);
+            var latestMove = _controller.GetMovesByName(move.Name).ToList().Last();
+
+            Assert.AreEqual(result, latestMove);
         }
 
         [Test]
         public void ShouldUpdateMove()
         {
             const string expectedName = "jab 2";
-            var move = TestObjects.Move();
+            var move = _controller.GetMovesByName("Jab 1").First();
 
-            var dateTime = DateTime.Now;
-            Thread.Sleep(100);
-            var returnedMove = Post(move);
-
-            if (returnedMove != null)
+            if (move != null)
             {
-                returnedMove.Name = expectedName;
-                _controller.PutMove(returnedMove.Id, returnedMove);
+                move.Name = expectedName;
+                _controller.PutMove(move.Id, move);
             }
 
             var updatedMove = Get(move.Id);
 
             Assert.That(updatedMove?.Name, Is.EqualTo(expectedName));
-            Assert.That(updatedMove?.LastModified, Is.GreaterThan(dateTime));
         }
 
         [Test]

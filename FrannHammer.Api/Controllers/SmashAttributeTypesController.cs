@@ -5,6 +5,8 @@ using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
 using FrannHammer.Models.DTOs;
@@ -25,11 +27,11 @@ namespace FrannHammer.Api.Controllers
         /// Get all of the stored <see cref="SmashAttributeType"/>s.
         /// </summary>
         /// <returns></returns>
-        [ResponseType(typeof(IQueryable<SmashAttributeType>))]
+        [ResponseType(typeof(IQueryable<SmashAttributeTypeDto>))]
         [Route("smashattributetypes")]
-        public IQueryable<SmashAttributeType> GetSmashAttributeTypes()
+        public IQueryable<SmashAttributeTypeDto> GetSmashAttributeTypes()
         {
-            return Db.SmashAttributeTypes;
+            return Db.SmashAttributeTypes.ProjectTo<SmashAttributeTypeDto>();
         }
 
         /// <summary>
@@ -37,7 +39,7 @@ namespace FrannHammer.Api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [ResponseType(typeof(SmashAttributeType))]
+        [ResponseType(typeof(SmashAttributeTypeDto))]
         [Route("smashattributetypes/{id}")]
         public IHttpActionResult GetSmashAttributeType(int id)
         {
@@ -47,7 +49,8 @@ namespace FrannHammer.Api.Controllers
                 return NotFound();
             }
 
-            return Ok(smashAttributeType);
+            var dto = Mapper.Map<SmashAttributeType, SmashAttributeTypeDto>(smashAttributeType);
+            return Ok(dto);
         }
 
         /// <summary>
@@ -77,17 +80,12 @@ namespace FrannHammer.Api.Controllers
                         g.Key, g.Select(at => new CharacterAttributeKeyValuePair()
                         {
                             KeyName = at.Name,
-                            ValueCharacterAttribute = new CharacterAttribute
+                            ValueCharacterAttribute = new CharacterAttributeDto
                             {
                                 Id = at.Id,
                                 Name = at.Name,
                                 OwnerId = at.OwnerId,
                                 Rank = at.Rank,
-                                SmashAttributeType = new SmashAttributeType
-                                {
-                                    Id = at.SmashAttributeType.Id,
-                                    Name = at.Name
-                                },
                                 SmashAttributeTypeId = at.SmashAttributeTypeId,
                                 Value = at.Value
                             }
@@ -102,41 +100,35 @@ namespace FrannHammer.Api.Controllers
         /// Update an existing <see cref="SmashAttributeType"/>.
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="smashAttributeType"></param>
+        /// <param name="dto"></param>
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
         [ResponseType(typeof(void))]
         [Route("smashattributetypes/{id}")]
-        public IHttpActionResult PutSmashAttributeType(int id, SmashAttributeType smashAttributeType)
+        public IHttpActionResult PutSmashAttributeType(int id, SmashAttributeTypeDto dto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != smashAttributeType.Id)
+            if (id != dto.Id)
             {
                 return BadRequest();
             }
 
-            smashAttributeType.LastModified = DateTime.Now;
-            Db.Entry(smashAttributeType).State = EntityState.Modified;
+            if (!SmashAttributeTypeExists(id))
+            {
+                return NotFound();
+            }
 
-            try
-            {
-                Db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!SmashAttributeTypeExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            var entity = Db.SmashAttributeTypes.Find(id);
+            entity = Mapper.Map(dto, entity);
+
+            entity.LastModified = DateTime.Now;
+            Db.Entry(entity).State = EntityState.Modified;
+
+            Db.SaveChanges();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -144,23 +136,25 @@ namespace FrannHammer.Api.Controllers
         /// <summary>
         /// Create a new <see cref="SmashAttributeType"/>.
         /// </summary>
-        /// <param name="smashAttributeType"></param>
+        /// <param name="dto"></param>
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
         [ResponseType(typeof(SmashAttributeType))]
         [Route("smashattributetypes")]
-        public IHttpActionResult PostSmashAttributeType(SmashAttributeType smashAttributeType)
+        public IHttpActionResult PostSmashAttributeType(SmashAttributeTypeDto dto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            smashAttributeType.LastModified = DateTime.Now;
-            Db.SmashAttributeTypes.Add(smashAttributeType);
+            var entity = Mapper.Map<SmashAttributeTypeDto, SmashAttributeType>(dto);
+            entity.LastModified = DateTime.Now;
+            Db.SmashAttributeTypes.Add(entity);
             Db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { controller = "SmashAttributeTypes", id = smashAttributeType.Id }, smashAttributeType);
+            var newDto = Mapper.Map<SmashAttributeType, SmashAttributeTypeDto>(entity);
+            return CreatedAtRoute("DefaultApi", new { controller = "SmashAttributeTypes", id = newDto.Id }, newDto);
         }
 
         /// <summary>
@@ -169,7 +163,6 @@ namespace FrannHammer.Api.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
-        [ResponseType(typeof(SmashAttributeType))]
         [Route("smashattributetypes/{id}")]
         public IHttpActionResult DeleteSmashAttributeType(int id)
         {
@@ -182,7 +175,7 @@ namespace FrannHammer.Api.Controllers
             Db.SmashAttributeTypes.Remove(smashAttributeType);
             Db.SaveChanges();
 
-            return Ok(smashAttributeType);
+            return StatusCode(HttpStatusCode.OK);
         }
 
         protected override void Dispose(bool disposing)

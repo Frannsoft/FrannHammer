@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
@@ -17,6 +17,8 @@ namespace FrannHammer.Api.Controllers
     [RoutePrefix("api")]
     public class CharactersController : BaseApiController
     {
+        private const string CharactersRouteKey = "Characters";
+
         /// <summary>
         /// Create a new <see cref="CharactersController"/> to interact with the server using 
         /// a specific <see cref="ApplicationDbContext"/>
@@ -27,22 +29,22 @@ namespace FrannHammer.Api.Controllers
         { }
 
         /// <summary>
-        /// Get all of the <see cref="Character"/> details.
+        /// Get all of the <see cref="CharacterDto"/> details.
         /// </summary>
         /// <returns></returns>
-        [Route("characters")]
-        public IQueryable<Character> GetCharacters()
+        [Route(CharactersRouteKey)]
+        public IQueryable<CharacterDto> GetCharacters()
         {
-            return Db.Characters;
+            return Db.Characters.ProjectTo<CharacterDto>();
         }
 
         /// <summary>
-        /// Get a specific <see cref="Character"/>s details.
+        /// Get a specific <see cref="CharacterDto"/>s details.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [ResponseType(typeof(Character))]
-        [Route("characters/{id}")]
+        [ResponseType(typeof(CharacterDto))]
+        [Route(CharactersRouteKey + "/{id}")]
         public IHttpActionResult GetCharacter(int id)
         {
             //TODO: error check for invalid param to give better feedback
@@ -51,17 +53,18 @@ namespace FrannHammer.Api.Controllers
             {
                 return NotFound();
             }
+            var dto = Mapper.Map<Character, CharacterDto>(character);
 
-            return Ok(character);
+            return Ok(dto);
         }
 
         /// <summary>
-        /// Get a specific <see cref="Character"/>s details by their name.
+        /// Get a specific <see cref="CharacterDto"/>s details by their name.
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        [ResponseType(typeof(Character))]
-        [Route("characters/name/{name}")]
+        [ResponseType(typeof(CharacterDto))]
+        [Route(CharactersRouteKey + "/name/{name}")]
         public IHttpActionResult GetCharacterByName(string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -74,7 +77,9 @@ namespace FrannHammer.Api.Controllers
                 return NotFound();
             }
 
-            return Ok(character);
+            var dto = Mapper.Map<Character, CharacterDto>(character);
+
+            return Ok(dto);
         }
 
         /// <summary>
@@ -82,11 +87,11 @@ namespace FrannHammer.Api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Route("Characters/{id}/movements")]
+        [Route(CharactersRouteKey + "/{id}/movements")]
         [HttpGet]
-        public IQueryable<Movement> GetMovementsForCharacter(int id)
+        public IQueryable<MovementDto> GetMovementsForCharacter(int id)
         {
-            var movements = Db.Movements.Where(m => m.OwnerId == id);
+            var movements = Db.Movements.Where(m => m.OwnerId == id).ProjectTo<MovementDto>();
             return movements;
         }
 
@@ -95,11 +100,10 @@ namespace FrannHammer.Api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Route("Characters/{id}/moves")]
-        public IQueryable<Move> GetMovesForCharacter(int id)
+        [Route(CharactersRouteKey + "/{id}/moves")]
+        public IQueryable<MoveDto> GetMovesForCharacter(int id)
         {
-            var moves = Db.Moves.Where(m => m.OwnerId == id);
-
+            var moves = Db.Moves.Where(m => m.OwnerId == id).ProjectTo<MoveDto>();
             return moves;
         }
 
@@ -109,7 +113,7 @@ namespace FrannHammer.Api.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [ResponseType(typeof(IQueryable<ThrowDto>))]
-        [Route("characters/{id}/throws")]
+        [Route(CharactersRouteKey + "/{id}/throws")]
         public IQueryable<ThrowDto> GetThrowsForCharacter(int id)
         {
             return (from throws in Db.Throws
@@ -122,83 +126,141 @@ namespace FrannHammer.Api.Controllers
         /// <summary>
         /// Get all the <see cref="CharacterAttribute"/>s of a specific <see cref="Character"/>.
         /// 
-        /// These will be returned as <see cref="CharacterAttribute"/>s.
+        /// These will be returned as <see cref="CharacterAttributeDto"/>s.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Route("characters/{id}/characterattributes")]
-        [ResponseType(typeof(IQueryable<CharacterAttribute>))]
-        public IQueryable<CharacterAttribute> GetCharacterAttributesForCharacter(int id)
+        [Route(CharactersRouteKey + "/{id}/characterattributes")]
+        [ResponseType(typeof(IQueryable<CharacterAttributeDto>))]
+        public IQueryable<CharacterAttributeDto> GetCharacterAttributesForCharacter(int id)
         {
-            var attrs = Db.CharacterAttributes.Where(a => a.OwnerId == id);
-            //var dtos = Mapper.Map<IEnumerable<CharacterAttributeDto>>(attrs);
-
+            var attrs = Db.CharacterAttributes.Where(a => a.OwnerId == id).ProjectTo<CharacterAttributeDto>();
             return attrs;
         }
 
         /// <summary>
-        /// Update a <see cref="Character"/>.
+        /// Get all the <see cref="Angle"/>s of a specific <see cref="Character"/>'s moves.
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="character"></param>
+        /// <returns></returns>
+        [Route(CharactersRouteKey + "/{id}/angles")]
+        [ResponseType(typeof (IQueryable<AngleDto>))]
+        public IQueryable<AngleDto> GetCharacterMoveAngles(int id)
+        {
+            return (from angle in Db.Angle
+                join moves in Db.Moves
+                    on angle.MoveId equals moves.Id
+                where moves.OwnerId == id
+                select angle).ProjectTo<AngleDto>();
+        }
+
+        /// <summary>
+        /// Get all the <see cref="Hitbox"/>es of a specific <see cref="Character"/>'s moves.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route(CharactersRouteKey + "/{id}/hitboxes")]
+        [ResponseType(typeof (IQueryable<HitboxDto>))]
+        public IQueryable<HitboxDto> GetCharacterMoveHitboxes(int id)
+        {
+            return (from hitbox in Db.Hitbox
+                    join moves in Db.Moves
+                        on hitbox.MoveId equals moves.Id
+                    where moves.OwnerId == id
+                    select hitbox).ProjectTo<HitboxDto>();
+        }
+
+        /// <summary>
+        /// Get all the <see cref="KnockbackGrowth"/>es of a specific <see cref="Character"/>'s moves.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route(CharactersRouteKey + "/{id}/knockbackgrowths")]
+        [ResponseType(typeof(IQueryable<KnockbackGrowthDto>))]
+        public IQueryable<KnockbackGrowthDto> GetCharacterMoveKnockbackGrowths(int id)
+        {
+            return (from knockbackGrowth in Db.KnockbackGrowth
+                    join moves in Db.Moves
+                        on knockbackGrowth.MoveId equals moves.Id
+                    where moves.OwnerId == id
+                    select knockbackGrowth).ProjectTo<KnockbackGrowthDto>();
+        }
+
+        /// <summary>
+        /// Get all the <see cref="BaseDamage"/>s of a specific <see cref="Character"/>'s moves.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route(CharactersRouteKey + "/{id}/basedamages")]
+        [ResponseType(typeof(IQueryable<BaseDamageDto>))]
+        public IQueryable<BaseDamageDto> GetCharacterMoveBaseDamages(int id)
+        {
+            return (from baseDamage in Db.BaseDamage
+                    join moves in Db.Moves
+                        on baseDamage.MoveId equals moves.Id
+                    where moves.OwnerId == id
+                    select baseDamage).ProjectTo<BaseDamageDto>();
+        }
+
+        /// <summary>
+        /// Update a <see cref="CharacterDto"/>.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="dto"></param>
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
         [ResponseType(typeof(void))]
-        [Route("characters/{id}")]
-        public IHttpActionResult PutCharacter(int id, Character character)
+        [Route(CharactersRouteKey + "/{id}")]
+        public IHttpActionResult PutCharacter(int id, CharacterDto dto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != character.Id)
+            if (id != dto.Id)
             {
                 return BadRequest();
             }
 
-            character.LastModified = DateTime.Now;
-            Db.Entry(character).State = EntityState.Modified;
+            if (!CharacterExists(id))
+            {
+                return NotFound();
+            }
 
-            try
-            {
-                Db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CharacterExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            var entity = Db.Characters.Find(id);
+            entity = Mapper.Map(dto, entity);
+
+            entity.LastModified = DateTime.Now;
+            Db.Entry(entity).State = EntityState.Modified;
+
+            Db.SaveChanges();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
         /// <summary>
-        /// Create a new <see cref="Character"/>.
+        /// Create a new <see cref="CharacterDto"/>.
         /// </summary>
-        /// <param name="character"></param>
+        /// <param name="dto"></param>
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
-        [ResponseType(typeof(Character))]
-        [Route("characters")]
-        public IHttpActionResult PostCharacter(Character character)
+        [ResponseType(typeof(CharacterDto))]
+        [Route(CharactersRouteKey + "")]
+        public IHttpActionResult PostCharacter(CharacterDto dto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            character.LastModified = DateTime.Now;
-            Db.Characters.Add(character);
+            var entity = Mapper.Map<CharacterDto, Character>(dto);
+            entity.LastModified = DateTime.Now;
+            Db.Characters.Add(entity);
             Db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { controller = "Characters", id = character.Id }, character);
+            var newDto = Mapper.Map<Character, CharacterDto>(entity);
+            return CreatedAtRoute("DefaultApi", new { controller = CharactersRouteKey + "", id = newDto.Id }, newDto);
         }
 
         /// <summary>
@@ -207,8 +269,7 @@ namespace FrannHammer.Api.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
-        [ResponseType(typeof(Character))]
-        [Route("characters/{id}")]
+        [Route(CharactersRouteKey + "/{id}")]
         public IHttpActionResult DeleteCharacter(int id)
         {
             Character character = Db.Characters.Find(id);
@@ -220,7 +281,7 @@ namespace FrannHammer.Api.Controllers
             Db.Characters.Remove(character);
             Db.SaveChanges();
 
-            return Ok(character);
+            return StatusCode(HttpStatusCode.OK);
         }
 
         private bool CharacterExists(int id)

@@ -16,7 +16,7 @@ namespace FrannHammer.Api.Controllers
     [RoutePrefix("api")]
     public class HitboxesController : BaseApiController
     {
-        private const string HitboxsRouteKey = "Hitboxes";
+        private const string HitboxesRouteKey = "Hitboxes";
 
         /// <summary>
         /// Create a new <see cref="HitboxesController"/> to interact with the server using 
@@ -31,8 +31,8 @@ namespace FrannHammer.Api.Controllers
         /// Get all <see cref="HitboxDto"/>s.
         /// </summary>
         /// <returns></returns>
-        [Route(HitboxsRouteKey)]
-        public IQueryable<HitboxDto> GetHitboxs()
+        [Route(HitboxesRouteKey)]
+        public IQueryable<HitboxDto> GetHitboxes()
         {
             var hitboxes = Db.Hitbox.ProjectTo<HitboxDto>();
             return hitboxes;
@@ -44,7 +44,7 @@ namespace FrannHammer.Api.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [ResponseType(typeof(HitboxDto))]
-        [Route(HitboxsRouteKey + "/{id}")]
+        [Route(HitboxesRouteKey + "/{id}")]
         public IHttpActionResult GetHitbox(int id)
         {
             Hitbox retHitbox = Db.Hitbox.Find(id);
@@ -63,7 +63,7 @@ namespace FrannHammer.Api.Controllers
         /// <param name="id"></param>
         /// <param name="dto"></param>
         /// <returns></returns>
-        [Route(HitboxsRouteKey + "/{id}")]
+        [Route(HitboxesRouteKey + "/{id}")]
         public IHttpActionResult PutHitbox(int id, HitboxDto dto)
         {
             if (!ModelState.IsValid)
@@ -99,7 +99,7 @@ namespace FrannHammer.Api.Controllers
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
         [ResponseType(typeof(HitboxDto))]
-        [Route(HitboxsRouteKey)]
+        [Route(HitboxesRouteKey)]
         public IHttpActionResult PostHitbox(HitboxDto dto)
         {
             if (!ModelState.IsValid)
@@ -123,7 +123,7 @@ namespace FrannHammer.Api.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
-        [Route(HitboxsRouteKey + "/{id}")]
+        [Route(HitboxesRouteKey + "/{id}")]
         public IHttpActionResult DeleteHitbox(int id)
         {
             Hitbox hitbox = Db.Hitbox.Find(id);
