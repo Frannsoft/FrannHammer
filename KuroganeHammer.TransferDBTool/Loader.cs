@@ -183,6 +183,9 @@ namespace KurograneHammer.TransferDBTool
                 var attributesFromPage = page.GetAttributes();
 
                 var fullAtts = new List<CharacterAttribute>();
+                var existingCharacters = LoggedInBasicClient.GetAsync(Baseuri + "/Characters")
+                 .Result.Content.ReadAsAsync<List<FrannHammer.Models.Character>>().Result;
+
                 foreach (var attributeRow in attributesFromPage.AttributeValues)
                 {
                     var rank = attributeRow.Values.First(a => a.Name.ToLower() == "rank").Value;
@@ -205,7 +208,7 @@ namespace KurograneHammer.TransferDBTool
                             Rank = rank,
                             LastModified = DateTime.Now,
                             Name = attributeName,
-                            OwnerId = CharacterUtility.GetCharacterIdFromName(characterName),
+                            OwnerId = existingCharacters.First(c => c.Name.Equals(characterName, StringComparison.OrdinalIgnoreCase)).Id,
                             SmashAttributeTypeId = dbAttributeType.Id,
                             Value = value
                         };
