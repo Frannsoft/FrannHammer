@@ -19,7 +19,7 @@ namespace FrannHammer.Api.Tests
         public virtual void TestFixtureSetUp()
         {
             var path = AppDomain.CurrentDomain.BaseDirectory;
-            IDataLoader loader = new CsvDataLoader($"{path}/fakeDb");
+            IDataLoader loader = new CsvDataLoader($"{path}fakeDb\\");
 
             _connection = Effort.DbConnectionFactory.CreateTransient(loader);
             Context = new ApplicationDbContext(_connection);

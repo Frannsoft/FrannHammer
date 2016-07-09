@@ -24,9 +24,11 @@ namespace KurograneHammer.TransferDBTool
     //5) attribute values
     //6) insert sql to seed throw types
     //7) insert sql to seed throw data
-    //8) run seedspecificmovedata() test in Seeder
-    //9) update throws to proper move type in moves table
-    //10) run cfm update-database again to update char attr types and char attrs in seed
+    //8) remove spotdodge, airdodge, forward roll, back roll from moves
+    //9) remove hitbox active, weight dependent, intangibility values from moves
+    //10) run seedspecificmovedata() test in Seeder
+    //11) update throws to proper move type in moves table
+    //12) run cfm update-database again to update char attr types and char attrs in seed
     // Should be all set!
 
     public class Loader : BaseTest
@@ -51,7 +53,7 @@ namespace KurograneHammer.TransferDBTool
             await ReloadSmash4CharacterAttributeValues();
 
             Console.WriteLine("Done.");
-            //after running this do step 6-10
+            //after running this do step 6-12
         }
 
         [Test]

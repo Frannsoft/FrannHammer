@@ -5,6 +5,8 @@ using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
 
@@ -30,9 +32,9 @@ namespace FrannHammer.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [Route("characterattributes")]
-        public IQueryable<CharacterAttribute> GetCharacterAttributes()
+        public IQueryable<CharacterAttributeDto> GetCharacterAttributes()
         {
-            return Db.CharacterAttributes;
+            return Db.CharacterAttributes.ProjectTo<CharacterAttributeDto>();
         }
 
         /// <summary>
@@ -40,7 +42,7 @@ namespace FrannHammer.Api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [ResponseType(typeof(CharacterAttribute))]
+        [ResponseType(typeof(CharacterAttributeDto))]
         [Route("characterattributes/{id}")]
         public IHttpActionResult GetCharacterAttribute(int id)
         {
@@ -49,49 +51,44 @@ namespace FrannHammer.Api.Controllers
             {
                 return NotFound();
             }
+            var dto = Mapper.Map<CharacterAttribute, CharacterAttributeDto>(characterAttribute);
 
-            return Ok(characterAttribute);
+            return Ok(dto);
         }
 
         /// <summary>
         /// Update a <see cref="CharacterAttribute"/>
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="characterAttribute"></param>
+        /// <param name="dto"></param>
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
         [ResponseType(typeof(void))]
         [Route("characterattributes/{id}")]
-        public IHttpActionResult PutCharacterAttribute(int id, CharacterAttribute characterAttribute)
+        public IHttpActionResult PutCharacterAttribute(int id, CharacterAttributeDto dto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            characterAttribute.LastModified = DateTime.Now;
-            if (id != characterAttribute.Id)
+            if (id != dto.Id)
             {
                 return BadRequest();
             }
 
-            Db.Entry(characterAttribute).State = EntityState.Modified;
+            if (!CharacterAttributeExists(id))
+            {
+                return NotFound();
+            }
 
-            try
-            {
-                Db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CharacterAttributeExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            var entity = Db.CharacterAttributes.Find(id);
+            entity = Mapper.Map(dto, entity);
+
+            entity.LastModified = DateTime.Now;
+            Db.Entry(entity).State = EntityState.Modified;
+
+            Db.SaveChanges();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -99,23 +96,24 @@ namespace FrannHammer.Api.Controllers
         /// <summary>
         /// Create a new <see cref="CharacterAttribute"/>.
         /// </summary>
-        /// <param name="characterAttribute"></param>
+        /// <param name="dto"></param>
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
         [Route("characterattributes")]
-        public IHttpActionResult PostCharacterAttribute(CharacterAttribute characterAttribute)
+        public IHttpActionResult PostCharacterAttribute(CharacterAttributeDto dto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            characterAttribute.LastModified = DateTime.Now;
-            Db.CharacterAttributes.Add(characterAttribute);
+            var entity = Mapper.Map<CharacterAttributeDto, CharacterAttribute>(dto);
+            entity.LastModified = DateTime.Now;
+            Db.CharacterAttributes.Add(entity);
             Db.SaveChanges();
 
-            var result = CreatedAtRoute("DefaultApi", new { controller="CharacterAttributes", id = characterAttribute.Id }, characterAttribute);
-            return result;
+            var newDto = Mapper.Map<CharacterAttribute, CharacterAttributeDto>(entity);
+            return CreatedAtRoute("DefaultApi", new { controller = "CharacterAttributes", id = newDto.Id }, newDto);
         }
 
         /// <summary>
@@ -124,7 +122,6 @@ namespace FrannHammer.Api.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
-        [ResponseType(typeof(CharacterAttribute))]
         [Route("characterattributes/{id}")]
         public IHttpActionResult DeleteCharacterAttribute(int id)
         {
@@ -137,7 +134,7 @@ namespace FrannHammer.Api.Controllers
             Db.CharacterAttributes.Remove(characterAttribute);
             Db.SaveChanges();
 
-            return Ok(characterAttribute);
+            return StatusCode(HttpStatusCode.OK);
         }
 
         private bool CharacterAttributeExists(int id)

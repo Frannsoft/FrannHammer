@@ -43,7 +43,17 @@ namespace FrannHammer.Api
                 cfg.CreateMap<Hitbox, HitboxDto>();
                 cfg.CreateMap<HitboxDto, Hitbox>();
                 cfg.CreateMap<Character, CharacterDto>();
+                cfg.CreateMap<CharacterDto, Character>();
                 cfg.CreateMap<Movement, MovementDto>();
+                cfg.CreateMap<MovementDto, Movement>();
+                cfg.CreateMap<Move, MoveDto>();
+                cfg.CreateMap<MoveDto, Move>();
+                cfg.CreateMap<SmashAttributeType, SmashAttributeTypeDto>();
+                cfg.CreateMap<SmashAttributeTypeDto, SmashAttributeType>();
+                cfg.CreateMap<CharacterAttributeType, CharacterAttributeTypeDto>();
+                cfg.CreateMap<CharacterAttributeTypeDto, CharacterAttributeType>();
+                cfg.CreateMap<CharacterAttribute, CharacterAttributeDto>();
+                cfg.CreateMap<CharacterAttributeDto, CharacterAttribute>();
             });
         }
     }

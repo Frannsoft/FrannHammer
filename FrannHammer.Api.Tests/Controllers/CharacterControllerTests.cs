@@ -1,9 +1,8 @@
-﻿using System;
-using System.Threading;
-using System.Web.Http.Results;
+﻿using System.Web.Http.Results;
 using FrannHammer.Api.Controllers;
 using FrannHammer.Models;
 using NUnit.Framework;
+using System.Linq;
 
 namespace FrannHammer.Api.Tests.Controllers
 {
@@ -29,7 +28,7 @@ namespace FrannHammer.Api.Tests.Controllers
         [Test]
         public void CanGetCharacterById()
         {
-            var character = ExecuteAndReturnContent<Character>(() => _controller.GetCharacter(1));
+            var character = ExecuteAndReturnContent<CharacterDto>(() => _controller.GetCharacter(1));
             Assert.That(character, Is.Not.Null);
         }
 
@@ -37,7 +36,7 @@ namespace FrannHammer.Api.Tests.Controllers
         public void CanGetCharacterByName()
         {
             const string expectedName = "Pikachu";
-            var character = ExecuteAndReturnContent<Character>(() => _controller.GetCharacterByName(expectedName));
+            var character = ExecuteAndReturnContent<CharacterDto>(() => _controller.GetCharacterByName(expectedName));
 
             Assert.That(character, Is.Not.Null);
             Assert.That(character.Name, Is.EqualTo(expectedName));
@@ -89,7 +88,7 @@ namespace FrannHammer.Api.Tests.Controllers
 
             CollectionAssert.AllItemsAreNotNull(characters);
             CollectionAssert.AllItemsAreUnique(characters);
-            CollectionAssert.AllItemsAreInstancesOfType(characters, typeof(Character));
+            CollectionAssert.AllItemsAreInstancesOfType(characters, typeof(CharacterDto));
         }
 
         [Test]
@@ -98,7 +97,7 @@ namespace FrannHammer.Api.Tests.Controllers
             var movements = _controller.GetMovementsForCharacter(1);
             CollectionAssert.AllItemsAreNotNull(movements);
             CollectionAssert.AllItemsAreUnique(movements);
-            CollectionAssert.AllItemsAreInstancesOfType(movements, typeof(Movement));
+            CollectionAssert.AllItemsAreInstancesOfType(movements, typeof(MovementDto));
         }
 
         [Test]
@@ -107,49 +106,44 @@ namespace FrannHammer.Api.Tests.Controllers
             var moves = _controller.GetMovesForCharacter(1);
             CollectionAssert.AllItemsAreNotNull(moves);
             CollectionAssert.AllItemsAreUnique(moves);
-            CollectionAssert.AllItemsAreInstancesOfType(moves, typeof(Move));
+            CollectionAssert.AllItemsAreInstancesOfType(moves, typeof(MoveDto));
         }
 
         [Test]
         public void ShouldAddCharacter()
         {
             var newCharacter = TestObjects.Character();
-            var result = ExecuteAndReturnCreatedAtRouteContent<Character>(() => _controller.PostCharacter(newCharacter));
+            var result = ExecuteAndReturnCreatedAtRouteContent<CharacterDto>(() => _controller.PostCharacter(newCharacter));
 
-            Assert.AreEqual(newCharacter, result);
+            var latestCharacter = _controller.GetCharacters().ToList().Last();
+            Assert.AreEqual(result, latestCharacter);
         }
 
         [Test]
         public void ShouldUpdateCharacter()
         {
             const string expectedName = "mewtwo";
-            var character = TestObjects.Character();
+            var character = _controller.GetCharacters().First();
 
-            var dateTime = DateTime.Now;
-            Thread.Sleep(100);
-            //arrange
-            var returnedCharacter =
-                ExecuteAndReturnCreatedAtRouteContent<Character>(() => _controller.PostCharacter(character));
             //act
-            if (returnedCharacter != null)
+            if (character != null)
             {
-                returnedCharacter.Name = expectedName;
-                ExecuteAndReturn<StatusCodeResult>(() => _controller.PutCharacter(returnedCharacter.Id, returnedCharacter));
+                character.Name = expectedName;
+                ExecuteAndReturn<StatusCodeResult>(() => _controller.PutCharacter(character.Id, character));
             }
 
-            var updatedCharacter = ExecuteAndReturnContent<Character>(() => _controller.GetCharacter(character.Id));
+            var updatedCharacter = ExecuteAndReturnContent<CharacterDto>(() => _controller.GetCharacter(character.Id));
 
             //assert
             Assert.That(updatedCharacter.Name, Is.EqualTo(expectedName));
-            Assert.That(updatedCharacter.LastModified, Is.GreaterThan(dateTime));
         }
 
         [Test]
         public void ShouldDeleteCharacter()
         {
             var character = TestObjects.Character();
-            ExecuteAndReturnCreatedAtRouteContent<Character>(() => _controller.PostCharacter(character));
-            ExecuteAndReturnContent<Character>(() => _controller.DeleteCharacter(character.Id));
+            ExecuteAndReturnCreatedAtRouteContent<CharacterDto>(() => _controller.PostCharacter(character));
+            _controller.DeleteCharacter(character.Id);
             ExecuteAndReturn<NotFoundResult>(() => _controller.GetCharacter(character.Id));
         }
     }

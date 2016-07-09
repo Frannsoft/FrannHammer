@@ -42,7 +42,7 @@ namespace FrannHammer.Api.Tests.Controllers
         [Test]
         public void ShouldGetAllHitboxs()
         {
-            var throws = _controller.GetHitboxs();
+            var throws = _controller.GetHitboxes();
 
             CollectionAssert.AllItemsAreNotNull(throws);
             CollectionAssert.AllItemsAreUnique(throws);
@@ -55,9 +55,9 @@ namespace FrannHammer.Api.Tests.Controllers
             var newThrow = TestObjects.Hitbox();
             var result = ExecuteAndReturnCreatedAtRouteContent<HitboxDto>(() => _controller.PostHitbox(newThrow));
 
-            var latestThrow = _controller.GetHitboxs().ToList().Last();
+            var latestThrow = _controller.GetHitboxes().ToList().Last();
 
-            Assert.AreEqual(result, latestThrow); ;
+            Assert.AreEqual(result, latestThrow);
         }
 
         [Test]

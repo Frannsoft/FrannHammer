@@ -25,14 +25,14 @@ namespace KurograneHammer.TransferDBTool.Seeding
         {
             using (AppDbContext context = new AppDbContext())
             {
-                SyncThrowData(context);
+                SyncData<BaseDamage>(context);
                 SyncData<Hitbox>(context);
                 //SyncData<BaseKnockbackSetKnockback>(context);
-                SyncData<BaseDamage>(context);
                 SyncData<Angle>(context);
                 SyncData<Autocancel>(context);
                 SyncData<LandingLag>(context);
                 SyncData<KnockbackGrowth>(context);
+                SyncThrowData(context);
             }
         }
 
@@ -42,6 +42,7 @@ namespace KurograneHammer.TransferDBTool.Seeding
             if (!context.Set<T>().Any())
             {
                 var moves = context.Moves.ToList();
+                Console.WriteLine($"Adding {typeof(T).Name} data");
 
                 foreach (var move in moves)
                 {
@@ -49,7 +50,6 @@ namespace KurograneHammer.TransferDBTool.Seeding
                         !move.HitboxActive.Contains("Yes"))
                     {
                         var metaData = TransferMethods.MapDataThenSync<T>(move, context);
-                        Console.WriteLine($"Adding {metaData.GetType().Name} data for moveId: {move.Id}");
                         context.Set<T>().Add(metaData);
                     }
                 }
@@ -68,7 +68,7 @@ namespace KurograneHammer.TransferDBTool.Seeding
                 if (move.HitboxActive.Contains("No") ||
                     move.HitboxActive.Contains("Yes"))
                 {
-                    var tempBaseDamage = move.FirstActionableFrame.ToString();
+                    var tempBaseDamage = move.FirstActionableFrame;
                     var tempAngle = move.BaseDamage;
                     //var tempBaseKnockback = move.Angle; TODO: not yet parseable
                     var tempKnockbackGrowth = move.BaseKnockBackSetKnockback;

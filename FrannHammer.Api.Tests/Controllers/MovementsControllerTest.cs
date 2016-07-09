@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
+﻿using System.Linq;
 using System.Web.Http.Results;
 using FrannHammer.Api.Controllers;
 using FrannHammer.Models;
@@ -13,15 +11,15 @@ namespace FrannHammer.Api.Tests.Controllers
     {
         private MovementsController _controller;
 
-        private Movement Post(Movement movement)
+        private MovementDto Post(MovementDto movement)
         {
-            return ExecuteAndReturnCreatedAtRouteContent<Movement>(
+            return ExecuteAndReturnCreatedAtRouteContent<MovementDto>(
                 () => _controller.PostMovement(movement));
         }
 
-        private Movement Get(int id)
+        private MovementDto Get(int id)
         {
-            return ExecuteAndReturnContent<Movement>(
+            return ExecuteAndReturnContent<MovementDto>(
                 () => _controller.GetMovement(id));
         }
 
@@ -63,14 +61,12 @@ namespace FrannHammer.Api.Tests.Controllers
         [TestCase("Weight")]
         public void ShouldGetAllMovementsByName(string name)
         {
-            var character = ExecuteAndReturnCreatedAtRouteContent<Character>(
-                () => new CharactersController(Context).PostCharacter(TestObjects.Character()));
+            var character = new CharactersController(Context).GetCharacters().First();
 
             var movement = TestObjects.Movement();
-            var movement2 = new Movement
+            var movement2 = new MovementDto
             {
                 Id = 2,
-                LastModified = DateTime.Now,
                 Name = name,
                 OwnerId = character.Id,
                 Value = "3"
@@ -83,7 +79,7 @@ namespace FrannHammer.Api.Tests.Controllers
 
             CollectionAssert.AllItemsAreNotNull(results);
             CollectionAssert.AllItemsAreUnique(results);
-            CollectionAssert.AllItemsAreInstancesOfType(results, typeof(Movement));
+            CollectionAssert.AllItemsAreInstancesOfType(results, typeof(MovementDto));
         }
 
         [Test]
@@ -97,22 +93,18 @@ namespace FrannHammer.Api.Tests.Controllers
         public void ShouldUpdateMovements()
         {
             const string expectedName = "jab 2";
-            var movement = TestObjects.Movement();
 
-            var dateTime = DateTime.Now;
-            Thread.Sleep(100);
-            var returnedMovements = Post(movement);
+            var movement = _controller.GetMovementsByName("Gravity").First();
 
-            if (returnedMovements != null)
+            if (movement != null)
             {
-                returnedMovements.Name = expectedName;
-                ExecuteAndReturn<StatusCodeResult>(() => _controller.PutMovement(returnedMovements.Id, returnedMovements));
+                movement.Name = expectedName;
+                ExecuteAndReturn<StatusCodeResult>(() => _controller.PutMovement(movement.Id, movement));
             }
 
             var updatedMovements = Get(movement.Id);
 
             Assert.That(updatedMovements?.Name, Is.EqualTo(expectedName));
-            Assert.That(updatedMovements?.LastModified, Is.GreaterThan(dateTime));
         }
 
         [Test]

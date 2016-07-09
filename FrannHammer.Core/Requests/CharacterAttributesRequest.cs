@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
+using FrannHammer.Models;
 using FrannHammer.Models.DTOs;
 
 namespace FrannHammer.Core.Requests
