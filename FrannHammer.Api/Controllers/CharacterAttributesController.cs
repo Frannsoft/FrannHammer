@@ -32,7 +32,7 @@ namespace FrannHammer.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [Route("characterattributes")]
-        public IQueryable<CharacterAttributeDto> GetCharacterAttributes()
+        internal IQueryable<CharacterAttributeDto> GetCharacterAttributes()
         {
             return Db.CharacterAttributes.ProjectTo<CharacterAttributeDto>();
         }

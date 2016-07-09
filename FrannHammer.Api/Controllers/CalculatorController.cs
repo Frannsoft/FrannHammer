@@ -25,25 +25,25 @@ namespace FrannHammer.Api.Controllers
             : base(context)
         { }
 
-        /// <summary>
-        /// Calculate Rage based on passed in data.
-        /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        [Route(CalculatorRoutePrefix + "/rage")]
-        [HttpPost]
-        public IHttpActionResult PostRage(RageProblemData data)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        ///// <summary>
+        ///// Calculate Rage based on passed in data.
+        ///// </summary>
+        ///// <param name="data"></param>
+        ///// <returns></returns>
+        //[Route(CalculatorRoutePrefix + "/rage")]
+        //[HttpPost]
+        //public IHttpActionResult PostRage(RageProblemData data)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            var calculator = new Calculator();
-            var result = calculator.Rage(data);
+        //    var calculator = new Calculator();
+        //    var result = calculator.Rage(data);
 
-            return Ok(result);
-        }
+        //    return Ok(result);
+        //}
 
         //[Route(CalculatorRoutePrefix + "/moves/rage")]
         //[Authorize(Roles = Basic)]

@@ -32,7 +32,7 @@ namespace FrannHammer.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [Route(KnockbackGrowthsRouteKey)]
-        public IQueryable<KnockbackGrowthDto> GetKnockbackGrowths()
+        internal IQueryable<KnockbackGrowthDto> GetKnockbackGrowths()
         {
             var knockbackGrowthTypes = Db.KnockbackGrowth.ProjectTo<KnockbackGrowthDto>();
             return knockbackGrowthTypes;
