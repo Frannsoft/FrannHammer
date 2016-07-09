@@ -51,10 +51,20 @@
   <ItemGroup>
     <Compile Include="Character.cs" />
     <Compile Include="CharacterAttributeStats.cs" />
+    <Compile Include="CharacterConstants.cs" />
+    <Compile Include="CharacterUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HomePage.cs" />
     <Compile Include="Page.cs" />
     <Compile Include="StatConstants.cs" />
+    <Compile Include="Stats\AerialStat.cs" />
+    <Compile Include="Stats\CharacterStat.cs" />
+    <Compile Include="Stats\GroundStat.cs" />
+    <Compile Include="Stats\MovementStat.cs" />
+    <Compile Include="Stats\MoveStat.cs" />
+    <Compile Include="Stats\MoveType.cs" />
+    <Compile Include="Stats\SpecialStat.cs" />
+    <Compile Include="Stats\Stat.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -64,6 +74,10 @@
     <ProjectReference Include="..\FrannHammer.Core\FrannHammer.Core.csproj">
       <Project>{2904d4e7-8989-46bd-ac0a-b4356f190a15}</Project>
       <Name>FrannHammer.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.Models\FrannHammer.Models.csproj">
+      <Project>{e4f0c134-6288-438f-b5d0-c53638e866e3}</Project>
+      <Name>FrannHammer.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

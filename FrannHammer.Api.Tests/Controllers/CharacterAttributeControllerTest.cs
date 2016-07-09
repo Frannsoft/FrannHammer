@@ -2,8 +2,9 @@
 using System.Threading;
 using System.Web.Http.Results;
 using FrannHammer.Api.Controllers;
-using FrannHammer.Core.Models;
+using FrannHammer.Models;
 using NUnit.Framework;
+using System.Linq;
 
 namespace FrannHammer.Api.Tests.Controllers
 {
@@ -12,15 +13,15 @@ namespace FrannHammer.Api.Tests.Controllers
     {
         private CharacterAttributesController _controller;
 
-        private CharacterAttribute Post(CharacterAttribute characterAttribute)
+        private CharacterAttributeDto Post(CharacterAttributeDto characterAttribute)
         {
-            return ExecuteAndReturnCreatedAtRouteContent<CharacterAttribute>(
+            return ExecuteAndReturnCreatedAtRouteContent<CharacterAttributeDto>(
                 () => _controller.PostCharacterAttribute(characterAttribute));
         }
 
-        private CharacterAttribute Get(int id)
+        private CharacterAttributeDto Get(int id)
         {
-            return ExecuteAndReturnContent<CharacterAttribute>(
+            return ExecuteAndReturnContent<CharacterAttributeDto>(
                 () => _controller.GetCharacterAttribute(id));
         }
 
@@ -41,7 +42,7 @@ namespace FrannHammer.Api.Tests.Controllers
         [Test]
         public void ShouldGetCharacterAttribute()
         {
-            var charAttr = TestObjects.CharacterAttribute();
+            var charAttr = _controller.GetCharacterAttributes().First();
             Post(charAttr);
             Get(charAttr.Id);
         }
@@ -52,13 +53,13 @@ namespace FrannHammer.Api.Tests.Controllers
             var results = _controller.GetCharacterAttributes();
             CollectionAssert.AllItemsAreNotNull(results);
             CollectionAssert.AllItemsAreUnique(results);
-            CollectionAssert.AllItemsAreInstancesOfType(results, typeof(CharacterAttribute));
+            CollectionAssert.AllItemsAreInstancesOfType(results, typeof(CharacterAttributeDto));
         }
 
         [Test]
         public void ShouldAddCharacterAttribute()
         {
-            var characterAttribute = TestObjects.CharacterAttribute();
+            var characterAttribute = _controller.GetCharacterAttributes().First();
             Post(characterAttribute);
         }
 
@@ -66,30 +67,25 @@ namespace FrannHammer.Api.Tests.Controllers
         public void ShouldUpdateCharacterAttribute()
         {
             const string expectedName = "mewtwo";
-            var characterAttribute = TestObjects.CharacterAttribute();
+            var characterAttribute = _controller.GetCharacterAttributes().First();
 
-            var dateTime = DateTime.Now;
-            Thread.Sleep(100);
-            //arrange
-            var returnedCharacter = Post(characterAttribute);
             //act
-            if (returnedCharacter != null)
+            if (characterAttribute != null)
             {
-                returnedCharacter.Name = expectedName;
-                _controller.PutCharacterAttribute(returnedCharacter.Id, returnedCharacter);
+                characterAttribute.Name = expectedName;
+                _controller.PutCharacterAttribute(characterAttribute.Id, characterAttribute);
             }
 
             var updatedCharacter = Get(characterAttribute.Id);
 
             //assert
             Assert.That(updatedCharacter?.Name, Is.EqualTo(expectedName));
-            Assert.That(updatedCharacter?.LastModified, Is.GreaterThan(dateTime));
         }
 
         [Test]
         public void ShouldDeleteCharacterAttribute()
         {
-            var characterAttribute = TestObjects.CharacterAttribute();
+            var characterAttribute = _controller.GetCharacterAttributes().First();
             Post(characterAttribute);
 
             _controller.DeleteCharacterAttribute(characterAttribute.Id);

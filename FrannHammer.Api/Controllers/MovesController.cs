@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
-using FrannHammer.Api.DTOs;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using FrannHammer.Api.Models;
-using FrannHammer.Core.Models;
+using FrannHammer.Models;
 
 namespace FrannHammer.Api.Controllers
 {
+    /// <summary>
+    /// Handles server operations dealing with <see cref="Move"/>s.
+    /// </summary>
     [RoutePrefix("api")]
     public class MovesController : BaseApiController
     {
@@ -18,19 +21,21 @@ namespace FrannHammer.Api.Controllers
             : base(context)
         { }
 
-        /// <summary>
-        /// Get all moves.  Not sure if this is sticking around.
-        /// </summary>
-        /// <returns></returns>
-        [ResponseType(typeof(IQueryable<MoveDto>))]
-        [Route("moves")]
-        public IQueryable<MoveDto> GetMoves()
-        {
-            return (from move in Db.Moves.ToList()
-                    select new MoveDto(move,
-                        Db.Characters.Find(move.OwnerId))// .First(c => c.Id == move.OwnerId))
-                ).AsQueryable();
-        }
+        //Too big to be useful
+        ///// <summary>
+        ///// Get all moves.  Not sure if this is sticking around.
+        ///// </summary>
+        ///// <returns></returns>
+        //[ResponseType(typeof(IQueryable<Move>))]
+        //[Route("moves")]
+        //public IQueryable<Move> GetMoves()
+        //{
+        //    return Db.Moves;
+        //    return (from move in Db.Moves.ToList()
+        //            select new MoveDto(move,
+        //                Db.Characters.Find(move.OwnerId))// .First(c => c.Id == move.OwnerId))
+        //        ).AsQueryable();
+        //}
 
         /// <summary>
         /// Get all moves that have a specific name.
@@ -41,14 +46,11 @@ namespace FrannHammer.Api.Controllers
         [Route("moves/byname")]
         public IQueryable<MoveDto> GetMovesByName([FromUri] string name)
         {
-            return (from move in Db.Moves.Where(m => m.Name.Equals(name)).ToList()
-                    select new MoveDto(move,
-                        Db.Characters.First(c => c.Id == move.OwnerId))
-                ).AsQueryable();
+            return Db.Moves.Where(m => m.Name.Equals(name, StringComparison.OrdinalIgnoreCase)).ProjectTo<MoveDto>();
         }
 
         /// <summary>
-        /// Get a specific <see cref="MoveDto"/>.
+        /// Get a specific <see cref="Move"/>.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -62,8 +64,7 @@ namespace FrannHammer.Api.Controllers
                 return NotFound();
             }
 
-            var dto = new MoveDto(move,
-                Db.Characters.First(c => c.Id == move.OwnerId));
+            var dto = Mapper.Map<Move, MoveDto>(move);
             return Ok(dto);
         }
 
@@ -71,41 +72,35 @@ namespace FrannHammer.Api.Controllers
         /// Update a <see cref="Move"/>.
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="move"></param>
+        /// <param name="dto"></param>
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
         [ResponseType(typeof(IHttpActionResult))]
         [Route("moves/{id}")]
-        public IHttpActionResult PutMove(int id, Move move)
+        public IHttpActionResult PutMove(int id, MoveDto dto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != move.Id)
+            if (id != dto.Id)
             {
                 return BadRequest();
             }
 
-            move.LastModified = DateTime.Now;
-            Db.Entry(move).State = EntityState.Modified;
+            if (!MoveExists(id))
+            {
+                return NotFound();
+            }
 
-            try
-            {
-                Db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MoveExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            var entity = Db.Moves.Find(id);
+            entity = Mapper.Map(dto, entity);
+
+            entity.LastModified = DateTime.Now;
+            Db.Entry(entity).State = EntityState.Modified;
+
+            Db.SaveChanges();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -113,23 +108,25 @@ namespace FrannHammer.Api.Controllers
         /// <summary>
         /// Create a new <see cref="Move"/>.
         /// </summary>
-        /// <param name="move"></param>
+        /// <param name="dto"></param>
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
-        [ResponseType(typeof(Move))]
+        [ResponseType(typeof(MoveDto))]
         [Route("moves")]
-        public IHttpActionResult PostMove(Move move)
+        public IHttpActionResult PostMove(MoveDto dto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            move.LastModified = DateTime.Now;
-            Db.Moves.Add(move);
+            var entity = Mapper.Map<MoveDto, Move>(dto);
+            entity.LastModified = DateTime.Now;
+            Db.Moves.Add(entity);
             Db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { controller = "Moves", id = move.Id }, move);
+            var newDto = Mapper.Map<Move, MoveDto>(entity);
+            return CreatedAtRoute("DefaultApi", new { controller = "Moves", id = newDto.Id }, newDto);
         }
 
         /// <summary>
@@ -151,7 +148,7 @@ namespace FrannHammer.Api.Controllers
             Db.Moves.Remove(move);
             Db.SaveChanges();
 
-            return Ok(move);
+            return StatusCode(HttpStatusCode.OK);
         }
 
         protected override void Dispose(bool disposing)

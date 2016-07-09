@@ -2,8 +2,8 @@
 using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Input;
-using FrannHammer.Core.Models;
 using FrannHammer.DataSynchro.ViewModels;
+using FrannHammer.Models;
 
 namespace FrannHammer.DataSynchro.Controls
 {

@@ -1,5 +1,6 @@
 ﻿using System;
 using FrannHammer.Core.Calculations;
+using FrannHammer.Models;
 using NUnit.Framework;
 
 namespace FrannHammer.Core.Tests

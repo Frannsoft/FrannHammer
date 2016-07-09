@@ -4,8 +4,8 @@ using System.Drawing;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
-using FrannHammer.Core;
 using Newtonsoft.Json;
+using Stat = FrannHammer.WebScraper.Stats.Stat;
 
 namespace FrannHammer.WebScraper
 {
@@ -29,6 +29,9 @@ namespace FrannHammer.WebScraper
         public string Name { get; private set; }
 
         [JsonProperty]
+        public string DisplayName { get; private set; }
+
+        [JsonProperty]
         public int Id { get; set; }
 
         [JsonProperty]
@@ -41,27 +44,29 @@ namespace FrannHammer.WebScraper
         [JsonProperty]
         public Dictionary<string, Stat> FrameData { get; private set; }
 
-        public Character(Characters character)
+        public Character(Characters character, int id)
         {
             Name = character.ToString();
             _urlTail = CharacterUtility.GetEnumDescription(character);
-            Id = (int)character;
+            //Id = (int)character;
+            Id = id;
             _page = new Page(UrlBase + _urlTail, Id);
             GetData();
         }
 
-        public Character(string characterName)
+        public Character(FrannHammer.Models.Character existingCharacter)
         {
-            Name = characterName;
-            var enumValue = (Characters)Enum.Parse(typeof(Characters), characterName, true);
+            Name = existingCharacter.Name;
+            var enumValue = (Characters)Enum.Parse(typeof(Characters), existingCharacter.Name, true);
             _urlTail = CharacterUtility.GetEnumDescription(enumValue);
-            Id = (int)enumValue;
+            Id = existingCharacter.Id;
             _page = new Page(UrlBase + _urlTail, Id);
             GetData();
         }
 
         private void GetData()
         {
+            DisplayName = _page.GetCharacterFriendlyName();
             FrameDataVersion = _page.GetVersion();
             MainImageUrl = _page.GetImageUrl();
             FrameData = _page.GetStats();

@@ -36,6 +36,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -48,39 +64,15 @@
     <Reference Include="System.Net.Http.Formatting">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AerialStat.cs" />
     <Compile Include="Calculations\Calculator.cs" />
-    <Compile Include="Calculations\Modifiers.cs" />
-    <Compile Include="Calculations\ProblemModels.cs" />
-    <Compile Include="CharacterAttributes.cs" />
-    <Compile Include="CharacterStat.cs" />
-    <Compile Include="CharacterUtility.cs" />
-    <Compile Include="DTOs\CharacterAttributeDto.cs" />
-    <Compile Include="DTOs\CharacterAttributeRowDto.cs" />
-    <Compile Include="DTOs\SmashAttributeTypeDto.cs" />
-    <Compile Include="EntityBusinessConverter.cs" />
-    <Compile Include="CharacterConstants.cs" />
-    <Compile Include="GroundStat.cs" />
     <Compile Include="Guard.cs" />
-    <Compile Include="Models\AccountBindingModels.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\BaseModel.cs" />
-    <Compile Include="Models\CalculatorModels.cs" />
-    <Compile Include="Models\Character.cs" />
-    <Compile Include="Models\CharacterAttributeModels.cs" />
-    <Compile Include="Models\CharacterAttributeType.cs" />
-    <Compile Include="Models\Move.cs" />
-    <Compile Include="Models\Movement.cs" />
-    <Compile Include="Models\MoveMetadataModels.cs" />
-    <Compile Include="Models\MoveType.cs" />
-    <Compile Include="Models\Notation.cs" />
-    <Compile Include="Models\RoleBindingModel.cs" />
-    <Compile Include="Models\SmashAttributeType.cs" />
-    <Compile Include="MovementStat.cs" />
-    <Compile Include="MoveStat.cs" />
-    <Compile Include="MoveType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\AccountRequest.cs" />
     <Compile Include="Requests\CharacterAttributesRequest.cs" />
@@ -88,8 +80,6 @@
     <Compile Include="Requests\MovementsRequest.cs" />
     <Compile Include="Requests\MovesRequest.cs" />
     <Compile Include="Requests\Request.cs" />
-    <Compile Include="SpecialStat.cs" />
-    <Compile Include="Stat.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -98,7 +88,18 @@
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FrannHammer.Models\FrannHammer.Models.csproj">
+      <Project>{e4f0c134-6288-438f-b5d0-c53638e866e3}</Project>
+      <Name>FrannHammer.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data.Common;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Results;
 using Effort.DataLoaders;
@@ -20,11 +19,12 @@ namespace FrannHammer.Api.Tests
         public virtual void TestFixtureSetUp()
         {
             var path = AppDomain.CurrentDomain.BaseDirectory;
-            IDataLoader loader = new CsvDataLoader($"{path}/fakeDb");
+            IDataLoader loader = new CsvDataLoader($"{path}fakeDb\\");
 
             _connection = Effort.DbConnectionFactory.CreateTransient(loader);
             Context = new ApplicationDbContext(_connection);
             TestObjects = new TestObjects();
+            Startup.ConfigureAutoMapping();
         }
 
         [TestFixtureTearDown]
@@ -69,23 +69,5 @@ namespace FrannHammer.Api.Tests
             Assert.That(retVal.Content, Is.Not.Null);
             return retVal.Content;
         }
-
-        //protected BadRequestErrorMessageResult ExecuteAndReturnBadRequestErrorMessageResult(Func<IHttpActionResult> op)
-        //{
-        //    var response = op();
-        //    var retVal = response as BadRequestErrorMessageResult;
-
-        //    Assert.That(retVal, Is.Not.Null);
-        //    return retVal;
-        //}
-
-        //protected NotFoundResult ExecuteAndReturnNotFoundResult(Func<IHttpActionResult> op)
-        //{
-        //    var response = op();
-        //    var retVal = response as NotFoundResult;
-
-        //    Assert.That(retVal, Is.Not.Null);
-        //    return retVal;
-        //}
     }
 }

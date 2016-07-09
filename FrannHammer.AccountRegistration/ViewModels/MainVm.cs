@@ -4,9 +4,8 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Runtime.CompilerServices;
 using FrannHammer.AccountRegistrationTool.Models;
-using FrannHammer.AccountRegistrationTool.Properties;
 using FrannHammer.Core;
-using FrannHammer.Core.Models;
+using FrannHammer.Models;
 
 namespace FrannHammer.AccountRegistrationTool.ViewModels
 {

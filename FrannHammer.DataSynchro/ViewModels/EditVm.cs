@@ -5,9 +5,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
-using FrannHammer.Core.Models;
 using FrannHammer.DataSynchro.Controls;
 using FrannHammer.DataSynchro.Models;
+using FrannHammer.Models;
 
 namespace FrannHammer.DataSynchro.ViewModels
 {

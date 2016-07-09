@@ -2,8 +2,9 @@
 using System.Threading;
 using System.Web.Http.Results;
 using FrannHammer.Api.Controllers;
-using FrannHammer.Core.Models;
+using FrannHammer.Models;
 using NUnit.Framework;
+using System.Linq;
 
 namespace FrannHammer.Api.Tests.Controllers
 {
@@ -12,15 +13,15 @@ namespace FrannHammer.Api.Tests.Controllers
     {
         private SmashAttributeTypesController _controller;
 
-        private SmashAttributeType Post(SmashAttributeType smashAttributeType)
+        private SmashAttributeTypeDto Post(SmashAttributeTypeDto smashAttributeType)
         {
-            return ExecuteAndReturnCreatedAtRouteContent<SmashAttributeType>(
+            return ExecuteAndReturnCreatedAtRouteContent<SmashAttributeTypeDto>(
                 () => _controller.PostSmashAttributeType(smashAttributeType));
         }
 
-        private SmashAttributeType Get(int id)
+        private SmashAttributeTypeDto Get(int id)
         {
-            return ExecuteAndReturnContent<SmashAttributeType>(
+            return ExecuteAndReturnContent<SmashAttributeTypeDto>(
                 () => _controller.GetSmashAttributeType(id));
         }
 
@@ -39,7 +40,7 @@ namespace FrannHammer.Api.Tests.Controllers
         }
 
         [Test]
-        public void ShouldGetSmashAttributeTypes()
+        public void ShouldGetSmashAttributeType()
         {
             var smashAttributeType = TestObjects.SmashAttributeType();
             Post(smashAttributeType);
@@ -52,7 +53,7 @@ namespace FrannHammer.Api.Tests.Controllers
             var results = _controller.GetSmashAttributeTypes();
             CollectionAssert.AllItemsAreNotNull(results);
             CollectionAssert.AllItemsAreUnique(results);
-            CollectionAssert.AllItemsAreInstancesOfType(results, typeof(SmashAttributeType));
+            CollectionAssert.AllItemsAreInstancesOfType(results, typeof(SmashAttributeTypeDto));
         }
 
         [Test]
@@ -61,29 +62,26 @@ namespace FrannHammer.Api.Tests.Controllers
             var smashAttributeType = TestObjects.SmashAttributeType();
             var result = Post(smashAttributeType);
 
-            Assert.AreEqual(smashAttributeType, result);
+            var latestSmashAttributeType = _controller.GetSmashAttributeTypes().ToList().Last();
+
+            Assert.AreEqual(result, latestSmashAttributeType);
         }
 
         [Test]
         public void ShouldUpdateSmashAttributeTypes()
         {
             const string expectedName = "new name";
-            var smashAttributeType = TestObjects.SmashAttributeType();
+            var smashAttributeType = _controller.GetSmashAttributeTypes().ToList().First();
 
-            var dateTime = DateTime.Now;
-            Thread.Sleep(100);
-            var returnedSmashAttributeTypes = Post(smashAttributeType);
-
-            if (returnedSmashAttributeTypes != null)
+            if (smashAttributeType != null)
             {
-                returnedSmashAttributeTypes.Name = expectedName;
-                ExecuteAndReturn<StatusCodeResult>(() => _controller.PutSmashAttributeType(returnedSmashAttributeTypes.Id, returnedSmashAttributeTypes));
+                smashAttributeType.Name = expectedName;
+                ExecuteAndReturn<StatusCodeResult>(() => _controller.PutSmashAttributeType(smashAttributeType.Id, smashAttributeType));
             }
 
             var updatedSmashAttributeTypes = Get(smashAttributeType.Id);
 
             Assert.That(updatedSmashAttributeTypes?.Name, Is.EqualTo(expectedName));
-            Assert.That(updatedSmashAttributeTypes?.LastModified, Is.GreaterThan(dateTime));
         }
 
         [Test]

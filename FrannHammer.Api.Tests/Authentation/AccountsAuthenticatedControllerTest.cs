@@ -1,6 +1,6 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
-using FrannHammer.Core.Models;
+using FrannHammer.Models;
 using NUnit.Framework;
 
 namespace FrannHammer.Api.Tests.Authentation
@@ -11,7 +11,6 @@ namespace FrannHammer.Api.Tests.Authentation
         private const string UriBase = "api/account/";
 
         [Test]
-        [Explicit]
         public async Task CanLogin() => await Login();
 
         [Test]

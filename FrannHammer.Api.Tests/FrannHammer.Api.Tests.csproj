@@ -49,6 +49,10 @@
       <HintPath>..\packages\Autofac.WebApi2.Owin.3.3.0\lib\net45\Autofac.Integration.WebApi.Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="AutoMapper, Version=5.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.5.0.0\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Effort, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6a46696d54971e6d, processorArchitecture=MSIL">
       <HintPath>..\packages\Effort.EF6.1.1.5\lib\net45\Effort.dll</HintPath>
       <Private>True</Private>
@@ -142,20 +146,25 @@
     <Compile Include="Asserts\CollectionPropertyAssert.cs" />
     <Compile Include="Authentation\AccountsAuthenticatedControllerTest.cs" />
     <Compile Include="Authentation\BaseAuthenticationTest.cs" />
+    <Compile Include="Controllers\AnglesControllerTest.cs" />
     <Compile Include="Controllers\BaseControllerTest.cs" />
     <Compile Include="Authentation\CharacterAttributeAuthControllerTest.cs" />
+    <Compile Include="Controllers\BaseDamagesControllerTest.cs" />
     <Compile Include="Controllers\CharacterAttributeControllerTest.cs" />
-    <Compile Include="Authentation\CharacterAttributeTypeControllerTest.cs" />
-    <Compile Include="Controllers\CharacterControllerTest.cs" />
+    <Compile Include="Controllers\CharacterAttributeTypeControllerTest.cs" />
     <Compile Include="Authentation\CharactersAuthenticationTest.cs" />
-    <Compile Include="Controllers\CharacterTests.cs" />
+    <Compile Include="Controllers\CharacterControllerTests.cs" />
     <Compile Include="Authentation\MovementsAuthControllerTest.cs" />
     <Compile Include="Authentation\MoveAuthControllerTest.cs" />
+    <Compile Include="Controllers\HitboxesControllerTest.cs" />
+    <Compile Include="Controllers\KnockbackGrowthControllerTest.cs" />
     <Compile Include="Controllers\MoveControllerTest.cs" />
     <Compile Include="Controllers\MovementsControllerTest.cs" />
     <Compile Include="Controllers\NotationControllerTest.cs" />
     <Compile Include="Authentation\SmashAttributeTypeAuthControllerTest.cs" />
     <Compile Include="Controllers\SmashAttributeTypesControllerTest.cs" />
+    <Compile Include="Controllers\ThrowsControllerTest.cs" />
+    <Compile Include="Controllers\ThrowTypesControllerTest.cs" />
     <Compile Include="EffortBaseTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestObjects.cs" />
@@ -218,6 +227,12 @@
     <Content Include="fakeDb\SmashAttributeTypes.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="fakeDb\Throws.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="fakeDb\ThrowTypes.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -228,6 +243,10 @@
     <ProjectReference Include="..\FrannHammer.Core\FrannHammer.Core.csproj">
       <Project>{2904d4e7-8989-46bd-ac0a-b4356f190a15}</Project>
       <Name>FrannHammer.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.Models\FrannHammer.Models.csproj">
+      <Project>{e4f0c134-6288-438f-b5d0-c53638e866e3}</Project>
+      <Name>FrannHammer.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

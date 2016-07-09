@@ -1,8 +1,8 @@
 ﻿using FrannHammer.Core;
-using FrannHammer.Core.Models;
 using FrannHammer.DataSynchro.Controls;
 using FrannHammer.DataSynchro.Models;
 using FrannHammer.DataSynchro.ViewModels;
+using FrannHammer.Models;
 
 namespace FrannHammer.DataSynchro
 {

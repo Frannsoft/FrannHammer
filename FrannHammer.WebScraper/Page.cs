@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using FrannHammer.Core;
 using HtmlAgilityPack;
+using AerialStat = FrannHammer.WebScraper.Stats.AerialStat;
+using GroundStat = FrannHammer.WebScraper.Stats.GroundStat;
+using MovementStat = FrannHammer.WebScraper.Stats.MovementStat;
+using SpecialStat = FrannHammer.WebScraper.Stats.SpecialStat;
+using Stat = FrannHammer.WebScraper.Stats.Stat;
 
 namespace FrannHammer.WebScraper
 {
@@ -372,6 +376,17 @@ namespace FrannHammer.WebScraper
             }
 
             return stat;
+        }
+
+        public string GetCharacterFriendlyName()
+        {
+            var node = _doc.DocumentNode.SelectSingleNode(StatConstants.XpathFrameDataVersion);
+
+            var characterFriendlyName = node.InnerText.Split(new[] { " F" }, StringSplitOptions.None)[0];
+
+            //clean up and remove the "'s"
+            var retVal = characterFriendlyName.TrimEnd('s', '\'');// .Remove(characterFriendlyName.Length - 1, 2);
+            return retVal;
         }
     }
 }

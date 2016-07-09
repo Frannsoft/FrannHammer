@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Configuration;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using FrannHammer.Api.Models;
-using FrannHammer.Core.Models;
+using FrannHammer.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -17,19 +18,37 @@ namespace FrannHammer.Api.Migrations
 
         protected override void Seed(ApplicationDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
+            var getUserName = ConfigurationManager.AppSettings["basicusername"];
+            var adminUserName = ConfigurationManager.AppSettings["adminusername"];
 
             var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
-            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+            var roleManager =
+                new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
 
-            var getuser = new ApplicationUser()
+            var getUserFound = manager.FindByName(getUserName);
+            var adminUserFound = manager.FindByName(adminUserName);
+
+            if (getUserFound == null)
             {
-                UserName = "GETuser",
-                Email = "getuser@mymail.com",
-                EmailConfirmed = true,
-            };
+                var newGetUser = new ApplicationUser()
+                {
+                    UserName = getUserName,
+                    Email = "getuser@mymail.com",
+                    EmailConfirmed = true
+                };
+                manager.Create(newGetUser, ConfigurationManager.AppSettings["basicpassword"]);
+            }
 
-            manager.Create(getuser, "");
+            if (adminUserFound == null)
+            {
+                var newAdminUser = new ApplicationUser
+                {
+                    UserName = adminUserName,
+                    Email = "adminuser@myemail.com",
+                    EmailConfirmed = true
+                };
+                manager.Create(newAdminUser, ConfigurationManager.AppSettings["adminpassword"]);
+            }
 
             if (!roleManager.Roles.Any())
             {
@@ -45,26 +64,27 @@ namespace FrannHammer.Api.Migrations
             manager.AddToRoles(getUser.Id, "Basic");
 
             //seed notations
+            const string notationFloat = "FLOAT";
+            const string notationFrames = "FRAMES";
+            const string notationBool = "BOOLEAN";
+
             if (!context.Notations.Any())
             {
                 var floatNotation = new Notation
                 {
-                    Name = "FLOAT",
-                    NotationType = NotationTypes.Float,
+                    Name = notationFloat,
                     LastModified = DateTime.Now
                 };
 
                 var framesNotation = new Notation
                 {
-                    Name = "FRAMES",
-                    NotationType = NotationTypes.Frames,
+                    Name = notationFrames,
                     LastModified = DateTime.Now
                 };
 
                 var booleanNotation = new Notation
                 {
-                    Name = "BOOLEAN",
-                    NotationType = NotationTypes.Boolean,
+                    Name = notationBool,
                     LastModified = DateTime.Now
                 };
 
@@ -75,13 +95,40 @@ namespace FrannHammer.Api.Migrations
 
             if (context.CharacterAttributes.Any() && !context.CharacterAttributeTypes.Any())
             {
-                var charAttributeNames = context.CharacterAttributes.Select(c => c.Name).Distinct();//get names
+                var charAttributeNames = context.CharacterAttributes.Select(c => c.Name).Distinct().ToList();//get names
 
                 //add char attribute type ids
                 foreach (var name in charAttributeNames)
                 {
+                    int notationId;
+
+                    if (name.Equals("FAST FALL SPEED") ||
+                        name.Equals("MAX AIR SPEED VALUE") ||
+                        name.Equals("MAX FALL SPEED VALUE") ||
+                        name.Equals("MAX FALL SPEED") ||
+                        name.Equals("MAX WALK SPEED VALUE") ||
+                        name.Equals("SPEED INCREASE") ||
+                        name.Equals("VALUE") ||
+                        name.Equals("WEIGHT VALUE"))
+                    {
+                        notationId = context.Notations.First(n => n.Name.Equals(notationFloat)).Id;
+                    }
+                    else if (name.Equals("INTANGIBILITY") ||
+                             name.Equals("INTANGIBLE") ||
+                             name.Equals("FAF"))
+                    {
+                        notationId = context.Notations.First(n => n.Name.Equals(notationFrames)).Id;
+                    }
+                    else
+                    {
+                        notationId = context.Notations.First(n => n.Name.Equals(notationBool)).Id;
+                    }
+
+
                     var charAttributeType = new CharacterAttributeType
                     {
+                        NotationId = notationId,
+                        LastModified = DateTime.Now,
                         Name = name
                     };
                     context.CharacterAttributeTypes.Add(charAttributeType);

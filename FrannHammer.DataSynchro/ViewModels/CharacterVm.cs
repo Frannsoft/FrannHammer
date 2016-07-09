@@ -2,10 +2,10 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using FrannHammer.Core;
-using FrannHammer.Core.DTOs;
-using FrannHammer.Core.Models;
 using FrannHammer.Core.Requests;
 using FrannHammer.DataSynchro.Models;
+using FrannHammer.Models;
+using FrannHammer.Models.DTOs;
 
 namespace FrannHammer.DataSynchro.ViewModels
 {
@@ -93,17 +93,17 @@ namespace FrannHammer.DataSynchro.ViewModels
             {
                 case CharacterMetadataTypes.CharacterAttributes:
                     {
-                        model = new CharacterAttributeDto();
+                        //model = new CharacterAttributeDto();
                         break;
                     }
                 case CharacterMetadataTypes.Movements:
                     {
-                        model = new Movement();
+                        //model = new Movement();
                         break;
                     }
                 case CharacterMetadataTypes.Moves:
                     {
-                        model = new Move();
+                        //model = new Move();
                         break;
                     }
                 default:

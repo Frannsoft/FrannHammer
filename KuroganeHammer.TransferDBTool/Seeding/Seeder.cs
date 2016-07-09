@@ -1,22 +1,38 @@
 ﻿using System;
 using System.Linq;
-using FrannHammer.Core.Models;
+using FrannHammer.Models;
+using NUnit.Framework;
 
 namespace KurograneHammer.TransferDBTool.Seeding
 {
+    [TestFixture]
+    public class Seeding
+    {
+        [Test]
+        [Explicit("Parses and splits move data into specific move tables")]
+        public void SeedSpecificMoveData()
+        {
+            var seeder = new Seeder();
+            seeder.Seed();
+
+            //if completes assume success..
+        }
+    }
+
     internal class Seeder
     {
         public void Seed()
         {
             using (AppDbContext context = new AppDbContext())
             {
-                SyncData<Hitbox>(context);
-                SyncData<BaseKnockbackSetKnockback>(context);
                 SyncData<BaseDamage>(context);
+                SyncData<Hitbox>(context);
+                //SyncData<BaseKnockbackSetKnockback>(context);
                 SyncData<Angle>(context);
                 SyncData<Autocancel>(context);
                 SyncData<LandingLag>(context);
                 SyncData<KnockbackGrowth>(context);
+                SyncThrowData(context);
             }
         }
 
@@ -26,15 +42,53 @@ namespace KurograneHammer.TransferDBTool.Seeding
             if (!context.Set<T>().Any())
             {
                 var moves = context.Moves.ToList();
+                Console.WriteLine($"Adding {typeof(T).Name} data");
 
                 foreach (var move in moves)
                 {
-                    var metaData = TransferMethods.MapDataThenSync<T>(move, context);
-                    Console.WriteLine($"Adding {metaData.GetType().Name} data for moveId: {move.Id}");
-                    context.Set<T>().Add(metaData);
+                    if (!move.HitboxActive.Contains("No") &&
+                        !move.HitboxActive.Contains("Yes"))
+                    {
+                        var metaData = TransferMethods.MapDataThenSync<T>(move, context);
+                        context.Set<T>().Add(metaData);
+                    }
                 }
                 context.SaveChanges();
             }
+        }
+
+        //someones always gotta be different
+        private static void SyncThrowData(AppDbContext context)
+        {
+            //correct the offby one error and add
+            var moves = context.Moves.ToList();
+
+            foreach (var move in moves)
+            {
+                if (move.HitboxActive.Contains("No") ||
+                    move.HitboxActive.Contains("Yes"))
+                {
+                    var tempBaseDamage = move.FirstActionableFrame;
+                    var tempAngle = move.BaseDamage;
+                    //var tempBaseKnockback = move.Angle; TODO: not yet parseable
+                    var tempKnockbackGrowth = move.BaseKnockBackSetKnockback;
+
+                    move.BaseDamage = tempBaseDamage;
+                    move.Angle = tempAngle;
+                    move.KnockbackGrowth = tempKnockbackGrowth;
+
+                    var baseDmgData = TransferMethods.MapDataThenSync<BaseDamage>(move, context);
+                    var angleData = TransferMethods.MapDataThenSync<Angle>(move, context);
+                    var knockbackGrowthData = TransferMethods.MapDataThenSync<KnockbackGrowth>(move, context);
+                    Console.WriteLine($"Adding throw data for moveId: {move.Id}");
+
+                    context.Set<BaseDamage>().Add(baseDmgData);
+                    context.Set<Angle>().Add(angleData);
+                    context.Set<KnockbackGrowth>().Add(knockbackGrowthData);
+                }
+            }
+            context.SaveChanges();
+            //can correct firstactiveframe in the future
         }
 
         //private static void SyncHitboxData(AppDbContext context)
@@ -71,7 +125,7 @@ namespace KurograneHammer.TransferDBTool.Seeding
         //}
     }
 
-   
 
-    
+
+
 }

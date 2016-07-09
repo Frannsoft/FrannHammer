@@ -143,6 +143,10 @@
       <Project>{2904D4E7-8989-46BD-AC0A-B4356F190A15}</Project>
       <Name>FrannHammer.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.Models\FrannHammer.Models.csproj">
+      <Project>{e4f0c134-6288-438f-b5d0-c53638e866e3}</Project>
+      <Name>FrannHammer.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
