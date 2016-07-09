@@ -189,7 +189,7 @@ namespace KurograneHammer.TransferDBTool
                 foreach (var attributeRow in attributesFromPage.AttributeValues)
                 {
                     var rank = attributeRow.Values.First(a => a.Name.ToLower() == "rank").Value;
-                    var characterName = MapCharacterName(attributeRow.Values.First(a => a.Name.ToLower() == "character").Value);
+                    var characterName = MapCharacterName(attributeRow.Values.First(a => a.Name.ToLower() == "character").Value).Trim();
 
                     if (string.IsNullOrEmpty(characterName))
                     { continue; } //if no characterName was found there is a high probability this table row was a decorator rather than a real value
@@ -203,6 +203,7 @@ namespace KurograneHammer.TransferDBTool
                         var attributeName = specificValues[i].Name;
                         var dbAttributeType = attributeTypes.Find(a => a.Name.Equals(specificValues[i].AttributeFlag)); //   (CharacterAttributes)Enum.Parse(typeof(CharacterAttributes), specificValues[i].AttributeFlag, true);
                         var value = specificValues[i].Value;
+                        Console.WriteLine("characterName: " + characterName);
                         var characterAttribute = new CharacterAttribute
                         {
                             Rank = rank,
