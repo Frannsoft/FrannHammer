@@ -47,13 +47,17 @@ namespace FrannHammer.Api.Controllers
         [Route(BaseDamagesRouteKey + "/{id}")]
         public IHttpActionResult GetBaseDamage(int id)
         {
-            BaseDamage retBaseDamage = Db.BaseDamage.Find(id);
-            if (retBaseDamage == null)
+            var dto = (from baseDamage in Db.BaseDamage
+                       join moves in Db.Moves
+                           on baseDamage.MoveId equals moves.Id
+                       where baseDamage.Id == id
+                       select baseDamage).ProjectTo<BaseDamageDto>()
+                       .SingleOrDefault();
+
+            if (dto == null)
             {
                 return NotFound();
             }
-
-            var dto = Mapper.Map<BaseDamage, BaseDamageDto>(retBaseDamage);
             return Ok(dto);
         }
 

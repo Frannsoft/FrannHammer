@@ -74,14 +74,17 @@ namespace FrannHammer.Api.Controllers
         [Route(MovesRouteKey + "/{id}/angles")]
         public IHttpActionResult GetMoveAngleData(int id)
         {
-            var entity = Db.Angle.SingleOrDefault(a => a.MoveId == id);
+            var dto = (from angle in Db.Angle
+                       join moves in Db.Moves
+                           on angle.MoveId equals moves.Id
+                       where angle.MoveId == id
+                       select angle).ProjectTo<AngleDto>().SingleOrDefault();
 
-            if (entity == null)
+            if (dto == null)
             {
                 return NotFound();
             }
 
-            var dto = Mapper.Map<Angle, AngleDto>(entity);
             return Ok(dto);
         }
 
@@ -93,14 +96,17 @@ namespace FrannHammer.Api.Controllers
         [Route(MovesRouteKey + "/{id}/basedamages")]
         public IHttpActionResult GetMoveBaseDamageData(int id)
         {
-            var entity = Db.BaseDamage.SingleOrDefault(b => b.MoveId == id);
+            var dto = (from baseDamage in Db.BaseDamage
+                       join moves in Db.Moves
+                           on baseDamage.MoveId equals moves.Id
+                       where baseDamage.MoveId == id
+                       select baseDamage).ProjectTo<BaseDamageDto>()
+                       .SingleOrDefault();
 
-            if (entity == null)
+            if (dto == null)
             {
                 return NotFound();
             }
-
-            var dto = Mapper.Map<BaseDamage, BaseDamageDto>(entity);
             return Ok(dto);
         }
 
@@ -112,14 +118,17 @@ namespace FrannHammer.Api.Controllers
         [Route(MovesRouteKey + "/{id}/knockbackgrowths")]
         public IHttpActionResult GetMoveKnockbackGrowthData(int id)
         {
-            var entity = Db.KnockbackGrowth.SingleOrDefault(b => b.MoveId == id);
+            var dto = (from knockbackGrowth in Db.KnockbackGrowth
+                       join moves in Db.Moves
+                           on knockbackGrowth.MoveId equals moves.Id
+                       where knockbackGrowth.MoveId == id
+                       select knockbackGrowth).ProjectTo<KnockbackGrowthDto>()
+                      .SingleOrDefault();
 
-            if (entity == null)
+            if (dto == null)
             {
                 return NotFound();
             }
-
-            var dto = Mapper.Map<KnockbackGrowth, KnockbackGrowthDto>(entity);
             return Ok(dto);
         }
 

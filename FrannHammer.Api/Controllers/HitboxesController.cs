@@ -47,13 +47,17 @@ namespace FrannHammer.Api.Controllers
         [Route(HitboxesRouteKey + "/{id}")]
         public IHttpActionResult GetHitbox(int id)
         {
-            Hitbox retHitbox = Db.Hitbox.Find(id);
-            if (retHitbox == null)
+            var dto = (from hitbox in Db.Hitbox
+                       join moves in Db.Moves
+                           on hitbox.MoveId equals moves.Id
+                       where hitbox.Id == id
+                       select hitbox).ProjectTo<HitboxDto>()
+                       .SingleOrDefault();
+
+            if (dto == null)
             {
                 return NotFound();
             }
-
-            var dto = Mapper.Map<Hitbox, HitboxDto>(retHitbox);
             return Ok(dto);
         }
 
