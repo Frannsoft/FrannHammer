@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FrannHammer.Models;
 using NUnit.Framework;
@@ -34,6 +35,7 @@ namespace KurograneHammer.TransferDBTool.Seeding
                 SyncData<KnockbackGrowth>(context);
                 SyncThrowData(context);
             }
+            Console.WriteLine("Completed seeding.");
         }
 
         private static void SyncData<T>(AppDbContext context)
@@ -41,18 +43,14 @@ namespace KurograneHammer.TransferDBTool.Seeding
         {
             if (!context.Set<T>().Any())
             {
-                var moves = context.Moves.ToList();
+                var moves = context.Moves.ToList().Where(m => !m.HitboxActive.Contains("No") &&
+                !m.HitboxActive.Contains("Yes"));
+
                 Console.WriteLine($"Adding {typeof(T).Name} data");
 
-                foreach (var move in moves)
-                {
-                    if (!move.HitboxActive.Contains("No") &&
-                        !move.HitboxActive.Contains("Yes"))
-                    {
-                        var metaData = TransferMethods.MapDataThenSync<T>(move, context);
-                        context.Set<T>().Add(metaData);
-                    }
-                }
+                List<T> dataToAdd = moves.Select(move => TransferMethods.MapDataThenSync<T>(move, context)).ToList();
+
+                context.Set<T>().AddRange(dataToAdd);
                 context.SaveChanges();
             }
         }
@@ -61,31 +59,33 @@ namespace KurograneHammer.TransferDBTool.Seeding
         private static void SyncThrowData(AppDbContext context)
         {
             //correct the offby one error and add
-            var moves = context.Moves.ToList();
+            var moves = context.Moves.ToList().Where(m => m.HitboxActive.Contains("No") ||
+                    m.HitboxActive.Contains("Yes"));
+
+            Console.WriteLine("Adding throw data...");
 
             foreach (var move in moves)
             {
-                if (move.HitboxActive.Contains("No") ||
-                    move.HitboxActive.Contains("Yes"))
-                {
-                    var tempBaseDamage = move.FirstActionableFrame;
-                    var tempAngle = move.BaseDamage;
-                    //var tempBaseKnockback = move.Angle; TODO: not yet parseable
-                    var tempKnockbackGrowth = move.BaseKnockBackSetKnockback;
+                var tempBaseDamage = move.FirstActionableFrame;
+                var tempAngle = move.BaseDamage;
+                var tempBaseKnockback = move.Angle;
+                var tempKnockbackGrowth = move.BaseKnockBackSetKnockback;
 
-                    move.BaseDamage = tempBaseDamage;
-                    move.Angle = tempAngle;
-                    move.KnockbackGrowth = tempKnockbackGrowth;
+                move.BaseDamage = tempBaseDamage;
+                move.Angle = tempAngle;
+                move.KnockbackGrowth = tempKnockbackGrowth;
+                move.BaseKnockBackSetKnockback = tempBaseKnockback;
+                move.FirstActionableFrame = "-"; //do this until KH posts FAF data for throws
+                move.HitboxActive = "-"; //clear out the invalid value here
 
-                    var baseDmgData = TransferMethods.MapDataThenSync<BaseDamage>(move, context);
-                    var angleData = TransferMethods.MapDataThenSync<Angle>(move, context);
-                    var knockbackGrowthData = TransferMethods.MapDataThenSync<KnockbackGrowth>(move, context);
-                    Console.WriteLine($"Adding throw data for moveId: {move.Id}");
+                var baseDmgData = TransferMethods.MapDataThenSync<BaseDamage>(move, context);
+                var angleData = TransferMethods.MapDataThenSync<Angle>(move, context);
+                var knockbackGrowthData = TransferMethods.MapDataThenSync<KnockbackGrowth>(move, context);
 
-                    context.Set<BaseDamage>().Add(baseDmgData);
-                    context.Set<Angle>().Add(angleData);
-                    context.Set<KnockbackGrowth>().Add(knockbackGrowthData);
-                }
+                context.Set<BaseDamage>().Add(baseDmgData);
+                context.Set<Angle>().Add(angleData);
+                context.Set<KnockbackGrowth>().Add(knockbackGrowthData);
+
             }
             context.SaveChanges();
             //can correct firstactiveframe in the future

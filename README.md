@@ -24,16 +24,18 @@ This allows consumers to pull back the following types of data from the existing
 - Character details such as image links, color theme from KuroganeHammer.com, descriptions, etc.
 - Movement details such as Weight, Fall Speed, Walk Speed, etc.
 - Move details such as active Hitboxes, First Actionable frames, Knockback Growth, etc.
-- Calculate Versus mode Knockback, Rage, Shield stun.
-   - More options exist in the [Data.Core project](https://github.com/Frannsoft/FrannHammer/tree/master/KuroganeHammer.Data.Core/Calculations), I just haven't made public API calls for them yet.
-   
+
 To see more details on these features, check out these wiki pages:
 
 - [Character data](https://github.com/Frannsoft/FrannHammer/wiki/Character-Data)
 - [Move Data](https://github.com/Frannsoft/FrannHammer/wiki/Move-Data)
 - [Movement Data](https://github.com/Frannsoft/FrannHammer/wiki/Movement-data)
 - [Character Attribute Data](https://github.com/Frannsoft/FrannHammer/wiki/Character-Attribute-Data)
-- [Calculator Functionality](https://github.com/Frannsoft/FrannHammer/wiki/Calculator-Functionality)
+- [Angle Data](https://github.com/Frannsoft/FrannHammer/wiki/Angle-Data)
+- [Base Damage Data](https://github.com/Frannsoft/FrannHammer/wiki/Base-Damage-Data)
+- [Hitbox Data](https://github.com/Frannsoft/FrannHammer/wiki/Hitbox-Data)
+- [Knockback Growth Data](https://github.com/Frannsoft/FrannHammer/wiki/Knockback-Growth-Data)
+- [Throw Data](https://github.com/Frannsoft/FrannHammer/wiki/Throw-Data)
 
 #### Documentation
 

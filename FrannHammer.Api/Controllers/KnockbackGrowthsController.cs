@@ -47,13 +47,17 @@ namespace FrannHammer.Api.Controllers
         [Route(KnockbackGrowthsRouteKey + "/{id}")]
         public IHttpActionResult GetKnockbackGrowth(int id)
         {
-            KnockbackGrowth retKnockbackGrowth = Db.KnockbackGrowth.Find(id);
-            if (retKnockbackGrowth == null)
+            var dto = (from knockbackGrowth in Db.KnockbackGrowth
+                       join moves in Db.Moves
+                           on knockbackGrowth.MoveId equals moves.Id
+                       where knockbackGrowth.Id == id
+                       select knockbackGrowth).ProjectTo<KnockbackGrowthDto>()
+                      .SingleOrDefault();
+
+            if (dto == null)
             {
                 return NotFound();
             }
-
-            var dto = Mapper.Map<KnockbackGrowth, KnockbackGrowthDto>(retKnockbackGrowth);
             return Ok(dto);
         }
 
