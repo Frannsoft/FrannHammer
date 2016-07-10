@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace FrannHammer.Api.Tests.Controllers
 {
     [TestFixture]
-    public class HitboxsControllerTest : EffortBaseTest
+    public class HitboxesControllerTest : EffortBaseTest
     {
         private HitboxesController _controller;
 

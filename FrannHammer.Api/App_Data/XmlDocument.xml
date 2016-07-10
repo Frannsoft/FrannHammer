@@ -506,6 +506,34 @@
             <param name="name"></param>
             <returns></returns>
         </member>
+        <member name="M:FrannHammer.Api.Controllers.MovesController.GetMoveHitboxData(System.Int32)">
+            <summary>
+            Get the <see cref="T:FrannHammer.Models.Hitbox"/> data associated with this move.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Api.Controllers.MovesController.GetMoveAngleData(System.Int32)">
+            <summary>
+            Get the <see cref="T:FrannHammer.Models.Angle"/> data associated with this move.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Api.Controllers.MovesController.GetMoveBaseDamageData(System.Int32)">
+            <summary>
+            Get the <see cref="T:FrannHammer.Models.BaseDamage"/> data associated with this move.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Api.Controllers.MovesController.GetMoveKnockbackGrowthData(System.Int32)">
+            <summary>
+            Get the <see cref="T:FrannHammer.Models.KnockbackGrowth"/> data associated with this <see cref="T:FrannHammer.Models.Move"/>.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:FrannHammer.Api.Controllers.MovesController.GetMove(System.Int32)">
             <summary>
             Get a specific <see cref="T:FrannHammer.Models.Move"/>.

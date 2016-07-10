@@ -47,13 +47,17 @@ namespace FrannHammer.Api.Controllers
         [Route(AnglesRouteKey + "/{id}")]
         public IHttpActionResult GetAngle(int id)
         {
-            Angle retAngle = Db.Angle.Find(id);
-            if (retAngle == null)
+            var dto = (from angle in Db.Angle
+                join moves in Db.Moves
+                    on angle.MoveId equals moves.Id
+                where angle.Id == id
+                select angle).ProjectTo<AngleDto>().SingleOrDefault();
+
+            if (dto == null)
             {
                 return NotFound();
             }
 
-            var dto = Mapper.Map<Angle, AngleDto>(retAngle);
             return Ok(dto);
         }
 
