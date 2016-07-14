@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using FrannHammer.Models;
 
 namespace KurograneHammer.TransferDBTool.Seeding
@@ -13,11 +14,14 @@ namespace KurograneHammer.TransferDBTool.Seeding
             {
                 return (T)(object)AddHitboxDataToHitboxTable(move, context);
             }
-            //TODO: this table is going away and split into 'BaseKnockback' and 'SetKnockback' tables.  Need to figure out a way to parse into both of those from this.
-            //if (typeof(T) == typeof(BaseKnockbackSetKnockback))
-            //{
-            //    return (T)(object)AddBaseKnockbackSetKnockback_DataTo_BaseKnockbackSetKnockback_Table(move, context);
-            //}
+            if (typeof(T) == typeof(BaseKnockback))
+            {
+                return (T)(object)AddBaseKnockback_DataTo_BaseKnockback_Table(move, context);
+            }
+            if (typeof(T) == typeof(SetKnockback))
+            {
+                return (T)(object)AddSetKnockback_DataTo_SetKnockback_Table(move, context);
+            }
             if (typeof(T) == typeof(BaseDamage))
             {
                 return (T)(object)AddBaseDamageDataToTable(move, context);
@@ -164,18 +168,58 @@ namespace KurograneHammer.TransferDBTool.Seeding
             return baseDamage;
         }
 
+        private static T AddBaseSetKnockbackCore<T>(string rawKbk, string regexPattern, char[] trimValues,
+            char primaryKnockbackValueChar, Func<string, bool> doesRawContainKnockBackValue,
+            Move move, AppDbContext context)
+            where T : BaseMoveHitboxMeta
+        {
+            const char splitValue = '/';
+
+            if (rawKbk.Contains(primaryKnockbackValueChar))
+            {
+                var baseKbksRegexMatch = Regex.Match(rawKbk, regexPattern).Value;
+                var trimmed = baseKbksRegexMatch.Trim(trimValues);
+                return string.IsNullOrEmpty(trimmed) ?
+                        null :
+                        SetBaseHitboxData<T>(trimmed, splitValue, move, context);
+            }
+            if (doesRawContainKnockBackValue(rawKbk))
+            {
+                return null;
+            }
+
+            return rawKbk.Equals("-") || string.IsNullOrEmpty(rawKbk) ?
+                null :
+                SetBaseHitboxData<T>(rawKbk, splitValue, move, context);
+        }
+
         internal static BaseKnockback AddBaseKnockback_DataTo_BaseKnockback_Table(
             Move move, AppDbContext context)
         {
-            //TODO: Need to figure out a way to parse move.BaseKnockbackSetKnock into a usable value for this
-            throw new NotImplementedException();
+            var rawKbk = move.BaseKnockBackSetKnockback;
+            const string matchBaseKnockbackRegex = "(B: ).[^W]*";
+            char[] baseKnockbackTrimValues = {'B', ':', ' '};
+            const char primaryKnockbackValueChar = 'B';
+            Func<string, bool> doesRawContainBaseKnockbackValue = raw => raw.Contains('W') && !raw.Contains('B');
+
+            return AddBaseSetKnockbackCore<BaseKnockback>(rawKbk, matchBaseKnockbackRegex, baseKnockbackTrimValues,
+                primaryKnockbackValueChar,
+                doesRawContainBaseKnockbackValue, move, context);
         }
 
         internal static SetKnockback AddSetKnockback_DataTo_SetKnockback_Table(
             Move move, AppDbContext context)
         {
-            //TODO: Need to figure out a way to parse move.BaseKnockbackSetKnock into a usable value for this
-            throw new NotImplementedException();
+            var rawKbk = move.BaseKnockBackSetKnockback;
+            const string matchSetKnockbackRegex = "(W: ).[^B]*";
+            char[] setKnockbackTrimValues = {'W', ':', ' '};
+            const char primaryKnockbackValueChar = 'W';
+            Func<string, bool> doesRawContainSetKnockbackValue = raw => rawKbk.Contains('B') &&
+                                                                        !rawKbk.Contains('W');
+
+            return AddBaseSetKnockbackCore<SetKnockback>(rawKbk, matchSetKnockbackRegex, setKnockbackTrimValues,
+                primaryKnockbackValueChar,
+                doesRawContainSetKnockbackValue, move, context);
         }
 
         //private static BaseKnockbackSetKnockback AddBaseKnockbackSetKnockback_DataTo_BaseKnockbackSetKnockback_Table(
