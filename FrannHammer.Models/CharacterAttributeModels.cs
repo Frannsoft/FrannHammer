@@ -238,7 +238,7 @@ namespace FrannHammer.Models
     public class CharacterAttributeDto : BaseCharacterAttributeModel
     { }
 
-    public class CharacterAttribute : BaseCharacterAttributeModel
+    public class CharacterAttribute : BaseCharacterAttributeModel, IEntity
     {
         public DateTime LastModified { get; set; }
         public SmashAttributeType SmashAttributeType { get; set; }

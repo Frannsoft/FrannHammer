@@ -109,6 +109,10 @@
       <Project>{e4f0c134-6288-438f-b5d0-c53638e866e3}</Project>
       <Name>FrannHammer.Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.Services\FrannHammer.Services.csproj">
+      <Project>{7E5C008B-AE84-4D50-BC4B-9D49D8D53870}</Project>
+      <Name>FrannHammer.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FrannHammer.WebScraper\FrannHammer.WebScraper.csproj">
       <Project>{9d3c1343-f4b4-4538-b0e0-590d3b2f5de3}</Project>
       <Name>FrannHammer.WebScraper</Name>

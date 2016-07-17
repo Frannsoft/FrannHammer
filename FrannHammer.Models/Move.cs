@@ -64,7 +64,7 @@ namespace FrannHammer.Models
     public class MoveDto : BaseMoveModel
     { }
 
-    public class Move : BaseMoveModel// : BaseModel
+    public class Move : BaseMoveModel, IMoveEntity// : BaseModel
     {
         public DateTime LastModified { get; set; }
 

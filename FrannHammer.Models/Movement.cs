@@ -48,7 +48,7 @@ namespace FrannHammer.Models
     public class MovementDto : BaseMovementModel
     { }
 
-    public class Movement : BaseMovementModel// : BaseModel
+    public class Movement : BaseMovementModel, IEntity// : BaseModel
     {
         public DateTime LastModified { get; set; }
 

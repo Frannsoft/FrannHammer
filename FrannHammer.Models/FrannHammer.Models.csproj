@@ -78,6 +78,7 @@
     <Compile Include="Angle.cs" />
     <Compile Include="ApplicationUser.cs" />
     <Compile Include="BaseDamage.cs" />
+    <Compile Include="BaseEntity.cs" />
     <Compile Include="BaseModel.cs" />
     <Compile Include="CalculatorModels.cs" />
     <Compile Include="Character.cs" />

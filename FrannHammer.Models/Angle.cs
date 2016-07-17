@@ -5,6 +5,6 @@ namespace FrannHammer.Models
     public class AngleDto : BaseMoveHitboxMetaDto
     { }
 
-    public class Angle : BaseMoveHitboxMeta
+    public class Angle : BaseMoveHitboxMeta, IMoveIdEntity
     { }
 }
