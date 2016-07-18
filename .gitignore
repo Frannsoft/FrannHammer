@@ -58,3 +58,9 @@ appsettings.config
 FrannHammer.Models/bin/
 FrannHammer.Models/obj/
 KuroganeHammer.TransferDBTool/ConnectionStrings.config
+FrannHammer.Services.Tests/bin/
+FrannHammer.Api/Scripts/jquery-3.1.0.min.map
+FrannHammer.Api/Scripts/
+FrannHammer.Services/bin/
+FrannHammer.Services/obj/
+FrannHammer.Services.Tests/obj/
