@@ -1,12 +1,9 @@
-﻿using System;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
+using FrannHammer.Services;
 
 namespace FrannHammer.Api.Controllers
 {
@@ -17,48 +14,43 @@ namespace FrannHammer.Api.Controllers
     public class KnockbackGrowthsController : BaseApiController
     {
         private const string KnockbackGrowthsRouteKey = "KnockbackGrowths";
+        private readonly IMetadataService _metadataService;
 
         /// <summary>
-        /// Create a new <see cref="KnockbackGrowthsController"/> to interact with the server using 
-        /// a specific <see cref="IApplicationDbContext"/>
+        /// Create a new <see cref="KnockbackGrowthsController"/> to interact with the server.
         /// </summary>
-        /// <param name="context"></param>
-        public KnockbackGrowthsController(IApplicationDbContext context)
-            : base(context)
-        { }
+        public KnockbackGrowthsController(IMetadataService metadataService)
+        {
+            _metadataService = metadataService;
+        }
 
         /// <summary>
         /// Get all <see cref="KnockbackGrowthDto"/>s.
         /// </summary>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
+        [ResponseType(typeof(KnockbackGrowthDto))]
         [Route(KnockbackGrowthsRouteKey)]
-        public IQueryable<KnockbackGrowthDto> GetKnockbackGrowths()
+        public IHttpActionResult GetKnockbackGrowths([FromUri] string fields = "")
         {
-            var knockbackGrowthTypes = Db.KnockbackGrowth.ProjectTo<KnockbackGrowthDto>();
-            return knockbackGrowthTypes;
+            var content = _metadataService.GetAllWithMoves<KnockbackGrowth, KnockbackGrowthDto>(fields);
+            return Ok(content);
         }
 
         /// <summary>
         /// Get a specific <see cref="KnockbackGrowthDto"/>s details.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(KnockbackGrowthDto))]
         [Route(KnockbackGrowthsRouteKey + "/{id}")]
-        public IHttpActionResult GetKnockbackGrowth(int id)
+        public IHttpActionResult GetKnockbackGrowth(int id, [FromUri] string fields = "")
         {
-            var dto = (from knockbackGrowth in Db.KnockbackGrowth
-                       join moves in Db.Moves
-                           on knockbackGrowth.MoveId equals moves.Id
-                       where knockbackGrowth.Id == id
-                       select knockbackGrowth).ProjectTo<KnockbackGrowthDto>()
-                      .SingleOrDefault();
-
-            if (dto == null)
-            {
-                return NotFound();
-            }
-            return Ok(dto);
+            var content = _metadataService.GetWithMoves<KnockbackGrowth, KnockbackGrowthDto>(id, fields);
+            return Ok(content);
         }
 
         /// <summary>
@@ -80,19 +72,7 @@ namespace FrannHammer.Api.Controllers
                 return BadRequest();
             }
 
-            if (!KnockbackGrowthExists(id))
-            {
-                return NotFound();
-            }
-
-            var entity = Db.KnockbackGrowth.Find(id);
-            entity = Mapper.Map(dto, entity);
-
-            entity.LastModified = DateTime.Now;
-            Db.Entry(entity).State = System.Data.Entity.EntityState.Modified;
-
-            Db.SaveChanges();
-
+            _metadataService.Update<KnockbackGrowth, KnockbackGrowthDto>(id, dto);
             return StatusCode(HttpStatusCode.NoContent);
         }
 
@@ -111,13 +91,7 @@ namespace FrannHammer.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var entity = Mapper.Map<KnockbackGrowthDto, KnockbackGrowth>(dto);
-            entity.LastModified = DateTime.Now;
-
-            Db.KnockbackGrowth.Add(entity);
-            Db.SaveChanges();
-
-            var newDto = Mapper.Map<KnockbackGrowth, KnockbackGrowthDto>(entity);
+            var newDto = _metadataService.Add<KnockbackGrowth, KnockbackGrowthDto>(dto);
             return CreatedAtRoute("DefaultApi", new { controller = "KnockbackGrowths", id = newDto.Id }, newDto);
         }
 
@@ -130,21 +104,8 @@ namespace FrannHammer.Api.Controllers
         [Route(KnockbackGrowthsRouteKey + "/{id}")]
         public IHttpActionResult DeleteKnockbackGrowth(int id)
         {
-            KnockbackGrowth knockbackGrowth = Db.KnockbackGrowth.Find(id);
-            if (knockbackGrowth == null)
-            {
-                return NotFound();
-            }
-
-            Db.KnockbackGrowth.Remove(knockbackGrowth);
-            Db.SaveChanges();
-
+            _metadataService.Delete<KnockbackGrowth>(id);
             return StatusCode(HttpStatusCode.OK);
-        }
-
-        private bool KnockbackGrowthExists(int id)
-        {
-            return Db.KnockbackGrowth.Count(e => e.Id == id) > 0;
         }
     }
 }

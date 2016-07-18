@@ -1,11 +1,9 @@
-﻿using System;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
+using FrannHammer.Services;
 
 namespace FrannHammer.Api.Controllers
 {
@@ -15,81 +13,68 @@ namespace FrannHammer.Api.Controllers
     [RoutePrefix("api")]
     public class NotationsController : BaseApiController
     {
+        private readonly IMetadataService _metadataService;
+
         /// <summary>
-        /// Create a new <see cref="NotationsController"/> to interact with the server using 
-        /// a specific <see cref="ApplicationDbContext"/>
+        /// Create a new <see cref="NotationsController"/> to interact with the server.
         /// </summary>
-        /// <param name="context"></param>
-        public NotationsController(ApplicationDbContext context)
-            : base(context)
-        { }
+        /// <param name="metadataService"></param>
+        public NotationsController(IMetadataService metadataService)
+        {
+            _metadataService = metadataService;
+        }
 
         /// <summary>
         /// Get all <see cref="Notation"/>s.
         /// </summary>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
+        [ResponseType(typeof(Notation))]
         [Route("notations")]
-        public IQueryable<Notation> GetNotations()
+        public IHttpActionResult GetNotations([FromUri] string fields = "")
         {
-            return Db.Notations;
+            var content = _metadataService.GetAll<Notation, Notation>(fields);
+            return Ok(content);
         }
 
         /// <summary>
         /// Get a specific <see cref="Notation"/>s details.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(Notation))]
         [Route("notations/{id}")]
-        public IHttpActionResult GetNotation(int id)
+        public IHttpActionResult GetNotation(int id, [FromUri] string fields = "")
         {
-            Notation notation = Db.Notations.Find(id);
-            if (notation == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(notation);
+            var content =
+                _metadataService.Get<Notation, Notation>(id, fields);
+            return Ok(content);
         }
 
         /// <summary>
         /// Update a <see cref="Notation"/>.
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="notation"></param>
+        /// <param name="dto"></param>
         /// <returns></returns>
         [ResponseType(typeof(void))]
         [Route("notations/{id}")]
-        public IHttpActionResult PutNotation(int id, Notation notation)
+        public IHttpActionResult PutNotation(int id, Notation dto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != notation.Id)
+            if (id != dto.Id)
             {
                 return BadRequest();
             }
 
-            notation.LastModified = DateTime.Now;
-            Db.Entry(notation).State = System.Data.Entity.EntityState.Modified;
-
-            try
-            {
-                Db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!NotationExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            _metadataService.Update<Notation, Notation>(id, dto);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -97,22 +82,21 @@ namespace FrannHammer.Api.Controllers
         /// <summary>
         /// Create a new <see cref="Notation"/>.
         /// </summary>
-        /// <param name="notation"></param>
+        /// <param name="dto"></param>
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
         [ResponseType(typeof(Notation))]
         [Route("notations")]
-        public IHttpActionResult PostNotation(Notation notation)
+        public IHttpActionResult PostNotation(Notation dto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            Db.Notations.Add(notation);
-            Db.SaveChanges();
+            var newDto = _metadataService.Add<Notation, Notation>(dto);
 
-            return CreatedAtRoute("DefaultApi", new { controller = "Notations", id = notation.Id }, notation);
+            return CreatedAtRoute("DefaultApi", new { controller = "Notations", id = newDto.Id }, dto);
         }
 
         /// <summary>
@@ -121,25 +105,11 @@ namespace FrannHammer.Api.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
-        [ResponseType(typeof(Notation))]
         [Route("notations/{id}")]
         public IHttpActionResult DeleteNotation(int id)
         {
-            Notation notation = Db.Notations.Find(id);
-            if (notation == null)
-            {
-                return NotFound();
-            }
-
-            Db.Notations.Remove(notation);
-            Db.SaveChanges();
-
-            return Ok(notation);
-        }
-
-        private bool NotationExists(int id)
-        {
-            return Db.Notations.Count(e => e.Id == id) > 0;
+            _metadataService.Delete<Notation>(id);
+            return StatusCode(HttpStatusCode.OK);
         }
     }
 }

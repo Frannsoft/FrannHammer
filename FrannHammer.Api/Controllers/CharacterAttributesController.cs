@@ -1,14 +1,9 @@
-﻿using System;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
+using FrannHammer.Services;
 
 namespace FrannHammer.Api.Controllers
 {
@@ -18,42 +13,43 @@ namespace FrannHammer.Api.Controllers
     [RoutePrefix("api")]
     public class CharacterAttributesController : BaseApiController
     {
+        private readonly IMetadataService _metadataService;
 
         /// <summary>
-        /// Create a new <see cref="CharacterAttribute"/> controller to interact with the server using a specific 
-        /// <see cref="ApplicationDbContext"/>.
+        /// Create a new <see cref="CharacterAttribute"/> controller to interact with the server. 
         /// </summary>
-        public CharacterAttributesController(ApplicationDbContext context)
-            : base(context)
-        { }
+        public CharacterAttributesController(IMetadataService metadataService)
+        {
+            _metadataService = metadataService;
+        }
 
         /// <summary>
         /// Get all <see cref="CharacterAttribute"/>s.
         /// </summary>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
+        [ResponseType(typeof(CharacterAttributeDto))]
         [Route("characterattributes")]
-        public IQueryable<CharacterAttributeDto> GetCharacterAttributes()
+        public IHttpActionResult GetCharacterAttributes([FromUri] string fields = "")
         {
-            return Db.CharacterAttributes.ProjectTo<CharacterAttributeDto>();
+            var content = _metadataService.GetAll<CharacterAttribute, CharacterAttributeDto>(fields);
+            return Ok(content);
         }
 
         /// <summary>
         /// Get a specific <see cref="CharacterAttribute"/> by its id.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(CharacterAttributeDto))]
         [Route("characterattributes/{id}")]
-        public IHttpActionResult GetCharacterAttribute(int id)
+        public IHttpActionResult GetCharacterAttribute(int id, [FromUri] string fields = "")
         {
-            CharacterAttribute characterAttribute = Db.CharacterAttributes.Find(id);
-            if (characterAttribute == null)
-            {
-                return NotFound();
-            }
-            var dto = Mapper.Map<CharacterAttribute, CharacterAttributeDto>(characterAttribute);
-
-            return Ok(dto);
+            var content = _metadataService.Get<CharacterAttribute, CharacterAttributeDto>(id, fields);
+            return Ok(content);
         }
 
         /// <summary>
@@ -63,7 +59,6 @@ namespace FrannHammer.Api.Controllers
         /// <param name="dto"></param>
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
-        [ResponseType(typeof(void))]
         [Route("characterattributes/{id}")]
         public IHttpActionResult PutCharacterAttribute(int id, CharacterAttributeDto dto)
         {
@@ -77,18 +72,7 @@ namespace FrannHammer.Api.Controllers
                 return BadRequest();
             }
 
-            if (!CharacterAttributeExists(id))
-            {
-                return NotFound();
-            }
-
-            var entity = Db.CharacterAttributes.Find(id);
-            entity = Mapper.Map(dto, entity);
-
-            entity.LastModified = DateTime.Now;
-            Db.Entry(entity).State = EntityState.Modified;
-
-            Db.SaveChanges();
+            _metadataService.Update<CharacterAttribute, CharacterAttributeDto>(id, dto);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -107,12 +91,7 @@ namespace FrannHammer.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var entity = Mapper.Map<CharacterAttributeDto, CharacterAttribute>(dto);
-            entity.LastModified = DateTime.Now;
-            Db.CharacterAttributes.Add(entity);
-            Db.SaveChanges();
-
-            var newDto = Mapper.Map<CharacterAttribute, CharacterAttributeDto>(entity);
+            var newDto = _metadataService.Add<CharacterAttribute, CharacterAttributeDto>(dto);
             return CreatedAtRoute("DefaultApi", new { controller = "CharacterAttributes", id = newDto.Id }, newDto);
         }
 
@@ -125,21 +104,8 @@ namespace FrannHammer.Api.Controllers
         [Route("characterattributes/{id}")]
         public IHttpActionResult DeleteCharacterAttribute(int id)
         {
-            CharacterAttribute characterAttribute = Db.CharacterAttributes.Find(id);
-            if (characterAttribute == null)
-            {
-                return NotFound();
-            }
-
-            Db.CharacterAttributes.Remove(characterAttribute);
-            Db.SaveChanges();
-
+            _metadataService.Delete<CharacterAttribute>(id);
             return StatusCode(HttpStatusCode.OK);
-        }
-
-        private bool CharacterAttributeExists(int id)
-        {
-            return Db.CharacterAttributes.Count(e => e.Id == id) > 0;
         }
     }
 }

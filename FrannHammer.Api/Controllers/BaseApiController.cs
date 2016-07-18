@@ -1,6 +1,13 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
+using System.Dynamic;
+using System.Linq;
+using System.Net.Http;
 using System.Web.Http;
+using AutoMapper;
 using FrannHammer.Api.Models;
+using FrannHammer.Core;
+using FrannHammer.Services;
 using Microsoft.AspNet.Identity.Owin;
 
 namespace FrannHammer.Api.Controllers
@@ -38,10 +45,29 @@ namespace FrannHammer.Api.Controllers
 
         protected readonly IApplicationDbContext Db = new ApplicationDbContext();
 
-       
         protected BaseApiController(IApplicationDbContext context)
         {
-            Db = context;    
+            Db = context;
+        }
+
+        protected BaseApiController()
+        { }
+
+        /// <summary>
+        /// Returns a content based response that is either a custom <see cref="ExpandoObject"/> or an
+        /// existing DTO depending on the passed in fields.
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <typeparam name="TDto"></typeparam>
+        /// <param name="entity"></param>
+        /// <param name="fields"></param>
+        /// <returns></returns>
+        protected dynamic BuildContentResponse<TEntity, TDto>(TEntity entity, string fields)
+            where TEntity : class
+        {
+            return !string.IsNullOrEmpty(fields) ?
+                new DtoBuilder().Build(entity, fields) :
+                Mapper.Map<TEntity, TDto>(entity);
         }
 
         protected override void Dispose(bool disposing)
@@ -53,6 +79,26 @@ namespace FrannHammer.Api.Controllers
             }
 
             base.Dispose(disposing);
+        }
+
+        protected IEnumerable<dynamic> BuildContentResponseMultiple<TEntity, TDto>(IQueryable<TEntity> entities,
+            string fields)
+            where TEntity : class
+            where TDto : class
+        {
+            var entitiesList = entities.ToList(); //note: this evaluates the result set fully!
+
+            if (!string.IsNullOrEmpty(fields))
+            {
+                var builder = new DtoBuilder();
+                return from entity in entitiesList
+                       select builder.Build(entity, fields);
+            }
+            else
+            {
+                return from entity in entitiesList
+                       select Mapper.Map<TEntity, TDto>(entity);
+            }
         }
     }
 }

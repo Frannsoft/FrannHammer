@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
+using FrannHammer.Services;
 
 namespace FrannHammer.Api.Controllers
 {
@@ -17,53 +15,59 @@ namespace FrannHammer.Api.Controllers
     [RoutePrefix("api")]
     public class MovementsController : BaseApiController
     {
-        public MovementsController(ApplicationDbContext context)
-            : base(context)
+        private readonly IMetadataService _metadataService;
+
+        /// <summary>
+        /// Create a new <see cref="MovementsController"/>.
+        /// </summary>
+        public MovementsController(IMetadataService metadataService)
         {
+            _metadataService = metadataService;
         }
 
         //Query too big to be useful.
         /// <summary>
         /// Get all movement data.
         /// </summary>
-        [ResponseType(typeof(IQueryable<Movement>))]
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
+        [ResponseType(typeof(MovementDto))]
         [Route("movements", Name = "GetAllMovements")]
-        public IQueryable<Movement> GetMovements()
+        public IHttpActionResult GetMovements([FromUri] string fields = "")
         {
-            return Db.Movements;
+            var content = _metadataService.GetAll<Movement, MovementDto>(fields);
+            return Ok(content);
         }
 
         /// <summary>
         /// Get all of the <see cref="Movement"/> data that is a specific name.
         /// </summary>
         /// <param name="name"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
-        [ResponseType(typeof(IQueryable<MovementDto>))]
+        [ResponseType(typeof(MovementDto))]
         [Route("movements/byname", Name = "GetMovementsByName")]
-        public IQueryable<MovementDto> GetMovementsByName([FromUri] string name)
+        public IHttpActionResult GetMovementsByName([FromUri] string name, [FromUri] string fields = "")
         {
-            var movements = Db.Movements.Where(m => m.Name.Equals(name, StringComparison.OrdinalIgnoreCase)).ProjectTo<MovementDto>();
-            return movements;
+            var content = _metadataService.GetAll<Movement, MovementDto>(Db.Movements
+                .Where(m => m.Name.Equals(name, StringComparison.OrdinalIgnoreCase)), fields);
+            return Ok(content);
         }
 
         /// <summary>
         /// Get a specific <see cref="Movement"/>.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(MovementDto))]
         [Route("movements/{id}")]
-        public IHttpActionResult GetMovement(int id)
+        public IHttpActionResult GetMovement(int id, [FromUri] string fields = "")
         {
-            Movement movement = Db.Movements.Find(id);
-            if (movement == null)
-            {
-                return NotFound();
-            }
-
-            var dto = Mapper.Map<Movement, MovementDto>(movement);
-
-            return Ok(dto);
+            var content = _metadataService.Get<Movement, MovementDto>(id, fields);
+            return content == null ? NotFound() : Ok(content);
         }
 
         /// <summary>
@@ -87,19 +91,7 @@ namespace FrannHammer.Api.Controllers
                 return BadRequest();
             }
 
-            if (!MovementExists(id))
-            {
-                return NotFound();
-            }
-
-            var entity = Db.Movements.Find(id);
-
-            entity = Mapper.Map(dto, entity);
-
-            entity.LastModified = DateTime.Now;
-            Db.Entry(entity).State = EntityState.Modified;
-
-            Db.SaveChanges();
+            _metadataService.Update<Movement, MovementDto>(id, dto);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -119,12 +111,7 @@ namespace FrannHammer.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var entity = Mapper.Map<MovementDto, Movement>(dto);
-            entity.LastModified = DateTime.Now;
-            Db.Movements.Add(entity);
-            Db.SaveChanges();
-
-            var newDto = Mapper.Map<Movement, MovementDto>(entity);
+            var newDto = _metadataService.Add<Movement, MovementDto>(dto);
             return CreatedAtRoute("DefaultApi", new { controller = "Movements", id = newDto.Id }, newDto);
         }
 
@@ -137,30 +124,8 @@ namespace FrannHammer.Api.Controllers
         [Route("movements/{id}")]
         public IHttpActionResult DeleteMovement(int id)
         {
-            Movement movement = Db.Movements.Find(id);
-            if (movement == null)
-            {
-                return NotFound();
-            }
-
-            Db.Movements.Remove(movement);
-            Db.SaveChanges();
-
+            _metadataService.Delete<Movement>(id);
             return StatusCode(HttpStatusCode.OK);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                Db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool MovementExists(int id)
-        {
-            return Db.Movements.Count(e => e.Id == id) > 0;
         }
     }
 }

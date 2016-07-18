@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
+using FrannHammer.Services;
 
 namespace FrannHammer.Api.Controllers
 {
@@ -18,137 +16,155 @@ namespace FrannHammer.Api.Controllers
     public class MovesController : BaseApiController
     {
         private const string MovesRouteKey = "moves";
+        private readonly IMetadataService _metadataService;
 
-        public MovesController(ApplicationDbContext context)
-            : base(context)
-        { }
+        /// <summary>
+        /// Create a new <see cref="MovesController"/>.
+        /// </summary>
+        public MovesController(IMetadataService metadataService)
+        {
+            _metadataService = metadataService;
+        }
 
-        //Too big to be useful
+        //Too big to be useful?
         /// <summary>
         /// Get all moves.  Not sure if this is sticking around.
         /// </summary>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
-        [ResponseType(typeof(IQueryable<MoveDto>))]
+        [ResponseType(typeof(MoveDto))]
         [Route(MovesRouteKey)]
-        public IQueryable<MoveDto> GetMoves()
+        public IHttpActionResult GetMoves([FromUri] string fields = "")
         {
-            return Db.Moves.ProjectTo<MoveDto>();
+            var content = _metadataService.GetAll<Move, MoveDto>(fields);
+            return Ok(content);
         }
 
         /// <summary>
         /// Get all moves that have a specific name.
         /// </summary>
         /// <param name="name"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
-        [ResponseType(typeof(IQueryable<MoveDto>))]
+        [ResponseType(typeof(MoveDto))]
         [Route(MovesRouteKey + "/byname")]
-        public IQueryable<MoveDto> GetMovesByName([FromUri] string name)
+        public IHttpActionResult GetMovesByName([FromUri] string name, [FromUri] string fields = "")
         {
-            return Db.Moves.Where(m => m.Name.Equals(name, StringComparison.OrdinalIgnoreCase)).ProjectTo<MoveDto>();
+            var content = _metadataService.GetAll<Move, MoveDto>(Db.Moves
+                .Where(m => m.Name.Equals(name, StringComparison.OrdinalIgnoreCase)), fields);
+            return Ok(content);
         }
 
         /// <summary>
         /// Get the <see cref="Hitbox"/> data associated with this move.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
+        [ResponseType(typeof(HitboxDto))]
         [Route(MovesRouteKey + "/{id}/hitboxes")]
-        public IHttpActionResult GetMoveHitboxData(int id)
+        public IHttpActionResult GetMoveHitboxData(int id, [FromUri] string fields = "")
         {
-            var entity = Db.Hitbox.SingleOrDefault(h => h.MoveId == id);
-
-            if (entity == null)
-            {
-                return NotFound();
-            }
-
-            var dto = Mapper.Map<Hitbox, HitboxDto>(entity);
-            return Ok(dto);
+            //Db.Hitbox.SingleOrDefault(h => h.MoveId == id)
+            var content = _metadataService.GetWithMoves<Hitbox, HitboxDto>(id, fields);
+            return Ok(content);
         }
 
         /// <summary>
         /// Get the <see cref="Angle"/> data associated with this move.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
+        [ResponseType(typeof(AngleDto))]
         [Route(MovesRouteKey + "/{id}/angles")]
-        public IHttpActionResult GetMoveAngleData(int id)
+        public IHttpActionResult GetMoveAngleData(int id, [FromUri] string fields = "")
         {
-            var dto = (from angle in Db.Angle
-                       join moves in Db.Moves
-                           on angle.MoveId equals moves.Id
-                       where angle.MoveId == id
-                       select angle).ProjectTo<AngleDto>().SingleOrDefault();
+            //var dto = (from angle in Db.Angle
+            //           join moves in Db.Moves
+            //               on angle.MoveId equals moves.Id
+            //           where angle.MoveId == id
+            //           select angle).ProjectTo<AngleDto>().SingleOrDefault();
 
-            if (dto == null)
-            {
-                return NotFound();
-            }
+            //if (dto == null)
+            //{
+            //    return NotFound();
+            //}
 
-            return Ok(dto);
+            var content = _metadataService.GetWithMoves<Angle, AngleDto>(id, fields);
+            return Ok(content);
         }
 
         /// <summary>
         /// Get the <see cref="BaseDamage"/> data associated with this move.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
+        [ResponseType(typeof(BaseDamageDto))]
         [Route(MovesRouteKey + "/{id}/basedamages")]
-        public IHttpActionResult GetMoveBaseDamageData(int id)
+        public IHttpActionResult GetMoveBaseDamageData(int id, [FromUri] string fields = "")
         {
-            var dto = (from baseDamage in Db.BaseDamage
-                       join moves in Db.Moves
-                           on baseDamage.MoveId equals moves.Id
-                       where baseDamage.MoveId == id
-                       select baseDamage).ProjectTo<BaseDamageDto>()
-                       .SingleOrDefault();
+            //var dto = (from baseDamage in Db.BaseDamage
+            //           join moves in Db.Moves
+            //               on baseDamage.MoveId equals moves.Id
+            //           where baseDamage.MoveId == id
+            //           select baseDamage).ProjectTo<BaseDamageDto>()
+            //           .SingleOrDefault();
 
-            if (dto == null)
-            {
-                return NotFound();
-            }
-            return Ok(dto);
+            //if (dto == null)
+            //{
+            //    return NotFound();
+            //}
+            var content = _metadataService.GetWithMoves<BaseDamage, BaseDamageDto>(id, fields);
+            return Ok(content);
         }
 
         /// <summary>
         /// Get the <see cref="KnockbackGrowth"/> data associated with this <see cref="Move"/>.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
+        [ResponseType(typeof(KnockbackGrowthDto))]
         [Route(MovesRouteKey + "/{id}/knockbackgrowths")]
-        public IHttpActionResult GetMoveKnockbackGrowthData(int id)
+        public IHttpActionResult GetMoveKnockbackGrowthData(int id, [FromUri] string fields = "")
         {
-            var dto = (from knockbackGrowth in Db.KnockbackGrowth
-                       join moves in Db.Moves
-                           on knockbackGrowth.MoveId equals moves.Id
-                       where knockbackGrowth.MoveId == id
-                       select knockbackGrowth).ProjectTo<KnockbackGrowthDto>()
-                      .SingleOrDefault();
+            //var dto = (from knockbackGrowth in Db.KnockbackGrowth
+            //           join moves in Db.Moves
+            //               on knockbackGrowth.MoveId equals moves.Id
+            //           where knockbackGrowth.MoveId == id
+            //           select knockbackGrowth).ProjectTo<KnockbackGrowthDto>()
+            //          .SingleOrDefault();
 
-            if (dto == null)
-            {
-                return NotFound();
-            }
-            return Ok(dto);
+            //if (dto == null)
+            //{
+            //    return NotFound();
+            //}
+
+            var content = _metadataService.GetWithMoves<KnockbackGrowth, KnockbackGrowthDto>(id, fields);
+            return Ok(content);
         }
 
         /// <summary>
         /// Get a specific <see cref="Move"/>.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(MoveDto))]
         [Route(MovesRouteKey + "/{id}")]
-        public IHttpActionResult GetMove(int id)
+        public IHttpActionResult GetMove(int id, [FromUri] string fields = "")
         {
-            Move move = Db.Moves.Find(id);
-            if (move == null)
-            {
-                return NotFound();
-            }
-
-            var dto = Mapper.Map<Move, MoveDto>(move);
-            return Ok(dto);
+            var content = _metadataService.Get<Move, MoveDto>(id, fields);
+            return content == null ? NotFound() : Ok(content);
         }
 
         /// <summary>
@@ -172,19 +188,7 @@ namespace FrannHammer.Api.Controllers
                 return BadRequest();
             }
 
-            if (!MoveExists(id))
-            {
-                return NotFound();
-            }
-
-            var entity = Db.Moves.Find(id);
-            entity = Mapper.Map(dto, entity);
-
-            entity.LastModified = DateTime.Now;
-            Db.Entry(entity).State = EntityState.Modified;
-
-            Db.SaveChanges();
-
+            _metadataService.Update<Move, MoveDto>(id, dto);
             return StatusCode(HttpStatusCode.NoContent);
         }
 
@@ -203,12 +207,7 @@ namespace FrannHammer.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var entity = Mapper.Map<MoveDto, Move>(dto);
-            entity.LastModified = DateTime.Now;
-            Db.Moves.Add(entity);
-            Db.SaveChanges();
-
-            var newDto = Mapper.Map<Move, MoveDto>(entity);
+            var newDto = _metadataService.Add<Move, MoveDto>(dto);
             return CreatedAtRoute("DefaultApi", new { controller = MovesRouteKey + "", id = newDto.Id }, newDto);
         }
 
@@ -222,30 +221,8 @@ namespace FrannHammer.Api.Controllers
         [Route(MovesRouteKey + "/{id}")]
         public IHttpActionResult DeleteMove(int id)
         {
-            Move move = Db.Moves.Find(id);
-            if (move == null)
-            {
-                return NotFound();
-            }
-
-            Db.Moves.Remove(move);
-            Db.SaveChanges();
-
+            _metadataService.Delete<Move>(id);
             return StatusCode(HttpStatusCode.OK);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                Db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool MoveExists(int id)
-        {
-            return Db.Moves.Count(e => e.Id == id) > 0;
         }
     }
 }

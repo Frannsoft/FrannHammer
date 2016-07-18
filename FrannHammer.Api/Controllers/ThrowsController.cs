@@ -1,12 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
-using AutoMapper;
 using FrannHammer.Api.Models;
+using FrannHammer.Core;
 using FrannHammer.Models;
-using AutoMapper.QueryableExtensions;
+using FrannHammer.Services;
 
 namespace FrannHammer.Api.Controllers
 {
@@ -17,44 +15,44 @@ namespace FrannHammer.Api.Controllers
     public class ThrowsController : BaseApiController
     {
         private const string ThrowsRouteKey = "Throws";
+        private readonly IMetadataService _metadataService;
 
         /// <summary>
-        /// Create a new <see cref="ThrowsController"/> to interact with the server using 
-        /// a specific <see cref="IApplicationDbContext"/>
+        /// Create a new <see cref="ThrowsController"/> to interact with the server.
         /// </summary>
-        /// <param name="context"></param>
-        public ThrowsController(IApplicationDbContext context)
-            : base(context)
-        { }
+        public ThrowsController(IMetadataService metadataService)
+        {
+            Guard.VerifyObjectNotNull(metadataService, nameof(metadataService));
+            _metadataService = metadataService;
+        }
 
         /// <summary>
         /// Get all <see cref="ThrowDto"/>s.
         /// </summary>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [Route(ThrowsRouteKey)]
-        public IQueryable<ThrowDto> GetThrows()
+        public IHttpActionResult GetThrows([FromUri] string fields = "")
         {
-            var throwTypes = Db.Throws.ProjectTo<ThrowDto>();
-            return throwTypes;
+            var content = _metadataService.GetAll<Throw, ThrowDto>(fields);
+            return Ok(content);
         }
 
         /// <summary>
         /// Get a specific <see cref="ThrowDto"/>s details.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(ThrowDto))]
         [Route(ThrowsRouteKey + "/{id}")]
-        public IHttpActionResult GetThrow(int id)
+        public IHttpActionResult GetThrow(int id, [FromUri] string fields = "")
         {
-            Throw retThrow = Db.Throws.Find(id);
-            if (retThrow == null)
-            {
-                return NotFound();
-            }
+            var content = _metadataService.Get<Throw, ThrowDto>(id, fields);
 
-            var dto = Mapper.Map<Throw, ThrowDto>(retThrow);
-            return Ok(dto);
+            return content == null ? NotFound() : Ok(content);
         }
 
         /// <summary>
@@ -76,18 +74,7 @@ namespace FrannHammer.Api.Controllers
                 return BadRequest();
             }
 
-            if (!ThrowExists(id))
-            {
-                return NotFound();
-            }
-
-            var entity = Db.Throws.Find(id);
-            entity = Mapper.Map(dto, entity);
-
-            entity.LastModified = DateTime.Now;
-            Db.Entry(entity).State = System.Data.Entity.EntityState.Modified;
-
-            Db.SaveChanges();
+            _metadataService.Update<Throw, ThrowDto>(id, dto);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -107,13 +94,8 @@ namespace FrannHammer.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var entity = Mapper.Map<ThrowDto, Throw>(dto);
-            entity.LastModified = DateTime.Now;
+            var newDto = _metadataService.Add<Throw, ThrowDto>(dto);
 
-            Db.Throws.Add(entity);
-            Db.SaveChanges();
-
-            var newDto = Mapper.Map<Throw, ThrowDto>(entity);
             return CreatedAtRoute("DefaultApi", new { controller = "Throws", id = newDto.Id }, newDto);
         }
 
@@ -126,21 +108,9 @@ namespace FrannHammer.Api.Controllers
         [Route(ThrowsRouteKey + "/{id}")]
         public IHttpActionResult DeleteThrow(int id)
         {
-            Throw Throw = Db.Throws.Find(id);
-            if (Throw == null)
-            {
-                return NotFound();
-            }
-
-            Db.Throws.Remove(Throw);
-            Db.SaveChanges();
+            _metadataService.Delete<Throw>(id);
 
             return StatusCode(HttpStatusCode.OK);
-        }
-
-        private bool ThrowExists(int id)
-        {
-            return Db.Throws.Count(e => e.Id == id) > 0;
         }
     }
 }

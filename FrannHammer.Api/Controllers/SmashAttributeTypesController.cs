@@ -1,15 +1,10 @@
-﻿using System;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
 using FrannHammer.Models.DTOs;
+using FrannHammer.Services;
 
 namespace FrannHammer.Api.Controllers
 {
@@ -19,38 +14,43 @@ namespace FrannHammer.Api.Controllers
     [RoutePrefix("api")]
     public class SmashAttributeTypesController : BaseApiController
     {
-        public SmashAttributeTypesController(ApplicationDbContext context)
-            : base(context)
-        { }
+        private readonly ISmashAttributeTypeService _smashAttributeTypesService;
+
+        /// <summary>
+        /// Create a new <see cref="SmashAttributeTypesController"/> to interact with the server.
+        /// </summary>
+        public SmashAttributeTypesController(ISmashAttributeTypeService smashAttributeTypesService)
+        {
+            _smashAttributeTypesService = smashAttributeTypesService;
+        }
 
         /// <summary>
         /// Get all of the stored <see cref="SmashAttributeType"/>s.
         /// </summary>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
-        [ResponseType(typeof(IQueryable<SmashAttributeTypeDto>))]
+        [ResponseType(typeof(SmashAttributeTypeDto))]
         [Route("smashattributetypes")]
-        public IQueryable<SmashAttributeTypeDto> GetSmashAttributeTypes()
+        public IHttpActionResult GetSmashAttributeTypes([FromUri] string fields = "")
         {
-            return Db.SmashAttributeTypes.ProjectTo<SmashAttributeTypeDto>();
+            var content = _smashAttributeTypesService.GetAll<SmashAttributeType, SmashAttributeTypeDto>(fields);
+            return Ok(content);
         }
 
         /// <summary>
         /// Get a specific <see cref="SmashAttributeType"/>.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(SmashAttributeTypeDto))]
         [Route("smashattributetypes/{id}")]
-        public IHttpActionResult GetSmashAttributeType(int id)
+        public IHttpActionResult GetSmashAttributeType(int id, [FromUri] string fields = "")
         {
-            SmashAttributeType smashAttributeType = Db.SmashAttributeTypes.Find(id);
-            if (smashAttributeType == null)
-            {
-                return NotFound();
-            }
-
-            var dto = Mapper.Map<SmashAttributeType, SmashAttributeTypeDto>(smashAttributeType);
-            return Ok(dto);
+            var content = _smashAttributeTypesService.Get<SmashAttributeType, SmashAttributeTypeDto>(id, fields);
+            return content == null ? NotFound() : Ok(content);
         }
 
         /// <summary>
@@ -60,40 +60,16 @@ namespace FrannHammer.Api.Controllers
         /// similar to how they are displayed on KuroganeHammer.com.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
+        [ResponseType(typeof(CharacterAttributeRowDto))]
         [Route("smashattributetypes/{id}/characterattributes")]
-        public IHttpActionResult GetAllCharacterAttributeOfSmashAttributeType(int id)
+        public IHttpActionResult GetAllCharacterAttributeOfSmashAttributeType(int id, [FromUri] string fields = "")
         {
-            SmashAttributeType smashAttributeType = Db.SmashAttributeTypes.Find(id);
-            if (smashAttributeType == null)
-            {
-                return NotFound();
-            }
-
-            //create a 'row' from each pulled back characterattribute since a characterattribute only represents
-            //a single cell of a row in the existing KH site.
-            var characterAttributeRows =
-                Db.CharacterAttributes.Where(c => c.SmashAttributeType.Id == smashAttributeType.Id)
-                    .ToList() //execute query and bring into memory so I can continue to query against the data below
-                    .GroupBy(a => a.OwnerId)
-                    .Select(g => new CharacterAttributeRowDto(g.First().Rank, smashAttributeType.Id,
-                        g.Key, g.Select(at => new CharacterAttributeKeyValuePair()
-                        {
-                            KeyName = at.Name,
-                            ValueCharacterAttribute = new CharacterAttributeDto
-                            {
-                                Id = at.Id,
-                                Name = at.Name,
-                                OwnerId = at.OwnerId,
-                                Rank = at.Rank,
-                                SmashAttributeTypeId = at.SmashAttributeTypeId,
-                                Value = at.Value
-                            }
-                        }).ToList(),
-                        Db.Characters.Find(g.Key).Name, Db.Characters.Find(g.Key).ThumbnailUrl))
-                        .ToList();
-
-            return Ok(characterAttributeRows);
+            //issue #95 - https://github.com/Frannsoft/FrannHammer/issues/95
+            var content = _smashAttributeTypesService.GetAllCharacterAttributeOfSmashAttributeType(id, fields);
+            return Ok(content);
         }
 
         /// <summary>
@@ -117,19 +93,7 @@ namespace FrannHammer.Api.Controllers
                 return BadRequest();
             }
 
-            if (!SmashAttributeTypeExists(id))
-            {
-                return NotFound();
-            }
-
-            var entity = Db.SmashAttributeTypes.Find(id);
-            entity = Mapper.Map(dto, entity);
-
-            entity.LastModified = DateTime.Now;
-            Db.Entry(entity).State = EntityState.Modified;
-
-            Db.SaveChanges();
-
+            _smashAttributeTypesService.Update<SmashAttributeType, SmashAttributeTypeDto>(id, dto);
             return StatusCode(HttpStatusCode.NoContent);
         }
 
@@ -148,12 +112,7 @@ namespace FrannHammer.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var entity = Mapper.Map<SmashAttributeTypeDto, SmashAttributeType>(dto);
-            entity.LastModified = DateTime.Now;
-            Db.SmashAttributeTypes.Add(entity);
-            Db.SaveChanges();
-
-            var newDto = Mapper.Map<SmashAttributeType, SmashAttributeTypeDto>(entity);
+            var newDto = _smashAttributeTypesService.Add<SmashAttributeType, SmashAttributeTypeDto>(dto);
             return CreatedAtRoute("DefaultApi", new { controller = "SmashAttributeTypes", id = newDto.Id }, newDto);
         }
 
@@ -166,30 +125,8 @@ namespace FrannHammer.Api.Controllers
         [Route("smashattributetypes/{id}")]
         public IHttpActionResult DeleteSmashAttributeType(int id)
         {
-            SmashAttributeType smashAttributeType = Db.SmashAttributeTypes.Find(id);
-            if (smashAttributeType == null)
-            {
-                return NotFound();
-            }
-
-            Db.SmashAttributeTypes.Remove(smashAttributeType);
-            Db.SaveChanges();
-
+            _smashAttributeTypesService.Delete<SmashAttributeType>(id);
             return StatusCode(HttpStatusCode.OK);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                Db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool SmashAttributeTypeExists(int id)
-        {
-            return Db.SmashAttributeTypes.Count(e => e.Id == id) > 0;
         }
     }
 }
