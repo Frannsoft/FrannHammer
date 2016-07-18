@@ -2,6 +2,7 @@
 using Autofac;
 using FrannHammer.Api.Models;
 using FrannHammer.Api.Providers;
+using FrannHammer.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
