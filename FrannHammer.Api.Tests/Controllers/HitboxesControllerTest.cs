@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http.Results;
 using FrannHammer.Api.Controllers;
 using FrannHammer.Models;
+using FrannHammer.Services;
 using NUnit.Framework;
 
 namespace FrannHammer.Api.Tests.Controllers
@@ -10,12 +12,14 @@ namespace FrannHammer.Api.Tests.Controllers
     public class HitboxesControllerTest : EffortBaseTest
     {
         private HitboxesController _controller;
+        private IMetadataService _service;
 
         [TestFixtureSetUp]
         public override void TestFixtureSetUp()
         {
             base.TestFixtureSetUp();
-            _controller = new HitboxesController(Context);
+            _service = new MetadataService(Context);
+            _controller = new HitboxesController(_service);
         }
 
         [TestFixtureTearDown]
@@ -42,7 +46,8 @@ namespace FrannHammer.Api.Tests.Controllers
         [Test]
         public void ShouldGetAllHitboxs()
         {
-            var throws = _controller.GetHitboxes();
+            var throws = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetHitboxes())
+                .ToList();
 
             CollectionAssert.AllItemsAreNotNull(throws);
             CollectionAssert.AllItemsAreUnique(throws);
@@ -55,7 +60,7 @@ namespace FrannHammer.Api.Tests.Controllers
             var newThrow = TestObjects.Hitbox();
             var result = ExecuteAndReturnCreatedAtRouteContent<HitboxDto>(() => _controller.PostHitbox(newThrow));
 
-            var latestThrow = _controller.GetHitboxes().ToList().Last();
+            var latestThrow = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetHitboxes()).ToList().Last();
 
             Assert.AreEqual(result, latestThrow);
         }

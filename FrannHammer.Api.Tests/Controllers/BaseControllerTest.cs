@@ -2,6 +2,7 @@
 using Effort;
 using FrannHammer.Api.Controllers;
 using FrannHammer.Api.Models;
+using FrannHammer.Services;
 using NUnit.Framework;
 
 namespace FrannHammer.Api.Tests.Controllers
@@ -26,13 +27,17 @@ namespace FrannHammer.Api.Tests.Controllers
         {
             Connection = DbConnectionFactory.CreateTransient();
             DbContext = new ApplicationDbContext(Connection);
-            CharactersController = new CharactersController(DbContext);
-            MovesController = new MovesController(DbContext);
-            MovementsController = new MovementsController(DbContext);
-            SmashAttributeTypesController = new SmashAttributeTypesController(DbContext);
-            CharacterAttributesController = new CharacterAttributesController(DbContext);
-            CharacterAttributeTypesController = new CharacterAttributeTypesController(DbContext);
-            NotationsController = new NotationsController(DbContext);
+
+            var service = new MetadataService(DbContext);
+            var smashService = new SmashAttributeTypeService(DbContext);
+
+            CharactersController = new CharactersController(service);
+            MovesController = new MovesController(service);
+            MovementsController = new MovementsController(service);
+            SmashAttributeTypesController = new SmashAttributeTypesController(smashService);
+            CharacterAttributesController = new CharacterAttributesController(service);
+            CharacterAttributeTypesController = new CharacterAttributeTypesController(service);
+            NotationsController = new NotationsController(service);
             CalculatorController = new CalculatorController(DbContext);
             TestObjects = new TestObjects();
 

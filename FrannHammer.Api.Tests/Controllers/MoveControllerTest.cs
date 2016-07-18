@@ -1,10 +1,10 @@
-﻿using System;
-using System.Threading;
+﻿using System.Collections.Generic;
 using System.Web.Http.Results;
 using FrannHammer.Api.Controllers;
 using FrannHammer.Models;
 using NUnit.Framework;
 using System.Linq;
+using FrannHammer.Services;
 
 namespace FrannHammer.Api.Tests.Controllers
 {
@@ -12,6 +12,7 @@ namespace FrannHammer.Api.Tests.Controllers
     public class MoveControllerTest : EffortBaseTest
     {
         private MovesController _controller;
+        private IMetadataService _service;
 
         private MoveDto Post(MoveDto move)
         {
@@ -29,7 +30,8 @@ namespace FrannHammer.Api.Tests.Controllers
         public override void TestFixtureSetUp()
         {
             base.TestFixtureSetUp();
-            _controller = new MovesController(Context);
+            _service = new MetadataService(Context);
+            _controller = new MovesController(_service);
         }
 
         [TestFixtureTearDown]
@@ -50,7 +52,7 @@ namespace FrannHammer.Api.Tests.Controllers
         [Test]
         public void ShouldGetHitboxDataForMove()
         {
-            var move = _controller.GetMoves().First();
+            var move = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetMoves()).First();
 
             var hitbox = ExecuteAndReturnContent<HitboxDto>(() => _controller.GetMoveHitboxData(move.Id));
 
@@ -62,7 +64,7 @@ namespace FrannHammer.Api.Tests.Controllers
         [Test]
         public void ShouldGetAngleDataForMove()
         {
-            var move = _controller.GetMoves().First();
+            var move = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetMoves()).First();
 
             var angle = ExecuteAndReturnContent<AngleDto>(() => _controller.GetMoveAngleData(move.Id));
 
@@ -74,7 +76,7 @@ namespace FrannHammer.Api.Tests.Controllers
         [Test]
         public void ShouldGetBaseDamageDataForMove()
         {
-            var move = _controller.GetMoves().First();
+            var move = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetMoves()).First();
 
             var baseDamage = ExecuteAndReturnContent<BaseDamageDto>(() => _controller.GetMoveBaseDamageData(move.Id));
 
@@ -86,7 +88,7 @@ namespace FrannHammer.Api.Tests.Controllers
         [Test]
         public void ShouldGetKnockbackGrowthDataForMove()
         {
-            var move = _controller.GetMoves().First();
+            var move = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetMoves()).First();
 
             var knockbackGrowth = ExecuteAndReturnContent<KnockbackGrowthDto>(() => _controller.GetMoveKnockbackGrowthData(move.Id));
 
@@ -95,22 +97,12 @@ namespace FrannHammer.Api.Tests.Controllers
             Assert.That(knockbackGrowth, Is.TypeOf<KnockbackGrowthDto>());
         }
 
-        //[Test]
-        //[Ignore("This intermittently fails due to the size of the response.  Arguably, a call like this shouldn't even be exposed.")]
-        //public void ShouldGetAllMoves()
-        //{
-        //    var results = _controller.GetMoves();
-        //    CollectionAssert.AllItemsAreNotNull(results);
-        //    CollectionAssert.AllItemsAreUnique(results);
-        //    CollectionAssert.AllItemsAreInstancesOfType(results, typeof(Move));
-        //}
-
         [Test]
         [TestCase("Jab+2")]
         public void ShouldGetAllMovesByName(string name)
         {
             //arrange
-            var character = new CharactersController(Context).GetCharacters().First();
+            var character = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => new CharactersController(_service).GetCharacters()).First();
 
             var move = TestObjects.Move();
             var move2 = new MoveDto
@@ -124,7 +116,8 @@ namespace FrannHammer.Api.Tests.Controllers
             Post(move2);
 
             //act
-            var results = _controller.GetMovesByName(name);
+            var results = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetMovesByName(name))
+                .ToList();
 
             //assert
             CollectionAssert.AllItemsAreNotNull(results);
@@ -138,7 +131,7 @@ namespace FrannHammer.Api.Tests.Controllers
             var move = TestObjects.Move();
             var result = Post(move);
 
-            var latestMove = _controller.GetMovesByName(move.Name).ToList().Last();
+            var latestMove = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetMovesByName(move.Name)).ToList().Last();
 
             Assert.AreEqual(result, latestMove);
         }
@@ -147,7 +140,7 @@ namespace FrannHammer.Api.Tests.Controllers
         public void ShouldUpdateMove()
         {
             const string expectedName = "jab 2";
-            var move = _controller.GetMovesByName("Jab 1").First();
+            var move = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetMovesByName("Jab 1")).First();
 
             if (move != null)
             {

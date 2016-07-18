@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Http.Results;
 using FrannHammer.Api.Controllers;
 using FrannHammer.Models;
+using FrannHammer.Services;
 using NUnit.Framework;
 
 namespace FrannHammer.Api.Tests.Controllers
@@ -14,12 +12,14 @@ namespace FrannHammer.Api.Tests.Controllers
     public class BaseDamagesControllerTest : EffortBaseTest
     {
         private BaseDamagesController _controller;
+        private IMetadataService _service;
 
         [TestFixtureSetUp]
         public override void TestFixtureSetUp()
         {
             base.TestFixtureSetUp();
-            _controller = new BaseDamagesController(Context);
+            _service = new MetadataService(Context);
+            _controller = new BaseDamagesController(_service);
         }
 
         [TestFixtureTearDown]
@@ -46,7 +46,8 @@ namespace FrannHammer.Api.Tests.Controllers
         [Test]
         public void ShouldGetAllBaseDamages()
         {
-            var throws = _controller.GetBaseDamages();
+            var throws = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetBaseDamages())
+                .ToList();
 
             CollectionAssert.AllItemsAreNotNull(throws);
             CollectionAssert.AllItemsAreUnique(throws);
@@ -59,7 +60,7 @@ namespace FrannHammer.Api.Tests.Controllers
             var newThrow = TestObjects.BaseDamage();
             var result = ExecuteAndReturnCreatedAtRouteContent<BaseDamageDto>(() => _controller.PostBaseDamage(newThrow));
 
-            var latestThrow = _controller.GetBaseDamages().ToList().Last();
+            var latestThrow = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetBaseDamages()).ToList().Last();
 
             Assert.AreEqual(result, latestThrow); ;
         }

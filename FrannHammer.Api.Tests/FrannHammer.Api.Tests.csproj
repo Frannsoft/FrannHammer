@@ -49,8 +49,8 @@
       <HintPath>..\packages\Autofac.WebApi2.Owin.3.3.0\lib\net45\Autofac.Integration.WebApi.Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="AutoMapper, Version=5.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.5.0.0\lib\net45\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=5.0.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.5.0.2\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Effort, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6a46696d54971e6d, processorArchitecture=MSIL">
@@ -247,6 +247,10 @@
     <ProjectReference Include="..\FrannHammer.Models\FrannHammer.Models.csproj">
       <Project>{e4f0c134-6288-438f-b5d0-c53638e866e3}</Project>
       <Name>FrannHammer.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.Services\FrannHammer.Services.csproj">
+      <Project>{7e5c008b-ae84-4d50-bc4b-9d49d8d53870}</Project>
+      <Name>FrannHammer.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

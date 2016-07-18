@@ -1,9 +1,11 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Web.Http.Results;
 using FrannHammer.Api.Controllers;
 using FrannHammer.Models;
 using NUnit.Framework;
 using System.Linq;
+using FrannHammer.Services;
 
 namespace FrannHammer.Api.Tests.Controllers
 {
@@ -11,12 +13,14 @@ namespace FrannHammer.Api.Tests.Controllers
     public class ThrowsControllerTest : EffortBaseTest
     {
         private ThrowsController _controller;
+        private IMetadataService _service;
 
         [TestFixtureSetUp]
         public override void TestFixtureSetUp()
         {
             base.TestFixtureSetUp();
-            _controller = new ThrowsController(Context);
+            _service = new MetadataService(Context);
+            _controller = new ThrowsController(_service);
         }
 
         [TestFixtureTearDown]
@@ -43,7 +47,8 @@ namespace FrannHammer.Api.Tests.Controllers
         [Test]
         public void ShouldGetAllThrows()
         {
-            var throws = _controller.GetThrows();
+            var throws = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetThrows())
+                .ToList();
 
             CollectionAssert.AllItemsAreNotNull(throws);
             CollectionAssert.AllItemsAreUnique(throws);
@@ -56,7 +61,7 @@ namespace FrannHammer.Api.Tests.Controllers
             var newThrow = TestObjects.Throw();
             var result = ExecuteAndReturnCreatedAtRouteContent<ThrowDto>(() => _controller.PostThrow(newThrow));
 
-            var latestThrow = _controller.GetThrows().ToList().Last();
+            var latestThrow = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetThrows()).ToList().Last();
 
             Assert.AreEqual(result, latestThrow);
         }

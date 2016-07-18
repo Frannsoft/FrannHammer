@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Data.Common;
+using System.Dynamic;
 using System.Web.Http;
 using System.Web.Http.Results;
 using Effort.DataLoaders;
-using FrannHammer.Api.Models;
+using FrannHammer.Services;
 using NUnit.Framework;
 
 namespace FrannHammer.Api.Tests
@@ -49,6 +50,19 @@ namespace FrannHammer.Api.Tests
         {
             var response = op();
             var retVal = response as OkNegotiatedContentResult<T>;
+
+            Assert.That(retVal, Is.Not.Null);
+
+            // ReSharper disable once PossibleNullReferenceException
+            Assert.That(retVal.Content, Is.Not.Null);
+
+            return retVal.Content;
+        }
+
+        protected dynamic ExecuteAndReturnExpandoObject(Func<IHttpActionResult> op)
+        {
+            var response = op();
+            var retVal = response as OkNegotiatedContentResult<ExpandoObject>;
 
             Assert.That(retVal, Is.Not.Null);
 

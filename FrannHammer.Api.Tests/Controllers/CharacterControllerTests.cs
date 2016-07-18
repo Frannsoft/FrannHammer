@@ -1,8 +1,10 @@
-﻿using System.Web.Http.Results;
+﻿using System.Collections.Generic;
+using System.Web.Http.Results;
 using FrannHammer.Api.Controllers;
 using FrannHammer.Models;
 using NUnit.Framework;
 using System.Linq;
+using FrannHammer.Services;
 
 namespace FrannHammer.Api.Tests.Controllers
 {
@@ -10,12 +12,14 @@ namespace FrannHammer.Api.Tests.Controllers
     public class CharacterControllerTests : EffortBaseTest
     {
         private CharactersController _controller;
+        private IMetadataService _service;
 
         [TestFixtureSetUp]
         public override void TestFixtureSetUp()
         {
             base.TestFixtureSetUp();
-            _controller = new CharactersController(Context);
+            _service = new MetadataService(Context);
+            _controller = new CharactersController(_service);
         }
 
         [TestFixtureTearDown]
@@ -36,7 +40,7 @@ namespace FrannHammer.Api.Tests.Controllers
         public void CanGetCharacterByName()
         {
             const string expectedName = "Pikachu";
-            var character = ExecuteAndReturnContent<CharacterDto>(() => _controller.GetCharacterByName(expectedName));
+            var character = ExecuteAndReturnContent<dynamic>(() => _controller.GetCharacterByName(expectedName));
 
             Assert.That(character, Is.Not.Null);
             Assert.That(character.Name, Is.EqualTo(expectedName));
@@ -73,7 +77,8 @@ namespace FrannHammer.Api.Tests.Controllers
         [Test]
         public void ShouldGetAllCharacterThrows()
         {
-            var throws = _controller.GetThrowsForCharacter(1);
+            var throws = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetThrowsForCharacter(1))
+                .ToList();
 
             Assert.That(throws, Is.Not.Empty);
             CollectionAssert.AllItemsAreNotNull(throws);
@@ -84,26 +89,27 @@ namespace FrannHammer.Api.Tests.Controllers
         [Test]
         public void ShouldGetAllCharacters()
         {
-            var characters = _controller.GetCharacters();
+            var characters = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetCharacters())
+                .ToList();
 
             CollectionAssert.AllItemsAreNotNull(characters);
             CollectionAssert.AllItemsAreUnique(characters);
-            CollectionAssert.AllItemsAreInstancesOfType(characters, typeof(CharacterDto));
         }
 
         [Test]
         public void ShouldGetAllMovementsForCharacter()
         {
-            var movements = _controller.GetMovementsForCharacter(1);
+            var movements = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetMovementsForCharacter(1))
+                .ToList();
             CollectionAssert.AllItemsAreNotNull(movements);
             CollectionAssert.AllItemsAreUnique(movements);
-            CollectionAssert.AllItemsAreInstancesOfType(movements, typeof(MovementDto));
         }
 
         [Test]
         public void ShouldGetAllMovesForCharacter()
         {
-            var moves = _controller.GetMovesForCharacter(1);
+            var moves = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetMovesForCharacter(1))
+                .ToList();
             CollectionAssert.AllItemsAreNotNull(moves);
             CollectionAssert.AllItemsAreUnique(moves);
             CollectionAssert.AllItemsAreInstancesOfType(moves, typeof(MoveDto));
@@ -115,7 +121,7 @@ namespace FrannHammer.Api.Tests.Controllers
             var newCharacter = TestObjects.Character();
             var result = ExecuteAndReturnCreatedAtRouteContent<CharacterDto>(() => _controller.PostCharacter(newCharacter));
 
-            var latestCharacter = _controller.GetCharacters().ToList().Last();
+            var latestCharacter = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetCharacters()).ToList().Last();
             Assert.AreEqual(result, latestCharacter);
         }
 
@@ -123,7 +129,7 @@ namespace FrannHammer.Api.Tests.Controllers
         public void ShouldUpdateCharacter()
         {
             const string expectedName = "mewtwo";
-            var character = _controller.GetCharacters().First();
+            var character = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetCharacters()).First();
 
             //act
             if (character != null)
