@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -66,7 +65,7 @@ namespace FrannHammer.Api.Controllers
         [Route(CharactersRouteKey + "/name/{name}")]
         public IHttpActionResult GetCharacterByName(string name, [FromUri] string fields = "")
         {
-            var content = _metadataService.Get<Character, CharacterDto>(Db.Characters.First(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase)), fields);
+            var content = _metadataService.Get<Character, CharacterDto>(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase), fields);
             return Ok(content);
         }
 
@@ -82,7 +81,7 @@ namespace FrannHammer.Api.Controllers
         [HttpGet]
         public IHttpActionResult GetMovementsForCharacter(int id, [FromUri] string fields = "")
         {
-            var content = _metadataService.GetAll<Movement, MovementDto>(Db.Movements.Where(m => m.OwnerId == id), fields);
+            var content = _metadataService.GetAll<Movement, MovementDto>(m => m.OwnerId == id, fields);
             return Ok(content);
         }
 
@@ -97,7 +96,7 @@ namespace FrannHammer.Api.Controllers
         [Route(CharactersRouteKey + "/{id}/moves")]
         public IHttpActionResult GetMovesForCharacter(int id, [FromUri] string fields = "")
         {
-            var content = _metadataService.GetAll<Move, MoveDto>(Db.Moves.Where(m => m.OwnerId == id), fields);
+            var content = _metadataService.GetAll<Move, MoveDto>(m => m.OwnerId == id, fields);
             return Ok(content);
         }
 
@@ -129,7 +128,7 @@ namespace FrannHammer.Api.Controllers
         [Route(CharactersRouteKey + "/{id}/characterattributes")]
         public IHttpActionResult GetCharacterAttributesForCharacter(int id, [FromUri] string fields = "")
         {
-            var content = _metadataService.GetAll<CharacterAttribute, CharacterAttributeDto>(Db.CharacterAttributes.Where(a => a.OwnerId == id), fields);
+            var content = _metadataService.GetAll<CharacterAttribute, CharacterAttributeDto>(a => a.OwnerId == id, fields);
             return Ok(content);
         }
 

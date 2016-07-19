@@ -52,8 +52,7 @@ namespace FrannHammer.Api.Controllers
         [Route(MovesRouteKey + "/byname")]
         public IHttpActionResult GetMovesByName([FromUri] string name, [FromUri] string fields = "")
         {
-            var content = _metadataService.GetAll<Move, MoveDto>(Db.Moves
-                .Where(m => m.Name.Equals(name, StringComparison.OrdinalIgnoreCase)), fields);
+            var content = _metadataService.GetAll<Move, MoveDto>(m => m.Name.Equals(name, StringComparison.OrdinalIgnoreCase), fields);
             return Ok(content);
         }
 

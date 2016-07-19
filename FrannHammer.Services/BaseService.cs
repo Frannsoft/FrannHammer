@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Dynamic;
 using System.Linq;
 using AutoMapper;
 using FrannHammer.Core;
@@ -86,9 +85,11 @@ namespace FrannHammer.Services
                 return null;
             }
 
-            return !string.IsNullOrEmpty(fields) ?
-                new DtoBuilder().Build(entity, fields) :
-                Mapper.Map<TEntity, TDto>(entity);
+            return new DtoBuilder().Build(entity, fields);
+
+            //return !string.IsNullOrEmpty(fields) ?
+            //    new DtoBuilder().Build(entity, fields) :
+            //    Mapper.Map<TEntity, TDto>(entity);
         }
 
         protected IEnumerable<dynamic> BuildContentResponseMultiple<TEntity, TDto>(IQueryable<TEntity> entities,
@@ -103,17 +104,21 @@ namespace FrannHammer.Services
 
             var entitiesList = entities.ToList(); //note: this evaluates the result set fully!
 
-            if (!string.IsNullOrEmpty(fields))
-            {
-                var builder = new DtoBuilder();
-                return from entity in entitiesList
-                       select builder.Build(entity, fields);
-            }
-            else
-            {
-                return from entity in entitiesList
-                       select Mapper.Map<TEntity, TDto>(entity);
-            }
+            var builder = new DtoBuilder();
+            return from entity in entitiesList
+                   select builder.Build(entity, fields);
+
+            //if (!string.IsNullOrEmpty(fields))
+            //{
+            //    var builder = new DtoBuilder();
+            //    return from entity in entitiesList
+            //           select builder.Build(entity, fields);
+            //}
+            //else
+            //{
+            //    return (from entity in entitiesList
+            //           select Mapper.Map<TEntity, TDto>(entity)).ToList();
+            //}
         }
     }
 }
