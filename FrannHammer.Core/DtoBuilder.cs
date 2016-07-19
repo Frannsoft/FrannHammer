@@ -26,7 +26,7 @@ namespace FrannHammer.Core
         /// <returns></returns>
         public dynamic Build<TEntity>(TEntity entity, string fieldsRaw)
         {
-            Guard.VerifyStringIsNotNullOrEmpty(fieldsRaw, nameof(fieldsRaw));
+            //Guard.VerifyStringIsNotNullOrEmpty(fieldsRaw, nameof(fieldsRaw));
             Guard.VerifyObjectNotNull(entity, nameof(entity));
 
             var splitValues = SplitValues(fieldsRaw);
@@ -36,7 +36,7 @@ namespace FrannHammer.Core
 
         private IEnumerable<string> SplitValues(string fieldsRaw)
         {
-            return fieldsRaw.Split(',');
+            return fieldsRaw.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
         }
 
         private dynamic Assemble<TEntity>(TEntity entity, IEnumerable<string> requestedFieldNames)
@@ -44,8 +44,16 @@ namespace FrannHammer.Core
             Guard.VerifyObjectNotNull(requestedFieldNames, nameof(requestedFieldNames));
 
             var fieldsNamesList = requestedFieldNames.ToList();
+
+            //if (!fieldsNamesList.Any())
+            //{ throw new ArgumentException("Must have at least one field specified! "); }
+
+            //if no field names exist add all public instance ones for a 'default' object
             if (!fieldsNamesList.Any())
-            { throw new ArgumentException("Must have at least one field specified! "); }
+            {
+                var props = entity.GetType().GetProperties(Flags);
+                fieldsNamesList.AddRange(props.Select(p => p.Name));
+            }
 
             var customDto = new Dictionary<string, object>();
 
