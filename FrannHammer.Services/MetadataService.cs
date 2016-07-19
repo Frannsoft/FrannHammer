@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FrannHammer.Core;
 using FrannHammer.Models;
 using System.Linq;
+using System.Linq.Expressions;
 using AutoMapper.QueryableExtensions;
 
 namespace FrannHammer.Services
@@ -140,19 +142,27 @@ namespace FrannHammer.Services
             where TEntity : class, IEntity
             where TDto : class;
 
-        dynamic Get<TEntity, TDto>(TEntity entity, string fields = "")
+        /// <summary>
+        /// Get an entity where the expression is true.
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <typeparam name="TDto"></typeparam>
+        /// <param name="where"></param>
+        /// <param name="fields"></param>
+        /// <returns></returns>
+        dynamic Get<TEntity, TDto>(Expression<Func<TEntity, bool>> where, string fields = "")
             where TEntity : class, IEntity
             where TDto : class;
 
         /// <summary>
-        /// Get fields of the specified entities.
+        /// Get fields of the specified entities where the expression is true.
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <typeparam name="TDto"></typeparam>
-        /// <param name="entities"></param>
+        /// <param name="where"></param>
         /// <param name="fields"></param>
         /// <returns></returns>
-        IEnumerable<dynamic> GetAll<TEntity, TDto>(IQueryable<TEntity> entities, string fields = "")
+        IEnumerable<dynamic> GetAll<TEntity, TDto>(Expression<Func<TEntity, bool>> where, string fields = "")
             where TEntity : class, IEntity
             where TDto : class;
 
@@ -252,17 +262,19 @@ namespace FrannHammer.Services
             return BuildContentResponse<TEntity, TDto>(entity, fields);
         }
 
-        public dynamic Get<TEntity, TDto>(TEntity entity, string fields = "")
+        public dynamic Get<TEntity, TDto>(Expression<Func<TEntity, bool>> where, string fields = "")
             where TEntity : class, IEntity
             where TDto : class
         {
+            var entity = Db.Set<TEntity>().First(where);
             return BuildContentResponse<TEntity, TDto>(entity, fields);
         }
 
-        public IEnumerable<dynamic> GetAll<TEntity, TDto>(IQueryable<TEntity> entities, string fields = "")
+        public IEnumerable<dynamic> GetAll<TEntity, TDto>(Expression<Func<TEntity, bool>> where, string fields = "")
             where TEntity : class, IEntity
             where TDto : class
         {
+            var entities = Db.Set<TEntity>().Where(where);
             return BuildContentResponseMultiple<TEntity, TDto>(entities, fields);
         }
 
