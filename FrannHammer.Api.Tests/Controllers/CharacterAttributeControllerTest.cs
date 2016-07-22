@@ -5,6 +5,7 @@ using FrannHammer.Models;
 using NUnit.Framework;
 using System.Linq;
 using FrannHammer.Services;
+using Newtonsoft.Json;
 
 namespace FrannHammer.Api.Tests.Controllers
 {
@@ -57,21 +58,40 @@ namespace FrannHammer.Api.Tests.Controllers
 
             CollectionAssert.AllItemsAreNotNull(results);
             CollectionAssert.AllItemsAreUnique(results);
-            CollectionAssert.AllItemsAreInstancesOfType(results, typeof(CharacterAttributeDto));
         }
 
         [Test]
         public void ShouldAddCharacterAttribute()
         {
-            var characterAttribute = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetCharacterAttributes()).First();
-            Post(characterAttribute);
+            var first = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetCharacterAttributes()).First();
+
+            var json = JsonConvert.SerializeObject(first);
+            var characterAttribute = JsonConvert.DeserializeObject<CharacterAttributeDto>(json);
+
+            var result = ExecuteAndReturnCreatedAtRouteContent<CharacterAttributeDto>(() => _controller.PostCharacterAttribute(characterAttribute));
+
+            var latest =
+                ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetCharacterAttributes())
+                    .ToList()
+                    .Last();
+
+            Assert.AreEqual(result.CharacterAttributeTypeId, latest.CharacterAttributeTypeId);
+            Assert.AreEqual(result.Id, latest.Id);
+            Assert.AreEqual(result.Name, latest.Name);
+            Assert.AreEqual(result.OwnerId, latest.OwnerId);
+            Assert.AreEqual(result.Rank, latest.Rank);
+            Assert.AreEqual(result.SmashAttributeTypeId, latest.SmashAttributeTypeId);
+            Assert.AreEqual(result.Value, latest.Value);
         }
 
         [Test]
         public void ShouldUpdateCharacterAttribute()
         {
             const string expectedName = "mewtwo";
-            var characterAttribute = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetCharacterAttributes()).First();
+            var result = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetCharacterAttributes()).First();
+
+            var json = JsonConvert.SerializeObject(result);
+            var characterAttribute = JsonConvert.DeserializeObject<CharacterAttributeDto>(json);
 
             //act
             if (characterAttribute != null)

@@ -72,19 +72,6 @@ namespace FrannHammer.Api.Tests
             return retVal.Content;
         }
 
-        protected dynamic ExecuteAndReturnExpandoObject(Func<IHttpActionResult> op)
-        {
-            var response = op();
-            var retVal = response as OkNegotiatedContentResult<ExpandoObject>;
-
-            Assert.That(retVal, Is.Not.Null);
-
-            // ReSharper disable once PossibleNullReferenceException
-            Assert.That(retVal.Content, Is.Not.Null);
-
-            return retVal.Content;
-        }
-
         protected T ExecuteAndReturnCreatedAtRouteContent<T>(Func<IHttpActionResult> op)
         {
             var response = op();

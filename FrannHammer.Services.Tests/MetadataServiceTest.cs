@@ -24,6 +24,8 @@ namespace FrannHammer.Services.Tests
             yield return new MoveDataHarness<BaseDamage, BaseDamageDto>("Id,MoveName,Hitbox1");
             yield return new MoveDataHarness<Hitbox, HitboxDto>("Id,MoveName,Hitbox1");
             yield return new MoveDataHarness<KnockbackGrowth, KnockbackGrowthDto>("Id,MoveName,Hitbox1");
+            yield return new MoveDataHarness<BaseKnockback, BaseKnockbackDto>("Id,MoveName,Hitbox2");
+            yield return new MoveDataHarness<SetKnockback, SetKnockbackDto>("MoveName,RawValue");
         }
 
         #region move data tests
