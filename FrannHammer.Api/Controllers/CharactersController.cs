@@ -133,6 +133,24 @@ namespace FrannHammer.Api.Controllers
         }
 
         /// <summary>
+        /// Get all the <see cref="CharacterAttribute"/>s of a specific <see cref="Character"/>.
+        /// 
+        /// These will be returned as <see cref="CharacterAttributeDto"/>s.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="smashAttributeTypeId"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param> 
+        /// <returns></returns>
+        [ResponseType(typeof(CharacterAttributeDto))]
+        [Route(CharactersRouteKey + "/{id}/smashattributetypes/{smashAttributeTypeId}")]
+        public IHttpActionResult GetCharacterAttributesForCharacter(int id, int smashAttributeTypeId, [FromUri] string fields = "")
+        {
+            var content = _metadataService.GetAll<CharacterAttribute, CharacterAttributeDto>(c => c.OwnerId == id && c.SmashAttributeTypeId == smashAttributeTypeId, fields);
+            return Ok(content);
+        }
+
+        /// <summary>
         /// Get all the <see cref="Angle"/>s of a specific <see cref="Character"/>'s moves.
         /// </summary>
         /// <param name="id"></param>
