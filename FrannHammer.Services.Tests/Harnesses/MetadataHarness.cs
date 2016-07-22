@@ -42,9 +42,7 @@ namespace FrannHammer.Services.Tests.Harnesses
         {
             var items = _metadataSut.GetAll(context, fields).ToList();
 
-            CollectionAssert.IsNotEmpty(items);
-            CollectionAssert.AllItemsAreNotNull(items);
-            CollectionAssert.AllItemsAreUnique(items);
+            Assert.That(items, Is.TypeOf<List<dynamic>>());
 
             if (!string.IsNullOrEmpty(fields))
             {
@@ -54,11 +52,9 @@ namespace FrannHammer.Services.Tests.Harnesses
 
         public void CollectionIsValid(IApplicationDbContext context)
         {
-            var items = _metadataSut.GetAll(context).ToList();
+            var items = _metadataSut.GetAll(context);
 
-            CollectionAssert.IsNotEmpty(items);
             CollectionAssert.AllItemsAreNotNull(items);
-            CollectionAssert.AllItemsAreUnique(items);
         }
     }
 }

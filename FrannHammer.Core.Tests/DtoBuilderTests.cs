@@ -11,14 +11,14 @@ namespace FrannHammer.Core.Tests
     [TestFixture]
     public class DtoBuilderTests
     {
-        private void AssertObjectBuiltAsExpected(object entity, string rawFields)
+        private void AssertObjectBuiltAsExpected<TEntity, TDto>(TEntity entity, string rawFields)
         {
             var builder = new DtoBuilder();
 
             string[] fieldsArr = rawFields.Split(',');
             string splitFields = string.Join(",", fieldsArr);
 
-            var result = builder.Build(entity, splitFields);
+            var result = builder.Build<TEntity, TDto>(entity, splitFields);
 
             var exValues = result as IDictionary<string, object>;
 
@@ -64,7 +64,7 @@ namespace FrannHammer.Core.Tests
             var entity = new Character
             {
                 Id = 1,
-                ColorTheme = null,
+                ColorTheme = string.Empty,
                 Description = "desc",
                 DisplayName = string.Empty,
                 LastModified = DateTime.Now,
@@ -74,7 +74,7 @@ namespace FrannHammer.Core.Tests
                 ThumbnailUrl = "thumburl"
             };
 
-            AssertObjectBuiltAsExpected(entity, rawFields);
+            AssertObjectBuiltAsExpected<Character, CharacterDto>(entity, rawFields);
         }
     }
 }

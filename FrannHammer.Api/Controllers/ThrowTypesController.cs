@@ -14,14 +14,14 @@ namespace FrannHammer.Api.Controllers
     public class ThrowTypesController : BaseApiController
     {
         private const string ThrowTypesRouteKey = "ThrowTypes";
-        private readonly IMetadataService _throwTypeService;
+        private readonly IMetadataService _metadataService;
 
         /// <summary>
         /// Create a new <see cref="ThrowTypesController"/> to interact with the server.
         /// </summary>
-        public ThrowTypesController(IMetadataService throwTypeService)
+        public ThrowTypesController(IMetadataService metadataService)
         {
-            _throwTypeService = throwTypeService;
+            _metadataService = metadataService;
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace FrannHammer.Api.Controllers
         [Route(ThrowTypesRouteKey)]
         public IHttpActionResult GetThrowTypes([FromUri] string fields = "")
         {
-            var content = _throwTypeService.GetAll<ThrowType, ThrowTypeDto>(fields);
+            var content = _metadataService.GetAll<ThrowType, ThrowTypeDto>(fields);
             return Ok(content);
         }
 
@@ -49,7 +49,7 @@ namespace FrannHammer.Api.Controllers
         [Route(ThrowTypesRouteKey + "/{id}")]
         public IHttpActionResult GetThrowType(int id, [FromUri] string fields = "")
         {
-            var content = _throwTypeService.Get<ThrowType, ThrowTypeDto>(id, fields);
+            var content = _metadataService.Get<ThrowType, ThrowTypeDto>(id, fields);
             return content == null ? NotFound() : Ok(content);
         }
 
@@ -73,7 +73,7 @@ namespace FrannHammer.Api.Controllers
                 return BadRequest();
             }
 
-            _throwTypeService.Update<ThrowType, ThrowTypeDto>(id, dto);
+            _metadataService.Update<ThrowType, ThrowTypeDto>(id, dto);
             return StatusCode(HttpStatusCode.NoContent);
         }
 
@@ -92,7 +92,7 @@ namespace FrannHammer.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var newDto = _throwTypeService.Add<ThrowType, ThrowTypeDto>(dto);
+            var newDto = _metadataService.Add<ThrowType, ThrowTypeDto>(dto);
             return CreatedAtRoute("DefaultApi", new { controller = "ThrowTypes", id = newDto.Id }, newDto);
         }
 
@@ -105,7 +105,7 @@ namespace FrannHammer.Api.Controllers
         [Route(ThrowTypesRouteKey + "/{id}")]
         public IHttpActionResult DeleteThrowType(int id)
         {
-            _throwTypeService.Delete<ThrowType>(id);
+            _metadataService.Delete<ThrowType>(id);
             return StatusCode(HttpStatusCode.OK);
         }
     }

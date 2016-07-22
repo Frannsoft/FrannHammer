@@ -45,7 +45,6 @@ namespace FrannHammer.Services.Tests.Harnesses
 
             CollectionAssert.IsNotEmpty(items);
             CollectionAssert.AllItemsAreNotNull(items);
-            CollectionAssert.AllItemsAreUnique(items);
 
             if (!string.IsNullOrEmpty(fields))
             {
@@ -59,7 +58,6 @@ namespace FrannHammer.Services.Tests.Harnesses
 
             CollectionAssert.IsNotEmpty(items);
             CollectionAssert.AllItemsAreNotNull(items);
-            CollectionAssert.AllItemsAreUnique(items);
         }
     }
 
