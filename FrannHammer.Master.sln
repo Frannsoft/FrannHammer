@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.AccountRegistra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.Api", "FrannHammer.Api\FrannHammer.Api.csproj", "{470ADA5B-56B2-45D3-8162-AB65B0350C68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.Api.Tests", "FrannHammer.Api.Tests\FrannHammer.Api.Tests.csproj", "{1F7ACBB4-1B26-4C87-8F38-2635753ABD7D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.Core", "FrannHammer.Core\FrannHammer.Core.csproj", "{2904D4E7-8989-46BD-AC0A-B4356F190A15}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.DataSynchro", "FrannHammer.DataSynchro\FrannHammer.DataSynchro.csproj", "{9539A472-8C2A-4DD7-86E8-91BCDD6E2BFB}"
@@ -44,10 +42,6 @@ Global
 		{470ADA5B-56B2-45D3-8162-AB65B0350C68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{470ADA5B-56B2-45D3-8162-AB65B0350C68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{470ADA5B-56B2-45D3-8162-AB65B0350C68}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1F7ACBB4-1B26-4C87-8F38-2635753ABD7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1F7ACBB4-1B26-4C87-8F38-2635753ABD7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1F7ACBB4-1B26-4C87-8F38-2635753ABD7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1F7ACBB4-1B26-4C87-8F38-2635753ABD7D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2904D4E7-8989-46BD-AC0A-B4356F190A15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2904D4E7-8989-46BD-AC0A-B4356F190A15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2904D4E7-8989-46BD-AC0A-B4356F190A15}.Release|Any CPU.ActiveCfg = Release|Any CPU
