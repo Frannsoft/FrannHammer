@@ -66,7 +66,7 @@ namespace FrannHammer.Api.Controllers
             where TEntity : class
         {
             return !string.IsNullOrEmpty(fields) ?
-                new DtoBuilder().Build(entity, fields) :
+                new DtoBuilder().Build<TEntity, TDto>(entity, fields) :
                 Mapper.Map<TEntity, TDto>(entity);
         }
 
@@ -92,7 +92,7 @@ namespace FrannHammer.Api.Controllers
             {
                 var builder = new DtoBuilder();
                 return from entity in entitiesList
-                       select builder.Build(entity, fields);
+                       select builder.Build<TEntity, TDto>(entity, fields);
             }
             else
             {
