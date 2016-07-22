@@ -6,10 +6,8 @@ namespace FrannHammer.Models
 {
     public abstract class BaseCharacterAttribute : BaseModel
     {
-        public int Id { get; set; }
         public Character Character { get; set; }
         public int CharacterId { get; set; }
-        public DateTime LastModified { get; set; }
 
         public override Task<HttpResponseMessage> Update(HttpClient client)
         {
@@ -190,7 +188,10 @@ namespace FrannHammer.Models
     {
         protected bool Equals(BaseCharacterAttributeModel other)
         {
-            return OwnerId == other.OwnerId && string.Equals(Rank, other.Rank) && string.Equals(Value, other.Value) && string.Equals(Name, other.Name) && Id == other.Id && SmashAttributeTypeId == other.SmashAttributeTypeId && CharacterAttributeTypeId == other.CharacterAttributeTypeId;
+            return OwnerId == other.OwnerId && string.Equals(Rank, other.Rank)
+                && string.Equals(Value, other.Value) && string.Equals(Name, other.Name)
+                && Id == other.Id && SmashAttributeTypeId == other.SmashAttributeTypeId
+                && CharacterAttributeTypeId == other.CharacterAttributeTypeId;
         }
 
         public override bool Equals(object obj)
@@ -206,12 +207,12 @@ namespace FrannHammer.Models
             unchecked
             {
                 var hashCode = OwnerId;
-                hashCode = (hashCode*397) ^ (Rank != null ? Rank.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ (Value != null ? Value.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ (Name != null ? Name.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ Id;
-                hashCode = (hashCode*397) ^ SmashAttributeTypeId;
-                hashCode = (hashCode*397) ^ CharacterAttributeTypeId.GetHashCode();
+                hashCode = (hashCode * 397) ^ (Rank != null ? Rank.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Value != null ? Value.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Name != null ? Name.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ Id;
+                hashCode = (hashCode * 397) ^ SmashAttributeTypeId;
+                hashCode = (hashCode * 397) ^ CharacterAttributeTypeId.GetHashCode();
                 return hashCode;
             }
         }
@@ -226,11 +227,11 @@ namespace FrannHammer.Models
             return !Equals(left, right);
         }
 
+        public int Id { get; set; }
         public int OwnerId { get; set; }
         public string Rank { get; set; }
         public string Value { get; set; }
         public string Name { get; set; }
-        public int Id { get; set; }
         public int SmashAttributeTypeId { get; set; }
         public int? CharacterAttributeTypeId { get; set; }
     }
@@ -243,24 +244,5 @@ namespace FrannHammer.Models
         public DateTime LastModified { get; set; }
         public SmashAttributeType SmashAttributeType { get; set; }
         public CharacterAttributeType CharacterAttributeType { get; set; }
-
-        //public CharacterAttribute(string rank, string characterName,
-        //    string name, string value, SmashAttributeType smashAttributeType)
-        //{
-        //    Rank = rank;
-        //    OwnerId = GetOwnerIdFromCharacterName(characterName);
-        //    Name = name;
-        //    Value = value;
-        //    SmashAttributeType = smashAttributeType;
-        //}
-
-        //public CharacterAttribute()
-        //{ }
-
-        //private int GetOwnerIdFromCharacterName(string name)
-        //{
-        //    var characterId = (Characters)Enum.Parse(typeof(Characters), name, true);
-        //    return (int)characterId;
-        //}
     }
 }
