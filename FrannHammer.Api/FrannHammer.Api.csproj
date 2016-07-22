@@ -177,6 +177,7 @@
     <Compile Include="Controllers\AnglesController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\BaseDamagesController.cs" />
+    <Compile Include="Controllers\BaseKnockbacksController.cs" />
     <Compile Include="Controllers\CalculatorController.cs" />
     <Compile Include="Controllers\CharacterAttributesController.cs" />
     <Compile Include="Controllers\CharacterAttributeTypesController.cs" />
@@ -187,6 +188,7 @@
     <Compile Include="Controllers\MovesController.cs" />
     <Compile Include="Controllers\NotationsController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\SetKnockbacksController.cs" />
     <Compile Include="Controllers\SmashAttributeTypesController.cs" />
     <Compile Include="Controllers\ThrowsController.cs" />
     <Compile Include="Controllers\ThrowTypesController.cs" />

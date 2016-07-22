@@ -155,9 +155,19 @@
     <Content Include="fakeDb\ThrowTypes.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="fakeDb\BaseKnockbacks.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="fakeDb\SetKnockbacks.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FrannHammer.Api\FrannHammer.Api.csproj">
+      <Project>{470ada5b-56b2-45d3-8162-ab65b0350c68}</Project>
+      <Name>FrannHammer.Api</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FrannHammer.Models\FrannHammer.Models.csproj">
       <Project>{e4f0c134-6288-438f-b5d0-c53638e866e3}</Project>
       <Name>FrannHammer.Models</Name>
