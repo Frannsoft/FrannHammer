@@ -78,6 +78,14 @@ namespace FrannHammer.Api
                 .As<ThrowTypesController>()
                 .WithParameter(metadataServiceName, metadataService);
 
+            builder.RegisterType<BaseKnockbacksController>()
+                .As<BaseKnockbacksController>()
+                .WithParameter(metadataServiceName, metadataService);
+
+            builder.RegisterType<SetKnockbacksController>()
+                .As<SetKnockbacksController>()
+                .WithParameter(metadataServiceName, metadataService);
+
             builder.RegisterApiControllers();
 
             builder.RegisterSource(new AnyConcreteTypeNotAlreadyRegisteredSource());
