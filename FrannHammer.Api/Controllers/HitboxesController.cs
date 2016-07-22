@@ -1,12 +1,9 @@
-﻿using System;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
+using FrannHammer.Services;
 
 namespace FrannHammer.Api.Controllers
 {
@@ -17,52 +14,48 @@ namespace FrannHammer.Api.Controllers
     public class HitboxesController : BaseApiController
     {
         private const string HitboxesRouteKey = "Hitboxes";
+        private readonly IMetadataService _metadataService;
 
         /// <summary>
-        /// Create a new <see cref="HitboxesController"/> to interact with the server using 
-        /// a specific <see cref="IApplicationDbContext"/>
+        /// Create a new <see cref="HitboxesController"/> to interact with the server.
         /// </summary>
-        /// <param name="context"></param>
-        public HitboxesController(IApplicationDbContext context)
-            : base(context)
-        { }
+        public HitboxesController(IMetadataService metadataService)
+        {
+            _metadataService = metadataService;
+        }
 
         /// <summary>
         /// Get all <see cref="HitboxDto"/>s.
         /// </summary>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
+        [ResponseType(typeof(HitboxDto))]
         [Route(HitboxesRouteKey)]
-        public IQueryable<HitboxDto> GetHitboxes()
+        public IHttpActionResult GetHitboxes([FromUri] string fields = "")
         {
-            var hitboxes = Db.Hitbox.ProjectTo<HitboxDto>();
-            return hitboxes;
+            var content = _metadataService.GetAllWithMoves<Hitbox, HitboxDto>(fields);
+            return Ok(content);
         }
 
         /// <summary>
         /// Get a specific <see cref="HitboxDto"/>s details.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(HitboxDto))]
         [Route(HitboxesRouteKey + "/{id}")]
-        public IHttpActionResult GetHitbox(int id)
+        public IHttpActionResult GetHitbox(int id, [FromUri] string fields = "")
         {
-            var dto = (from hitbox in Db.Hitbox
-                       join moves in Db.Moves
-                           on hitbox.MoveId equals moves.Id
-                       where hitbox.Id == id
-                       select hitbox).ProjectTo<HitboxDto>()
-                       .SingleOrDefault();
-
-            if (dto == null)
-            {
-                return NotFound();
-            }
-            return Ok(dto);
+            //ensure that data from joined can persist on the object
+            var content = _metadataService.GetWithMoves<Hitbox, HitboxDto>(id, fields);
+            return content == null ? NotFound() : Ok(content);
         }
 
         /// <summary>
-        /// Update a <see cref="HitboxDto"/>.
+        /// Update a <see cref="Hitbox"/>.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="dto"></param>
@@ -80,24 +73,13 @@ namespace FrannHammer.Api.Controllers
                 return BadRequest();
             }
 
-            if (!HitboxExists(id))
-            {
-                return NotFound();
-            }
-
-            var entity = Db.Hitbox.Find(id);
-            entity = Mapper.Map(dto, entity);
-
-            entity.LastModified = DateTime.Now;
-            Db.Entry(entity).State = System.Data.Entity.EntityState.Modified;
-
-            Db.SaveChanges();
+            _metadataService.Update<Hitbox, HitboxDto>(id, dto);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
         /// <summary>
-        /// Create a new <see cref="HitboxDto"/>.
+        /// Create a new <see cref="Hitbox"/>.
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
@@ -111,13 +93,7 @@ namespace FrannHammer.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var entity = Mapper.Map<HitboxDto, Hitbox>(dto);
-            entity.LastModified = DateTime.Now;
-
-            Db.Hitbox.Add(entity);
-            Db.SaveChanges();
-
-            var newDto = Mapper.Map<Hitbox, HitboxDto>(entity);
+            var newDto = _metadataService.Add<Hitbox, HitboxDto>(dto);
             return CreatedAtRoute("DefaultApi", new { controller = "Hitboxes", id = newDto.Id }, newDto);
         }
 
@@ -130,21 +106,8 @@ namespace FrannHammer.Api.Controllers
         [Route(HitboxesRouteKey + "/{id}")]
         public IHttpActionResult DeleteHitbox(int id)
         {
-            Hitbox hitbox = Db.Hitbox.Find(id);
-            if (hitbox == null)
-            {
-                return NotFound();
-            }
-
-            Db.Hitbox.Remove(hitbox);
-            Db.SaveChanges();
-
+            _metadataService.Delete<Hitbox>(id);
             return StatusCode(HttpStatusCode.OK);
-        }
-
-        private bool HitboxExists(int id)
-        {
-            return Db.Hitbox.Count(e => e.Id == id) > 0;
         }
     }
 }

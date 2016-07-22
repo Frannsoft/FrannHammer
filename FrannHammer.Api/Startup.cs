@@ -54,6 +54,10 @@ namespace FrannHammer.Api
                 cfg.CreateMap<CharacterAttributeTypeDto, CharacterAttributeType>();
                 cfg.CreateMap<CharacterAttribute, CharacterAttributeDto>();
                 cfg.CreateMap<CharacterAttributeDto, CharacterAttribute>();
+                cfg.CreateMap<BaseKnockback, BaseKnockbackDto>();
+                cfg.CreateMap<BaseKnockbackDto, BaseKnockback>();
+                cfg.CreateMap<SetKnockback, SetKnockbackDto>();
+                cfg.CreateMap<SetKnockbackDto, SetKnockback>();
             });
         }
     }

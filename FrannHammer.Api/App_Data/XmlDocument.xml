@@ -43,24 +43,27 @@
             Handles operations dealing with <see cref="T:FrannHammer.Models.Angle"/>s.
             </summary>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.AnglesController.#ctor(FrannHammer.Api.Models.IApplicationDbContext)">
+        <member name="M:FrannHammer.Api.Controllers.AnglesController.#ctor(FrannHammer.Services.IMetadataService)">
             <summary>
-            Create a new <see cref="T:FrannHammer.Api.Controllers.AnglesController"/> to interact with the server using 
-            a specific <see cref="T:FrannHammer.Api.Models.IApplicationDbContext"/>
+            Create a new <see cref="T:FrannHammer.Api.Controllers.AnglesController"/> to interact with the server.
             </summary>
-            <param name="context"></param>
+            <param name="metadataService"></param>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.AnglesController.GetAngles">
+        <member name="M:FrannHammer.Api.Controllers.AnglesController.GetAngles(System.String)">
             <summary>
             Get all <see cref="T:FrannHammer.Models.AngleDto"/>s.
             </summary>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.AnglesController.GetAngle(System.Int32)">
+        <member name="M:FrannHammer.Api.Controllers.AnglesController.GetAngle(System.Int32,System.String)">
             <summary>
             Get a specific <see cref="T:FrannHammer.Models.AngleDto"/>s details.
             </summary>
             <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.AnglesController.PutAngle(System.Int32,FrannHammer.Models.AngleDto)">
@@ -85,29 +88,42 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:FrannHammer.Api.Controllers.BaseApiController.BuildContentResponse``2(``0,System.String)">
+            <summary>
+            Returns a content based response that is either a custom <see cref="T:System.Dynamic.ExpandoObject"/> or an
+            existing DTO depending on the passed in fields.
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <typeparam name="TDto"></typeparam>
+            <param name="entity"></param>
+            <param name="fields"></param>
+            <returns></returns>
+        </member>
         <member name="T:FrannHammer.Api.Controllers.BaseDamagesController">
             <summary>
             Handles operations dealing with <see cref="T:FrannHammer.Models.BaseDamage"/>s.
             </summary>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.BaseDamagesController.#ctor(FrannHammer.Api.Models.IApplicationDbContext)">
+        <member name="M:FrannHammer.Api.Controllers.BaseDamagesController.#ctor(FrannHammer.Services.IMetadataService)">
             <summary>
-            Create a new <see cref="T:FrannHammer.Api.Controllers.BaseDamagesController"/> to interact with the server using 
-            a specific <see cref="T:FrannHammer.Api.Models.IApplicationDbContext"/>
+            Create a new <see cref="T:FrannHammer.Api.Controllers.BaseDamagesController"/> to interact with the server.
             </summary>
-            <param name="context"></param>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.BaseDamagesController.GetBaseDamages">
+        <member name="M:FrannHammer.Api.Controllers.BaseDamagesController.GetBaseDamages(System.String)">
             <summary>
             Get all <see cref="T:FrannHammer.Models.BaseDamageDto"/>s.
             </summary>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.BaseDamagesController.GetBaseDamage(System.Int32)">
+        <member name="M:FrannHammer.Api.Controllers.BaseDamagesController.GetBaseDamage(System.Int32,System.String)">
             <summary>
             Get a specific <see cref="T:FrannHammer.Models.BaseDamageDto"/>s details.
             </summary>
             <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.BaseDamagesController.PutBaseDamage(System.Int32,FrannHammer.Models.BaseDamageDto)">
@@ -132,14 +148,64 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="T:FrannHammer.Api.Controllers.BaseKnockbacksController">
+            <summary>
+            Handles operations dealing with <see cref="T:FrannHammer.Models.BaseKnockback"/>s.
+            </summary>
+        </member>
+        <member name="M:FrannHammer.Api.Controllers.BaseKnockbacksController.#ctor(FrannHammer.Services.IMetadataService)">
+            <summary>
+            Create a new <see cref="T:FrannHammer.Api.Controllers.BaseKnockbacksController"/> to interact with the server.
+            </summary>
+            <param name="metadataService"></param>
+        </member>
+        <member name="M:FrannHammer.Api.Controllers.BaseKnockbacksController.GetBaseKnockbacks(System.String)">
+            <summary>
+            Get all <see cref="T:FrannHammer.Models.BaseKnockbackDto"/>s.
+            </summary>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Api.Controllers.BaseKnockbacksController.GetBaseKnockback(System.Int32,System.String)">
+            <summary>
+            Get a specific <see cref="T:FrannHammer.Models.BaseKnockbackDto"/>s details.
+            </summary>
+            <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Api.Controllers.BaseKnockbacksController.PutBaseKnockback(System.Int32,FrannHammer.Models.BaseKnockbackDto)">
+            <summary>
+            Update a <see cref="T:FrannHammer.Models.BaseKnockbackDto"/>.
+            </summary>
+            <param name="id"></param>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Api.Controllers.BaseKnockbacksController.PostBaseKnockback(FrannHammer.Models.BaseKnockbackDto)">
+            <summary>
+            Create a new <see cref="T:FrannHammer.Models.BaseKnockbackDto"/>.
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Api.Controllers.BaseKnockbacksController.DeleteBaseKnockback(System.Int32)">
+            <summary>
+            Delete a <see cref="T:FrannHammer.Models.BaseKnockback"/>.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="T:FrannHammer.Api.Controllers.CalculatorController">
             <summary>
             Controller used for calculating data off of character attributes and properties such as moves.
             </summary>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CalculatorController.#ctor(FrannHammer.Api.Models.ApplicationDbContext)">
+        <member name="M:FrannHammer.Api.Controllers.CalculatorController.#ctor(FrannHammer.Services.ApplicationDbContext)">
             <summary>
-            Creates a <see cref="T:FrannHammer.Api.Controllers.CalculatorController"/> with the specified <see cref="T:FrannHammer.Api.Models.ApplicationDbContext"/>.
+            Creates a <see cref="T:FrannHammer.Api.Controllers.CalculatorController"/> with the specified <see cref="T:FrannHammer.Services.ApplicationDbContext"/>.
             </summary>
             <param name="context"></param>
         </member>
@@ -148,23 +214,26 @@
             Handles all individual <see cref="T:FrannHammer.Models.CharacterAttribute"/> operations.  
             </summary>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharacterAttributesController.#ctor(FrannHammer.Api.Models.ApplicationDbContext)">
+        <member name="M:FrannHammer.Api.Controllers.CharacterAttributesController.#ctor(FrannHammer.Services.IMetadataService)">
             <summary>
-            Create a new <see cref="T:FrannHammer.Models.CharacterAttribute"/> controller to interact with the server using a specific 
-            <see cref="T:FrannHammer.Api.Models.ApplicationDbContext"/>.
+            Create a new <see cref="T:FrannHammer.Models.CharacterAttribute"/> controller to interact with the server. 
             </summary>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharacterAttributesController.GetCharacterAttributes">
+        <member name="M:FrannHammer.Api.Controllers.CharacterAttributesController.GetCharacterAttributes(System.String)">
             <summary>
             Get all <see cref="T:FrannHammer.Models.CharacterAttribute"/>s.
             </summary>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharacterAttributesController.GetCharacterAttribute(System.Int32)">
+        <member name="M:FrannHammer.Api.Controllers.CharacterAttributesController.GetCharacterAttribute(System.Int32,System.String)">
             <summary>
             Get a specific <see cref="T:FrannHammer.Models.CharacterAttribute"/> by its id.
             </summary>
             <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.CharacterAttributesController.PutCharacterAttribute(System.Int32,FrannHammer.Models.CharacterAttributeDto)">
@@ -194,24 +263,27 @@
             Handles the backing types of <see cref="T:FrannHammer.Models.CharacterAttribute"/>s.
             </summary>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharacterAttributeTypesController.#ctor(FrannHammer.Api.Models.ApplicationDbContext)">
+        <member name="M:FrannHammer.Api.Controllers.CharacterAttributeTypesController.#ctor(FrannHammer.Services.IMetadataService)">
             <summary>
-            Create a new <see cref="T:FrannHammer.Api.Controllers.CharacterAttributeTypesController"/> using
-            a specific <see cref="T:FrannHammer.Api.Models.ApplicationDbContext"/>.
+            Create a new <see cref="T:FrannHammer.Api.Controllers.CharacterAttributeTypesController"/>.
             </summary>
-            <param name="context"></param>
+            <param name="metadataService"></param>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharacterAttributeTypesController.GetCharacterAttributeTypes">
+        <member name="M:FrannHammer.Api.Controllers.CharacterAttributeTypesController.GetCharacterAttributeTypes(System.String)">
             <summary>
             Get all of the <see cref="T:FrannHammer.Models.CharacterAttributeType"/> details.
             </summary>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharacterAttributeTypesController.GetCharacterAttributeType(System.Int32)">
+        <member name="M:FrannHammer.Api.Controllers.CharacterAttributeTypesController.GetCharacterAttributeType(System.Int32,System.String)">
             <summary>
             Get a specific <see cref="T:FrannHammer.Models.CharacterAttributeType"/>s details.
             </summary>
             <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.CharacterAttributeTypesController.PutCharacterAttributeType(System.Int32,FrannHammer.Models.CharacterAttributeTypeDto)">
@@ -241,89 +313,109 @@
             Handles server operations dealing with <see cref="T:FrannHammer.Models.Character"/>s.
             </summary>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharactersController.#ctor(FrannHammer.Api.Models.IApplicationDbContext)">
+        <member name="M:FrannHammer.Api.Controllers.CharactersController.#ctor(FrannHammer.Services.IMetadataService)">
             <summary>
-            Create a new <see cref="T:FrannHammer.Api.Controllers.CharactersController"/> to interact with the server using 
-            a specific <see cref="T:FrannHammer.Api.Models.ApplicationDbContext"/>
+            Create a new <see cref="T:FrannHammer.Api.Controllers.CharactersController"/> to interact with the server.
             </summary>
-            <param name="context"></param>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharactersController.GetCharacters">
+        <member name="M:FrannHammer.Api.Controllers.CharactersController.GetCharacters(System.String)">
             <summary>
             Get all of the <see cref="T:FrannHammer.Models.CharacterDto"/> details.
             </summary>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharactersController.GetCharacter(System.Int32)">
+        <member name="M:FrannHammer.Api.Controllers.CharactersController.GetCharacter(System.Int32,System.String)">
             <summary>
             Get a specific <see cref="T:FrannHammer.Models.CharacterDto"/>s details.
             </summary>
             <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param> 
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharactersController.GetCharacterByName(System.String)">
+        <member name="M:FrannHammer.Api.Controllers.CharactersController.GetCharacterByName(System.String,System.String)">
             <summary>
             Get a specific <see cref="T:FrannHammer.Models.CharacterDto"/>s details by their name.
             </summary>
             <param name="name"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param> 
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharactersController.GetMovementsForCharacter(System.Int32)">
+        <member name="M:FrannHammer.Api.Controllers.CharactersController.GetMovementsForCharacter(System.Int32,System.String)">
             <summary>
             Get all the <see cref="T:FrannHammer.Models.Movement"/> data for a specific <see cref="T:FrannHammer.Models.Character"/>
             </summary>
             <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param> 
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharactersController.GetMovesForCharacter(System.Int32)">
+        <member name="M:FrannHammer.Api.Controllers.CharactersController.GetMovesForCharacter(System.Int32,System.String)">
             <summary>
             Get all the <see cref="T:FrannHammer.Models.Move"/> data for a specific <see cref="T:FrannHammer.Models.Character"/>.
             </summary>
             <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param> 
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharactersController.GetThrowsForCharacter(System.Int32)">
+        <member name="M:FrannHammer.Api.Controllers.CharactersController.GetThrowsForCharacter(System.Int32,System.String)">
             <summary>
             Get all the <see cref="T:FrannHammer.Models.Throw"/>s for the specific <see cref="T:FrannHammer.Models.Character"/>.
             </summary>
             <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param> 
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharactersController.GetCharacterAttributesForCharacter(System.Int32)">
+        <member name="M:FrannHammer.Api.Controllers.CharactersController.GetCharacterAttributesForCharacter(System.Int32,System.String)">
             <summary>
             Get all the <see cref="T:FrannHammer.Models.CharacterAttribute"/>s of a specific <see cref="T:FrannHammer.Models.Character"/>.
             
             These will be returned as <see cref="T:FrannHammer.Models.CharacterAttributeDto"/>s.
             </summary>
             <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param> 
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharactersController.GetCharacterMoveAngles(System.Int32)">
+        <member name="M:FrannHammer.Api.Controllers.CharactersController.GetCharacterMoveAngles(System.Int32,System.String)">
             <summary>
             Get all the <see cref="T:FrannHammer.Models.Angle"/>s of a specific <see cref="T:FrannHammer.Models.Character"/>'s moves.
             </summary>
             <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param> 
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharactersController.GetCharacterMoveHitboxes(System.Int32)">
+        <member name="M:FrannHammer.Api.Controllers.CharactersController.GetCharacterMoveHitboxes(System.Int32,System.String)">
             <summary>
             Get all the <see cref="T:FrannHammer.Models.Hitbox"/>es of a specific <see cref="T:FrannHammer.Models.Character"/>'s moves.
             </summary>
             <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para>
+            E.g., id,name to get back just the id and name.</para></param> 
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharactersController.GetCharacterMoveKnockbackGrowths(System.Int32)">
+        <member name="M:FrannHammer.Api.Controllers.CharactersController.GetCharacterMoveKnockbackGrowths(System.Int32,System.String)">
             <summary>
             Get all the <see cref="T:FrannHammer.Models.KnockbackGrowth"/>es of a specific <see cref="T:FrannHammer.Models.Character"/>'s moves.
             </summary>
             <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para>
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharactersController.GetCharacterMoveBaseDamages(System.Int32)">
+        <member name="M:FrannHammer.Api.Controllers.CharactersController.GetCharacterMoveBaseDamages(System.Int32,System.String)">
             <summary>
             Get all the <see cref="T:FrannHammer.Models.BaseDamage"/>s of a specific <see cref="T:FrannHammer.Models.Character"/>'s moves.
             </summary>
             <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            /// E.g., id,name to get back just the id and name.</para></param> 
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.CharactersController.PutCharacter(System.Int32,FrannHammer.Models.CharacterDto)">
@@ -353,29 +445,31 @@
             Handles operations dealing with <see cref="T:FrannHammer.Models.Hitbox"/>s.
             </summary>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.HitboxesController.#ctor(FrannHammer.Api.Models.IApplicationDbContext)">
+        <member name="M:FrannHammer.Api.Controllers.HitboxesController.#ctor(FrannHammer.Services.IMetadataService)">
             <summary>
-            Create a new <see cref="T:FrannHammer.Api.Controllers.HitboxesController"/> to interact with the server using 
-            a specific <see cref="T:FrannHammer.Api.Models.IApplicationDbContext"/>
+            Create a new <see cref="T:FrannHammer.Api.Controllers.HitboxesController"/> to interact with the server.
             </summary>
-            <param name="context"></param>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.HitboxesController.GetHitboxes">
+        <member name="M:FrannHammer.Api.Controllers.HitboxesController.GetHitboxes(System.String)">
             <summary>
             Get all <see cref="T:FrannHammer.Models.HitboxDto"/>s.
             </summary>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.HitboxesController.GetHitbox(System.Int32)">
+        <member name="M:FrannHammer.Api.Controllers.HitboxesController.GetHitbox(System.Int32,System.String)">
             <summary>
             Get a specific <see cref="T:FrannHammer.Models.HitboxDto"/>s details.
             </summary>
             <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.HitboxesController.PutHitbox(System.Int32,FrannHammer.Models.HitboxDto)">
             <summary>
-            Update a <see cref="T:FrannHammer.Models.HitboxDto"/>.
+            Update a <see cref="T:FrannHammer.Models.Hitbox"/>.
             </summary>
             <param name="id"></param>
             <param name="dto"></param>
@@ -383,7 +477,7 @@
         </member>
         <member name="M:FrannHammer.Api.Controllers.HitboxesController.PostHitbox(FrannHammer.Models.HitboxDto)">
             <summary>
-            Create a new <see cref="T:FrannHammer.Models.HitboxDto"/>.
+            Create a new <see cref="T:FrannHammer.Models.Hitbox"/>.
             </summary>
             <param name="dto"></param>
             <returns></returns>
@@ -400,24 +494,26 @@
             Handles operations dealing with <see cref="T:FrannHammer.Models.KnockbackGrowth"/>s.
             </summary>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.KnockbackGrowthsController.#ctor(FrannHammer.Api.Models.IApplicationDbContext)">
+        <member name="M:FrannHammer.Api.Controllers.KnockbackGrowthsController.#ctor(FrannHammer.Services.IMetadataService)">
             <summary>
-            Create a new <see cref="T:FrannHammer.Api.Controllers.KnockbackGrowthsController"/> to interact with the server using 
-            a specific <see cref="T:FrannHammer.Api.Models.IApplicationDbContext"/>
+            Create a new <see cref="T:FrannHammer.Api.Controllers.KnockbackGrowthsController"/> to interact with the server.
             </summary>
-            <param name="context"></param>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.KnockbackGrowthsController.GetKnockbackGrowths">
+        <member name="M:FrannHammer.Api.Controllers.KnockbackGrowthsController.GetKnockbackGrowths(System.String)">
             <summary>
             Get all <see cref="T:FrannHammer.Models.KnockbackGrowthDto"/>s.
             </summary>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.KnockbackGrowthsController.GetKnockbackGrowth(System.Int32)">
+        <member name="M:FrannHammer.Api.Controllers.KnockbackGrowthsController.GetKnockbackGrowth(System.Int32,System.String)">
             <summary>
             Get a specific <see cref="T:FrannHammer.Models.KnockbackGrowthDto"/>s details.
             </summary>
             <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.KnockbackGrowthsController.PutKnockbackGrowth(System.Int32,FrannHammer.Models.KnockbackGrowthDto)">
@@ -447,23 +543,34 @@
             Handles server operations dealing with <see cref="T:FrannHammer.Models.Movement"/>s.
             </summary>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.MovementsController.GetMovements">
+        <member name="M:FrannHammer.Api.Controllers.MovementsController.#ctor(FrannHammer.Services.IMetadataService)">
+            <summary>
+            Create a new <see cref="T:FrannHammer.Api.Controllers.MovementsController"/>.
+            </summary>
+        </member>
+        <member name="M:FrannHammer.Api.Controllers.MovementsController.GetMovements(System.String)">
             <summary>
             Get all movement data.
             </summary>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.MovementsController.GetMovementsByName(System.String)">
+        <member name="M:FrannHammer.Api.Controllers.MovementsController.GetMovementsByName(System.String,System.String)">
             <summary>
             Get all of the <see cref="T:FrannHammer.Models.Movement"/> data that is a specific name.
             </summary>
             <param name="name"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.MovementsController.GetMovement(System.Int32)">
+        <member name="M:FrannHammer.Api.Controllers.MovementsController.GetMovement(System.Int32,System.String)">
             <summary>
             Get a specific <see cref="T:FrannHammer.Models.Movement"/>.
             </summary>
             <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.MovementsController.PutMovement(System.Int32,FrannHammer.Models.MovementDto)">
@@ -493,52 +600,71 @@
             Handles server operations dealing with <see cref="T:FrannHammer.Models.Move"/>s.
             </summary>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.MovesController.GetMoves">
+        <member name="M:FrannHammer.Api.Controllers.MovesController.#ctor(FrannHammer.Services.IMetadataService)">
+            <summary>
+            Create a new <see cref="T:FrannHammer.Api.Controllers.MovesController"/>.
+            </summary>
+        </member>
+        <member name="M:FrannHammer.Api.Controllers.MovesController.GetMoves(System.String)">
             <summary>
             Get all moves.  Not sure if this is sticking around.
             </summary>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.MovesController.GetMovesByName(System.String)">
+        <member name="M:FrannHammer.Api.Controllers.MovesController.GetMovesByName(System.String,System.String)">
             <summary>
             Get all moves that have a specific name.
             </summary>
             <param name="name"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.MovesController.GetMoveHitboxData(System.Int32)">
+        <member name="M:FrannHammer.Api.Controllers.MovesController.GetMoveHitboxData(System.Int32,System.String)">
             <summary>
             Get the <see cref="T:FrannHammer.Models.Hitbox"/> data associated with this move.
             </summary>
             <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.MovesController.GetMoveAngleData(System.Int32)">
+        <member name="M:FrannHammer.Api.Controllers.MovesController.GetMoveAngleData(System.Int32,System.String)">
             <summary>
             Get the <see cref="T:FrannHammer.Models.Angle"/> data associated with this move.
             </summary>
             <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.MovesController.GetMoveBaseDamageData(System.Int32)">
+        <member name="M:FrannHammer.Api.Controllers.MovesController.GetMoveBaseDamageData(System.Int32,System.String)">
             <summary>
             Get the <see cref="T:FrannHammer.Models.BaseDamage"/> data associated with this move.
             </summary>
             <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.MovesController.GetMoveKnockbackGrowthData(System.Int32)">
+        <member name="M:FrannHammer.Api.Controllers.MovesController.GetMoveKnockbackGrowthData(System.Int32,System.String)">
             <summary>
             Get the <see cref="T:FrannHammer.Models.KnockbackGrowth"/> data associated with this <see cref="T:FrannHammer.Models.Move"/>.
             </summary>
             <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.MovesController.GetMove(System.Int32)">
+        <member name="M:FrannHammer.Api.Controllers.MovesController.GetMove(System.Int32,System.String)">
             <summary>
             Get a specific <see cref="T:FrannHammer.Models.Move"/>.
             </summary>
             <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.MovesController.PutMove(System.Int32,FrannHammer.Models.MoveDto)">
@@ -568,24 +694,27 @@
             Handles operations dealing with <see cref="T:FrannHammer.Models.Notation"/>s.
             </summary>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.NotationsController.#ctor(FrannHammer.Api.Models.ApplicationDbContext)">
+        <member name="M:FrannHammer.Api.Controllers.NotationsController.#ctor(FrannHammer.Services.IMetadataService)">
             <summary>
-            Create a new <see cref="T:FrannHammer.Api.Controllers.NotationsController"/> to interact with the server using 
-            a specific <see cref="T:FrannHammer.Api.Models.ApplicationDbContext"/>
+            Create a new <see cref="T:FrannHammer.Api.Controllers.NotationsController"/> to interact with the server.
             </summary>
-            <param name="context"></param>
+            <param name="metadataService"></param>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.NotationsController.GetNotations">
+        <member name="M:FrannHammer.Api.Controllers.NotationsController.GetNotations(System.String)">
             <summary>
             Get all <see cref="T:FrannHammer.Models.Notation"/>s.
             </summary>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.NotationsController.GetNotation(System.Int32)">
+        <member name="M:FrannHammer.Api.Controllers.NotationsController.GetNotation(System.Int32,System.String)">
             <summary>
             Get a specific <see cref="T:FrannHammer.Models.Notation"/>s details.
             </summary>
             <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.NotationsController.PutNotation(System.Int32,FrannHammer.Models.Notation)">
@@ -593,14 +722,14 @@
             Update a <see cref="T:FrannHammer.Models.Notation"/>.
             </summary>
             <param name="id"></param>
-            <param name="notation"></param>
+            <param name="dto"></param>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.NotationsController.PostNotation(FrannHammer.Models.Notation)">
             <summary>
             Create a new <see cref="T:FrannHammer.Models.Notation"/>.
             </summary>
-            <param name="notation"></param>
+            <param name="dto"></param>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.NotationsController.DeleteNotation(System.Int32)">
@@ -624,25 +753,84 @@
             <param name="model"></param>
             <returns></returns>
         </member>
+        <member name="T:FrannHammer.Api.Controllers.SetKnockbacksController">
+            <summary>
+            Handles operations dealing with <see cref="T:FrannHammer.Models.SetKnockback"/>s.
+            </summary>
+        </member>
+        <member name="M:FrannHammer.Api.Controllers.SetKnockbacksController.#ctor(FrannHammer.Services.IMetadataService)">
+            <summary>
+            Create a new <see cref="T:FrannHammer.Api.Controllers.SetKnockbacksController"/> to interact with the server.
+            </summary>
+            <param name="metadataService"></param>
+        </member>
+        <member name="M:FrannHammer.Api.Controllers.SetKnockbacksController.GetSetKnockbacks(System.String)">
+            <summary>
+            Get all <see cref="T:FrannHammer.Models.SetKnockbackDto"/>s.
+            </summary>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Api.Controllers.SetKnockbacksController.GetSetKnockback(System.Int32,System.String)">
+            <summary>
+            Get a specific <see cref="T:FrannHammer.Models.SetKnockbackDto"/>s details.
+            </summary>
+            <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Api.Controllers.SetKnockbacksController.PutSetKnockback(System.Int32,FrannHammer.Models.SetKnockbackDto)">
+            <summary>
+            Update a <see cref="T:FrannHammer.Models.SetKnockbackDto"/>.
+            </summary>
+            <param name="id"></param>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Api.Controllers.SetKnockbacksController.PostSetKnockback(FrannHammer.Models.SetKnockbackDto)">
+            <summary>
+            Create a new <see cref="T:FrannHammer.Models.SetKnockbackDto"/>.
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Api.Controllers.SetKnockbacksController.DeleteSetKnockback(System.Int32)">
+            <summary>
+            Delete a <see cref="T:FrannHammer.Models.SetKnockback"/>.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="T:FrannHammer.Api.Controllers.SmashAttributeTypesController">
             <summary>
             Handles the more broad types that can be assigned to other metadata in the Db.
             </summary>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.SmashAttributeTypesController.GetSmashAttributeTypes">
+        <member name="M:FrannHammer.Api.Controllers.SmashAttributeTypesController.#ctor(FrannHammer.Services.ISmashAttributeTypeService)">
+            <summary>
+            Create a new <see cref="T:FrannHammer.Api.Controllers.SmashAttributeTypesController"/> to interact with the server.
+            </summary>
+        </member>
+        <member name="M:FrannHammer.Api.Controllers.SmashAttributeTypesController.GetSmashAttributeTypes(System.String)">
             <summary>
             Get all of the stored <see cref="T:FrannHammer.Models.SmashAttributeType"/>s.
             </summary>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.SmashAttributeTypesController.GetSmashAttributeType(System.Int32)">
+        <member name="M:FrannHammer.Api.Controllers.SmashAttributeTypesController.GetSmashAttributeType(System.Int32,System.String)">
             <summary>
             Get a specific <see cref="T:FrannHammer.Models.SmashAttributeType"/>.
             </summary>
             <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.SmashAttributeTypesController.GetAllCharacterAttributeOfSmashAttributeType(System.Int32)">
+        <member name="M:FrannHammer.Api.Controllers.SmashAttributeTypesController.GetAllCharacterAttributeOfSmashAttributeType(System.Int32,System.String)">
             <summary>
             Get back all of the <see cref="T:FrannHammer.Models.SmashAttributeType"/>s of a specific id
             as <see cref="T:FrannHammer.Models.CharacterAttribute"/> objects.  This call parses the returned 
@@ -650,6 +838,8 @@
             similar to how they are displayed on KuroganeHammer.com.
             </summary>
             <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.SmashAttributeTypesController.PutSmashAttributeType(System.Int32,FrannHammer.Models.SmashAttributeTypeDto)">
@@ -679,24 +869,26 @@
             Handles operations dealing with <see cref="T:FrannHammer.Models.Throw"/>s.
             </summary>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.ThrowsController.#ctor(FrannHammer.Api.Models.IApplicationDbContext)">
+        <member name="M:FrannHammer.Api.Controllers.ThrowsController.#ctor(FrannHammer.Services.IMetadataService)">
             <summary>
-            Create a new <see cref="T:FrannHammer.Api.Controllers.ThrowsController"/> to interact with the server using 
-            a specific <see cref="T:FrannHammer.Api.Models.IApplicationDbContext"/>
+            Create a new <see cref="T:FrannHammer.Api.Controllers.ThrowsController"/> to interact with the server.
             </summary>
-            <param name="context"></param>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.ThrowsController.GetThrows">
+        <member name="M:FrannHammer.Api.Controllers.ThrowsController.GetThrows(System.String)">
             <summary>
             Get all <see cref="T:FrannHammer.Models.ThrowDto"/>s.
             </summary>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.ThrowsController.GetThrow(System.Int32)">
+        <member name="M:FrannHammer.Api.Controllers.ThrowsController.GetThrow(System.Int32,System.String)">
             <summary>
             Get a specific <see cref="T:FrannHammer.Models.ThrowDto"/>s details.
             </summary>
             <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.ThrowsController.PutThrow(System.Int32,FrannHammer.Models.ThrowDto)">
@@ -726,24 +918,26 @@
             Handles operations dealing with <see cref="T:FrannHammer.Models.ThrowType"/>s.
             </summary>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.ThrowTypesController.#ctor(FrannHammer.Api.Models.IApplicationDbContext)">
+        <member name="M:FrannHammer.Api.Controllers.ThrowTypesController.#ctor(FrannHammer.Services.IMetadataService)">
             <summary>
-            Create a new <see cref="T:FrannHammer.Api.Controllers.ThrowTypesController"/> to interact with the server using 
-            a specific <see cref="T:FrannHammer.Api.Models.IApplicationDbContext"/>
+            Create a new <see cref="T:FrannHammer.Api.Controllers.ThrowTypesController"/> to interact with the server.
             </summary>
-            <param name="context"></param>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.ThrowTypesController.GetThrowTypes">
+        <member name="M:FrannHammer.Api.Controllers.ThrowTypesController.GetThrowTypes(System.String)">
             <summary>
             Get all <see cref="T:FrannHammer.Models.Throw"/>s.
             </summary>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.ThrowTypesController.GetThrowType(System.Int32)">
+        <member name="M:FrannHammer.Api.Controllers.ThrowTypesController.GetThrowType(System.Int32,System.String)">
             <summary>
             Get a specific <see cref="T:FrannHammer.Models.Throw"/>s details.
             </summary>
             <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.ThrowTypesController.PutThrowType(System.Int32,FrannHammer.Models.ThrowTypeDto)">
@@ -751,19 +945,19 @@
             Update a <see cref="T:FrannHammer.Models.ThrowType"/>.
             </summary>
             <param name="id"></param>
-            <param name="throwType"></param>
+            <param name="dto"></param>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.ThrowTypesController.PostThrowType(FrannHammer.Models.ThrowTypeDto)">
             <summary>
             Create a new <see cref="T:FrannHammer.Models.ThrowType"/>.
             </summary>
-            <param name="throwTypeDto"></param>
+            <param name="dto"></param>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.ThrowTypesController.DeleteThrowType(System.Int32)">
             <summary>
-            Delete a <see cref="T:FrannHammer.Models.ThrowTypeDto"/>.
+            Delete a <see cref="T:FrannHammer.Models.ThrowType"/>.
             </summary>
             <param name="id"></param>
             <returns></returns>

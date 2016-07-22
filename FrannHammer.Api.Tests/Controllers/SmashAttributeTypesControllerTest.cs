@@ -1,10 +1,10 @@
-﻿using System;
-using System.Threading;
+﻿using System.Collections.Generic;
 using System.Web.Http.Results;
 using FrannHammer.Api.Controllers;
 using FrannHammer.Models;
 using NUnit.Framework;
 using System.Linq;
+using FrannHammer.Services;
 
 namespace FrannHammer.Api.Tests.Controllers
 {
@@ -12,6 +12,7 @@ namespace FrannHammer.Api.Tests.Controllers
     public class SmashAttributeTypesControllerTest : EffortBaseTest
     {
         private SmashAttributeTypesController _controller;
+        private ISmashAttributeTypeService _service;
 
         private SmashAttributeTypeDto Post(SmashAttributeTypeDto smashAttributeType)
         {
@@ -29,7 +30,8 @@ namespace FrannHammer.Api.Tests.Controllers
         public override void TestFixtureSetUp()
         {
             base.TestFixtureSetUp();
-            _controller = new SmashAttributeTypesController(Context);
+            _service = new SmashAttributeTypeService(Context);
+            _controller = new SmashAttributeTypesController(_service);
         }
 
         [TestFixtureTearDown]
@@ -50,7 +52,9 @@ namespace FrannHammer.Api.Tests.Controllers
         [Test]
         public void ShouldGetAllSmashAttributeTypes()
         {
-            var results = _controller.GetSmashAttributeTypes();
+            var results = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetSmashAttributeTypes())
+                .ToList();
+
             CollectionAssert.AllItemsAreNotNull(results);
             CollectionAssert.AllItemsAreUnique(results);
             CollectionAssert.AllItemsAreInstancesOfType(results, typeof(SmashAttributeTypeDto));
@@ -62,7 +66,7 @@ namespace FrannHammer.Api.Tests.Controllers
             var smashAttributeType = TestObjects.SmashAttributeType();
             var result = Post(smashAttributeType);
 
-            var latestSmashAttributeType = _controller.GetSmashAttributeTypes().ToList().Last();
+            var latestSmashAttributeType = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetSmashAttributeTypes()).ToList().Last();
 
             Assert.AreEqual(result, latestSmashAttributeType);
         }
@@ -71,7 +75,7 @@ namespace FrannHammer.Api.Tests.Controllers
         public void ShouldUpdateSmashAttributeTypes()
         {
             const string expectedName = "new name";
-            var smashAttributeType = _controller.GetSmashAttributeTypes().ToList().First();
+            var smashAttributeType = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetSmashAttributeTypes()).ToList().First();
 
             if (smashAttributeType != null)
             {

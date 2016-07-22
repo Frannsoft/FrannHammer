@@ -65,7 +65,7 @@ namespace FrannHammer.Models
         //public int Id { get; set; }
     }
 
-    public class Character : BaseCharacterModel// : BaseModel
+    public class Character : BaseCharacterModel, IEntity// : BaseModel
     {
         //public string Style { get; set; }
         //public string MainImageUrl { get; set; }

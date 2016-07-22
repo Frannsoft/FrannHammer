@@ -1,5 +1,6 @@
 ﻿using System.Configuration;
 using FrannHammer.Api.Models;
+using FrannHammer.Services;
 
 namespace KurograneHammer.TransferDBTool.Seeding
 {

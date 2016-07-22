@@ -1,12 +1,9 @@
-﻿using System;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
+using FrannHammer.Services;
 
 namespace FrannHammer.Api.Controllers
 {
@@ -17,48 +14,45 @@ namespace FrannHammer.Api.Controllers
     public class AnglesController : BaseApiController
     {
         private const string AnglesRouteKey = "Angles";
+        private readonly IMetadataService _metadataService;
 
         /// <summary>
-        /// Create a new <see cref="AnglesController"/> to interact with the server using 
-        /// a specific <see cref="IApplicationDbContext"/>
+        /// Create a new <see cref="AnglesController"/> to interact with the server.
         /// </summary>
-        /// <param name="context"></param>
-        public AnglesController(IApplicationDbContext context)
-            : base(context)
-        { }
+        /// <param name="metadataService"></param>
+        public AnglesController(IMetadataService metadataService)
+        {
+            _metadataService = metadataService;
+        }
 
         /// <summary>
         /// Get all <see cref="AngleDto"/>s.
         /// </summary>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
+        [ResponseType(typeof(AngleDto))]
         [Route(AnglesRouteKey)]
-        public IQueryable<AngleDto> GetAngles()
+        public IHttpActionResult GetAngles([FromUri] string fields = "")
         {
-            var angleTypes = Db.Angle.ProjectTo<AngleDto>();
-            return angleTypes;
+            var content = _metadataService.GetAllWithMoves<Angle, AngleDto>(fields);
+            return Ok(content);
         }
 
         /// <summary>
         /// Get a specific <see cref="AngleDto"/>s details.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(AngleDto))]
         [Route(AnglesRouteKey + "/{id}")]
-        public IHttpActionResult GetAngle(int id)
+        public IHttpActionResult GetAngle(int id, [FromUri] string fields = "")
         {
-            var dto = (from angle in Db.Angle
-                join moves in Db.Moves
-                    on angle.MoveId equals moves.Id
-                where angle.Id == id
-                select angle).ProjectTo<AngleDto>().SingleOrDefault();
-
-            if (dto == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(dto);
+            //ensure that data from joined can persist on the object
+            var content = _metadataService.GetWithMoves<Angle, AngleDto>(id, fields);
+            return content == null ? NotFound() : Ok(content);
         }
 
         /// <summary>
@@ -80,18 +74,7 @@ namespace FrannHammer.Api.Controllers
                 return BadRequest();
             }
 
-            if (!AngleExists(id))
-            {
-                return NotFound();
-            }
-
-            var entity = Db.Angle.Find(id);
-            entity = Mapper.Map(dto, entity);
-
-            entity.LastModified = DateTime.Now;
-            Db.Entry(entity).State = System.Data.Entity.EntityState.Modified;
-
-            Db.SaveChanges();
+            _metadataService.Update<Angle, AngleDto>(id, dto);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -111,13 +94,7 @@ namespace FrannHammer.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var entity = Mapper.Map<AngleDto, Angle>(dto);
-            entity.LastModified = DateTime.Now;
-
-            Db.Angle.Add(entity);
-            Db.SaveChanges();
-
-            var newDto = Mapper.Map<Angle, AngleDto>(entity);
+            var newDto = _metadataService.Add<Angle, AngleDto>(dto);
             return CreatedAtRoute("DefaultApi", new { controller = "Angles", id = newDto.Id }, newDto);
         }
 
@@ -130,21 +107,8 @@ namespace FrannHammer.Api.Controllers
         [Route(AnglesRouteKey + "/{id}")]
         public IHttpActionResult DeleteAngle(int id)
         {
-            Angle angle = Db.Angle.Find(id);
-            if (angle == null)
-            {
-                return NotFound();
-            }
-
-            Db.Angle.Remove(angle);
-            Db.SaveChanges();
-
+            _metadataService.Delete<Angle>(id);
             return StatusCode(HttpStatusCode.OK);
-        }
-
-        private bool AngleExists(int id)
-        {
-            return Db.Angle.Count(e => e.Id == id) > 0;
         }
     }
 }

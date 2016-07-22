@@ -11,7 +11,7 @@ namespace FrannHammer.Models
         Boolean
     }
 
-    public class Notation : BaseModel
+    public class Notation : BaseModel, IEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

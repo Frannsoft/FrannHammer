@@ -18,6 +18,7 @@ namespace FrannHammer.Models.DTOs
     {
         public string Rank { get; set; }
         public int SmashAttributeType { get; set; }
+        public string SmashAttributeTypeName { get; set; }
         public int OwnerId { get; set; }
         public string CharacterName { get; set; }
         public string ThumbnailUrl { get; set; }
@@ -25,10 +26,11 @@ namespace FrannHammer.Models.DTOs
         public List<CharacterAttributeDto> RawValues { get; set; }
         public List<CharacterAttributeKeyValuePair> ParsedValues { get; set; }
 
-        public CharacterAttributeRowDto(string rank, int attributeType, int ownerId, List<CharacterAttributeKeyValuePair> values, string characterName, string thumbnailUrl)
+        public CharacterAttributeRowDto(string rank, string smashAttributeTypeName, int attributeType, int ownerId, List<CharacterAttributeKeyValuePair> values, string characterName, string thumbnailUrl)
         {
             Rank = rank;
             SmashAttributeType = attributeType;
+            SmashAttributeTypeName = smashAttributeTypeName;
             OwnerId = ownerId;
             ParsedValues = values;
             RawHeaders = values.Select(v => v.KeyName).ToList();

@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http.Results;
 using FrannHammer.Api.Controllers;
 using FrannHammer.Models;
+using FrannHammer.Services;
 using NUnit.Framework;
 
 namespace FrannHammer.Api.Tests.Controllers
@@ -10,6 +12,7 @@ namespace FrannHammer.Api.Tests.Controllers
     public class MovementsControllerTest : EffortBaseTest
     {
         private MovementsController _controller;
+        private IMetadataService _service;
 
         private MovementDto Post(MovementDto movement)
         {
@@ -27,7 +30,8 @@ namespace FrannHammer.Api.Tests.Controllers
         public override void TestFixtureSetUp()
         {
             base.TestFixtureSetUp();
-            _controller = new MovementsController(Context);
+            _service = new MetadataService(Context);
+            _controller = new MovementsController(_service);
         }
 
         [TestFixtureTearDown]
@@ -61,7 +65,7 @@ namespace FrannHammer.Api.Tests.Controllers
         [TestCase("Weight")]
         public void ShouldGetAllMovementsByName(string name)
         {
-            var character = new CharactersController(Context).GetCharacters().First();
+            var character = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => new CharactersController(_service).GetCharacters()).First();
 
             var movement = TestObjects.Movement();
             var movement2 = new MovementDto
@@ -75,7 +79,7 @@ namespace FrannHammer.Api.Tests.Controllers
             Post(movement);
             Post(movement2);
 
-            var results = _controller.GetMovementsByName(name).ToList();
+            var results = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetMovementsByName(name)).ToList();
 
             CollectionAssert.AllItemsAreNotNull(results);
             CollectionAssert.AllItemsAreUnique(results);
@@ -94,7 +98,7 @@ namespace FrannHammer.Api.Tests.Controllers
         {
             const string expectedName = "jab 2";
 
-            var movement = _controller.GetMovementsByName("Gravity").First();
+            var movement = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetMovementsByName("Gravity")).First();
 
             if (movement != null)
             {

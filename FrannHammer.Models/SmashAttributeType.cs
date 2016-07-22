@@ -42,7 +42,7 @@ namespace FrannHammer.Models
     public class SmashAttributeTypeDto : BaseSmashAttributeTypeModel
     { }
 
-    public class SmashAttributeType : BaseSmashAttributeTypeModel // : BaseModel
+    public class SmashAttributeType : BaseSmashAttributeTypeModel, IEntity // : BaseModel
     {
         public DateTime LastModified { get; set; }
 

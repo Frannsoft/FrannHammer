@@ -42,7 +42,7 @@ namespace FrannHammer.Models
     public class ThrowTypeDto : ThrowTypeBaseModel
     { } 
 
-    public class ThrowType : ThrowTypeBaseModel
+    public class ThrowType : ThrowTypeBaseModel, IEntity
     {
         public DateTime LastModified { get; set; }
     }

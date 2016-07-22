@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Web.Http.Results;
 using FrannHammer.Api.Controllers;
 using FrannHammer.Models;
+using FrannHammer.Services;
 using NUnit.Framework;
 
 namespace FrannHammer.Api.Tests.Controllers
@@ -11,6 +14,7 @@ namespace FrannHammer.Api.Tests.Controllers
     public class NotationControllerTest : EffortBaseTest
     {
         private NotationsController _controller;
+        private IMetadataService _service;
 
         private Notation Post(Notation notation)
         {
@@ -28,7 +32,8 @@ namespace FrannHammer.Api.Tests.Controllers
         public override void TestFixtureSetUp()
         {
             base.TestFixtureSetUp();
-            _controller = new NotationsController(Context);
+            _service = new MetadataService(Context);
+            _controller = new NotationsController(_service);
         }
 
         [TestFixtureTearDown]
@@ -49,7 +54,9 @@ namespace FrannHammer.Api.Tests.Controllers
         [Test]
         public void ShouldGetAllNotations()
         {
-            var results = _controller.GetNotations();
+            var results = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetNotations())
+                .ToList();
+
             CollectionAssert.AllItemsAreNotNull(results);
             CollectionAssert.AllItemsAreUnique(results);
             CollectionAssert.AllItemsAreInstancesOfType(results, typeof(Notation));

@@ -78,6 +78,8 @@
     <Compile Include="Angle.cs" />
     <Compile Include="ApplicationUser.cs" />
     <Compile Include="BaseDamage.cs" />
+    <Compile Include="BaseEntity.cs" />
+    <Compile Include="BaseKnockback.cs" />
     <Compile Include="BaseModel.cs" />
     <Compile Include="CalculatorModels.cs" />
     <Compile Include="Character.cs" />
@@ -98,6 +100,7 @@
     <Compile Include="Notation.cs" />
     <Compile Include="ProblemModels.cs" />
     <Compile Include="RoleBindingModel.cs" />
+    <Compile Include="SetKnockback.cs" />
     <Compile Include="SmashAttributeType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Throw.cs" />

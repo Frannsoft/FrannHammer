@@ -1,12 +1,9 @@
-﻿using System;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
+using FrannHammer.Services;
 
 namespace FrannHammer.Api.Controllers
 {
@@ -17,110 +14,90 @@ namespace FrannHammer.Api.Controllers
     public class ThrowTypesController : BaseApiController
     {
         private const string ThrowTypesRouteKey = "ThrowTypes";
+        private readonly IMetadataService _metadataService;
 
         /// <summary>
-        /// Create a new <see cref="ThrowTypesController"/> to interact with the server using 
-        /// a specific <see cref="IApplicationDbContext"/>
+        /// Create a new <see cref="ThrowTypesController"/> to interact with the server.
         /// </summary>
-        /// <param name="context"></param>
-        public ThrowTypesController(IApplicationDbContext context)
-            : base(context)
-        { }
+        public ThrowTypesController(IMetadataService metadataService)
+        {
+            _metadataService = metadataService;
+        }
 
         /// <summary>
         /// Get all <see cref="Throw"/>s.
         /// </summary>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
+        [ResponseType(typeof(ThrowTypeDto))]
         [Route(ThrowTypesRouteKey)]
-        public IQueryable<ThrowTypeDto> GetThrowTypes()
+        public IHttpActionResult GetThrowTypes([FromUri] string fields = "")
         {
-            var throwTypes = Db.ThrowTypes.ProjectTo<ThrowTypeDto>();
-            return throwTypes;
+            var content = _metadataService.GetAll<ThrowType, ThrowTypeDto>(fields);
+            return Ok(content);
         }
 
         /// <summary>
         /// Get a specific <see cref="Throw"/>s details.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(ThrowTypeDto))]
         [Route(ThrowTypesRouteKey + "/{id}")]
-        public IHttpActionResult GetThrowType(int id)
+        public IHttpActionResult GetThrowType(int id, [FromUri] string fields = "")
         {
-            ThrowType type = Db.ThrowTypes.Find(id);
-            if (type == null)
-            {
-                return NotFound();
-            }
-
-            var dto = Mapper.Map<ThrowType, ThrowTypeDto>(type);
-
-            return Ok(dto);
+            var content = _metadataService.Get<ThrowType, ThrowTypeDto>(id, fields);
+            return content == null ? NotFound() : Ok(content);
         }
 
         /// <summary>
         /// Update a <see cref="ThrowType"/>.
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="throwType"></param>
+        /// <param name="dto"></param>
         /// <returns></returns>
         [ResponseType(typeof(void))]
         [Route(ThrowTypesRouteKey + "/{id}")]
-        public IHttpActionResult PutThrowType(int id, ThrowTypeDto throwType)
+        public IHttpActionResult PutThrowType(int id, ThrowTypeDto dto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != throwType.Id)
+            if (id != dto.Id)
             {
                 return BadRequest();
             }
 
-            if (!ThrowTypeExists(id))
-            {
-                return NotFound();
-            }
-
-            var entity = Db.ThrowTypes.Find(id);
-            entity = Mapper.Map(throwType, entity);
-
-            entity.LastModified = DateTime.Now;
-            Db.Entry(entity).State = System.Data.Entity.EntityState.Modified;
-
-            Db.SaveChanges();
-
+            _metadataService.Update<ThrowType, ThrowTypeDto>(id, dto);
             return StatusCode(HttpStatusCode.NoContent);
         }
 
         /// <summary>
         /// Create a new <see cref="ThrowType"/>.
         /// </summary>
-        /// <param name="throwTypeDto"></param>
+        /// <param name="dto"></param>
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
         [ResponseType(typeof(ThrowTypeDto))]
         [Route(ThrowTypesRouteKey)]
-        public IHttpActionResult PostThrowType(ThrowTypeDto throwTypeDto)
+        public IHttpActionResult PostThrowType(ThrowTypeDto dto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var entity = Mapper.Map<ThrowTypeDto, ThrowType>(throwTypeDto);
-
-            entity.LastModified = DateTime.Now;
-            Db.ThrowTypes.Add(entity);
-            Db.SaveChanges();
-
-            var newDto = Mapper.Map<ThrowType, ThrowTypeDto>(entity);
+            var newDto = _metadataService.Add<ThrowType, ThrowTypeDto>(dto);
             return CreatedAtRoute("DefaultApi", new { controller = "ThrowTypes", id = newDto.Id }, newDto);
         }
 
         /// <summary>
-        /// Delete a <see cref="ThrowTypeDto"/>.
+        /// Delete a <see cref="ThrowType"/>.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -128,21 +105,8 @@ namespace FrannHammer.Api.Controllers
         [Route(ThrowTypesRouteKey + "/{id}")]
         public IHttpActionResult DeleteThrowType(int id)
         {
-            ThrowType type = Db.ThrowTypes.Find(id);
-            if (type == null)
-            {
-                return NotFound();
-            }
-
-            Db.ThrowTypes.Remove(type);
-            Db.SaveChanges();
-
+            _metadataService.Delete<ThrowType>(id);
             return StatusCode(HttpStatusCode.OK);
-        }
-
-        private bool ThrowTypeExists(int id)
-        {
-            return Db.ThrowTypes.Count(e => e.Id == id) > 0;
         }
     }
 }

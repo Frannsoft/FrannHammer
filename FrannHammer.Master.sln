@@ -26,6 +26,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.AccountRegistra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.Models", "FrannHammer.Models\FrannHammer.Models.csproj", "{E4F0C134-6288-438F-B5D0-C53638E866E3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.Services", "FrannHammer.Services\FrannHammer.Services.csproj", "{7E5C008B-AE84-4D50-BC4B-9D49D8D53870}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.Services.Tests", "FrannHammer.Services.Tests\FrannHammer.Services.Tests.csproj", "{26880B5B-83B8-4064-A1E5-9536D2513FF2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,6 +76,14 @@ Global
 		{E4F0C134-6288-438F-B5D0-C53638E866E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4F0C134-6288-438F-B5D0-C53638E866E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E4F0C134-6288-438F-B5D0-C53638E866E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E5C008B-AE84-4D50-BC4B-9D49D8D53870}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E5C008B-AE84-4D50-BC4B-9D49D8D53870}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E5C008B-AE84-4D50-BC4B-9D49D8D53870}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E5C008B-AE84-4D50-BC4B-9D49D8D53870}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26880B5B-83B8-4064-A1E5-9536D2513FF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26880B5B-83B8-4064-A1E5-9536D2513FF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26880B5B-83B8-4064-A1E5-9536D2513FF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26880B5B-83B8-4064-A1E5-9536D2513FF2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
