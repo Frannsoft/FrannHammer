@@ -6,7 +6,7 @@ using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
-namespace KurograneHammer.TransferDBTool
+namespace KuroganeHammer.TransferDBTool
 {
     public class BaseTest
     {

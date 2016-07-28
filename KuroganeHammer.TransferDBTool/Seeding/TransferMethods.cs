@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using FrannHammer.Models;
 
-namespace KurograneHammer.TransferDBTool.Seeding
+namespace KuroganeHammer.TransferDBTool.Seeding
 {
     internal class TransferMethods
     {
@@ -215,7 +215,9 @@ namespace KurograneHammer.TransferDBTool.Seeding
             char[] setKnockbackTrimValues = {'W', ':', ' '};
             const char primaryKnockbackValueChar = 'W';
             Func<string, bool> doesRawContainSetKnockbackValue = raw => rawKbk.Contains('B') &&
-                                                                        !rawKbk.Contains('W');
+                                                                        !rawKbk.Contains('W') ||
+                                                                        (!rawKbk.Contains('B') &&
+                                                                        !rawKbk.Contains('W'));
 
             return AddBaseSetKnockbackCore<SetKnockback>(rawKbk, matchSetKnockbackRegex, setKnockbackTrimValues,
                 primaryKnockbackValueChar,

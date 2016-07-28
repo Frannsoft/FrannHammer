@@ -3,7 +3,7 @@ using System.Linq;
 using FrannHammer.Models;
 using NUnit.Framework;
 
-namespace KurograneHammer.TransferDBTool.Seeding
+namespace KuroganeHammer.TransferDBTool.Seeding
 {
     [TestFixture]
     public class Seeding
@@ -65,33 +65,43 @@ namespace KurograneHammer.TransferDBTool.Seeding
 
             Console.WriteLine("Adding throw data...");
 
-            if (!context.Throws.Any())
+            //if (!context.Throws.Any())
+            //{
+            foreach (var move in moves)
             {
-                foreach (var move in moves)
+                var tempBaseDamage = move.FirstActionableFrame;
+                var tempAngle = move.BaseDamage;
+                var tempBaseKnockback = move.Angle;
+                var tempKnockbackGrowth = move.BaseKnockBackSetKnockback;
+
+                move.BaseDamage = tempBaseDamage;
+                move.Angle = tempAngle;
+                move.KnockbackGrowth = tempKnockbackGrowth;
+                move.BaseKnockBackSetKnockback = tempBaseKnockback;
+                move.FirstActionableFrame = "-"; //do this until KH posts FAF data for throws
+                move.HitboxActive = "-"; //clear out the invalid value here
+
+                var baseDmgData = TransferMethods.MapDataThenSync<BaseDamage>(move, context);
+                var angleData = TransferMethods.MapDataThenSync<Angle>(move, context);
+                var knockbackGrowthData = TransferMethods.MapDataThenSync<KnockbackGrowth>(move, context);
+                var baseKbk = TransferMethods.MapDataThenSync<BaseKnockback>(move, context);
+                var setKbk = TransferMethods.MapDataThenSync<SetKnockback>(move, context);
+
+                context.Set<BaseDamage>().Add(baseDmgData);
+                context.Set<Angle>().Add(angleData);
+                context.Set<KnockbackGrowth>().Add(knockbackGrowthData);
+
+                if (baseKbk != null)
                 {
-                    var tempBaseDamage = move.FirstActionableFrame;
-                    var tempAngle = move.BaseDamage;
-                    var tempBaseKnockback = move.Angle;
-                    var tempKnockbackGrowth = move.BaseKnockBackSetKnockback;
-
-                    move.BaseDamage = tempBaseDamage;
-                    move.Angle = tempAngle;
-                    move.KnockbackGrowth = tempKnockbackGrowth;
-                    move.BaseKnockBackSetKnockback = tempBaseKnockback;
-                    move.FirstActionableFrame = "-"; //do this until KH posts FAF data for throws
-                    move.HitboxActive = "-"; //clear out the invalid value here
-
-                    var baseDmgData = TransferMethods.MapDataThenSync<BaseDamage>(move, context);
-                    var angleData = TransferMethods.MapDataThenSync<Angle>(move, context);
-                    var knockbackGrowthData = TransferMethods.MapDataThenSync<KnockbackGrowth>(move, context);
-
-                    context.Set<BaseDamage>().Add(baseDmgData);
-                    context.Set<Angle>().Add(angleData);
-                    context.Set<KnockbackGrowth>().Add(knockbackGrowthData);
-
+                    context.Set<BaseKnockback>().Add(baseKbk);
                 }
-                context.SaveChanges();
+                if (setKbk != null)
+                {
+                    context.Set<SetKnockback>().Add(setKbk);
+                }
             }
+            context.SaveChanges();
+            //}
             //can correct firstactiveframe in the future
         }
 

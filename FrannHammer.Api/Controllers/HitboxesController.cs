@@ -50,7 +50,7 @@ namespace FrannHammer.Api.Controllers
         public IHttpActionResult GetHitbox(int id, [FromUri] string fields = "")
         {
             //ensure that data from joined can persist on the object
-            var content = _metadataService.GetWithMoves<Hitbox, HitboxDto>(id, fields);
+            var content = _metadataService.GetWithMovesOnEntity<Hitbox, HitboxDto>(id, fields);
             return content == null ? NotFound() : Ok(content);
         }
 

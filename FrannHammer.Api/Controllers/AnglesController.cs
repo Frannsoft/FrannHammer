@@ -51,7 +51,7 @@ namespace FrannHammer.Api.Controllers
         public IHttpActionResult GetAngle(int id, [FromUri] string fields = "")
         {
             //ensure that data from joined can persist on the object
-            var content = _metadataService.GetWithMoves<Angle, AngleDto>(id, fields);
+            var content = _metadataService.GetWithMovesOnEntity<Angle, AngleDto>(id, fields);
             return content == null ? NotFound() : Ok(content);
         }
 

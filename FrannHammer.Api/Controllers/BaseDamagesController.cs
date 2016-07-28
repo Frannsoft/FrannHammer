@@ -51,7 +51,7 @@ namespace FrannHammer.Api.Controllers
         [Route(BaseDamagesRouteKey + "/{id}")]
         public IHttpActionResult GetBaseDamage(int id, [FromUri] string fields = "")
         {
-            var content = _metadataService.GetWithMoves<BaseDamage, BaseDamageDto>(id, fields);
+            var content = _metadataService.GetWithMovesOnEntity<BaseDamage, BaseDamageDto>(id, fields);
             return content == null ? NotFound() : Ok(content);
         }
 

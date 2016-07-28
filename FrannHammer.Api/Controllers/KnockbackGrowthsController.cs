@@ -49,7 +49,7 @@ namespace FrannHammer.Api.Controllers
         [Route(KnockbackGrowthsRouteKey + "/{id}")]
         public IHttpActionResult GetKnockbackGrowth(int id, [FromUri] string fields = "")
         {
-            var content = _metadataService.GetWithMoves<KnockbackGrowth, KnockbackGrowthDto>(id, fields);
+            var content = _metadataService.GetWithMovesOnEntity<KnockbackGrowth, KnockbackGrowthDto>(id, fields);
             return Ok(content);
         }
 

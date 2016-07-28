@@ -51,7 +51,7 @@ namespace FrannHammer.Api.Controllers
         public IHttpActionResult GetBaseKnockback(int id, [FromUri] string fields = "")
         {
             //ensure that data from joined can persist on the object
-            var content = _metadataService.GetWithMoves<BaseKnockback, BaseKnockbackDto>(id, fields);
+            var content = _metadataService.GetWithMovesOnEntity<BaseKnockback, BaseKnockbackDto>(id, fields);
             return content == null ? NotFound() : Ok(content);
         }
 

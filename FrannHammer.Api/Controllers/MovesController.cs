@@ -73,6 +73,38 @@ namespace FrannHammer.Api.Controllers
         }
 
         /// <summary>
+        /// Get the <see cref="BaseKnockback"/> data associated with this move.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
+        /// <returns></returns>
+        [ResponseType(typeof(BaseKnockbackDto))]
+        [Route(MovesRouteKey + "/{id}/baseknockbacks")]
+        public IHttpActionResult GetMoveBaseKnockbackData(int id, [FromUri] string fields = "")
+        {
+            //Db.Hitbox.SingleOrDefault(h => h.MoveId == id)
+            var content = _metadataService.GetWithMoves<BaseKnockback, BaseKnockbackDto>(id, fields);
+            return Ok(content);
+        }
+
+        /// <summary>
+        /// Get the <see cref="SetKnockback"/> data associated with this move.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
+        /// <returns></returns>
+        [ResponseType(typeof(SetKnockbackDto))]
+        [Route(MovesRouteKey + "/{id}/setknockbacks")]
+        public IHttpActionResult GetMoveSetKnockbackData(int id, [FromUri] string fields = "")
+        {
+            //Db.Hitbox.SingleOrDefault(h => h.MoveId == id)
+            var content = _metadataService.GetWithMoves<SetKnockback, SetKnockbackDto>(id, fields);
+            return Ok(content);
+        }
+
+        /// <summary>
         /// Get the <see cref="Angle"/> data associated with this move.
         /// </summary>
         /// <param name="id"></param>

@@ -81,6 +81,18 @@ namespace FrannHammer.Services
     public interface IMetadataService
     {
         /// <summary>
+        /// Join on Entity Id instead of MoveId.  If you want to join on MoveId use GetWithMoves.
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <typeparam name="TDto"></typeparam>
+        /// <param name="id"></param>
+        /// <param name="fields"></param>
+        /// <returns></returns>
+        dynamic GetWithMovesOnEntity<TEntity, TDto>(int id, string fields = "")
+            where TEntity : class, IMoveIdEntity
+            where TDto : class;
+
+        /// <summary>
         /// Joins with the moves table to get back all of type <typeparamref name="TEntity"/>
         /// with a matching MoveId.
         /// </summary>
@@ -207,6 +219,20 @@ namespace FrannHammer.Services
             : base(db)
         { }
 
+        public dynamic GetWithMovesOnEntity<TEntity, TDto>(int id, string fields = "")
+            where TEntity : class, IMoveIdEntity
+            where TDto : class
+        {
+            var dto = (from entity in Db.Set<TEntity>()
+                       join joinEntity in Db.Moves
+                           on entity.MoveId equals joinEntity.Id
+                       where entity.Id == id
+                       select entity).ProjectTo<TDto>()
+                         .SingleOrDefault();
+
+            return BuildContentResponse<TDto, TDto>(dto, fields);
+        }
+
         public dynamic GetWithMoves<TEntity, TDto>(int id, string fields = "") 
             where TEntity : class, IMoveIdEntity 
             where TDto : class
@@ -214,7 +240,7 @@ namespace FrannHammer.Services
             var dto = (from entity in Db.Set<TEntity>()
                        join joinEntity in Db.Moves
                            on entity.MoveId equals joinEntity.Id
-                       where entity.Id == id
+                       where entity.MoveId == id
                        select entity).ProjectTo<TDto>()
                          .SingleOrDefault();
 
