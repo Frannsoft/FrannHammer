@@ -48,7 +48,7 @@ namespace FrannHammer.Models
     public class ThrowDto : ThrowBaseModel
     { }
 
-    public class Throw : ThrowBaseModel
+    public class Throw : ThrowBaseModel, IMoveIdEntity
     {
         public Move Move { get; set; }
         public ThrowType ThrowType { get; set; }

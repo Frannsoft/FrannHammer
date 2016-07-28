@@ -6,6 +6,7 @@ using FrannHammer.Core;
 using FrannHammer.Core.Calculations;
 using FrannHammer.Models;
 using FrannHammer.Models.DTOs;
+using FrannHammer.Services;
 
 namespace FrannHammer.Api.Controllers
 {

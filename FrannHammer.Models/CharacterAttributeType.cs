@@ -46,7 +46,7 @@ namespace FrannHammer.Models
     public class CharacterAttributeTypeDto : BaseCharacterAttributeTypeModel
     { }
 
-    public class CharacterAttributeType : BaseCharacterAttributeTypeModel// : BaseModel
+    public class CharacterAttributeType : BaseCharacterAttributeTypeModel, IEntity// : BaseModel
     {
         public Notation Notation { get; set; }
         public DateTime LastModified { get; set; }

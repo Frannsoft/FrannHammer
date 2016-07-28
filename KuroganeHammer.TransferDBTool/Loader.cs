@@ -10,7 +10,7 @@ using FrannHammer.WebScraper.Stats;
 using NUnit.Framework;
 using Character = FrannHammer.WebScraper.Character;
 
-namespace KurograneHammer.TransferDBTool
+namespace KuroganeHammer.TransferDBTool
 {
     //order to load:
     //0) generate cfm migration (add-migration) and update-database

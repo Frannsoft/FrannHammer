@@ -4,6 +4,7 @@ using System.Data.Entity.Migrations;
 using System.Linq;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
+using FrannHammer.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Http.Results;
 using FrannHammer.Api.Controllers;
 using FrannHammer.Models;
+using FrannHammer.Services;
 using NUnit.Framework;
 
 namespace FrannHammer.Api.Tests.Controllers
@@ -14,12 +12,14 @@ namespace FrannHammer.Api.Tests.Controllers
     public class KnockbackGrowthsControllerTest : EffortBaseTest
     {
         private KnockbackGrowthsController _controller;
+        private IMetadataService _service;
 
         [TestFixtureSetUp]
         public override void TestFixtureSetUp()
         {
             base.TestFixtureSetUp();
-            _controller = new KnockbackGrowthsController(Context);
+            _service = new MetadataService(Context);
+            _controller = new KnockbackGrowthsController(_service);
         }
 
         [TestFixtureTearDown]
@@ -46,7 +46,8 @@ namespace FrannHammer.Api.Tests.Controllers
         [Test]
         public void ShouldGetAllKnockbackGrowths()
         {
-            var throws = _controller.GetKnockbackGrowths();
+            var throws = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetKnockbackGrowths())
+                .ToList();
 
             CollectionAssert.AllItemsAreNotNull(throws);
             CollectionAssert.AllItemsAreUnique(throws);
@@ -59,7 +60,7 @@ namespace FrannHammer.Api.Tests.Controllers
             var newThrow = TestObjects.KnockbackGrowth();
             var result = ExecuteAndReturnCreatedAtRouteContent<KnockbackGrowthDto>(() => _controller.PostKnockbackGrowth(newThrow));
 
-            var latestThrow = _controller.GetKnockbackGrowths().ToList().Last();
+            var latestThrow = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetKnockbackGrowths()).ToList().Last();
 
             Assert.AreEqual(result, latestThrow); ;
         }

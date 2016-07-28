@@ -5,6 +5,6 @@ namespace FrannHammer.Models
     public class KnockbackGrowthDto : BaseMoveHitboxMetaDto
     { }
 
-    public class KnockbackGrowth : BaseMoveHitboxMeta
+    public class KnockbackGrowth : BaseMoveHitboxMeta, IMoveIdEntity
     { }
 }

@@ -5,6 +5,6 @@ namespace FrannHammer.Models
     public class BaseDamageDto : BaseMoveHitboxMetaDto
     { }
 
-    public class BaseDamage : BaseMoveHitboxMeta
+    public class BaseDamage : BaseMoveHitboxMeta, IMoveIdEntity
     { }
 }

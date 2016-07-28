@@ -1,10 +1,10 @@
-﻿using System;
-using System.Threading;
+﻿using System.Collections.Generic;
 using System.Web.Http.Results;
 using FrannHammer.Api.Controllers;
 using FrannHammer.Models;
 using NUnit.Framework;
 using System.Linq;
+using FrannHammer.Services;
 
 namespace FrannHammer.Api.Tests.Controllers
 {
@@ -12,12 +12,14 @@ namespace FrannHammer.Api.Tests.Controllers
     public class CharacterAttributeTypeControllerTest : EffortBaseTest
     {
         private CharacterAttributeTypesController _controller;
+        private IMetadataService _service;
 
         [TestFixtureSetUp]
         public override void TestFixtureSetUp()
         {
             base.TestFixtureSetUp();
-            _controller = new CharacterAttributeTypesController(Context);
+            _service = new MetadataService(Context);
+            _controller = new CharacterAttributeTypesController(_service);
         }
 
         [TestFixtureTearDown]
@@ -36,7 +38,9 @@ namespace FrannHammer.Api.Tests.Controllers
         [Test]
         public void ShouldGetAllCharacterAttributeTypes()
         {
-            var characterAttributeTypes = _controller.GetCharacterAttributeTypes();
+            var characterAttributeTypes = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetCharacterAttributeTypes())
+                .ToList();
+
             CollectionAssert.AllItemsAreNotNull(characterAttributeTypes);
             CollectionAssert.AllItemsAreUnique(characterAttributeTypes);
             CollectionAssert.AllItemsAreInstancesOfType(characterAttributeTypes, typeof(CharacterAttributeTypeDto));
@@ -48,7 +52,7 @@ namespace FrannHammer.Api.Tests.Controllers
             var characterAttributeType = TestObjects.CharacterAttributeType();
             var result = ExecuteAndReturnCreatedAtRouteContent<CharacterAttributeTypeDto>(() => _controller.PostCharacterAttributeType(characterAttributeType));
 
-            var latestCharacterAttributeType = _controller.GetCharacterAttributeTypes().ToList().Last();
+            var latestCharacterAttributeType = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetCharacterAttributeTypes()).ToList().Last();
             Assert.AreEqual(result, latestCharacterAttributeType);
         }
 
@@ -56,7 +60,7 @@ namespace FrannHammer.Api.Tests.Controllers
         public void ShouldUpdateCharacterAttributeType()
         {
             const string expectedName = "mewtwo";
-            var characterAttributeType = _controller.GetCharacterAttributeTypes().First();
+            var characterAttributeType = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetCharacterAttributeTypes()).First();
 
             //act
             if (characterAttributeType != null)
@@ -74,12 +78,12 @@ namespace FrannHammer.Api.Tests.Controllers
         [Test]
         public void ShouldDeleteCharacterAttributeType()
         {
-            var characterAttributeType = _controller.GetCharacterAttributeTypes().ToList().First();
+            var characterAttributeType = ExecuteAndReturnContent<IEnumerable<dynamic>>(() => _controller.GetCharacterAttributeTypes()).ToList().First();
             var newCharacterAttributeType = ExecuteAndReturnCreatedAtRouteContent<CharacterAttributeTypeDto>(() => _controller.PostCharacterAttributeType(characterAttributeType));
 
             _controller.DeleteCharacterAttributeType(newCharacterAttributeType.Id);
 
-            var characterAttributeTypesController = new CharacterAttributeTypesController(Context);
+            var characterAttributeTypesController = new CharacterAttributeTypesController(_service);
             ExecuteAndReturn<NotFoundResult>(() => characterAttributeTypesController.GetCharacterAttributeType(newCharacterAttributeType.Id));
         }
     }

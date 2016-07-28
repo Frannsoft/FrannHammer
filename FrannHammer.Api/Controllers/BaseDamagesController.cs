@@ -1,12 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using FrannHammer.Api.Models;
+using FrannHammer.Core;
 using FrannHammer.Models;
+using FrannHammer.Services;
 
 namespace FrannHammer.Api.Controllers
 {
@@ -17,48 +15,44 @@ namespace FrannHammer.Api.Controllers
     public class BaseDamagesController : BaseApiController
     {
         private const string BaseDamagesRouteKey = "BaseDamages";
+        private readonly IMetadataService _metadataService;
 
         /// <summary>
-        /// Create a new <see cref="FrannHammer.Api.Controllers.BaseDamagesController"/> to interact with the server using 
-        /// a specific <see cref="IApplicationDbContext"/>
+        /// Create a new <see cref="BaseDamagesController"/> to interact with the server.
         /// </summary>
-        /// <param name="context"></param>
-        public BaseDamagesController(IApplicationDbContext context)
-            : base(context)
-        { }
+        public BaseDamagesController(IMetadataService metadataService)
+        {
+            Guard.VerifyObjectNotNull(metadataService, nameof(metadataService));
+            _metadataService = metadataService;
+        }
 
         /// <summary>
         /// Get all <see cref="BaseDamageDto"/>s.
         /// </summary>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
+        [ResponseType(typeof(BaseDamageDto))]
         [Route(BaseDamagesRouteKey)]
-        public IQueryable<BaseDamageDto> GetBaseDamages()
+        public IHttpActionResult GetBaseDamages([FromUri] string fields = "")
         {
-            var baseDamageTypes = Db.BaseDamage.ProjectTo<BaseDamageDto>();
-            return baseDamageTypes;
+            var content = _metadataService.GetAllWithMoves<BaseDamage, BaseDamageDto>(fields);
+            return Ok(content);
         }
 
         /// <summary>
         /// Get a specific <see cref="BaseDamageDto"/>s details.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(BaseDamageDto))]
         [Route(BaseDamagesRouteKey + "/{id}")]
-        public IHttpActionResult GetBaseDamage(int id)
+        public IHttpActionResult GetBaseDamage(int id, [FromUri] string fields = "")
         {
-            var dto = (from baseDamage in Db.BaseDamage
-                       join moves in Db.Moves
-                           on baseDamage.MoveId equals moves.Id
-                       where baseDamage.Id == id
-                       select baseDamage).ProjectTo<BaseDamageDto>()
-                       .SingleOrDefault();
-
-            if (dto == null)
-            {
-                return NotFound();
-            }
-            return Ok(dto);
+            var content = _metadataService.GetWithMovesOnEntity<BaseDamage, BaseDamageDto>(id, fields);
+            return content == null ? NotFound() : Ok(content);
         }
 
         /// <summary>
@@ -80,18 +74,7 @@ namespace FrannHammer.Api.Controllers
                 return BadRequest();
             }
 
-            if (!BaseDamageExists(id))
-            {
-                return NotFound();
-            }
-
-            var entity = Db.BaseDamage.Find(id);
-            entity = Mapper.Map(dto, entity);
-
-            entity.LastModified = DateTime.Now;
-            Db.Entry(entity).State = System.Data.Entity.EntityState.Modified;
-
-            Db.SaveChanges();
+            _metadataService.Update<BaseDamage, BaseDamageDto>(id, dto);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -111,13 +94,7 @@ namespace FrannHammer.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var entity = Mapper.Map<BaseDamageDto, BaseDamage>(dto);
-            entity.LastModified = DateTime.Now;
-
-            Db.BaseDamage.Add(entity);
-            Db.SaveChanges();
-
-            var newDto = Mapper.Map<BaseDamage, BaseDamageDto>(entity);
+            var newDto = _metadataService.Add<BaseDamage, BaseDamageDto>(dto);
             return CreatedAtRoute("DefaultApi", new { controller = "BaseDamages", id = newDto.Id }, newDto);
         }
 
@@ -130,21 +107,8 @@ namespace FrannHammer.Api.Controllers
         [Route(BaseDamagesRouteKey + "/{id}")]
         public IHttpActionResult DeleteBaseDamage(int id)
         {
-            BaseDamage baseDamage = Db.BaseDamage.Find(id);
-            if (baseDamage == null)
-            {
-                return NotFound();
-            }
-
-            Db.BaseDamage.Remove(baseDamage);
-            Db.SaveChanges();
-
+            _metadataService.Delete<BaseDamage>(id);
             return StatusCode(HttpStatusCode.OK);
-        }
-
-        private bool BaseDamageExists(int id)
-        {
-            return Db.BaseDamage.Count(e => e.Id == id) > 0;
         }
     }
 }

@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Data.Entity;
-using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
+using FrannHammer.Services;
 
 namespace FrannHammer.Api.Controllers
 {
@@ -18,109 +15,104 @@ namespace FrannHammer.Api.Controllers
     public class CharactersController : BaseApiController
     {
         private const string CharactersRouteKey = "Characters";
+        private readonly IMetadataService _metadataService;
 
         /// <summary>
-        /// Create a new <see cref="CharactersController"/> to interact with the server using 
-        /// a specific <see cref="ApplicationDbContext"/>
+        /// Create a new <see cref="CharactersController"/> to interact with the server.
         /// </summary>
-        /// <param name="context"></param>
-        public CharactersController(IApplicationDbContext context)
-            : base(context)
-        { }
+        public CharactersController(IMetadataService metadataService)
+        {
+            _metadataService = metadataService;
+        }
 
         /// <summary>
         /// Get all of the <see cref="CharacterDto"/> details.
         /// </summary>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
+        [ResponseType(typeof(CharacterDto))]
         [Route(CharactersRouteKey)]
-        public IQueryable<CharacterDto> GetCharacters()
+        public IHttpActionResult GetCharacters([FromUri] string fields = "")
         {
-            return Db.Characters.ProjectTo<CharacterDto>();
+            var content = _metadataService.GetAll<Character, CharacterDto>(fields);
+            return Ok(content);
         }
 
         /// <summary>
         /// Get a specific <see cref="CharacterDto"/>s details.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param> 
         /// <returns></returns>
         [ResponseType(typeof(CharacterDto))]
         [Route(CharactersRouteKey + "/{id}")]
-        public IHttpActionResult GetCharacter(int id)
+        public IHttpActionResult GetCharacter(int id, [FromUri] string fields = "")
         {
-            //TODO: error check for invalid param to give better feedback
-            var character = Db.Characters.Find(id);
-            if (character == null)
-            {
-                return NotFound();
-            }
-            var dto = Mapper.Map<Character, CharacterDto>(character);
-
-            return Ok(dto);
+            var content = _metadataService.Get<Character, CharacterDto>(id, fields);
+            return content == null ? NotFound() : Ok(content);
         }
 
         /// <summary>
         /// Get a specific <see cref="CharacterDto"/>s details by their name.
         /// </summary>
         /// <param name="name"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param> 
         /// <returns></returns>
         [ResponseType(typeof(CharacterDto))]
         [Route(CharactersRouteKey + "/name/{name}")]
-        public IHttpActionResult GetCharacterByName(string name)
+        public IHttpActionResult GetCharacterByName(string name, [FromUri] string fields = "")
         {
-            if (string.IsNullOrEmpty(name))
-            { return BadRequest($"Parameter {nameof(name)} cannot be empty."); }
-
-            Character character = Db.Characters.FirstOrDefault(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
-
-            if (character == null)
-            {
-                return NotFound();
-            }
-
-            var dto = Mapper.Map<Character, CharacterDto>(character);
-
-            return Ok(dto);
+            var content = _metadataService.Get<Character, CharacterDto>(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase), fields);
+            return Ok(content);
         }
 
         /// <summary>
         /// Get all the <see cref="Movement"/> data for a specific <see cref="Character"/>
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param> 
         /// <returns></returns>
+        [ResponseType(typeof(MovementDto))]
         [Route(CharactersRouteKey + "/{id}/movements")]
         [HttpGet]
-        public IQueryable<MovementDto> GetMovementsForCharacter(int id)
+        public IHttpActionResult GetMovementsForCharacter(int id, [FromUri] string fields = "")
         {
-            var movements = Db.Movements.Where(m => m.OwnerId == id).ProjectTo<MovementDto>();
-            return movements;
+            var content = _metadataService.GetAll<Movement, MovementDto>(m => m.OwnerId == id, fields);
+            return Ok(content);
         }
 
         /// <summary>
         /// Get all the <see cref="Move"/> data for a specific <see cref="Character"/>.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param> 
         /// <returns></returns>
+        [ResponseType(typeof(MoveDto))]
         [Route(CharactersRouteKey + "/{id}/moves")]
-        public IQueryable<MoveDto> GetMovesForCharacter(int id)
+        public IHttpActionResult GetMovesForCharacter(int id, [FromUri] string fields = "")
         {
-            var moves = Db.Moves.Where(m => m.OwnerId == id).ProjectTo<MoveDto>();
-            return moves;
+            var content = _metadataService.GetAll<Move, MoveDto>(m => m.OwnerId == id, fields);
+            return Ok(content);
         }
 
         /// <summary>
         /// Get all the <see cref="Throw"/>s for the specific <see cref="Character"/>.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param> 
         /// <returns></returns>
-        [ResponseType(typeof(IQueryable<ThrowDto>))]
+        [ResponseType(typeof(ThrowDto))]
         [Route(CharactersRouteKey + "/{id}/throws")]
-        public IQueryable<ThrowDto> GetThrowsForCharacter(int id)
+        public IHttpActionResult GetThrowsForCharacter(int id, [FromUri] string fields = "")
         {
-            return (from throws in Db.Throws
-                    join moves in Db.Moves
-                        on throws.MoveId equals moves.Id
-                    where moves.OwnerId == id
-                    select throws).ProjectTo<ThrowDto>();
+            var content = _metadataService.GetAllForOwnerId<Move, Throw, ThrowDto>(id, fields);
+            return Ok(content);
         }
 
         /// <summary>
@@ -129,77 +121,93 @@ namespace FrannHammer.Api.Controllers
         /// These will be returned as <see cref="CharacterAttributeDto"/>s.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param> 
         /// <returns></returns>
+        [ResponseType(typeof(CharacterAttributeDto))]
         [Route(CharactersRouteKey + "/{id}/characterattributes")]
-        [ResponseType(typeof(IQueryable<CharacterAttributeDto>))]
-        public IQueryable<CharacterAttributeDto> GetCharacterAttributesForCharacter(int id)
+        public IHttpActionResult GetCharacterAttributesForCharacter(int id, [FromUri] string fields = "")
         {
-            var attrs = Db.CharacterAttributes.Where(a => a.OwnerId == id).ProjectTo<CharacterAttributeDto>();
-            return attrs;
+            var content = _metadataService.GetAll<CharacterAttribute, CharacterAttributeDto>(a => a.OwnerId == id, fields);
+            return Ok(content);
+        }
+
+        /// <summary>
+        /// Get all the <see cref="CharacterAttribute"/>s of a specific <see cref="Character"/>.
+        /// 
+        /// These will be returned as <see cref="CharacterAttributeDto"/>s.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="smashAttributeTypeId"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param> 
+        /// <returns></returns>
+        [ResponseType(typeof(CharacterAttributeDto))]
+        [Route(CharactersRouteKey + "/{id}/smashattributetypes/{smashAttributeTypeId}")]
+        public IHttpActionResult GetCharacterAttributesForCharacter(int id, int smashAttributeTypeId, [FromUri] string fields = "")
+        {
+            var content = _metadataService.GetAll<CharacterAttribute, CharacterAttributeDto>(c => c.OwnerId == id && c.SmashAttributeTypeId == smashAttributeTypeId, fields);
+            return Ok(content);
         }
 
         /// <summary>
         /// Get all the <see cref="Angle"/>s of a specific <see cref="Character"/>'s moves.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param> 
         /// <returns></returns>
+        [ResponseType(typeof(AngleDto))]
         [Route(CharactersRouteKey + "/{id}/angles")]
-        [ResponseType(typeof (IQueryable<AngleDto>))]
-        public IQueryable<AngleDto> GetCharacterMoveAngles(int id)
+        public IHttpActionResult GetCharacterMoveAngles(int id, [FromUri] string fields = "")
         {
-            return (from angle in Db.Angle
-                join moves in Db.Moves
-                    on angle.MoveId equals moves.Id
-                where moves.OwnerId == id
-                select angle).ProjectTo<AngleDto>();
+            var content = _metadataService.GetAllForOwnerId<Move, Angle, AngleDto>(id, fields);
+            return Ok(content);
         }
 
         /// <summary>
         /// Get all the <see cref="Hitbox"/>es of a specific <see cref="Character"/>'s moves.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para>
+        /// E.g., id,name to get back just the id and name.</para></param> 
         /// <returns></returns>
+        [ResponseType(typeof(HitboxDto))]
         [Route(CharactersRouteKey + "/{id}/hitboxes")]
-        [ResponseType(typeof (IQueryable<HitboxDto>))]
-        public IQueryable<HitboxDto> GetCharacterMoveHitboxes(int id)
+        public IHttpActionResult GetCharacterMoveHitboxes(int id, [FromUri] string fields = "")
         {
-            return (from hitbox in Db.Hitbox
-                    join moves in Db.Moves
-                        on hitbox.MoveId equals moves.Id
-                    where moves.OwnerId == id
-                    select hitbox).ProjectTo<HitboxDto>();
+            var content = _metadataService.GetAllForOwnerId<Move, Hitbox, HitboxDto>(id, fields);
+            return Ok(content);
         }
 
         /// <summary>
         /// Get all the <see cref="KnockbackGrowth"/>es of a specific <see cref="Character"/>'s moves.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para>
+        /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
+        [ResponseType(typeof(KnockbackGrowthDto))]
         [Route(CharactersRouteKey + "/{id}/knockbackgrowths")]
-        [ResponseType(typeof(IQueryable<KnockbackGrowthDto>))]
-        public IQueryable<KnockbackGrowthDto> GetCharacterMoveKnockbackGrowths(int id)
+        public IHttpActionResult GetCharacterMoveKnockbackGrowths(int id, [FromUri] string fields = "")
         {
-            return (from knockbackGrowth in Db.KnockbackGrowth
-                    join moves in Db.Moves
-                        on knockbackGrowth.MoveId equals moves.Id
-                    where moves.OwnerId == id
-                    select knockbackGrowth).ProjectTo<KnockbackGrowthDto>();
+            var content = _metadataService.GetAllForOwnerId<Move, KnockbackGrowth, KnockbackGrowthDto>(id, fields);
+            return Ok(content);
         }
 
         /// <summary>
         /// Get all the <see cref="BaseDamage"/>s of a specific <see cref="Character"/>'s moves.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// /// E.g., id,name to get back just the id and name.</para></param> 
         /// <returns></returns>
+        [ResponseType(typeof(BaseDamageDto))]
         [Route(CharactersRouteKey + "/{id}/basedamages")]
-        [ResponseType(typeof(IQueryable<BaseDamageDto>))]
-        public IQueryable<BaseDamageDto> GetCharacterMoveBaseDamages(int id)
+        public IHttpActionResult GetCharacterMoveBaseDamages(int id, [FromUri] string fields = "")
         {
-            return (from baseDamage in Db.BaseDamage
-                    join moves in Db.Moves
-                        on baseDamage.MoveId equals moves.Id
-                    where moves.OwnerId == id
-                    select baseDamage).ProjectTo<BaseDamageDto>();
+            var content = _metadataService.GetAllForOwnerId<Move, BaseDamage, BaseDamageDto>(id, fields);
+            return Ok(content);
         }
 
         /// <summary>
@@ -223,18 +231,7 @@ namespace FrannHammer.Api.Controllers
                 return BadRequest();
             }
 
-            if (!CharacterExists(id))
-            {
-                return NotFound();
-            }
-
-            var entity = Db.Characters.Find(id);
-            entity = Mapper.Map(dto, entity);
-
-            entity.LastModified = DateTime.Now;
-            Db.Entry(entity).State = EntityState.Modified;
-
-            Db.SaveChanges();
+            _metadataService.Update<Character, CharacterDto>(id, dto);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -254,12 +251,7 @@ namespace FrannHammer.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var entity = Mapper.Map<CharacterDto, Character>(dto);
-            entity.LastModified = DateTime.Now;
-            Db.Characters.Add(entity);
-            Db.SaveChanges();
-
-            var newDto = Mapper.Map<Character, CharacterDto>(entity);
+            var newDto = _metadataService.Add<Character, CharacterDto>(dto);
             return CreatedAtRoute("DefaultApi", new { controller = CharactersRouteKey + "", id = newDto.Id }, newDto);
         }
 
@@ -272,21 +264,8 @@ namespace FrannHammer.Api.Controllers
         [Route(CharactersRouteKey + "/{id}")]
         public IHttpActionResult DeleteCharacter(int id)
         {
-            Character character = Db.Characters.Find(id);
-            if (character == null)
-            {
-                return NotFound();
-            }
-
-            Db.Characters.Remove(character);
-            Db.SaveChanges();
-
+            _metadataService.Delete<Character>(id);
             return StatusCode(HttpStatusCode.OK);
-        }
-
-        private bool CharacterExists(int id)
-        {
-            return Db.Characters.Count(e => e.Id == id) > 0;
         }
     }
 }
