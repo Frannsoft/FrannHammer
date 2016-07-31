@@ -27,7 +27,7 @@ This allows consumers to pull back the following types of data from the existing
 - Character details such as image links, color theme from KuroganeHammer.com, descriptions, etc.
 - Movement details such as Weight, Fall Speed, Walk Speed, etc.
 - Move details such as active Hitboxes, First Actionable frames, Knockback Growth, etc.
-- Ability to [tailor responses](https://github.com/Frannsoft/FrannHammer/wiki/Custom-tailored-response-objects) to your specific needs 
+- Ability to [tailor responses](https://github.com/Frannsoft/FrannHammer/wiki/Custom-tailored-response-body) to your specific needs 
 
 To see more details on these features, check out these wiki pages:
 
