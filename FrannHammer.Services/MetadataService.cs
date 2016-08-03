@@ -8,76 +8,7 @@ using AutoMapper.QueryableExtensions;
 
 namespace FrannHammer.Services
 {
-    //public interface IMetadataService : IDataService
-    //{
-
-    //}
-
-    //public class MetadataService :  BaseService, IMetadataService
-    //{
-    //    public MetadataService(IApplicationDbContext db) 
-    //        : base(db)
-    //    { }
-
-    //    public dynamic Get<TEntity, TDto>(int id, string fields = "") where TEntity : class, IEntity where TDto : class
-    //    {
-    //        throw new System.NotImplementedException();
-    //    }
-
-    //    public IEnumerable<dynamic> GetAll<TEntity, TDto>(IDbSet<TEntity> entities, string fields = "") where TEntity : class, IEntity where TDto : class
-    //    {
-    //        throw new System.NotImplementedException();
-    //    }
-
-    //    /// <summary>
-    //    /// Get all entity data of a specific type.
-    //    /// </summary>
-    //    /// <param name="fields"></param>
-    //    /// <returns></returns>
-    //    public virtual IEnumerable<dynamic> GetAll<TEntity, TDto>(string fields = "")
-    //        where TEntity : class, IEntity
-    //        where TDto : class
-    //    {
-    //        return BuildContentResponseMultiple<TEntity, TDto>(Db.Set<TEntity>(), fields);
-    //    }
-
-    //    /// <summary>
-    //    /// Update an existing entity.
-    //    /// </summary>
-    //    /// <param name="id"></param>
-    //    /// <param name="dto"></param>
-    //    public void Update<TEntity, TDto>(int id, TDto dto)
-    //        where TEntity : class, IEntity
-    //        where TDto : class
-    //    {
-    //        Guard.VerifyObjectNotNull(dto, nameof(dto));
-    //        UpdateEntity<TEntity, TDto>(id, dto);
-    //    }
-
-    //    /// <summary>
-    //    /// Add an entity.
-    //    /// </summary>
-    //    /// <param name="dto"></param>
-    //    /// <returns></returns>
-    //    public TDto Add<TEntity, TDto>(TDto dto)
-    //        where TEntity : class, IEntity
-    //        where TDto : class
-    //    {
-    //        Guard.VerifyObjectNotNull(dto, nameof(dto));
-    //        return AddEntity<TEntity, TDto>(dto);
-    //    }
-
-    //    /// <summary>
-    //    /// Delete an entity.
-    //    /// </summary>
-    //    /// <param name="id"></param>
-    //    public void Delete<T>(int id)
-    //        where T : class, IEntity
-    //    {
-    //        DeleteEntity<T>(id);
-    //    }
-    //}
-
+    
     public interface IMetadataService
     {
         /// <summary>

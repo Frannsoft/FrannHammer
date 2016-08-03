@@ -87,10 +87,6 @@ namespace FrannHammer.Services
             }
 
             return new DtoBuilder().Build<TEntity, TDto>(entity, fields);
-
-            //return !string.IsNullOrEmpty(fields) ?
-            //    new DtoBuilder().Build(entity, fields) :
-            //    Mapper.Map<TEntity, TDto>(entity);
         }
 
         protected IQueryable<dynamic> BuildContentResponseMultiple<TEntity, TDto>(IQueryable<TEntity> entities,
@@ -107,24 +103,10 @@ namespace FrannHammer.Services
 
             var builder = new DtoBuilder();
 
-            //var whereIterator = from entity in entitiesList
-            //             select builder.Build(entity, fields);
             var whereIterator = entitiesList.Select(entity => builder.Build<TEntity, TDto>(entity, fields));
 
             var retVal = whereIterator.AsQueryable();
             return retVal;
-
-            //if (!string.IsNullOrEmpty(fields))
-            //{
-            //    var builder = new DtoBuilder();
-            //    return from entity in entitiesList
-            //           select builder.Build(entity, fields);
-            //}
-            //else
-            //{
-            //    return (from entity in entitiesList
-            //           select Mapper.Map<TEntity, TDto>(entity)).ToList();
-            //}
         }
     }
 }

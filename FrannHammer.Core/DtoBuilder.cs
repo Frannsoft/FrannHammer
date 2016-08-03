@@ -9,8 +9,6 @@ namespace FrannHammer.Core
     /// <summary>
     /// Supports building dynamic objects via <see cref="ExpandoObject"/> from an
     /// object and specified property values from that object.
-    /// 
-    /// A poor man's version of Facebook's graph api feature.
     /// </summary>
     public class DtoBuilder
     {
@@ -45,9 +43,6 @@ namespace FrannHammer.Core
             Guard.VerifyObjectNotNull(requestedFieldNames, nameof(requestedFieldNames));
 
             var fieldsNamesList = requestedFieldNames.ToList();
-
-            //if (!fieldsNamesList.Any())
-            //{ throw new ArgumentException("Must have at least one field specified! "); }
 
             //if no field names exist add all public instance ones for a 'default' dto object
             if (!fieldsNamesList.Any())
