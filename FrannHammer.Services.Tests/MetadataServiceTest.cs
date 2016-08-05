@@ -16,6 +16,7 @@ namespace FrannHammer.Services.Tests
             yield return new MetadataHarness<SmashAttributeType, SmashAttributeTypeDto>("Id,Name");
             yield return new MetadataHarness<ThrowType, ThrowTypeDto>("Id,Name");
             yield return new MetadataHarness<Movement, MovementDto>("Name,OwnerId,Value");
+            yield return new MetadataHarness<Character, CharacterDto>("Name,Id,Name");
         }
 
         public IEnumerable<IMoveDataHarness> MoveTestCases()

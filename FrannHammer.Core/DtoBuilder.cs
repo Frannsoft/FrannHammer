@@ -42,16 +42,16 @@ namespace FrannHammer.Core
         {
             Guard.VerifyObjectNotNull(requestedFieldNames, nameof(requestedFieldNames));
 
-            var fieldsNamesList = requestedFieldNames.ToList();
+            var fieldsNamesList = requestedFieldNames.Distinct().ToList();
 
             //if no field names exist add all public instance ones for a 'default' dto object
-            if (!fieldsNamesList.Any())
+            if (fieldsNamesList.Count == 0)
             {
                 var props = typeof(TDto).GetProperties(Flags);
                 fieldsNamesList.AddRange(props.Select(p => p.Name));
             }
 
-            var customDto = new Dictionary<string, object>();
+            var customDto = new Dictionary<string, object>(StringComparer.InvariantCultureIgnoreCase);
 
             foreach (var field in fieldsNamesList)
             {
@@ -66,8 +66,7 @@ namespace FrannHammer.Core
                 }
             }
 
-            dynamic resultObj = customDto.ToDynamicObject();
-            return resultObj;
+            return customDto.ToDynamicObject();
         }
     }
 }
