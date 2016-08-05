@@ -12,7 +12,37 @@ namespace FrannHammer.Core
     /// </summary>
     public class DtoBuilder
     {
+        private readonly Dictionary<Type, Dictionary<string, PropertyInfo>> _cachedPropertyInfo =
+            new Dictionary<Type, Dictionary<string, PropertyInfo>>();
+
         private const BindingFlags Flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase;
+
+        /// <summary>
+        /// Gets the <see cref="PropertyInfo"/> objects of type <typeparamref name="TDto"/> that follow the 
+        /// specified class member Flags.
+        /// 
+        /// If the <see cref="PropertyInfo"/> data already exists in the cache this method just returns the 
+        /// cached data.  Otherwise, it adds it and then returns the newly added data.
+        /// </summary>
+        /// <typeparam name="TDto"></typeparam>
+        /// <returns></returns>
+        private Dictionary<string, PropertyInfo> FetchProperties<TDto>()
+        {
+            var type = typeof (TDto);
+            Dictionary<string, PropertyInfo> typeProperties = null;
+
+            if (_cachedPropertyInfo.TryGetValue(type, out typeProperties))
+            {
+                return typeProperties; //found existing property info don't bother reflecting
+            }
+
+            var properties = type.GetProperties(Flags);
+
+            typeProperties = properties.ToDictionary(p => p.Name, p => p, StringComparer.InvariantCultureIgnoreCase);
+            _cachedPropertyInfo.Add(type, typeProperties);
+
+            return typeProperties;
+        }
 
         /// <summary>
         /// Build up an <see cref="ExpandoObject"/> consisting of the specified field values
@@ -25,7 +55,6 @@ namespace FrannHammer.Core
         /// <returns></returns>
         public dynamic Build<TEntity, TDto>(TEntity entity, string fieldsRaw)
         {
-            //Guard.VerifyStringIsNotNullOrEmpty(fieldsRaw, nameof(fieldsRaw));
             Guard.VerifyObjectNotNull(entity, nameof(entity));
 
             var splitValues = SplitValues(fieldsRaw);
@@ -44,20 +73,22 @@ namespace FrannHammer.Core
 
             var fieldsNamesList = requestedFieldNames.Distinct().ToList();
 
+            //get cached property information for this dto
+            var typeProperties = FetchProperties<TDto>();
+
             //if no field names exist add all public instance ones for a 'default' dto object
             if (fieldsNamesList.Count == 0)
             {
-                var props = typeof(TDto).GetProperties(Flags);
-                fieldsNamesList.AddRange(props.Select(p => p.Name));
+                fieldsNamesList.AddRange(typeProperties.Keys);
             }
 
             var customDto = new Dictionary<string, object>(StringComparer.InvariantCultureIgnoreCase);
 
             foreach (var field in fieldsNamesList)
             {
-                var propInfo = entity.GetType().GetProperty(field, Flags);
+                PropertyInfo propInfo;
 
-                if (propInfo != null)
+                if (typeProperties.TryGetValue(field, out propInfo))
                 {
                     //if null make empty so result is more web friendly
                     var value = propInfo.GetValue(entity) ?? string.Empty;
