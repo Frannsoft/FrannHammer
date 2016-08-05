@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Dynamic;
 using System.Linq;
 using AutoMapper;
 using FrannHammer.Core;
@@ -11,8 +9,8 @@ namespace FrannHammer.Services
 {
     public abstract class BaseService
     {
-        protected readonly DtoBuilder DtoBuilder;
-        protected readonly IApplicationDbContext Db;
+        protected DtoBuilder DtoBuilder { get; }
+        protected IApplicationDbContext Db { get; }
 
         protected BaseService(IApplicationDbContext db)
         {
