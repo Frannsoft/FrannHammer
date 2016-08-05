@@ -90,10 +90,10 @@ namespace FrannHammer.Services
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <typeparam name="TDto"></typeparam>
-        /// <param name="where"></param>
+        /// <param name="whereCondition"></param>
         /// <param name="fields"></param>
         /// <returns></returns>
-        dynamic Get<TEntity, TDto>(Expression<Func<TEntity, bool>> where, string fields = "")
+        dynamic Get<TEntity, TDto>(Expression<Func<TEntity, bool>> whereCondition, string fields = "")
             where TEntity : class, IEntity
             where TDto : class;
 
@@ -102,10 +102,10 @@ namespace FrannHammer.Services
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <typeparam name="TDto"></typeparam>
-        /// <param name="where"></param>
+        /// <param name="whereCondition"></param>
         /// <param name="fields"></param>
         /// <returns></returns>
-        IEnumerable<dynamic> GetAll<TEntity, TDto>(Expression<Func<TEntity, bool>> where, string fields = "")
+        IEnumerable<dynamic> GetAll<TEntity, TDto>(Expression<Func<TEntity, bool>> whereCondition, string fields = "")
             where TEntity : class, IEntity
             where TDto : class;
 
