@@ -57,8 +57,8 @@ namespace FrannHammer.Core.Tests
 
         [Test]
         [TestCase("name")]
-        [TestCase("lastmodified,name")]
-        [TestCase("id,style,lastmodified,colortheme")]
+        [TestCase("style,name")]
+        [TestCase("id,style,description,colortheme")]
         public void ShouldBuildObjectWithSpecificProps(string rawFields)
         {
             var entity = new Character
