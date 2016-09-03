@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace FrannHammer.Api.Data.Tests
 {
-    public class BaseIntegrityTest
+    public class BaseDataIntegrityTest
     {
         protected Mock<IApplicationDbContext> DbContextMock;
         protected ApplicationDbContext Context;
@@ -12,7 +12,6 @@ namespace FrannHammer.Api.Data.Tests
         [TestFixtureSetUp]
         public virtual void TestFixtureSetUp()
         {
-            Startup.ConfigureAutoMapping();
             Context = new ApplicationDbContext();
         }
     }

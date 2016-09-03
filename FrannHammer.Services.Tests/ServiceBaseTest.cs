@@ -26,7 +26,5 @@ namespace FrannHammer.Services.Tests
             _connection = Effort.DbConnectionFactory.CreateTransient(loader);
             Context = new ApplicationDbContext(_connection);
         }
-
-
     }
 }

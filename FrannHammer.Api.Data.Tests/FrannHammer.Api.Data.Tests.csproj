@@ -85,10 +85,11 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="BaseIntegrityTest.cs" />
+    <Compile Include="BaseDataIntegrityTest.cs" />
     <Compile Include="CharacterIntegrityTest.cs" />
     <Compile Include="MovesIntegrityTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ThrowsIntegrityTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
