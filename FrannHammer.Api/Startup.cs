@@ -3,7 +3,6 @@ using System.Web.Mvc;
 using AutoMapper;
 using FrannHammer.Api;
 using FrannHammer.Models;
-using FrannHammer.Models.DTOs;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Owin;
