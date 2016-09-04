@@ -8,7 +8,7 @@ namespace FrannHammer.Services.Tests
     [TestFixture]
     public class MetadataServiceTest : ServiceBaseTest
     {
-        public IEnumerable<IMetadataHarness> MetadataTestCases()
+        private static IEnumerable<IMetadataHarness> MetadataTestCases()
         {
             yield return new MetadataHarness<Throw, ThrowDto>("Id,WeightDependent");
             yield return new MetadataHarness<Character, CharacterDto>("Id,Name,DisplayName");
@@ -19,7 +19,7 @@ namespace FrannHammer.Services.Tests
             yield return new MetadataHarness<Character, CharacterDto>("Name,Id,Name");
         }
 
-        public IEnumerable<IMoveDataHarness> MoveTestCases()
+        private static IEnumerable<IMoveDataHarness> MoveTestCases()
         {
             yield return new MoveDataHarness<Angle, AngleDto>("Id,MoveName,Hitbox1");
             yield return new MoveDataHarness<BaseDamage, BaseDamageDto>("Id,MoveName,Hitbox1");
@@ -27,12 +27,12 @@ namespace FrannHammer.Services.Tests
             yield return new MoveDataHarness<KnockbackGrowth, KnockbackGrowthDto>("Id,MoveName,Hitbox1");
         }
 
-        public IEnumerable<IMoveDataHarness> BaseKnockBackMoveTestCases()
+        private static IEnumerable<IMoveDataHarness> BaseKnockBackMoveTestCases()
         {
             yield return new MoveDataHarness<BaseKnockback, BaseKnockbackDto>("Id,MoveName,Hitbox2");
         }
 
-        public IEnumerable<IMoveDataHarness> SetKnockBackMoveTestCases()
+        private static IEnumerable<IMoveDataHarness> SetKnockBackMoveTestCases()
         {
             yield return new MoveDataHarness<SetKnockback, SetKnockbackDto>("MoveName,RawValue");
         }
