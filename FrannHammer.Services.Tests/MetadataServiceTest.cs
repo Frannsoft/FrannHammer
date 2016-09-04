@@ -25,7 +25,15 @@ namespace FrannHammer.Services.Tests
             yield return new MoveDataHarness<BaseDamage, BaseDamageDto>("Id,MoveName,Hitbox1");
             yield return new MoveDataHarness<Hitbox, HitboxDto>("Id,MoveName,Hitbox1");
             yield return new MoveDataHarness<KnockbackGrowth, KnockbackGrowthDto>("Id,MoveName,Hitbox1");
+        }
+
+        public IEnumerable<IMoveDataHarness> BaseKnockBackMoveTestCases()
+        {
             yield return new MoveDataHarness<BaseKnockback, BaseKnockbackDto>("Id,MoveName,Hitbox2");
+        }
+
+        public IEnumerable<IMoveDataHarness> SetKnockBackMoveTestCases()
+        {
             yield return new MoveDataHarness<SetKnockback, SetKnockbackDto>("MoveName,RawValue");
         }
 
@@ -38,10 +46,40 @@ namespace FrannHammer.Services.Tests
         }
 
         [Test]
+        [TestCaseSource(nameof(BaseKnockBackMoveTestCases))]
+        public void ShouldGetAllBaseKnockback_Moves(IMoveDataHarness moveDataHarness)
+        {
+            moveDataHarness.SingleIsValidMove(1, Context);
+        }
+
+        [Test]
+        [TestCaseSource(nameof(SetKnockBackMoveTestCases))]
+        public void ShouldGetAllSetKnockback_Moves(IMoveDataHarness moveDataHarness)
+        {
+            //TODO: I hate magic numbers.  Id = 4 is the first entry for set knockback in the db
+            moveDataHarness.SingleIsValidMove(4, Context);
+        }
+
+        [Test]
         [TestCaseSource(nameof(MoveTestCases))]
         public void ShouldGetSingle_Move(IMoveDataHarness moveDataHarness)
         {
             moveDataHarness.SingleIsValidMove(1, Context);
+        }
+
+        [Test]
+        [TestCaseSource(nameof(BaseKnockBackMoveTestCases))]
+        public void ShouldGetSingleWithFieldsBaseKnockback_Moves(IMoveDataHarness moveDataHarness)
+        {
+            moveDataHarness.SingleIsValidMove(1, Context);
+        }
+
+        [Test]
+        [TestCaseSource(nameof(SetKnockBackMoveTestCases))]
+        public void ShouldGetSingleWithFieldsSetKnockback_Moves(IMoveDataHarness moveDataHarness)
+        {
+            //TODO: I hate magic numbers.  Id = 4 is the first entry for set knockback in the db
+            moveDataHarness.SingleIsValidMove(4, Context);
         }
 
         [Test]

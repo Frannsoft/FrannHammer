@@ -10,9 +10,9 @@ namespace FrannHammer.Services.Tests
     [TestFixture]
     public abstract class ServiceBaseTest
     {
-        private DbConnection _connection;
+        //private DbConnection _connection;
 
-        protected Mock<IApplicationDbContext> DbContextMock;
+        //protected Mock<IApplicationDbContext> DbContextMock;
         protected ApplicationDbContext Context;
 
         [SetUp]
@@ -20,11 +20,12 @@ namespace FrannHammer.Services.Tests
         {
             Startup.ConfigureAutoMapping();
 
-            var path = AppDomain.CurrentDomain.BaseDirectory;
-            IDataLoader loader = new CsvDataLoader($"{path}\\fakeDb\\");
+            //var path = AppDomain.CurrentDomain.BaseDirectory;
+            //IDataLoader loader = new CsvDataLoader($"{path}\\fakeDb\\");
 
-            _connection = Effort.DbConnectionFactory.CreateTransient(loader);
-            Context = new ApplicationDbContext(_connection);
+            //_connection = Effort.DbConnectionFactory.CreateTransient(loader);
+            //Context = new ApplicationDbContext(_connection);
+            Context = new ApplicationDbContext();
         }
     }
 }
