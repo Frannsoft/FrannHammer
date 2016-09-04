@@ -8,7 +8,7 @@ namespace FrannHammer.Services.Tests
     [TestFixture]
     public class MetadataServiceTest : ServiceBaseTest
     {
-        public IEnumerable<IMetadataHarness> MetadataTestCases()
+        private static IEnumerable<IMetadataHarness> MetadataTestCases()
         {
             yield return new MetadataHarness<Throw, ThrowDto>("Id,WeightDependent");
             yield return new MetadataHarness<Character, CharacterDto>("Id,Name,DisplayName");
@@ -19,13 +19,21 @@ namespace FrannHammer.Services.Tests
             yield return new MetadataHarness<Character, CharacterDto>("Name,Id,Name");
         }
 
-        public IEnumerable<IMoveDataHarness> MoveTestCases()
+        private static IEnumerable<IMoveDataHarness> MoveTestCases()
         {
             yield return new MoveDataHarness<Angle, AngleDto>("Id,MoveName,Hitbox1");
             yield return new MoveDataHarness<BaseDamage, BaseDamageDto>("Id,MoveName,Hitbox1");
             yield return new MoveDataHarness<Hitbox, HitboxDto>("Id,MoveName,Hitbox1");
             yield return new MoveDataHarness<KnockbackGrowth, KnockbackGrowthDto>("Id,MoveName,Hitbox1");
+        }
+
+        private static IEnumerable<IMoveDataHarness> BaseKnockBackMoveTestCases()
+        {
             yield return new MoveDataHarness<BaseKnockback, BaseKnockbackDto>("Id,MoveName,Hitbox2");
+        }
+
+        private static IEnumerable<IMoveDataHarness> SetKnockBackMoveTestCases()
+        {
             yield return new MoveDataHarness<SetKnockback, SetKnockbackDto>("MoveName,RawValue");
         }
 
@@ -38,10 +46,40 @@ namespace FrannHammer.Services.Tests
         }
 
         [Test]
+        [TestCaseSource(nameof(BaseKnockBackMoveTestCases))]
+        public void ShouldGetAllBaseKnockback_Moves(IMoveDataHarness moveDataHarness)
+        {
+            moveDataHarness.SingleIsValidMove(1, Context);
+        }
+
+        [Test]
+        [TestCaseSource(nameof(SetKnockBackMoveTestCases))]
+        public void ShouldGetAllSetKnockback_Moves(IMoveDataHarness moveDataHarness)
+        {
+            //TODO: I hate magic numbers.  Id = 4 is the first entry for set knockback in the db
+            moveDataHarness.SingleIsValidMove(4, Context);
+        }
+
+        [Test]
         [TestCaseSource(nameof(MoveTestCases))]
         public void ShouldGetSingle_Move(IMoveDataHarness moveDataHarness)
         {
             moveDataHarness.SingleIsValidMove(1, Context);
+        }
+
+        [Test]
+        [TestCaseSource(nameof(BaseKnockBackMoveTestCases))]
+        public void ShouldGetSingleWithFieldsBaseKnockback_Moves(IMoveDataHarness moveDataHarness)
+        {
+            moveDataHarness.SingleIsValidMove(1, Context);
+        }
+
+        [Test]
+        [TestCaseSource(nameof(SetKnockBackMoveTestCases))]
+        public void ShouldGetSingleWithFieldsSetKnockback_Moves(IMoveDataHarness moveDataHarness)
+        {
+            //TODO: I hate magic numbers.  Id = 4 is the first entry for set knockback in the db
+            moveDataHarness.SingleIsValidMove(4, Context);
         }
 
         [Test]
