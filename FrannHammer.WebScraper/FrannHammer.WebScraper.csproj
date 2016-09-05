@@ -49,7 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Character.cs" />
+    <Compile Include="WebCharacter.cs" />
     <Compile Include="CharacterAttributeStats.cs" />
     <Compile Include="CharacterConstants.cs" />
     <Compile Include="CharacterUtility.cs" />

@@ -33,9 +33,10 @@ namespace FrannHammer.Services
         DbSet<TEntity> Set<TEntity>()
             where TEntity : class;
 
+        DbSet Set(Type entityType);
+
         DbEntityEntry Entry(object entity);
         int SaveChanges();
-        void Dispose();
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplicationDbContext

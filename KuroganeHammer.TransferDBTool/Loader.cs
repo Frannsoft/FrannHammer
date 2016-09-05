@@ -8,7 +8,6 @@ using FrannHammer.Models;
 using FrannHammer.WebScraper;
 using FrannHammer.WebScraper.Stats;
 using NUnit.Framework;
-using Character = FrannHammer.WebScraper.Character;
 
 namespace KuroganeHammer.TransferDBTool
 {
@@ -68,7 +67,7 @@ namespace KuroganeHammer.TransferDBTool
             var chars = Enum.GetNames(typeof(Characters)).ToList();
             chars.Sort();
 
-            foreach (var character in chars.Select(c => new Character((Characters)Enum.Parse(typeof(Characters), c), ++idCounter)))
+            foreach (var character in chars.Select(c => new WebCharacter((Characters)Enum.Parse(typeof(Characters), c), ++idCounter)))
             {
                 string val;
                 if (character.Name.Contains("Mii") || character.Name.Contains("MII"))
@@ -115,7 +114,7 @@ namespace KuroganeHammer.TransferDBTool
             var characters = LoggedInBasicClient.GetAsync(Baseuri + "/Characters")
                 .Result.Content.ReadAsAsync<List<FrannHammer.Models.Character>>().Result;
 
-            foreach (var character in characters.Select(c => new Character(c)))
+            foreach (var character in characters.Select(c => new WebCharacter(c)))
             {
                 var movements = from movement in character.FrameData.Values.OfType<MovementStat>()
                                 select movement;
@@ -136,7 +135,7 @@ namespace KuroganeHammer.TransferDBTool
             var characters = LoggedInBasicClient.GetAsync(Baseuri + "/Characters")
                 .Result.Content.ReadAsAsync<List<FrannHammer.Models.Character>>().Result;
 
-            foreach (var character in characters.Select(c => new Character(c)))
+            foreach (var character in characters.Select(c => new WebCharacter(c)))
             {
                 //load moves
                 var moves = from move in character.FrameData.Values.OfType<MoveStat>()
