@@ -13,5 +13,21 @@ namespace FrannHammer.Api.Data.Tests
 
             Assert.That(moves.ToList().Count, Is.EqualTo(2795));
         }
+
+        [Test]
+        public void EveryMoveHasName()
+        {
+            var moves = Context.Moves.ToList();
+
+           moves.ForEach(m => Assert.That(!string.IsNullOrEmpty(m.Name)));
+        }
+
+        [Test]
+        public void EveryMoveHasOwnerId()
+        {
+            var moves = Context.Moves.ToList();
+
+            moves.ForEach(m => Assert.That(m.OwnerId > 0));
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using FrannHammer.WebScraper;
 using NUnit.Framework;
 
 namespace FrannHammer.Api.Data.Tests
@@ -9,21 +10,15 @@ namespace FrannHammer.Api.Data.Tests
         [Test]
         [TestCase(1, "Bayonetta")]
         [TestCase(58, "Zerosuitsamus")]
-        public void VerifyCharacterIdIsCorrect(int characterId, string characterName)
+        public void VerifyCharacterIdEndpointsAreCorrect(int characterId, string characterName)
         {
             var character = Context.Characters.Find(characterId);
-             
+
             Assert.That(character, Is.Not.Null);
             Assert.That(character.Name, Is.EqualTo(characterName));
             Assert.That(character.Id, Is.EqualTo(characterId));
         }
 
-        [Test]
-        public void VerifyCharacterCountIsExpectedAmount()
-        {
-            var characters = Context.Characters;
-
-            Assert.That(characters.ToList().Count, Is.EqualTo(58));
-        }
+        
     }
 }

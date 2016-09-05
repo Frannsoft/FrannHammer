@@ -7,10 +7,10 @@ namespace FrannHammer.Api.Data.Tests
     public class BaseDataIntegrityTest
     {
         protected Mock<IApplicationDbContext> DbContextMock;
-        protected ApplicationDbContext Context;
+        protected ApplicationDbContext Context { get; private set; }
 
-        [TestFixtureSetUp]
-        public virtual void TestFixtureSetUp()
+        [OneTimeSetUp]
+        public virtual void OneTimeSetUp()
         {
             Context = new ApplicationDbContext();
         }
