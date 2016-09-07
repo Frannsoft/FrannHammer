@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using FrannHammer.Models;
 using FrannHammer.WebScraper;
 using FrannHammer.WebScraper.Stats;
+using KuroganeHammer.TransferDBTool.Seeding;
 using NUnit.Framework;
 
 namespace KuroganeHammer.TransferDBTool
@@ -34,7 +35,7 @@ namespace KuroganeHammer.TransferDBTool
     {
         [Test]
         [Explicit("Data loader.  High intensity")]
-        public async Task Load()
+        public async Task LoadAndSeedAndCleanDataFull()
         {
             Console.WriteLine("characters...");
             await ReloadCharacters();
@@ -51,8 +52,14 @@ namespace KuroganeHammer.TransferDBTool
             Console.WriteLine("char attr values...");
             await ReloadSmash4CharacterAttributeValues();
 
+            Console.WriteLine("seeding and cleaning all data...");
+            using (var context = new AppDbContext())
+            {
+                var seeder = new Seeder(context);
+                seeder.SeedAll();
+            }
+
             Console.WriteLine("Done.");
-            //after running this do step 6-12
         }
 
         [Test]

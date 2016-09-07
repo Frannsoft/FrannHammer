@@ -1,8 +1,6 @@
-﻿using System;
-using System.Configuration;
+﻿using System.Configuration;
 using System.Data.Entity.Migrations;
 using System.Linq;
-using FrannHammer.Api.Models;
 using FrannHammer.Models;
 using FrannHammer.Services;
 using Microsoft.AspNet.Identity;
@@ -63,88 +61,6 @@ namespace FrannHammer.Api.Migrations
 
             var getUser = manager.FindByName("GETuser");
             manager.AddToRoles(getUser.Id, "Basic");
-
-            //seed notations
-            const string notationFloat = "FLOAT";
-            const string notationFrames = "FRAMES";
-            const string notationBool = "BOOLEAN";
-
-            if (!context.Notations.Any())
-            {
-                var floatNotation = new Notation
-                {
-                    Name = notationFloat,
-                    LastModified = DateTime.Now
-                };
-
-                var framesNotation = new Notation
-                {
-                    Name = notationFrames,
-                    LastModified = DateTime.Now
-                };
-
-                var booleanNotation = new Notation
-                {
-                    Name = notationBool,
-                    LastModified = DateTime.Now
-                };
-
-                context.Notations.Add(floatNotation);
-                context.Notations.Add(framesNotation);
-                context.Notations.Add(booleanNotation);
-            }
-
-            if (context.CharacterAttributes.Any() && !context.CharacterAttributeTypes.Any())
-            {
-                var charAttributeNames = context.CharacterAttributes.Select(c => c.Name).Distinct().ToList();//get names
-
-                //add char attribute type ids
-                foreach (var name in charAttributeNames)
-                {
-                    int notationId;
-
-                    if (name.Equals("FAST FALL SPEED") ||
-                        name.Equals("MAX AIR SPEED VALUE") ||
-                        name.Equals("MAX FALL SPEED VALUE") ||
-                        name.Equals("MAX FALL SPEED") ||
-                        name.Equals("MAX WALK SPEED VALUE") ||
-                        name.Equals("SPEED INCREASE") ||
-                        name.Equals("VALUE") ||
-                        name.Equals("WEIGHT VALUE"))
-                    {
-                        notationId = context.Notations.First(n => n.Name.Equals(notationFloat)).Id;
-                    }
-                    else if (name.Equals("INTANGIBILITY") ||
-                             name.Equals("INTANGIBLE") ||
-                             name.Equals("FAF"))
-                    {
-                        notationId = context.Notations.First(n => n.Name.Equals(notationFrames)).Id;
-                    }
-                    else
-                    {
-                        notationId = context.Notations.First(n => n.Name.Equals(notationBool)).Id;
-                    }
-
-
-                    var charAttributeType = new CharacterAttributeType
-                    {
-                        NotationId = notationId,
-                        LastModified = DateTime.Now,
-                        Name = name
-                    };
-                    context.CharacterAttributeTypes.Add(charAttributeType);
-                }
-                context.SaveChanges();
-
-                //now set the characterattributes
-                foreach (var characterAttribute in context.CharacterAttributes.ToList())
-                {
-                    characterAttribute.CharacterAttributeTypeId = context.CharacterAttributeTypes.Single(c => c.Name.Equals(characterAttribute.Name)).Id;
-                    context.CharacterAttributes.AddOrUpdate(characterAttribute);
-                }
-            }
-
-
         }
     }
 }
