@@ -38,22 +38,27 @@ namespace FrannHammer.Api.Data.Tests
                 Assert.That(filteredMovesFromKhPage.Count, Is.GreaterThan(0));
                 Assert.That(dbMovesForCharacter.Count, Is.EqualTo(filteredMovesFromKhPage.Count), $"Mismatch on move count for character '{characterFromDb.DisplayName}'");
 
-                foreach (var move in dbMovesForCharacter)
+                foreach (var move in WhereNotThrowMove(dbMovesForCharacter))
                 {
                     var moveFromKhPage = filteredMovesFromKhPage.FirstOrDefault(khmove => khmove.Name.Equals(move.Name) &&
-                                                                                          //khmove.Angle.Equals(move.Angle) &&
-                                                                                          //khmove.AutoCancel.Equals(move.AutoCancel) &&
-                                                                                          //khmove.BaseDamage.Equals(move.BaseDamage) &&
-                                                                                          //khmove.BaseKnockBackSetKnockback.Equals(move.BaseKnockBackSetKnockback) &&
-                                                                                          //khmove.FirstActionableFrame.Equals(move.FirstActionableFrame) &&
-                                                                                          //khmove.HitboxActive.Equals(move.HitboxActive) &&
-                                                                                          //khmove.KnockbackGrowth.Equals(move.KnockbackGrowth) &&
-                                                                                          //khmove.LandingLag.Equals(move.LandingLag) &&
+                                                                                          khmove.Angle.Equals(move.Angle) &&
+                                                                                          khmove.AutoCancel.Equals(move.AutoCancel) &&
+                                                                                          khmove.BaseDamage.Equals(move.BaseDamage) &&
+                                                                                          khmove.BaseKnockBackSetKnockback.Equals(move.BaseKnockBackSetKnockback) &&
+                                                                                          khmove.FirstActionableFrame.Equals(move.FirstActionableFrame) &&
+                                                                                          khmove.HitboxActive.Equals(move.HitboxActive) &&
+                                                                                          khmove.KnockbackGrowth.Equals(move.KnockbackGrowth) &&
+                                                                                          khmove.LandingLag.Equals(move.LandingLag) &&
                                                                                           khmove.OwnerId == move.OwnerId);
                     Assert.That(moveFromKhPage, Is.Not.Null);
                 }
             }
         }
+
+        private IList<Move> WhereNotThrowMove(IList<Move> moves) => moves.Where(m => !m.Name.Contains("Fthrow") &&
+                                                                                     !m.Name.Contains("Bthrow") &&
+                                                                                     !m.Name.Contains("Uthrow") &&
+                                                                                     !m.Name.Contains("Dthrow")).ToList();
 
         private IList<MoveStat> FilterUnwantedRowsFromKhPageData(IEnumerable<MoveStat> unfilteredMoveStats)
         {
