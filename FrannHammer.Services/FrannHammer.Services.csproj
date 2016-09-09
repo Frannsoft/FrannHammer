@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseService.cs" />
+    <Compile Include="Exceptions\EntityNotFoundException.cs" />
     <Compile Include="IdentityModels.cs" />
     <Compile Include="MetadataService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

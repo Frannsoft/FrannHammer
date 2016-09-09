@@ -5,6 +5,7 @@ using FrannHammer.Models;
 using System.Linq;
 using System.Linq.Expressions;
 using AutoMapper.QueryableExtensions;
+using FrannHammer.Services.Exceptions;
 
 namespace FrannHammer.Services
 {
@@ -208,6 +209,10 @@ namespace FrannHammer.Services
                             where ret.OwnerId == id
                             select entity).ProjectTo<TDto>();
 
+            if (!entities.Any())
+            {
+                throw new EntityNotFoundException($"Unable to find any entities with id: {id}");
+            }
             return BuildContentResponseMultiple<TDto, TDto>(entities, fields);
         }
 

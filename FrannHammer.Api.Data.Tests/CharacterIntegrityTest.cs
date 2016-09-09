@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using FrannHammer.WebScraper;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace FrannHammer.Api.Data.Tests
 {
@@ -19,6 +17,6 @@ namespace FrannHammer.Api.Data.Tests
             Assert.That(character.Id, Is.EqualTo(characterId));
         }
 
-        
+
     }
 }
