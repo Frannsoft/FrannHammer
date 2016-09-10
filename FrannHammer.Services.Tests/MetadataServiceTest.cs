@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using FrannHammer.Models;
+using FrannHammer.Services.Exceptions;
 using FrannHammer.Services.Tests.Harnesses;
 using NUnit.Framework;
 
@@ -12,7 +13,7 @@ namespace FrannHammer.Services.Tests
         {
             yield return new MetadataHarness<Throw, ThrowDto>("Id,WeightDependent");
             yield return new MetadataHarness<Character, CharacterDto>("Id,Name,DisplayName");
-            yield return new MetadataHarness<Notation, Notation>("Id,Name");
+            yield return new MetadataHarness<Notation, NotationDto>("Id,Name");
             yield return new MetadataHarness<SmashAttributeType, SmashAttributeTypeDto>("Id,Name");
             yield return new MetadataHarness<ThrowType, ThrowTypeDto>("Id,Name");
             yield return new MetadataHarness<Movement, MovementDto>("Name,OwnerId,Value");
@@ -126,5 +127,32 @@ namespace FrannHammer.Services.Tests
             metadataHarness.CollectionIsValidWithFields(Context, metadataHarness.Fields);
         }
         #endregion
+
+        [Test]
+        public void ThrowsForNonExistentIdOnGetSingle()
+        {
+            Assert.Throws<EntityNotFoundException>(() =>
+            {
+                new MetadataService(Context).Get<Character, CharacterDto>(200);
+            });
+        }
+
+        [Test]
+        public void ThrowsForExistentIdOnGetAll()
+        {
+            Assert.Throws<EntityNotFoundException>(() =>
+            {
+                new MetadataService(Context).GetAll<Character, CharacterDto>(c => c.Id == 200);
+            });
+        }
+
+        [Test]
+        public void ThrowsForExistentIdOnGetAllForOwnerId()
+        {
+            Assert.Throws<EntityNotFoundException>(() =>
+            {
+                new MetadataService(Context).GetAllForOwnerId<Move, Angle, AngleDto>(200);
+            });
+        }
     }
 }

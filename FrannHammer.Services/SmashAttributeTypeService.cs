@@ -41,7 +41,7 @@ namespace FrannHammer.Services
                             }
                         }).ToList(),
                         Db.Characters.Find(g.Key).Name, Db.Characters.Find(g.Key).ThumbnailUrl))
-                        .AsQueryable();
+                        .ToList();
 
             return BuildContentResponseMultiple<CharacterAttributeRowDto, CharacterAttributeRowDto>(characterAttributeRows, fields);
         }

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
+using FrannHammer.Services.Exceptions;
 
 namespace FrannHammer.Api.ActionFilterAttributes
 {
@@ -19,10 +19,16 @@ namespace FrannHammer.Api.ActionFilterAttributes
 
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
-            if (actionExecutedContext.Exception != null)
+            if (actionExecutedContext.Exception != null &&
+                actionExecutedContext.Exception.GetType() == typeof(EntityNotFoundException))
             {
                 actionExecutedContext.Response = actionExecutedContext.Request.CreateErrorResponse(
                     HttpStatusCode.NotFound, actionExecutedContext.Exception.Message);
+            }
+            else if (actionExecutedContext.Exception != null)
+            {
+                actionExecutedContext.Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
+                    actionExecutedContext.Exception.Message);
             }
         }
     }

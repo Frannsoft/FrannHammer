@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Dynamic;
 using System.Linq;
 using AutoMapper;
 using FrannHammer.Core;
 using FrannHammer.Models;
+using FrannHammer.Services.Exceptions;
 
 namespace FrannHammer.Services
 {
@@ -27,7 +29,7 @@ namespace FrannHammer.Services
             var entity = Db.Set<TEntity>().Find(id);
 
             if (entity == null)
-            { throw new NullReferenceException($"Unable to find entity of {typeof(TEntity).Name} with id = {id}"); }
+            { throw new EntityNotFoundException($"Unable to find entity of {typeof(TEntity).Name} with id = {id}"); }
 
             entity = Mapper.Map(dto, entity);
             entity.LastModified = DateTime.Now;
@@ -56,17 +58,14 @@ namespace FrannHammer.Services
             var entity = Db.Set<T>().Find(id);
 
             if (entity == null)
-            { throw new NullReferenceException($"Unable to find entity of {typeof(T).Name} with id = {id}"); }
+            { throw new EntityNotFoundException($"Unable to find entity of {typeof(T).Name} with id = {id}"); }
 
             Db.Set<T>().Remove(entity);
             Db.SaveChanges();
         }
 
         protected bool EntityExists<T>(int id)
-            where T : class, IEntity
-        {
-            return Db.Set<T>().Count(e => e.Id == id) > 0;
-        }
+            where T : class, IEntity => Db.Set<T>().Count(e => e.Id == id) > 0;
 
         /// <summary>
         /// Returns a content based response that is either a custom <see cref="ExpandoObject"/> or an
@@ -81,29 +80,19 @@ namespace FrannHammer.Services
             where TEntity : class
         {
             if (entity == null)
-            {
-                return null;
-            }
+            { throw new EntityNotFoundException($"Unable to find any entities of type '{typeof(TEntity).Name}'"); }
 
             return DtoBuilder.Build<TEntity, TDto>(entity, fields);
         }
 
-        protected IQueryable<dynamic> BuildContentResponseMultiple<TEntity, TDto>(IQueryable<TEntity> entities,
+        protected IEnumerable<dynamic> BuildContentResponseMultiple<TEntity, TDto>(IList<TEntity> entities,
             string fields)
             where TEntity : class
             where TDto : class
         {
-            if (entities == null)
-            {
-                return null;
-            }
+            Guard.VerifyObjectNotNull(entities, nameof(entities));
 
-            var entitiesList = entities.ToList(); //note: this evaluates the result set fully!
-
-            var whereIterator = entitiesList.Select(entity => DtoBuilder.Build<TEntity, TDto>(entity, fields));
-
-            var retVal = whereIterator.AsQueryable();
-            return retVal;
+            return entities.Select(entity => DtoBuilder.Build<TEntity, TDto>(entity, fields));
         }
     }
 }
