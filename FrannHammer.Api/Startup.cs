@@ -33,6 +33,7 @@ namespace FrannHammer.Api
                 cfg.CreateMap<ThrowDto, Throw>();
                 cfg.CreateMap<ThrowType, ThrowTypeDto>();
                 cfg.CreateMap<ThrowTypeDto, ThrowType>();
+                cfg.CreateMap<Notation, NotationDto>();
                 cfg.CreateMap<Angle, AngleDto>();
                 cfg.CreateMap<AngleDto, Angle>();
                 cfg.CreateMap<BaseDamage, BaseDamageDto>();
