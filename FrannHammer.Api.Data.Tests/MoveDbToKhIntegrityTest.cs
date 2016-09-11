@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using FrannHammer.Models;
@@ -29,7 +30,7 @@ namespace FrannHammer.Api.Data.Tests
             {
                 var characterFromKhPage = new WebCharacter(characterFromDb);
 
-                var unfilteredMovePageData = characterFromKhPage.FrameData.Values.OfType<MoveStat>();
+                var unfilteredMovePageData = characterFromKhPage.FrameData.OfType<MoveStat>();
                 var filteredMovesFromKhPage = FilterUnwantedRowsFromKhPageData(unfilteredMovePageData);
 
                 var dbMovesForCharacter = _moves.Where(m => m.OwnerId == characterFromDb.Id).ToList();

@@ -29,7 +29,7 @@ namespace FrannHammer.Api.Data.Tests
             {
                 var characterFromKhPage = new WebCharacter(characterFromDb);
 
-                var movementsFromKhPage = characterFromKhPage.FrameData.Values.OfType<MovementStat>().ToList();
+                var movementsFromKhPage = characterFromKhPage.FrameData.OfType<MovementStat>().ToList();
 
                 var dbMovementsForCharacter = _movements.Where(m => m.OwnerId == characterFromDb.Id).ToList();
 
