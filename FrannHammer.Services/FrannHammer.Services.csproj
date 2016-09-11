@@ -67,6 +67,7 @@
     <Compile Include="IdentityModels.cs" />
     <Compile Include="MetadataService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResultValidationService.cs" />
     <Compile Include="SmashAttributeTypeService.cs" />
   </ItemGroup>
   <ItemGroup>

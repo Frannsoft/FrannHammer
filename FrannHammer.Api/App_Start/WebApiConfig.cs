@@ -64,8 +64,6 @@ namespace FrannHammer.Api
             //in memory caching for debug mode
             config.MessageHandlers.Add(new CachingHandler(config));
 #endif
-
-
             config.EnableSwagger(c =>
             {
                 c.SingleApiVersion("v1", "FrannHammer Api");

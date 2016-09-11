@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using FrannHammer.Models;
 using FrannHammer.Services.Tests.Suts;
 using NUnit.Framework;
@@ -10,26 +9,28 @@ namespace FrannHammer.Services.Tests.Harnesses
         where T : class, IMoveIdEntity
         where TDto : class
     {
+        private readonly IResultValidationService _resultValidationService;
         public string Fields { get; }
 
         private readonly MoveDataSut<T, TDto> _movedataSut;
 
         public MoveDataHarness(string fields = "")
         {
+            _resultValidationService = new ResultValidationService();
             _movedataSut = new MoveDataSut<T, TDto>();
             Fields = fields;
         }
 
         public void SingleIsValidMove(int id, IApplicationDbContext context)
         {
-            var item = _movedataSut.GetWithMoves(id, context);
+            var item = _movedataSut.GetWithMoves(id, context, _resultValidationService);
 
             Assert.That(item, Is.Not.Null);
         }
 
         public void SingleIsValidMoveWithFields(int id, IApplicationDbContext context, string fields)
         {
-            var item = _movedataSut.GetWithMoves(id, context, fields);
+            var item = _movedataSut.GetWithMoves(id, context, _resultValidationService, fields);
 
             Assert.That(item, Is.Not.Null);
 
@@ -41,7 +42,7 @@ namespace FrannHammer.Services.Tests.Harnesses
 
         public void CollectionIsValidWithFields(IApplicationDbContext context, string fields = "")
         {
-            var items = _movedataSut.GetAllWithMoves(context, fields).ToList();
+            var items = _movedataSut.GetAllWithMoves(context, _resultValidationService, fields).ToList();
 
             CollectionAssert.IsNotEmpty(items);
             CollectionAssert.AllItemsAreNotNull(items);
@@ -54,7 +55,7 @@ namespace FrannHammer.Services.Tests.Harnesses
 
         public void CollectionIsValid(IApplicationDbContext context)
         {
-            var items = _movedataSut.GetAllWithMoves(context).ToList();
+            var items = _movedataSut.GetAllWithMoves(context, _resultValidationService).ToList();
 
             CollectionAssert.IsNotEmpty(items);
             CollectionAssert.AllItemsAreNotNull(items);

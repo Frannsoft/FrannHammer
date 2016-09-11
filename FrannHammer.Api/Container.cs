@@ -24,7 +24,8 @@ namespace FrannHammer.Api
             const string metadataServiceName = "metadataService";
 
             var context = new ApplicationDbContext();
-            var metadataService = new MetadataService(context);
+            var metadataResultValidationService = new ResultValidationService();
+            var metadataService = new MetadataService(context, metadataResultValidationService);
 
             builder.RegisterType<AnglesController>()
                 .As<AnglesController>()
@@ -68,7 +69,7 @@ namespace FrannHammer.Api
 
             builder.RegisterType<SmashAttributeTypesController>()
                 .As<SmashAttributeTypesController>()
-                .WithParameter("smashAttributeTypesService", new SmashAttributeTypeService(context));
+                .WithParameter("smashAttributeTypesService", new SmashAttributeTypeService(context, metadataResultValidationService));
 
             builder.RegisterType<ThrowsController>()
                 .As<ThrowsController>()

@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
+using FrannHammer.Api.ActionFilterAttributes;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
 using FrannHammer.Models.DTOs;
@@ -31,6 +32,7 @@ namespace FrannHammer.Api.Controllers
         /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(SmashAttributeTypeDto))]
+        [ValidateModel]
         [Route("smashattributetypes")]
         public IHttpActionResult GetSmashAttributeTypes([FromUri] string fields = "")
         {
@@ -46,6 +48,7 @@ namespace FrannHammer.Api.Controllers
         /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(SmashAttributeTypeDto))]
+        [ValidateModel]
         [Route("smashattributetypes/{id}")]
         public IHttpActionResult GetSmashAttributeType(int id, [FromUri] string fields = "")
         {
@@ -64,6 +67,7 @@ namespace FrannHammer.Api.Controllers
         /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(CharacterAttributeRowDto))]
+        [ValidateModel]
         [Route("smashattributetypes/{id}/characterattributes")]
         public IHttpActionResult GetAllCharacterAttributeOfSmashAttributeType(int id, [FromUri] string fields = "")
         {
@@ -80,14 +84,10 @@ namespace FrannHammer.Api.Controllers
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
         [ResponseType(typeof(void))]
+        [ValidateModel]
         [Route("smashattributetypes/{id}")]
         public IHttpActionResult PutSmashAttributeType(int id, SmashAttributeTypeDto dto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             if (id != dto.Id)
             {
                 return BadRequest();
@@ -104,14 +104,10 @@ namespace FrannHammer.Api.Controllers
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
         [ResponseType(typeof(SmashAttributeType))]
+        [ValidateModel]
         [Route("smashattributetypes")]
         public IHttpActionResult PostSmashAttributeType(SmashAttributeTypeDto dto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var newDto = _smashAttributeTypesService.Add<SmashAttributeType, SmashAttributeTypeDto>(dto);
             return CreatedAtRoute("DefaultApi", new { controller = "SmashAttributeTypes", id = newDto.Id }, newDto);
         }

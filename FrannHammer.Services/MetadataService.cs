@@ -9,7 +9,6 @@ using FrannHammer.Services.Exceptions;
 
 namespace FrannHammer.Services
 {
-    
     public interface IMetadataService
     {
         /// <summary>
@@ -36,18 +35,6 @@ namespace FrannHammer.Services
         dynamic GetWithMoves<TEntity, TDto>(int id, string fields = "")
         where TEntity : class, IMoveIdEntity
             where TDto : class;
-
-        ///// <summary>
-        ///// Forms an return value from a previously found entity.
-        ///// </summary>
-        ///// <typeparam name="TEntity"></typeparam>
-        ///// <typeparam name="TDto"></typeparam>
-        ///// <param name="entity"></param>
-        ///// <param name="fields"></param>
-        ///// <returns></returns>
-        //dynamic GetFromEntity<TEntity, TDto>(TEntity entity, string fields = "")
-        //    where TEntity : class, IMoveIdEntity
-        //    where TDto : class;
 
         /// <summary>
         /// Get all of type <typeparamref name="TEntity"/>.  Joins with moves table
@@ -147,9 +134,14 @@ namespace FrannHammer.Services
 
     public class MetadataService : BaseService, IMetadataService
     {
-        public MetadataService(IApplicationDbContext db)
+        protected IResultValidationService ResultValidationService { get; }
+
+        public MetadataService(IApplicationDbContext db, IResultValidationService resultValidationService)
             : base(db)
-        { }
+        {
+            Guard.VerifyObjectNotNull(resultValidationService, nameof(resultValidationService));
+            ResultValidationService = resultValidationService;
+        }
 
         public dynamic GetWithMovesOnEntity<TEntity, TDto>(int id, string fields = "")
             where TEntity : class, IMoveIdEntity
@@ -162,12 +154,12 @@ namespace FrannHammer.Services
                        select entity).ProjectTo<TDto>()
                          .SingleOrDefault();
 
-            ValidateSingleResult<TDto, TDto>(dto, id);
+            ResultValidationService.ValidateSingleResult<TDto, TDto>(dto, id);
             return BuildContentResponse<TDto, TDto>(dto, fields);
         }
 
-        public dynamic GetWithMoves<TEntity, TDto>(int id, string fields = "") 
-            where TEntity : class, IMoveIdEntity 
+        public dynamic GetWithMoves<TEntity, TDto>(int id, string fields = "")
+            where TEntity : class, IMoveIdEntity
             where TDto : class
         {
             var dto = (from entity in Db.Set<TEntity>()
@@ -177,32 +169,25 @@ namespace FrannHammer.Services
                        select entity).ProjectTo<TDto>()
                          .SingleOrDefault();
 
-            ValidateSingleResult<TDto, TDto>(dto, id);
+            ResultValidationService.ValidateSingleResult<TDto, TDto>(dto, id);
             return BuildContentResponse<TDto, TDto>(dto, fields);
         }
 
-        //public dynamic GetFromEntity<TEntity, TDto>(TEntity entity, string fields = "") 
-        //    where TEntity : class, IMoveIdEntity 
-        //    where TDto : class
-        //{
-        //    return BuildContentResponse<TEntity, TDto>(entity, fields);
-        //}
-
-        public IEnumerable<dynamic> GetAllWithMoves<TEntity, TDto>(string fields = "") 
-            where TEntity : class, IMoveIdEntity 
+        public IEnumerable<dynamic> GetAllWithMoves<TEntity, TDto>(string fields = "")
+            where TEntity : class, IMoveIdEntity
             where TDto : class
         {
             var entities = (from entity in Db.Set<TEntity>()
-                       join joinEntity in Db.Moves
-                           on entity.MoveId equals joinEntity.Id
-                       select entity).ProjectTo<TDto>().ToList();
+                            join joinEntity in Db.Moves
+                                on entity.MoveId equals joinEntity.Id
+                            select entity).ProjectTo<TDto>().ToList();
 
-            ValidateMultipleResult<TDto, TDto>(entities);
+            ResultValidationService.ValidateMultipleResult<TDto, TDto>(entities);
             return BuildContentResponseMultiple<TDto, TDto>(entities, fields);
         }
 
         public IEnumerable<dynamic> GetAllForOwnerId<TJoinEntity, TPrimaryEntity, TDto>(int id, string fields = "")
-            where TJoinEntity : class, IMoveEntity 
+            where TJoinEntity : class, IMoveEntity
             where TPrimaryEntity : class, IMoveIdEntity
             where TDto : class
         {
@@ -212,7 +197,7 @@ namespace FrannHammer.Services
                             where ret.OwnerId == id
                             select entity).ProjectTo<TDto>().ToList();
 
-            ValidateMultipleResult<TDto, TDto>(entities, id);
+            ResultValidationService.ValidateMultipleResult<TDto, TDto>(entities, id);
             return BuildContentResponseMultiple<TDto, TDto>(entities, fields);
         }
 
@@ -222,7 +207,7 @@ namespace FrannHammer.Services
         {
             var entity = Db.Set<TEntity>().Find(id);
 
-            ValidateSingleResult<TEntity, TDto>(entity, id);
+            ResultValidationService.ValidateSingleResult<TEntity, TDto>(entity, id);
             return BuildContentResponse<TEntity, TDto>(entity, fields);
         }
 
@@ -232,7 +217,7 @@ namespace FrannHammer.Services
         {
             var entity = Db.Set<TEntity>().First(where);
 
-            ValidateSingleResult<TEntity, TDto>(entity);
+            ResultValidationService.ValidateSingleResultFromExpression(entity, where);
             return BuildContentResponse<TEntity, TDto>(entity, fields);
         }
 
@@ -245,7 +230,7 @@ namespace FrannHammer.Services
                              .ProjectTo<TDto>()
                              .ToList();
 
-            ValidateMultipleResult<TDto, TDto>(entities);
+            ResultValidationService.ValidateMultipleResultFromExpression(entities, where);
             return BuildContentResponseMultiple<TDto, TDto>(entities, fields);
         }
 
@@ -262,7 +247,7 @@ namespace FrannHammer.Services
                               .ProjectTo<TDto>()
                               .ToList();
 
-            ValidateMultipleResult<TDto, TDto>(entities);
+            ResultValidationService.ValidateMultipleResult<TDto, TDto>(entities);
             return BuildContentResponseMultiple<TDto, TDto>(entities, fields);
         }
 
@@ -298,27 +283,5 @@ namespace FrannHammer.Services
         /// <param name="id"></param>
         public void Delete<T>(int id)
             where T : class, IEntity => DeleteEntity<T>(id);
-
-        private void ValidateSingleResult<TDto, TPrimaryModelType>(TDto entity, int id = -1)
-        {
-            if (entity == null)
-            {
-                string baseMessage = $"Unable to find any entities of type '{typeof(TPrimaryModelType).Name}'";
-                string extraMessage = id > -1 ? $"with id = {id}" : string.Empty;
-
-                throw new EntityNotFoundException(baseMessage + extraMessage);
-            }
-        }
-
-        private void ValidateMultipleResult<TEntity, TDto>(IList<TEntity> entities, int id = -1)
-        {
-            if (entities == null || entities.Count == 0)
-            {
-                string baseMessage = $"Unable to find any entities of type '{typeof(TDto).Name}'";
-                string extraMessage = id > -1 ? $"with id = {id}" : string.Empty;
-
-                throw new EntityNotFoundException(baseMessage + extraMessage);
-            }
-        }
     }
 }

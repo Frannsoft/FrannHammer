@@ -33,6 +33,7 @@ namespace FrannHammer.Api.Controllers
         /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(CharacterDto))]
+        [ValidateModel]
         [Route(CharactersRouteKey)]
         public IHttpActionResult GetCharacters([FromUri] string fields = "")
         {
@@ -48,6 +49,7 @@ namespace FrannHammer.Api.Controllers
         /// E.g., id,name to get back just the id and name.</para></param> 
         /// <returns></returns>
         [ResponseType(typeof(CharacterDto))]
+        [ValidateModel]
         [Route(CharactersRouteKey + "/{id}")]
         public IHttpActionResult GetCharacter(int id, [FromUri] string fields = "")
         {
@@ -63,6 +65,7 @@ namespace FrannHammer.Api.Controllers
         /// E.g., id,name to get back just the id and name.</para></param> 
         /// <returns></returns>
         [ResponseType(typeof(CharacterDto))]
+        [ValidateModel]
         [Route(CharactersRouteKey + "/name/{name}")]
         public IHttpActionResult GetCharacterByName(string name, [FromUri] string fields = "")
         {
@@ -78,6 +81,7 @@ namespace FrannHammer.Api.Controllers
         /// E.g., id,name to get back just the id and name.</para></param> 
         /// <returns></returns>
         [ResponseType(typeof(MovementDto))]
+        [ValidateModel]
         [Route(CharactersRouteKey + "/{id}/movements")]
         [HttpGet]
         public IHttpActionResult GetMovementsForCharacter(int id, [FromUri] string fields = "")
@@ -94,6 +98,7 @@ namespace FrannHammer.Api.Controllers
         /// E.g., id,name to get back just the id and name.</para></param> 
         /// <returns></returns>
         [ResponseType(typeof(MoveDto))]
+        [ValidateModel]
         [Route(CharactersRouteKey + "/{id}/moves")]
         public IHttpActionResult GetMovesForCharacter(int id, [FromUri] string fields = "")
         {
@@ -110,6 +115,7 @@ namespace FrannHammer.Api.Controllers
         /// <returns></returns>
         [ValidateModel]
         [ResponseType(typeof(ThrowDto))]
+        [ValidateModel]
         [Route(CharactersRouteKey + "/{id}/throws")]
         public IHttpActionResult GetThrowsForCharacter(int id, [FromUri] string fields = "")
         {
@@ -127,6 +133,7 @@ namespace FrannHammer.Api.Controllers
         /// E.g., id,name to get back just the id and name.</para></param> 
         /// <returns></returns>
         [ResponseType(typeof(CharacterAttributeDto))]
+        [ValidateModel]
         [Route(CharactersRouteKey + "/{id}/characterattributes")]
         public IHttpActionResult GetCharacterAttributesForCharacter(int id, [FromUri] string fields = "")
         {
@@ -145,6 +152,7 @@ namespace FrannHammer.Api.Controllers
         /// E.g., id,name to get back just the id and name.</para></param> 
         /// <returns></returns>
         [ResponseType(typeof(CharacterAttributeDto))]
+        [ValidateModel]
         [Route(CharactersRouteKey + "/{id}/smashattributetypes/{smashAttributeTypeId}")]
         public IHttpActionResult GetCharacterAttributesForCharacter(int id, int smashAttributeTypeId, [FromUri] string fields = "")
         {
@@ -160,6 +168,7 @@ namespace FrannHammer.Api.Controllers
         /// E.g., id,name to get back just the id and name.</para></param> 
         /// <returns></returns>
         [ResponseType(typeof(AngleDto))]
+        [ValidateModel]
         [Route(CharactersRouteKey + "/{id}/angles")]
         public IHttpActionResult GetCharacterMoveAngles(int id, [FromUri] string fields = "")
         {
@@ -175,6 +184,7 @@ namespace FrannHammer.Api.Controllers
         /// E.g., id,name to get back just the id and name.</para></param> 
         /// <returns></returns>
         [ResponseType(typeof(HitboxDto))]
+        [ValidateModel]
         [Route(CharactersRouteKey + "/{id}/hitboxes")]
         public IHttpActionResult GetCharacterMoveHitboxes(int id, [FromUri] string fields = "")
         {
@@ -190,6 +200,7 @@ namespace FrannHammer.Api.Controllers
         /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(KnockbackGrowthDto))]
+        [ValidateModel]
         [Route(CharactersRouteKey + "/{id}/knockbackgrowths")]
         public IHttpActionResult GetCharacterMoveKnockbackGrowths(int id, [FromUri] string fields = "")
         {
@@ -205,6 +216,7 @@ namespace FrannHammer.Api.Controllers
         /// /// E.g., id,name to get back just the id and name.</para></param> 
         /// <returns></returns>
         [ResponseType(typeof(BaseDamageDto))]
+        [ValidateModel]
         [Route(CharactersRouteKey + "/{id}/basedamages")]
         public IHttpActionResult GetCharacterMoveBaseDamages(int id, [FromUri] string fields = "")
         {
@@ -220,14 +232,10 @@ namespace FrannHammer.Api.Controllers
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
         [ResponseType(typeof(void))]
+        [ValidateModel]
         [Route(CharactersRouteKey + "/{id}")]
         public IHttpActionResult PutCharacter(int id, CharacterDto dto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             if (id != dto.Id)
             {
                 return BadRequest();
@@ -245,14 +253,10 @@ namespace FrannHammer.Api.Controllers
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
         [ResponseType(typeof(CharacterDto))]
+        [ValidateModel]
         [Route(CharactersRouteKey + "")]
         public IHttpActionResult PostCharacter(CharacterDto dto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var newDto = _metadataService.Add<Character, CharacterDto>(dto);
             return CreatedAtRoute("DefaultApi", new { controller = CharactersRouteKey + "", id = newDto.Id }, newDto);
         }
