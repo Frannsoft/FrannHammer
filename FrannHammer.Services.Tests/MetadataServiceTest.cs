@@ -133,25 +133,25 @@ namespace FrannHammer.Services.Tests
         {
             Assert.Throws<EntityNotFoundException>(() =>
             {
-                new MetadataService(Context).Get<Character, CharacterDto>(200);
+                new MetadataService(Context, ResultValidationService).Get<Character, CharacterDto>(200);
             });
         }
 
         [Test]
-        public void ThrowsForExistentIdOnGetAll()
+        public void ThrowsForNonExistentIdOnGetAll()
         {
             Assert.Throws<EntityNotFoundException>(() =>
             {
-                new MetadataService(Context).GetAll<Character, CharacterDto>(c => c.Id == 200);
+                new MetadataService(Context, ResultValidationService).GetAll<Character, CharacterDto>(c => c.Id == 200);
             });
         }
 
         [Test]
-        public void ThrowsForExistentIdOnGetAllForOwnerId()
+        public void ThrowsForNonExistentIdOnGetAllForOwnerId()
         {
             Assert.Throws<EntityNotFoundException>(() =>
             {
-                new MetadataService(Context).GetAllForOwnerId<Move, Angle, AngleDto>(200);
+                new MetadataService(Context, ResultValidationService).GetAllForOwnerId<Move, Angle, AngleDto>(200);
             });
         }
     }

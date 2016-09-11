@@ -7,14 +7,16 @@ namespace FrannHammer.Services.Tests.Suts
          where T : class, IMoveIdEntity
          where TDto : class
     {
-        public dynamic GetWithMoves(int id, IApplicationDbContext context, string fields = "")
+        public dynamic GetWithMoves(int id, IApplicationDbContext context, 
+            IResultValidationService resultValidationService, string fields = "")
         {
-            return new MetadataService(context).GetWithMoves<T, TDto>(id, fields);
+            return new MetadataService(context, resultValidationService).GetWithMoves<T, TDto>(id, fields);
         }
 
-        public IEnumerable<dynamic> GetAllWithMoves(IApplicationDbContext context, string fields = "")
+        public IEnumerable<dynamic> GetAllWithMoves(IApplicationDbContext context,
+            IResultValidationService resultValidationService, string fields = "")
         {
-            return new MetadataService(context).GetAllWithMoves<T, TDto>(fields);
+            return new MetadataService(context, resultValidationService).GetAllWithMoves<T, TDto>(fields);
         }
     }
 }
