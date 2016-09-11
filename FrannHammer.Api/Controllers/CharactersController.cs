@@ -2,6 +2,7 @@
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
+using FrannHammer.Api.ActionFilterAttributes;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
 using FrannHammer.Services;
@@ -107,6 +108,7 @@ namespace FrannHammer.Api.Controllers
         /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
         /// E.g., id,name to get back just the id and name.</para></param> 
         /// <returns></returns>
+        [ValidateModel]
         [ResponseType(typeof(ThrowDto))]
         [Route(CharactersRouteKey + "/{id}/throws")]
         public IHttpActionResult GetThrowsForCharacter(int id, [FromUri] string fields = "")

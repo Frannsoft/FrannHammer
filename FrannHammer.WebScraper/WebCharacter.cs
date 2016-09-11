@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
+using FrannHammer.Models;
 using Newtonsoft.Json;
 using Stat = FrannHammer.WebScraper.Stats.Stat;
 
@@ -42,19 +43,19 @@ namespace FrannHammer.WebScraper
         public string Style { get; private set; }
 
         [JsonProperty]
-        public Dictionary<string, Stat> FrameData { get; private set; }
+        //public Dictionary<string, Stat> FrameData { get; private set; }
+        public IList<Stat> FrameData { get; private set; }
 
         public WebCharacter(Characters character, int id)
         {
             Name = character.ToString();
             _urlTail = CharacterUtility.GetEnumDescription(character);
-            //Id = (int)character;
             Id = id;
             _page = new Page(UrlBase + _urlTail, Id);
             GetData();
         }
 
-        public WebCharacter(FrannHammer.Models.Character existingCharacter)
+        public WebCharacter(BaseCharacterModel existingCharacter)
         {
             Name = existingCharacter.Name;
             var enumValue = (Characters)Enum.Parse(typeof(Characters), existingCharacter.Name, true);
@@ -75,7 +76,7 @@ namespace FrannHammer.WebScraper
 
         private async Task<string> GetColorHex()
         {
-            var bitmapImage = default(Bitmap);
+            Bitmap bitmapImage;
             //download image
 
             using (var client = new HttpClient())

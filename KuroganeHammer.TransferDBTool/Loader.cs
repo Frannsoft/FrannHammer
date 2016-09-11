@@ -15,21 +15,6 @@ namespace KuroganeHammer.TransferDBTool
     //order to load:
     //0) generate cfm migration (add-migration) and update-database
 
-    //[1-5 in Load()]
-
-    //1) characters
-    //2) smash attribute types
-    //3) movements
-    //4) moves
-    //5) attribute values
-    //6) insert sql to seed throw types
-    //7) insert sql to seed throw data
-    //8) remove spotdodge, airdodge, forward roll, back roll from moves
-    //9) remove hitbox active, weight dependent, intangibility values from moves
-    //10) run seedspecificmovedata() test in Seeder
-    //11) update throws to proper move type in moves table
-    //12) run cfm update-database again to update char attr types and char attrs in seed
-    // Should be all set!
 
     public class Loader : BaseTest
     {
@@ -123,7 +108,7 @@ namespace KuroganeHammer.TransferDBTool
 
             foreach (var character in characters.Select(c => new WebCharacter(c)))
             {
-                var movements = from movement in character.FrameData.Values.OfType<MovementStat>()
+                var movements = from movement in character.FrameData.OfType<MovementStat>()
                                 select movement;
 
                 foreach (var movement in movements)
@@ -140,12 +125,12 @@ namespace KuroganeHammer.TransferDBTool
         public async Task ReloadMoves()
         {
             var characters = LoggedInBasicClient.GetAsync(Baseuri + "/Characters")
-                .Result.Content.ReadAsAsync<List<FrannHammer.Models.Character>>().Result;
+                .Result.Content.ReadAsAsync<List<Character>>().Result;
 
             foreach (var character in characters.Select(c => new WebCharacter(c)))
             {
                 //load moves
-                var moves = from move in character.FrameData.Values.OfType<MoveStat>()
+                var moves = from move in character.FrameData.OfType<MoveStat>()
                             select move;
 
                 foreach (var move in moves)
