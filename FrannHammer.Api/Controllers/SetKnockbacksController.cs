@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
+using FrannHammer.Api.ActionFilterAttributes;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
 using FrannHammer.Services;
@@ -32,6 +33,7 @@ namespace FrannHammer.Api.Controllers
         /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(SetKnockbackDto))]
+        [ValidateModel]
         [Route(SetKnockbacksRouteKey)]
         public IHttpActionResult GetSetKnockbacks([FromUri] string fields = "")
         {
@@ -47,6 +49,7 @@ namespace FrannHammer.Api.Controllers
         /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(SetKnockbackDto))]
+        [ValidateModel]
         [Route(SetKnockbacksRouteKey + "/{id}")]
         public IHttpActionResult GetSetKnockback(int id, [FromUri] string fields = "")
         {
@@ -61,14 +64,11 @@ namespace FrannHammer.Api.Controllers
         /// <param name="id"></param>
         /// <param name="dto"></param>
         /// <returns></returns>
+        [ResponseType(typeof(SetKnockbackDto))]
+        [ValidateModel]
         [Route(SetKnockbacksRouteKey + "/{id}")]
         public IHttpActionResult PutSetKnockback(int id, SetKnockbackDto dto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             if (id != dto.Id)
             {
                 return BadRequest();
@@ -86,14 +86,10 @@ namespace FrannHammer.Api.Controllers
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
         [ResponseType(typeof(SetKnockbackDto))]
+        [ValidateModel]
         [Route(SetKnockbacksRouteKey)]
         public IHttpActionResult PostSetKnockback(SetKnockbackDto dto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var newDto = _metadataService.Add<SetKnockback, SetKnockbackDto>(dto);
             return CreatedAtRoute("DefaultApi", new { controller = "SetKnockbacks", id = newDto.Id }, newDto);
         }

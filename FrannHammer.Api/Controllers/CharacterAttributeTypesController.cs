@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
+using FrannHammer.Api.ActionFilterAttributes;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
 using FrannHammer.Services;
@@ -31,6 +32,7 @@ namespace FrannHammer.Api.Controllers
         /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(CharacterAttributeTypeDto))]
+        [ValidateModel]
         [Route("characterattributetypes")]
         public IHttpActionResult GetCharacterAttributeTypes([FromUri] string fields = "")
         {
@@ -47,6 +49,7 @@ namespace FrannHammer.Api.Controllers
         /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(CharacterAttributeTypeDto))]
+        [ValidateModel]
         [Route("characterattributetypes/{id}")]
         public IHttpActionResult GetCharacterAttributeType(int id, [FromUri] string fields = "")
         {
@@ -63,14 +66,10 @@ namespace FrannHammer.Api.Controllers
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
         [ResponseType(typeof(void))]
+        [ValidateModel]
         [Route("characterattributetypes/{id}")]
         public IHttpActionResult PutCharacterAttributeType(int id, CharacterAttributeTypeDto dto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             if (id != dto.Id)
             {
                 return BadRequest();
@@ -88,14 +87,10 @@ namespace FrannHammer.Api.Controllers
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
         [ResponseType(typeof(CharacterAttributeTypeDto))]
+        [ValidateModel]
         [Route("characterattributetypes")]
         public IHttpActionResult PostCharacterAttributeType(CharacterAttributeTypeDto dto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var newDto = _metadataService.Add<CharacterAttributeType, CharacterAttributeTypeDto>(dto);
             return CreatedAtRoute("DefaultApi", new { controller = "CharacterAttributeTypes", id = newDto.Id }, newDto);
         }

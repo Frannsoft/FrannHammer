@@ -10,25 +10,28 @@ namespace FrannHammer.Services.Tests.Harnesses
         where T : class, IEntity
         where TDto : class
     {
+        private readonly IResultValidationService _resultValidationService;
+
         private readonly MetadataSut<T, TDto> _metadataSut;
         public string Fields { get; }
 
         public MetadataHarness(string fields = "")
         {
+            _resultValidationService = new ResultValidationService();
             _metadataSut = new MetadataSut<T, TDto>();
             Fields = fields;
         }
 
         public void SingleIsValidMeta(int id, IApplicationDbContext context)
         {
-            var item = _metadataSut.Get(id, context);
+            var item = _metadataSut.Get(id, context, _resultValidationService);
 
             Assert.That(item, Is.Not.Null);
         }
 
         public void SingleIsValidMetaWithFields(int id, IApplicationDbContext context, string fields)
         {
-            var item = _metadataSut.Get(id, context, fields);
+            var item = _metadataSut.Get(id, context, _resultValidationService, fields);
 
             Assert.That(item, Is.Not.Null);
 
@@ -40,7 +43,7 @@ namespace FrannHammer.Services.Tests.Harnesses
 
         public void CollectionIsValidWithFields(IApplicationDbContext context, string fields = "")
         {
-            var items = _metadataSut.GetAll(context, fields).ToList();
+            var items = _metadataSut.GetAll(context, _resultValidationService, fields).ToList();
 
             Assert.That(items, Is.TypeOf<List<dynamic>>());
 
@@ -52,7 +55,7 @@ namespace FrannHammer.Services.Tests.Harnesses
 
         public void CollectionIsValid(IApplicationDbContext context)
         {
-            var items = _metadataSut.GetAll(context);
+            var items = _metadataSut.GetAll(context, _resultValidationService);
 
             CollectionAssert.AllItemsAreNotNull(items);
         }
