@@ -7,12 +7,12 @@ namespace FrannHammer.AccountRegistrationTool.Tests
     [TestFixture]
     public class ServiceHandlerTest
     {
-        private const string _fakeUri = "http://localhost/";
+        private const string FakeUri = "http://localhost/";
 
         [Test]
         public void ShouldThrowIfRegisterIsCalledBeforeAuthenticated()
         {
-            var handler = new ServiceHandler(_fakeUri);
+            var handler = new ServiceHandler(FakeUri);
             var model = new RegisterUserModel();
 
             Assert.That(() => handler.RegisterNewUser(model), Throws.InvalidOperationException);
@@ -21,7 +21,7 @@ namespace FrannHammer.AccountRegistrationTool.Tests
         [Test]
         public void ShouldThrowArgumentExceptionIfModelNullWhenRegistering()
         {
-            var handler = new ServiceHandler(_fakeUri);
+            var handler = new ServiceHandler(FakeUri);
 
             Assert.Throws<ArgumentNullException>(() => handler.RegisterNewUser(null));
         }

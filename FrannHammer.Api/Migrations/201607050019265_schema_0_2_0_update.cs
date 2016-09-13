@@ -3,7 +3,7 @@ namespace FrannHammer.Api.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class schema_0_2_0_update : DbMigration
+    public partial class Schema020Update : DbMigration
     {
         public override void Up()
         {

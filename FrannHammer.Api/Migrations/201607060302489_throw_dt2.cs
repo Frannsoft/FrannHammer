@@ -3,7 +3,7 @@ namespace FrannHammer.Api.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class throw_dt2 : DbMigration
+    public partial class ThrowDt2 : DbMigration
     {
         public override void Up()
         {

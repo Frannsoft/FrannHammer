@@ -3,7 +3,7 @@ namespace FrannHammer.Api.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class throws_last_modified : DbMigration
+    public partial class ThrowsLastModified : DbMigration
     {
         public override void Up()
         {
