@@ -7,9 +7,9 @@ namespace FrannHammer.Api.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class schema_0_2_0_update : IMigrationMetadata
+    public sealed partial class Schema020Update : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(schema_0_2_0_update));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Schema020Update));
         
         string IMigrationMetadata.Id
         {

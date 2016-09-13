@@ -2,10 +2,10 @@
     $(function () {
 
         if (!$("#input_username").length && !$("#input_password").length) {
-            var basicAuthUI =
+            var basicAuthUi =
                 '<div class="input"><input placeholder="username" id="input_username" name="username" type="text" size="10"></div>' +
                     '<div class="input"><input placeholder="password" id="input_password" name="password" type="password" size="10"></div>';
-            $(basicAuthUI).insertBefore('#api_selector div.input:last-child');
+            $(basicAuthUi).insertBefore('#api_selector div.input:last-child');
             $("#input_apiKey").hide();
         }
     });

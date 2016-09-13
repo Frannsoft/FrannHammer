@@ -7,9 +7,9 @@ namespace FrannHammer.Api.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class throw_dt : IMigrationMetadata
+    public sealed partial class ThrowDt : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(throw_dt));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ThrowDt));
         
         string IMigrationMetadata.Id
         {
