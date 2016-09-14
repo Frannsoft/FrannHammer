@@ -55,7 +55,7 @@ namespace FrannHammer.Api.Controllers
         [Route(MovesRouteKey + "/byname")]
         public IHttpActionResult GetMovesByName([FromUri] string name, [FromUri] string fields = "")
         {
-            var content = _metadataService.GetAll<Move, MoveDto>(m => m.Name.Equals(name, StringComparison.OrdinalIgnoreCase), fields);
+            var content = _metadataService.GetAll<Move, MoveDto>(m => m.Name.Equals(name, StringComparison.OrdinalIgnoreCase), fields, false);
             return Ok(content);
         }
 
@@ -71,7 +71,6 @@ namespace FrannHammer.Api.Controllers
         [Route(MovesRouteKey + "/{id}/hitboxes")]
         public IHttpActionResult GetMoveHitboxData(int id, [FromUri] string fields = "")
         {
-            //Db.Hitbox.SingleOrDefault(h => h.MoveId == id)
             var content = _metadataService.GetWithMoves<Hitbox, HitboxDto>(id, fields);
             return Ok(content);
         }
@@ -88,7 +87,6 @@ namespace FrannHammer.Api.Controllers
         [Route(MovesRouteKey + "/{id}/baseknockbacks")]
         public IHttpActionResult GetMoveBaseKnockbackData(int id, [FromUri] string fields = "")
         {
-            //Db.Hitbox.SingleOrDefault(h => h.MoveId == id)
             var content = _metadataService.GetWithMoves<BaseKnockback, BaseKnockbackDto>(id, fields);
             return Ok(content);
         }

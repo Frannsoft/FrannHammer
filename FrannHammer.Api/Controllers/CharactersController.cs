@@ -69,7 +69,7 @@ namespace FrannHammer.Api.Controllers
         [Route(CharactersRouteKey + "/name/{name}")]
         public IHttpActionResult GetCharacterByName(string name, [FromUri] string fields = "")
         {
-            var content = _metadataService.Get<Character, CharacterDto>(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase), fields);
+            var content = _metadataService.Get<Character, CharacterDto>(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase), fields, false);
             return Ok(content);
         }
 
@@ -156,7 +156,8 @@ namespace FrannHammer.Api.Controllers
         [Route(CharactersRouteKey + "/{id}/smashattributetypes/{smashAttributeTypeId}")]
         public IHttpActionResult GetCharacterAttributesForCharacter(int id, int smashAttributeTypeId, [FromUri] string fields = "")
         {
-            var content = _metadataService.GetAll<CharacterAttribute, CharacterAttributeDto>(c => c.OwnerId == id && c.SmashAttributeTypeId == smashAttributeTypeId, fields);
+            var content = _metadataService.GetAll<CharacterAttribute, CharacterAttributeDto>(c => 
+                                        c.OwnerId == id && c.SmashAttributeTypeId == smashAttributeTypeId, fields, false);
             return Ok(content);
         }
 
