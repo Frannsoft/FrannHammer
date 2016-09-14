@@ -80,8 +80,9 @@ namespace FrannHammer.Services
         /// <typeparam name="TDto"></typeparam>
         /// <param name="whereCondition"></param>
         /// <param name="fields"></param>
+        /// <param name="isValidatable"></param>
         /// <returns></returns>
-        dynamic Get<TEntity, TDto>(Expression<Func<TEntity, bool>> whereCondition, string fields = "")
+        dynamic Get<TEntity, TDto>(Expression<Func<TEntity, bool>> whereCondition, string fields = "", bool isValidatable = true)
             where TEntity : class, IEntity
             where TDto : class;
 
@@ -92,8 +93,9 @@ namespace FrannHammer.Services
         /// <typeparam name="TDto"></typeparam>
         /// <param name="whereCondition"></param>
         /// <param name="fields"></param>
+        /// <param name="isValidatable"></param>
         /// <returns></returns>
-        IEnumerable<dynamic> GetAll<TEntity, TDto>(Expression<Func<TEntity, bool>> whereCondition, string fields = "")
+        IEnumerable<dynamic> GetAll<TEntity, TDto>(Expression<Func<TEntity, bool>> whereCondition, string fields = "", bool isValidatable = true)
             where TEntity : class, IEntity
             where TDto : class;
 
@@ -211,17 +213,19 @@ namespace FrannHammer.Services
             return BuildContentResponse<TEntity, TDto>(entity, fields);
         }
 
-        public dynamic Get<TEntity, TDto>(Expression<Func<TEntity, bool>> where, string fields = "")
+        public dynamic Get<TEntity, TDto>(Expression<Func<TEntity, bool>> where, string fields = "", bool isValidatable = true)
             where TEntity : class, IEntity
             where TDto : class
         {
-            var entity = Db.Set<TEntity>().First(where);
+            var entity = Db.Set<TEntity>().FirstOrDefault(where);
 
-            ResultValidationService.ValidateSingleResultFromExpression(entity, where);
+            if (isValidatable)
+            { ResultValidationService.ValidateSingleResultFromExpression(entity, where); }
+
             return BuildContentResponse<TEntity, TDto>(entity, fields);
         }
 
-        public IEnumerable<dynamic> GetAll<TEntity, TDto>(Expression<Func<TEntity, bool>> where, string fields = "")
+        public IEnumerable<dynamic> GetAll<TEntity, TDto>(Expression<Func<TEntity, bool>> where, string fields = "", bool isValidatable = true)
             where TEntity : class, IEntity
             where TDto : class
         {
@@ -230,7 +234,9 @@ namespace FrannHammer.Services
                              .ProjectTo<TDto>()
                              .ToList();
 
-            ResultValidationService.ValidateMultipleResultFromExpression(entities, where);
+            if (isValidatable)
+            { ResultValidationService.ValidateMultipleResultFromExpression(entities, where); }
+
             return BuildContentResponseMultiple<TDto, TDto>(entities, fields);
         }
 
