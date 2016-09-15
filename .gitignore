@@ -64,3 +64,7 @@ FrannHammer.Api/Scripts/
 FrannHammer.Services/bin/
 FrannHammer.Services/obj/
 FrannHammer.Services.Tests/obj/
+**/*/bin/
+**/*/obj/
+FrannHammer.Api.Data.Tests/ConnectionStringsTest.config
+ConnectionStringsTest.config

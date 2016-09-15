@@ -4,18 +4,12 @@ using System.Threading.Tasks;
 
 namespace FrannHammer.Models
 {
-    public enum NotationTypes
-    {
-        Frames,
-        Float,
-        Boolean
-    }
-
-    public class Notation : BaseModel, IEntity
+    public class BaseNotationModel : BaseModel
     {
         public int Id { get; set; }
+
         public string Name { get; set; }
-        public DateTime LastModified { get; set; }
+
         public override Task<HttpResponseMessage> Create(HttpClient client)
         {
             throw new NotImplementedException();
@@ -30,5 +24,14 @@ namespace FrannHammer.Models
         {
             throw new NotImplementedException();
         }
+    }
+
+    public class NotationDto : BaseNotationModel
+    {
+    }
+
+    public class Notation : BaseNotationModel, IEntity
+    {
+        public DateTime LastModified { get; set; }
     }
 }

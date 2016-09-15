@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
+using FrannHammer.Api.ActionFilterAttributes;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
 using FrannHammer.Services;
@@ -32,6 +33,7 @@ namespace FrannHammer.Api.Controllers
         /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
         /// E.g., id,name to get back just the id and name.</para></param>
         [ResponseType(typeof(MovementDto))]
+        [ValidateModel]
         [Route("movements", Name = "GetAllMovements")]
         public IHttpActionResult GetMovements([FromUri] string fields = "")
         {
@@ -47,10 +49,11 @@ namespace FrannHammer.Api.Controllers
         /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(MovementDto))]
+        [ValidateModel]
         [Route("movements/byname", Name = "GetMovementsByName")]
         public IHttpActionResult GetMovementsByName([FromUri] string name, [FromUri] string fields = "")
         {
-            var content = _metadataService.GetAll<Movement, MovementDto>((m => m.Name.Equals(name, StringComparison.OrdinalIgnoreCase)), fields);
+            var content = _metadataService.GetAll<Movement, MovementDto>((m => m.Name.Equals(name, StringComparison.OrdinalIgnoreCase)), fields, false);
             return Ok(content);
         }
 
@@ -62,6 +65,7 @@ namespace FrannHammer.Api.Controllers
         /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(MovementDto))]
+        [ValidateModel]
         [Route("movements/{id}")]
         public IHttpActionResult GetMovement(int id, [FromUri] string fields = "")
         {
@@ -77,14 +81,10 @@ namespace FrannHammer.Api.Controllers
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
         [ResponseType(typeof(void))]
+        [ValidateModel]
         [Route("movements/{id}")]
         public IHttpActionResult PutMovement(int id, MovementDto dto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             if (id != dto.Id)
             {
                 return BadRequest();
@@ -102,14 +102,10 @@ namespace FrannHammer.Api.Controllers
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
         [ResponseType(typeof(MovementDto))]
+        [ValidateModel]
         [Route("movements")]
         public IHttpActionResult PostMovement(MovementDto dto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var newDto = _metadataService.Add<Movement, MovementDto>(dto);
             return CreatedAtRoute("DefaultApi", new { controller = "Movements", id = newDto.Id }, newDto);
         }

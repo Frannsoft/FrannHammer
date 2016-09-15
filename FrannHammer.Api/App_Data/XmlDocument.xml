@@ -747,7 +747,7 @@
             E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.NotationsController.PutNotation(System.Int32,FrannHammer.Models.Notation)">
+        <member name="M:FrannHammer.Api.Controllers.NotationsController.PutNotation(System.Int32,FrannHammer.Models.NotationDto)">
             <summary>
             Update a <see cref="T:FrannHammer.Models.Notation"/>.
             </summary>
@@ -755,7 +755,7 @@
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.NotationsController.PostNotation(FrannHammer.Models.Notation)">
+        <member name="M:FrannHammer.Api.Controllers.NotationsController.PostNotation(FrannHammer.Models.NotationDto)">
             <summary>
             Create a new <see cref="T:FrannHammer.Models.Notation"/>.
             </summary>

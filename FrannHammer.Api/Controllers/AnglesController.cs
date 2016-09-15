@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
+using FrannHammer.Api.ActionFilterAttributes;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
 using FrannHammer.Services;
@@ -32,6 +33,7 @@ namespace FrannHammer.Api.Controllers
         /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(AngleDto))]
+        [ValidateModel]
         [Route(AnglesRouteKey)]
         public IHttpActionResult GetAngles([FromUri] string fields = "")
         {
@@ -47,6 +49,7 @@ namespace FrannHammer.Api.Controllers
         /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(AngleDto))]
+        [ValidateModel]
         [Route(AnglesRouteKey + "/{id}")]
         public IHttpActionResult GetAngle(int id, [FromUri] string fields = "")
         {
@@ -61,14 +64,10 @@ namespace FrannHammer.Api.Controllers
         /// <param name="id"></param>
         /// <param name="dto"></param>
         /// <returns></returns>
+        [ValidateModel]
         [Route(AnglesRouteKey + "/{id}")]
         public IHttpActionResult PutAngle(int id, AngleDto dto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             if (id != dto.Id)
             {
                 return BadRequest();
@@ -86,14 +85,10 @@ namespace FrannHammer.Api.Controllers
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
         [ResponseType(typeof(AngleDto))]
+        [ValidateModel]
         [Route(AnglesRouteKey)]
         public IHttpActionResult PostAngle(AngleDto dto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var newDto = _metadataService.Add<Angle, AngleDto>(dto);
             return CreatedAtRoute("DefaultApi", new { controller = "Angles", id = newDto.Id }, newDto);
         }

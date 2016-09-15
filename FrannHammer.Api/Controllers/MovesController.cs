@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
+using FrannHammer.Api.ActionFilterAttributes;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
 using FrannHammer.Services;
@@ -34,6 +35,7 @@ namespace FrannHammer.Api.Controllers
         /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(MoveDto))]
+        [ValidateModel]
         [Route(MovesRouteKey)]
         public IHttpActionResult GetMoves([FromUri] string fields = "")
         {
@@ -49,10 +51,11 @@ namespace FrannHammer.Api.Controllers
         /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(MoveDto))]
+        [ValidateModel]
         [Route(MovesRouteKey + "/byname")]
         public IHttpActionResult GetMovesByName([FromUri] string name, [FromUri] string fields = "")
         {
-            var content = _metadataService.GetAll<Move, MoveDto>(m => m.Name.Equals(name, StringComparison.OrdinalIgnoreCase), fields);
+            var content = _metadataService.GetAll<Move, MoveDto>(m => m.Name.Equals(name, StringComparison.OrdinalIgnoreCase), fields, false);
             return Ok(content);
         }
 
@@ -64,10 +67,10 @@ namespace FrannHammer.Api.Controllers
         /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(HitboxDto))]
+        [ValidateModel]
         [Route(MovesRouteKey + "/{id}/hitboxes")]
         public IHttpActionResult GetMoveHitboxData(int id, [FromUri] string fields = "")
         {
-            //Db.Hitbox.SingleOrDefault(h => h.MoveId == id)
             var content = _metadataService.GetWithMoves<Hitbox, HitboxDto>(id, fields);
             return Ok(content);
         }
@@ -80,10 +83,10 @@ namespace FrannHammer.Api.Controllers
         /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(BaseKnockbackDto))]
+        [ValidateModel]
         [Route(MovesRouteKey + "/{id}/baseknockbacks")]
         public IHttpActionResult GetMoveBaseKnockbackData(int id, [FromUri] string fields = "")
         {
-            //Db.Hitbox.SingleOrDefault(h => h.MoveId == id)
             var content = _metadataService.GetWithMoves<BaseKnockback, BaseKnockbackDto>(id, fields);
             return Ok(content);
         }
@@ -96,10 +99,10 @@ namespace FrannHammer.Api.Controllers
         /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(SetKnockbackDto))]
+        [ValidateModel]
         [Route(MovesRouteKey + "/{id}/setknockbacks")]
         public IHttpActionResult GetMoveSetKnockbackData(int id, [FromUri] string fields = "")
         {
-            //Db.Hitbox.SingleOrDefault(h => h.MoveId == id)
             var content = _metadataService.GetWithMoves<SetKnockback, SetKnockbackDto>(id, fields);
             return Ok(content);
         }
@@ -112,20 +115,10 @@ namespace FrannHammer.Api.Controllers
         /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(AngleDto))]
+        [ValidateModel]
         [Route(MovesRouteKey + "/{id}/angles")]
         public IHttpActionResult GetMoveAngleData(int id, [FromUri] string fields = "")
         {
-            //var dto = (from angle in Db.Angle
-            //           join moves in Db.Moves
-            //               on angle.MoveId equals moves.Id
-            //           where angle.MoveId == id
-            //           select angle).ProjectTo<AngleDto>().SingleOrDefault();
-
-            //if (dto == null)
-            //{
-            //    return NotFound();
-            //}
-
             var content = _metadataService.GetWithMoves<Angle, AngleDto>(id, fields);
             return Ok(content);
         }
@@ -138,20 +131,10 @@ namespace FrannHammer.Api.Controllers
         /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(BaseDamageDto))]
+        [ValidateModel]
         [Route(MovesRouteKey + "/{id}/basedamages")]
         public IHttpActionResult GetMoveBaseDamageData(int id, [FromUri] string fields = "")
         {
-            //var dto = (from baseDamage in Db.BaseDamage
-            //           join moves in Db.Moves
-            //               on baseDamage.MoveId equals moves.Id
-            //           where baseDamage.MoveId == id
-            //           select baseDamage).ProjectTo<BaseDamageDto>()
-            //           .SingleOrDefault();
-
-            //if (dto == null)
-            //{
-            //    return NotFound();
-            //}
             var content = _metadataService.GetWithMoves<BaseDamage, BaseDamageDto>(id, fields);
             return Ok(content);
         }
@@ -164,21 +147,10 @@ namespace FrannHammer.Api.Controllers
         /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(KnockbackGrowthDto))]
+        [ValidateModel]
         [Route(MovesRouteKey + "/{id}/knockbackgrowths")]
         public IHttpActionResult GetMoveKnockbackGrowthData(int id, [FromUri] string fields = "")
         {
-            //var dto = (from knockbackGrowth in Db.KnockbackGrowth
-            //           join moves in Db.Moves
-            //               on knockbackGrowth.MoveId equals moves.Id
-            //           where knockbackGrowth.MoveId == id
-            //           select knockbackGrowth).ProjectTo<KnockbackGrowthDto>()
-            //          .SingleOrDefault();
-
-            //if (dto == null)
-            //{
-            //    return NotFound();
-            //}
-
             var content = _metadataService.GetWithMoves<KnockbackGrowth, KnockbackGrowthDto>(id, fields);
             return Ok(content);
         }
@@ -191,6 +163,7 @@ namespace FrannHammer.Api.Controllers
         /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(MoveDto))]
+        [ValidateModel]
         [Route(MovesRouteKey + "/{id}")]
         public IHttpActionResult GetMove(int id, [FromUri] string fields = "")
         {
@@ -206,14 +179,10 @@ namespace FrannHammer.Api.Controllers
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
         [ResponseType(typeof(IHttpActionResult))]
+        [ValidateModel]
         [Route(MovesRouteKey + "/{id}")]
         public IHttpActionResult PutMove(int id, MoveDto dto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             if (id != dto.Id)
             {
                 return BadRequest();
@@ -230,14 +199,10 @@ namespace FrannHammer.Api.Controllers
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
         [ResponseType(typeof(MoveDto))]
+        [ValidateModel]
         [Route(MovesRouteKey + "")]
         public IHttpActionResult PostMove(MoveDto dto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var newDto = _metadataService.Add<Move, MoveDto>(dto);
             return CreatedAtRoute("DefaultApi", new { controller = MovesRouteKey + "", id = newDto.Id }, newDto);
         }

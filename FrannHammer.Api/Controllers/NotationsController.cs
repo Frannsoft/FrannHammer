@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
+using FrannHammer.Api.ActionFilterAttributes;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
 using FrannHammer.Services;
@@ -30,11 +31,12 @@ namespace FrannHammer.Api.Controllers
         /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
         /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
-        [ResponseType(typeof(Notation))]
+        [ResponseType(typeof(NotationDto))]
+        [ValidateModel]
         [Route("notations")]
         public IHttpActionResult GetNotations([FromUri] string fields = "")
         {
-            var content = _metadataService.GetAll<Notation, Notation>(fields);
+            var content = _metadataService.GetAll<Notation, NotationDto>(fields);
             return Ok(content);
         }
 
@@ -45,12 +47,13 @@ namespace FrannHammer.Api.Controllers
         /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
         /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
-        [ResponseType(typeof(Notation))]
+        [ResponseType(typeof(NotationDto))]
+        [ValidateModel]
         [Route("notations/{id}")]
         public IHttpActionResult GetNotation(int id, [FromUri] string fields = "")
         {
             var content =
-                _metadataService.Get<Notation, Notation>(id, fields);
+                _metadataService.Get<Notation, NotationDto>(id, fields);
             return Ok(content);
         }
 
@@ -61,20 +64,16 @@ namespace FrannHammer.Api.Controllers
         /// <param name="dto"></param>
         /// <returns></returns>
         [ResponseType(typeof(void))]
+        [ValidateModel]
         [Route("notations/{id}")]
-        public IHttpActionResult PutNotation(int id, Notation dto)
+        public IHttpActionResult PutNotation(int id, NotationDto dto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             if (id != dto.Id)
             {
                 return BadRequest();
             }
 
-            _metadataService.Update<Notation, Notation>(id, dto);
+            _metadataService.Update<Notation, NotationDto>(id, dto);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -85,17 +84,12 @@ namespace FrannHammer.Api.Controllers
         /// <param name="dto"></param>
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
-        [ResponseType(typeof(Notation))]
+        [ResponseType(typeof(NotationDto))]
+        [ValidateModel]
         [Route("notations")]
-        public IHttpActionResult PostNotation(Notation dto)
+        public IHttpActionResult PostNotation(NotationDto dto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var newDto = _metadataService.Add<Notation, Notation>(dto);
-
+            var newDto = _metadataService.Add<Notation, NotationDto>(dto);
             return CreatedAtRoute("DefaultApi", new { controller = "Notations", id = newDto.Id }, dto);
         }
 

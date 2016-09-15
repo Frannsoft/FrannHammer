@@ -7,35 +7,20 @@ using System.Threading.Tasks;
 using FrannHammer.Models;
 using FrannHammer.WebScraper;
 using FrannHammer.WebScraper.Stats;
+using KuroganeHammer.TransferDBTool.Seeding;
 using NUnit.Framework;
-using Character = FrannHammer.WebScraper.Character;
 
 namespace KuroganeHammer.TransferDBTool
 {
     //order to load:
     //0) generate cfm migration (add-migration) and update-database
 
-    //[1-5 in Load()]
-
-    //1) characters
-    //2) smash attribute types
-    //3) movements
-    //4) moves
-    //5) attribute values
-    //6) insert sql to seed throw types
-    //7) insert sql to seed throw data
-    //8) remove spotdodge, airdodge, forward roll, back roll from moves
-    //9) remove hitbox active, weight dependent, intangibility values from moves
-    //10) run seedspecificmovedata() test in Seeder
-    //11) update throws to proper move type in moves table
-    //12) run cfm update-database again to update char attr types and char attrs in seed
-    // Should be all set!
 
     public class Loader : BaseTest
     {
         [Test]
         [Explicit("Data loader.  High intensity")]
-        public async Task Load()
+        public async Task LoadAndSeedAndCleanDataFull()
         {
             Console.WriteLine("characters...");
             await ReloadCharacters();
@@ -52,8 +37,14 @@ namespace KuroganeHammer.TransferDBTool
             Console.WriteLine("char attr values...");
             await ReloadSmash4CharacterAttributeValues();
 
+            Console.WriteLine("seeding and cleaning all data...");
+            using (var context = new AppDbContext())
+            {
+                var seeder = new Seeder(context);
+                seeder.SeedAll();
+            }
+
             Console.WriteLine("Done.");
-            //after running this do step 6-12
         }
 
         [Test]
@@ -68,7 +59,7 @@ namespace KuroganeHammer.TransferDBTool
             var chars = Enum.GetNames(typeof(Characters)).ToList();
             chars.Sort();
 
-            foreach (var character in chars.Select(c => new Character((Characters)Enum.Parse(typeof(Characters), c), ++idCounter)))
+            foreach (var character in chars.Select(c => new WebCharacter((Characters)Enum.Parse(typeof(Characters), c), ++idCounter)))
             {
                 string val;
                 if (character.Name.Contains("Mii") || character.Name.Contains("MII"))
@@ -115,9 +106,9 @@ namespace KuroganeHammer.TransferDBTool
             var characters = LoggedInBasicClient.GetAsync(Baseuri + "/Characters")
                 .Result.Content.ReadAsAsync<List<FrannHammer.Models.Character>>().Result;
 
-            foreach (var character in characters.Select(c => new Character(c)))
+            foreach (var character in characters.Select(c => new WebCharacter(c)))
             {
-                var movements = from movement in character.FrameData.Values.OfType<MovementStat>()
+                var movements = from movement in character.FrameData.OfType<MovementStat>()
                                 select movement;
 
                 foreach (var movement in movements)
@@ -134,12 +125,12 @@ namespace KuroganeHammer.TransferDBTool
         public async Task ReloadMoves()
         {
             var characters = LoggedInBasicClient.GetAsync(Baseuri + "/Characters")
-                .Result.Content.ReadAsAsync<List<FrannHammer.Models.Character>>().Result;
+                .Result.Content.ReadAsAsync<List<Character>>().Result;
 
-            foreach (var character in characters.Select(c => new Character(c)))
+            foreach (var character in characters.Select(c => new WebCharacter(c)))
             {
                 //load moves
-                var moves = from move in character.FrameData.Values.OfType<MoveStat>()
+                var moves = from move in character.FrameData.OfType<MoveStat>()
                             select move;
 
                 foreach (var move in moves)

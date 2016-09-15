@@ -3,7 +3,6 @@ using System.Web.Mvc;
 using AutoMapper;
 using FrannHammer.Api;
 using FrannHammer.Models;
-using FrannHammer.Models.DTOs;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Owin;
@@ -34,6 +33,7 @@ namespace FrannHammer.Api
                 cfg.CreateMap<ThrowDto, Throw>();
                 cfg.CreateMap<ThrowType, ThrowTypeDto>();
                 cfg.CreateMap<ThrowTypeDto, ThrowType>();
+                cfg.CreateMap<Notation, NotationDto>();
                 cfg.CreateMap<Angle, AngleDto>();
                 cfg.CreateMap<AngleDto, Angle>();
                 cfg.CreateMap<BaseDamage, BaseDamageDto>();

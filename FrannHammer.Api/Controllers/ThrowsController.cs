@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
+using FrannHammer.Api.ActionFilterAttributes;
 using FrannHammer.Api.Models;
 using FrannHammer.Core;
 using FrannHammer.Models;
@@ -32,6 +33,8 @@ namespace FrannHammer.Api.Controllers
         /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
         /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
+        [ResponseType(typeof(ThrowDto))]
+        [ValidateModel]
         [Route(ThrowsRouteKey)]
         public IHttpActionResult GetThrows([FromUri] string fields = "")
         {
@@ -47,6 +50,7 @@ namespace FrannHammer.Api.Controllers
         /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [ResponseType(typeof(ThrowDto))]
+        [ValidateModel]
         [Route(ThrowsRouteKey + "/{id}")]
         public IHttpActionResult GetThrow(int id, [FromUri] string fields = "")
         {
@@ -61,14 +65,11 @@ namespace FrannHammer.Api.Controllers
         /// <param name="id"></param>
         /// <param name="dto"></param>
         /// <returns></returns>
+        [ResponseType(typeof(ThrowDto))]
+        [ValidateModel]
         [Route(ThrowsRouteKey + "/{id}")]
         public IHttpActionResult PutThrow(int id, ThrowDto dto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             if (id != dto.Id)
             {
                 return BadRequest();
@@ -86,14 +87,10 @@ namespace FrannHammer.Api.Controllers
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
         [ResponseType(typeof(ThrowDto))]
+        [ValidateModel]
         [Route(ThrowsRouteKey)]
         public IHttpActionResult PostThrow(ThrowDto dto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var newDto = _metadataService.Add<Throw, ThrowDto>(dto);
 
             return CreatedAtRoute("DefaultApi", new { controller = "Throws", id = newDto.Id }, newDto);

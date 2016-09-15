@@ -5,6 +5,8 @@ using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Web.Http;
 using Autofac.Integration.WebApi;
+using CacheCow.Server;
+using CacheCow.Server.EntityTagStore.SqlServer;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.Application;
@@ -47,8 +49,21 @@ namespace FrannHammer.Api
                 },
                 Repository = new CacheRepository()
             });
-#endif
 
+            //cache on db in release mode
+            var connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            var eTagStore = new SqlServerEntityTagStore(connectionString);
+
+            var cacheCowCacheHandler = new CachingHandler(config, eTagStore)
+            {
+                AddLastModifiedHeader = false
+            };
+            config.MessageHandlers.Add(cacheCowCacheHandler);
+
+#else
+            //in memory caching for debug mode
+            config.MessageHandlers.Add(new CachingHandler(config));
+#endif
             config.EnableSwagger(c =>
             {
                 c.SingleApiVersion("v1", "FrannHammer Api");

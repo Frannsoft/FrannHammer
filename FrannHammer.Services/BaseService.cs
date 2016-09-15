@@ -6,13 +6,14 @@ using System.Linq;
 using AutoMapper;
 using FrannHammer.Core;
 using FrannHammer.Models;
+using FrannHammer.Services.Exceptions;
 
 namespace FrannHammer.Services
 {
     public abstract class BaseService
     {
-        protected readonly DtoBuilder DtoBuilder;
-        protected readonly IApplicationDbContext Db;
+        protected DtoBuilder DtoBuilder { get; }
+        protected IApplicationDbContext Db { get; }
 
         protected BaseService(IApplicationDbContext db)
         {
@@ -28,7 +29,7 @@ namespace FrannHammer.Services
             var entity = Db.Set<TEntity>().Find(id);
 
             if (entity == null)
-            { throw new NullReferenceException($"Unable to find entity of {typeof(TEntity).Name} with id = {id}"); }
+            { throw new EntityNotFoundException($"Unable to find entity of {typeof(TEntity).Name} with id = {id}"); }
 
             entity = Mapper.Map(dto, entity);
             entity.LastModified = DateTime.Now;
@@ -57,17 +58,14 @@ namespace FrannHammer.Services
             var entity = Db.Set<T>().Find(id);
 
             if (entity == null)
-            { throw new NullReferenceException($"Unable to find entity of {typeof(T).Name} with id = {id}"); }
+            { throw new EntityNotFoundException($"Unable to find entity of {typeof(T).Name} with id = {id}"); }
 
             Db.Set<T>().Remove(entity);
             Db.SaveChanges();
         }
 
         protected bool EntityExists<T>(int id)
-            where T : class, IEntity
-        {
-            return Db.Set<T>().Count(e => e.Id == id) > 0;
-        }
+            where T : class, IEntity => Db.Set<T>().Count(e => e.Id == id) > 0;
 
         /// <summary>
         /// Returns a content based response that is either a custom <see cref="ExpandoObject"/> or an
@@ -82,49 +80,19 @@ namespace FrannHammer.Services
             where TEntity : class
         {
             if (entity == null)
-            {
-                return null;
-            }
+            { throw new EntityNotFoundException($"Unable to find any entities of type '{typeof(TEntity).Name}'"); }
 
-            return new DtoBuilder().Build<TEntity, TDto>(entity, fields);
-
-            //return !string.IsNullOrEmpty(fields) ?
-            //    new DtoBuilder().Build(entity, fields) :
-            //    Mapper.Map<TEntity, TDto>(entity);
+            return DtoBuilder.Build<TEntity, TDto>(entity, fields);
         }
 
-        protected IQueryable<dynamic> BuildContentResponseMultiple<TEntity, TDto>(IQueryable<TEntity> entities,
+        protected IEnumerable<dynamic> BuildContentResponseMultiple<TEntity, TDto>(IList<TEntity> entities,
             string fields)
             where TEntity : class
             where TDto : class
         {
-            if (entities == null)
-            {
-                return null;
-            }
+            Guard.VerifyObjectNotNull(entities, nameof(entities));
 
-            var entitiesList = entities.ToList(); //note: this evaluates the result set fully!
-
-            var builder = new DtoBuilder();
-
-            //var whereIterator = from entity in entitiesList
-            //             select builder.Build(entity, fields);
-            var whereIterator = entitiesList.Select(entity => builder.Build<TEntity, TDto>(entity, fields));
-
-            var retVal = whereIterator.AsQueryable();
-            return retVal;
-
-            //if (!string.IsNullOrEmpty(fields))
-            //{
-            //    var builder = new DtoBuilder();
-            //    return from entity in entitiesList
-            //           select builder.Build(entity, fields);
-            //}
-            //else
-            //{
-            //    return (from entity in entitiesList
-            //           select Mapper.Map<TEntity, TDto>(entity)).ToList();
-            //}
+            return entities.Select(entity => DtoBuilder.Build<TEntity, TDto>(entity, fields));
         }
     }
 }

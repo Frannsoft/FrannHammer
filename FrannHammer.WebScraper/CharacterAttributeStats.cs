@@ -34,7 +34,7 @@ namespace FrannHammer.WebScraper
     }
 
     /// <summary>
-    /// Holds a row of attribute values (e.g., Rank (1), Character (Pikachu), Value (1))
+    /// Holds a row of attribute values (e.g., Rank (1), WebCharacter (Pikachu), Value (1))
     /// </summary>
     public class AttributeValueRow
     {

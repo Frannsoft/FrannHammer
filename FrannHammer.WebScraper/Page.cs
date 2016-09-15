@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using HtmlAgilityPack;
 using AerialStat = FrannHammer.WebScraper.Stats.AerialStat;
@@ -56,11 +55,9 @@ namespace FrannHammer.WebScraper
             return node.Attributes["src"].Value;
         }
 
-        public Dictionary<string, Stat> GetStats()
+        public IList<Stat> GetStats()
         {
-            var items = new Dictionary<string, Stat>();
-
-
+            var items = new List<Stat>();
             var allTables = GetTables();
             foreach (var stat in GetStats<MovementStat>(allTables[0]))
             {
@@ -144,19 +141,9 @@ namespace FrannHammer.WebScraper
             return tail;
         }
 
-        private void AddItem(ref Dictionary<string, Stat> items, Stat stat)
+        private void AddItem(ref List<Stat> items, Stat stat)
         {
-            try
-            {
-                items.Add(stat.Name, stat);
-            }
-            catch (ArgumentException)
-            {
-                using (TextWriter writer = new StreamWriter(@"E:\char\FULLerrordump.dat", true))
-                {
-                    writer.WriteLine(Url + " ---- " + stat.Name);
-                }
-            }
+            items.Add(stat);
         }
 
         private HtmlNodeCollection GetRows(string xpathToTable)

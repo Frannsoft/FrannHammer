@@ -21,10 +21,10 @@ namespace FrannHammer.Models
         {
             unchecked
             {
-                var hashCode = (Name != null ? Name.GetHashCode() : 0);
+                var hashCode = Name?.GetHashCode() ?? 0;
                 hashCode = (hashCode*397) ^ OwnerId;
                 hashCode = (hashCode*397) ^ Id;
-                hashCode = (hashCode*397) ^ (Value != null ? Value.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ (Value?.GetHashCode() ?? 0);
                 return hashCode;
             }
         }

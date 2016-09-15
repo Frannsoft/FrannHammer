@@ -5,79 +5,10 @@ using FrannHammer.Models;
 using System.Linq;
 using System.Linq.Expressions;
 using AutoMapper.QueryableExtensions;
+using FrannHammer.Services.Exceptions;
 
 namespace FrannHammer.Services
 {
-    //public interface IMetadataService : IDataService
-    //{
-
-    //}
-
-    //public class MetadataService :  BaseService, IMetadataService
-    //{
-    //    public MetadataService(IApplicationDbContext db) 
-    //        : base(db)
-    //    { }
-
-    //    public dynamic Get<TEntity, TDto>(int id, string fields = "") where TEntity : class, IEntity where TDto : class
-    //    {
-    //        throw new System.NotImplementedException();
-    //    }
-
-    //    public IEnumerable<dynamic> GetAll<TEntity, TDto>(IDbSet<TEntity> entities, string fields = "") where TEntity : class, IEntity where TDto : class
-    //    {
-    //        throw new System.NotImplementedException();
-    //    }
-
-    //    /// <summary>
-    //    /// Get all entity data of a specific type.
-    //    /// </summary>
-    //    /// <param name="fields"></param>
-    //    /// <returns></returns>
-    //    public virtual IEnumerable<dynamic> GetAll<TEntity, TDto>(string fields = "")
-    //        where TEntity : class, IEntity
-    //        where TDto : class
-    //    {
-    //        return BuildContentResponseMultiple<TEntity, TDto>(Db.Set<TEntity>(), fields);
-    //    }
-
-    //    /// <summary>
-    //    /// Update an existing entity.
-    //    /// </summary>
-    //    /// <param name="id"></param>
-    //    /// <param name="dto"></param>
-    //    public void Update<TEntity, TDto>(int id, TDto dto)
-    //        where TEntity : class, IEntity
-    //        where TDto : class
-    //    {
-    //        Guard.VerifyObjectNotNull(dto, nameof(dto));
-    //        UpdateEntity<TEntity, TDto>(id, dto);
-    //    }
-
-    //    /// <summary>
-    //    /// Add an entity.
-    //    /// </summary>
-    //    /// <param name="dto"></param>
-    //    /// <returns></returns>
-    //    public TDto Add<TEntity, TDto>(TDto dto)
-    //        where TEntity : class, IEntity
-    //        where TDto : class
-    //    {
-    //        Guard.VerifyObjectNotNull(dto, nameof(dto));
-    //        return AddEntity<TEntity, TDto>(dto);
-    //    }
-
-    //    /// <summary>
-    //    /// Delete an entity.
-    //    /// </summary>
-    //    /// <param name="id"></param>
-    //    public void Delete<T>(int id)
-    //        where T : class, IEntity
-    //    {
-    //        DeleteEntity<T>(id);
-    //    }
-    //}
-
     public interface IMetadataService
     {
         /// <summary>
@@ -103,18 +34,6 @@ namespace FrannHammer.Services
         /// <returns></returns>
         dynamic GetWithMoves<TEntity, TDto>(int id, string fields = "")
         where TEntity : class, IMoveIdEntity
-            where TDto : class;
-
-        /// <summary>
-        /// Forms an return value from a previously found entity.
-        /// </summary>
-        /// <typeparam name="TEntity"></typeparam>
-        /// <typeparam name="TDto"></typeparam>
-        /// <param name="entity"></param>
-        /// <param name="fields"></param>
-        /// <returns></returns>
-        dynamic GetFromEntity<TEntity, TDto>(TEntity entity, string fields = "")
-            where TEntity : class, IMoveIdEntity
             where TDto : class;
 
         /// <summary>
@@ -159,10 +78,11 @@ namespace FrannHammer.Services
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <typeparam name="TDto"></typeparam>
-        /// <param name="where"></param>
+        /// <param name="whereCondition"></param>
         /// <param name="fields"></param>
+        /// <param name="isValidatable"></param>
         /// <returns></returns>
-        dynamic Get<TEntity, TDto>(Expression<Func<TEntity, bool>> where, string fields = "")
+        dynamic Get<TEntity, TDto>(Expression<Func<TEntity, bool>> whereCondition, string fields = "", bool isValidatable = true)
             where TEntity : class, IEntity
             where TDto : class;
 
@@ -171,10 +91,11 @@ namespace FrannHammer.Services
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <typeparam name="TDto"></typeparam>
-        /// <param name="where"></param>
+        /// <param name="whereCondition"></param>
         /// <param name="fields"></param>
+        /// <param name="isValidatable"></param>
         /// <returns></returns>
-        IEnumerable<dynamic> GetAll<TEntity, TDto>(Expression<Func<TEntity, bool>> where, string fields = "")
+        IEnumerable<dynamic> GetAll<TEntity, TDto>(Expression<Func<TEntity, bool>> whereCondition, string fields = "", bool isValidatable = true)
             where TEntity : class, IEntity
             where TDto : class;
 
@@ -215,9 +136,14 @@ namespace FrannHammer.Services
 
     public class MetadataService : BaseService, IMetadataService
     {
-        public MetadataService(IApplicationDbContext db)
+        protected IResultValidationService ResultValidationService { get; }
+
+        public MetadataService(IApplicationDbContext db, IResultValidationService resultValidationService)
             : base(db)
-        { }
+        {
+            Guard.VerifyObjectNotNull(resultValidationService, nameof(resultValidationService));
+            ResultValidationService = resultValidationService;
+        }
 
         public dynamic GetWithMovesOnEntity<TEntity, TDto>(int id, string fields = "")
             where TEntity : class, IMoveIdEntity
@@ -230,11 +156,12 @@ namespace FrannHammer.Services
                        select entity).ProjectTo<TDto>()
                          .SingleOrDefault();
 
+            ResultValidationService.ValidateSingleResult<TDto, TDto>(dto, id);
             return BuildContentResponse<TDto, TDto>(dto, fields);
         }
 
-        public dynamic GetWithMoves<TEntity, TDto>(int id, string fields = "") 
-            where TEntity : class, IMoveIdEntity 
+        public dynamic GetWithMoves<TEntity, TDto>(int id, string fields = "")
+            where TEntity : class, IMoveIdEntity
             where TDto : class
         {
             var dto = (from entity in Db.Set<TEntity>()
@@ -244,30 +171,25 @@ namespace FrannHammer.Services
                        select entity).ProjectTo<TDto>()
                          .SingleOrDefault();
 
+            ResultValidationService.ValidateSingleResult<TDto, TDto>(dto, id);
             return BuildContentResponse<TDto, TDto>(dto, fields);
         }
 
-        public dynamic GetFromEntity<TEntity, TDto>(TEntity entity, string fields = "") 
-            where TEntity : class, IMoveIdEntity 
+        public IEnumerable<dynamic> GetAllWithMoves<TEntity, TDto>(string fields = "")
+            where TEntity : class, IMoveIdEntity
             where TDto : class
         {
-            return BuildContentResponse<TEntity, TDto>(entity, fields);
-        }
+            var entities = (from entity in Db.Set<TEntity>()
+                            join joinEntity in Db.Moves
+                                on entity.MoveId equals joinEntity.Id
+                            select entity).ProjectTo<TDto>().ToList();
 
-        public IEnumerable<dynamic> GetAllWithMoves<TEntity, TDto>(string fields = "") 
-            where TEntity : class, IMoveIdEntity 
-            where TDto : class
-        {
-            var dto = (from entity in Db.Set<TEntity>()
-                       join joinEntity in Db.Moves
-                           on entity.MoveId equals joinEntity.Id
-                       select entity).ProjectTo<TDto>();
-
-            return BuildContentResponseMultiple<TDto, TDto>(dto, fields);
+            ResultValidationService.ValidateMultipleResult<TDto, TDto>(entities);
+            return BuildContentResponseMultiple<TDto, TDto>(entities, fields);
         }
 
         public IEnumerable<dynamic> GetAllForOwnerId<TJoinEntity, TPrimaryEntity, TDto>(int id, string fields = "")
-            where TJoinEntity : class, IMoveEntity 
+            where TJoinEntity : class, IMoveEntity
             where TPrimaryEntity : class, IMoveIdEntity
             where TDto : class
         {
@@ -275,8 +197,9 @@ namespace FrannHammer.Services
                             join ret in Db.Set<TJoinEntity>()
                                 on entity.MoveId equals ret.Id
                             where ret.OwnerId == id
-                            select entity).ProjectTo<TDto>();
+                            select entity).ProjectTo<TDto>().ToList();
 
+            ResultValidationService.ValidateMultipleResult<TDto, TDto>(entities, id);
             return BuildContentResponseMultiple<TDto, TDto>(entities, fields);
         }
 
@@ -285,23 +208,36 @@ namespace FrannHammer.Services
             where TDto : class
         {
             var entity = Db.Set<TEntity>().Find(id);
+
+            ResultValidationService.ValidateSingleResult<TEntity, TDto>(entity, id);
             return BuildContentResponse<TEntity, TDto>(entity, fields);
         }
 
-        public dynamic Get<TEntity, TDto>(Expression<Func<TEntity, bool>> where, string fields = "")
+        public dynamic Get<TEntity, TDto>(Expression<Func<TEntity, bool>> where, string fields = "", bool isValidatable = true)
             where TEntity : class, IEntity
             where TDto : class
         {
-            var entity = Db.Set<TEntity>().First(where);
+            var entity = Db.Set<TEntity>().FirstOrDefault(where);
+
+            if (isValidatable)
+            { ResultValidationService.ValidateSingleResultFromExpression(entity, where); }
+
             return BuildContentResponse<TEntity, TDto>(entity, fields);
         }
 
-        public IEnumerable<dynamic> GetAll<TEntity, TDto>(Expression<Func<TEntity, bool>> where, string fields = "")
+        public IEnumerable<dynamic> GetAll<TEntity, TDto>(Expression<Func<TEntity, bool>> where, string fields = "", bool isValidatable = true)
             where TEntity : class, IEntity
             where TDto : class
         {
-            var entities = Db.Set<TEntity>().Where(where);
-            return BuildContentResponseMultiple<TEntity, TDto>(entities, fields);
+            var entities = Db.Set<TEntity>()
+                             .Where(where)
+                             .ProjectTo<TDto>()
+                             .ToList();
+
+            if (isValidatable)
+            { ResultValidationService.ValidateMultipleResultFromExpression(entities, where); }
+
+            return BuildContentResponseMultiple<TDto, TDto>(entities, fields);
         }
 
         /// <summary>
@@ -313,7 +249,12 @@ namespace FrannHammer.Services
             where TEntity : class, IEntity
             where TDto : class
         {
-            return BuildContentResponseMultiple<TEntity, TDto>(Db.Set<TEntity>(), fields);
+            var entities = Db.Set<TEntity>()
+                              .ProjectTo<TDto>()
+                              .ToList();
+
+            ResultValidationService.ValidateMultipleResult<TDto, TDto>(entities);
+            return BuildContentResponseMultiple<TDto, TDto>(entities, fields);
         }
 
         /// <summary>
@@ -347,9 +288,6 @@ namespace FrannHammer.Services
         /// </summary>
         /// <param name="id"></param>
         public void Delete<T>(int id)
-            where T : class, IEntity
-        {
-            DeleteEntity<T>(id);
-        }
+            where T : class, IEntity => DeleteEntity<T>(id);
     }
 }

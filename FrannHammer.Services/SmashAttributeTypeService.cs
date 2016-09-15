@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using FrannHammer.Core;
 using FrannHammer.Models;
 using FrannHammer.Models.DTOs;
 
@@ -12,8 +13,8 @@ namespace FrannHammer.Services
 
     public class SmashAttributeTypeService : MetadataService, ISmashAttributeTypeService
     {
-        public SmashAttributeTypeService(IApplicationDbContext db)
-            : base(db)
+        public SmashAttributeTypeService(IApplicationDbContext db, IResultValidationService resultValidationService)
+            : base(db, resultValidationService)
         { }
 
         public IEnumerable<dynamic> GetAllCharacterAttributeOfSmashAttributeType(int id, string fields = "")
@@ -41,8 +42,10 @@ namespace FrannHammer.Services
                             }
                         }).ToList(),
                         Db.Characters.Find(g.Key).Name, Db.Characters.Find(g.Key).ThumbnailUrl))
-                        .AsQueryable();
+                        .ToList();
 
+            ResultValidationService.ValidateMultipleResult<CharacterAttributeRowDto, CharacterAttributeRowDto>(
+                characterAttributeRows, id);
             return BuildContentResponseMultiple<CharacterAttributeRowDto, CharacterAttributeRowDto>(characterAttributeRows, fields);
         }
     }
