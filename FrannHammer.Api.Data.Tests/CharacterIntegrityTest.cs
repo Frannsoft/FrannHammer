@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Linq;
+using NUnit.Framework;
 
 namespace FrannHammer.Api.Data.Tests
 {
@@ -17,6 +18,23 @@ namespace FrannHammer.Api.Data.Tests
             Assert.That(character.Id, Is.EqualTo(characterId));
         }
 
+        [Test]
+        public void VerifyDisplayNameIsProperlyTrimmed()
+        {
+            var characters = Context.Characters.ToList();
 
+            foreach (var character in characters)
+            {
+                if (character.Name.EndsWith("s"))
+                {
+                    Assert.That(character.DisplayName.EndsWith("s"));
+                    Assert.That(!character.DisplayName.EndsWith("'s"));
+                }
+                else
+                {
+                    Assert.That(character.DisplayName.Last().Equals(character.Name.Last()));
+                }
+            }
+        }
     }
 }
