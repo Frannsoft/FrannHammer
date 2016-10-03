@@ -25,14 +25,12 @@ namespace FrannHammer.Api.Data.Tests
 
             foreach (var character in characters)
             {
+                string msg = $"displayname: {character.DisplayName} is not " +
+                             $"equal to name: {character.Name}";
                 if (character.Name.EndsWith("s"))
                 {
-                    Assert.That(character.DisplayName.EndsWith("s"));
-                    Assert.That(!character.DisplayName.EndsWith("'s"));
-                }
-                else
-                {
-                    Assert.That(character.DisplayName.Last().Equals(character.Name.Last()));
+                    Assert.That(character.DisplayName.EndsWith("s"), msg);
+                    Assert.That(!character.DisplayName.EndsWith("'s"), msg);
                 }
             }
         }

@@ -1,18 +1,21 @@
-﻿using FrannHammer.Services;
-using Moq;
+﻿using System;
+using Effort;
+using Effort.DataLoaders;
+using FrannHammer.Services;
 using NUnit.Framework;
 
 namespace FrannHammer.Api.Data.Tests
 {
     public class BaseDataIntegrityTest
     {
-        protected Mock<IApplicationDbContext> DbContextMock;
         protected ApplicationDbContext Context { get; private set; }
 
         [OneTimeSetUp]
         public virtual void OneTimeSetUp()
         {
-            Context = new ApplicationDbContext();
+            var dataLoader = new CsvDataLoader(AppDomain.CurrentDomain.BaseDirectory + "\\fakeDb\\");
+            var connection = DbConnectionFactory.CreatePersistent("testdb", dataLoader);
+            Context = new ApplicationDbContext(connection);
         }
     }
 }
