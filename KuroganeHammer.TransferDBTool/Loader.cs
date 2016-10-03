@@ -166,6 +166,7 @@ namespace KuroganeHammer.TransferDBTool
                     attributeType.Name.Equals("REFLECTORS") ||
                     attributeType.Name.Equals("SHIELDS") ||
                     attributeType.Name.Equals("SMASHCHARGERELEASE") ||
+                    attributeType.Name.Equals("TRIP") ||
                     attributeType.Name.Equals("RUNSPEED"))
                 { continue; } //skip these for now since the tables are problematic
 

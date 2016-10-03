@@ -1,4 +1,7 @@
-﻿using FrannHammer.Api;
+﻿using System;
+using Effort;
+using Effort.DataLoaders;
+using FrannHammer.Api;
 using NUnit.Framework;
 
 namespace FrannHammer.Services.Tests
@@ -13,7 +16,11 @@ namespace FrannHammer.Services.Tests
         public virtual void SetUp()
         {
             Startup.ConfigureAutoMapping();
-            Context = new ApplicationDbContext();
+
+            var dataLoader = new CsvDataLoader(AppDomain.CurrentDomain.BaseDirectory + "\\fakeDb\\");
+            var connection = DbConnectionFactory.CreatePersistent("testdb", dataLoader);
+
+            Context = new ApplicationDbContext(connection);
             ResultValidationService = new ResultValidationService();
         }
     }
