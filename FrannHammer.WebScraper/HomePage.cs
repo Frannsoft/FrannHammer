@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using HtmlAgilityPack;
 
 namespace FrannHammer.WebScraper
@@ -19,17 +18,33 @@ namespace FrannHammer.WebScraper
             var doc = web.Load(_url);
             var nodes = doc.DocumentNode.SelectNodes(".//*[@id='AutoNumber1']/tbody/tr/td/a/img");
 
-            return nodes.Select(node => new Thumbnail()
+            var thumbnails = new List<Thumbnail>();
+
+            foreach (var node in nodes)
             {
-                Key = node.Attributes["alt"].Value
-                .Replace(" ", string.Empty)
-                .Replace("_", string.Empty)
-                .Replace(".", string.Empty)
-                .Replace("&", string.Empty)
-                .Replace("-", string.Empty).ToUpper(),
-                Url = _url.Replace("/Smash4/", string.Empty) + node.Attributes["src"]
-                .Value
-            }).ToList();
+                var thumbnail = new Thumbnail
+                {
+                    Key = node.Attributes["alt"].Value
+                        .Replace(" ", string.Empty)
+                        .Replace("_", string.Empty)
+                        .Replace(".", string.Empty)
+                        .Replace("&", string.Empty)
+                        .Replace("-", string.Empty).ToUpper()
+                };
+
+                if (node.Attributes["alt"].Value.Equals("Lucas"))
+                {
+                    thumbnail.Url = node.Attributes["src"].Value;
+                }
+                else
+                {
+                    thumbnail.Url = _url.Replace("/Smash4/", string.Empty) + node.Attributes["src"].Value;
+                }
+
+                thumbnails.Add(thumbnail);
+            }
+
+            return thumbnails;
         }
     }
 
