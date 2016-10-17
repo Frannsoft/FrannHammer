@@ -85,6 +85,7 @@
     <Compile Include="Character.cs" />
     <Compile Include="CharacterAttributeModels.cs" />
     <Compile Include="CharacterAttributeType.cs" />
+    <Compile Include="ComplexMoveSearchModel.cs" />
     <Compile Include="DTOs\BaseMoveHitboxMetaDto.cs" />
     <Compile Include="DTOs\CalculatorDtos.cs" />
     <Compile Include="DTOs\CharacterAttributeRowDto.cs" />
@@ -99,6 +100,8 @@
     <Compile Include="MoveType.cs" />
     <Compile Include="Notation.cs" />
     <Compile Include="ProblemModels.cs" />
+    <Compile Include="RangeModel.cs" />
+    <Compile Include="RangeQuantifier.cs" />
     <Compile Include="RoleBindingModel.cs" />
     <Compile Include="SetKnockback.cs" />
     <Compile Include="SmashAttributeType.cs" />

@@ -63,11 +63,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseService.cs" />
+    <Compile Include="HitboxActiveSearchPredicateService.cs" />
+    <Compile Include="HitboxSearchPredicateProcessingService.cs" />
+    <Compile Include="RangeMatchProcessingService.cs" />
+    <Compile Include="RangeQuantifierService.cs" />
     <Compile Include="Exceptions\EntityNotFoundException.cs" />
+    <Compile Include="HitboxStartupSearchPredicateService.cs" />
     <Compile Include="IdentityModels.cs" />
     <Compile Include="MetadataService.cs" />
+    <Compile Include="NameSearchPredicateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResultValidationService.cs" />
+    <Compile Include="SearchPredicateFactory.cs" />
+    <Compile Include="SearchPredicateService.cs" />
     <Compile Include="SmashAttributeTypeService.cs" />
   </ItemGroup>
   <ItemGroup>

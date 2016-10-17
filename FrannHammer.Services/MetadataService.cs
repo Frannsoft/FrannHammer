@@ -94,8 +94,20 @@ namespace FrannHammer.Services
         /// <param name="fields"></param>
         /// <param name="isValidatable"></param>
         /// <returns></returns>
-        IEnumerable<dynamic> GetAll<TEntity, TDto>(Expression<Func<TEntity, bool>> whereCondition, string fields = "", bool isValidatable = true)
+        IEnumerable<dynamic> GetAll<TEntity, TDto>(Expression<Func<TEntity, bool>> whereCondition, string fields = "",
+            bool isValidatable = true)
             where TEntity : class, IEntity
+            where TDto : class;
+
+        /// <summary>
+        /// Get fields of the specified entities where the expression is true.
+        /// </summary>
+        /// <typeparam name="TDto"></typeparam>
+        /// <param name="searchModel"></param>
+        /// <param name="fields"></param>
+        /// <param name="isValidatable"></param>
+        /// <returns></returns>
+        IEnumerable<dynamic> GetAll<TDto>(ComplexMoveSearchModel searchModel, string fields = "", bool isValidatable = true)
             where TDto : class;
 
         /// <summary>
@@ -237,6 +249,42 @@ namespace FrannHammer.Services
             { ResultValidationService.ValidateMultipleResultFromExpression(entities, where); }
 
             return BuildContentResponseMultiple<TDto, TDto>(entities, fields);
+        }
+
+        public IEnumerable<dynamic> GetAll<TDto>(ComplexMoveSearchModel searchModel, string fields = "", bool isValidatable = true)
+            where TDto : class
+        {
+            var searchPredicateFactory = new SearchPredicateFactory();
+            var nameExpression = searchPredicateFactory.CreateNamePredicate(searchModel);
+            var entitiesPrimary = Db.Set<Move>()
+                             .Where(nameExpression)
+                             .ToList();
+
+            //if (isValidatable)
+            //{ ResultValidationService.ValidateMultipleResultFromExpression(entitiesPrimary, nameExpression); }
+
+            var hitboxExpression = searchPredicateFactory.CreateHitboxStartupPredicate(searchModel);
+            var entitiesSecondary = Db.Set<Hitbox>()
+                .Where(hitboxExpression).ToList();
+
+            var hitboxActivePredicate = searchPredicateFactory.CreateHitboxActiveOnFramePredicate(searchModel);
+            var entitiesTertiary = Db.Set<Hitbox>()
+                .Where(hitboxActivePredicate).ToList();
+
+            //if (isValidatable)
+            //{ ResultValidationService.ValidateMultipleResultFromExpression(entitiesSecondary, hitboxExpression); }
+
+            var secondaryMoveIds = entitiesSecondary.Select(h => h.MoveId);
+            var tertiaryMoveIds = entitiesTertiary.Select(h => h.MoveId);
+             
+            var totalMoveIds = tertiaryMoveIds.Where(h => secondaryMoveIds.Contains(h));
+
+            //var totalMoveIds = secondaryMoveIds.Join(tertiaryMoveIds).Distinct();
+
+            var entitiesTotal = entitiesPrimary.Where(m => totalMoveIds.Contains(m.Id)).AsQueryable().ProjectTo<TDto>()
+                .ToList();
+
+            return BuildContentResponseMultiple<TDto, TDto>(entitiesTotal, fields);
         }
 
         /// <summary>

@@ -86,6 +86,10 @@
     <Compile Include="Harnesses\IMoveDataHarness.cs" />
     <Compile Include="Harnesses\IMetadataHarness.cs" />
     <Compile Include="Harnesses\MetadataHarness.cs" />
+    <Compile Include="HitboxActiveSearchPredicateServiceTest.cs" />
+    <Compile Include="HitboxStartupSearchPredicateServiceTest.cs" />
+    <Compile Include="NameSearchPredicateServiceTest.cs" />
+    <Compile Include="RangeQuantifierServiceTest.cs" />
     <Compile Include="Suts\MoveDataSut.cs" />
     <Compile Include="Harnesses\MoveDataHarness.cs" />
     <Compile Include="ServiceBaseTest.cs" />

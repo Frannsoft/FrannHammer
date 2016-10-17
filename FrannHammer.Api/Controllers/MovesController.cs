@@ -43,6 +43,16 @@ namespace FrannHammer.Api.Controllers
             return Ok(content);
         }
 
+        [ResponseType(typeof(MoveDto))]
+        [ValidateModel]
+        [Route(MovesRouteKey + "/search")]
+        [HttpPost]
+        public IHttpActionResult GetMovesThatMeetCriteria(ComplexMoveSearchModel complexMoveSearchModel, [FromUri] string fields = "")
+        {
+            var content = _metadataService.GetAll<MoveDto>(complexMoveSearchModel, fields, false);
+            return Ok(content);
+        }
+
         /// <summary>
         /// Get all moves that have a specific name.
         /// </summary>
