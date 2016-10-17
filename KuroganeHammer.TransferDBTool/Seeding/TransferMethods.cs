@@ -56,28 +56,47 @@ namespace KuroganeHammer.TransferDBTool.Seeding
         {
             if (rawData.Length > 0)
             {
-                model.Hitbox1 = rawData[0];
+                string hitboxActiveNoParens = SeparateNotesDataFromHitbox(model, rawData[0]);
+                model.Hitbox1 = hitboxActiveNoParens;
             }
 
             if (rawData.Length > 1)
             {
-                model.Hitbox2 = rawData[1];
+                string hitboxActiveNoParens = SeparateNotesDataFromHitbox(model, rawData[1]);
+                model.Hitbox2 = hitboxActiveNoParens;
             }
 
             if (rawData.Length > 2)
             {
-                model.Hitbox3 = rawData[2];
+                string hitboxActiveNoParens = SeparateNotesDataFromHitbox(model, rawData[2]);
+                model.Hitbox3 = hitboxActiveNoParens;
             }
 
             if (rawData.Length > 3)
             {
-                model.Hitbox4 = rawData[3];
+                string hitboxActiveNoParens = SeparateNotesDataFromHitbox(model, rawData[3]);
+                model.Hitbox4 = hitboxActiveNoParens;
             }
 
             if (rawData.Length > 4)
             {
-                model.Hitbox5 = rawData[4];
+                string hitboxActiveNoParens = SeparateNotesDataFromHitbox(model, rawData[4]);
+                model.Hitbox5 = hitboxActiveNoParens;
             }
+        }
+
+        private static string SeparateNotesDataFromHitbox<T>(T model, string rawData)
+            where T : BaseMoveHitboxMeta
+        {
+            string noteData = GetNoteDataFromHitboxActiveData(rawData);
+            model.Notes += noteData;
+            return !string.IsNullOrEmpty(noteData) ? rawData.Replace(noteData, string.Empty).Trim() : rawData;
+        }
+
+        private static string GetNoteDataFromHitboxActiveData(string rawHitboxData)
+        {
+            var match = Regex.Match(rawHitboxData, @"\(([^\)]+)\)");
+            return match.Value;
         }
 
         private static T SetBaseHitboxData<T>(string rawValue, char splitOn, Move move, AppDbContext context)
