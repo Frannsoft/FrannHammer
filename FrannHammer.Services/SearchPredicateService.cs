@@ -5,27 +5,31 @@ namespace FrannHammer.Services
 {
     public abstract class SearchPredicateService
     {
-        protected abstract bool ProcessWhenHitboxLengthGreaterThanZero(RangeModel frameRange, int startValueFromDb,
-            int endValueFromDb);
+        protected readonly RangeMatchProcessingService RangeMatchProcessingService;
 
-        protected bool ProcessHitboxData(RangeModel frameRange, string hitboxRawData)
+        protected SearchPredicateService()
         {
-            var splits = hitboxRawData.Split('-');
-
-            return splits.Any() && ProcessWhenThereIsParseableHitboxData(frameRange, splits);
+            RangeMatchProcessingService = new RangeMatchProcessingService();
         }
 
-        protected bool ProcessWhenThereIsParseableHitboxData(RangeModel frameRange, string[] hitboxDataSplits)
+        protected virtual bool ProcessData(RangeModel frameRange, string rawData)
         {
-            if (hitboxDataSplits.Length == 1)
+            var splits = rawData.Split('-');
+
+            return splits.Any() && ProcessWhenThereIsParseableData(frameRange, splits);
+        }
+
+        protected bool ProcessWhenThereIsParseableData(RangeModel frameRange, string[] dataSplits)
+        {
+            if (dataSplits.Length == 1)
             {
                 return new HitboxSearchPredicateProcessingService().ProcessWhenSplitsLengthIsOne(frameRange,
-                    hitboxDataSplits);
+                    dataSplits);
             }
 
-            if (hitboxDataSplits.Length > 1)
+            if (dataSplits.Length > 1)
             {
-                return ProcessWhenMoreThanOneSplitsResults(frameRange, hitboxDataSplits);
+                return ProcessWhenMoreThanOneSplitsResults(frameRange, dataSplits);
             }
             return false;
         }
@@ -54,6 +58,12 @@ namespace FrannHammer.Services
                 return hitboxSearchPredicateProcessingService.ProcessWhenHitboxLengthNotGreaterThanZero(frameRange,
                         startValueFromDb, hitboxDataSplits);
             }
+        }
+
+        protected virtual bool ProcessWhenHitboxLengthGreaterThanZero(RangeModel frameRange, int startValueFromDb,
+            int endValueFromDb)
+        {
+            return RangeMatchProcessingService.Check(frameRange, startValueFromDb, endValueFromDb);
         }
     }
 }
