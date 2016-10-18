@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseService.cs" />
+    <Compile Include="FirstActionableFrameSearchPredicateService.cs" />
     <Compile Include="HitboxActiveSearchPredicateService.cs" />
     <Compile Include="HitboxSearchPredicateProcessingService.cs" />
     <Compile Include="RangeMatchProcessingService.cs" />

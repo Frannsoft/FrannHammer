@@ -6,24 +6,20 @@ namespace FrannHammer.Services
 {
     public class HitboxActiveSearchPredicateService : SearchPredicateService
     {
-        private readonly RangeMatchProcessingService _rangeMatchProcessingService;
-
         private readonly Func<RangeQuantifierService, RangeModel, int, int, bool> _equalToCheck;
 
         public HitboxActiveSearchPredicateService()
         {
-            _rangeMatchProcessingService = new RangeMatchProcessingService();
-
-            _rangeMatchProcessingService.ConfigureIsBetweenCheck(
+            RangeMatchProcessingService.ConfigureIsBetweenCheck(
                         (procService, frameRange, startValueFromDb, endValueFromDb) =>
                             procService.IsBetween(frameRange.StartValue, startValueFromDb, endValueFromDb) ||
                             procService.IsBetween(frameRange.EndValue, startValueFromDb, endValueFromDb));
 
-            _rangeMatchProcessingService.ConfigureIsGreaterThanCheck(
+            RangeMatchProcessingService.ConfigureIsGreaterThanCheck(
                 (procService, frameRange, startValueFromDb) =>
                         procService.IsGreaterThan(startValueFromDb, frameRange.StartValue));
 
-            _rangeMatchProcessingService.ConfigureIsLessThanCheck(
+            RangeMatchProcessingService.ConfigureIsLessThanCheck(
                (procService, frameRange, startValueFromDb) =>
                        procService.IsLessThan(startValueFromDb, frameRange.StartValue));
 
@@ -34,17 +30,17 @@ namespace FrannHammer.Services
 
 
         public Func<Hitbox, bool> GetHitboxActivePredicate(RangeModel hitboxActiveOnFrame)
-            => h => IsValueInHitboxRange(h.Hitbox1, hitboxActiveOnFrame) ||
-               IsValueInHitboxRange(h.Hitbox2, hitboxActiveOnFrame) ||
-               IsValueInHitboxRange(h.Hitbox3, hitboxActiveOnFrame) ||
-               IsValueInHitboxRange(h.Hitbox4, hitboxActiveOnFrame) ||
-               IsValueInHitboxRange(h.Hitbox5, hitboxActiveOnFrame) ||
-               IsValueInHitboxRange(h.Hitbox6, hitboxActiveOnFrame);
+            => h => IsValueInRange(h.Hitbox1, hitboxActiveOnFrame) ||
+               IsValueInRange(h.Hitbox2, hitboxActiveOnFrame) ||
+               IsValueInRange(h.Hitbox3, hitboxActiveOnFrame) ||
+               IsValueInRange(h.Hitbox4, hitboxActiveOnFrame) ||
+               IsValueInRange(h.Hitbox5, hitboxActiveOnFrame) ||
+               IsValueInRange(h.Hitbox6, hitboxActiveOnFrame);
 
-        public bool IsValueInHitboxRange(string hitboxRaw, RangeModel frameRange)
+        public bool IsValueInRange(string hitboxRaw, RangeModel frameRange)
         {
             Guard.VerifyObjectNotNull(frameRange, nameof(frameRange));
-            return !string.IsNullOrEmpty(hitboxRaw) && ProcessHitboxData(frameRange, hitboxRaw);
+            return !string.IsNullOrEmpty(hitboxRaw) && ProcessData(frameRange, hitboxRaw);
         }
 
         protected override bool ProcessWhenHitboxLengthGreaterThanZero(RangeModel frameRange, int startValueFromDb, int endValueFromDb)
@@ -70,7 +66,7 @@ namespace FrannHammer.Services
                     }
                 default:
                 {
-                    return _rangeMatchProcessingService.Check(frameRange, startValueFromDb, endValueFromDb);
+                    return RangeMatchProcessingService.Check(frameRange, startValueFromDb, endValueFromDb);
                 }
             }
         }

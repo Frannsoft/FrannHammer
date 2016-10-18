@@ -7,7 +7,7 @@
         public int HitboxActiveLength { get; set; }
         //public int OwnerId { get; set; }
         public RangeModel HitboxActiveOnFrame { get; set; }
-        //public int FirstActionableFrame { get; set; }
+        public RangeModel FirstActionableFrame { get; set; }
         //public int LandingLag { get; set; }
         //public int? AutoCancel { get; set; }
         //public int BaseDamage { get; set; }

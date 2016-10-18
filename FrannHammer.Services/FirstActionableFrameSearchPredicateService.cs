@@ -4,15 +4,18 @@ using FrannHammer.Models;
 
 namespace FrannHammer.Services
 {
-    public class HitboxStartupSearchPredicateService : SearchPredicateService
+    public class FirstActionableFrameSearchPredicateService : SearchPredicateService
     {
-        public HitboxStartupSearchPredicateService()
+        public FirstActionableFrameSearchPredicateService()
         {
-
+            //RangeMatchProcessingService.ConfigureIsBetweenCheck(
+            //            (procService, frameRange, startValueFromDb, endValueFromDb) =>
+            //                procService.IsBetween(frameRange.StartValue, startValueFromDb, endValueFromDb) ||
+            //                procService.IsBetween(frameRange.EndValue, startValueFromDb, endValueFromDb));
             RangeMatchProcessingService.ConfigureIsBetweenCheck(
-                        (procService, frameRange, startValueFromDb, endValueFromDb) =>
-                            procService.IsBetween(frameRange.StartValue, startValueFromDb, endValueFromDb) ||
-                            procService.IsBetween(frameRange.EndValue, startValueFromDb, endValueFromDb));
+                (procService, frameRange, startValueFromDb, endValueFromDb) =>
+                    procService.IsBetween(frameRange.StartValue, startValueFromDb, frameRange.EndValue,
+                        endValueFromDb));
 
             RangeMatchProcessingService.ConfigureIsGreaterThanCheck(
                 (procService, frameRange, startValueFromDb) =>
@@ -35,24 +38,19 @@ namespace FrannHammer.Services
                        procService.IsEqualTo(frameRange.StartValue, startValueFromDb));
         }
 
-        public Func<Hitbox, bool> GetHitboxStartupPredicate(RangeModel hitboxStartupFrame)
-           => h => IsValueInRange(h.Hitbox1, hitboxStartupFrame) ||
-               IsValueInRange(h.Hitbox2, hitboxStartupFrame) ||
-               IsValueInRange(h.Hitbox3, hitboxStartupFrame) ||
-               IsValueInRange(h.Hitbox4, hitboxStartupFrame) ||
-               IsValueInRange(h.Hitbox5, hitboxStartupFrame) ||
-               IsValueInRange(h.Hitbox6, hitboxStartupFrame);
+        public Func<Move, bool> GetFirstActionableFrameSearchPredicate(RangeModel firstActionableFrameRange)
+           => move => IsValueInRange(move.FirstActionableFrame, firstActionableFrameRange);
 
-        public bool IsValueInRange(string hitboxRaw, RangeModel frameRange)
+        public bool IsValueInRange(string rawFrame, RangeModel frameRange)
         {
             Guard.VerifyObjectNotNull(frameRange, nameof(frameRange));
-            return !string.IsNullOrEmpty(hitboxRaw) && ProcessData(frameRange, hitboxRaw);
+            return !string.IsNullOrEmpty(rawFrame) && ProcessData(frameRange, rawFrame);
         }
 
-        protected override bool ProcessWhenHitboxLengthGreaterThanZero(RangeModel frameRange, int startValueFromDb,
-            int endValueFromDb)
+        protected override bool ProcessData(RangeModel frameRange, string rawData)
         {
-            return RangeMatchProcessingService.Check(frameRange, startValueFromDb, endValueFromDb);
+            int parsedFrameValue;
+            return int.TryParse(rawData, out parsedFrameValue) && RangeMatchProcessingService.Check(frameRange, parsedFrameValue, parsedFrameValue);
         }
     }
 }

@@ -256,8 +256,10 @@ namespace FrannHammer.Services
         {
             var searchPredicateFactory = new SearchPredicateFactory();
             var nameExpression = searchPredicateFactory.CreateNamePredicate(searchModel);
+            var firstActionableFrameExpression = searchPredicateFactory.CreateFirstActionableFramePredicate(searchModel);
+
             var entitiesPrimary = Db.Set<Move>()
-                             .Where(nameExpression)
+                             .Where(nameExpression).Where(firstActionableFrameExpression)
                              .ToList();
 
             //if (isValidatable)
@@ -270,6 +272,7 @@ namespace FrannHammer.Services
             var hitboxActivePredicate = searchPredicateFactory.CreateHitboxActiveOnFramePredicate(searchModel);
             var entitiesTertiary = Db.Set<Hitbox>()
                 .Where(hitboxActivePredicate).ToList();
+
 
             //if (isValidatable)
             //{ ResultValidationService.ValidateMultipleResultFromExpression(entitiesSecondary, hitboxExpression); }

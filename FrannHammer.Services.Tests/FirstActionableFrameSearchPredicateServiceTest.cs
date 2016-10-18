@@ -4,31 +4,31 @@ using NUnit.Framework;
 namespace FrannHammer.Services.Tests
 {
     [TestFixture]
-    public class HitboxActiveSearchPredicateServiceTest
+    public class FirstActionableFrameSearchPredicateServiceTest
     {
-        private HitboxActiveSearchPredicateService _service;
-        private const string UnableToFindValueMessage = "Unable to find value in hitbox range";
-        private const string FoundValueMessage = "Found value in hitbox range";
+        private FirstActionableFrameSearchPredicateService _service;
+        private const string UnableToFindValueMessage = "Unable to find value in first actionable frame range";
+        private const string FoundValueMessage = "Found value in first actionable frame range";
 
         [SetUp]
         public void SetUp()
         {
-            _service = new HitboxActiveSearchPredicateService();
+            _service = new FirstActionableFrameSearchPredicateService();
         }
 
         [Test]
-        public void FindsValidHitboxActiveFrameInBetween()
+        public void FindsValidFirstActionableFrameInBetween()
         {
-            Assert.That(_service.IsValueInRange("3-15", new RangeModel
+            Assert.That(_service.IsValueInRange("3", new RangeModel
             {
-                StartValue = 5,
+                StartValue = 2,
                 RangeQuantifier = RangeQuantifier.Between,
                 EndValue = 10
             }), UnableToFindValueMessage);
         }
 
         [Test]
-        public void DoesFindValidHitboxActiveFrameInMessyHitbox()
+        public void DoesFindValidFirstActionableFrameInMessyHitbox()
         {
             const int valueUnderTest = 5;
 
@@ -40,9 +40,19 @@ namespace FrannHammer.Services.Tests
         }
 
         [Test]
-        public void DoesFindValidHitboxActiveFrame()
+        public void DoesFindValidFirstActionableFrame()
         {
-            Assert.That(_service.IsValueInRange("3-10", new RangeModel
+            Assert.That(_service.IsValueInRange("3", new RangeModel
+            {
+                StartValue = 3,
+                RangeQuantifier = RangeQuantifier.EqualTo
+            }), UnableToFindValueMessage);
+        }
+
+        [Test]
+        public void FindsFirstActionableFrameEqualToStandardHitbox()
+        {
+            Assert.That(_service.IsValueInRange("5", new RangeModel
             {
                 StartValue = 5,
                 RangeQuantifier = RangeQuantifier.EqualTo
@@ -50,19 +60,9 @@ namespace FrannHammer.Services.Tests
         }
 
         [Test]
-        public void FindsHitboxActiveFrameEqualToStandardHitbox()
+        public void FindsFirstActionableFrameGreaterThanStandardHitbox()
         {
-            Assert.That(_service.IsValueInRange("5-15", new RangeModel
-            {
-                StartValue = 5,
-                RangeQuantifier = RangeQuantifier.EqualTo
-            }), UnableToFindValueMessage);
-        }
-
-        [Test]
-        public void FindsHitboxActiveFrameGreaterThanStandardHitbox()
-        {
-            Assert.That(_service.IsValueInRange("5-15", new RangeModel
+            Assert.That(_service.IsValueInRange("5", new RangeModel
             {
                 StartValue = 4,
                 RangeQuantifier = RangeQuantifier.GreaterThan
@@ -70,20 +70,31 @@ namespace FrannHammer.Services.Tests
         }
 
         [Test]
-        public void FindsHitboxActiveFrameInBetweenStandardHitbox()
+        public void FindsFirstActionableFrameInBetweenStandardHitbox()
         {
-            Assert.That(_service.IsValueInRange("5-15", new RangeModel
+            Assert.That(_service.IsValueInRange("5", new RangeModel
             {
-                StartValue = 6,
+                StartValue = 4,
                 RangeQuantifier = RangeQuantifier.Between,
                 EndValue = 12
             }), UnableToFindValueMessage);
         }
 
         [Test]
+        public void FindsFirstActionableFrameInBetween()
+        {
+            Assert.That(!_service.IsValueInRange("46", new RangeModel
+            {
+                StartValue = 1,
+                RangeQuantifier = RangeQuantifier.Between,
+                EndValue = 40
+            }), FoundValueMessage);
+        }
+
+        [Test]
         public void DoesNotIncludeBoundariesInDefinitionOfBetween()
         {
-            Assert.That(!_service.IsValueInRange("5-15", new RangeModel
+            Assert.That(!_service.IsValueInRange("5", new RangeModel
             {
                 StartValue = 5,
                 RangeQuantifier = RangeQuantifier.Between,
@@ -94,9 +105,9 @@ namespace FrannHammer.Services.Tests
         [Test]
         [TestCase(6)]
         [TestCase(5)]
-        public void FindsHitboxActiveFrameIsLessThanOrEqualToStandardHitbox(int startValue)
+        public void FindsFirstActionableFrameIsLessThanOrEqualToStandardHitbox(int startValue)
         {
-            Assert.That(_service.IsValueInRange("5-15", new RangeModel
+            Assert.That(_service.IsValueInRange("5", new RangeModel
             {
                 StartValue = startValue,
                 RangeQuantifier = RangeQuantifier.LessThanOrEqualTo
@@ -104,9 +115,9 @@ namespace FrannHammer.Services.Tests
         }
 
         [Test]
-        public void FindsHitboxActiveFrameIsLessThanStandardHitbox()
+        public void FindsFirstActionableFrameIsLessThanStandardHitbox()
         {
-            Assert.That(_service.IsValueInRange("5-15", new RangeModel
+            Assert.That(_service.IsValueInRange("5", new RangeModel
             {
                 StartValue = 6,
                 RangeQuantifier = RangeQuantifier.LessThan
@@ -114,21 +125,21 @@ namespace FrannHammer.Services.Tests
         }
 
         [Test]
-        [TestCase(7)]
-        [TestCase(6)]
+        [TestCase(4)]
+        [TestCase(3)]
         [TestCase(5)]
-        public void FindsHitboxActiveFrameIsGreaterThanOrEqualToStandardHitbox(int startValue)
+        public void FindsFirstActionableFrameIsGreaterThanOrEqualTo(int startValue)
         {
-            Assert.That(_service.IsValueInRange("5-15", new RangeModel
+            Assert.That(_service.IsValueInRange("5", new RangeModel
             {
                 StartValue = startValue,
                 RangeQuantifier = RangeQuantifier.GreaterThanOrEqualTo
             }), UnableToFindValueMessage);
         }
 
-        public void ShouldNotFindHitboxActiveFrameWhenGreaterThanOrEqualTo()
+        public void ShouldNotFindFirstActionableFrameWhenGreaterThanOrEqualTo()
         {
-            Assert.That(!_service.IsValueInRange("5-15", new RangeModel
+            Assert.That(!_service.IsValueInRange("5", new RangeModel
             {
                 StartValue = 16,
                 RangeQuantifier = RangeQuantifier.GreaterThanOrEqualTo
@@ -136,7 +147,7 @@ namespace FrannHammer.Services.Tests
         }
 
         [Test]
-        public void DoesFindValidHitboxActiveFrameForSingleFrameHitbox()
+        public void DoesFindValidFirstActionableFrameForSingleFrameHitbox()
         {
             const int valueUnderTest = 5;
 
@@ -148,11 +159,11 @@ namespace FrannHammer.Services.Tests
         }
 
         [Test]
-        public void DoesNotFindValidHitboxActiveFrameIfOutsideRange()
+        public void DoesNotFindValidFirstActionableFrameIfOutsideRange()
         {
             const int valueUnderTest = 5;
 
-            Assert.That(!_service.IsValueInRange("13-20", new RangeModel
+            Assert.That(!_service.IsValueInRange("13", new RangeModel
             {
                 StartValue = valueUnderTest,
                 RangeQuantifier = RangeQuantifier.EqualTo
