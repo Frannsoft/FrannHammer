@@ -155,7 +155,8 @@ namespace KuroganeHammer.TransferDBTool.Seeding
 
         private static Autocancel AddAutocancelDataToTable(Move move, AppDbContext context)
         {
-            var rawData = move.AutoCancel;
+            //I don't want to ref System.Web (for httputility) just for this call.
+            string rawData = move.AutoCancel.Replace("&gt;", ">");
 
             var splitData = rawData.Split(',');
 
@@ -217,7 +218,7 @@ namespace KuroganeHammer.TransferDBTool.Seeding
         {
             var rawKbk = move.BaseKnockBackSetKnockback;
             const string matchBaseKnockbackRegex = "(B: ).[^W]*";
-            char[] baseKnockbackTrimValues = {'B', ':', ' '};
+            char[] baseKnockbackTrimValues = { 'B', ':', ' ' };
             const char primaryKnockbackValueChar = 'B';
             Func<string, bool> doesRawContainBaseKnockbackValue = raw => raw.Contains('W') && !raw.Contains('B');
 
@@ -231,7 +232,7 @@ namespace KuroganeHammer.TransferDBTool.Seeding
         {
             var rawKbk = move.BaseKnockBackSetKnockback;
             const string matchSetKnockbackRegex = "(W: ).[^B]*";
-            char[] setKnockbackTrimValues = {'W', ':', ' '};
+            char[] setKnockbackTrimValues = { 'W', ':', ' ' };
             const char primaryKnockbackValueChar = 'W';
             Func<string, bool> doesRawContainSetKnockbackValue = raw => rawKbk.Contains('B') &&
                                                                         !rawKbk.Contains('W') ||
