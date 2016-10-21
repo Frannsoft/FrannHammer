@@ -8,7 +8,6 @@ namespace FrannHammer.Services
     {
         public HitboxStartupSearchPredicateService()
         {
-
             RangeMatchProcessingService.ConfigureIsBetweenCheck(
                         (procService, frameRange, startValueFromDb, endValueFromDb) =>
                             procService.IsBetween(frameRange.StartValue, startValueFromDb, endValueFromDb) ||
@@ -46,13 +45,27 @@ namespace FrannHammer.Services
         public bool IsValueInRange(string hitboxRaw, RangeModel frameRange)
         {
             Guard.VerifyObjectNotNull(frameRange, nameof(frameRange));
-            return !string.IsNullOrEmpty(hitboxRaw) && ProcessData(frameRange, hitboxRaw);
-        }
 
-        protected override bool ProcessWhenHitboxLengthGreaterThanZero(RangeModel frameRange, int startValueFromDb,
-            int endValueFromDb)
-        {
-            return RangeMatchProcessingService.Check(frameRange, startValueFromDb, endValueFromDb);
+            var dataParsingService = new DataParsingService();
+
+            var dbNumberRanges = dataParsingService.Parse(hitboxRaw);
+
+            if (dbNumberRanges.Count > 0)
+            {
+                if (dbNumberRanges[0].End.HasValue)
+                {
+                    return RangeMatchProcessingService.Check(frameRange, dbNumberRanges[0].Start,
+                        dbNumberRanges[0].End.Value);
+                }
+                else
+                {
+                    return RangeMatchProcessingService.Check(frameRange, dbNumberRanges[0].Start);
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
