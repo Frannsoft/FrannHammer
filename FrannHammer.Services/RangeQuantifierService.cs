@@ -1,31 +1,33 @@
-﻿namespace FrannHammer.Services
+﻿using FrannHammer.Models;
+
+namespace FrannHammer.Services
 {
     public class RangeQuantifierService
     {
-        public bool IsBetween(int valueUnderTest, int lowBoundary, int highBoundary)
+        public bool IsBetween(int valueUnderTest, NumberRange boundaries)
         {
-            if (highBoundary > -1)
+            if (boundaries.End.HasValue)
             {
-                return valueUnderTest > lowBoundary && valueUnderTest < highBoundary;
+                return valueUnderTest > boundaries.Start && valueUnderTest < boundaries.End.Value;
             }
             else
             {
-                return valueUnderTest > lowBoundary;
+                return valueUnderTest > boundaries.Start;
             }
         }
 
-        public bool IsBetween(int lowValueUnderTest, int lowBoundary, int highValueUnderTest, int highBoundary)
+        public bool IsBetween(int lowValueUnderTest, int highValueUnderTest, NumberRange boundaries)
         {
-            if (highBoundary > -1)
+            if (boundaries.End.HasValue)
             {
-                return (lowValueUnderTest > lowBoundary && highValueUnderTest < highBoundary) ||
-                       (lowValueUnderTest < lowBoundary && highValueUnderTest > lowBoundary);
+                return (lowValueUnderTest > boundaries.Start && highValueUnderTest < boundaries.End.Value) ||
+                       (lowValueUnderTest < boundaries.Start && highValueUnderTest > boundaries.Start);
             }
             else
             {
-                return lowValueUnderTest > lowBoundary && 
-                       highValueUnderTest > lowBoundary && 
-                       highValueUnderTest >= lowValueUnderTest;
+                return lowValueUnderTest < boundaries.Start &&
+                        highValueUnderTest > boundaries.Start &&
+                        highValueUnderTest > lowValueUnderTest;
             }
         }
 

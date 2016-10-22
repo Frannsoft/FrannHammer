@@ -273,14 +273,18 @@ namespace FrannHammer.Services
             var entitiesTertiary = Db.Set<Hitbox>()
                 .Where(hitboxActivePredicate).ToList();
 
+            var baseDamagePredicate = searchPredicateFactory.CreateBaseDamagePredicate(searchModel);
+            var entitiesFour = Db.Set<BaseDamage>()
+                .Where(baseDamagePredicate).ToList();
 
             //if (isValidatable)
             //{ ResultValidationService.ValidateMultipleResultFromExpression(entitiesSecondary, hitboxExpression); }
 
             var secondaryMoveIds = entitiesSecondary.Select(h => h.MoveId);
             var tertiaryMoveIds = entitiesTertiary.Select(h => h.MoveId);
+            var fourthMoveIds = entitiesFour.Select(h => h.MoveId);
              
-            var totalMoveIds = tertiaryMoveIds.Where(h => secondaryMoveIds.Contains(h));
+            var totalMoveIds = fourthMoveIds.Where(id => tertiaryMoveIds.Where(h => secondaryMoveIds.Contains(h)).Contains(id));
 
             //var totalMoveIds = secondaryMoveIds.Join(tertiaryMoveIds).Distinct();
 

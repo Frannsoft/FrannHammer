@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using FrannHammer.Models;
+using NUnit.Framework;
 
 namespace FrannHammer.Services.Tests
 {
@@ -16,13 +17,13 @@ namespace FrannHammer.Services.Tests
         [Test]
         public void ReturnsTrueInBetweenRange()
         {
-            Assert.That(_service.IsBetween(10, 5, 15), "Number was marked as not inbetween range");
+            Assert.That(_service.IsBetween(5, 10, new NumberRange(1, 15)), "Number was marked as not inbetween range");
         }
 
         [Test]
         public void ReturnsFalseForNumberOutOfExpectedInBetweenRange()
         {
-            Assert.That(!_service.IsBetween(5, 10, 15), "Number was marked as in between range");
+            Assert.That(!_service.IsBetween(10, 5, new NumberRange(15)), "Number was marked as in between range");
         }
 
         [Test]

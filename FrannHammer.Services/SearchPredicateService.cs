@@ -1,69 +1,78 @@
-﻿using System.Linq;
+﻿using System;
+using FrannHammer.Core;
 using FrannHammer.Models;
 
 namespace FrannHammer.Services
 {
-    public abstract class SearchPredicateService
+    public class SearchPredicateService
     {
         protected readonly RangeMatchProcessingService RangeMatchProcessingService;
 
-        protected SearchPredicateService()
+        protected internal SearchPredicateService()
         {
             RangeMatchProcessingService = new RangeMatchProcessingService();
+            InitializeDefaultRangeChecks();
         }
 
-        protected virtual bool ProcessData(RangeModel frameRange, string rawData)
+        private void InitializeDefaultRangeChecks()
         {
-            var splits = rawData.Split('-');
+            RangeMatchProcessingService.ConfigureIsBetweenCheck(
+                (procService, frameRange, numberRange) =>
+                    procService.IsBetween(frameRange.StartValue, frameRange.EndValue, numberRange));
 
-            return splits.Any() && ProcessWhenThereIsParseableData(frameRange, splits);
+            RangeMatchProcessingService.ConfigureIsGreaterThanCheck(
+               (procService, frameRange, startValueFromDb) =>
+                       procService.IsGreaterThan(startValueFromDb, frameRange.StartValue));
+
+            RangeMatchProcessingService.ConfigureIsLessThanCheck(
+                (procService, frameRange, startValueFromDb) =>
+                        procService.IsLessThan(startValueFromDb, frameRange.StartValue));
+
+            RangeMatchProcessingService.ConfigureIsGreaterThanOrEqualToCheck(
+                (procService, frameRange, startValueFromDb) =>
+                        procService.IsGreaterThanOrEqualTo(startValueFromDb, frameRange.StartValue));
+
+            RangeMatchProcessingService.ConfigureIsLessThanOrEqualToCheck(
+                (procService, frameRange, startValueFromDb) =>
+                        procService.IsLessThanOrEqualTo(startValueFromDb, frameRange.StartValue));
+
+            RangeMatchProcessingService.ConfigureIsEqualToCheck(
+               (procService, frameRange, startValueFromDb) =>
+                       procService.IsEqualTo(frameRange.StartValue, startValueFromDb));
         }
 
-        protected bool ProcessWhenThereIsParseableData(RangeModel frameRange, string[] dataSplits)
+        protected internal Func<T, bool> GetPredicate<T>(RangeModel frameRange)
+            where T : BaseMoveHitboxMeta
+            => h => IsValueInRange(h.Hitbox1, frameRange) ||
+               IsValueInRange(h.Hitbox2, frameRange) ||
+               IsValueInRange(h.Hitbox3, frameRange) ||
+               IsValueInRange(h.Hitbox4, frameRange) ||
+               IsValueInRange(h.Hitbox5, frameRange) ||
+               IsValueInRange(h.Hitbox6, frameRange);
+
+        protected internal bool IsValueInRange(string raw, RangeModel frameRange)
         {
-            if (dataSplits.Length == 1)
-            {
-                return new HitboxSearchPredicateProcessingService().ProcessWhenSplitsLengthIsOne(frameRange,
-                    dataSplits);
-            }
+            Guard.VerifyObjectNotNull(frameRange, nameof(frameRange));
 
-            if (dataSplits.Length > 1)
-            {
-                return ProcessWhenMoreThanOneSplitsResults(frameRange, dataSplits);
-            }
-            return false;
-        }
+            var dataParsingService = new DataParsingService();
 
-        protected bool ProcessWhenMoreThanOneSplitsResults(RangeModel frameRange, string[] hitboxDataSplits)
-        {
-            int startValueFromDb, endValueFromDb;
-            var hitboxSearchPredicateProcessingService = new HitboxSearchPredicateProcessingService();
+            var dbNumberRanges = dataParsingService.Parse(raw);
 
-            if (int.TryParse(hitboxDataSplits[0], out startValueFromDb) && int.TryParse(hitboxDataSplits[1], out endValueFromDb))
+            if (dbNumberRanges.Count > 0)
             {
-                int hitboxLength = endValueFromDb - startValueFromDb;
-                if (hitboxLength > 0)
+                if (dbNumberRanges[0].End.HasValue)
                 {
-                    return ProcessWhenHitboxLengthGreaterThanZero(frameRange, startValueFromDb,
-                        endValueFromDb);
+                    return RangeMatchProcessingService.Check(frameRange, dbNumberRanges[0]);
                 }
                 else
                 {
-                    return hitboxSearchPredicateProcessingService.ProcessWhenHitboxLengthNotGreaterThanZero(frameRange,
-                        startValueFromDb, hitboxDataSplits);
+                    return RangeMatchProcessingService.Check(frameRange, dbNumberRanges[0]);
                 }
             }
             else
             {
-                return hitboxSearchPredicateProcessingService.ProcessWhenHitboxLengthNotGreaterThanZero(frameRange,
-                        startValueFromDb, hitboxDataSplits);
+                return false;
             }
-        }
-
-        protected virtual bool ProcessWhenHitboxLengthGreaterThanZero(RangeModel frameRange, int startValueFromDb,
-            int endValueFromDb)
-        {
-            return RangeMatchProcessingService.Check(frameRange, startValueFromDb, endValueFromDb);
         }
     }
 }

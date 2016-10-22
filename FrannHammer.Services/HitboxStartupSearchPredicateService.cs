@@ -1,5 +1,4 @@
 ﻿using System;
-using FrannHammer.Core;
 using FrannHammer.Models;
 
 namespace FrannHammer.Services
@@ -9,29 +8,9 @@ namespace FrannHammer.Services
         public HitboxStartupSearchPredicateService()
         {
             RangeMatchProcessingService.ConfigureIsBetweenCheck(
-                        (procService, frameRange, startValueFromDb, endValueFromDb) =>
-                            procService.IsBetween(frameRange.StartValue, startValueFromDb, endValueFromDb) ||
-                            procService.IsBetween(frameRange.EndValue, startValueFromDb, endValueFromDb));
-
-            RangeMatchProcessingService.ConfigureIsGreaterThanCheck(
-                (procService, frameRange, startValueFromDb) =>
-                        procService.IsGreaterThan(startValueFromDb, frameRange.StartValue));
-
-            RangeMatchProcessingService.ConfigureIsLessThanCheck(
-                (procService, frameRange, startValueFromDb) =>
-                        procService.IsLessThan(startValueFromDb, frameRange.StartValue));
-
-            RangeMatchProcessingService.ConfigureIsGreaterThanOrEqualToCheck(
-                (procService, frameRange, startValueFromDb) =>
-                        procService.IsGreaterThanOrEqualTo(startValueFromDb, frameRange.StartValue));
-
-            RangeMatchProcessingService.ConfigureIsLessThanOrEqualToCheck(
-                (procService, frameRange, startValueFromDb) =>
-                        procService.IsLessThanOrEqualTo(startValueFromDb, frameRange.StartValue));
-
-            RangeMatchProcessingService.ConfigureIsEqualToCheck(
-               (procService, frameRange, startValueFromDb) =>
-                       procService.IsEqualTo(frameRange.StartValue, startValueFromDb));
+                        (procService, frameRange, numberRange) =>
+                            procService.IsBetween(frameRange.StartValue, numberRange) ||
+                            procService.IsBetween(frameRange.EndValue, numberRange));
         }
 
         public Func<Hitbox, bool> GetHitboxStartupPredicate(RangeModel hitboxStartupFrame)
@@ -41,31 +20,5 @@ namespace FrannHammer.Services
                IsValueInRange(h.Hitbox4, hitboxStartupFrame) ||
                IsValueInRange(h.Hitbox5, hitboxStartupFrame) ||
                IsValueInRange(h.Hitbox6, hitboxStartupFrame);
-
-        public bool IsValueInRange(string hitboxRaw, RangeModel frameRange)
-        {
-            Guard.VerifyObjectNotNull(frameRange, nameof(frameRange));
-
-            var dataParsingService = new DataParsingService();
-
-            var dbNumberRanges = dataParsingService.Parse(hitboxRaw);
-
-            if (dbNumberRanges.Count > 0)
-            {
-                if (dbNumberRanges[0].End.HasValue)
-                {
-                    return RangeMatchProcessingService.Check(frameRange, dbNumberRanges[0].Start,
-                        dbNumberRanges[0].End.Value);
-                }
-                else
-                {
-                    return RangeMatchProcessingService.Check(frameRange, dbNumberRanges[0].Start);
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
     }
 }

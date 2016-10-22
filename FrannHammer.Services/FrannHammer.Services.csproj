@@ -62,10 +62,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseDamageSearchPredicateService.cs" />
     <Compile Include="BaseService.cs" />
+    <Compile Include="DataParsingService.cs" />
     <Compile Include="FirstActionableFrameSearchPredicateService.cs" />
     <Compile Include="HitboxActiveSearchPredicateService.cs" />
-    <Compile Include="HitboxSearchPredicateProcessingService.cs" />
     <Compile Include="RangeMatchProcessingService.cs" />
     <Compile Include="RangeQuantifierService.cs" />
     <Compile Include="Exceptions\EntityNotFoundException.cs" />

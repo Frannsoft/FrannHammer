@@ -82,6 +82,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseDamageSearchPredicateServiceTest.cs" />
+    <Compile Include="BaseMoveHitboxSearchPredicateServiceTest.cs" />
+    <Compile Include="DataParsingServiceTest.cs" />
     <Compile Include="FirstActionableFrameSearchPredicateServiceTest.cs" />
     <Compile Include="Harnesses\HarnessAsserts.cs" />
     <Compile Include="Harnesses\IMoveDataHarness.cs" />
