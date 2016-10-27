@@ -3,9 +3,9 @@ using FrannHammer.Models;
 
 namespace FrannHammer.Services
 {
-    public class HitboxActiveSearchPredicateService : SearchPredicateService
+    public class AutoCancelSearchPredicateService : SearchPredicateService
     {
-        public HitboxActiveSearchPredicateService()
+        public AutoCancelSearchPredicateService()
         {
             OverrideRangeChecks();
         }
@@ -13,9 +13,9 @@ namespace FrannHammer.Services
         private void OverrideRangeChecks()
         {
             RangeMatchProcessingService.ConfigureIsBetweenCheck(
-                       (procService, frameRange, numberRange) =>
-                          procService.IsGreaterThan(frameRange.StartValue, numberRange.Start) &&
-                    (!numberRange.End.HasValue || procService.IsLessThan(frameRange.EndValue, numberRange.End.Value)));
+                (procService, frameRange, numberRange) =>
+                    procService.IsGreaterThan(numberRange.Start, frameRange.StartValue) &&
+                    (!numberRange.End.HasValue || procService.IsLessThan(numberRange.End.Value, frameRange.EndValue)));
 
             RangeMatchProcessingService.ConfigureIsGreaterThanOrEqualToCheck(
                 (procService, frameRange, startValueFromDb) =>
@@ -35,12 +35,8 @@ namespace FrannHammer.Services
                 procService.IsEqualTo(frameRange.StartValue, numberRange.Start));
         }
 
-        public Func<Hitbox, bool> GetHitboxActivePredicate(RangeModel hitboxActiveOnFrame)
-            => h => IsValueInRange(h.Hitbox1, hitboxActiveOnFrame) ||
-               IsValueInRange(h.Hitbox2, hitboxActiveOnFrame) ||
-               IsValueInRange(h.Hitbox3, hitboxActiveOnFrame) ||
-               IsValueInRange(h.Hitbox4, hitboxActiveOnFrame) ||
-               IsValueInRange(h.Hitbox5, hitboxActiveOnFrame) ||
-               IsValueInRange(h.Hitbox6, hitboxActiveOnFrame);
+        public Func<Autocancel, bool> GetAutoCancelSearchPredicate(RangeModel autoCancelFrame)
+            => a => IsValueInRange(a.Cancel1?.Replace(">", string.Empty), autoCancelFrame) ||
+                    IsValueInRange(a.Cancel2?.Replace(">", string.Empty), autoCancelFrame);
     }
 }

@@ -4,19 +4,17 @@ using NUnit.Framework;
 namespace FrannHammer.Services.Tests
 {
     [TestFixture]
-    public class NameSearchPredicateServiceTest
+    public class CharacterNameSearchPredicateServiceTest
     {
-
-        private NameSearchPredicateService _service;
+        private CharacterNameSearchPredicateService _service;
         private const string UnableToFindValueMessage = "Unable to find value in range";
         private const string FoundValueMessage = "Found value in range";
 
         [SetUp]
         public void SetUp()
         {
-            _service = new NameSearchPredicateService();
+            _service = new CharacterNameSearchPredicateService();
         }
-
 
         [Test]
         public void DoesValidNameFindMove()
@@ -25,9 +23,9 @@ namespace FrannHammer.Services.Tests
 
             var createdPredicate = _service.GetNameDelegate(expectedName);
 
-            var didFindMove = createdPredicate(new Move
+            var didFindMove = createdPredicate(new Character
             {
-                Name = "testname"
+                DisplayName = "test"
             });
 
             Assert.That(didFindMove, UnableToFindValueMessage);
@@ -40,9 +38,9 @@ namespace FrannHammer.Services.Tests
 
             var createdPredicate = _service.GetNameDelegate(expectedName);
 
-            var didFindMove = createdPredicate(new Move
+            var didFindMove = createdPredicate(new Character
             {
-                Name = "testname"
+                DisplayName = "test"
             });
 
             Assert.That(!didFindMove, FoundValueMessage);
@@ -55,9 +53,9 @@ namespace FrannHammer.Services.Tests
 
             var createdPredicate = _service.GetNameDelegate(expectedName);
 
-            var didFindMove = createdPredicate(new Move
+            var didFindMove = createdPredicate(new Character
             {
-                Name = "test"
+                DisplayName = "test"
             });
 
             Assert.That(didFindMove, "Did not find move using created predicate of empty string");

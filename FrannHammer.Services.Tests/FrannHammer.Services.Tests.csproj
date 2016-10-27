@@ -82,13 +82,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoCancelSearchPredicateServiceTest.cs" />
     <Compile Include="BaseMoveHitboxSearchPredicateServiceTest.cs" />
+    <Compile Include="CharacterNameSearchPredicateServiceTest.cs" />
     <Compile Include="DataParsingServiceTest.cs" />
     <Compile Include="Harnesses\HarnessAsserts.cs" />
     <Compile Include="Harnesses\IMoveDataHarness.cs" />
     <Compile Include="Harnesses\IMetadataHarness.cs" />
     <Compile Include="Harnesses\MetadataHarness.cs" />
     <Compile Include="HitboxActiveSearchPredicateServiceTest.cs" />
+    <Compile Include="LandingLagSearchPredicateServiceTest.cs" />
     <Compile Include="NameSearchPredicateServiceTest.cs" />
     <Compile Include="RangeQuantifierServiceTest.cs" />
     <Compile Include="Suts\MoveDataSut.cs" />

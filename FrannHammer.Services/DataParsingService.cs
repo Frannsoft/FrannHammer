@@ -19,10 +19,13 @@ namespace FrannHammer.Services
 
         public IList<NumberRange> Parse(string rawData)
         {
-            Guard.VerifyStringIsNotNullOrEmpty(rawData, nameof(rawData));
+            //if data is empty don't bother parsing it.
+            if(string.IsNullOrEmpty(rawData))
+            { return _numberRanges; }
 
             if (_numberRanges.Count > 0)
             { _numberRanges.Clear(); } //empty existing entries so we don't get stale data
+
 
             rawData = rawData.Replace(Space, string.Empty); //remove spaces
             if (rawData.Contains(Comma))

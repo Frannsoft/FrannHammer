@@ -7,17 +7,21 @@ namespace FrannHammer.Services
     {
         //these have custom range checks
         private readonly HitboxActiveSearchPredicateService _hitboxActiveSearchPredicateService;
-        private readonly NameSearchPredicateService _nameSearchExpressionService;
+        private readonly NameSearchPredicateService _nameSearchPredicateService;
+        private readonly CharacterNameSearchPredicateService _characterNameSearchPredicateService;
         private readonly FirstActionableFrameSearchPredicateService _firstActionableFrameSearchPredicateService;
+        private readonly LandingLagSearchPredicateService _landingLagSearchPredicateService;
 
         //uses default range checks
         private readonly SearchPredicateService _baseMoveHitboxPredicateService;
 
         public SearchPredicateFactory()
         {
-            _nameSearchExpressionService = new NameSearchPredicateService();
+            _nameSearchPredicateService = new NameSearchPredicateService();
+            _characterNameSearchPredicateService = new CharacterNameSearchPredicateService();
             _hitboxActiveSearchPredicateService = new HitboxActiveSearchPredicateService();
             _firstActionableFrameSearchPredicateService = new FirstActionableFrameSearchPredicateService();
+            _landingLagSearchPredicateService = new LandingLagSearchPredicateService();
             _baseMoveHitboxPredicateService = new SearchPredicateService();
         }
 
@@ -45,9 +49,15 @@ namespace FrannHammer.Services
         public Func<Move, bool> CreateFirstActionableFramePredicate(ComplexMoveSearchModel searchModel)
            => _firstActionableFrameSearchPredicateService.GetFirstActionableFrameSearchPredicate(searchModel.FirstActionableFrame);
 
-        public Func<Move, bool> CreateNamePredicate(ComplexMoveSearchModel searchModel)
-            => _nameSearchExpressionService.GetNameDelegate(searchModel.Name);
+        public Func<LandingLag, bool> CreateLandingLagPredicate(ComplexMoveSearchModel searchModel)
+            => _landingLagSearchPredicateService.GetLandingLagSearchPredicate(searchModel.LandingLag);
 
-       
+        public Func<Move, bool> CreateNamePredicate(ComplexMoveSearchModel searchModel)
+            => _nameSearchPredicateService.GetNameDelegate(searchModel.Name);
+
+        public Func<Character, bool> CreateCharacterNamePredicate(ComplexMoveSearchModel searchModel)
+            => _characterNameSearchPredicateService.GetNameDelegate(searchModel.CharacterName);
+
+
     }
 }
