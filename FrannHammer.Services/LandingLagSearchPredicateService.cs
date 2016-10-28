@@ -6,6 +6,11 @@ namespace FrannHammer.Services
     public class LandingLagSearchPredicateService : SearchPredicateService
     {
         public Func<LandingLag, bool> GetLandingLagSearchPredicate(RangeModel landingLagFrameRange)
-            => landingLag => IsValueInRange(landingLag.Frames.ToString(), landingLagFrameRange);
+        {
+            if(landingLagFrameRange == null)
+            { return null; }
+
+            return landingLag => IsValueInRange(landingLag.Frames.ToString(), landingLagFrameRange);
+        }
     }
 }

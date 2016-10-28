@@ -5,7 +5,7 @@ namespace FrannHammer.Services
 {
     public class CharacterNameSearchPredicateService : SearchPredicateService
     {
-        public Func<Character, bool> GetNameDelegate(string name)
+        public Func<Character, bool> GetCharacterNamePredicate(string name)
         {
             if (!string.IsNullOrEmpty(name))
             {

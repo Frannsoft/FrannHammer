@@ -81,6 +81,7 @@
     <Compile Include="ResultValidationService.cs" />
     <Compile Include="SearchPredicateFactory.cs" />
     <Compile Include="SearchPredicateService.cs" />
+    <Compile Include="ServiceExtensions.cs" />
     <Compile Include="SmashAttributeTypeService.cs" />
   </ItemGroup>
   <ItemGroup>

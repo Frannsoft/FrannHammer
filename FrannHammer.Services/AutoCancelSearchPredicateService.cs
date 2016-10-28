@@ -36,7 +36,12 @@ namespace FrannHammer.Services
         }
 
         public Func<Autocancel, bool> GetAutoCancelSearchPredicate(RangeModel autoCancelFrame)
-            => a => IsValueInRange(a.Cancel1?.Replace(">", string.Empty), autoCancelFrame) ||
+        {
+            if (autoCancelFrame == null)
+            { return null; }
+
+            return a => IsValueInRange(a.Cancel1?.Replace(">", string.Empty), autoCancelFrame) ||
                     IsValueInRange(a.Cancel2?.Replace(">", string.Empty), autoCancelFrame);
+        }
     }
 }

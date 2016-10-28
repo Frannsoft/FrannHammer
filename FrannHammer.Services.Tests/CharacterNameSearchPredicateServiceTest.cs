@@ -21,7 +21,7 @@ namespace FrannHammer.Services.Tests
         {
             string expectedName = "test";
 
-            var createdPredicate = _service.GetNameDelegate(expectedName);
+            var createdPredicate = _service.GetCharacterNamePredicate(expectedName);
 
             var didFindMove = createdPredicate(new Character
             {
@@ -36,7 +36,7 @@ namespace FrannHammer.Services.Tests
         {
             string expectedName = "zeta";
 
-            var createdPredicate = _service.GetNameDelegate(expectedName);
+            var createdPredicate = _service.GetCharacterNamePredicate(expectedName);
 
             var didFindMove = createdPredicate(new Character
             {
@@ -51,7 +51,7 @@ namespace FrannHammer.Services.Tests
         {
             string expectedName = string.Empty;
 
-            var createdPredicate = _service.GetNameDelegate(expectedName);
+            var createdPredicate = _service.GetCharacterNamePredicate(expectedName);
 
             var didFindMove = createdPredicate(new Character
             {

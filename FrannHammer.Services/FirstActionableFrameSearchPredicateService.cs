@@ -6,6 +6,11 @@ namespace FrannHammer.Services
     public class FirstActionableFrameSearchPredicateService : SearchPredicateService
     {
         public Func<Move, bool> GetFirstActionableFrameSearchPredicate(RangeModel firstActionableFrameRange)
-           => move => IsValueInRange(move.FirstActionableFrame, firstActionableFrameRange);
+        {
+            if(firstActionableFrameRange == null)
+            { return null; }
+
+            return move => IsValueInRange(move.FirstActionableFrame, firstActionableFrameRange);
+        }
     }
 }

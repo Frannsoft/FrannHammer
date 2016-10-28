@@ -49,7 +49,7 @@ namespace FrannHammer.Api.Controllers
         [HttpPost]
         public IHttpActionResult GetMovesThatMeetCriteria(ComplexMoveSearchModel complexMoveSearchModel, [FromUri] string fields = "")
         {
-            var content = _metadataService.GetAll<MoveDto>(complexMoveSearchModel, fields, false);
+            var content = _metadataService.GetAll<MoveDto>(complexMoveSearchModel, fields);
             return Ok(content);
         }
 

@@ -5,11 +5,11 @@ namespace FrannHammer.Services
 {
     public class NameSearchPredicateService
     {
-        public Func<Move, bool> GetNameDelegate(string name)
+        public Func<Move, bool> GetNamePredicate(string name)
         {
             if (!string.IsNullOrEmpty(name))
             {
-                return m => m.Name.Contains(name);
+                return m => m.Name.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0;
             }
             else
             {

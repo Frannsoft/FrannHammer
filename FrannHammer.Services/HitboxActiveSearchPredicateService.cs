@@ -36,11 +36,16 @@ namespace FrannHammer.Services
         }
 
         public Func<Hitbox, bool> GetHitboxActivePredicate(RangeModel hitboxActiveOnFrame)
-            => h => IsValueInRange(h.Hitbox1, hitboxActiveOnFrame) ||
-               IsValueInRange(h.Hitbox2, hitboxActiveOnFrame) ||
-               IsValueInRange(h.Hitbox3, hitboxActiveOnFrame) ||
-               IsValueInRange(h.Hitbox4, hitboxActiveOnFrame) ||
-               IsValueInRange(h.Hitbox5, hitboxActiveOnFrame) ||
-               IsValueInRange(h.Hitbox6, hitboxActiveOnFrame);
+        {
+            if(hitboxActiveOnFrame == null)
+            { return null; }
+
+            return h => IsValueInRange(h.Hitbox1, hitboxActiveOnFrame) ||
+                 IsValueInRange(h.Hitbox2, hitboxActiveOnFrame) ||
+                 IsValueInRange(h.Hitbox3, hitboxActiveOnFrame) ||
+                 IsValueInRange(h.Hitbox4, hitboxActiveOnFrame) ||
+                 IsValueInRange(h.Hitbox5, hitboxActiveOnFrame) ||
+                 IsValueInRange(h.Hitbox6, hitboxActiveOnFrame);
+        }
     }
 }

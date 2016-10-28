@@ -43,12 +43,17 @@ namespace FrannHammer.Services
 
         protected internal Func<T, bool> GetPredicate<T>(RangeModel frameRange)
             where T : BaseMoveHitboxMeta
-            => h => IsValueInRange(h.Hitbox1, frameRange) ||
-               IsValueInRange(h.Hitbox2, frameRange) ||
-               IsValueInRange(h.Hitbox3, frameRange) ||
-               IsValueInRange(h.Hitbox4, frameRange) ||
-               IsValueInRange(h.Hitbox5, frameRange) ||
-               IsValueInRange(h.Hitbox6, frameRange);
+        {
+            if(frameRange == null)
+            { return null; }
+
+            return h => IsValueInRange(h.Hitbox1, frameRange) ||
+                 IsValueInRange(h.Hitbox2, frameRange) ||
+                 IsValueInRange(h.Hitbox3, frameRange) ||
+                 IsValueInRange(h.Hitbox4, frameRange) ||
+                 IsValueInRange(h.Hitbox5, frameRange) ||
+                 IsValueInRange(h.Hitbox6, frameRange);
+        }
 
         protected internal bool IsValueInRange(string raw, RangeModel frameRange)
         {

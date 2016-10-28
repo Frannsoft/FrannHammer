@@ -11,9 +11,23 @@ namespace FrannHammer.Services
         private readonly CharacterNameSearchPredicateService _characterNameSearchPredicateService;
         private readonly FirstActionableFrameSearchPredicateService _firstActionableFrameSearchPredicateService;
         private readonly LandingLagSearchPredicateService _landingLagSearchPredicateService;
+        private readonly AutoCancelSearchPredicateService _autocancelSearchPredicateService;
 
         //uses default range checks
         private readonly SearchPredicateService _baseMoveHitboxPredicateService;
+
+        public Func<Hitbox, bool> HitboxStartupPredicate { get; private set; }
+        public Func<BaseDamage, bool> BaseDamagePredicate { get; private set; }
+        public Func<Angle, bool> AnglePredicate { get; private set; }
+        public Func<BaseKnockback, bool> BaseKnockbackPredicate { get; private set; }
+        public Func<SetKnockback, bool> SetKnockbackPredicate { get; private set; }
+        public Func<KnockbackGrowth, bool> KnockbackGrowthPredicate { get; private set; }
+        public Func<Hitbox, bool> HitboxActiveOnFramePredicate { get; private set; }
+        public Func<Move, bool> FirstActionableFramePredicate { get; private set; }
+        public Func<LandingLag, bool> LandingLagPredicate { get; private set; }
+        public Func<Autocancel, bool> AutocancelPredicate { get; private set; }
+        public Func<Move, bool> NamePredicate { get; private set; }
+        public Func<Character, bool> CharacterNamePredicate { get; private set; }
 
         public SearchPredicateFactory()
         {
@@ -23,40 +37,60 @@ namespace FrannHammer.Services
             _firstActionableFrameSearchPredicateService = new FirstActionableFrameSearchPredicateService();
             _landingLagSearchPredicateService = new LandingLagSearchPredicateService();
             _baseMoveHitboxPredicateService = new SearchPredicateService();
+            _autocancelSearchPredicateService = new AutoCancelSearchPredicateService();
         }
 
-        public Func<Hitbox, bool> CreateHitboxStartupPredicate(ComplexMoveSearchModel searchModel)
+        public void CreateSearchPredicates(ComplexMoveSearchModel searchModel)
+        {
+            HitboxStartupPredicate = CreateHitboxStartupPredicate(searchModel);
+            BaseDamagePredicate = CreateBaseDamagePredicate(searchModel);
+            AnglePredicate = CreateAnglePredicate(searchModel);
+            BaseKnockbackPredicate = CreateBaseKnockbackPredicate(searchModel);
+            SetKnockbackPredicate = CreateSetKnockbackPredicate(searchModel);
+            KnockbackGrowthPredicate = CreateKnockbackGrowthPredicate(searchModel);
+            HitboxActiveOnFramePredicate = CreateHitboxActiveOnFramePredicate(searchModel);
+            FirstActionableFramePredicate = CreateFirstActionableFramePredicate(searchModel);
+            LandingLagPredicate = CreateLandingLagPredicate(searchModel);
+            NamePredicate = CreateNamePredicate(searchModel);
+            CharacterNamePredicate = CreateCharacterNamePredicate(searchModel);
+            AutocancelPredicate = CreateAutocancelPredicate(searchModel);
+        }
+
+        private Func<Autocancel, bool> CreateAutocancelPredicate(ComplexMoveSearchModel searchModel)
+            => _autocancelSearchPredicateService.GetAutoCancelSearchPredicate(searchModel.AutoCancel);
+
+        private Func<Hitbox, bool> CreateHitboxStartupPredicate(ComplexMoveSearchModel searchModel)
             => _baseMoveHitboxPredicateService.GetPredicate<Hitbox>(searchModel.HitboxStartupFrame);
 
-        public Func<BaseDamage, bool> CreateBaseDamagePredicate(ComplexMoveSearchModel searchModel)
+        private Func<BaseDamage, bool> CreateBaseDamagePredicate(ComplexMoveSearchModel searchModel)
             => _baseMoveHitboxPredicateService.GetPredicate<BaseDamage>(searchModel.BaseDamage);
 
-        public Func<Angle, bool> CreateAnglePredicate(ComplexMoveSearchModel searchModel)
+        private Func<Angle, bool> CreateAnglePredicate(ComplexMoveSearchModel searchModel)
             => _baseMoveHitboxPredicateService.GetPredicate<Angle>(searchModel.Angle);
 
-        public Func<BaseKnockback, bool> CreateBaseKnockbackPredicate(ComplexMoveSearchModel searchModel)
+        private Func<BaseKnockback, bool> CreateBaseKnockbackPredicate(ComplexMoveSearchModel searchModel)
             => _baseMoveHitboxPredicateService.GetPredicate<BaseKnockback>(searchModel.BaseKnockback);
 
-        public Func<SetKnockback, bool> CreateSetKnockbackPredicate(ComplexMoveSearchModel searchModel)
+        private Func<SetKnockback, bool> CreateSetKnockbackPredicate(ComplexMoveSearchModel searchModel)
            => _baseMoveHitboxPredicateService.GetPredicate<SetKnockback>(searchModel.SetKnockback);
 
-        public Func<KnockbackGrowth, bool> CreateKnockbackGrowthPredicate(ComplexMoveSearchModel searchModel)
+        private Func<KnockbackGrowth, bool> CreateKnockbackGrowthPredicate(ComplexMoveSearchModel searchModel)
            => _baseMoveHitboxPredicateService.GetPredicate<KnockbackGrowth>(searchModel.KnockbackGrowth);
 
-        public Func<Hitbox, bool> CreateHitboxActiveOnFramePredicate(ComplexMoveSearchModel searchModel)
+        private Func<Hitbox, bool> CreateHitboxActiveOnFramePredicate(ComplexMoveSearchModel searchModel)
             => _hitboxActiveSearchPredicateService.GetHitboxActivePredicate(searchModel.HitboxActiveOnFrame);
 
-        public Func<Move, bool> CreateFirstActionableFramePredicate(ComplexMoveSearchModel searchModel)
+        private Func<Move, bool> CreateFirstActionableFramePredicate(ComplexMoveSearchModel searchModel)
            => _firstActionableFrameSearchPredicateService.GetFirstActionableFrameSearchPredicate(searchModel.FirstActionableFrame);
 
-        public Func<LandingLag, bool> CreateLandingLagPredicate(ComplexMoveSearchModel searchModel)
+        private Func<LandingLag, bool> CreateLandingLagPredicate(ComplexMoveSearchModel searchModel)
             => _landingLagSearchPredicateService.GetLandingLagSearchPredicate(searchModel.LandingLag);
 
-        public Func<Move, bool> CreateNamePredicate(ComplexMoveSearchModel searchModel)
-            => _nameSearchPredicateService.GetNameDelegate(searchModel.Name);
+        private Func<Move, bool> CreateNamePredicate(ComplexMoveSearchModel searchModel)
+            => _nameSearchPredicateService.GetNamePredicate(searchModel.Name);
 
-        public Func<Character, bool> CreateCharacterNamePredicate(ComplexMoveSearchModel searchModel)
-            => _characterNameSearchPredicateService.GetNameDelegate(searchModel.CharacterName);
+        private Func<Character, bool> CreateCharacterNamePredicate(ComplexMoveSearchModel searchModel)
+            => _characterNameSearchPredicateService.GetCharacterNamePredicate(searchModel.CharacterName);
 
 
     }
