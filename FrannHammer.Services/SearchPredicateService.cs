@@ -55,7 +55,7 @@ namespace FrannHammer.Services
                  IsValueInRange(h.Hitbox6, frameRange);
         }
 
-        protected internal bool IsValueInRange(string raw, RangeModel frameRange)
+        protected internal virtual bool IsValueInRange(string raw, RangeModel frameRange)
         {
             Guard.VerifyObjectNotNull(frameRange, nameof(frameRange));
 
@@ -63,21 +63,15 @@ namespace FrannHammer.Services
 
             var dbNumberRanges = dataParsingService.Parse(raw);
 
+            bool retVal = false;
             if (dbNumberRanges.Count > 0)
             {
-                if (dbNumberRanges[0].End.HasValue)
+                foreach (var dbNumberRange in dbNumberRanges)
                 {
-                    return RangeMatchProcessingService.Check(frameRange, dbNumberRanges[0]);
-                }
-                else
-                {
-                    return RangeMatchProcessingService.Check(frameRange, dbNumberRanges[0]);
+                    retVal = RangeMatchProcessingService.Check(frameRange, dbNumberRange);
                 }
             }
-            else
-            {
-                return false;
-            }
+            return retVal;
         }
     }
 }

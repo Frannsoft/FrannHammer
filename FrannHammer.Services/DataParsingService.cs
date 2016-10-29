@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using FrannHammer.Core;
 using FrannHammer.Models;
 
 namespace FrannHammer.Services
@@ -20,7 +19,7 @@ namespace FrannHammer.Services
         public IList<NumberRange> Parse(string rawData)
         {
             //if data is empty don't bother parsing it.
-            if(string.IsNullOrEmpty(rawData))
+            if (string.IsNullOrEmpty(rawData))
             { return _numberRanges; }
 
             if (_numberRanges.Count > 0)

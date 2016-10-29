@@ -260,6 +260,7 @@ namespace FrannHammer.Services
             var characterNames = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.CharacterNamePredicate).Select(c => c.Id);
 
             var names = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.NamePredicate)?.Select(m => m.Id);
+            var hitboxActiveLengths = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.HitboxActiveLengthPredicate)?.Select(h => h.MoveId);
             var hitboxStartups = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.HitboxStartupPredicate)?.Select(h => h.MoveId);
             var hitboxActives = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.HitboxActiveOnFramePredicate)?.Select(h => h.MoveId);
             var baseDamages = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.BaseDamagePredicate)?.Select(b => b.MoveId);
@@ -271,7 +272,9 @@ namespace FrannHammer.Services
             var landingLags = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.LandingLagPredicate)?.Select(l => l.MoveId);
             var autocancels = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.AutocancelPredicate)?.Select(a => a.MoveId);
 
-            var combinedTotalMoveIds = names
+            var combinedTotalMoveIds = new List<int>()
+                .SafeConcat(names)
+                .SafeConcat(hitboxActiveLengths)
                 .SafeConcat(hitboxStartups)
                 .SafeConcat(hitboxActives)
                 .SafeConcat(baseDamages)

@@ -9,7 +9,8 @@ namespace FrannHammer.Services
         {
             if (!string.IsNullOrEmpty(name))
             {
-                return c => c.DisplayName.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0;
+                var trimmedName = name.Trim();
+                return c => c.DisplayName.IndexOf(trimmedName, StringComparison.OrdinalIgnoreCase) >= 0;
             }
             else
             {

@@ -2,7 +2,6 @@
 {
     public enum RangeQuantifier
     {
-        Any,
         EqualTo,
         GreaterThan,
         LessThan,

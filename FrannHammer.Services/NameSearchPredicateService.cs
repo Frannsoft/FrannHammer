@@ -7,13 +7,15 @@ namespace FrannHammer.Services
     {
         public Func<Move, bool> GetNamePredicate(string name)
         {
+
             if (!string.IsNullOrEmpty(name))
             {
-                return m => m.Name.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0;
+                var trimmedName = name.Trim();
+                return m => m.Name.IndexOf(trimmedName, StringComparison.OrdinalIgnoreCase) >= 0;
             }
             else
             {
-                return m => m.Name.Length > 0; //all
+                return null; //all
             }
         }
     }

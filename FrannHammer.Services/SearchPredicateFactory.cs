@@ -7,6 +7,7 @@ namespace FrannHammer.Services
     {
         //these have custom range checks
         private readonly HitboxActiveSearchPredicateService _hitboxActiveSearchPredicateService;
+        private readonly HitboxActiveLengthSearchPredicateService _hitboxActiveLengthSearchPredicateService;
         private readonly NameSearchPredicateService _nameSearchPredicateService;
         private readonly CharacterNameSearchPredicateService _characterNameSearchPredicateService;
         private readonly FirstActionableFrameSearchPredicateService _firstActionableFrameSearchPredicateService;
@@ -16,6 +17,7 @@ namespace FrannHammer.Services
         //uses default range checks
         private readonly SearchPredicateService _baseMoveHitboxPredicateService;
 
+        public Func<Hitbox, bool> HitboxActiveLengthPredicate { get; private set; }
         public Func<Hitbox, bool> HitboxStartupPredicate { get; private set; }
         public Func<BaseDamage, bool> BaseDamagePredicate { get; private set; }
         public Func<Angle, bool> AnglePredicate { get; private set; }
@@ -38,10 +40,12 @@ namespace FrannHammer.Services
             _landingLagSearchPredicateService = new LandingLagSearchPredicateService();
             _baseMoveHitboxPredicateService = new SearchPredicateService();
             _autocancelSearchPredicateService = new AutoCancelSearchPredicateService();
+            _hitboxActiveLengthSearchPredicateService = new HitboxActiveLengthSearchPredicateService();
         }
 
         public void CreateSearchPredicates(ComplexMoveSearchModel searchModel)
         {
+            HitboxActiveLengthPredicate = CreateHitboxActiveLengthPredicate(searchModel);
             HitboxStartupPredicate = CreateHitboxStartupPredicate(searchModel);
             BaseDamagePredicate = CreateBaseDamagePredicate(searchModel);
             AnglePredicate = CreateAnglePredicate(searchModel);
@@ -55,6 +59,9 @@ namespace FrannHammer.Services
             CharacterNamePredicate = CreateCharacterNamePredicate(searchModel);
             AutocancelPredicate = CreateAutocancelPredicate(searchModel);
         }
+
+        private Func<Hitbox, bool> CreateHitboxActiveLengthPredicate(ComplexMoveSearchModel searchModel)
+            => _hitboxActiveLengthSearchPredicateService.GetHitboxActiveLengthPredicate(searchModel.HitboxActiveLength);
 
         private Func<Autocancel, bool> CreateAutocancelPredicate(ComplexMoveSearchModel searchModel)
             => _autocancelSearchPredicateService.GetAutoCancelSearchPredicate(searchModel.AutoCancel);

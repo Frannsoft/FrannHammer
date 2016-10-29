@@ -37,7 +37,7 @@ namespace FrannHammer.Services
 
         public Func<Hitbox, bool> GetHitboxActivePredicate(RangeModel hitboxActiveOnFrame)
         {
-            if(hitboxActiveOnFrame == null)
+            if (hitboxActiveOnFrame == null)
             { return null; }
 
             return h => IsValueInRange(h.Hitbox1, hitboxActiveOnFrame) ||

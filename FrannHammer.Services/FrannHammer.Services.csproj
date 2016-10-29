@@ -68,6 +68,7 @@
     <Compile Include="CharacterNameSearchPredicateService.cs" />
     <Compile Include="DataParsingService.cs" />
     <Compile Include="FirstActionableFrameSearchPredicateService.cs" />
+    <Compile Include="HitboxActiveLengthSearchPredicateService.cs" />
     <Compile Include="HitboxActiveSearchPredicateService.cs" />
     <Compile Include="LandingLagSearchPredicateService.cs" />
     <Compile Include="RangeMatchProcessingService.cs" />
