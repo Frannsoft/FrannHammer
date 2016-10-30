@@ -105,5 +105,41 @@ namespace FrannHammer.Services.Tests
                 }
             }
         }
+
+        [Test]
+        public void ReturnsBaseDamageOnlyResult()
+        {
+            var rangeModel = new RangeModel
+            {
+                StartValue = 20,
+                RangeQuantifier = RangeQuantifier.EqualTo
+            };
+
+            var searchModel = new ComplexMoveSearchModel
+            {
+                BaseDamage = rangeModel
+            };
+
+            var results = _metadataService.GetAll<MoveDto>(searchModel).ToList();
+
+            Assert.That(results, Is.Not.Null);
+            Assert.That(results.Count, Is.GreaterThan(0));
+            HarnessAsserts.ExpandoObjectIsCorrect(results, $"{Id},{Name}");
+
+            var service = new BaseDamageSearchPredicateService();
+            foreach (var result in results)
+            {
+                var func = service.GetBaseDamagePredicate(rangeModel);
+
+                int moveId = result.Id;
+                string moveName = result.Name;
+                var thisMovesBaseDamages = Context.BaseDamage.Where(h => h.MoveId == moveId);
+
+                foreach (var baseDamage in thisMovesBaseDamages)
+                {
+                    Assert.That(func(baseDamage), $"Matching base damages of {moveName} were not able to be found!");
+                }
+            }
+        }
     }
 }

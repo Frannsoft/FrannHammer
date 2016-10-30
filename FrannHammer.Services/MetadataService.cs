@@ -286,8 +286,19 @@ namespace FrannHammer.Services
                 .SafeConcat(landingLags)
                 .SafeConcat(autocancels).Distinct().ToList();
 
-            var foundMoves = Db.Moves.Where(m => combinedTotalMoveIds.Contains(m.Id) && characterNames.Contains(m.OwnerId))
-                            .ProjectTo<TDto>().ToList();
+            IList<TDto> foundMoves;
+
+            if (combinedTotalMoveIds.Count > 0)
+            {
+                foundMoves =
+                    Db.Moves.Where(m => combinedTotalMoveIds.Contains(m.Id) && characterNames.Contains(m.OwnerId))
+                        .ProjectTo<TDto>().ToList();
+            }
+            else
+            {
+                foundMoves = Db.Moves.Where(m => characterNames.Contains(m.OwnerId))
+                    .ProjectTo<TDto>().ToList();
+            }
 
             return BuildContentResponseMultiple<TDto, TDto>(foundMoves, fields);
         }
@@ -295,7 +306,7 @@ namespace FrannHammer.Services
         private IList<T> GetEntitiesThatMeetSearchCriteria<T>(Func<T, bool> searchPredicate)
             where T : class
         {
-            if(searchPredicate == null)
+            if (searchPredicate == null)
             { return null; }
 
             return Db.Set<T>()
