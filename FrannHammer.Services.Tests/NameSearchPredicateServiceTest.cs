@@ -47,20 +47,5 @@ namespace FrannHammer.Services.Tests
 
             Assert.That(!didFindMove, FoundValueMessage);
         }
-
-        [Test]
-        public void DoesEmptyNameFindAllMoves()
-        {
-            string expectedName = string.Empty;
-
-            var createdPredicate = _service.GetNamePredicate(expectedName);
-
-            var didFindMove = createdPredicate(new Move
-            {
-                Name = "test"
-            });
-
-            Assert.That(didFindMove, "Did not find move using created predicate of empty string");
-        }
     }
 }

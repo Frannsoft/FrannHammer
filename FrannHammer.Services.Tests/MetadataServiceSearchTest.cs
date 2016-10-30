@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using FrannHammer.Models;
 using FrannHammer.Services.Tests.Harnesses;
 using NUnit.Framework;
@@ -10,11 +11,36 @@ namespace FrannHammer.Services.Tests
     {
         private IMetadataService _metadataService;
 
+        private static IEnumerable<IMoveSearchHarness> SearchTestCases()
+        {
+            yield return new MoveSearchHarness($"{Id},{Name}");
+        }
+
         [SetUp]
         public override void SetUp()
         {
             base.SetUp();
             _metadataService = new MetadataService(Context, ResultValidationService);
+        }
+
+        [Test]
+        [TestCaseSource(nameof(SearchTestCases))]
+        public void ReturnsAngleOnlyResult(IMoveSearchHarness moveSearchHarness)
+        {
+            var rangeModel = new RangeModel
+            {
+                StartValue = 40,
+                RangeQuantifier = RangeQuantifier.EqualTo
+            };
+
+            var searchModel = new ComplexMoveSearchModel
+            {
+                Angle = rangeModel
+            };
+
+            var searchFunc = new SearchPredicateService().GetPredicate<Angle>(rangeModel);
+
+            moveSearchHarness.SearchResultCollectionIsValid(searchModel, Context, searchFunc, moveSearchHarness.Fields);
         }
 
         [Test]
@@ -141,5 +167,7 @@ namespace FrannHammer.Services.Tests
                 }
             }
         }
+
+       
     }
 }
