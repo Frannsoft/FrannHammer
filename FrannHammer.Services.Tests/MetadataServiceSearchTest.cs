@@ -10,10 +10,17 @@ namespace FrannHammer.Services.Tests
     public class MetadataServiceSearchTest : ServiceBaseTest
     {
         private IMetadataService _metadataService;
+        private IMoveSearchHarness _moveSearchHarness;
 
-        private static IEnumerable<IMoveSearchHarness> SearchTestCases()
+        private static IEnumerable<RangeModel> Ranges()
         {
-            yield return new MoveSearchHarness($"{Id},{Name}");
+            yield return new RangeModel { StartValue = 5, RangeQuantifier = RangeQuantifier.EqualTo };
+            yield return new RangeModel { StartValue = 20, RangeQuantifier = RangeQuantifier.EqualTo };
+            yield return new RangeModel { StartValue = 10, RangeQuantifier = RangeQuantifier.GreaterThan };
+            yield return new RangeModel { StartValue = 10, RangeQuantifier = RangeQuantifier.LessThan };
+            yield return new RangeModel { StartValue = 20, RangeQuantifier = RangeQuantifier.GreaterThanOrEqualTo };
+            yield return new RangeModel { StartValue = 20, RangeQuantifier = RangeQuantifier.LessThanOrEqualTo };
+            yield return new RangeModel { StartValue = 10, RangeQuantifier = RangeQuantifier.Between, EndValue = 20 };
         }
 
         [SetUp]
@@ -21,18 +28,60 @@ namespace FrannHammer.Services.Tests
         {
             base.SetUp();
             _metadataService = new MetadataService(Context, ResultValidationService);
+            _moveSearchHarness = new MoveSearchHarness(string.Empty);
         }
 
         [Test]
-        [TestCaseSource(nameof(SearchTestCases))]
-        public void ReturnsAngleOnlyResult(IMoveSearchHarness moveSearchHarness)
+        public void ReturnsResultsForMultipleSearchAttributes()
         {
-            var rangeModel = new RangeModel
+            var searchModel = new ComplexMoveSearchModel
             {
-                StartValue = 40,
-                RangeQuantifier = RangeQuantifier.EqualTo
+                Angle = new RangeModel { StartValue = 10, RangeQuantifier = RangeQuantifier.GreaterThan },
+                AutoCancel = new RangeModel { StartValue = 5, RangeQuantifier = RangeQuantifier.GreaterThanOrEqualTo },
+                BaseDamage = new RangeModel { StartValue = 3, RangeQuantifier = RangeQuantifier.LessThanOrEqualTo },
+                BaseKnockback = new RangeModel { StartValue = 50, RangeQuantifier = RangeQuantifier.GreaterThan }
             };
 
+            var results = _metadataService.GetAll<MoveDto>(searchModel).ToList();
+
+            Assert.That(results, Is.Not.Null);
+            Assert.That(results.Count, Is.GreaterThan(0));
+            HarnessAsserts.ExpandoObjectIsCorrect(results, $"{Id},{Name}");
+        }
+
+        [Test]
+        [TestCaseSource(nameof(Ranges))]
+        public void ReturnsBaseDamageOnlyResult(RangeModel rangeModel)
+        {
+            var searchModel = new ComplexMoveSearchModel
+            {
+                BaseDamage = rangeModel
+            };
+            var service = new SearchPredicateService();
+            var func = service.GetPredicate<BaseDamage>(rangeModel);
+
+            _moveSearchHarness.SearchResultCollectionIsValid(searchModel, Context, func);
+        }
+
+        [Test]
+        [TestCaseSource(nameof(Ranges))]
+        public void ReturnsHitboxActiveLengthOnlyResult(RangeModel rangeModel)
+        {
+            var searchModel = new ComplexMoveSearchModel
+            {
+                HitboxActiveLength = rangeModel
+            };
+
+            var service = new HitboxActiveLengthSearchPredicateService();
+            var func = service.GetHitboxActiveLengthPredicate(rangeModel);
+
+            _moveSearchHarness.SearchResultCollectionIsValid(searchModel, Context, func);
+        }
+
+        [Test]
+        [TestCaseSource(nameof(Ranges))]
+        public void ReturnsAngleOnlyResult(RangeModel rangeModel)
+        {
             var searchModel = new ComplexMoveSearchModel
             {
                 Angle = rangeModel
@@ -40,7 +89,7 @@ namespace FrannHammer.Services.Tests
 
             var searchFunc = new SearchPredicateService().GetPredicate<Angle>(rangeModel);
 
-            moveSearchHarness.SearchResultCollectionIsValid(searchModel, Context, searchFunc, moveSearchHarness.Fields);
+            _moveSearchHarness.SearchResultCollectionIsValid(searchModel, Context, searchFunc);
         }
 
         [Test]
@@ -94,80 +143,5 @@ namespace FrannHammer.Services.Tests
                 Assert.That(characterName.ToLower().Contains(characterName.Trim().ToLower()));
             }
         }
-
-        [Test]
-        [TestCase(5)]
-        public void ReturnsHitboxActiveLengthOnlyResult(int valueUnderTest)
-        {
-            var rangeModel = new RangeModel
-            {
-                StartValue = valueUnderTest,
-                RangeQuantifier = RangeQuantifier.EqualTo
-            };
-
-            var searchModel = new ComplexMoveSearchModel
-            {
-                HitboxActiveLength = rangeModel
-            };
-
-            var results = _metadataService.GetAll<MoveDto>(searchModel).ToList();
-
-            Assert.That(results, Is.Not.Null);
-            Assert.That(results.Count, Is.GreaterThan(0));
-            HarnessAsserts.ExpandoObjectIsCorrect(results, $"{Id},{Name}");
-
-            var service = new HitboxActiveLengthSearchPredicateService();
-            foreach (var result in results)
-            {
-                var func = service.GetHitboxActiveLengthPredicate(rangeModel);
-
-                int moveId = result.Id;
-                string moveName = result.Name;
-                var thisMovesHitboxes = Context.Hitbox.Where(h => h.MoveId == moveId);
-
-                foreach (var hitbox in thisMovesHitboxes)
-                {
-                    Assert.That(func(hitbox), $"Matching hitboxes of {moveName} were not able to be found!");
-                }
-            }
-        }
-
-        [Test]
-        public void ReturnsBaseDamageOnlyResult()
-        {
-            var rangeModel = new RangeModel
-            {
-                StartValue = 20,
-                RangeQuantifier = RangeQuantifier.EqualTo
-            };
-
-            var searchModel = new ComplexMoveSearchModel
-            {
-                BaseDamage = rangeModel
-            };
-
-            var results = _metadataService.GetAll<MoveDto>(searchModel).ToList();
-
-            Assert.That(results, Is.Not.Null);
-            Assert.That(results.Count, Is.GreaterThan(0));
-            HarnessAsserts.ExpandoObjectIsCorrect(results, $"{Id},{Name}");
-
-            var service = new BaseDamageSearchPredicateService();
-            foreach (var result in results)
-            {
-                var func = service.GetBaseDamagePredicate(rangeModel);
-
-                int moveId = result.Id;
-                string moveName = result.Name;
-                var thisMovesBaseDamages = Context.BaseDamage.Where(h => h.MoveId == moveId);
-
-                foreach (var baseDamage in thisMovesBaseDamages)
-                {
-                    Assert.That(func(baseDamage), $"Matching base damages of {moveName} were not able to be found!");
-                }
-            }
-        }
-
-       
     }
 }

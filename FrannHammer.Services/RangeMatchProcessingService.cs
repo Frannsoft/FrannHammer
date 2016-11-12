@@ -20,26 +20,26 @@ namespace FrannHammer.Services
             _rangeQuantifierService = new RangeQuantifierService();
         }
 
-        public void ConfigureIsBetweenCheck(Func<RangeQuantifierService, RangeModel, NumberRange, bool> isBetweenCheck) =>
+        internal void ConfigureIsBetweenCheck(Func<RangeQuantifierService, RangeModel, NumberRange, bool> isBetweenCheck) =>
             _isBetweenCheck = isBetweenCheck;
 
-        public void ConfigureIsEqualToRangeCheck(
+        internal void ConfigureIsEqualToRangeCheck(
                 Func<RangeQuantifierService, RangeModel, NumberRange, bool> isEqualToRangeCheck) =>
             _isEqualToRangeCheck = isEqualToRangeCheck;
 
-        public void ConfigureIsGreaterThanCheck(Func<RangeQuantifierService, RangeModel, int, bool> isGreaterThanCheck) =>
+        internal void ConfigureIsGreaterThanCheck(Func<RangeQuantifierService, RangeModel, int, bool> isGreaterThanCheck) =>
             _isGreaterThanCheck = isGreaterThanCheck;
 
-        public void ConfigureIsLessThanCheck(Func<RangeQuantifierService, RangeModel, int, bool> isLessThanCheck) =>
+        internal void ConfigureIsLessThanCheck(Func<RangeQuantifierService, RangeModel, int, bool> isLessThanCheck) =>
             _isLessThanCheck = isLessThanCheck;
 
-        public void ConfigureIsGreaterThanOrEqualToCheck(Func<RangeQuantifierService, RangeModel, int, bool> isGreaterThanOrEqualToCheck) =>
+        internal void ConfigureIsGreaterThanOrEqualToCheck(Func<RangeQuantifierService, RangeModel, int, bool> isGreaterThanOrEqualToCheck) =>
             _isGreaterThanOrEqualToCheck = isGreaterThanOrEqualToCheck;
 
-        public void ConfigureIsLessThanOrEqualToCheck(Func<RangeQuantifierService, RangeModel, int, bool> isLessThanOrEqualToCheck) =>
+        internal void ConfigureIsLessThanOrEqualToCheck(Func<RangeQuantifierService, RangeModel, int, bool> isLessThanOrEqualToCheck) =>
           _isLessThanOrEqualToCheck = isLessThanOrEqualToCheck;
 
-        public void ConfigureIsEqualToCheck(Func<RangeQuantifierService, RangeModel, int, bool> isEqualToCheck) =>
+        internal void ConfigureIsEqualToCheck(Func<RangeQuantifierService, RangeModel, int, bool> isEqualToCheck) =>
             _isEqualToCheck = isEqualToCheck;
 
 

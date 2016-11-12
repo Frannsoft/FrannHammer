@@ -51,7 +51,7 @@ namespace FrannHammer.Api.Data.Tests
                                                                                           khmove.KnockbackGrowth.Equals(move.KnockbackGrowth) &&
                                                                                           khmove.LandingLag.Equals(move.LandingLag) &&
                                                                                           khmove.OwnerId == move.OwnerId);
-                    Assert.That(moveFromKhPage, Is.Not.Null);
+                    Assert.That(moveFromKhPage, Is.Not.Null, $"Unable to find matching kh move for {move.Name}");
                 }
             }
         }

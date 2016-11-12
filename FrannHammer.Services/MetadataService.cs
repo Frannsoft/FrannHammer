@@ -273,19 +273,19 @@ namespace FrannHammer.Services
             var autocancels = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.AutocancelPredicate)?.Select(a => a.MoveId);
 
             var combinedTotalMoveIds = new List<int>()
-                .SafeConcat(names)
-                .SafeConcat(hitboxActiveLengths)
-                .SafeConcat(hitboxStartups)
-                .SafeConcat(hitboxActives)
-                .SafeConcat(baseDamages)
-                .SafeConcat(angles)
-                .SafeConcat(baseKnockbacks)
-                .SafeConcat(setKnockbacks)
-                .SafeConcat(knockbackGrowths)
-                .SafeConcat(firstActionableFrames)
-                .SafeConcat(landingLags)
-                .SafeConcat(autocancels).Distinct().ToList();
-
+                .SafeFilter(names)
+                .SafeFilter(hitboxActiveLengths)
+                .SafeFilter(hitboxStartups)
+                .SafeFilter(hitboxActives)
+                .SafeFilter(baseDamages)
+                .SafeFilter(angles)
+                .SafeFilter(baseKnockbacks)
+                .SafeFilter(setKnockbacks)
+                .SafeFilter(knockbackGrowths)
+                .SafeFilter(firstActionableFrames)
+                .SafeFilter(landingLags)
+                .SafeFilter(autocancels).Distinct().ToList();
+            
             IList<TDto> foundMoves;
 
             if (combinedTotalMoveIds.Count > 0)

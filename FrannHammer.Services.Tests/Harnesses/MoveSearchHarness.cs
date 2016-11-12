@@ -11,8 +11,7 @@ namespace FrannHammer.Services.Tests.Harnesses
         string Fields { get; }
 
         void SearchResultCollectionIsValid<TMoveType>(ComplexMoveSearchModel searchModel,
-            IApplicationDbContext context, Func<TMoveType, bool> serviceSearchMethod,
-            string fields = "")
+            IApplicationDbContext context, Func<TMoveType, bool> serviceSearchMethod)
             where TMoveType : class, IMoveIdEntity;
     }
 
@@ -30,18 +29,17 @@ namespace FrannHammer.Services.Tests.Harnesses
         }
 
         public void SearchResultCollectionIsValid<TMoveType>(ComplexMoveSearchModel searchModel,
-           IApplicationDbContext context, Func<TMoveType, bool> serviceSearchMethod,
-               string fields = "")
+           IApplicationDbContext context, Func<TMoveType, bool> serviceSearchMethod)
            where TMoveType : class, IMoveIdEntity
         {
-            var results = _moveSearchSut.GetAll(searchModel, context, _resultValidationService, fields).ToList();
+            var results = _moveSearchSut.GetAll(searchModel, context, _resultValidationService, Fields).ToList();
 
             Assert.That(results, Is.Not.Null);
             Assert.That(results.Count, Is.GreaterThan(0));
 
-            if (!string.IsNullOrEmpty(fields))
+            if (!string.IsNullOrEmpty(Fields))
             {
-                HarnessAsserts.ExpandoObjectIsCorrect(results, fields);
+                HarnessAsserts.ExpandoObjectIsCorrect(results, Fields);
             }
 
             foreach (var result in results)
