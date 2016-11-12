@@ -5,7 +5,7 @@ using FrannHammer.Services.MoveSearch;
 using FrannHammer.Services.Tests.Harnesses;
 using NUnit.Framework;
 
-namespace FrannHammer.Services.Tests
+namespace FrannHammer.Services.Tests.MoveSearch
 {
     [TestFixture]
     public class MetadataServiceSearchTest : ServiceBaseTest

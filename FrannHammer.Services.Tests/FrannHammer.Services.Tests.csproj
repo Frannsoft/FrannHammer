@@ -82,20 +82,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutoCancelSearchPredicateServiceTest.cs" />
-    <Compile Include="BaseMoveHitboxSearchPredicateServiceTest.cs" />
-    <Compile Include="CharacterNameSearchPredicateServiceTest.cs" />
-    <Compile Include="DataParsingServiceTest.cs" />
+    <Compile Include="MoveSearch\AutoCancelSearchPredicateServiceTest.cs" />
+    <Compile Include="MoveSearch\BaseMoveHitboxSearchPredicateServiceTest.cs" />
+    <Compile Include="MoveSearch\CharacterNameSearchPredicateServiceTest.cs" />
+    <Compile Include="MoveSearch\DataParsingServiceTest.cs" />
     <Compile Include="Harnesses\HarnessAsserts.cs" />
     <Compile Include="Harnesses\IMoveDataHarness.cs" />
     <Compile Include="Harnesses\IMetadataHarness.cs" />
     <Compile Include="Harnesses\MetadataHarness.cs" />
     <Compile Include="Harnesses\MoveSearchHarness.cs" />
-    <Compile Include="HitboxActiveSearchPredicateServiceTest.cs" />
-    <Compile Include="LandingLagSearchPredicateServiceTest.cs" />
-    <Compile Include="MetadataServiceSearchTest.cs" />
-    <Compile Include="NameSearchPredicateServiceTest.cs" />
-    <Compile Include="RangeQuantifierServiceTest.cs" />
+    <Compile Include="MoveSearch\HitboxActiveSearchPredicateServiceTest.cs" />
+    <Compile Include="MoveSearch\LandingLagSearchPredicateServiceTest.cs" />
+    <Compile Include="MoveSearch\MetadataServiceSearchTest.cs" />
+    <Compile Include="MoveSearch\NameSearchPredicateServiceTest.cs" />
+    <Compile Include="MoveSearch\RangeQuantifierServiceTest.cs" />
     <Compile Include="Suts\MoveDataSut.cs" />
     <Compile Include="Harnesses\MoveDataHarness.cs" />
     <Compile Include="ServiceBaseTest.cs" />

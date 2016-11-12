@@ -1,7 +1,7 @@
 ﻿using FrannHammer.Services.MoveSearch;
 using NUnit.Framework;
 
-namespace FrannHammer.Services.Tests
+namespace FrannHammer.Services.Tests.MoveSearch
 {
     [TestFixture]
     public class DataParsingServiceTest
