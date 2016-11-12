@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using FrannHammer.Services.MoveSearch;
+using NUnit.Framework;
 
 namespace FrannHammer.Services.Tests
 {

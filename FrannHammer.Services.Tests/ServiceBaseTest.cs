@@ -2,6 +2,7 @@
 using Effort;
 using Effort.DataLoaders;
 using FrannHammer.Api;
+using FrannHammer.Services.MoveSearch;
 using NUnit.Framework;
 
 namespace FrannHammer.Services.Tests

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using FrannHammer.Models;
+using FrannHammer.Services.MoveSearch;
 using FrannHammer.Services.Tests.Suts;
 using NUnit.Framework;
 

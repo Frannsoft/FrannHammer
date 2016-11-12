@@ -5,6 +5,7 @@ using FrannHammer.Models;
 using System.Linq;
 using System.Linq.Expressions;
 using AutoMapper.QueryableExtensions;
+using FrannHammer.Services.MoveSearch;
 
 namespace FrannHammer.Services
 {

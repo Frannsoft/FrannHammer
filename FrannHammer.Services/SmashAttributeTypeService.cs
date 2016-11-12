@@ -2,6 +2,7 @@
 using System.Linq;
 using FrannHammer.Models;
 using FrannHammer.Models.DTOs;
+using FrannHammer.Services.MoveSearch;
 
 namespace FrannHammer.Services
 {

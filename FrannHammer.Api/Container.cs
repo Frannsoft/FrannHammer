@@ -3,6 +3,7 @@ using Autofac.Features.ResolveAnything;
 using Autofac.Integration.WebApi;
 using FrannHammer.Api.Controllers;
 using FrannHammer.Services;
+using FrannHammer.Services.MoveSearch;
 
 namespace FrannHammer.Api
 {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using FrannHammer.Models;
 
-namespace FrannHammer.Services
+namespace FrannHammer.Services.MoveSearch
 {
     public class DataParsingService
     {

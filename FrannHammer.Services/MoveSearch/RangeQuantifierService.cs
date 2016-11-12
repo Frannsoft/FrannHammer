@@ -1,6 +1,6 @@
 ﻿using FrannHammer.Models;
 
-namespace FrannHammer.Services
+namespace FrannHammer.Services.MoveSearch
 {
     public class RangeQuantifierService
     {
