@@ -5,7 +5,17 @@ namespace FrannHammer.Services
 {
     public static class ServiceExtensions
     {
-        public static IEnumerable<T> SafeConcat<T>(this IEnumerable<T> currentItems, IEnumerable<T> newItems) 
-            => newItems == null ? currentItems : currentItems.Concat(newItems);
+        public static IList<T> SafeWhere<T>(this IList<T> currentItems, IEnumerable<T> newItems)
+        {
+            if (newItems == null)
+            { return currentItems; }
+
+            var matches = currentItems.Count == 0 ?
+                                newItems :
+                                newItems.Where(currentItems.Contains);
+
+            return matches.ToList();
+        }
+
     }
 }
