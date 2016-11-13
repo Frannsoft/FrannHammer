@@ -62,7 +62,9 @@ namespace FrannHammer.Models
     }
 
     public class MoveDto : BaseMoveModel
-    { }
+    {
+        public CharacterDto Owner { get; set; }
+    }
 
     public class Move : BaseMoveModel, IMoveEntity// : BaseModel
     {
