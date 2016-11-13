@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FrannHammer.Models;
+using FrannHammer.Services.MoveSearch;
 using FrannHammer.Services.Tests.Suts;
 using NUnit.Framework;
 
@@ -59,5 +61,7 @@ namespace FrannHammer.Services.Tests.Harnesses
 
             CollectionAssert.AllItemsAreNotNull(items);
         }
+
+       
     }
 }

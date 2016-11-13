@@ -62,12 +62,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MoveSearch\AutoCancelSearchPredicateService.cs" />
     <Compile Include="BaseService.cs" />
+    <Compile Include="MoveSearch\CharacterNameSearchPredicateService.cs" />
+    <Compile Include="MoveSearch\DataParsingService.cs" />
+    <Compile Include="MoveSearch\FirstActionableFrameSearchPredicateService.cs" />
+    <Compile Include="MoveSearch\HitboxActiveLengthSearchPredicateService.cs" />
+    <Compile Include="MoveSearch\HitboxActiveSearchPredicateService.cs" />
+    <Compile Include="MoveSearch\LandingLagSearchPredicateService.cs" />
+    <Compile Include="MoveSearch\RangeMatchProcessingService.cs" />
+    <Compile Include="MoveSearch\RangeQuantifierService.cs" />
     <Compile Include="Exceptions\EntityNotFoundException.cs" />
+    <Compile Include="MoveSearch\HitboxStartupSearchPredicateService.cs" />
     <Compile Include="IdentityModels.cs" />
     <Compile Include="MetadataService.cs" />
+    <Compile Include="MoveSearch\NameSearchPredicateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResultValidationService.cs" />
+    <Compile Include="MoveSearch\ResultValidationService.cs" />
+    <Compile Include="MoveSearch\SearchPredicateFactory.cs" />
+    <Compile Include="MoveSearch\SearchPredicateService.cs" />
+    <Compile Include="ServiceExtensions.cs" />
     <Compile Include="SmashAttributeTypeService.cs" />
   </ItemGroup>
   <ItemGroup>

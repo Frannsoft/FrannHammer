@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using FrannHammer.Core;
 using FrannHammer.Services.Exceptions;
 
-namespace FrannHammer.Services
+namespace FrannHammer.Services.MoveSearch
 {
     public interface IResultValidationService
     {

@@ -4,7 +4,9 @@ using FrannHammer.Core;
 using FrannHammer.Models;
 using System.Linq;
 using System.Linq.Expressions;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using FrannHammer.Services.MoveSearch;
 
 namespace FrannHammer.Services
 {
@@ -94,9 +96,20 @@ namespace FrannHammer.Services
         /// <param name="fields"></param>
         /// <param name="isValidatable"></param>
         /// <returns></returns>
-        IEnumerable<dynamic> GetAll<TEntity, TDto>(Expression<Func<TEntity, bool>> whereCondition, string fields = "", bool isValidatable = true)
+        IEnumerable<dynamic> GetAll<TEntity, TDto>(Expression<Func<TEntity, bool>> whereCondition, string fields = "",
+            bool isValidatable = true)
             where TEntity : class, IEntity
             where TDto : class;
+
+        /// <summary>
+        /// Get fields of the specified entities where the expression is true.
+        /// </summary>
+        /// <typeparam name="TDto"></typeparam>
+        /// <param name="searchModel"></param>
+        /// <param name="fields"></param>
+        /// <returns></returns>
+        IEnumerable<dynamic> GetAll<TDto>(ComplexMoveSearchModel searchModel, string fields = "")
+            where TDto : MoveDto;
 
         /// <summary>
         /// Get all entity data of a specific type.
@@ -237,6 +250,82 @@ namespace FrannHammer.Services
             { ResultValidationService.ValidateMultipleResultFromExpression(entities, where); }
 
             return BuildContentResponseMultiple<TDto, TDto>(entities, fields);
+        }
+
+        public IEnumerable<dynamic> GetAll<TDto>(ComplexMoveSearchModel searchModel, string fields = "")
+            where TDto : MoveDto
+        {
+            var searchPredicateFactory = new SearchPredicateFactory();
+            searchPredicateFactory.CreateSearchPredicates(searchModel);
+
+            //character name ids need to be separate since all other are move ids.
+            var characterNames = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.CharacterNamePredicate).Select(c => c.Id);
+
+            var names = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.NamePredicate)?.Select(m => m.Id);
+            var hitboxActiveLengths = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.HitboxActiveLengthPredicate)?.Select(h => h.MoveId);
+            var hitboxStartups = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.HitboxStartupPredicate)?.Select(h => h.MoveId);
+            var hitboxActives = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.HitboxActiveOnFramePredicate)?.Select(h => h.MoveId);
+            var baseDamages = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.BaseDamagePredicate)?.Select(b => b.MoveId);
+            var angles = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.AnglePredicate)?.Select(a => a.MoveId);
+            var baseKnockbacks = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.BaseKnockbackPredicate)?.Select(b => b.MoveId);
+            var setKnockbacks = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.SetKnockbackPredicate)?.Select(s => s.MoveId);
+            var knockbackGrowths = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.KnockbackGrowthPredicate)?.Select(k => k.MoveId);
+            var firstActionableFrames = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.FirstActionableFramePredicate)?.Select(f => f.Id);
+            var landingLags = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.LandingLagPredicate)?.Select(l => l.MoveId);
+            var autocancels = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.AutocancelPredicate)?.Select(a => a.MoveId);
+
+            var combinedTotalMoveIds = new List<int>()
+                .SafeFilter(names)
+                .SafeFilter(hitboxActiveLengths)
+                .SafeFilter(hitboxStartups)
+                .SafeFilter(hitboxActives)
+                .SafeFilter(baseDamages)
+                .SafeFilter(angles)
+                .SafeFilter(baseKnockbacks)
+                .SafeFilter(setKnockbacks)
+                .SafeFilter(knockbackGrowths)
+                .SafeFilter(firstActionableFrames)
+                .SafeFilter(landingLags)
+                .SafeFilter(autocancels).Distinct().ToList();
+            
+            IList<TDto> foundMoves;
+
+            if (combinedTotalMoveIds.Count > 0)
+            {
+                foundMoves =
+                    Db.Moves.Where(m => combinedTotalMoveIds.Contains(m.Id) && characterNames.Contains(m.OwnerId))
+                        .ProjectTo<TDto>().ToList();
+
+                ApplyCharacterDetailsToMove(foundMoves);
+            }
+            else
+            {
+                foundMoves = Db.Moves.Where(m => characterNames.Contains(m.OwnerId))
+                    .ProjectTo<TDto>().ToList();
+
+                ApplyCharacterDetailsToMove(foundMoves);
+            }
+
+            return BuildContentResponseMultiple<TDto, TDto>(foundMoves, fields);
+        }
+
+        private void ApplyCharacterDetailsToMove<T>(IEnumerable<T> moves)
+            where T : MoveDto
+        {
+            foreach (var move in moves)
+            {
+                move.Owner = Mapper.Map<CharacterDto>(Db.Characters.Find(move.OwnerId));
+            }
+        }
+
+        private IList<T> GetEntitiesThatMeetSearchCriteria<T>(Func<T, bool> searchPredicate)
+            where T : class
+        {
+            if (searchPredicate == null)
+            { return null; }
+
+            return Db.Set<T>()
+                .Where(searchPredicate).ToList();
         }
 
         /// <summary>

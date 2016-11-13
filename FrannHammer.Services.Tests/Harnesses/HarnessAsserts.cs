@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace FrannHammer.Services.Tests.Harnesses
@@ -25,10 +26,11 @@ namespace FrannHammer.Services.Tests.Harnesses
         {
             var itemDict = (IDictionary<string, object>)item;
 
+            var caseInsensitiveDictionary = new Dictionary<string, object>(itemDict, StringComparer.OrdinalIgnoreCase);
             foreach (var field in fields)
             {
-                Assert.That(itemDict.ContainsKey(field));
-                Assert.That(itemDict[field], Is.Not.Null);
+                Assert.That(caseInsensitiveDictionary.ContainsKey(field.ToLower()));
+                Assert.That(caseInsensitiveDictionary[field], Is.Not.Null);
             }
         }
     }

@@ -82,16 +82,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MoveSearch\AutoCancelSearchPredicateServiceTest.cs" />
+    <Compile Include="MoveSearch\BaseMoveHitboxSearchPredicateServiceTest.cs" />
+    <Compile Include="MoveSearch\CharacterNameSearchPredicateServiceTest.cs" />
+    <Compile Include="MoveSearch\DataParsingServiceTest.cs" />
     <Compile Include="Harnesses\HarnessAsserts.cs" />
     <Compile Include="Harnesses\IMoveDataHarness.cs" />
     <Compile Include="Harnesses\IMetadataHarness.cs" />
     <Compile Include="Harnesses\MetadataHarness.cs" />
+    <Compile Include="Harnesses\MoveSearchHarness.cs" />
+    <Compile Include="MoveSearch\HitboxActiveSearchPredicateServiceTest.cs" />
+    <Compile Include="MoveSearch\LandingLagSearchPredicateServiceTest.cs" />
+    <Compile Include="MoveSearch\MetadataServiceSearchTest.cs" />
+    <Compile Include="MoveSearch\NameSearchPredicateServiceTest.cs" />
+    <Compile Include="MoveSearch\RangeQuantifierServiceTest.cs" />
     <Compile Include="Suts\MoveDataSut.cs" />
     <Compile Include="Harnesses\MoveDataHarness.cs" />
     <Compile Include="ServiceBaseTest.cs" />
     <Compile Include="MetadataServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Suts\MetadataSut.cs" />
+    <Compile Include="Suts\MoveSearchSut.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

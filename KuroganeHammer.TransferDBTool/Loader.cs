@@ -48,6 +48,20 @@ namespace KuroganeHammer.TransferDBTool
         }
 
         [Test]
+        [Explicit("Only Seed data.  Useful for testing only.")]
+        public void SeedMoveDetailsOnly()
+        {
+            Console.WriteLine("seeding and cleaning all data...");
+            using (var context = new AppDbContext())
+            {
+                var seeder = new Seeder(context);
+                seeder.SeedMoveDetails();
+            }
+
+            Console.WriteLine("Done.");
+        }
+
+        [Test]
         [Explicit("Reloads character data")]
         public async Task ReloadCharacters()
         {
