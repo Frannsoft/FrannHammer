@@ -11,7 +11,7 @@ namespace FrannHammer.Api.Data.Tests
         {
             var moves = Context.Moves;
 
-            Assert.That(moves.ToList().Count, Is.EqualTo(2841));
+            Assert.That(moves.ToList().Count, Is.EqualTo(2845));
         }
 
         [Test]
