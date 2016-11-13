@@ -4,6 +4,7 @@ using FrannHammer.Core;
 using FrannHammer.Models;
 using System.Linq;
 using System.Linq.Expressions;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using FrannHammer.Services.MoveSearch;
 
@@ -108,7 +109,7 @@ namespace FrannHammer.Services
         /// <param name="fields"></param>
         /// <returns></returns>
         IEnumerable<dynamic> GetAll<TDto>(ComplexMoveSearchModel searchModel, string fields = "")
-            where TDto : class;
+            where TDto : MoveDto;
 
         /// <summary>
         /// Get all entity data of a specific type.
@@ -252,7 +253,7 @@ namespace FrannHammer.Services
         }
 
         public IEnumerable<dynamic> GetAll<TDto>(ComplexMoveSearchModel searchModel, string fields = "")
-            where TDto : class
+            where TDto : MoveDto
         {
             var searchPredicateFactory = new SearchPredicateFactory();
             searchPredicateFactory.CreateSearchPredicates(searchModel);
@@ -294,14 +295,27 @@ namespace FrannHammer.Services
                 foundMoves =
                     Db.Moves.Where(m => combinedTotalMoveIds.Contains(m.Id) && characterNames.Contains(m.OwnerId))
                         .ProjectTo<TDto>().ToList();
+
+                ApplyCharacterDetailsToMove(foundMoves);
             }
             else
             {
                 foundMoves = Db.Moves.Where(m => characterNames.Contains(m.OwnerId))
                     .ProjectTo<TDto>().ToList();
+
+                ApplyCharacterDetailsToMove(foundMoves);
             }
 
             return BuildContentResponseMultiple<TDto, TDto>(foundMoves, fields);
+        }
+
+        private void ApplyCharacterDetailsToMove<T>(IEnumerable<T> moves)
+            where T : MoveDto
+        {
+            foreach (var move in moves)
+            {
+                move.Owner = Mapper.Map<CharacterDto>(Db.Characters.Find(move.OwnerId));
+            }
         }
 
         private IList<T> GetEntitiesThatMeetSearchCriteria<T>(Func<T, bool> searchPredicate)
