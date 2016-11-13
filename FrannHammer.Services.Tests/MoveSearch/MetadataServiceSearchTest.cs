@@ -4,6 +4,7 @@ using FrannHammer.Models;
 using FrannHammer.Services.MoveSearch;
 using FrannHammer.Services.Tests.Harnesses;
 using NUnit.Framework;
+using System;
 
 namespace FrannHammer.Services.Tests.MoveSearch
 {
@@ -32,6 +33,62 @@ namespace FrannHammer.Services.Tests.MoveSearch
             _moveSearchHarness = new MoveSearchHarness(string.Empty);
         }
 
+        private IList<dynamic> AssertSearchResultsAreValid(ComplexMoveSearchModel searchModel, Action<List<dynamic>> countAssertion = null,
+            string fields = "")
+        {
+            var results = _metadataService.GetAll<MoveDto>(searchModel).ToList();
+
+            Assert.That(results, Is.Not.Null);
+
+            if (countAssertion == null)
+            {
+                Assert.That(results.Count, Is.GreaterThan(0));
+            }
+            else
+            {
+                countAssertion(results);
+            }
+
+            HarnessAsserts.ExpandoObjectIsCorrect(results, string.IsNullOrEmpty(fields) ? $"{Id},{Name}" : $"{fields}");
+            return results;
+        }
+
+        [Test]
+        public void ReturnsAllMovesForCharacterWhenNoOtherAttributesSpecified()
+        {
+            var searchModel = new ComplexMoveSearchModel
+            {
+                CharacterName = "Ganondorf"
+            };
+
+            AssertSearchResultsAreValid(searchModel,
+                    results => Assert.That(results.Count, Is.EqualTo(44)),
+                    $"{Id},{Name}");
+        }
+
+        [Test]
+        public void ReturnsSingleResultUsingMultipleSearchAttributes()
+        {
+            var searchModel = new ComplexMoveSearchModel
+            {
+                Angle = new RangeModel { StartValue = 10, RangeQuantifier = RangeQuantifier.GreaterThan },
+                AutoCancel = new RangeModel { StartValue = 5, RangeQuantifier = RangeQuantifier.GreaterThanOrEqualTo },
+                BaseDamage = new RangeModel { StartValue = 3, RangeQuantifier = RangeQuantifier.LessThanOrEqualTo },
+                BaseKnockback = new RangeModel { StartValue = 50, RangeQuantifier = RangeQuantifier.GreaterThan },
+                FirstActionableFrame = new RangeModel { StartValue = 30, RangeQuantifier = RangeQuantifier.Between, EndValue = 40 },
+                HitboxActiveLength = new RangeModel { StartValue = 1, RangeQuantifier = RangeQuantifier.GreaterThan },
+                HitboxActiveOnFrame = new RangeModel { StartValue = 2, RangeQuantifier = RangeQuantifier.GreaterThan },
+                HitboxStartupFrame = new RangeModel { StartValue = 3, RangeQuantifier = RangeQuantifier.GreaterThanOrEqualTo },
+                KnockbackGrowth = new RangeModel { StartValue = 30, RangeQuantifier = RangeQuantifier.LessThanOrEqualTo },
+                Name = "Fair 2",
+                CharacterName = "Bayonetta"
+            };
+
+            AssertSearchResultsAreValid(searchModel,
+                results => Assert.That(results.Count, Is.EqualTo(1)),
+                $"{Id},{Name}");
+        }
+
         [Test]
         public void ReturnsResultsForMultipleSearchAttributes()
         {
@@ -43,11 +100,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
                 BaseKnockback = new RangeModel { StartValue = 50, RangeQuantifier = RangeQuantifier.GreaterThan }
             };
 
-            var results = _metadataService.GetAll<MoveDto>(searchModel).ToList();
-
-            Assert.That(results, Is.Not.Null);
-            Assert.That(results.Count, Is.GreaterThan(0));
-            HarnessAsserts.ExpandoObjectIsCorrect(results, $"{Id},{Name}");
+            AssertSearchResultsAreValid(searchModel);
         }
 
         [Test]
@@ -106,11 +159,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
                 Name = valueUnderTest
             };
 
-            var results = _metadataService.GetAll<MoveDto>(model).ToList();
-
-            Assert.That(results, Is.Not.Null);
-            Assert.That(results.Count, Is.GreaterThan(0));
-            HarnessAsserts.ExpandoObjectIsCorrect(results, $"{Id},{Name}");
+            var results = AssertSearchResultsAreValid(model);
 
             foreach (var result in results)
             {
@@ -131,11 +180,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
                 CharacterName = valueUnderTest
             };
 
-            var results = _metadataService.GetAll<MoveDto>(model).ToList();
-
-            Assert.That(results, Is.Not.Null);
-            Assert.That(results.Count, Is.GreaterThan(0));
-            HarnessAsserts.ExpandoObjectIsCorrect(results, $"{Id},{Name}");
+            var results = AssertSearchResultsAreValid(model);
 
             foreach (var result in results)
             {
