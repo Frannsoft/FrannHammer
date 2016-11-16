@@ -33,10 +33,10 @@ namespace FrannHammer.Services.Tests.MoveSearch
             _moveSearchHarness = new MoveSearchHarness(string.Empty);
         }
 
-        private IList<dynamic> AssertSearchResultsAreValid(ComplexMoveSearchModel searchModel, Action<List<dynamic>> countAssertion = null,
+        private IList<dynamic> AssertSearchResultsAreValid(MoveSearchModel searchModel, Action<List<dynamic>> countAssertion = null,
             string fields = "")
         {
-            var results = _metadataService.GetAll<MoveDto>(searchModel).ToList();
+            var results = _metadataService.GetAll<MoveDto>(searchModel, null).ToList();
 
             Assert.That(results, Is.Not.Null);
 
@@ -56,7 +56,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
         [Test]
         public void ReturnsAllMovesForCharacterWhenNoOtherAttributesSpecified()
         {
-            var searchModel = new ComplexMoveSearchModel
+            var searchModel = new MoveSearchModel
             {
                 CharacterName = "Ganondorf"
             };
@@ -69,7 +69,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
         [Test]
         public void ReturnsSingleResultUsingMultipleSearchAttributes()
         {
-            var searchModel = new ComplexMoveSearchModel
+            var searchModel = new MoveSearchModel
             {
                 Angle = new RangeModel { StartValue = 10, RangeQuantifier = RangeQuantifier.GreaterThan },
                 AutoCancel = new RangeModel { StartValue = 5, RangeQuantifier = RangeQuantifier.GreaterThanOrEqualTo },
@@ -92,7 +92,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
         [Test]
         public void ReturnsResultsForMultipleSearchAttributes()
         {
-            var searchModel = new ComplexMoveSearchModel
+            var searchModel = new MoveSearchModel
             {
                 Angle = new RangeModel { StartValue = 10, RangeQuantifier = RangeQuantifier.GreaterThan },
                 AutoCancel = new RangeModel { StartValue = 5, RangeQuantifier = RangeQuantifier.GreaterThanOrEqualTo },
@@ -107,7 +107,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
         [TestCaseSource(nameof(Ranges))]
         public void ReturnsBaseDamageOnlyResult(RangeModel rangeModel)
         {
-            var searchModel = new ComplexMoveSearchModel
+            var searchModel = new MoveSearchModel
             {
                 BaseDamage = rangeModel
             };
@@ -121,7 +121,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
         [TestCaseSource(nameof(Ranges))]
         public void ReturnsHitboxActiveLengthOnlyResult(RangeModel rangeModel)
         {
-            var searchModel = new ComplexMoveSearchModel
+            var searchModel = new MoveSearchModel
             {
                 HitboxActiveLength = rangeModel
             };
@@ -136,7 +136,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
         [TestCaseSource(nameof(Ranges))]
         public void ReturnsAngleOnlyResult(RangeModel rangeModel)
         {
-            var searchModel = new ComplexMoveSearchModel
+            var searchModel = new MoveSearchModel
             {
                 Angle = rangeModel
             };
@@ -154,7 +154,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
         [TestCase(" Ftilt 2 ")]
         public void ReturnsNameOnlyResult(string valueUnderTest)
         {
-            var model = new ComplexMoveSearchModel
+            var model = new MoveSearchModel
             {
                 Name = valueUnderTest
             };
@@ -175,7 +175,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
         [TestCase(" Bowser Jr ")]
         public void ReturnsCharacterNameOnlyResult(string valueUnderTest)
         {
-            var model = new ComplexMoveSearchModel
+            var model = new MoveSearchModel
             {
                 CharacterName = valueUnderTest
             };

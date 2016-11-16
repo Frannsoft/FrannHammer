@@ -85,7 +85,7 @@
     <Compile Include="Character.cs" />
     <Compile Include="CharacterAttributeModels.cs" />
     <Compile Include="CharacterAttributeType.cs" />
-    <Compile Include="ComplexMoveSearchModel.cs" />
+    <Compile Include="MoveSearchModel.cs" />
     <Compile Include="DTOs\BaseMoveHitboxMetaDto.cs" />
     <Compile Include="DTOs\CalculatorDtos.cs" />
     <Compile Include="DTOs\CharacterAttributeRowDto.cs" />

@@ -9,6 +9,7 @@ using CacheCow.Server;
 using CacheCow.Server.EntityTagStore.SqlServer;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
+using StackExchange.Redis;
 using Swashbuckle.Application;
 using WebApiThrottle;
 
@@ -19,6 +20,13 @@ namespace FrannHammer.Api
         #region custom config keys
         private const string KeyThrottleRequestsPerSecond = "throttlingrequestspersecond";
         #endregion
+
+        public static IConnectionMultiplexer RedisMultiplexer;
+
+        static WebApiConfig()
+        {
+            RedisMultiplexer = ConnectionMultiplexer.Connect("localhost");
+        }
 
         public static void Register(HttpConfiguration config)
         {
@@ -37,6 +45,7 @@ namespace FrannHammer.Api
             );
 
             config.DependencyResolver = new AutofacWebApiDependencyResolver(Container.Instance.AutoFacContainer);
+
 
 #if !DEBUG
             int throttleRequestsPerSecond = GetConfigValue<int>(KeyThrottleRequestsPerSecond);

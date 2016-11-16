@@ -23,6 +23,7 @@ namespace FrannHammer.Api
             ConfigureAuth(app, Container.Instance.AutoFacContainer);
 
             ConfigureAutoMapping();
+
         }
 
         internal static void ConfigureAutoMapping()

@@ -62,7 +62,8 @@ namespace FrannHammer.Api
 
             builder.RegisterType<MovesController>()
                 .As<MovesController>()
-                .WithParameter(metadataServiceName, metadataService);
+                .WithParameter(metadataServiceName, metadataService)
+                .WithParameter("redisConnectionMultiplexer", WebApiConfig.RedisMultiplexer);
 
             builder.RegisterType<NotationsController>()
                 .As<NotationsController>()

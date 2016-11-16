@@ -11,7 +11,7 @@ namespace FrannHammer.Services.Tests.Harnesses
     {
         string Fields { get; }
 
-        void SearchResultCollectionIsValid<TMoveType>(ComplexMoveSearchModel searchModel,
+        void SearchResultCollectionIsValid<TMoveType>(MoveSearchModel searchModel,
             IApplicationDbContext context, Func<TMoveType, bool> serviceSearchMethod)
             where TMoveType : class, IMoveIdEntity;
     }
@@ -29,7 +29,7 @@ namespace FrannHammer.Services.Tests.Harnesses
             Fields = fields;
         }
 
-        public void SearchResultCollectionIsValid<TMoveType>(ComplexMoveSearchModel searchModel,
+        public void SearchResultCollectionIsValid<TMoveType>(MoveSearchModel searchModel,
            IApplicationDbContext context, Func<TMoveType, bool> serviceSearchMethod)
            where TMoveType : class, IMoveIdEntity
         {
