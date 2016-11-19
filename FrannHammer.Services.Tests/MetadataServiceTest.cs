@@ -3,6 +3,7 @@ using FrannHammer.Models;
 using FrannHammer.Services.Exceptions;
 using FrannHammer.Services.Tests.Harnesses;
 using NUnit.Framework;
+using StackExchange.Redis;
 
 namespace FrannHammer.Services.Tests
 {

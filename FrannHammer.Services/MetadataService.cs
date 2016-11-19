@@ -7,6 +7,8 @@ using System.Linq.Expressions;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using FrannHammer.Services.MoveSearch;
+using Newtonsoft.Json;
+using StackExchange.Redis;
 
 namespace FrannHammer.Services
 {
@@ -108,7 +110,7 @@ namespace FrannHammer.Services
         /// <param name="searchModel"></param>
         /// <param name="fields"></param>
         /// <returns></returns>
-        IEnumerable<dynamic> GetAll<TDto>(ComplexMoveSearchModel searchModel, string fields = "")
+        IEnumerable<dynamic> GetAll<TDto>(MoveSearchModel searchModel, IConnectionMultiplexer redisConnectionMultiplexer, string fields = "")
             where TDto : MoveDto;
 
         /// <summary>
@@ -149,12 +151,15 @@ namespace FrannHammer.Services
     public class MetadataService : BaseService, IMetadataService
     {
         protected IResultValidationService ResultValidationService { get; }
+        private readonly MoveSearchModelRedisService _moveSearchModelRedisService;
 
         public MetadataService(IApplicationDbContext db, IResultValidationService resultValidationService)
             : base(db)
         {
             Guard.VerifyObjectNotNull(resultValidationService, nameof(resultValidationService));
             ResultValidationService = resultValidationService;
+
+            _moveSearchModelRedisService = new MoveSearchModelRedisService();
         }
 
         public dynamic GetWithMovesOnEntity<TEntity, TDto>(int id, string fields = "")
@@ -252,61 +257,111 @@ namespace FrannHammer.Services
             return BuildContentResponseMultiple<TDto, TDto>(entities, fields);
         }
 
-        public IEnumerable<dynamic> GetAll<TDto>(ComplexMoveSearchModel searchModel, string fields = "")
+        public IEnumerable<dynamic> GetAll<TDto>(MoveSearchModel searchModel, IConnectionMultiplexer redisConnectionMultiplexer,
+            string fields = "")
             where TDto : MoveDto
         {
-            var searchPredicateFactory = new SearchPredicateFactory();
-            searchPredicateFactory.CreateSearchPredicates(searchModel);
+            IEnumerable<dynamic> results;
+            IDatabase redisDatabase = default(IDatabase);
+            string redisValueForKey = string.Empty;
+            string redisKey = string.Empty;
 
-            //character name ids need to be separate since all other are move ids.
-            var characterNames = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.CharacterNamePredicate).Select(c => c.Id);
-
-            var names = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.NamePredicate)?.Select(m => m.Id);
-            var hitboxActiveLengths = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.HitboxActiveLengthPredicate)?.Select(h => h.MoveId);
-            var hitboxStartups = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.HitboxStartupPredicate)?.Select(h => h.MoveId);
-            var hitboxActives = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.HitboxActiveOnFramePredicate)?.Select(h => h.MoveId);
-            var baseDamages = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.BaseDamagePredicate)?.Select(b => b.MoveId);
-            var angles = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.AnglePredicate)?.Select(a => a.MoveId);
-            var baseKnockbacks = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.BaseKnockbackPredicate)?.Select(b => b.MoveId);
-            var setKnockbacks = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.SetKnockbackPredicate)?.Select(s => s.MoveId);
-            var knockbackGrowths = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.KnockbackGrowthPredicate)?.Select(k => k.MoveId);
-            var firstActionableFrames = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.FirstActionableFramePredicate)?.Select(f => f.Id);
-            var landingLags = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.LandingLagPredicate)?.Select(l => l.MoveId);
-            var autocancels = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.AutocancelPredicate)?.Select(a => a.MoveId);
-
-            var combinedTotalMoveIds = new List<int>()
-                .SafeFilter(names)
-                .SafeFilter(hitboxActiveLengths)
-                .SafeFilter(hitboxStartups)
-                .SafeFilter(hitboxActives)
-                .SafeFilter(baseDamages)
-                .SafeFilter(angles)
-                .SafeFilter(baseKnockbacks)
-                .SafeFilter(setKnockbacks)
-                .SafeFilter(knockbackGrowths)
-                .SafeFilter(firstActionableFrames)
-                .SafeFilter(landingLags)
-                .SafeFilter(autocancels).Distinct().ToList();
-            
-            IList<TDto> foundMoves;
-
-            if (combinedTotalMoveIds.Count > 0)
+            if (redisConnectionMultiplexer != null && redisConnectionMultiplexer.IsConnected)
             {
-                foundMoves =
-                    Db.Moves.Where(m => combinedTotalMoveIds.Contains(m.Id) && characterNames.Contains(m.OwnerId))
-                        .ProjectTo<TDto>().ToList();
+                //check if exists in redis cache if have access to redis
+                redisKey = _moveSearchModelRedisService.MoveSearchModelToRedisKey(searchModel);
 
-                ApplyCharacterDetailsToMove(foundMoves);
+                redisDatabase = redisConnectionMultiplexer.GetDatabase();
+                redisValueForKey = redisDatabase.StringGet(redisKey);
+            }
+
+            //if search already exists in cache just return the results.  Api data is almost all static.
+            if (!string.IsNullOrEmpty(redisValueForKey) && redisValueForKey != RedisValue.Null)
+            {
+                results = JsonConvert.DeserializeObject<IEnumerable<dynamic>>(redisValueForKey);
             }
             else
             {
-                foundMoves = Db.Moves.Where(m => characterNames.Contains(m.OwnerId))
-                    .ProjectTo<TDto>().ToList();
+                var searchPredicateFactory = new SearchPredicateFactory();
+                searchPredicateFactory.CreateSearchPredicates(searchModel);
 
-                ApplyCharacterDetailsToMove(foundMoves);
+                //character name ids need to be separate since all other are move ids.
+                var characterNames =
+                    GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.CharacterNamePredicate).Select(c => c.Id);
+
+                var names = GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.NamePredicate)?.Select(m => m.Id);
+                var hitboxActiveLengths =
+                    GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.HitboxActiveLengthPredicate)?
+                        .Select(h => h.MoveId);
+                var hitboxStartups =
+                    GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.HitboxStartupPredicate)?
+                        .Select(h => h.MoveId);
+                var hitboxActives =
+                    GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.HitboxActiveOnFramePredicate)?
+                        .Select(h => h.MoveId);
+                var baseDamages =
+                    GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.BaseDamagePredicate)?.Select(b => b.MoveId);
+                var angles =
+                    GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.AnglePredicate)?.Select(a => a.MoveId);
+                var baseKnockbacks =
+                    GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.BaseKnockbackPredicate)?
+                        .Select(b => b.MoveId);
+                var setKnockbacks =
+                    GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.SetKnockbackPredicate)?
+                        .Select(s => s.MoveId);
+                var knockbackGrowths =
+                    GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.KnockbackGrowthPredicate)?
+                        .Select(k => k.MoveId);
+                var firstActionableFrames =
+                    GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.FirstActionableFramePredicate)?
+                        .Select(f => f.Id);
+                var landingLags =
+                    GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.LandingLagPredicate)?.Select(l => l.MoveId);
+                var autocancels =
+                    GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.AutocancelPredicate)?.Select(a => a.MoveId);
+
+                var combinedTotalMoveIds = new List<int>()
+                    .SafeFilter(names)
+                    .SafeFilter(hitboxActiveLengths)
+                    .SafeFilter(hitboxStartups)
+                    .SafeFilter(hitboxActives)
+                    .SafeFilter(baseDamages)
+                    .SafeFilter(angles)
+                    .SafeFilter(baseKnockbacks)
+                    .SafeFilter(setKnockbacks)
+                    .SafeFilter(knockbackGrowths)
+                    .SafeFilter(firstActionableFrames)
+                    .SafeFilter(landingLags)
+                    .SafeFilter(autocancels).Distinct().ToList();
+
+                IList<TDto> foundMoves;
+
+                if (combinedTotalMoveIds.Count > 0)
+                {
+                    foundMoves =
+                        Db.Moves.Where(m => combinedTotalMoveIds.Contains(m.Id) && characterNames.Contains(m.OwnerId))
+                            .ProjectTo<TDto>().ToList();
+
+                    ApplyCharacterDetailsToMove(foundMoves);
+                }
+                else
+                {
+                    foundMoves = Db.Moves.Where(m => characterNames.Contains(m.OwnerId))
+                        .ProjectTo<TDto>().ToList();
+
+                    ApplyCharacterDetailsToMove(foundMoves);
+                }
+
+                results = BuildContentResponseMultiple<TDto, TDto>(foundMoves, fields);
+
+                if(redisDatabase != null)
+                {
+                    // add key and results so they exist in the future
+                    string resultsJson = JsonConvert.SerializeObject(results);
+                    redisDatabase.StringSet(redisKey, resultsJson);
+                }
             }
-
-            return BuildContentResponseMultiple<TDto, TDto>(foundMoves, fields);
+            return results;
         }
 
         private void ApplyCharacterDetailsToMove<T>(IEnumerable<T> moves)

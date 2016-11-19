@@ -9,7 +9,7 @@
     /// For example, an <see cref="RangeQuantifier.EqualTo"/> based <see cref="RangeModel"/>
     /// does not need both the Start and End values filled in (just the Start).
     /// </summary>
-    public class ComplexMoveSearchModel
+    public class MoveSearchModel
     {
         public string Name { get; set; }
         public string CharacterName { get; set; }

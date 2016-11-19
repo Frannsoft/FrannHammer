@@ -612,7 +612,7 @@
             Handles server operations dealing with <see cref="T:FrannHammer.Models.Move"/>s.
             </summary>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.MovesController.#ctor(FrannHammer.Services.IMetadataService)">
+        <member name="M:FrannHammer.Api.Controllers.MovesController.#ctor(FrannHammer.Services.IMetadataService,StackExchange.Redis.IConnectionMultiplexer)">
             <summary>
             Create a new <see cref="T:FrannHammer.Api.Controllers.MovesController"/>.
             </summary>

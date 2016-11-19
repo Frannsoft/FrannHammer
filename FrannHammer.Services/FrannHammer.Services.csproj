@@ -51,9 +51,18 @@
       <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="StackExchange.Redis, Version=1.1.608.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\StackExchange.Redis.1.1.608\lib\net45\StackExchange.Redis.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -65,6 +74,7 @@
     <Compile Include="MoveSearch\AutoCancelSearchPredicateService.cs" />
     <Compile Include="BaseService.cs" />
     <Compile Include="MoveSearch\CharacterNameSearchPredicateService.cs" />
+    <Compile Include="MoveSearch\MoveSearchModelRedisService.cs" />
     <Compile Include="MoveSearch\DataParsingService.cs" />
     <Compile Include="MoveSearch\FirstActionableFrameSearchPredicateService.cs" />
     <Compile Include="MoveSearch\HitboxActiveLengthSearchPredicateService.cs" />
