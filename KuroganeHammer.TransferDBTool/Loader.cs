@@ -181,6 +181,7 @@ namespace KuroganeHammer.TransferDBTool
                     attributeType.Name.Equals("SHIELDS") ||
                     attributeType.Name.Equals("SMASHCHARGERELEASE") ||
                     attributeType.Name.Equals("TRIP") ||
+                    attributeType.Name.Equals("JABLOCK") ||
                     attributeType.Name.Equals("RUNSPEED"))
                 { continue; } //skip these for now since the tables are problematic
 
@@ -209,7 +210,6 @@ namespace KuroganeHammer.TransferDBTool
                         var attributeName = specificValues[i].Name;
                         var dbAttributeType = attributeTypes.Find(a => a.Name.Equals(specificValues[i].AttributeFlag)); //   (CharacterAttributes)Enum.Parse(typeof(CharacterAttributes), specificValues[i].AttributeFlag, true);
                         var value = specificValues[i].Value;
-                        Console.WriteLine("characterName: " + characterName);
                         var characterAttribute = new CharacterAttribute
                         {
                             Rank = rank,
