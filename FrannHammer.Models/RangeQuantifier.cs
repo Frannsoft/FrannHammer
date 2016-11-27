@@ -56,6 +56,7 @@
         /// NOTE:  <see cref="Move"/> attribute data that is equal to either the <see cref="RangeModel.StartValue"/>
         /// or <see cref="RangeModel.EndValue"/> is not matched in this case.
         /// 
+        /// Flag = 5.
         /// </summary>
         Between
     }
