@@ -6,7 +6,7 @@
     /// 
     /// Not all properties on the <see cref="RangeModel"/> need to be set in every case.
     /// 
-    /// For example, an <see cref="RangeQuantifier.EqualTo"/> based <see cref="RangeModel"/>
+    /// For example, an <see cref="RangeConstraint.EqualTo"/> based <see cref="RangeModel"/>
     /// does not need both the Start and End values filled in (just the Start).
     /// </summary>
     public class MoveSearchModel

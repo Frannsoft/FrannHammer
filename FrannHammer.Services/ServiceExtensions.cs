@@ -19,16 +19,32 @@ namespace FrannHammer.Services
         /// <param name="currentItems"></param>
         /// <param name="newItems"></param>
         /// <returns></returns>
-        public static IList<T> SafeFilter<T>(this IList<T> currentItems, IEnumerable<T> newItems)
+        public static MoveSearchResultCollection<T> SafeFilter<T>(this MoveSearchResultCollection<T> currentItems, IEnumerable<T> newItems)
         {
+            IList<T> matches;
+
             if (newItems == null)
             { return currentItems; }
 
-            var matches = currentItems.Count == 0 ?
-                                newItems :
-                                newItems.Where(currentItems.Contains);
+            if (currentItems.Items.Count == 0 && currentItems.IsInitialized)
+            {
+                return currentItems;
+            }
+            if (currentItems.Items.Count == 0 && !currentItems.IsInitialized)
+            {
+                matches = newItems.ToList();
+                currentItems.Initialize();
+            }
+            else
+            {
+                matches = newItems.Intersect(currentItems.Items).ToList();
+            }
+            //matches = currentItems.Items.Count == 0 ?
+            //                    newItems.ToList() :
+            //                    newItems.Intersect(currentItems.Items).ToList();
 
-            return matches.ToList();
+            currentItems.SetItems(matches);
+            return currentItems;
         }
 
     }

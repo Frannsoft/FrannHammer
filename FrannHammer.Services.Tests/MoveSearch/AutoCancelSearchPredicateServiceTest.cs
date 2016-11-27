@@ -25,7 +25,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
             var model = new RangeModel
             {
                 StartValue = 5,
-                RangeQuantifier = RangeQuantifier.Between,
+                RangeQuantifier = RangeConstraint.Between,
                 EndValue = 10
             };
             var predicate = _service.GetAutoCancelSearchPredicate(model);
@@ -42,7 +42,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
             var model = new RangeModel
             {
                 StartValue = 4,
-                RangeQuantifier = RangeQuantifier.Between,
+                RangeQuantifier = RangeConstraint.Between,
                 EndValue = 20
             };
             var predicate = _service.GetAutoCancelSearchPredicate(model);
@@ -61,7 +61,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
             var model = new RangeModel
             {
                 StartValue = 4,
-                RangeQuantifier = RangeQuantifier.Between,
+                RangeQuantifier = RangeConstraint.Between,
                 EndValue = 20
             };
             var predicate = _service.GetAutoCancelSearchPredicate(model);
@@ -79,7 +79,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
             var model = new RangeModel
             {
                 StartValue = 5,
-                RangeQuantifier = RangeQuantifier.EqualTo
+                RangeQuantifier = RangeConstraint.EqualTo
             };
             var predicate = _service.GetAutoCancelSearchPredicate(model);
 
@@ -96,7 +96,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
             var model = new RangeModel
             {
                 StartValue = 5,
-                RangeQuantifier = RangeQuantifier.EqualTo
+                RangeQuantifier = RangeConstraint.EqualTo
             };
 
             var predicate = _service.GetAutoCancelSearchPredicate(model);
@@ -113,7 +113,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
             var model = new RangeModel
             {
                 StartValue = 4,
-                RangeQuantifier = RangeQuantifier.GreaterThan
+                RangeQuantifier = RangeConstraint.GreaterThan
             };
             var predicate = _service.GetAutoCancelSearchPredicate(model);
 
@@ -129,7 +129,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
             var model = new RangeModel
             {
                 StartValue = 6,
-                RangeQuantifier = RangeQuantifier.Between,
+                RangeQuantifier = RangeConstraint.Between,
                 EndValue = 12
             };
             var predicate = _service.GetAutoCancelSearchPredicate(model);
@@ -146,7 +146,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
             var model = new RangeModel
             {
                 StartValue = 5,
-                RangeQuantifier = RangeQuantifier.Between,
+                RangeQuantifier = RangeConstraint.Between,
                 EndValue = 15
             };
             var predicate = _service.GetAutoCancelSearchPredicate(model);
@@ -165,7 +165,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
             var model = new RangeModel
             {
                 StartValue = startValue,
-                RangeQuantifier = RangeQuantifier.LessThanOrEqualTo
+                RangeQuantifier = RangeConstraint.LessThanOrEqualTo
             };
             var predicate = _service.GetAutoCancelSearchPredicate(model);
 
@@ -181,7 +181,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
             var model = new RangeModel
             {
                 StartValue = 6,
-                RangeQuantifier = RangeQuantifier.LessThan
+                RangeQuantifier = RangeConstraint.LessThan
             };
             var predicate = _service.GetAutoCancelSearchPredicate(model);
 
@@ -200,7 +200,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
             var model = new RangeModel
             {
                 StartValue = startValue,
-                RangeQuantifier = RangeQuantifier.GreaterThanOrEqualTo
+                RangeQuantifier = RangeConstraint.GreaterThanOrEqualTo
             };
             var predicate = _service.GetAutoCancelSearchPredicate(model);
 
@@ -215,7 +215,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
             var model = new RangeModel
             {
                 StartValue = 16,
-                RangeQuantifier = RangeQuantifier.GreaterThanOrEqualTo
+                RangeQuantifier = RangeConstraint.GreaterThanOrEqualTo
             };
             var predicate = _service.GetAutoCancelSearchPredicate(model);
 
@@ -232,7 +232,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
             var model = new RangeModel
             {
                 StartValue = valueUnderTest,
-                RangeQuantifier = RangeQuantifier.EqualTo
+                RangeQuantifier = RangeConstraint.EqualTo
             };
             var predicate = _service.GetAutoCancelSearchPredicate(model);
 
@@ -249,7 +249,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
             var model = new RangeModel
             {
                 StartValue = valueUnderTest,
-                RangeQuantifier = RangeQuantifier.EqualTo
+                RangeQuantifier = RangeConstraint.EqualTo
             };
             var predicate = _service.GetAutoCancelSearchPredicate(model);
 

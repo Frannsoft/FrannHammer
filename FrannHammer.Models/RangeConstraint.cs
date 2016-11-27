@@ -3,7 +3,7 @@
     /// <summary>
     /// Used when determining how to compare move attributes while searching through them.
     /// </summary>
-    public enum RangeQuantifier
+    public enum RangeConstraint
     {
         /// <summary>
         /// Represents that a <see cref="RangeModel"/>s <see cref="RangeModel.StartValue"/>

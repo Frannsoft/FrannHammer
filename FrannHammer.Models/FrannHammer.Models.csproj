@@ -97,12 +97,13 @@
     <Compile Include="Move.cs" />
     <Compile Include="Movement.cs" />
     <Compile Include="MoveMetadataModels.cs" />
+    <Compile Include="MoveSearchResultCollection.cs" />
     <Compile Include="MoveType.cs" />
     <Compile Include="Notation.cs" />
     <Compile Include="NumberRange.cs" />
     <Compile Include="ProblemModels.cs" />
     <Compile Include="RangeModel.cs" />
-    <Compile Include="RangeQuantifier.cs" />
+    <Compile Include="RangeConstraint.cs" />
     <Compile Include="RoleBindingModel.cs" />
     <Compile Include="SetKnockback.cs" />
     <Compile Include="SmashAttributeType.cs" />

@@ -261,7 +261,7 @@ namespace FrannHammer.Services
             string fields = "")
             where TDto : MoveDto
         {
-            IEnumerable<dynamic> results;
+            IEnumerable<dynamic> results = default(IEnumerable<dynamic>);
             IDatabase redisDatabase = default(IDatabase);
             string redisValueForKey = string.Empty;
             string redisKey = string.Empty;
@@ -320,7 +320,7 @@ namespace FrannHammer.Services
                 var autocancels =
                     GetEntitiesThatMeetSearchCriteria(searchPredicateFactory.AutocancelPredicate)?.Select(a => a.MoveId);
 
-                var combinedTotalMoveIds = new List<int>()
+                var combinedTotalMoveIds = new MoveSearchResultCollection<int>()
                     .SafeFilter(names)
                     .SafeFilter(hitboxActiveLengths)
                     .SafeFilter(hitboxStartups)
@@ -332,36 +332,43 @@ namespace FrannHammer.Services
                     .SafeFilter(knockbackGrowths)
                     .SafeFilter(firstActionableFrames)
                     .SafeFilter(landingLags)
-                    .SafeFilter(autocancels).Distinct().ToList();
+                    .SafeFilter(autocancels);
 
                 IList<TDto> foundMoves;
 
-                if (combinedTotalMoveIds.Count > 0)
+                if (combinedTotalMoveIds.Items.Count > 0)
                 {
-                    foundMoves =
-                        Db.Moves.Where(m => combinedTotalMoveIds.Contains(m.Id) && characterNames.Contains(m.OwnerId))
-                            .ProjectTo<TDto>().ToList();
+                    foundMoves = Db.Moves.Where(m => combinedTotalMoveIds.Items.Contains(m.Id) && characterNames.Contains(m.OwnerId))
+                        .ProjectTo<TDto>().ToList();
 
                     ApplyCharacterDetailsToMove(foundMoves);
+                    results = BuildContentResponseMultiple<TDto, TDto>(foundMoves, fields);
+                    CacheResults(redisDatabase, redisKey, results);
                 }
-                else
+                else if (!string.IsNullOrEmpty(searchModel.CharacterName) &&
+                        combinedTotalMoveIds.Items.Count == 0)
                 {
                     foundMoves = Db.Moves.Where(m => characterNames.Contains(m.OwnerId))
                         .ProjectTo<TDto>().ToList();
 
                     ApplyCharacterDetailsToMove(foundMoves);
-                }
-
-                results = BuildContentResponseMultiple<TDto, TDto>(foundMoves, fields);
-
-                if(redisDatabase != null)
-                {
-                    // add key and results so they exist in the future
-                    string resultsJson = JsonConvert.SerializeObject(results);
-                    redisDatabase.StringSet(redisKey, resultsJson);
+                    results = BuildContentResponseMultiple<TDto, TDto>(foundMoves, fields);
+                    CacheResults(redisDatabase, redisKey, results);
                 }
             }
-            return results;
+            //return empty list if no results found
+            return results ?? new List<object> { new object() };
+        }
+
+        private void CacheResults(IDatabase redisDatabase, string redisKey,
+            IEnumerable<dynamic> results)
+        {
+            if (redisDatabase != null)
+            {
+                // add key and results so they exist in the future
+                string resultsJson = JsonConvert.SerializeObject(results);
+                redisDatabase.StringSet(redisKey, resultsJson);
+            }
         }
 
         private void ApplyCharacterDetailsToMove<T>(IEnumerable<T> moves)

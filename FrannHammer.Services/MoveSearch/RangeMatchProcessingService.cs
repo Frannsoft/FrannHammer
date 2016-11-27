@@ -47,27 +47,27 @@ namespace FrannHammer.Services.MoveSearch
         {
             switch (rangeModel.RangeQuantifier)
             {
-                case RangeQuantifier.Between:
+                case RangeConstraint.Between:
                     {
                         return _isBetweenCheck(_rangeQuantifierService, rangeModel, numberRange);
                     }
-                case RangeQuantifier.LessThan:
+                case RangeConstraint.LessThan:
                     {
                         return _isLessThanCheck(_rangeQuantifierService, rangeModel, numberRange.Start);
                     }
-                case RangeQuantifier.LessThanOrEqualTo:
+                case RangeConstraint.LessThanOrEqualTo:
                     {
                         return _isLessThanOrEqualToCheck(_rangeQuantifierService, rangeModel, numberRange.Start);
                     }
-                case RangeQuantifier.GreaterThan:
+                case RangeConstraint.GreaterThan:
                     {
                         return _isGreaterThanCheck(_rangeQuantifierService, rangeModel, numberRange.Start);
                     }
-                case RangeQuantifier.GreaterThanOrEqualTo:
+                case RangeConstraint.GreaterThanOrEqualTo:
                     {
                         return _isGreaterThanOrEqualToCheck(_rangeQuantifierService, rangeModel, numberRange.Start);
                     }
-                case RangeQuantifier.EqualTo:
+                case RangeConstraint.EqualTo:
                     {
                         return _isEqualToRangeCheck?.Invoke(_rangeQuantifierService, rangeModel, numberRange) ??
                                         _isEqualToCheck(_rangeQuantifierService, rangeModel, numberRange.Start);

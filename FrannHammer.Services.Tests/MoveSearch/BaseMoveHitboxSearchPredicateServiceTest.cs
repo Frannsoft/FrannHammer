@@ -23,7 +23,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
             Assert.That(_service.IsValueInRange("7", new RangeModel
             {
                 StartValue = 5,
-                RangeQuantifier = RangeQuantifier.Between,
+                RangeQuantifier = RangeConstraint.Between,
                 EndValue = 10
             }), UnableToFindValueMessage);
         }
@@ -36,7 +36,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
             Assert.That(!_service.IsValueInRange("54-197 (Tackle), 258 (Generated on: Frame 13)", new RangeModel
             {
                 StartValue = valueUnderTest,
-                RangeQuantifier = RangeQuantifier.EqualTo
+                RangeQuantifier = RangeConstraint.EqualTo
             }), UnableToFindValueMessage);
         }
 
@@ -46,7 +46,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
             Assert.That(_service.IsValueInRange("5", new RangeModel
             {
                 StartValue = 5,
-                RangeQuantifier = RangeQuantifier.EqualTo
+                RangeQuantifier = RangeConstraint.EqualTo
             }), UnableToFindValueMessage);
         }
 
@@ -56,7 +56,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
             Assert.That(_service.IsValueInRange("5", new RangeModel
             {
                 StartValue = 5,
-                RangeQuantifier = RangeQuantifier.EqualTo
+                RangeQuantifier = RangeConstraint.EqualTo
             }), UnableToFindValueMessage);
         }
 
@@ -66,7 +66,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
             Assert.That(_service.IsValueInRange("5", new RangeModel
             {
                 StartValue = 4,
-                RangeQuantifier = RangeQuantifier.GreaterThan
+                RangeQuantifier = RangeConstraint.GreaterThan
             }), UnableToFindValueMessage);
         }
 
@@ -76,7 +76,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
             Assert.That(_service.IsValueInRange("7", new RangeModel
             {
                 StartValue = 6,
-                RangeQuantifier = RangeQuantifier.Between,
+                RangeQuantifier = RangeConstraint.Between,
                 EndValue = 12
             }), UnableToFindValueMessage);
         }
@@ -87,7 +87,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
             Assert.That(!_service.IsValueInRange("5", new RangeModel
             {
                 StartValue = 5,
-                RangeQuantifier = RangeQuantifier.Between,
+                RangeQuantifier = RangeConstraint.Between,
                 EndValue = 15
             }), FoundValueMessage);
         }
@@ -100,7 +100,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
             Assert.That(_service.IsValueInRange("5", new RangeModel
             {
                 StartValue = startValue,
-                RangeQuantifier = RangeQuantifier.LessThanOrEqualTo
+                RangeQuantifier = RangeConstraint.LessThanOrEqualTo
             }), UnableToFindValueMessage);
         }
 
@@ -110,7 +110,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
             Assert.That(_service.IsValueInRange("5", new RangeModel
             {
                 StartValue = 6,
-                RangeQuantifier = RangeQuantifier.LessThan
+                RangeQuantifier = RangeConstraint.LessThan
             }), UnableToFindValueMessage);
         }
 
@@ -123,7 +123,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
             Assert.That(_service.IsValueInRange("5", new RangeModel
             {
                 StartValue = startValue,
-                RangeQuantifier = RangeQuantifier.GreaterThanOrEqualTo
+                RangeQuantifier = RangeConstraint.GreaterThanOrEqualTo
             }), UnableToFindValueMessage);
         }
 
@@ -132,7 +132,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
             Assert.That(!_service.IsValueInRange("15", new RangeModel
             {
                 StartValue = 16,
-                RangeQuantifier = RangeQuantifier.GreaterThanOrEqualTo
+                RangeQuantifier = RangeConstraint.GreaterThanOrEqualTo
             }), UnableToFindValueMessage);
         }
 
@@ -144,7 +144,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
             Assert.That(_service.IsValueInRange("5", new RangeModel
             {
                 StartValue = valueUnderTest,
-                RangeQuantifier = RangeQuantifier.EqualTo
+                RangeQuantifier = RangeConstraint.EqualTo
             }), UnableToFindValueMessage);
         }
 
@@ -156,7 +156,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
             Assert.That(!_service.IsValueInRange("13", new RangeModel
             {
                 StartValue = valueUnderTest,
-                RangeQuantifier = RangeQuantifier.EqualTo
+                RangeQuantifier = RangeConstraint.EqualTo
             }), FoundValueMessage);
         }
     }

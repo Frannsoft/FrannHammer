@@ -15,6 +15,14 @@ namespace FrannHammer.Services.Tests.MoveSearch
         }
 
         [Test]
+        public void RoundsForParsedFloatValue()
+        {
+            var numberRanges = _service.Parse("1.5");
+
+            Assert.That(numberRanges[0].Start, Is.EqualTo(2));
+        }
+
+        [Test]
         public void SingleValueSingleHitbox()
         {
             const int expectedCount = 1;

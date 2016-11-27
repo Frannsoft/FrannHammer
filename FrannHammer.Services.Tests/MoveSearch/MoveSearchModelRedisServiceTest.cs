@@ -11,34 +11,19 @@ namespace FrannHammer.Services.Tests.MoveSearch
         [Test]
         public void ConvertsToExpectedRedisKey()
         {
-            //string expected =
-            //    $"{nameof(MoveSearchModel.Name)}:jab 1;" +
-            //    $"{nameof(MoveSearchModel.CharacterName)}:mario;" +
-            //    $"{nameof(MoveSearchModel.Angle)}:{nameof(RangeModel.StartValue)}:10,{nameof(RangeModel.RangeQuantifier)}:{nameof(RangeQuantifier.GreaterThan)},{nameof(RangeModel.EndValue)}:0;" +
-            //    $"{nameof(MoveSearchModel.AutoCancel)}:{nameof(RangeModel.StartValue)}:5,{nameof(RangeModel.RangeQuantifier)}:{nameof(RangeQuantifier.GreaterThanOrEqualTo)},{nameof(RangeModel.EndValue)}:0;" +
-            //    $"{nameof(MoveSearchModel.BaseDamage)}:{nameof(RangeModel.StartValue)}:3,{nameof(RangeModel.RangeQuantifier)}:{nameof(RangeQuantifier.LessThanOrEqualTo)},{nameof(RangeModel.EndValue)}:0;" +
-            //    $"{nameof(MoveSearchModel.BaseKnockback)}:{nameof(RangeModel.StartValue)}:50,{nameof(RangeModel.RangeQuantifier)}:{nameof(RangeQuantifier.GreaterThan)},{nameof(RangeModel.EndValue)}:0;" +
-            //    $"{nameof(MoveSearchModel.FirstActionableFrame)}:{nameof(RangeModel.StartValue)}:30,{nameof(RangeModel.RangeQuantifier)}:{nameof(RangeQuantifier.Between)},{nameof(RangeModel.EndValue)}:40;" +
-            //    $"{nameof(MoveSearchModel.HitboxActiveLength)}:{nameof(RangeModel.StartValue)}:1,{nameof(RangeModel.RangeQuantifier)}:{nameof(RangeQuantifier.GreaterThan)},{nameof(RangeModel.EndValue)}:0;" +
-            //    $"{nameof(MoveSearchModel.HitboxActiveOnFrame)}:{nameof(RangeModel.StartValue)}:2,{nameof(RangeModel.RangeQuantifier)}:{nameof(RangeQuantifier.GreaterThan)},{nameof(RangeModel.EndValue)}:0;" +
-            //    $"{nameof(MoveSearchModel.HitboxStartupFrame)}:{nameof(RangeModel.StartValue)}:3,{nameof(RangeModel.RangeQuantifier)}:{nameof(RangeQuantifier.GreaterThanOrEqualTo)},{nameof(RangeModel.EndValue)}:0;" +
-            //    $"{nameof(MoveSearchModel.KnockbackGrowth)}:{nameof(RangeModel.StartValue)}:30,{nameof(RangeModel.RangeQuantifier)}:{nameof(RangeQuantifier.LessThanOrEqualTo)},{nameof(RangeModel.EndValue)}:0;" +
-            //    $"{nameof(MoveSearchModel.LandingLag)}:" +
-            //    $"{nameof(MoveSearchModel.SetKnockback)}:;";
-
             var searchModel = new MoveSearchModel
             {
-                Angle = new RangeModel { StartValue = 10, RangeQuantifier = RangeQuantifier.GreaterThan },
-                AutoCancel = new RangeModel { StartValue = 5, RangeQuantifier = RangeQuantifier.GreaterThanOrEqualTo },
-                BaseDamage = new RangeModel { StartValue = 3, RangeQuantifier = RangeQuantifier.LessThanOrEqualTo },
-                BaseKnockback = new RangeModel { StartValue = 50, RangeQuantifier = RangeQuantifier.GreaterThan },
+                Angle = new RangeModel { StartValue = 10, RangeQuantifier = RangeConstraint.GreaterThan },
+                AutoCancel = new RangeModel { StartValue = 5, RangeQuantifier = RangeConstraint.GreaterThanOrEqualTo },
+                BaseDamage = new RangeModel { StartValue = 3, RangeQuantifier = RangeConstraint.LessThanOrEqualTo },
+                BaseKnockback = new RangeModel { StartValue = 50, RangeQuantifier = RangeConstraint.GreaterThan },
                 FirstActionableFrame =
-                    new RangeModel { StartValue = 30, RangeQuantifier = RangeQuantifier.Between, EndValue = 40 },
-                HitboxActiveLength = new RangeModel { StartValue = 1, RangeQuantifier = RangeQuantifier.GreaterThan },
-                HitboxActiveOnFrame = new RangeModel { StartValue = 2, RangeQuantifier = RangeQuantifier.GreaterThan },
+                    new RangeModel { StartValue = 30, RangeQuantifier = RangeConstraint.Between, EndValue = 40 },
+                HitboxActiveLength = new RangeModel { StartValue = 1, RangeQuantifier = RangeConstraint.GreaterThan },
+                HitboxActiveOnFrame = new RangeModel { StartValue = 2, RangeQuantifier = RangeConstraint.GreaterThan },
                 HitboxStartupFrame =
-                    new RangeModel { StartValue = 3, RangeQuantifier = RangeQuantifier.GreaterThanOrEqualTo },
-                KnockbackGrowth = new RangeModel { StartValue = 30, RangeQuantifier = RangeQuantifier.LessThanOrEqualTo },
+                    new RangeModel { StartValue = 3, RangeQuantifier = RangeConstraint.GreaterThanOrEqualTo },
+                KnockbackGrowth = new RangeModel { StartValue = 30, RangeQuantifier = RangeConstraint.LessThanOrEqualTo },
                 Name = "jab 1",
                 CharacterName = "mario"
             };

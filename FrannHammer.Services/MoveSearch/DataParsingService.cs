@@ -57,10 +57,28 @@ namespace FrannHammer.Services.MoveSearch
             return _numberRanges;
         }
 
+        private bool TryParseIntAndRound(string rawValue, out int parsedAndRoundedValue)
+        {
+            double unrounded;
+
+            bool wasParsed = double.TryParse(rawValue, out unrounded);
+            if (wasParsed)
+            {
+                double rounded = Math.Round(unrounded);
+                parsedAndRoundedValue = (int)rounded;
+            }
+            else
+            {
+                parsedAndRoundedValue = -1;
+            }
+
+            return wasParsed;
+        }
+
         private void ProcessSingleValueSingleFrameActive(string rawValue)
         {
             int value;
-            int.TryParse(rawValue, out value); //single value, single frame active
+            TryParseIntAndRound(rawValue, out value);
             _numberRanges.Add(new NumberRange(value));
         }
 
@@ -69,7 +87,9 @@ namespace FrannHammer.Services.MoveSearch
             if (rawRange.Count == 2)
             {
                 int startRange, endRange;
-                if (int.TryParse(rawRange[0], out startRange) && int.TryParse(rawRange[1], out endRange))
+
+                if (TryParseIntAndRound(rawRange[0], out startRange) &&
+                    TryParseIntAndRound(rawRange[1], out endRange))
                 {
                     _numberRanges.Add(new NumberRange(startRange, endRange));
                 }
@@ -84,7 +104,8 @@ namespace FrannHammer.Services.MoveSearch
                 if (rawRange.Length == 2)
                 {
                     int startRange, endRange;
-                    if (int.TryParse(rawRange[0], out startRange) && int.TryParse(rawRange[1], out endRange))
+                    if (TryParseIntAndRound(rawRange[0], out startRange) &&
+                    TryParseIntAndRound(rawRange[1], out endRange))
                     {
                         _numberRanges.Add(new NumberRange(startRange, endRange));
                     }
@@ -97,7 +118,7 @@ namespace FrannHammer.Services.MoveSearch
             foreach (var hyphenSplit in commaSplits)
             {
                 int number;
-                if (int.TryParse(hyphenSplit, out number))
+                if (TryParseIntAndRound(hyphenSplit, out number))
                 {
                     _numberRanges.Add(new NumberRange(number));
                 }

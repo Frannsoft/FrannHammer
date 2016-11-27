@@ -16,13 +16,13 @@ namespace FrannHammer.Services.Tests.MoveSearch
 
         private static IEnumerable<RangeModel> Ranges()
         {
-            yield return new RangeModel { StartValue = 5, RangeQuantifier = RangeQuantifier.EqualTo };
-            yield return new RangeModel { StartValue = 20, RangeQuantifier = RangeQuantifier.EqualTo };
-            yield return new RangeModel { StartValue = 10, RangeQuantifier = RangeQuantifier.GreaterThan };
-            yield return new RangeModel { StartValue = 10, RangeQuantifier = RangeQuantifier.LessThan };
-            yield return new RangeModel { StartValue = 20, RangeQuantifier = RangeQuantifier.GreaterThanOrEqualTo };
-            yield return new RangeModel { StartValue = 20, RangeQuantifier = RangeQuantifier.LessThanOrEqualTo };
-            yield return new RangeModel { StartValue = 10, RangeQuantifier = RangeQuantifier.Between, EndValue = 20 };
+            yield return new RangeModel { StartValue = 5, RangeQuantifier = RangeConstraint.EqualTo };
+            yield return new RangeModel { StartValue = 20, RangeQuantifier = RangeConstraint.EqualTo };
+            yield return new RangeModel { StartValue = 10, RangeQuantifier = RangeConstraint.GreaterThan };
+            yield return new RangeModel { StartValue = 10, RangeQuantifier = RangeConstraint.LessThan };
+            yield return new RangeModel { StartValue = 20, RangeQuantifier = RangeConstraint.GreaterThanOrEqualTo };
+            yield return new RangeModel { StartValue = 20, RangeQuantifier = RangeConstraint.LessThanOrEqualTo };
+            yield return new RangeModel { StartValue = 10, RangeQuantifier = RangeConstraint.Between, EndValue = 20 };
         }
 
         [SetUp]
@@ -71,15 +71,15 @@ namespace FrannHammer.Services.Tests.MoveSearch
         {
             var searchModel = new MoveSearchModel
             {
-                Angle = new RangeModel { StartValue = 10, RangeQuantifier = RangeQuantifier.GreaterThan },
-                AutoCancel = new RangeModel { StartValue = 5, RangeQuantifier = RangeQuantifier.GreaterThanOrEqualTo },
-                BaseDamage = new RangeModel { StartValue = 3, RangeQuantifier = RangeQuantifier.LessThanOrEqualTo },
-                BaseKnockback = new RangeModel { StartValue = 50, RangeQuantifier = RangeQuantifier.GreaterThan },
-                FirstActionableFrame = new RangeModel { StartValue = 30, RangeQuantifier = RangeQuantifier.Between, EndValue = 40 },
-                HitboxActiveLength = new RangeModel { StartValue = 1, RangeQuantifier = RangeQuantifier.GreaterThan },
-                HitboxActiveOnFrame = new RangeModel { StartValue = 2, RangeQuantifier = RangeQuantifier.GreaterThan },
-                HitboxStartupFrame = new RangeModel { StartValue = 3, RangeQuantifier = RangeQuantifier.GreaterThanOrEqualTo },
-                KnockbackGrowth = new RangeModel { StartValue = 30, RangeQuantifier = RangeQuantifier.LessThanOrEqualTo },
+                Angle = new RangeModel { StartValue = 10, RangeQuantifier = RangeConstraint.GreaterThan },
+                AutoCancel = new RangeModel { StartValue = 5, RangeQuantifier = RangeConstraint.GreaterThanOrEqualTo },
+                BaseDamage = new RangeModel { StartValue = 3, RangeQuantifier = RangeConstraint.LessThanOrEqualTo },
+                BaseKnockback = new RangeModel { StartValue = 50, RangeQuantifier = RangeConstraint.GreaterThan },
+                FirstActionableFrame = new RangeModel { StartValue = 30, RangeQuantifier = RangeConstraint.Between, EndValue = 40 },
+                HitboxActiveLength = new RangeModel { StartValue = 1, RangeQuantifier = RangeConstraint.GreaterThan },
+                HitboxActiveOnFrame = new RangeModel { StartValue = 2, RangeQuantifier = RangeConstraint.GreaterThan },
+                HitboxStartupFrame = new RangeModel { StartValue = 3, RangeQuantifier = RangeConstraint.GreaterThanOrEqualTo },
+                KnockbackGrowth = new RangeModel { StartValue = 30, RangeQuantifier = RangeConstraint.LessThanOrEqualTo },
                 Name = "Fair 2",
                 CharacterName = "Bayonetta"
             };
@@ -94,10 +94,10 @@ namespace FrannHammer.Services.Tests.MoveSearch
         {
             var searchModel = new MoveSearchModel
             {
-                Angle = new RangeModel { StartValue = 10, RangeQuantifier = RangeQuantifier.GreaterThan },
-                AutoCancel = new RangeModel { StartValue = 5, RangeQuantifier = RangeQuantifier.GreaterThanOrEqualTo },
-                BaseDamage = new RangeModel { StartValue = 3, RangeQuantifier = RangeQuantifier.LessThanOrEqualTo },
-                BaseKnockback = new RangeModel { StartValue = 50, RangeQuantifier = RangeQuantifier.GreaterThan }
+                Angle = new RangeModel { StartValue = 10, RangeQuantifier = RangeConstraint.GreaterThan },
+                AutoCancel = new RangeModel { StartValue = 5, RangeQuantifier = RangeConstraint.GreaterThanOrEqualTo },
+                BaseDamage = new RangeModel { StartValue = 3, RangeQuantifier = RangeConstraint.LessThanOrEqualTo },
+                BaseKnockback = new RangeModel { StartValue = 50, RangeQuantifier = RangeConstraint.GreaterThan }
             };
 
             AssertSearchResultsAreValid(searchModel);
@@ -107,6 +107,25 @@ namespace FrannHammer.Services.Tests.MoveSearch
         [TestCaseSource(nameof(Ranges))]
         public void ReturnsBaseDamageOnlyResult(RangeModel rangeModel)
         {
+            var searchModel = new MoveSearchModel
+            {
+                BaseDamage = rangeModel
+            };
+            var service = new SearchPredicateService();
+            var func = service.GetPredicate<BaseDamage>(rangeModel);
+
+            _moveSearchHarness.SearchResultCollectionIsValid(searchModel, Context, func);
+        }
+
+        [Test]
+        public void ReturnsBaseDamageOnlyResultSinge()
+        {
+            var rangeModel = new RangeModel
+            {
+                StartValue = 1,
+                RangeQuantifier = RangeConstraint.LessThanOrEqualTo
+            };
+
             var searchModel = new MoveSearchModel
             {
                 BaseDamage = rangeModel
