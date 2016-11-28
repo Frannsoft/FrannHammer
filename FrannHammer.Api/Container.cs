@@ -3,6 +3,7 @@ using Autofac.Features.ResolveAnything;
 using Autofac.Integration.WebApi;
 using FrannHammer.Api.Controllers;
 using FrannHammer.Services;
+using FrannHammer.Services.MoveSearch;
 
 namespace FrannHammer.Api
 {
@@ -61,7 +62,8 @@ namespace FrannHammer.Api
 
             builder.RegisterType<MovesController>()
                 .As<MovesController>()
-                .WithParameter(metadataServiceName, metadataService);
+                .WithParameter(metadataServiceName, metadataService)
+                .WithParameter("redisConnectionMultiplexer", WebApiConfig.RedisMultiplexer);
 
             builder.RegisterType<NotationsController>()
                 .As<NotationsController>()

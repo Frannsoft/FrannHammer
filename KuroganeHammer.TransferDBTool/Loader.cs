@@ -48,6 +48,20 @@ namespace KuroganeHammer.TransferDBTool
         }
 
         [Test]
+        [Explicit("Only Seed data.  Useful for testing only.")]
+        public void SeedMoveDetailsOnly()
+        {
+            Console.WriteLine("seeding and cleaning all data...");
+            using (var context = new AppDbContext())
+            {
+                var seeder = new Seeder(context);
+                seeder.SeedMoveDetails();
+            }
+
+            Console.WriteLine("Done.");
+        }
+
+        [Test]
         [Explicit("Reloads character data")]
         public async Task ReloadCharacters()
         {
@@ -166,6 +180,8 @@ namespace KuroganeHammer.TransferDBTool
                     attributeType.Name.Equals("REFLECTORS") ||
                     attributeType.Name.Equals("SHIELDS") ||
                     attributeType.Name.Equals("SMASHCHARGERELEASE") ||
+                    attributeType.Name.Equals("TRIP") ||
+                    attributeType.Name.Equals("JABLOCK") ||
                     attributeType.Name.Equals("RUNSPEED"))
                 { continue; } //skip these for now since the tables are problematic
 
@@ -194,7 +210,6 @@ namespace KuroganeHammer.TransferDBTool
                         var attributeName = specificValues[i].Name;
                         var dbAttributeType = attributeTypes.Find(a => a.Name.Equals(specificValues[i].AttributeFlag)); //   (CharacterAttributes)Enum.Parse(typeof(CharacterAttributes), specificValues[i].AttributeFlag, true);
                         var value = specificValues[i].Value;
-                        Console.WriteLine("characterName: " + characterName);
                         var characterAttribute = new CharacterAttribute
                         {
                             Rank = rank,

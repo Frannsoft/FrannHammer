@@ -7,6 +7,7 @@ using FrannHammer.Api.ActionFilterAttributes;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
 using FrannHammer.Services;
+using StackExchange.Redis;
 
 namespace FrannHammer.Api.Controllers
 {
@@ -18,13 +19,15 @@ namespace FrannHammer.Api.Controllers
     {
         private const string MovesRouteKey = "moves";
         private readonly IMetadataService _metadataService;
+        private readonly IConnectionMultiplexer _redisConnectionMultiplexer;
 
         /// <summary>
         /// Create a new <see cref="MovesController"/>.
         /// </summary>
-        public MovesController(IMetadataService metadataService)
+        public MovesController(IMetadataService metadataService, IConnectionMultiplexer redisConnectionMultiplexer)
         {
             _metadataService = metadataService;
+            _redisConnectionMultiplexer = redisConnectionMultiplexer;
         }
 
         //Too big to be useful?
@@ -40,6 +43,16 @@ namespace FrannHammer.Api.Controllers
         public IHttpActionResult GetMoves([FromUri] string fields = "")
         {
             var content = _metadataService.GetAll<Move, MoveDto>(fields);
+            return Ok(content);
+        }
+
+        [ResponseType(typeof(MoveDto))]
+        [ValidateModel]
+        [Route(MovesRouteKey + "/search")]
+        [HttpPost]
+        public IHttpActionResult GetMovesThatMeetCriteria(MoveSearchModel moveSearchModel, [FromUri] string fields = "")
+        {
+            var content = _metadataService.GetAll<MoveDto>(moveSearchModel, _redisConnectionMultiplexer, fields);
             return Ok(content);
         }
 

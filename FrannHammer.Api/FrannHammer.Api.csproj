@@ -23,6 +23,7 @@
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
     <UseGlobalApplicationHostFile />
+    <ApplicationInsightsResourceId>/subscriptions/bc3039c4-9989-4e7f-b66a-cdea4e1935e1/resourcegroups/Default-ApplicationInsights-CentralUS/providers/microsoft.insights/components/FrannHammer.Api</ApplicationInsightsResourceId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -68,6 +69,34 @@
       <HintPath>..\packages\CacheCow.Server.EntityTagStore.SqlServer.1.0.0\lib\net40\CacheCow.Server.EntityTagStore.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.1.0\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.1.0\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.1.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.1.0\lib\net45\Microsoft.AI.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.1.0\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.1.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin.Cors, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Cors.3.0.1\lib\net45\Microsoft.Owin.Cors.dll</HintPath>
@@ -89,6 +118,10 @@
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="StackExchange.Redis, Version=1.1.608.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\StackExchange.Redis.1.1.608\lib\net45\StackExchange.Redis.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
       <HintPath>..\packages\Swashbuckle.Core.5.4.0\lib\net40\Swashbuckle.Core.dll</HintPath>
       <Private>True</Private>
@@ -96,6 +129,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
@@ -205,6 +239,7 @@
     <Compile Include="Controllers\SmashAttributeTypesController.cs" />
     <Compile Include="Controllers\ThrowsController.cs" />
     <Compile Include="Controllers\ThrowTypesController.cs" />
+    <Compile Include="ErrorHandler\AiHandleErrorAttribute.cs" />
     <Compile Include="Migrations\201607050019265_schema_0_2_0_update.cs" />
     <Compile Include="Migrations\201607050019265_schema_0_2_0_update.Designer.cs">
       <DependentUpon>201607050019265_schema_0_2_0_update.cs</DependentUpon>
@@ -227,13 +262,19 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="TelemetryProcessorFilters\ExcludedDataFilter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\XmlDocument.xml" />
     <Content Include="favicon.ico" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\PublishProfiles\Api.KuroganeHammer.com.pubxml" />
     <None Include="Properties\PublishProfiles\KHServer.pubxml" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
+    <Content Include="Scripts\ai.0.22.19-build00125.js" />
+    <Content Include="Scripts\ai.0.22.19-build00125.min.js" />
     <Content Include="Scripts\jquery-3.1.0.js" />
     <Content Include="Scripts\jquery-3.1.0.min.js" />
     <Content Include="Scripts\jquery-3.1.0.slim.js" />

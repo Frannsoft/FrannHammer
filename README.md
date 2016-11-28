@@ -1,10 +1,10 @@
-# FrannHammer
+# FrannHammer - The KuroganeHammer.com API
 
 Develop: [![Build status](https://ci.appveyor.com/api/projects/status/ruxmxhiutxe9q8v9/branch/develop?svg=true)](https://ci.appveyor.com/project/Frannsoft/frannhammer-0uqqq/branch/develop)
 Master: [![Build status](https://ci.appveyor.com/api/projects/status/y2hs2u8ux4ceaq2k/branch/master?svg=true)](https://ci.appveyor.com/project/Frannsoft/frannhammer/branch/master)
 
 
-Full stack web site, rest api and database layer for Sm4sh frame data as told by KuroganeHammer.
+Restful api and database layer for Sm4sh frame data as told by KuroganeHammer.
 
 This is being worked on with KuroganeHammer's permission.  All credit for the actual data that is stored and retrieved goes to him and 
 any other people that are involved in that process.
@@ -12,7 +12,7 @@ any other people that are involved in that process.
 Allows consumers to pull back the data displayed on KuroganeHammer's site as JSON.  The data is stored in a database and is not 
 scraped from the site on-call.
 
-See the [Wiki](https://github.com/Frannsoft/FrannHammer/wiki/Character-Data) for more information.
+See the [Wiki](https://github.com/Frannsoft/FrannHammer/wiki) for more information.
 
 ## Getting Started
 

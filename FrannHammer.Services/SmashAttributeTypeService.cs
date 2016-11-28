@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using FrannHammer.Core;
 using FrannHammer.Models;
 using FrannHammer.Models.DTOs;
+using FrannHammer.Services.MoveSearch;
 
 namespace FrannHammer.Services
 {

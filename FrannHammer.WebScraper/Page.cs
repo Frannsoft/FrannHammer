@@ -372,7 +372,12 @@ namespace FrannHammer.WebScraper
             var characterFriendlyName = node.InnerText.Split(new[] { " F" }, StringSplitOptions.None)[0];
 
             //clean up and remove the "'s"
-            var retVal = characterFriendlyName.TrimEnd('s', '\'');// .Remove(characterFriendlyName.Length - 1, 2);
+            string retVal = characterFriendlyName;
+            if (characterFriendlyName.EndsWith("'s"))
+            {
+                retVal = characterFriendlyName.Remove(characterFriendlyName.Length - 2, 2);
+            }
+            //var retVal = characterFriendlyName.TrimEnd('s', '\'');// .Remove(characterFriendlyName.Length - 1, 2);
             return retVal;
         }
     }

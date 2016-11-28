@@ -3,6 +3,7 @@ using FrannHammer.Models;
 using FrannHammer.Services.Exceptions;
 using FrannHammer.Services.Tests.Harnesses;
 using NUnit.Framework;
+using StackExchange.Redis;
 
 namespace FrannHammer.Services.Tests
 {
@@ -11,31 +12,31 @@ namespace FrannHammer.Services.Tests
     {
         private static IEnumerable<IMetadataHarness> MetadataTestCases()
         {
-            yield return new MetadataHarness<Throw, ThrowDto>("Id,WeightDependent");
-            yield return new MetadataHarness<Character, CharacterDto>("Id,Name,DisplayName");
-            yield return new MetadataHarness<Notation, NotationDto>("Id,Name");
-            yield return new MetadataHarness<SmashAttributeType, SmashAttributeTypeDto>("Id,Name");
-            yield return new MetadataHarness<ThrowType, ThrowTypeDto>("Id,Name");
-            yield return new MetadataHarness<Movement, MovementDto>("Name,OwnerId,Value");
-            yield return new MetadataHarness<Character, CharacterDto>("Name,Id,Name");
+            yield return new MetadataHarness<Throw, ThrowDto>($"{Id},{WeightDependent}");
+            yield return new MetadataHarness<Character, CharacterDto>($"{Id},{Name},{DisplayName}");
+            yield return new MetadataHarness<Notation, NotationDto>($"{Id},{Name}");
+            yield return new MetadataHarness<SmashAttributeType, SmashAttributeTypeDto>($"{Id},{Name}");
+            yield return new MetadataHarness<ThrowType, ThrowTypeDto>($"{Id},{Name}");
+            yield return new MetadataHarness<Movement, MovementDto>($"{Name},{OwnerId},{Value}");
+            yield return new MetadataHarness<Character, CharacterDto>($"{Name},{Id},{Name}");
         }
 
         private static IEnumerable<IMoveDataHarness> MoveTestCases()
         {
-            yield return new MoveDataHarness<Angle, AngleDto>("Id,MoveName,Hitbox1");
-            yield return new MoveDataHarness<BaseDamage, BaseDamageDto>("Id,MoveName,Hitbox1");
-            yield return new MoveDataHarness<Hitbox, HitboxDto>("Id,MoveName,Hitbox1");
-            yield return new MoveDataHarness<KnockbackGrowth, KnockbackGrowthDto>("Id,MoveName,Hitbox1");
+            yield return new MoveDataHarness<Angle, AngleDto>($"{Id},{MoveName},{Hitbox1}");
+            yield return new MoveDataHarness<BaseDamage, BaseDamageDto>($"{Id},{MoveName},{Hitbox1}");
+            yield return new MoveDataHarness<Hitbox, HitboxDto>($"{Id},{MoveName},{Hitbox1}");
+            yield return new MoveDataHarness<KnockbackGrowth, KnockbackGrowthDto>($"{Id},{MoveName},{Hitbox1}");
         }
 
         private static IEnumerable<IMoveDataHarness> BaseKnockBackMoveTestCases()
         {
-            yield return new MoveDataHarness<BaseKnockback, BaseKnockbackDto>("Id,MoveName,Hitbox2");
+            yield return new MoveDataHarness<BaseKnockback, BaseKnockbackDto>($"{Id},{MoveName},{Hitbox2}");
         }
 
         private static IEnumerable<IMoveDataHarness> SetKnockBackMoveTestCases()
         {
-            yield return new MoveDataHarness<SetKnockback, SetKnockbackDto>("MoveName,RawValue");
+            yield return new MoveDataHarness<SetKnockback, SetKnockbackDto>($"{MoveName},{RawValue}");
         }
 
         #region move data tests
