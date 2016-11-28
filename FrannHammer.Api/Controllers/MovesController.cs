@@ -46,11 +46,17 @@ namespace FrannHammer.Api.Controllers
             return Ok(content);
         }
 
+        /// <summary>
+        /// Search through <see cref="Move"/>s based on their individual attributes.
+        /// </summary>
+        /// <param name="moveSearchModel"></param>
+        /// <param name="fields"></param>
+        /// <returns></returns>
         [ResponseType(typeof(MoveDto))]
         [ValidateModel]
         [Route(MovesRouteKey + "/search")]
         [HttpPost]
-        public IHttpActionResult GetMovesThatMeetCriteria(MoveSearchModel moveSearchModel, [FromUri] string fields = "")
+        public IHttpActionResult MovesThatMeetCriteria(MoveSearchModel moveSearchModel, [FromUri] string fields = "")
         {
             var content = _metadataService.GetAll<MoveDto>(moveSearchModel, _redisConnectionMultiplexer, fields);
             return Ok(content);
