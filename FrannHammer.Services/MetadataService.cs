@@ -269,7 +269,7 @@ namespace FrannHammer.Services
             if (redisConnectionMultiplexer != null && redisConnectionMultiplexer.IsConnected)
             {
                 //check if exists in redis cache if have access to redis
-                redisKey = _moveSearchModelRedisService.MoveSearchModelToRedisKey(searchModel);
+                redisKey = _moveSearchModelRedisService.MoveSearchModelToRedisKey(searchModel, fields);
 
                 redisDatabase = redisConnectionMultiplexer.GetDatabase();
                 redisValueForKey = redisDatabase.StringGet(redisKey);
