@@ -36,5 +36,35 @@ namespace FrannHammer.Services.Tests.MoveSearch
 
             Assert.That(actualRedisKey, Is.EqualTo(expected));
         }
+
+         [Test]
+        public void ConvertsToExpectedRedisKeyWithFields()
+        {
+            var searchModel = new MoveSearchModel
+            {
+                Angle = new RangeModel { StartValue = 10, RangeQuantifier = RangeConstraint.GreaterThan },
+                AutoCancel = new RangeModel { StartValue = 5, RangeQuantifier = RangeConstraint.GreaterThanOrEqualTo },
+                BaseDamage = new RangeModel { StartValue = 3, RangeQuantifier = RangeConstraint.LessThanOrEqualTo },
+                BaseKnockback = new RangeModel { StartValue = 50, RangeQuantifier = RangeConstraint.GreaterThan },
+                FirstActionableFrame =
+                    new RangeModel { StartValue = 30, RangeQuantifier = RangeConstraint.Between, EndValue = 40 },
+                HitboxActiveLength = new RangeModel { StartValue = 1, RangeQuantifier = RangeConstraint.GreaterThan },
+                HitboxActiveOnFrame = new RangeModel { StartValue = 2, RangeQuantifier = RangeConstraint.GreaterThan },
+                HitboxStartupFrame =
+                    new RangeModel { StartValue = 3, RangeQuantifier = RangeConstraint.GreaterThanOrEqualTo },
+                KnockbackGrowth = new RangeModel { StartValue = 30, RangeQuantifier = RangeConstraint.LessThanOrEqualTo },
+                Name = "jab 1",
+                CharacterName = "mario"
+            };
+
+            string fields = "id,name";
+            string expected = JsonConvert.SerializeObject(searchModel) + JsonConvert.SerializeObject(fields);
+
+            var service = new MoveSearchModelRedisService();
+
+            var actualRedisKey = service.MoveSearchModelToRedisKey(searchModel, fields);
+
+            Assert.That(actualRedisKey, Is.EqualTo(expected));
+        }
     }
 }
