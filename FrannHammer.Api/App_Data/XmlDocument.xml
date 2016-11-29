@@ -625,6 +625,14 @@
             E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
+        <member name="M:FrannHammer.Api.Controllers.MovesController.MovesThatMeetCriteria(FrannHammer.Models.MoveSearchModel,System.String)">
+            <summary>
+            Search through <see cref="T:FrannHammer.Models.Move"/>s based on their individual attributes.
+            </summary>
+            <param name="moveSearchModel"></param>
+            <param name="fields"></param>
+            <returns></returns>
+        </member>
         <member name="M:FrannHammer.Api.Controllers.MovesController.GetMovesByName(System.String,System.String)">
             <summary>
             Get all moves that have a specific name.

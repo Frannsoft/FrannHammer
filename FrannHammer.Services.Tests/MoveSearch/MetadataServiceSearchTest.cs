@@ -118,25 +118,6 @@ namespace FrannHammer.Services.Tests.MoveSearch
         }
 
         [Test]
-        public void ReturnsBaseDamageOnlyResultSinge()
-        {
-            var rangeModel = new RangeModel
-            {
-                StartValue = 1,
-                RangeQuantifier = RangeConstraint.LessThanOrEqualTo
-            };
-
-            var searchModel = new MoveSearchModel
-            {
-                BaseDamage = rangeModel
-            };
-            var service = new SearchPredicateService();
-            var func = service.GetPredicate<BaseDamage>(rangeModel);
-
-            _moveSearchHarness.SearchResultCollectionIsValid(searchModel, Context, func);
-        }
-
-        [Test]
         [TestCaseSource(nameof(Ranges))]
         public void ReturnsHitboxActiveLengthOnlyResult(RangeModel rangeModel)
         {
