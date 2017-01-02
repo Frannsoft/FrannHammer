@@ -55,6 +55,11 @@ Task("Run-Unit-Tests")
 {
     string currentBranchName = GitBranchCurrent(".").FriendlyName;
 
+    if(currentBranchName.Equals("(no branch)"))
+    {
+        currentBranchName = EnvironmentVariable("APPVEYOR_REPO_BRANCH");
+    }
+    
     string reportUnitDirectory = buildArtifactsDirectory + @"/" + currentBranchName + @"/reportUnit";
     string reportUnitOutputFile = reportUnitDirectory + @"/unit.html";
     string unitTestResultsOutputDirectory = buildArtifactsDirectory + @"/" + currentBranchName + @"/unittestresults";
