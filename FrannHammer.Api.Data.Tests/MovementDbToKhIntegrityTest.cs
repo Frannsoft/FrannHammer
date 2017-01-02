@@ -8,6 +8,7 @@ using NUnit.Framework;
 namespace FrannHammer.Api.Data.Tests
 {
     [TestFixture]
+    [Explicit("These take way too long to perform on CI")]
     public class MovementDbToKhIntegrityTest : BaseDataIntegrityTest
     {
         private List<Movement> _movements;

@@ -8,6 +8,7 @@ using NUnit.Framework;
 namespace FrannHammer.Api.Data.Tests
 {
     [TestFixture]
+    [Explicit("These take way too long to perform on CI")]
     public class CharacterDbToKhIntegrityTest : BaseDataIntegrityTest
     {
         private List<Thumbnail> _thumbnailUrls;
