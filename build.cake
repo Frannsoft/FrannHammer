@@ -59,7 +59,7 @@ Task("Run-Unit-Tests")
     {
         currentBranchName = EnvironmentVariable("APPVEYOR_REPO_BRANCH");
     }
-    
+
     string reportUnitDirectory = buildArtifactsDirectory + @"/" + currentBranchName + @"/reportUnit";
     string reportUnitOutputFile = reportUnitDirectory + @"/unit.html";
     string unitTestResultsOutputDirectory = buildArtifactsDirectory + @"/" + currentBranchName + @"/unittestresults";
@@ -72,7 +72,7 @@ Task("Run-Unit-Tests")
     EnsureDirectoryExists(openCoverOutputDirectory);
 
     OpenCover(tool => 
-        tool.NUnit3("./**/bin/" + configuration + "/*.Core.Tests.dll", new NUnit3Settings { 
+        tool.NUnit3("./**/bin/" + configuration + "/*.Tests.dll", new NUnit3Settings { 
                 NoResults = false,
                 Results = unitTestResultsOutputFile
             }),
