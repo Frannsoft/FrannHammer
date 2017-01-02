@@ -25,6 +25,7 @@ namespace FrannHammer.Api.Data.Tests
         }
 
         [Test]
+        [Explicit("These take way too long to perform on CI")]
         public void MoveDbDataIsEqualToKhPageData()
         {
             foreach (var characterFromDb in _characters)
