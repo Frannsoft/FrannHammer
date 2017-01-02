@@ -70,3 +70,4 @@ FrannHammer.Api.Data.Tests/ConnectionStringsTest.config
 ConnectionStringsTest.config
 **/buildArtifacts/**/*
 **/tools/**/*
+!/tools/packages.config
