@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace FrannHammer.Api.Data.Tests
 {
     [TestFixture]
-    [Explicit("These take way too long to perform on CI")]
+    [LongRunning]
     public class MovementDbToKhIntegrityTest : BaseDataIntegrityTest
     {
         private List<Movement> _movements;
@@ -24,7 +24,6 @@ namespace FrannHammer.Api.Data.Tests
         }
 
         [Test]
-        [Explicit("These take way too long to perform on CI")]
         public void MovementDbDataIsEqualToKhPageData()
         {
             foreach (var characterFromDb in _characters)

@@ -74,7 +74,8 @@ Task("Run-Unit-Tests")
     OpenCover(tool => 
         tool.NUnit3("./**/bin/" + configuration + "/*.Tests.dll", new NUnit3Settings { 
                 NoResults = false,
-                Results = unitTestResultsOutputFile
+                Results = unitTestResultsOutputFile,
+                Where = "cat!=LONGRUNNING"
             }),
             openCoverResultsFile,
         new OpenCoverSettings()

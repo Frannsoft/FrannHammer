@@ -9,6 +9,7 @@ using System;
 namespace FrannHammer.Services.Tests.MoveSearch
 {
     [TestFixture]
+    [LongRunning]
     public class MetadataServiceSearchTest : ServiceBaseTest
     {
         private IMetadataService _metadataService;
