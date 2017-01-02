@@ -68,3 +68,5 @@ FrannHammer.Services.Tests/obj/
 **/*/obj/
 FrannHammer.Api.Data.Tests/ConnectionStringsTest.config
 ConnectionStringsTest.config
+**/buildArtifacts/**/*
+**/tools/**/*
