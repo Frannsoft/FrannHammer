@@ -86,6 +86,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="BaseDataIntegrityTest.cs" />
+    <Compile Include="Categories.cs" />
     <Compile Include="CharacterDbToKhIntegrityTest.cs" />
     <Compile Include="CharacterIntegrityTest.cs" />
     <Compile Include="MoveDbToKhIntegrityTest.cs" />
