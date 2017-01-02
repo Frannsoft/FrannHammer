@@ -9,6 +9,7 @@ using FrannHammer.WebScraper.Stats;
 namespace FrannHammer.Api.Data.Tests
 {
     [TestFixture]
+    [Explicit("These take way too long to perform on CI")]
     public class MoveDbToKhIntegrityTest : BaseDataIntegrityTest
     {
         private List<Move> _moves;
