@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Runtime.InteropServices;
 
 #region License
 //The MIT License(MIT)
@@ -34,17 +33,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("FrannHammer.Core")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("FrannSoft")]
 [assembly: AssemblyProduct("FrannHammer.Core")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-
-// Setting ComVisible to false makes the types in this assembly not visible 
-// to COM components.  If you need to access a type in this assembly from 
-// COM, set the ComVisible attribute to true on that type.
-[assembly: ComVisible(false)]
-
-// The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("2904d4e7-8989-46bd-ac0a-b4356f190a15")]
-[assembly: AssemblyVersion("0.3.*")]

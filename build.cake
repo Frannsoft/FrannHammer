@@ -1,5 +1,5 @@
 #addin nuget:?package=Cake.Git
-#tool "ReportGenerator"
+#addin "Cake.WebDeploy"
 
 //////////////////////////////////////////////////////////////////////
 // ARGUMENTS
@@ -33,6 +33,7 @@ Task("Restore-NuGet-Packages")
 
 Task("Build")
     .IsDependentOn("Restore-NuGet-Packages")
+    .IsDependentOn("Assign-Assembly-Info")
     .Does(() =>
 {
     if(IsRunningOnWindows())
@@ -90,6 +91,18 @@ Task("Run-Unit-Tests")
 
     ReportGenerator(openCoverResultsFile, Directory(openCoverOutputDirectory), reportSettings);
     ReportUnit(new FilePath(unitTestResultsOutputFile), new FilePath(reportUnitOutputFile));
+});
+
+Task("Assign-Assembly-Info")
+    .Description("Create Assembly Information.")
+    .Does(() =>{
+
+        CreateAssemblyInfo(
+            "./SolutionInfo.cs",
+            new AssemblyInfoSettings{
+                Version = "0.4.*",
+                Company = "FrannDotExe"
+        });
 });
 
 //////////////////////////////////////////////////////////////////////

@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.AccountRegistrationTool", "FrannHammer.AccountRegistration\FrannHammer.AccountRegistrationTool.csproj", "{B164DF04-9B05-4918-AA39-8008C8F4F5AC}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.Api", "FrannHammer.Api\FrannHammer.Api.csproj", "{470ADA5B-56B2-45D3-8162-AB65B0350C68}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.Core", "FrannHammer.Core\FrannHammer.Core.csproj", "{2904D4E7-8989-46BD-AC0A-B4356F190A15}"
@@ -20,8 +18,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KuroganeHammer.TransferDBTo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.Core.Tests", "FrannHammer.Core.Tests\FrannHammer.Core.Tests.csproj", "{6035B71B-F48B-4051-A9C4-6789D689DF04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.AccountRegistrationTool.Tests", "FrannHammer.AccountRegistrationTool.Tests\FrannHammer.AccountRegistrationTool.Tests.csproj", "{7548CF7E-87D7-40A2-8741-F90C07C6AB2F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.Models", "FrannHammer.Models\FrannHammer.Models.csproj", "{E4F0C134-6288-438F-B5D0-C53638E866E3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.Services", "FrannHammer.Services\FrannHammer.Services.csproj", "{7E5C008B-AE84-4D50-BC4B-9D49D8D53870}"
@@ -30,16 +26,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.Services.Tests"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.Api.Data.Tests", "FrannHammer.Api.Data.Tests\FrannHammer.Api.Data.Tests.csproj", "{86AEBEFE-B213-4DC7-88DE-B6D23DFB5C4D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{69FBD121-A16B-4A89-941F-54FD77745E60}"
+	ProjectSection(SolutionItems) = preProject
+		SolutionInfo.cs = SolutionInfo.cs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B164DF04-9B05-4918-AA39-8008C8F4F5AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B164DF04-9B05-4918-AA39-8008C8F4F5AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B164DF04-9B05-4918-AA39-8008C8F4F5AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B164DF04-9B05-4918-AA39-8008C8F4F5AC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{470ADA5B-56B2-45D3-8162-AB65B0350C68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{470ADA5B-56B2-45D3-8162-AB65B0350C68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{470ADA5B-56B2-45D3-8162-AB65B0350C68}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -64,10 +61,6 @@ Global
 		{6035B71B-F48B-4051-A9C4-6789D689DF04}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6035B71B-F48B-4051-A9C4-6789D689DF04}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6035B71B-F48B-4051-A9C4-6789D689DF04}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7548CF7E-87D7-40A2-8741-F90C07C6AB2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7548CF7E-87D7-40A2-8741-F90C07C6AB2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7548CF7E-87D7-40A2-8741-F90C07C6AB2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7548CF7E-87D7-40A2-8741-F90C07C6AB2F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E4F0C134-6288-438F-B5D0-C53638E866E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E4F0C134-6288-438F-B5D0-C53638E866E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4F0C134-6288-438F-B5D0-C53638E866E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
