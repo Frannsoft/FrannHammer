@@ -71,6 +71,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
     <Compile Include="Calculations\Calculator.cs" />
     <Compile Include="CustomDtoExtensions.cs" />
     <Compile Include="Guard.cs" />

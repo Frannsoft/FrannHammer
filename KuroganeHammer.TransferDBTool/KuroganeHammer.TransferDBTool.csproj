@@ -85,6 +85,9 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="..\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
     <Compile Include="Seeding\AppDbContext.cs" />
     <Compile Include="BaseTest.cs" />
     <Compile Include="Loader.cs" />
