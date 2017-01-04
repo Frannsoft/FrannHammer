@@ -259,6 +259,10 @@
     <Compile Include="Migrations\201607060302489_throw_dt2.Designer.cs">
       <DependentUpon>201607060302489_throw_dt2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701040146167_fullurl added to character.cs" />
+    <Compile Include="Migrations\201701040146167_fullurl added to character.Designer.cs">
+      <DependentUpon>201701040146167_fullurl added to character.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ModelFactory.cs" />
     <Compile Include="Models\RolesConstants.cs" />
@@ -305,6 +309,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607060302489_throw_dt2.resx">
       <DependentUpon>201607060302489_throw_dt2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701040146167_fullurl added to character.resx">
+      <DependentUpon>201701040146167_fullurl added to character.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SwaggerExtensions\onComplete.js" />
     <Content Include="Web.config" />
