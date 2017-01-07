@@ -13,6 +13,8 @@ namespace FrannHammer.Api.Data.Tests
         [OneTimeSetUp]
         public virtual void OneTimeSetUp()
         {
+            Startup.ConfigureAutoMapping();
+
             var dataLoader = new CsvDataLoader(AppDomain.CurrentDomain.BaseDirectory + "\\fakeDb\\");
             var connection = DbConnectionFactory.CreatePersistent("testdb", dataLoader);
             Context = new ApplicationDbContext(connection);

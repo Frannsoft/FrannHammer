@@ -15,6 +15,23 @@ namespace FrannHammer.Services
     public interface IMetadataService
     {
         /// <summary>
+        /// Gets the standard model of an object without support for mapping or fields parameter customization.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        T GetById<T>(int id)
+            where T : class, IEntity;
+
+        /// <summary>
+        /// Gets the standard model of objects of a db type without support for mapping or fields parameter customization.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        IEnumerable<T> GetAllOfType<T>()
+            where T : class, IEntity;
+
+        /// <summary>
         /// Join on Entity Id instead of MoveId.  If you want to join on MoveId use GetWithMoves.
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
@@ -439,5 +456,17 @@ namespace FrannHammer.Services
         /// <param name="id"></param>
         public void Delete<T>(int id)
             where T : class, IEntity => DeleteEntity<T>(id);
+
+        public T GetById<T>(int id)
+            where T : class, IEntity
+        {
+            return Db.Set<T>().Find(id);
+        }
+
+        public IEnumerable<T> GetAllOfType<T>() 
+            where T : class, IEntity
+        {
+            return Db.Set<T>();
+        }
     }
 }
