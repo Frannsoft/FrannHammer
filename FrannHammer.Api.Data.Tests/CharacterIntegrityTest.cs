@@ -1,4 +1,9 @@
 ﻿using System.Linq;
+using System.Web.Http.Results;
+using FrannHammer.Api.Controllers;
+using FrannHammer.Models.DTOs;
+using FrannHammer.Services;
+using FrannHammer.Services.MoveSearch;
 using NUnit.Framework;
 
 namespace FrannHammer.Api.Data.Tests
@@ -33,6 +38,40 @@ namespace FrannHammer.Api.Data.Tests
                     Assert.That(!character.DisplayName.EndsWith("'s"), msg);
                 }
             }
+        }
+
+        [Test]
+        [TestCase(1)]
+        public void CharacterDetailsReturnsExpectedTypesOfDataById(int characterId)
+        {
+            var metadataService = new MetadataService(Context, new ResultValidationService());
+            var controller = new CharactersController(metadataService);
+
+            var response = controller.GetCharacterDetailsById(characterId) as OkNegotiatedContentResult<AggregateCharacterData>;
+
+            Assert.That(response, Is.Not.Null);
+
+            // ReSharper disable once PossibleNullReferenceException
+            Assert.That(response.Content.CharacterAttributeData, Is.Not.Null);
+            Assert.That(response.Content.Metadata, Is.Not.Null);
+            Assert.That(response.Content.MovementData, Is.Not.Null);
+        }
+
+        [Test]
+        [TestCase("drmario")]
+        public void CharacterDetailsReturnsExpectedTypesOfDataByName(string characterName)
+        {
+            var metadataService = new MetadataService(Context, new ResultValidationService());
+            var controller = new CharactersController(metadataService);
+
+            var response = controller.GetCharacterDetailsByName(characterName) as OkNegotiatedContentResult<AggregateCharacterData>;
+
+            Assert.That(response, Is.Not.Null);
+
+            // ReSharper disable once PossibleNullReferenceException
+            Assert.That(response.Content.CharacterAttributeData, Is.Not.Null);
+            Assert.That(response.Content.Metadata, Is.Not.Null);
+            Assert.That(response.Content.MovementData, Is.Not.Null);
         }
     }
 }
