@@ -58,7 +58,7 @@ namespace FrannHammer.Api.Controllers
         [HttpPost]
         public IHttpActionResult MovesThatMeetCriteria(MoveSearchModel moveSearchModel, [FromUri] string fields = "")
         {
-            var content = _metadataService.GetAll<MoveDto>(moveSearchModel, _redisConnectionMultiplexer, fields);
+            var content = _metadataService.GetAll<MoveSearchDto>(moveSearchModel, _redisConnectionMultiplexer, fields);
             return Ok(content);
         }
 

@@ -9,7 +9,7 @@ namespace FrannHammer.Services.Tests.Suts
         public IEnumerable<dynamic> GetAll(MoveSearchModel searchModel, IApplicationDbContext context,
            IResultValidationService resultValidationService, string fields = "")
         {
-            return new MetadataService(context, resultValidationService).GetAll<MoveDto>(searchModel, null, fields);
+            return new MetadataService(context, resultValidationService).GetAll<MoveSearchDto>(searchModel, null, fields);
         }
     }
 }

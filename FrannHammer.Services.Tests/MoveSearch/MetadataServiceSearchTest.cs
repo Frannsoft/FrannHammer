@@ -37,7 +37,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
         private IList<dynamic> AssertSearchResultsAreValid(MoveSearchModel searchModel, Action<List<dynamic>> countAssertion = null,
             string fields = "")
         {
-            var results = _metadataService.GetAll<MoveDto>(searchModel, null).ToList();
+            var results = _metadataService.GetAll<MoveSearchDto>(searchModel, null).ToList();
 
             Assert.That(results, Is.Not.Null);
 

@@ -49,6 +49,8 @@ namespace FrannHammer.Api
                 cfg.CreateMap<MovementDto, Movement>();
                 cfg.CreateMap<Move, MoveDto>();
                 cfg.CreateMap<MoveDto, Move>();
+                cfg.CreateMap<Move, MoveSearchDto>();
+                cfg.CreateMap<MoveSearchDto, Move>();
                 cfg.CreateMap<SmashAttributeType, SmashAttributeTypeDto>();
                 cfg.CreateMap<SmashAttributeTypeDto, SmashAttributeType>();
                 cfg.CreateMap<CharacterAttributeType, CharacterAttributeTypeDto>();

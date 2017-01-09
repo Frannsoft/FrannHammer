@@ -128,7 +128,7 @@ namespace FrannHammer.Services
         /// <param name="fields"></param>
         /// <returns></returns>
         IEnumerable<dynamic> GetAll<TDto>(MoveSearchModel searchModel, IConnectionMultiplexer redisConnectionMultiplexer, string fields = "")
-            where TDto : MoveDto;
+            where TDto : MoveSearchDto;
 
         /// <summary>
         /// Get all entity data of a specific type.
@@ -276,7 +276,7 @@ namespace FrannHammer.Services
 
         public IEnumerable<dynamic> GetAll<TDto>(MoveSearchModel searchModel, IConnectionMultiplexer redisConnectionMultiplexer,
             string fields = "")
-            where TDto : MoveDto
+            where TDto : MoveSearchDto
         {
             IEnumerable<dynamic> results = default(IEnumerable<dynamic>);
             IDatabase redisDatabase = default(IDatabase);
@@ -389,7 +389,7 @@ namespace FrannHammer.Services
         }
 
         private void ApplyCharacterDetailsToMove<T>(IEnumerable<T> moves)
-            where T : MoveDto
+            where T : MoveSearchDto
         {
             foreach (var move in moves)
             {

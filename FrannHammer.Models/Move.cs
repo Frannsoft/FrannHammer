@@ -22,17 +22,17 @@ namespace FrannHammer.Models
             unchecked
             {
                 var hashCode = (HitboxActive != null ? HitboxActive.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ (FirstActionableFrame != null ? FirstActionableFrame.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ (BaseDamage != null ? BaseDamage.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ (Angle != null ? Angle.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ (BaseKnockBackSetKnockback != null ? BaseKnockBackSetKnockback.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ (LandingLag != null ? LandingLag.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ (AutoCancel != null ? AutoCancel.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ (KnockbackGrowth != null ? KnockbackGrowth.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ (int) Type;
-                hashCode = (hashCode*397) ^ (Name != null ? Name.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ OwnerId;
-                hashCode = (hashCode*397) ^ Id;
+                hashCode = (hashCode * 397) ^ (FirstActionableFrame != null ? FirstActionableFrame.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (BaseDamage != null ? BaseDamage.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Angle != null ? Angle.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (BaseKnockBackSetKnockback != null ? BaseKnockBackSetKnockback.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (LandingLag != null ? LandingLag.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (AutoCancel != null ? AutoCancel.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (KnockbackGrowth != null ? KnockbackGrowth.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (int)Type;
+                hashCode = (hashCode * 397) ^ (Name != null ? Name.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ OwnerId;
+                hashCode = (hashCode * 397) ^ Id;
                 return hashCode;
             }
         }
@@ -62,6 +62,10 @@ namespace FrannHammer.Models
     }
 
     public class MoveDto : BaseMoveModel
+    {
+    }
+
+    public class MoveSearchDto : BaseMoveModel
     {
         public CharacterDto Owner { get; set; }
     }
