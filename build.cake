@@ -1,5 +1,6 @@
 #addin nuget:?package=Cake.Git
 #addin "Cake.WebDeploy"
+#addin "Cake.Powershell"
 
 //////////////////////////////////////////////////////////////////////
 // ARGUMENTS

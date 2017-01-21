@@ -362,6 +362,15 @@
             E.g., id,name to get back just the id and name.</para></param> 
             <returns></returns>
         </member>
+        <member name="M:FrannHammer.Api.Controllers.CharactersController.GetDetailedMovesForCharacterByName(System.String,System.String)">
+            <summary>
+            Get all the <see cref="T:FrannHammer.Models.Move"/> data for a specific <see cref="T:FrannHammer.Models.Character"/> broken out
+            into stronger typed response objects.  This is designed to make sifting through the data easier.
+            </summary>
+            <param name="name"></param>
+            <param name="fields"></param>
+            <returns></returns>
+        </member>
         <member name="M:FrannHammer.Api.Controllers.CharactersController.GetMovementsForCharacter(System.Int32,System.String)">
             <summary>
             Get all the <see cref="T:FrannHammer.Models.Movement"/> data for a specific <see cref="T:FrannHammer.Models.Character"/>
@@ -378,6 +387,15 @@
             <param name="id"></param>
             <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
             E.g., id,name to get back just the id and name.</para></param> 
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Api.Controllers.CharactersController.GetDetailedMovesForCharacter(System.Int32,System.String)">
+            <summary>
+            Get all the <see cref="T:FrannHammer.Models.Move"/> data for a specific <see cref="T:FrannHammer.Models.Character"/> broken out
+            into stronger typed response objects.  This is designed to make sifting through the data easier.
+            </summary>
+            <param name="id"></param>
+            <param name="fields"></param>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.CharactersController.GetThrowsForCharacter(System.Int32,System.String)">
@@ -663,6 +681,24 @@
         <member name="M:FrannHammer.Api.Controllers.MovesController.GetMoveHitboxData(System.Int32,System.String)">
             <summary>
             Get the <see cref="T:FrannHammer.Models.Hitbox"/> data associated with this move.
+            </summary>
+            <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Api.Controllers.MovesController.GetMoveAutocancelData(System.Int32,System.String)">
+            <summary>
+            Get the <see cref="T:FrannHammer.Models.Autocancel"/> data associated with this move.
+            </summary>
+            <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Api.Controllers.MovesController.GetMoveLandingLagData(System.Int32,System.String)">
+            <summary>
+            Get the <see cref="T:FrannHammer.Models.LandingLag"/> data associated with this move.
             </summary>
             <param name="id"></param>
             <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 

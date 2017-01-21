@@ -6,6 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using FrannHammer.Models.DTOs;
 using FrannHammer.Services.MoveSearch;
 using Newtonsoft.Json;
 using StackExchange.Redis;
@@ -55,6 +56,15 @@ namespace FrannHammer.Services
         dynamic GetWithMoves<TEntity, TDto>(int id, string fields = "")
         where TEntity : class, IMoveIdEntity
             where TDto : class;
+
+        /// <summary>
+        /// Gets all the attributes of a <see cref="Move"/> using the strongly typed model tables 
+        /// instead of the raw <see cref="Move"/> data from the <see cref="Move"/> table.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="fields"></param>
+        /// <returns></returns>
+        IEnumerable<DetailedMoveDto> GetDetailsForMovesOfCharacter(int id, string fields = "");
 
         /// <summary>
         /// Get all of type <typeparamref name="TEntity"/>.  Joins with moves table
@@ -194,6 +204,58 @@ namespace FrannHammer.Services
             return BuildContentResponse<TDto, TDto>(dto, fields);
         }
 
+        public IEnumerable<DetailedMoveDto> GetDetailsForMovesOfCharacter(int id, string fields = "")
+        {
+            // get all moveIds for moves for character specified by id
+            var moveData = GetAll<Move, MoveDto>(m => m.OwnerId == id, $"{nameof(Move.Id)},{nameof(Move.Name)}").ToList();
+
+            //all move attribute tables have these same columns.  We don't need the metadata (ownerid, name, etc.) since 
+            //we have that from the above call.
+            const string moveDetailFields = "id,hitbox1,hitbox2,hitbox3,hitbox4,hitbox5,hitbox6,notes";
+
+            IList<DetailedMoveDto> detailedMoves = new List<DetailedMoveDto>();
+
+            if (moveData.Count != 0)
+            {
+                foreach (var data in moveData)
+                {
+                    int moveId = data.Id;
+                    string moveName = data.Name;
+
+                    //search each move attribute table for values
+                    var angles = GetWithMoves<Angle, AngleDto>(moveId, moveDetailFields);
+                    var hitboxes = GetWithMoves<Hitbox, HitboxDto>(moveId, moveDetailFields);
+                    var baseDamages = GetWithMoves<BaseDamage, BaseDamageDto>(moveId, moveDetailFields);
+                    var baseKnockbacks = GetWithMoves<BaseKnockback, BaseKnockbackDto>(moveId, moveDetailFields);
+                    var setKnockbacks = GetWithMoves<SetKnockback, SetKnockbackDto>(moveId, moveDetailFields);
+                    var autoCancels = GetWithMoves<Autocancel, AutocancelDto>(moveId);
+                    var landingLags = GetWithMoves<LandingLag, LandingLagDto>(moveId);
+
+                    //aggregate into Dto 
+                    var detailedMoveDto = new DetailedMoveDto
+                    {
+                        MoveId = moveId,
+                        MoveName = moveName,
+                        Angle = angles,
+                        Hitbox = hitboxes,
+                        BaseDamage = baseDamages,
+                        BaseKnockback = baseKnockbacks,
+                        SetKnockback = setKnockbacks,
+                        Autocancel = autoCancels,
+                        LandingLag = landingLags
+                    };
+
+                    detailedMoves.Add(detailedMoveDto);
+                }
+            }
+            else
+            {
+                return new List<DetailedMoveDto>();
+            }
+
+            return detailedMoves;
+        }
+
         public dynamic GetWithMoves<TEntity, TDto>(int id, string fields = "")
             where TEntity : class, IMoveIdEntity
             where TDto : class
@@ -205,7 +267,7 @@ namespace FrannHammer.Services
                        select entity).ProjectTo<TDto>()
                          .SingleOrDefault();
 
-            ResultValidationService.ValidateSingleResult<TDto, TDto>(dto, id);
+            //ResultValidationService.ValidateSingleResult<TDto, TDto>(dto, id);
             return BuildContentResponse<TDto, TDto>(dto, fields);
         }
 
@@ -463,7 +525,7 @@ namespace FrannHammer.Services
             return Db.Set<T>().Find(id);
         }
 
-        public IEnumerable<T> GetAllOfType<T>() 
+        public IEnumerable<T> GetAllOfType<T>()
             where T : class, IEntity
         {
             return Db.Set<T>();

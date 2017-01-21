@@ -156,6 +156,29 @@ namespace FrannHammer.Api.Controllers
         }
 
         /// <summary>
+        /// Get all the <see cref="Move"/> data for a specific <see cref="Character"/> broken out
+        /// into stronger typed response objects.  This is designed to make sifting through the data easier.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="fields"></param>
+        /// <returns></returns>
+        [Route(CharactersRouteKey + "/name/{name}/detailedmoves")]
+        public IHttpActionResult GetDetailedMovesForCharacterByName(string name, [FromUri] string fields = "")
+        {
+            var nameContent = _metadataService.Get<Character, CharacterDto>(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase), "id", false);
+
+            if (nameContent == null)
+            {
+                return NotFound();
+            }
+
+            int id = nameContent.Id;
+
+            var content = _metadataService.GetDetailsForMovesOfCharacter(id, fields);
+            return Ok(content);
+        }
+
+        /// <summary>
         /// Get all the <see cref="Movement"/> data for a specific <see cref="Character"/>
         /// </summary>
         /// <param name="id"></param>
@@ -185,6 +208,20 @@ namespace FrannHammer.Api.Controllers
         public IHttpActionResult GetMovesForCharacter(int id, [FromUri] string fields = "")
         {
             var content = _metadataService.GetAll<Move, MoveDto>(m => m.OwnerId == id, fields);
+            return Ok(content);
+        }
+
+        /// <summary>
+        /// Get all the <see cref="Move"/> data for a specific <see cref="Character"/> broken out
+        /// into stronger typed response objects.  This is designed to make sifting through the data easier.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="fields"></param>
+        /// <returns></returns>
+        [Route(CharactersRouteKey + "/{id}/detailedmoves")]
+        public IHttpActionResult GetDetailedMovesForCharacter(int id, [FromUri] string fields = "")
+        {
+            var content = _metadataService.GetDetailsForMovesOfCharacter(id, fields);
             return Ok(content);
         }
 

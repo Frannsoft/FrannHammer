@@ -79,10 +79,10 @@ namespace FrannHammer.Services
         protected dynamic BuildContentResponse<TEntity, TDto>(TEntity entity, string fields)
             where TEntity : class
         {
-            if (entity == null)
-            { throw new EntityNotFoundException($"Unable to find any entities of type '{typeof(TEntity).Name}'"); }
+            //if (entity == null)
+            //{ throw new EntityNotFoundException($"Unable to find any entities of type '{typeof(TEntity).Name}'"); }
 
-            return DtoBuilder.Build<TEntity, TDto>(entity, fields);
+            return entity != null ? DtoBuilder.Build<TEntity, TDto>(entity, fields) : default(dynamic);
         }
 
         protected IEnumerable<dynamic> BuildContentResponseMultiple<TEntity, TDto>(IList<TEntity> entities,
