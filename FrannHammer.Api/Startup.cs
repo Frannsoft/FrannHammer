@@ -30,6 +30,10 @@ namespace FrannHammer.Api
         {
             Mapper.Initialize(cfg =>
             {
+                cfg.CreateMap<Autocancel, AutocancelDto>();
+                cfg.CreateMap<AutocancelDto, Autocancel>();
+                cfg.CreateMap<LandingLag, LandingLagDto>();
+                cfg.CreateMap<LandingLagDto, LandingLag>();
                 cfg.CreateMap<Throw, ThrowDto>();
                 cfg.CreateMap<ThrowDto, Throw>();
                 cfg.CreateMap<ThrowType, ThrowTypeDto>();

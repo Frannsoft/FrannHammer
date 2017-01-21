@@ -43,12 +43,34 @@ namespace FrannHammer.Models
         public string Hitbox6 { get; set; }
     }
 
-    public class LandingLag : BaseMeta
+    public class BaseMetaDto
+    {
+        public int Id { get; set; }
+        public int OwnerId { get; set; }
+        public int MoveId { get; set; }
+        public string MoveName { get; set; }
+        public string Notes { get; set; }
+        public string RawValue { get; set; }
+        public DateTime LastModified { get; set; }
+    }
+
+    public class LandingLagDto : BaseMetaDto, IMoveIdEntity
     {
         public int Frames { get; set; }
     }
 
-    public class Autocancel : BaseMeta
+    public class LandingLag : BaseMeta, IMoveIdEntity
+    {
+        public int Frames { get; set; }
+    }
+
+    public class AutocancelDto : BaseMetaDto, IMoveIdEntity
+    {
+        public string Cancel1 { get; set; }
+        public string Cancel2 { get; set; }
+    }
+
+    public class Autocancel : BaseMeta, IMoveIdEntity
     {
         public string Cancel1 { get; set; }
         public string Cancel2 { get; set; }
