@@ -91,7 +91,7 @@ Task("Run-Unit-Tests")
     };
 
     ReportGenerator(openCoverResultsFile, Directory(openCoverOutputDirectory), reportSettings);
-    ReportUnit(new FilePath(unitTestResultsOutputFile), new FilePath(reportUnitOutputFile));
+    ReportUnit(new FilePath(unitTestResultsOutputFile), new FilePath(reportUnitOutputFile)); 
 });
 
 Task("Assign-Assembly-Info")
