@@ -8,6 +8,7 @@ using NUnit.Framework;
 namespace FrannHammer.Api.Data.Tests
 {
     [TestFixture]
+    [LongRunning]
     public class MovementDbToKhIntegrityTest : BaseDataIntegrityTest
     {
         private List<Movement> _movements;

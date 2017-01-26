@@ -91,6 +91,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
+    <Compile Include="Categories.cs" />
     <Compile Include="MoveSearch\AutoCancelSearchPredicateServiceTest.cs" />
     <Compile Include="MoveSearch\BaseMoveHitboxSearchPredicateServiceTest.cs" />
     <Compile Include="MoveSearch\CharacterNameSearchPredicateServiceTest.cs" />

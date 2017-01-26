@@ -9,6 +9,7 @@ using FrannHammer.WebScraper.Stats;
 namespace FrannHammer.Api.Data.Tests
 {
     [TestFixture]
+    [LongRunning]
     public class MoveDbToKhIntegrityTest : BaseDataIntegrityTest
     {
         private List<Move> _moves;

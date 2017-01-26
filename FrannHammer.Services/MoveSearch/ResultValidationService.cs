@@ -98,7 +98,7 @@ namespace FrannHammer.Services.MoveSearch
             else if (binaryExpression.Right is ConstantExpression)
             {
                 var rightConstantExpression = (ConstantExpression)binaryExpression.Right;
-                idValue = GetIdOfConstantExpressino(rightConstantExpression);
+                idValue = GetIdOfConstantExpression(rightConstantExpression);
             }
             else
             { throw new InvalidCastException("Right side expression is not a MemberExpression or ConstantExpression."); }
@@ -108,6 +108,7 @@ namespace FrannHammer.Services.MoveSearch
 
         private int GetIdOfMemberExpression(MemberExpression memberExpression)
         {
+
             int idValue;
             var rightConstantExpression = memberExpression.Expression as ConstantExpression;
 
@@ -128,7 +129,7 @@ namespace FrannHammer.Services.MoveSearch
             return idValue;
         }
 
-        private int GetIdOfConstantExpressino(ConstantExpression constantExpression)
+        private int GetIdOfConstantExpression(ConstantExpression constantExpression)
         {
             int idValue;
             try

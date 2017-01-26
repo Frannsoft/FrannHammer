@@ -58,7 +58,7 @@ namespace FrannHammer.Api.Controllers
         [HttpPost]
         public IHttpActionResult MovesThatMeetCriteria(MoveSearchModel moveSearchModel, [FromUri] string fields = "")
         {
-            var content = _metadataService.GetAll<MoveDto>(moveSearchModel, _redisConnectionMultiplexer, fields);
+            var content = _metadataService.GetAll<MoveSearchDto>(moveSearchModel, _redisConnectionMultiplexer, fields);
             return Ok(content);
         }
 
@@ -91,6 +91,38 @@ namespace FrannHammer.Api.Controllers
         public IHttpActionResult GetMoveHitboxData(int id, [FromUri] string fields = "")
         {
             var content = _metadataService.GetWithMoves<Hitbox, HitboxDto>(id, fields);
+            return Ok(content);
+        }
+
+        /// <summary>
+        /// Get the <see cref="Autocancel"/> data associated with this move.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
+        /// <returns></returns>
+        [ResponseType(typeof(AutocancelDto))]
+        [ValidateModel]
+        [Route(MovesRouteKey + "/{id}/autocancel")]
+        public IHttpActionResult GetMoveAutocancelData(int id, [FromUri] string fields = "")
+        {
+            var content = _metadataService.GetWithMoves<Autocancel, AutocancelDto>(id, fields);
+            return Ok(content);
+        }
+
+        /// <summary>
+        /// Get the <see cref="LandingLag"/> data associated with this move.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
+        /// <returns></returns>
+        [ResponseType(typeof(LandingLagDto))]
+        [ValidateModel]
+        [Route(MovesRouteKey + "/{id}/landinglag")]
+        public IHttpActionResult GetMoveLandingLagData(int id, [FromUri] string fields = "")
+        {
+            var content = _metadataService.GetWithMoves<LandingLag, LandingLagDto>(id, fields);
             return Ok(content);
         }
 

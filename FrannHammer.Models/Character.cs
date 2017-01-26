@@ -43,6 +43,7 @@ namespace FrannHammer.Models
             return !Equals(left, right);
         }
 
+        public string FullUrl { get; set; }
         public string Style { get; set; }
         public string MainImageUrl { get; set; }
         public string ThumbnailUrl { get; set; }

@@ -73,6 +73,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
     <Compile Include="AccountBindingModels.cs" />
     <Compile Include="AccountViewModels.cs" />
     <Compile Include="Angle.cs" />
@@ -85,6 +88,8 @@
     <Compile Include="Character.cs" />
     <Compile Include="CharacterAttributeModels.cs" />
     <Compile Include="CharacterAttributeType.cs" />
+    <Compile Include="DTOs\AggregateCharacterData.cs" />
+    <Compile Include="DTOs\DetailedMoveDto.cs" />
     <Compile Include="MoveSearchModel.cs" />
     <Compile Include="DTOs\BaseMoveHitboxMetaDto.cs" />
     <Compile Include="DTOs\CalculatorDtos.cs" />

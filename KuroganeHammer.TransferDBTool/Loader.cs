@@ -89,7 +89,7 @@ namespace KuroganeHammer.TransferDBTool
 
                 //load character
                 var charStat = new CharacterStat(character.Id, character.Name, character.DisplayName,
-                    character.Style, character.MainImageUrl, thumbnail.Url, character.ColorHex,
+                    character.Style, character.FullUrl, character.MainImageUrl, thumbnail.Url, character.ColorHex,
                     character.Description, DateTime.Now);
 
                 var result = await LoggedInAdminClient.PostAsJsonAsync(Baseuri + "/Characters", charStat);

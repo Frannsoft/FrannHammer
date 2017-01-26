@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
 using FrannHammer.Api.ActionFilterAttributes;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
+using FrannHammer.Models.DTOs;
 using FrannHammer.Services;
 
 namespace FrannHammer.Api.Controllers
@@ -27,6 +30,40 @@ namespace FrannHammer.Api.Controllers
         }
 
         /// <summary>
+        /// Returns character metadata (<see cref="CharacterDto"/>), movement data (<see cref="MovementDto"/>)
+        /// and character attribute data (<see cref="CharacterAttributeDto"/>) all in one request.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="fields"></param>
+        /// <returns></returns>
+        [ValidateModel]
+        [Route(CharactersRouteKey + "/{id}/details")]
+        public IHttpActionResult GetCharacterDetailsById(int id, [FromUri] string fields = "")
+        {
+            var characterContent = _metadataService.Get<Character, CharacterDto>(id, fields);
+            IEnumerable<dynamic> movementContent, characterAttributeContent;
+
+            //check if character data found. If not, don't bother searching for additional data.
+            if (characterContent != null)
+            {
+                movementContent = _metadataService.GetAll<Movement, MovementDto>(m => m.OwnerId == id, fields);
+                characterAttributeContent =
+                    _metadataService.GetAll<CharacterAttribute, CharacterAttributeDto>(a => a.OwnerId == id, fields);
+            }
+            else
+            {
+                return NotFound();
+            }
+
+            return Ok(new AggregateCharacterData
+            {
+                Metadata = characterContent,
+                MovementData = movementContent,
+                CharacterAttributeData = characterAttributeContent
+            });
+        }
+
+        /// <summary>
         /// Get all of the <see cref="CharacterDto"/> details.
         /// </summary>
         /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
@@ -42,7 +79,7 @@ namespace FrannHammer.Api.Controllers
         }
 
         /// <summary>
-        /// Get a specific <see cref="CharacterDto"/>s details.
+        /// Get a specific <see cref="CharacterDto"/>s metadata.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
@@ -58,6 +95,51 @@ namespace FrannHammer.Api.Controllers
         }
 
         /// <summary>
+        /// Returns character metadata (<see cref="CharacterDto"/>), movement data (<see cref="MovementDto"/>)
+        /// and character attribute data (<see cref="CharacterAttributeDto"/>) all in one request.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="fields"></param>
+        /// <returns></returns>
+        [Route(CharactersRouteKey + "/name/{name}/details")]
+        public IHttpActionResult GetCharacterDetailsByName(string name, [FromUri] string fields = "")
+        {
+            dynamic characterContent;
+            IEnumerable<dynamic> movementContent, characterAttributeContent;
+
+            //getting raw character models here so I can avoid dealing with dynamic and fields param.  
+            //user may not want 'id', which means it wouldn't be usable when getting additional data below.
+            //this ensures it will be.
+            var characters = _metadataService.GetAllOfType<Character>();
+
+            var foundCharacter = characters.FirstOrDefault(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+
+            if (foundCharacter != null)
+            {
+                int id = foundCharacter.Id;
+
+                //getting character content with fields support here
+                characterContent = _metadataService.Get<Character, CharacterDto>(foundCharacter.Id, fields);
+
+                //check if character data found. If not, don't bother searching for additional data.
+                movementContent = _metadataService.GetAll<Movement, MovementDto>(m => m.OwnerId == id, fields);
+                characterAttributeContent =
+                    _metadataService.GetAll<CharacterAttribute, CharacterAttributeDto>(a => a.OwnerId == id, fields);
+            }
+            else
+            {
+                return NotFound();
+            }
+
+            return Ok(new AggregateCharacterData
+            {
+                Metadata = characterContent,
+                MovementData = movementContent,
+                CharacterAttributeData = characterAttributeContent
+            });
+        }
+
+        /// <summary>
         /// Get a specific <see cref="CharacterDto"/>s details by their name.
         /// </summary>
         /// <param name="name"></param>
@@ -70,6 +152,29 @@ namespace FrannHammer.Api.Controllers
         public IHttpActionResult GetCharacterByName(string name, [FromUri] string fields = "")
         {
             var content = _metadataService.Get<Character, CharacterDto>(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase), fields, false);
+            return Ok(content);
+        }
+
+        /// <summary>
+        /// Get all the <see cref="Move"/> data for a specific <see cref="Character"/> broken out
+        /// into stronger typed response objects.  This is designed to make sifting through the data easier.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="fields"></param>
+        /// <returns></returns>
+        [Route(CharactersRouteKey + "/name/{name}/detailedmoves")]
+        public IHttpActionResult GetDetailedMovesForCharacterByName(string name, [FromUri] string fields = "")
+        {
+            var nameContent = _metadataService.Get<Character, CharacterDto>(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase), "id", false);
+
+            if (nameContent == null)
+            {
+                return NotFound();
+            }
+
+            int id = nameContent.Id;
+
+            var content = _metadataService.GetDetailsForMovesOfCharacter(id, fields);
             return Ok(content);
         }
 
@@ -103,6 +208,20 @@ namespace FrannHammer.Api.Controllers
         public IHttpActionResult GetMovesForCharacter(int id, [FromUri] string fields = "")
         {
             var content = _metadataService.GetAll<Move, MoveDto>(m => m.OwnerId == id, fields);
+            return Ok(content);
+        }
+
+        /// <summary>
+        /// Get all the <see cref="Move"/> data for a specific <see cref="Character"/> broken out
+        /// into stronger typed response objects.  This is designed to make sifting through the data easier.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="fields"></param>
+        /// <returns></returns>
+        [Route(CharactersRouteKey + "/{id}/detailedmoves")]
+        public IHttpActionResult GetDetailedMovesForCharacter(int id, [FromUri] string fields = "")
+        {
+            var content = _metadataService.GetDetailsForMovesOfCharacter(id, fields);
             return Ok(content);
         }
 
@@ -156,7 +275,7 @@ namespace FrannHammer.Api.Controllers
         [Route(CharactersRouteKey + "/{id}/smashattributetypes/{smashAttributeTypeId}")]
         public IHttpActionResult GetCharacterAttributesForCharacter(int id, int smashAttributeTypeId, [FromUri] string fields = "")
         {
-            var content = _metadataService.GetAll<CharacterAttribute, CharacterAttributeDto>(c => 
+            var content = _metadataService.GetAll<CharacterAttribute, CharacterAttributeDto>(c =>
                                         c.OwnerId == id && c.SmashAttributeTypeId == smashAttributeTypeId, fields, false);
             return Ok(content);
         }

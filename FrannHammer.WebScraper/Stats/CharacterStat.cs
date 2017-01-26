@@ -4,6 +4,7 @@ namespace FrannHammer.WebScraper.Stats
 {
     public class CharacterStat
     {
+        public string FullUrl { get; set; }
         public string Style { get; set; }
         public string MainImageUrl { get; set; }
         public string ThumbnailUrl { get; set; }
@@ -14,13 +15,14 @@ namespace FrannHammer.WebScraper.Stats
         public int Id { get; set; }
         public DateTime LastModified { get; set; }
 
-        public CharacterStat(int id, string name, string displayName, string style, string mainImageUrl,
+        public CharacterStat(int id, string name, string displayName, string style, string fullUrl, string mainImageUrl,
             string thumbnailUrl, string colorTheme, string description, DateTime lastModified)
         {
             Name = name;
             DisplayName = displayName;
             Id = id;
             Style = style;
+            FullUrl = fullUrl;
             MainImageUrl = mainImageUrl;
             ThumbnailUrl = thumbnailUrl;
             Description = description;
