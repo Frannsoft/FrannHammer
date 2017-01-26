@@ -182,7 +182,8 @@ namespace KuroganeHammer.TransferDBTool
                     attributeType.Name.Equals("SMASHCHARGERELEASE") ||
                     attributeType.Name.Equals("TRIP") ||
                     attributeType.Name.Equals("JABLOCK") ||
-                    attributeType.Name.Equals("RUNSPEED"))
+                    attributeType.Name.Equals("RUNSPEED") ||
+                    attributeType.Name.Equals("JUMPS"))
                 { continue; } //skip these for now since the tables are problematic
 
                 var page = new Page(baseUrl + attributeType.Name);
