@@ -207,7 +207,7 @@ namespace FrannHammer.Services
         public IEnumerable<DetailedMoveDto> GetDetailsForMovesOfCharacter(int id, string fields = "")
         {
             // get all moveIds for moves for character specified by id
-            var moveData = GetAll<Move, MoveDto>(m => m.OwnerId == id, $"{nameof(Move.Id)},{nameof(Move.Name)}").ToList();
+            var moveData = GetAll<Move, MoveDto>(m => m.OwnerId == id, $"{nameof(Move.Id)},{nameof(Move.Name)},{nameof(Move.FirstActionableFrame)}").ToList();
 
             //all move attribute tables have these same columns.  We don't need the metadata (ownerid, name, etc.) since 
             //we have that from the above call.
@@ -244,6 +244,14 @@ namespace FrannHammer.Services
                         Autocancel = autoCancels,
                         LandingLag = landingLags
                     };
+
+                    //only add faf if it's not empty or just contains a '-'
+                    string faf = (string) data.FirstActionableFrame;
+                    
+                    if (!string.IsNullOrEmpty(faf) && !faf.Equals("-"))
+                    {
+                        detailedMoveDto.FirstActionableFrame = faf;
+                    }
 
                     detailedMoves.Add(detailedMoveDto);
                 }

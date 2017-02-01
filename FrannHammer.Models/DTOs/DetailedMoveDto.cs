@@ -9,10 +9,11 @@
         public dynamic BaseDamage { get; set; }
         public dynamic BaseKnockback { get; set; }
         public dynamic SetKnockback { get; set; }
-
-        //TODO: These three props need to be exposed in the MovesController as well (and metadataservice).
+        public string FirstActionableFrame { get; set; }
         public dynamic Autocancel { get; set; }
         public dynamic LandingLag { get; set; }
+
+        //TODO: No good way to expose this here yet.
         //public dynamic Throws { get; set; }
     }
 }
