@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -71,7 +70,7 @@ namespace FrannHammer.Api.Controllers
         /// <returns></returns>
         [ResponseType(typeof(MoveDto))]
         [ValidateModel]
-        [Route(MovesRouteKey + "/byname")]
+        [Route(MovesRouteKey + "/name/{name}")]
         public IHttpActionResult GetMovesByName([FromUri] string name, [FromUri] string fields = "")
         {
             var content = _metadataService.GetAll<Move, MoveDto>(m => m.Name.Equals(name, StringComparison.OrdinalIgnoreCase), fields, false);
