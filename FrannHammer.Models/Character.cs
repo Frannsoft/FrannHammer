@@ -21,7 +21,7 @@ namespace FrannHammer.Models
         {
             unchecked
             {
-                var hashCode = (Style != null ? Style.GetHashCode() : 0);
+                var hashCode = Style != null ? Style.GetHashCode() : 0;
                 hashCode = (hashCode*397) ^ (MainImageUrl != null ? MainImageUrl.GetHashCode() : 0);
                 hashCode = (hashCode*397) ^ (ThumbnailUrl != null ? ThumbnailUrl.GetHashCode() : 0);
                 hashCode = (hashCode*397) ^ (Description != null ? Description.GetHashCode() : 0);
