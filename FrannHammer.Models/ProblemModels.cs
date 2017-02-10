@@ -1,5 +1,8 @@
-﻿namespace FrannHammer.Models
+﻿using System;
+
+namespace FrannHammer.Models
 {
+    [Obsolete("Calculate functionality is Obsolete.")]
     public class TrainingModeKnockbackProblemData
     {
         public double VictimPercent { get; set; }
@@ -10,11 +13,13 @@
         public double StanceModifier { get; set; }
     }
 
+    [Obsolete("Calculate functionality is Obsolete.")]
     public class RageProblemData
     {
         public double AttackerPercent { get; set; }
     }
 
+    [Obsolete("Calculate functionality is Obsolete.")]
     public class VersusModeKnockbackProblemData
     {
         public double AttackerPercent { get; set; }
@@ -27,6 +32,7 @@
         public double StaleMoveMultiplier { get; set; }
     }
 
+    [Obsolete("Calculate functionality is Obsolete.")]
     public class HitlagProblemData
     {
         public double Damage { get; set; }
@@ -35,6 +41,7 @@
         public CrouchingModifier CrouchingModifier { get; set; }
     }
 
+    [Obsolete("Calculate functionality is Obsolete.")]
     public class ShieldAdvantageProblemData
     {
         public int HitFrame { get; set; }
@@ -46,29 +53,34 @@
         public int Hitlag { get; set; }
     }
 
+    [Obsolete("Calculate functionality is Obsolete.")]
     public class LedgeIntangiblityProblemData
     {
         public int AirborneFrames { get; set; }
         public int CharacterPercentage { get; set; }
     }
 
+    [Obsolete("Calculate functionality is Obsolete.")]
     public class ReboundDurationProblemData
     {
         public int Damage { get; set; }
     }
 
+    [Obsolete("Calculate functionality is Obsolete.")]
     public class GrabDurationProblemData
     {
         public int TargetPercent { get; set; }
         public ControllerInput Input { get; set; }
     }
 
+    [Obsolete("Calculate functionality is Obsolete.")]
     public class PikminGrabDurationProblemData
     {
         public int TargetPercent { get; set; }
         public PikminGrabControllerInput Input { get; set; }
     }
 
+    [Obsolete("Calculate functionality is Obsolete.")]
     public class SmashChargeProblemData
     {
         public int Damage { get; set; }

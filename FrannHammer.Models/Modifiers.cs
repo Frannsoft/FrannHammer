@@ -7,6 +7,7 @@ namespace FrannHammer.Models
     /// <summary>
     /// Used to contain the actual value being used in the Core enum modifiers.
     /// </summary>
+    [Obsolete]
     [AttributeUsage(AttributeTargets.Field)]
     public class ModifierValueAttribute : Attribute
     {
@@ -28,6 +29,7 @@ namespace FrannHammer.Models
     /// <summary>
     /// Small helper class to get the <see cref="ModifierValueAttribute"/> data from an <see cref="Enum"/>.
     /// </summary>
+    [Obsolete]
     public static class ModifierHelper
     {
         /// <summary>
@@ -50,6 +52,7 @@ namespace FrannHammer.Models
     /// Determines which hitbox is having data resolved in the equation.  Really important at the 
     /// public request level in the api.  Otherwise it would be nightmare to act on all of them.
     /// </summary>
+    [Obsolete]
     public enum HitboxOptions
     {
         /// <summary>
@@ -81,6 +84,7 @@ namespace FrannHammer.Models
     /// <summary>
     /// What the attack victim is doing when hit.
     /// </summary>
+    [Obsolete]
     public enum Modifiers
     {
         /// <summary>
@@ -112,6 +116,7 @@ namespace FrannHammer.Models
     /// Whether or not the attack is electric.  
     /// Depending on whether or not more factors come out for this in the future it can be a bool instead.
     /// </summary>
+    [Obsolete]
     public enum ElectricModifier
     {
         /// <summary>
@@ -130,6 +135,7 @@ namespace FrannHammer.Models
     /// <summary>
     /// Whether or not the attacker is crouching.  Might be able to be a bool in the future.
     /// </summary>
+    [Obsolete]
     public enum CrouchingModifier
     {
         /// <summary>
@@ -148,6 +154,7 @@ namespace FrannHammer.Models
     /// <summary>
     /// The type of shield advantage.
     /// </summary>
+    [Obsolete]
     public enum ShieldAdvantageModifier
     {
         /// <summary>
@@ -164,6 +171,7 @@ namespace FrannHammer.Models
     /// <summary>
     /// ControllerInput used.  Typically used with mashing out or determining grab duration.
     /// </summary>
+    [Obsolete]
     public enum ControllerInput
     {
         /// <summary>
@@ -182,6 +190,7 @@ namespace FrannHammer.Models
     /// <summary>
     /// Controller input used when dealing with Pikmin grab duration.
     /// </summary>
+    [Obsolete]
     public enum PikminGrabControllerInput
     {
         /// <summary>
@@ -196,10 +205,11 @@ namespace FrannHammer.Models
         [ModifierValue(12.5)]
         Button
     }
-    
+
     /// <summary>
     /// The smash charge modifier.  Default is for holding a standard charge smash rather than no charge smash.  
     /// </summary>
+    [Obsolete]
     public enum SmashChargeModifier
     {
         /// <summary>
@@ -218,6 +228,7 @@ namespace FrannHammer.Models
     /// <summary>
     /// The staleness of a move.  The higher the level the more stale the move is.
     /// </summary>
+    [Obsolete]
     public enum StaleMoveNegationMultipler
     {
         /// <summary>
