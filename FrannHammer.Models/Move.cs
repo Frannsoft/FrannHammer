@@ -21,7 +21,7 @@ namespace FrannHammer.Models
         {
             unchecked
             {
-                var hashCode = (HitboxActive != null ? HitboxActive.GetHashCode() : 0);
+                var hashCode = HitboxActive != null ? HitboxActive.GetHashCode() : 0;
                 hashCode = (hashCode * 397) ^ (FirstActionableFrame != null ? FirstActionableFrame.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (BaseDamage != null ? BaseDamage.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (Angle != null ? Angle.GetHashCode() : 0);

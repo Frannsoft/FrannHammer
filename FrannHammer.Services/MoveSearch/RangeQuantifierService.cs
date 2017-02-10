@@ -20,8 +20,8 @@ namespace FrannHammer.Services.MoveSearch
         {
             if (boundaries.End.HasValue)
             {
-                return (lowValueUnderTest > boundaries.Start && highValueUnderTest < boundaries.End.Value) ||
-                       (lowValueUnderTest < boundaries.Start && highValueUnderTest > boundaries.Start);
+                return lowValueUnderTest > boundaries.Start && highValueUnderTest < boundaries.End.Value ||
+                       lowValueUnderTest < boundaries.Start && highValueUnderTest > boundaries.Start;
             }
             else
             {

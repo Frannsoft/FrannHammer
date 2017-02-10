@@ -236,8 +236,8 @@ namespace KuroganeHammer.TransferDBTool.Seeding
             const char primaryKnockbackValueChar = 'W';
             Func<string, bool> doesRawContainSetKnockbackValue = raw => rawKbk.Contains('B') &&
                                                                         !rawKbk.Contains('W') ||
-                                                                        (!rawKbk.Contains('B') &&
-                                                                        !rawKbk.Contains('W'));
+                                                                        !rawKbk.Contains('B') &&
+                                                                        !rawKbk.Contains('W');
 
             return AddBaseSetKnockbackCore<SetKnockback>(rawKbk, matchSetKnockbackRegex, setKnockbackTrimValues,
                 primaryKnockbackValueChar,
