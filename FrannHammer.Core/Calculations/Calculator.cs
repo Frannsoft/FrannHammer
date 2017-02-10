@@ -6,6 +6,7 @@ namespace FrannHammer.Core.Calculations
     /// <summary>
     /// Handles all calculations dealing with actionable move data.
     /// </summary>
+    [Obsolete("Others have created functionality in this area that is far more robust.  There is no reason to continue supporting this.")]
     public class Calculator
     {
         /// <summary>
@@ -13,6 +14,7 @@ namespace FrannHammer.Core.Calculations
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
+        [Obsolete]
         public double TrainingModeKnockback(TrainingModeKnockbackProblemData data)
         {
             var result = (((data.VictimPercent + data.BaseDamage) / 10 + (data.VictimPercent + data.BaseDamage) * data.BaseDamage / 20) * (200 / (data.TargetWeight + 100)) * 1.4 + 18) * (data.KnockbackGrowth / 100)
@@ -26,6 +28,7 @@ namespace FrannHammer.Core.Calculations
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
+        [Obsolete]
         public double VersusModeKnockback(VersusModeKnockbackProblemData data)
         {
             var result = ((((data.VictimPercent + data.BaseDamage * data.StaleMoveMultiplier) / 10 +
@@ -42,6 +45,7 @@ namespace FrannHammer.Core.Calculations
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
+        [Obsolete]
         public double Rage(RageProblemData data)
         {
             double result = 1;
@@ -60,6 +64,7 @@ namespace FrannHammer.Core.Calculations
         /// </summary>
         /// <param name="knockbackGrowth"></param>
         /// <returns></returns>
+        [Obsolete]
         public int Hitstun(double knockbackGrowth)
         {
             return (int)Math.Floor(knockbackGrowth * 0.4) - 1;
@@ -70,6 +75,7 @@ namespace FrannHammer.Core.Calculations
         /// </summary>
         /// <param name="damage"></param>
         /// <returns></returns>
+        [Obsolete]
         public int ShieldStunNormal(double damage)
         {
             return (int)Math.Floor(damage / 1.72 + 3.0 - 1.0);
@@ -80,6 +86,7 @@ namespace FrannHammer.Core.Calculations
         /// </summary>
         /// <param name="damage"></param>
         /// <returns></returns>
+        [Obsolete]
         public int ShieldStunPowerShield(double damage)
         {
             return (int)Math.Floor(damage / 2.61 + 3 - 1);
@@ -90,6 +97,7 @@ namespace FrannHammer.Core.Calculations
         /// </summary>
         /// <param name="damage"></param>
         /// <returns></returns>
+        [Obsolete]
         public int ShieldStunProjectile(double damage)
         {
             return (int)Math.Floor(damage / 3.5 + 3 - 1);
@@ -100,6 +108,7 @@ namespace FrannHammer.Core.Calculations
         /// </summary>
         /// <param name="damage"></param>
         /// <returns></returns>
+        [Obsolete]
         public int ShieldStunPowerShieldProjectile(double damage)
         {
             return (int)Math.Floor(damage / 5.22 + 3 - 1);
@@ -110,6 +119,7 @@ namespace FrannHammer.Core.Calculations
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
+        [Obsolete]
         public int Hitlag(HitlagProblemData data)
         {
             var retVal = (int)Math.Floor((data.Damage / 2.6 + 5) *
@@ -125,31 +135,12 @@ namespace FrannHammer.Core.Calculations
             return retVal;
         }
 
-        ///// <summary>
-        ///// Returns the calculated Hitlag.
-        ///// </summary>
-        ///// <param name="data"></param>
-        ///// <returns></returns>
-        //public double HitlagRaw(HitlagProblemData data)
-        //{
-        //    var retVal = (data.Damage / 2.6 + 5) *
-        //       data.ElectricModifier.GetModifierValue() *
-        //       data.HitlagMultiplier *
-        //       data.CrouchingModifier.GetModifierValue() - 1;
-
-        //    if (retVal > 30)
-        //    {
-        //        retVal = 30;
-        //    }
-
-        //    return retVal;
-        //}
-
         /// <summary>
         /// Returns the calculated LedgeIntangibility.
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
+        [Obsolete]
         public int LedgeIntangibility(LedgeIntangiblityProblemData data)
         {
             if (data.AirborneFrames > 300)
@@ -174,6 +165,7 @@ namespace FrannHammer.Core.Calculations
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
+        [Obsolete]
         public int ShieldAdvantage(ShieldAdvantageProblemData data)
         {
             var shieldAdvantage = data.HitFrame - (data.FirstActionableFrame - 1) + data.ShieldStun;
@@ -203,6 +195,7 @@ namespace FrannHammer.Core.Calculations
             return shieldAdvantage;
         }
 
+        [Obsolete]
         public int ReboundDuration(ReboundDurationProblemData data)
         {
             throw new NotImplementedException(
@@ -215,6 +208,7 @@ namespace FrannHammer.Core.Calculations
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
+        [Obsolete]
         public int GrabDuration(GrabDurationProblemData data)
         {
             return (int)(Math.Floor(90 + data.TargetPercent * 1.7) - data.Input.GetModifierValue());
@@ -225,6 +219,7 @@ namespace FrannHammer.Core.Calculations
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
+        [Obsolete]
         public int PikminGrabDuration(PikminGrabDurationProblemData data)
         {
             return (int)(Math.Floor(360.0 - data.TargetPercent) - data.Input.GetModifierValue());
@@ -235,11 +230,13 @@ namespace FrannHammer.Core.Calculations
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
+        [Obsolete]
         public int SmashCharge(SmashChargeProblemData data)
         {
             return (int)Math.Round(data.Damage * (data.HeldFrames / data.SmashChargeModifier.GetModifierValue()));
         }
 
+        [Obsolete]
         public double StaleMoveNegationMultiplier(StaleMoveNegationMultipler multiplier)
         {
             throw new NotImplementedException("Contact SpaceJam to explain this one.");

@@ -6,6 +6,7 @@ using NUnit.Framework;
 namespace FrannHammer.Core.Tests
 {
     [TestFixture]
+    [Ignore("Calculate functionality is Obsolete.")]
     public class CalculateTest
     {
         private Calculator _calculator;
