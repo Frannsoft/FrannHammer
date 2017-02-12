@@ -174,6 +174,21 @@ namespace FrannHammer.Api.Controllers
         }
 
         /// <summary>
+        /// Get the <see cref="FirstActionableFrame"/> data associated with this <see cref="Move"/>.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="fields"></param>
+        /// <returns></returns>
+        [ResponseType(typeof(FirstActionableFrameDto))]
+        [ValidateModel]
+        [Route(MovesRouteKey + "/{id}/firstActionableFrames")]
+        public IHttpActionResult GetMoveFirstActionableFrameData(int id, [FromUri] string fields = "")
+        {
+            var content = _metadataService.GetWithMoves<FirstActionableFrame, FirstActionableFrameDto>(id, fields);
+            return Ok(content);
+        }
+
+        /// <summary>
         /// Get the <see cref="BaseDamage"/> data associated with this move.
         /// </summary>
         /// <param name="id"></param>

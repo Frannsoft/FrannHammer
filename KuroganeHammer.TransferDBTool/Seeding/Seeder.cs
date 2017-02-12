@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using FrannHammer.Models;
-using NUnit.Framework;
 
 namespace KuroganeHammer.TransferDBTool.Seeding
 {
@@ -45,6 +43,7 @@ namespace KuroganeHammer.TransferDBTool.Seeding
             SyncData<Autocancel>();
             SyncData<LandingLag>();
             SyncData<KnockbackGrowth>();
+            SyncData<FirstActionableFrame>();
             SyncThrowData();
             Console.WriteLine("Completed seeding move details.");
         }

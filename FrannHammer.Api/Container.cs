@@ -32,6 +32,10 @@ namespace FrannHammer.Api
                 .As<AnglesController>()
                 .WithParameter(metadataServiceName, metadataService);
 
+            builder.RegisterType<FirstActionableFramesController>()
+                .As<FirstActionableFramesController>()
+                .WithParameter(metadataServiceName, metadataService);
+
             builder.RegisterType<BaseDamagesController>()
                 .As<BaseDamagesController>()
                 .WithParameter(metadataServiceName, metadataService);
