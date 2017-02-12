@@ -90,6 +90,7 @@
     <Compile Include="CharacterAttributeType.cs" />
     <Compile Include="DTOs\AggregateCharacterData.cs" />
     <Compile Include="DTOs\DetailedMoveDto.cs" />
+    <Compile Include="FirstActionableFrame.cs" />
     <Compile Include="MoveSearchModel.cs" />
     <Compile Include="DTOs\BaseMoveHitboxMetaDto.cs" />
     <Compile Include="DTOs\CalculatorDtos.cs" />

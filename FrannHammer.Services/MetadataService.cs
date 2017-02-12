@@ -230,6 +230,7 @@ namespace FrannHammer.Services
                     var setKnockbacks = GetWithMoves<SetKnockback, SetKnockbackDto>(moveId, moveDetailFields);
                     var autoCancels = GetWithMoves<Autocancel, AutocancelDto>(moveId);
                     var landingLags = GetWithMoves<LandingLag, LandingLagDto>(moveId);
+                    var firstActionableFrame = GetWithMoves<FirstActionableFrame, FirstActionableFrameDto>(moveId, "Frame");
 
                     //aggregate into Dto 
                     var detailedMoveDto = new DetailedMoveDto
@@ -242,16 +243,9 @@ namespace FrannHammer.Services
                         BaseKnockback = baseKnockbacks,
                         SetKnockback = setKnockbacks,
                         Autocancel = autoCancels,
-                        LandingLag = landingLags
+                        LandingLag = landingLags,
+                        FirstActionableFrame = firstActionableFrame
                     };
-
-                    //only add faf if it's not empty or just contains a '-'
-                    string faf = (string) data.FirstActionableFrame;
-                    
-                    if (!string.IsNullOrEmpty(faf) && !faf.Equals("-"))
-                    {
-                        detailedMoveDto.FirstActionableFrame = faf;
-                    }
 
                     detailedMoves.Add(detailedMoveDto);
                 }
@@ -277,6 +271,7 @@ namespace FrannHammer.Services
 
             //ResultValidationService.ValidateSingleResult<TDto, TDto>(dto, id);
             return BuildContentResponse<TDto, TDto>(dto, fields);
+            //return response ?? $"No data of type {typeof(TEntity).Name} found with Move id {id}";
         }
 
         public IEnumerable<dynamic> GetAllWithMoves<TEntity, TDto>(string fields = "")

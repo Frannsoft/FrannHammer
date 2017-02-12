@@ -488,6 +488,56 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="T:FrannHammer.Api.Controllers.FirstActionableFramesController">
+            <summary>
+            Handles operation dealing with <see cref="T:FrannHammer.Models.FirstActionableFrame"/>
+            </summary>
+        </member>
+        <member name="M:FrannHammer.Api.Controllers.FirstActionableFramesController.#ctor(FrannHammer.Services.IMetadataService)">
+            <summary>
+            Create a new <see cref="T:FrannHammer.Api.Controllers.FirstActionableFramesController"/> to interact with the server.
+            </summary>
+            <param name="metadataService"></param>
+        </member>
+        <member name="M:FrannHammer.Api.Controllers.FirstActionableFramesController.GetFirstActionableFrames(System.String)">
+            <summary>
+            Get all <see cref="T:FrannHammer.Models.FirstActionableFrameDto"/>s.
+            </summary>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Api.Controllers.FirstActionableFramesController.GetFirstActionableFrame(System.Int32,System.String)">
+            <summary>
+            Get a specific <see cref="T:FrannHammer.Models.FirstActionableFrameDto"/>s details.
+            </summary>
+            <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Api.Controllers.FirstActionableFramesController.PutFirstActionableFrame(System.Int32,FrannHammer.Models.FirstActionableFrameDto)">
+            <summary>
+            Update a <see cref="T:FrannHammer.Models.FirstActionableFrameDto"/>.
+            </summary>
+            <param name="id"></param>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Api.Controllers.FirstActionableFramesController.PostFirstActionableFrame(FrannHammer.Models.FirstActionableFrameDto)">
+            <summary>
+            Create a new <see cref="T:FrannHammer.Models.FirstActionableFrameDto"/>.
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Api.Controllers.FirstActionableFramesController.DeleteFirstActionableFrame(System.Int32)">
+            <summary>
+            Delete a <see cref="T:FrannHammer.Models.FirstActionableFrame"/>.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="T:FrannHammer.Api.Controllers.HitboxesController">
             <summary>
             Handles operations dealing with <see cref="T:FrannHammer.Models.Hitbox"/>s.
@@ -730,6 +780,14 @@
             <param name="id"></param>
             <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
             E.g., id,name to get back just the id and name.</para></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Api.Controllers.MovesController.GetMoveFirstActionableFrameData(System.Int32,System.String)">
+            <summary>
+            Get the <see cref="T:FrannHammer.Models.FirstActionableFrame"/> data associated with this <see cref="T:FrannHammer.Models.Move"/>.
+            </summary>
+            <param name="id"></param>
+            <param name="fields"></param>
             <returns></returns>
         </member>
         <member name="M:FrannHammer.Api.Controllers.MovesController.GetMoveBaseDamageData(System.Int32,System.String)">
