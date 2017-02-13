@@ -46,6 +46,34 @@ namespace FrannHammer.WebScraper
 
             return thumbnails;
         }
+
+        public IList<Thumbnail> GetThumbnailDataFromLink(string xpathToLinks)
+        {
+            var web = new HtmlWeb();
+            var doc = web.Load(_url);
+            var nodes = doc.DocumentNode.SelectNodes(xpathToLinks);
+
+            var thumbnails = new List<Thumbnail>();
+
+            const string hrefNode = "href";
+
+            foreach (var node in nodes)
+            {
+                var thumbnail = new Thumbnail
+                {
+                    Key = node.Attributes[hrefNode].Value.Replace("/Smash4/", string.Empty)
+                        .Replace(" ", string.Empty)
+                        .Replace("_", string.Empty)
+                        .Replace(".", string.Empty)
+                        .Replace("&", string.Empty)
+                        .Replace("-", string.Empty).ToUpper()
+                };
+
+                thumbnails.Add(thumbnail);
+            }
+
+            return thumbnails;
+        }
     }
 
     public class Thumbnail
