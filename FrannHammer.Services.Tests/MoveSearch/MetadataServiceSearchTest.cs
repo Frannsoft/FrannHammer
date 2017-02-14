@@ -5,6 +5,7 @@ using FrannHammer.Services.MoveSearch;
 using FrannHammer.Services.Tests.Harnesses;
 using NUnit.Framework;
 using System;
+using FrannHammer.Models.DTOs;
 
 namespace FrannHammer.Services.Tests.MoveSearch
 {

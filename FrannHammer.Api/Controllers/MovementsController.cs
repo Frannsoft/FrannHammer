@@ -5,6 +5,7 @@ using System.Web.Http.Description;
 using FrannHammer.Api.ActionFilterAttributes;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
+using FrannHammer.Models.DTOs;
 using FrannHammer.Services;
 
 namespace FrannHammer.Api.Controllers

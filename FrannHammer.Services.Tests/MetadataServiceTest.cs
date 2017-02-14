@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using FrannHammer.Models;
+using FrannHammer.Models.DTOs;
 using FrannHammer.Services.Exceptions;
 using FrannHammer.Services.Tests.Harnesses;
 using NUnit.Framework;

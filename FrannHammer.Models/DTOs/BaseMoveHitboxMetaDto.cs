@@ -8,7 +8,6 @@
         public string MoveName { get; set; }
         public string Notes { get; set; }
         public string RawValue { get; set; }
-
         public string Hitbox1 { get; set; }
         public string Hitbox2 { get; set; }
         public string Hitbox3 { get; set; }
@@ -40,14 +39,14 @@
                 var hashCode = Id;
                 hashCode = (hashCode*397) ^ OwnerId;
                 hashCode = (hashCode*397) ^ MoveId;
-                hashCode = (hashCode*397) ^ (Notes != null ? Notes.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ (RawValue != null ? RawValue.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ (Hitbox1 != null ? Hitbox1.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ (Hitbox2 != null ? Hitbox2.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ (Hitbox3 != null ? Hitbox3.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ (Hitbox4 != null ? Hitbox4.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ (Hitbox5 != null ? Hitbox5.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ (Hitbox6 != null ? Hitbox6.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ (Notes?.GetHashCode() ?? 0);
+                hashCode = (hashCode*397) ^ (RawValue?.GetHashCode() ?? 0);
+                hashCode = (hashCode*397) ^ (Hitbox1?.GetHashCode() ?? 0);
+                hashCode = (hashCode*397) ^ (Hitbox2?.GetHashCode() ?? 0);
+                hashCode = (hashCode*397) ^ (Hitbox3?.GetHashCode() ?? 0);
+                hashCode = (hashCode*397) ^ (Hitbox4?.GetHashCode() ?? 0);
+                hashCode = (hashCode*397) ^ (Hitbox5?.GetHashCode() ?? 0);
+                hashCode = (hashCode*397) ^ (Hitbox6?.GetHashCode() ?? 0);
                 return hashCode;
             }
         }

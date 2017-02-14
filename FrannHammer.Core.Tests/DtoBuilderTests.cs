@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using FrannHammer.Models.DTOs;
 
 namespace FrannHammer.Core.Tests
 {

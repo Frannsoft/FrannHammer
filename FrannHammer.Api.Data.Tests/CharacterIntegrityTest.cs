@@ -48,7 +48,7 @@ namespace FrannHammer.Api.Data.Tests
             var metadataService = new MetadataService(Context, new ResultValidationService());
             var controller = new CharactersController(metadataService);
 
-            var response = controller.GetCharacterDetailsById(characterId) as OkNegotiatedContentResult<AggregateCharacterData>;
+            var response = controller.GetCharacterDetailsById(characterId) as OkNegotiatedContentResult<AggregateCharacterDataDto>;
 
             Assert.That(response, Is.Not.Null);
 
@@ -65,7 +65,7 @@ namespace FrannHammer.Api.Data.Tests
             var metadataService = new MetadataService(Context, new ResultValidationService());
             var controller = new CharactersController(metadataService);
 
-            var response = controller.GetCharacterDetailsByName(characterName) as OkNegotiatedContentResult<AggregateCharacterData>;
+            var response = controller.GetCharacterDetailsByName(characterName) as OkNegotiatedContentResult<AggregateCharacterDataDto>;
 
             Assert.That(response, Is.Not.Null);
 
