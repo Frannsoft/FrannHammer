@@ -1,6 +1,6 @@
 ﻿namespace FrannHammer.Models.DTOs
 {
-    public class AggregateCharacterData
+    public class AggregateCharacterDataDto
     {
         public dynamic Metadata { get; set; }
         public dynamic MovementData { get; set; }

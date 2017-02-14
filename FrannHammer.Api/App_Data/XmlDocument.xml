@@ -51,7 +51,7 @@
         </member>
         <member name="M:FrannHammer.Api.Controllers.AnglesController.GetAngles(System.String)">
             <summary>
-            Get all <see cref="T:FrannHammer.Models.AngleDto"/>s.
+            Get all <see cref="T:FrannHammer.Models.DTOs.AngleDto"/>s.
             </summary>
             <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
             E.g., id,name to get back just the id and name.</para></param>
@@ -59,24 +59,24 @@
         </member>
         <member name="M:FrannHammer.Api.Controllers.AnglesController.GetAngle(System.Int32,System.String)">
             <summary>
-            Get a specific <see cref="T:FrannHammer.Models.AngleDto"/>s details.
+            Get a specific <see cref="T:FrannHammer.Models.DTOs.AngleDto"/>s details.
             </summary>
             <param name="id"></param>
             <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
             E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.AnglesController.PutAngle(System.Int32,FrannHammer.Models.AngleDto)">
+        <member name="M:FrannHammer.Api.Controllers.AnglesController.PutAngle(System.Int32,FrannHammer.Models.DTOs.AngleDto)">
             <summary>
-            Update a <see cref="T:FrannHammer.Models.AngleDto"/>.
+            Update a <see cref="T:FrannHammer.Models.DTOs.AngleDto"/>.
             </summary>
             <param name="id"></param>
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.AnglesController.PostAngle(FrannHammer.Models.AngleDto)">
+        <member name="M:FrannHammer.Api.Controllers.AnglesController.PostAngle(FrannHammer.Models.DTOs.AngleDto)">
             <summary>
-            Create a new <see cref="T:FrannHammer.Models.AngleDto"/>.
+            Create a new <see cref="T:FrannHammer.Models.DTOs.AngleDto"/>.
             </summary>
             <param name="dto"></param>
             <returns></returns>
@@ -111,7 +111,7 @@
         </member>
         <member name="M:FrannHammer.Api.Controllers.BaseDamagesController.GetBaseDamages(System.String)">
             <summary>
-            Get all <see cref="T:FrannHammer.Models.BaseDamageDto"/>s.
+            Get all <see cref="T:FrannHammer.Models.DTOs.BaseDamageDto"/>s.
             </summary>
             <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
             E.g., id,name to get back just the id and name.</para></param>
@@ -119,24 +119,24 @@
         </member>
         <member name="M:FrannHammer.Api.Controllers.BaseDamagesController.GetBaseDamage(System.Int32,System.String)">
             <summary>
-            Get a specific <see cref="T:FrannHammer.Models.BaseDamageDto"/>s details.
+            Get a specific <see cref="T:FrannHammer.Models.DTOs.BaseDamageDto"/>s details.
             </summary>
             <param name="id"></param>
             <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
             E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.BaseDamagesController.PutBaseDamage(System.Int32,FrannHammer.Models.BaseDamageDto)">
+        <member name="M:FrannHammer.Api.Controllers.BaseDamagesController.PutBaseDamage(System.Int32,FrannHammer.Models.DTOs.BaseDamageDto)">
             <summary>
-            Update a <see cref="T:FrannHammer.Models.BaseDamageDto"/>.
+            Update a <see cref="T:FrannHammer.Models.DTOs.BaseDamageDto"/>.
             </summary>
             <param name="id"></param>
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.BaseDamagesController.PostBaseDamage(FrannHammer.Models.BaseDamageDto)">
+        <member name="M:FrannHammer.Api.Controllers.BaseDamagesController.PostBaseDamage(FrannHammer.Models.DTOs.BaseDamageDto)">
             <summary>
-            Create a new <see cref="T:FrannHammer.Models.BaseDamageDto"/>.
+            Create a new <see cref="T:FrannHammer.Models.DTOs.BaseDamageDto"/>.
             </summary>
             <param name="dto"></param>
             <returns></returns>
@@ -161,7 +161,7 @@
         </member>
         <member name="M:FrannHammer.Api.Controllers.BaseKnockbacksController.GetBaseKnockbacks(System.String)">
             <summary>
-            Get all <see cref="T:FrannHammer.Models.BaseKnockbackDto"/>s.
+            Get all <see cref="T:FrannHammer.Models.DTOs.BaseKnockbackDto"/>s.
             </summary>
             <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
             E.g., id,name to get back just the id and name.</para></param>
@@ -169,24 +169,24 @@
         </member>
         <member name="M:FrannHammer.Api.Controllers.BaseKnockbacksController.GetBaseKnockback(System.Int32,System.String)">
             <summary>
-            Get a specific <see cref="T:FrannHammer.Models.BaseKnockbackDto"/>s details.
+            Get a specific <see cref="T:FrannHammer.Models.DTOs.BaseKnockbackDto"/>s details.
             </summary>
             <param name="id"></param>
             <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
             E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.BaseKnockbacksController.PutBaseKnockback(System.Int32,FrannHammer.Models.BaseKnockbackDto)">
+        <member name="M:FrannHammer.Api.Controllers.BaseKnockbacksController.PutBaseKnockback(System.Int32,FrannHammer.Models.DTOs.BaseKnockbackDto)">
             <summary>
-            Update a <see cref="T:FrannHammer.Models.BaseKnockbackDto"/>.
+            Update a <see cref="T:FrannHammer.Models.DTOs.BaseKnockbackDto"/>.
             </summary>
             <param name="id"></param>
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.BaseKnockbacksController.PostBaseKnockback(FrannHammer.Models.BaseKnockbackDto)">
+        <member name="M:FrannHammer.Api.Controllers.BaseKnockbacksController.PostBaseKnockback(FrannHammer.Models.DTOs.BaseKnockbackDto)">
             <summary>
-            Create a new <see cref="T:FrannHammer.Models.BaseKnockbackDto"/>.
+            Create a new <see cref="T:FrannHammer.Models.DTOs.BaseKnockbackDto"/>.
             </summary>
             <param name="dto"></param>
             <returns></returns>
@@ -236,7 +236,7 @@
             E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharacterAttributesController.PutCharacterAttribute(System.Int32,FrannHammer.Models.CharacterAttributeDto)">
+        <member name="M:FrannHammer.Api.Controllers.CharacterAttributesController.PutCharacterAttribute(System.Int32,FrannHammer.Models.DTOs.CharacterAttributeDto)">
             <summary>
             Update a <see cref="T:FrannHammer.Models.CharacterAttribute"/>
             </summary>
@@ -244,7 +244,7 @@
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharacterAttributesController.PostCharacterAttribute(FrannHammer.Models.CharacterAttributeDto)">
+        <member name="M:FrannHammer.Api.Controllers.CharacterAttributesController.PostCharacterAttribute(FrannHammer.Models.DTOs.CharacterAttributeDto)">
             <summary>
             Create a new <see cref="T:FrannHammer.Models.CharacterAttribute"/>.
             </summary>
@@ -286,7 +286,7 @@
             E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharacterAttributeTypesController.PutCharacterAttributeType(System.Int32,FrannHammer.Models.CharacterAttributeTypeDto)">
+        <member name="M:FrannHammer.Api.Controllers.CharacterAttributeTypesController.PutCharacterAttributeType(System.Int32,FrannHammer.Models.DTOs.CharacterAttributeTypeDto)">
             <summary>
             Update a <see cref="T:FrannHammer.Models.CharacterAttributeType"/>.
             </summary>
@@ -294,7 +294,7 @@
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharacterAttributeTypesController.PostCharacterAttributeType(FrannHammer.Models.CharacterAttributeTypeDto)">
+        <member name="M:FrannHammer.Api.Controllers.CharacterAttributeTypesController.PostCharacterAttributeType(FrannHammer.Models.DTOs.CharacterAttributeTypeDto)">
             <summary>
             Create a new <see cref="T:FrannHammer.Models.CharacterAttributeType"/>.
             </summary>
@@ -320,8 +320,8 @@
         </member>
         <member name="M:FrannHammer.Api.Controllers.CharactersController.GetCharacterDetailsById(System.Int32,System.String)">
             <summary>
-            Returns character metadata (<see cref="T:FrannHammer.Models.CharacterDto"/>), movement data (<see cref="T:FrannHammer.Models.MovementDto"/>)
-            and character attribute data (<see cref="T:FrannHammer.Models.CharacterAttributeDto"/>) all in one request.
+            Returns character metadata (<see cref="T:FrannHammer.Models.DTOs.CharacterDto"/>), movement data (<see cref="T:FrannHammer.Models.DTOs.MovementDto"/>)
+            and character attribute data (<see cref="T:FrannHammer.Models.DTOs.CharacterAttributeDto"/>) all in one request.
             </summary>
             <param name="id"></param>
             <param name="fields"></param>
@@ -329,7 +329,7 @@
         </member>
         <member name="M:FrannHammer.Api.Controllers.CharactersController.GetCharacters(System.String)">
             <summary>
-            Get all of the <see cref="T:FrannHammer.Models.CharacterDto"/> details.
+            Get all of the <see cref="T:FrannHammer.Models.DTOs.CharacterDto"/> details.
             </summary>
             <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
             E.g., id,name to get back just the id and name.</para></param>
@@ -337,7 +337,7 @@
         </member>
         <member name="M:FrannHammer.Api.Controllers.CharactersController.GetCharacter(System.Int32,System.String)">
             <summary>
-            Get a specific <see cref="T:FrannHammer.Models.CharacterDto"/>s metadata.
+            Get a specific <see cref="T:FrannHammer.Models.DTOs.CharacterDto"/>s metadata.
             </summary>
             <param name="id"></param>
             <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
@@ -346,8 +346,8 @@
         </member>
         <member name="M:FrannHammer.Api.Controllers.CharactersController.GetCharacterDetailsByName(System.String,System.String)">
             <summary>
-            Returns character metadata (<see cref="T:FrannHammer.Models.CharacterDto"/>), movement data (<see cref="T:FrannHammer.Models.MovementDto"/>)
-            and character attribute data (<see cref="T:FrannHammer.Models.CharacterAttributeDto"/>) all in one request.
+            Returns character metadata (<see cref="T:FrannHammer.Models.DTOs.CharacterDto"/>), movement data (<see cref="T:FrannHammer.Models.DTOs.MovementDto"/>)
+            and character attribute data (<see cref="T:FrannHammer.Models.DTOs.CharacterAttributeDto"/>) all in one request.
             </summary>
             <param name="name"></param>
             <param name="fields"></param>
@@ -355,7 +355,7 @@
         </member>
         <member name="M:FrannHammer.Api.Controllers.CharactersController.GetCharacterByName(System.String,System.String)">
             <summary>
-            Get a specific <see cref="T:FrannHammer.Models.CharacterDto"/>s details by their name.
+            Get a specific <see cref="T:FrannHammer.Models.DTOs.CharacterDto"/>s details by their name.
             </summary>
             <param name="name"></param>
             <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
@@ -411,7 +411,7 @@
             <summary>
             Get all the <see cref="T:FrannHammer.Models.CharacterAttribute"/>s of a specific <see cref="T:FrannHammer.Models.Character"/>.
             
-            These will be returned as <see cref="T:FrannHammer.Models.CharacterAttributeDto"/>s.
+            These will be returned as <see cref="T:FrannHammer.Models.DTOs.CharacterAttributeDto"/>s.
             </summary>
             <param name="id"></param>
             <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
@@ -422,7 +422,7 @@
             <summary>
             Get all the <see cref="T:FrannHammer.Models.CharacterAttribute"/>s of a specific <see cref="T:FrannHammer.Models.Character"/>.
             
-            These will be returned as <see cref="T:FrannHammer.Models.CharacterAttributeDto"/>s.
+            These will be returned as <see cref="T:FrannHammer.Models.DTOs.CharacterAttributeDto"/>s.
             </summary>
             <param name="id"></param>
             <param name="smashAttributeTypeId"></param>
@@ -466,17 +466,17 @@
             /// E.g., id,name to get back just the id and name.</para></param> 
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharactersController.PutCharacter(System.Int32,FrannHammer.Models.CharacterDto)">
+        <member name="M:FrannHammer.Api.Controllers.CharactersController.PutCharacter(System.Int32,FrannHammer.Models.DTOs.CharacterDto)">
             <summary>
-            Update a <see cref="T:FrannHammer.Models.CharacterDto"/>.
+            Update a <see cref="T:FrannHammer.Models.DTOs.CharacterDto"/>.
             </summary>
             <param name="id"></param>
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.CharactersController.PostCharacter(FrannHammer.Models.CharacterDto)">
+        <member name="M:FrannHammer.Api.Controllers.CharactersController.PostCharacter(FrannHammer.Models.DTOs.CharacterDto)">
             <summary>
-            Create a new <see cref="T:FrannHammer.Models.CharacterDto"/>.
+            Create a new <see cref="T:FrannHammer.Models.DTOs.CharacterDto"/>.
             </summary>
             <param name="dto"></param>
             <returns></returns>
@@ -501,7 +501,7 @@
         </member>
         <member name="M:FrannHammer.Api.Controllers.FirstActionableFramesController.GetFirstActionableFrames(System.String)">
             <summary>
-            Get all <see cref="T:FrannHammer.Models.FirstActionableFrameDto"/>s.
+            Get all <see cref="T:FrannHammer.Models.DTOs.FirstActionableFrameDto"/>s.
             </summary>
             <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
             E.g., id,name to get back just the id and name.</para></param>
@@ -509,24 +509,24 @@
         </member>
         <member name="M:FrannHammer.Api.Controllers.FirstActionableFramesController.GetFirstActionableFrame(System.Int32,System.String)">
             <summary>
-            Get a specific <see cref="T:FrannHammer.Models.FirstActionableFrameDto"/>s details.
+            Get a specific <see cref="T:FrannHammer.Models.DTOs.FirstActionableFrameDto"/>s details.
             </summary>
             <param name="id"></param>
             <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
             E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.FirstActionableFramesController.PutFirstActionableFrame(System.Int32,FrannHammer.Models.FirstActionableFrameDto)">
+        <member name="M:FrannHammer.Api.Controllers.FirstActionableFramesController.PutFirstActionableFrame(System.Int32,FrannHammer.Models.DTOs.FirstActionableFrameDto)">
             <summary>
-            Update a <see cref="T:FrannHammer.Models.FirstActionableFrameDto"/>.
+            Update a <see cref="T:FrannHammer.Models.DTOs.FirstActionableFrameDto"/>.
             </summary>
             <param name="id"></param>
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.FirstActionableFramesController.PostFirstActionableFrame(FrannHammer.Models.FirstActionableFrameDto)">
+        <member name="M:FrannHammer.Api.Controllers.FirstActionableFramesController.PostFirstActionableFrame(FrannHammer.Models.DTOs.FirstActionableFrameDto)">
             <summary>
-            Create a new <see cref="T:FrannHammer.Models.FirstActionableFrameDto"/>.
+            Create a new <see cref="T:FrannHammer.Models.DTOs.FirstActionableFrameDto"/>.
             </summary>
             <param name="dto"></param>
             <returns></returns>
@@ -550,7 +550,7 @@
         </member>
         <member name="M:FrannHammer.Api.Controllers.HitboxesController.GetHitboxes(System.String)">
             <summary>
-            Get all <see cref="T:FrannHammer.Models.HitboxDto"/>s.
+            Get all <see cref="T:FrannHammer.Models.DTOs.HitboxDto"/>s.
             </summary>
             <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
             E.g., id,name to get back just the id and name.</para></param>
@@ -558,14 +558,14 @@
         </member>
         <member name="M:FrannHammer.Api.Controllers.HitboxesController.GetHitbox(System.Int32,System.String)">
             <summary>
-            Get a specific <see cref="T:FrannHammer.Models.HitboxDto"/>s details.
+            Get a specific <see cref="T:FrannHammer.Models.DTOs.HitboxDto"/>s details.
             </summary>
             <param name="id"></param>
             <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
             E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.HitboxesController.PutHitbox(System.Int32,FrannHammer.Models.HitboxDto)">
+        <member name="M:FrannHammer.Api.Controllers.HitboxesController.PutHitbox(System.Int32,FrannHammer.Models.DTOs.HitboxDto)">
             <summary>
             Update a <see cref="T:FrannHammer.Models.Hitbox"/>.
             </summary>
@@ -573,7 +573,7 @@
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.HitboxesController.PostHitbox(FrannHammer.Models.HitboxDto)">
+        <member name="M:FrannHammer.Api.Controllers.HitboxesController.PostHitbox(FrannHammer.Models.DTOs.HitboxDto)">
             <summary>
             Create a new <see cref="T:FrannHammer.Models.Hitbox"/>.
             </summary>
@@ -599,7 +599,7 @@
         </member>
         <member name="M:FrannHammer.Api.Controllers.KnockbackGrowthsController.GetKnockbackGrowths(System.String)">
             <summary>
-            Get all <see cref="T:FrannHammer.Models.KnockbackGrowthDto"/>s.
+            Get all <see cref="T:FrannHammer.Models.DTOs.KnockbackGrowthDto"/>s.
             </summary>
             <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
             E.g., id,name to get back just the id and name.</para></param>
@@ -607,24 +607,24 @@
         </member>
         <member name="M:FrannHammer.Api.Controllers.KnockbackGrowthsController.GetKnockbackGrowth(System.Int32,System.String)">
             <summary>
-            Get a specific <see cref="T:FrannHammer.Models.KnockbackGrowthDto"/>s details.
+            Get a specific <see cref="T:FrannHammer.Models.DTOs.KnockbackGrowthDto"/>s details.
             </summary>
             <param name="id"></param>
             <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
             E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.KnockbackGrowthsController.PutKnockbackGrowth(System.Int32,FrannHammer.Models.KnockbackGrowthDto)">
+        <member name="M:FrannHammer.Api.Controllers.KnockbackGrowthsController.PutKnockbackGrowth(System.Int32,FrannHammer.Models.DTOs.KnockbackGrowthDto)">
             <summary>
-            Update a <see cref="T:FrannHammer.Models.KnockbackGrowthDto"/>.
+            Update a <see cref="T:FrannHammer.Models.DTOs.KnockbackGrowthDto"/>.
             </summary>
             <param name="id"></param>
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.KnockbackGrowthsController.PostKnockbackGrowth(FrannHammer.Models.KnockbackGrowthDto)">
+        <member name="M:FrannHammer.Api.Controllers.KnockbackGrowthsController.PostKnockbackGrowth(FrannHammer.Models.DTOs.KnockbackGrowthDto)">
             <summary>
-            Create a new <see cref="T:FrannHammer.Models.KnockbackGrowthDto"/>.
+            Create a new <see cref="T:FrannHammer.Models.DTOs.KnockbackGrowthDto"/>.
             </summary>
             <param name="dto"></param>
             <returns></returns>
@@ -671,7 +671,7 @@
             E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.MovementsController.PutMovement(System.Int32,FrannHammer.Models.MovementDto)">
+        <member name="M:FrannHammer.Api.Controllers.MovementsController.PutMovement(System.Int32,FrannHammer.Models.DTOs.MovementDto)">
             <summary>
             Update a specific <see cref="T:FrannHammer.Models.Movement"/>.
             </summary>
@@ -679,7 +679,7 @@
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.MovementsController.PostMovement(FrannHammer.Models.MovementDto)">
+        <member name="M:FrannHammer.Api.Controllers.MovementsController.PostMovement(FrannHammer.Models.DTOs.MovementDto)">
             <summary>
             Create a new <see cref="T:FrannHammer.Models.Movement"/>.
             </summary>
@@ -817,7 +817,7 @@
             E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.MovesController.PutMove(System.Int32,FrannHammer.Models.MoveDto)">
+        <member name="M:FrannHammer.Api.Controllers.MovesController.PutMove(System.Int32,FrannHammer.Models.DTOs.MoveDto)">
             <summary>
             Update a <see cref="T:FrannHammer.Models.Move"/>.
             </summary>
@@ -825,7 +825,7 @@
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.MovesController.PostMove(FrannHammer.Models.MoveDto)">
+        <member name="M:FrannHammer.Api.Controllers.MovesController.PostMove(FrannHammer.Models.DTOs.MoveDto)">
             <summary>
             Create a new <see cref="T:FrannHammer.Models.Move"/>.
             </summary>
@@ -867,7 +867,7 @@
             E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.NotationsController.PutNotation(System.Int32,FrannHammer.Models.NotationDto)">
+        <member name="M:FrannHammer.Api.Controllers.NotationsController.PutNotation(System.Int32,FrannHammer.Models.DTOs.NotationDto)">
             <summary>
             Update a <see cref="T:FrannHammer.Models.Notation"/>.
             </summary>
@@ -875,7 +875,7 @@
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.NotationsController.PostNotation(FrannHammer.Models.NotationDto)">
+        <member name="M:FrannHammer.Api.Controllers.NotationsController.PostNotation(FrannHammer.Models.DTOs.NotationDto)">
             <summary>
             Create a new <see cref="T:FrannHammer.Models.Notation"/>.
             </summary>
@@ -916,7 +916,7 @@
         </member>
         <member name="M:FrannHammer.Api.Controllers.SetKnockbacksController.GetSetKnockbacks(System.String)">
             <summary>
-            Get all <see cref="T:FrannHammer.Models.SetKnockbackDto"/>s.
+            Get all <see cref="T:FrannHammer.Models.DTOs.SetKnockbackDto"/>s.
             </summary>
             <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
             E.g., id,name to get back just the id and name.</para></param>
@@ -924,24 +924,24 @@
         </member>
         <member name="M:FrannHammer.Api.Controllers.SetKnockbacksController.GetSetKnockback(System.Int32,System.String)">
             <summary>
-            Get a specific <see cref="T:FrannHammer.Models.SetKnockbackDto"/>s details.
+            Get a specific <see cref="T:FrannHammer.Models.DTOs.SetKnockbackDto"/>s details.
             </summary>
             <param name="id"></param>
             <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
             E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.SetKnockbacksController.PutSetKnockback(System.Int32,FrannHammer.Models.SetKnockbackDto)">
+        <member name="M:FrannHammer.Api.Controllers.SetKnockbacksController.PutSetKnockback(System.Int32,FrannHammer.Models.DTOs.SetKnockbackDto)">
             <summary>
-            Update a <see cref="T:FrannHammer.Models.SetKnockbackDto"/>.
+            Update a <see cref="T:FrannHammer.Models.DTOs.SetKnockbackDto"/>.
             </summary>
             <param name="id"></param>
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.SetKnockbacksController.PostSetKnockback(FrannHammer.Models.SetKnockbackDto)">
+        <member name="M:FrannHammer.Api.Controllers.SetKnockbacksController.PostSetKnockback(FrannHammer.Models.DTOs.SetKnockbackDto)">
             <summary>
-            Create a new <see cref="T:FrannHammer.Models.SetKnockbackDto"/>.
+            Create a new <see cref="T:FrannHammer.Models.DTOs.SetKnockbackDto"/>.
             </summary>
             <param name="dto"></param>
             <returns></returns>
@@ -992,7 +992,7 @@
             E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.SmashAttributeTypesController.PutSmashAttributeType(System.Int32,FrannHammer.Models.SmashAttributeTypeDto)">
+        <member name="M:FrannHammer.Api.Controllers.SmashAttributeTypesController.PutSmashAttributeType(System.Int32,FrannHammer.Models.DTOs.SmashAttributeTypeDto)">
             <summary>
             Update an existing <see cref="T:FrannHammer.Models.SmashAttributeType"/>.
             </summary>
@@ -1000,7 +1000,7 @@
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.SmashAttributeTypesController.PostSmashAttributeType(FrannHammer.Models.SmashAttributeTypeDto)">
+        <member name="M:FrannHammer.Api.Controllers.SmashAttributeTypesController.PostSmashAttributeType(FrannHammer.Models.DTOs.SmashAttributeTypeDto)">
             <summary>
             Create a new <see cref="T:FrannHammer.Models.SmashAttributeType"/>.
             </summary>
@@ -1026,7 +1026,7 @@
         </member>
         <member name="M:FrannHammer.Api.Controllers.ThrowsController.GetThrows(System.String)">
             <summary>
-            Get all <see cref="T:FrannHammer.Models.ThrowDto"/>s.
+            Get all <see cref="T:FrannHammer.Models.DTOs.ThrowDto"/>s.
             </summary>
             <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
             E.g., id,name to get back just the id and name.</para></param>
@@ -1034,24 +1034,24 @@
         </member>
         <member name="M:FrannHammer.Api.Controllers.ThrowsController.GetThrow(System.Int32,System.String)">
             <summary>
-            Get a specific <see cref="T:FrannHammer.Models.ThrowDto"/>s details.
+            Get a specific <see cref="T:FrannHammer.Models.DTOs.ThrowDto"/>s details.
             </summary>
             <param name="id"></param>
             <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
             E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.ThrowsController.PutThrow(System.Int32,FrannHammer.Models.ThrowDto)">
+        <member name="M:FrannHammer.Api.Controllers.ThrowsController.PutThrow(System.Int32,FrannHammer.Models.DTOs.ThrowDto)">
             <summary>
-            Update a <see cref="T:FrannHammer.Models.ThrowDto"/>.
+            Update a <see cref="T:FrannHammer.Models.DTOs.ThrowDto"/>.
             </summary>
             <param name="id"></param>
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.ThrowsController.PostThrow(FrannHammer.Models.ThrowDto)">
+        <member name="M:FrannHammer.Api.Controllers.ThrowsController.PostThrow(FrannHammer.Models.DTOs.ThrowDto)">
             <summary>
-            Create a new <see cref="T:FrannHammer.Models.ThrowDto"/>.
+            Create a new <see cref="T:FrannHammer.Models.DTOs.ThrowDto"/>.
             </summary>
             <param name="dto"></param>
             <returns></returns>
@@ -1090,7 +1090,7 @@
             E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.ThrowTypesController.PutThrowType(System.Int32,FrannHammer.Models.ThrowTypeDto)">
+        <member name="M:FrannHammer.Api.Controllers.ThrowTypesController.PutThrowType(System.Int32,FrannHammer.Models.DTOs.ThrowTypeDto)">
             <summary>
             Update a <see cref="T:FrannHammer.Models.ThrowType"/>.
             </summary>
@@ -1098,7 +1098,7 @@
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:FrannHammer.Api.Controllers.ThrowTypesController.PostThrowType(FrannHammer.Models.ThrowTypeDto)">
+        <member name="M:FrannHammer.Api.Controllers.ThrowTypesController.PostThrowType(FrannHammer.Models.DTOs.ThrowTypeDto)">
             <summary>
             Create a new <see cref="T:FrannHammer.Models.ThrowType"/>.
             </summary>

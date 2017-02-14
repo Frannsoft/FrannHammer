@@ -55,7 +55,7 @@ namespace FrannHammer.Api.Controllers
                 return NotFound();
             }
 
-            return Ok(new AggregateCharacterData
+            return Ok(new AggregateCharacterDataDto
             {
                 Metadata = characterContent,
                 MovementData = movementContent,
@@ -131,7 +131,7 @@ namespace FrannHammer.Api.Controllers
                 return NotFound();
             }
 
-            return Ok(new AggregateCharacterData
+            return Ok(new AggregateCharacterDataDto
             {
                 Metadata = characterContent,
                 MovementData = movementContent,

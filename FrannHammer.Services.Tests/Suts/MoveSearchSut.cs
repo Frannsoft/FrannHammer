@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using FrannHammer.Models;
+using FrannHammer.Models.DTOs;
 using FrannHammer.Services.MoveSearch;
 
 namespace FrannHammer.Services.Tests.Suts
