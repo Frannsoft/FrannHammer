@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
 using FrannHammer.Api.ActionFilterAttributes;
@@ -57,6 +58,22 @@ namespace FrannHammer.Api.Controllers
         }
 
         /// <summary>
+        /// Get a specific <see cref="SmashAttributeType"/> by name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
+        /// <returns></returns>
+        [ResponseType(typeof(SmashAttributeTypeDto))]
+        [ValidateModel]
+        [Route("smashattributetypes/name/{name}")]
+        public IHttpActionResult GetSmashAttributeTypeByName(string name, [FromUri] string fields = "")
+        {
+            var content = _smashAttributeTypesService.Get<SmashAttributeType, SmashAttributeTypeDto>(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase), fields, false);
+            return content == null ? NotFound() : Ok(content);
+        }
+
+        /// <summary>
         /// Get back all of the <see cref="SmashAttributeType"/>s of a specific id
         /// as <see cref="CharacterAttribute"/> objects.  This call parses the returned 
         /// <see cref="CharacterAttribute"/>s into <see cref="CharacterAttributeRowDto"/>, 
@@ -73,6 +90,26 @@ namespace FrannHammer.Api.Controllers
         {
             //issue #95 - https://github.com/Frannsoft/FrannHammer/issues/95
             var content = _smashAttributeTypesService.GetAllCharacterAttributeOfSmashAttributeType(id, fields);
+            return Ok(content);
+        }
+
+        /// <summary>
+        /// Get back all of the <see cref="SmashAttributeType"/>s of a specific name.
+        /// as <see cref="CharacterAttribute"/> objects.  This call parses the returned 
+        /// <see cref="CharacterAttribute"/>s into <see cref="CharacterAttributeRowDto"/>, 
+        /// similar to how they are displayed on KuroganeHammer.com.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
+        /// <returns></returns>
+        [ResponseType(typeof(CharacterAttributeRowDto))]
+        [ValidateModel]
+        [Route("smashattributetypes/name/{name}/characterattributes")]
+        public IHttpActionResult GetAllCharacterAttributeOfSmashAttributeTypeByName(string name, [FromUri] string fields = "")
+        {
+            //issue #95 - https://github.com/Frannsoft/FrannHammer/issues/95
+            var content = _smashAttributeTypesService.GetAllCharacterAttributeOfSmashAttributeType(name, fields);
             return Ok(content);
         }
 
