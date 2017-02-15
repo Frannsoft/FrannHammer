@@ -980,6 +980,15 @@
             E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
+        <member name="M:FrannHammer.Api.Controllers.SmashAttributeTypesController.GetSmashAttributeTypeByName(System.String,System.String)">
+            <summary>
+            Get a specific <see cref="T:FrannHammer.Models.SmashAttributeType"/> by name.
+            </summary>
+            <param name="name"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
+            <returns></returns>
+        </member>
         <member name="M:FrannHammer.Api.Controllers.SmashAttributeTypesController.GetAllCharacterAttributeOfSmashAttributeType(System.Int32,System.String)">
             <summary>
             Get back all of the <see cref="T:FrannHammer.Models.SmashAttributeType"/>s of a specific id
@@ -988,6 +997,18 @@
             similar to how they are displayed on KuroganeHammer.com.
             </summary>
             <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrannHammer.Api.Controllers.SmashAttributeTypesController.GetAllCharacterAttributeOfSmashAttributeTypeByName(System.String,System.String)">
+            <summary>
+            Get back all of the <see cref="T:FrannHammer.Models.SmashAttributeType"/>s of a specific name.
+            as <see cref="T:FrannHammer.Models.CharacterAttribute"/> objects.  This call parses the returned 
+            <see cref="T:FrannHammer.Models.CharacterAttribute"/>s into <see cref="T:FrannHammer.Models.DTOs.CharacterAttributeRowDto"/>, 
+            similar to how they are displayed on KuroganeHammer.com.
+            </summary>
+            <param name="name"></param>
             <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
             E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
