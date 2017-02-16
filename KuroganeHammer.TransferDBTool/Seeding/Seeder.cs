@@ -251,6 +251,7 @@ namespace KuroganeHammer.TransferDBTool.Seeding
                         name.Equals("MAX FALL SPEED") ||
                         name.Equals("MAX WALK SPEED VALUE") ||
                         name.Equals("SPEED INCREASE") ||
+                        name.Equals("MAX RUN SPEED VALUE") ||
                         name.Equals("VALUE") ||
                         name.Equals("WEIGHT VALUE"))
                     {
