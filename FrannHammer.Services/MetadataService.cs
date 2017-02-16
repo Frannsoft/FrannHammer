@@ -79,17 +79,14 @@ namespace FrannHammer.Services
             where TDto : class;
 
         /// <summary>
-        /// Get all entities of type <typeparamref name="TPrimaryEntity"/> that have <typeparamref name="id"/>
-        /// of the specified value of type <typeparamref name="TJoinEntity"/>.
+        /// Get all entities of type <typeparamref name="TPrimaryEntity"/> that have <typeparamref name="id"/>.
         ///  </summary>
-        /// <typeparam name="TJoinEntity"></typeparam>
         /// <typeparam name="TPrimaryEntity"></typeparam>
         /// <typeparam name="TDto"></typeparam>
         /// <param name="id"></param>
         /// <param name="fields"></param>
         /// <returns></returns>
-        IEnumerable<dynamic> GetAllForOwnerId<TJoinEntity, TPrimaryEntity, TDto>(int id, string fields = "")
-            where TJoinEntity : class, IMoveEntity
+        IEnumerable<dynamic> GetAllMoveDataForOwnerId<TPrimaryEntity, TDto>(int id, string fields = "")
             where TPrimaryEntity : class, IMoveIdEntity
             where TDto : class;
 
@@ -287,13 +284,12 @@ namespace FrannHammer.Services
             return BuildContentResponseMultiple<TDto, TDto>(entities, fields);
         }
 
-        public IEnumerable<dynamic> GetAllForOwnerId<TJoinEntity, TPrimaryEntity, TDto>(int id, string fields = "")
-            where TJoinEntity : class, IMoveEntity
+        public IEnumerable<dynamic> GetAllMoveDataForOwnerId<TPrimaryEntity, TDto>(int id, string fields = "")
             where TPrimaryEntity : class, IMoveIdEntity
             where TDto : class
         {
             var entities = (from entity in Db.Set<TPrimaryEntity>()
-                            join ret in Db.Set<TJoinEntity>()
+                            join ret in Db.Set<Move>()
                                 on entity.MoveId equals ret.Id
                             where ret.OwnerId == id
                             select entity).ProjectTo<TDto>().ToList();
