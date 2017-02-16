@@ -152,7 +152,7 @@ namespace FrannHammer.Services.Tests
         {
             Assert.Throws<EntityNotFoundException>(() =>
             {
-                new MetadataService(Context, ResultValidationService).GetAllForOwnerId<Move, Angle, AngleDto>(200);
+                new MetadataService(Context, ResultValidationService).GetAllMoveDataForOwnerId<Angle, AngleDto>(200);
             });
         }
     }
