@@ -196,11 +196,14 @@ namespace KuroganeHammer.TransferDBTool
                     attributeType.Name.Equals("SMASHCHARGERELEASE") ||
                     attributeType.Name.Equals("TRIP") ||
                     attributeType.Name.Equals("JABLOCK") ||
-                    attributeType.Name.Equals("RUNSPEED") ||
                     attributeType.Name.Equals("JUMPS"))
                 { continue; } //skip these for now since the tables are problematic
 
-                var page = new Page(baseUrl + attributeType.Name);
+                //runspeed page name is dashspeed on site
+                var page = attributeType.Name.Equals("RUNSPEED") ? 
+                    new Page(baseUrl + "DashSpeed") : 
+                    new Page(baseUrl + attributeType.Name);
+
                 Console.WriteLine(attributeType.Name);
                 var attributesFromPage = page.GetAttributes();
 
@@ -223,17 +226,29 @@ namespace KuroganeHammer.TransferDBTool
                     foreach (AttributeValue attrValue in specificValues)
                     {
                         var attributeName = attrValue.Name;
-                        var dbAttributeType = attributeTypes.Find(a => a.Name.Equals(attrValue.AttributeFlag)); //   (CharacterAttributes)Enum.Parse(typeof(CharacterAttributes), specificValues[i].AttributeFlag, true);
+
+                        //this is because the link to run speed data is called /dashspeed.  confusion..
+                        string nameToCompare = attrValue.AttributeFlag.Equals("DashSpeed")
+                            ? "RUNSPEED"
+                            : attrValue.AttributeFlag;
+
+                        var dbAttributeType = attributeTypes.Find(a => a.Name.Equals(nameToCompare)); 
                         var value = attrValue.Value;
+
+                        if (dbAttributeType == null)
+                        {
+                            Debugger.Break();
+                        }
 
                         var characterAttribute = new CharacterAttribute
                         {
                             Rank = rank,
                             LastModified = DateTime.Now,
                             Name = attributeName,
-                            OwnerId = existingCharacters.First(c => c.Name.Equals(characterName, StringComparison.OrdinalIgnoreCase)).Id,
                             SmashAttributeTypeId = dbAttributeType.Id,
-                            Value = value
+                            Value = value,
+                            OwnerId = existingCharacters.First(
+                                c => c.Name.Equals(characterName, StringComparison.OrdinalIgnoreCase)).Id
                         };
                         fullAtts.Add(characterAttribute);
 
