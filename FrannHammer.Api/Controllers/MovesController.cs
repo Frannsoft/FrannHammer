@@ -20,7 +20,7 @@ namespace FrannHammer.Api.Controllers
         private const string MovesRouteKey = "moves";
         private readonly IMetadataService _metadataService;
         private readonly IConnectionMultiplexer _redisConnectionMultiplexer;
-
+        
         /// <summary>
         /// Create a new <see cref="MovesController"/>.
         /// </summary>
@@ -30,9 +30,8 @@ namespace FrannHammer.Api.Controllers
             _redisConnectionMultiplexer = redisConnectionMultiplexer;
         }
 
-        //Too big to be useful?
         /// <summary>
-        /// Get all moves.  Not sure if this is sticking around.
+        /// Get all moves.
         /// </summary>
         /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
         /// E.g., id,name to get back just the id and name.</para></param>

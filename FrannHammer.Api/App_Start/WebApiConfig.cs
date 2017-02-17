@@ -3,10 +3,12 @@ using System.Configuration;
 using System.Linq;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Web.Http;
 using Autofac.Integration.WebApi;
 using CacheCow.Server;
 using CacheCow.Server.EntityTagStore.SqlServer;
+using FrannHammer.Api.SwaggerExtensions;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 using StackExchange.Redis;
@@ -75,13 +77,19 @@ namespace FrannHammer.Api
 #endif
             config.EnableSwagger(c =>
             {
-                c.SingleApiVersion("v1", "FrannHammer Api");
+                c.SingleApiVersion("v0.5.0", "FrannHammer Api")
+                        .Contact(cc => cc.Email("FrannSoftDev@outlook.com")
+                                    .Name("@FrannDotExe")
+                                    .Url("https://github.com/Frannsoft/FrannHammer/wiki"))
+                    .Description("Restful api for Sm4sh frame data as told by @KuroganeHammer.")
+                    .License(lc => lc.Name("License: MIT").Url("https://github.com/Frannsoft/FrannHammer/blob/develop/License.md"));
+                c.DocumentFilter(() => new SwaggerAccessDocumentFilter());
                 c.IncludeXmlComments($@"{AppDomain.CurrentDomain.BaseDirectory}\App_Data\XmlDocument.XML");
             })
                 .EnableSwaggerUi(c =>
                 {
-                    c.InjectJavaScript(typeof(WebApiConfig).Assembly,
-                        "KuroganeHammer.Data.Api.SwaggerExtensions.onComplete.js");
+                    c.InjectStylesheet(Assembly.GetExecutingAssembly(),
+                        "FrannHammer.Api.SwaggerExtensions.swagger.styles.css");
                 });
 
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
