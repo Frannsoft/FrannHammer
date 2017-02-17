@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
 using FrannHammer.Api.ActionFilterAttributes;
@@ -15,6 +16,7 @@ namespace FrannHammer.Api.Controllers
     [RoutePrefix("api")]
     public class CharacterAttributesController : BaseApiController
     {
+        private const string CharacterAttributesRouteKey = "characterattributes";
         private readonly IMetadataService _metadataService;
 
         /// <summary>
@@ -33,7 +35,7 @@ namespace FrannHammer.Api.Controllers
         /// <returns></returns>
         [ResponseType(typeof(CharacterAttributeDto))]
         [ValidateModel]
-        [Route("characterattributes")]
+        [Route(CharacterAttributesRouteKey)]
         public IHttpActionResult GetCharacterAttributes([FromUri] string fields = "")
         {
             var content = _metadataService.GetAll<CharacterAttribute, CharacterAttributeDto>(fields);
@@ -49,10 +51,28 @@ namespace FrannHammer.Api.Controllers
         /// <returns></returns>
         [ResponseType(typeof(CharacterAttributeDto))]
         [ValidateModel]
-        [Route("characterattributes/{id}")]
+        [Route(CharacterAttributesRouteKey + "/{id}")]
         public IHttpActionResult GetCharacterAttribute(int id, [FromUri] string fields = "")
         {
             var content = _metadataService.Get<CharacterAttribute, CharacterAttributeDto>(id, fields);
+            return Ok(content);
+        }
+
+        /// <summary>
+        /// Get a specific <see cref="CharacterAttribute"/> by its name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param>
+        /// <returns></returns>
+        [ResponseType(typeof(CharacterAttributeDto))]
+        [ValidateModel]
+        [Route(CharacterAttributesRouteKey + "/name/{name}")]
+        public IHttpActionResult GetCharacterAttributeByName(string name, [FromUri] string fields = "")
+        {
+            var content =
+                _metadataService.GetAll<CharacterAttribute, CharacterAttributeDto>(
+                    c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase), fields, false);
             return Ok(content);
         }
 
@@ -64,7 +84,7 @@ namespace FrannHammer.Api.Controllers
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
         [ValidateModel]
-        [Route("characterattributes/{id}")]
+        [Route(CharacterAttributesRouteKey + "/{id}")]
         public IHttpActionResult PutCharacterAttribute(int id, CharacterAttributeDto dto)
         {
             if (id != dto.Id)
@@ -84,7 +104,7 @@ namespace FrannHammer.Api.Controllers
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
         [ValidateModel]
-        [Route("characterattributes")]
+        [Route(CharacterAttributesRouteKey)]
         public IHttpActionResult PostCharacterAttribute(CharacterAttributeDto dto)
         {
             var newDto = _metadataService.Add<CharacterAttribute, CharacterAttributeDto>(dto);
@@ -97,7 +117,7 @@ namespace FrannHammer.Api.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [Authorize(Roles = RolesConstants.Admin)]
-        [Route("characterattributes/{id}")]
+        [Route(CharacterAttributesRouteKey + "/{id}")]
         public IHttpActionResult DeleteCharacterAttribute(int id)
         {
             _metadataService.Delete<CharacterAttribute>(id);

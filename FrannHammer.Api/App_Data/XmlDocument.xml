@@ -236,6 +236,15 @@
             E.g., id,name to get back just the id and name.</para></param>
             <returns></returns>
         </member>
+        <member name="M:FrannHammer.Api.Controllers.CharacterAttributesController.GetCharacterAttributeByName(System.String,System.String)">
+            <summary>
+            Get a specific <see cref="T:FrannHammer.Models.CharacterAttribute"/> by its name.
+            </summary>
+            <param name="name"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
+            <returns></returns>
+        </member>
         <member name="M:FrannHammer.Api.Controllers.CharacterAttributesController.PutCharacterAttribute(System.Int32,FrannHammer.Models.DTOs.CharacterAttributeDto)">
             <summary>
             Update a <see cref="T:FrannHammer.Models.CharacterAttribute"/>
