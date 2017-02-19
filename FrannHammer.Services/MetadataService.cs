@@ -45,7 +45,7 @@ namespace FrannHammer.Services
             where TDto : class;
 
         /// <summary>
-        /// Joins with the moves table to get back all of type <typeparamref name="TEntity"/>
+        /// Joins with the moves table to get back first of type <typeparamref name="TEntity"/>
         /// with a matching MoveId.
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
@@ -55,6 +55,19 @@ namespace FrannHammer.Services
         /// <returns></returns>
         dynamic GetWithMoves<TEntity, TDto>(int id, string fields = "")
         where TEntity : class, IMoveIdEntity
+            where TDto : class;
+
+        /// <summary>
+        /// Joins with the moves table to get back all of type <typeparamref name="TEntity"/>
+        /// with a matching MoveId.
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <typeparam name="TDto"></typeparam>
+        /// <param name="ids"></param>
+        /// <param name="fields"></param>
+        /// <returns></returns>
+        IEnumerable<dynamic> GetMultipleWithMoves<TEntity, TDto>(IEnumerable<int> ids, string fields = "")
+            where TEntity : class, IMoveIdEntity
             where TDto : class;
 
         /// <summary>
@@ -268,6 +281,21 @@ namespace FrannHammer.Services
 
             //ResultValidationService.ValidateSingleResult<TDto, TDto>(dto, id);
             return BuildContentResponse<TDto, TDto>(dto, fields);
+            //return response ?? $"No data of type {typeof(TEntity).Name} found with Move id {id}";
+        }
+
+        public IEnumerable<dynamic> GetMultipleWithMoves<TEntity, TDto>(IEnumerable<int> ids, string fields = "")
+            where TEntity : class, IMoveIdEntity
+            where TDto : class
+        {
+            var dtos = (from entity in Db.Set<TEntity>()
+                        join joinEntity in Db.Moves
+                        on entity.MoveId equals joinEntity.Id
+                        where ids.Contains(entity.MoveId)
+                        select entity).ProjectTo<TDto>().ToList();
+
+            //ResultValidationService.ValidateSingleResult<TDto, TDto>(dto, id);
+            return BuildContentResponseMultiple<TDto, TDto>(dtos, fields);
             //return response ?? $"No data of type {typeof(TEntity).Name} found with Move id {id}";
         }
 
