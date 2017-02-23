@@ -45,7 +45,7 @@ namespace FrannHammer.Services
             where TDto : class;
 
         /// <summary>
-        /// Joins with the moves table to get back all of type <typeparamref name="TEntity"/>
+        /// Joins with the moves table to get back first of type <typeparamref name="TEntity"/>
         /// with a matching MoveId.
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
@@ -55,6 +55,19 @@ namespace FrannHammer.Services
         /// <returns></returns>
         dynamic GetWithMoves<TEntity, TDto>(int id, string fields = "")
         where TEntity : class, IMoveIdEntity
+            where TDto : class;
+
+        /// <summary>
+        /// Joins with the moves table to get back all of type <typeparamref name="TEntity"/>
+        /// with a matching MoveId.
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <typeparam name="TDto"></typeparam>
+        /// <param name="ids"></param>
+        /// <param name="fields"></param>
+        /// <returns></returns>
+        IEnumerable<dynamic> GetMultipleWithMoves<TEntity, TDto>(IEnumerable<int> ids, string fields = "")
+            where TEntity : class, IMoveIdEntity
             where TDto : class;
 
         /// <summary>
@@ -79,17 +92,14 @@ namespace FrannHammer.Services
             where TDto : class;
 
         /// <summary>
-        /// Get all entities of type <typeparamref name="TPrimaryEntity"/> that have <typeparamref name="id"/>
-        /// of the specified value of type <typeparamref name="TJoinEntity"/>.
+        /// Get all entities of type <typeparamref name="TPrimaryEntity"/> that have <typeparamref name="id"/>.
         ///  </summary>
-        /// <typeparam name="TJoinEntity"></typeparam>
         /// <typeparam name="TPrimaryEntity"></typeparam>
         /// <typeparam name="TDto"></typeparam>
         /// <param name="id"></param>
         /// <param name="fields"></param>
         /// <returns></returns>
-        IEnumerable<dynamic> GetAllForOwnerId<TJoinEntity, TPrimaryEntity, TDto>(int id, string fields = "")
-            where TJoinEntity : class, IMoveEntity
+        IEnumerable<dynamic> GetAllMoveDataForOwnerId<TPrimaryEntity, TDto>(int id, string fields = "")
             where TPrimaryEntity : class, IMoveIdEntity
             where TDto : class;
 
@@ -230,6 +240,7 @@ namespace FrannHammer.Services
                     var setKnockbacks = GetWithMoves<SetKnockback, SetKnockbackDto>(moveId, moveDetailFields);
                     var autoCancels = GetWithMoves<Autocancel, AutocancelDto>(moveId);
                     var landingLags = GetWithMoves<LandingLag, LandingLagDto>(moveId);
+                    var firstActionableFrame = GetWithMoves<FirstActionableFrame, FirstActionableFrameDto>(moveId, "Frame");
 
                     //aggregate into Dto 
                     var detailedMoveDto = new DetailedMoveDto
@@ -242,16 +253,9 @@ namespace FrannHammer.Services
                         BaseKnockback = baseKnockbacks,
                         SetKnockback = setKnockbacks,
                         Autocancel = autoCancels,
-                        LandingLag = landingLags
+                        LandingLag = landingLags,
+                        FirstActionableFrame = firstActionableFrame
                     };
-
-                    //only add faf if it's not empty or just contains a '-'
-                    string faf = (string) data.FirstActionableFrame;
-                    
-                    if (!string.IsNullOrEmpty(faf) && !faf.Equals("-"))
-                    {
-                        detailedMoveDto.FirstActionableFrame = faf;
-                    }
 
                     detailedMoves.Add(detailedMoveDto);
                 }
@@ -277,6 +281,22 @@ namespace FrannHammer.Services
 
             //ResultValidationService.ValidateSingleResult<TDto, TDto>(dto, id);
             return BuildContentResponse<TDto, TDto>(dto, fields);
+            //return response ?? $"No data of type {typeof(TEntity).Name} found with Move id {id}";
+        }
+
+        public IEnumerable<dynamic> GetMultipleWithMoves<TEntity, TDto>(IEnumerable<int> ids, string fields = "")
+            where TEntity : class, IMoveIdEntity
+            where TDto : class
+        {
+            var dtos = (from entity in Db.Set<TEntity>()
+                        join joinEntity in Db.Moves
+                        on entity.MoveId equals joinEntity.Id
+                        where ids.Contains(entity.MoveId)
+                        select entity).ProjectTo<TDto>().ToList();
+
+            //ResultValidationService.ValidateSingleResult<TDto, TDto>(dto, id);
+            return BuildContentResponseMultiple<TDto, TDto>(dtos, fields);
+            //return response ?? $"No data of type {typeof(TEntity).Name} found with Move id {id}";
         }
 
         public IEnumerable<dynamic> GetAllWithMoves<TEntity, TDto>(string fields = "")
@@ -292,13 +312,12 @@ namespace FrannHammer.Services
             return BuildContentResponseMultiple<TDto, TDto>(entities, fields);
         }
 
-        public IEnumerable<dynamic> GetAllForOwnerId<TJoinEntity, TPrimaryEntity, TDto>(int id, string fields = "")
-            where TJoinEntity : class, IMoveEntity
+        public IEnumerable<dynamic> GetAllMoveDataForOwnerId<TPrimaryEntity, TDto>(int id, string fields = "")
             where TPrimaryEntity : class, IMoveIdEntity
             where TDto : class
         {
             var entities = (from entity in Db.Set<TPrimaryEntity>()
-                            join ret in Db.Set<TJoinEntity>()
+                            join ret in Db.Set<Move>()
                                 on entity.MoveId equals ret.Id
                             where ret.OwnerId == id
                             select entity).ProjectTo<TDto>().ToList();

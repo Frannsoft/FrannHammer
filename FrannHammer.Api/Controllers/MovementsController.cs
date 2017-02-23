@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
 using FrannHammer.Api.ActionFilterAttributes;
 using FrannHammer.Api.Models;
 using FrannHammer.Models;
+using FrannHammer.Models.DTOs;
 using FrannHammer.Services;
 
 namespace FrannHammer.Api.Controllers
@@ -50,10 +50,10 @@ namespace FrannHammer.Api.Controllers
         /// <returns></returns>
         [ResponseType(typeof(MovementDto))]
         [ValidateModel]
-        [Route("movements/byname", Name = "GetMovementsByName")]
+        [Route("movements/name/{name}", Name = "GetMovementsByName")]
         public IHttpActionResult GetMovementsByName([FromUri] string name, [FromUri] string fields = "")
         {
-            var content = _metadataService.GetAll<Movement, MovementDto>((m => m.Name.Equals(name, StringComparison.OrdinalIgnoreCase)), fields, false);
+            var content = _metadataService.GetAll<Movement, MovementDto>(m => m.Name.Equals(name, StringComparison.OrdinalIgnoreCase), fields, false);
             return Ok(content);
         }
 

@@ -369,7 +369,7 @@ namespace FrannHammer.WebScraper
         {
             var node = _doc.DocumentNode.SelectSingleNode(StatConstants.XpathFrameDataVersion);
 
-            var characterFriendlyName = node.InnerText.Split(new[] { " F" }, StringSplitOptions.None)[0];
+            var characterFriendlyName = node.InnerText.Split(new[] { "'s F" }, StringSplitOptions.None)[0];
 
             //clean up and remove the "'s"
             string retVal = characterFriendlyName;
@@ -377,7 +377,6 @@ namespace FrannHammer.WebScraper
             {
                 retVal = characterFriendlyName.Remove(characterFriendlyName.Length - 2, 2);
             }
-            //var retVal = characterFriendlyName.TrimEnd('s', '\'');// .Remove(characterFriendlyName.Length - 1, 2);
             return retVal;
         }
     }

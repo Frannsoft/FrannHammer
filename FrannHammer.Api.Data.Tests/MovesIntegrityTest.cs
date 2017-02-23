@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Http.Results;
 using FrannHammer.Api.Controllers;
 using FrannHammer.Models;
+using FrannHammer.Models.DTOs;
 using FrannHammer.Services;
 using FrannHammer.Services.MoveSearch;
 using NUnit.Framework;

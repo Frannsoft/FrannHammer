@@ -44,6 +44,8 @@ namespace FrannHammer.Api.Data.Tests
                                                                                           khmove.Value.Equals(movement.Value) &&
                                                                                           khmove.OwnerId == movement.OwnerId);
                     Assert.That(movementFromKhPage, Is.Not.Null);
+                    Assert.That(movementFromKhPage, Is.Not.Null, $"Unable to find matching kh move for {movement.Name} - {characterFromDb.DisplayName} (id = {characterFromDb.Id})");
+
                 }
             }
         }

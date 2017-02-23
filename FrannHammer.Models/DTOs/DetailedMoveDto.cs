@@ -9,7 +9,7 @@
         public dynamic BaseDamage { get; set; }
         public dynamic BaseKnockback { get; set; }
         public dynamic SetKnockback { get; set; }
-        public string FirstActionableFrame { get; set; }
+        public dynamic FirstActionableFrame { get; set; }
         public dynamic Autocancel { get; set; }
         public dynamic LandingLag { get; set; }
 

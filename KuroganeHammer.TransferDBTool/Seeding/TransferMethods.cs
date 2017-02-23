@@ -42,8 +42,14 @@ namespace KuroganeHammer.TransferDBTool.Seeding
             {
                 return (T)(object)AddKnockbackGrowthDataToTable(move, context);
             }
+            if (typeof(T) == typeof(FirstActionableFrame))
+            {
+                return (T) (object) AddFirstActionableFrameDataToTable(move, context);
+            }
             throw new Exception("No applicable type found");
         }
+
+       
 
         internal static KnockbackGrowth AddKnockbackGrowthDataToTable(Move move, AppDbContext context)
         {
@@ -236,25 +242,37 @@ namespace KuroganeHammer.TransferDBTool.Seeding
             const char primaryKnockbackValueChar = 'W';
             Func<string, bool> doesRawContainSetKnockbackValue = raw => rawKbk.Contains('B') &&
                                                                         !rawKbk.Contains('W') ||
-                                                                        (!rawKbk.Contains('B') &&
-                                                                        !rawKbk.Contains('W'));
+                                                                        !rawKbk.Contains('B') &&
+                                                                        !rawKbk.Contains('W');
 
             return AddBaseSetKnockbackCore<SetKnockback>(rawKbk, matchSetKnockbackRegex, setKnockbackTrimValues,
                 primaryKnockbackValueChar,
                 doesRawContainSetKnockbackValue, move, context);
         }
 
-        //private static BaseKnockbackSetKnockback AddBaseKnockbackSetKnockback_DataTo_BaseKnockbackSetKnockback_Table(
-        //    Move move, AppDbContext context)
-        //{
-        //    var kbk = SetBaseHitboxData<BaseKnockbackSetKnockback>(move.BaseKnockBackSetKnockback, '/', move, context);
-        //    return kbk;
-        //}
-
         private static Hitbox AddHitboxDataToHitboxTable(Move move, AppDbContext context)
         {
             var hitbox = SetBaseHitboxData<Hitbox>(move.HitboxActive, ',', move, context);
             return hitbox;
+        }
+
+        private static FirstActionableFrame AddFirstActionableFrameDataToTable(Move move, AppDbContext context)
+        {
+            var faf = new FirstActionableFrame
+            {
+                Frame = move.FirstActionableFrame,
+                LastModified = DateTime.Now,
+                Move = move,
+                MoveId = move.Id,
+                RawValue = move.FirstActionableFrame,
+                Owner = context.Characters.Single(c => c.Id == move.OwnerId),
+                OwnerId = context.Characters.Single(c => c.Id == move.OwnerId).Id
+            };
+
+            //if (!move.FirstActionableFrame.Equals("-") && !move.FirstActionableFrame.Equals(string.Empty))
+            //{
+            //}
+            return faf;
         }
     }
 }

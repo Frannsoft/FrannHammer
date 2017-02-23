@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using FrannHammer.Models;
-using NUnit.Framework;
 
 namespace KuroganeHammer.TransferDBTool.Seeding
 {
@@ -45,6 +43,7 @@ namespace KuroganeHammer.TransferDBTool.Seeding
             SyncData<Autocancel>();
             SyncData<LandingLag>();
             SyncData<KnockbackGrowth>();
+            SyncData<FirstActionableFrame>();
             SyncThrowData();
             Console.WriteLine("Completed seeding move details.");
         }
@@ -252,6 +251,7 @@ namespace KuroganeHammer.TransferDBTool.Seeding
                         name.Equals("MAX FALL SPEED") ||
                         name.Equals("MAX WALK SPEED VALUE") ||
                         name.Equals("SPEED INCREASE") ||
+                        name.Equals("MAX RUN SPEED VALUE") ||
                         name.Equals("VALUE") ||
                         name.Equals("WEIGHT VALUE"))
                     {

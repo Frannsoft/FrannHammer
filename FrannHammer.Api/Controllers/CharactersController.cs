@@ -18,7 +18,7 @@ namespace FrannHammer.Api.Controllers
     [RoutePrefix("api")]
     public class CharactersController : BaseApiController
     {
-        private const string CharactersRouteKey = "Characters";
+        private const string CharactersRouteKey = "characters";
         private readonly IMetadataService _metadataService;
 
         /// <summary>
@@ -27,40 +27,6 @@ namespace FrannHammer.Api.Controllers
         public CharactersController(IMetadataService metadataService)
         {
             _metadataService = metadataService;
-        }
-
-        /// <summary>
-        /// Returns character metadata (<see cref="CharacterDto"/>), movement data (<see cref="MovementDto"/>)
-        /// and character attribute data (<see cref="CharacterAttributeDto"/>) all in one request.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="fields"></param>
-        /// <returns></returns>
-        [ValidateModel]
-        [Route(CharactersRouteKey + "/{id}/details")]
-        public IHttpActionResult GetCharacterDetailsById(int id, [FromUri] string fields = "")
-        {
-            var characterContent = _metadataService.Get<Character, CharacterDto>(id, fields);
-            IEnumerable<dynamic> movementContent, characterAttributeContent;
-
-            //check if character data found. If not, don't bother searching for additional data.
-            if (characterContent != null)
-            {
-                movementContent = _metadataService.GetAll<Movement, MovementDto>(m => m.OwnerId == id, fields);
-                characterAttributeContent =
-                    _metadataService.GetAll<CharacterAttribute, CharacterAttributeDto>(a => a.OwnerId == id, fields);
-            }
-            else
-            {
-                return NotFound();
-            }
-
-            return Ok(new AggregateCharacterData
-            {
-                Metadata = characterContent,
-                MovementData = movementContent,
-                CharacterAttributeData = characterAttributeContent
-            });
         }
 
         /// <summary>
@@ -92,6 +58,56 @@ namespace FrannHammer.Api.Controllers
         {
             var content = _metadataService.Get<Character, CharacterDto>(id, fields);
             return content == null ? NotFound() : Ok(content);
+        }
+
+        /// <summary>
+        /// Get a specific <see cref="CharacterDto"/>s details by their name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param> 
+        /// <returns></returns>
+        [ResponseType(typeof(CharacterDto))]
+        [ValidateModel]
+        [Route(CharactersRouteKey + "/name/{name}")]
+        public IHttpActionResult GetCharacterByName(string name, [FromUri] string fields = "")
+        {
+            var content = _metadataService.Get<Character, CharacterDto>(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase), fields, false);
+            return Ok(content);
+        }
+
+        /// <summary>
+        /// Returns character metadata (<see cref="CharacterDto"/>), movement data (<see cref="MovementDto"/>)
+        /// and character attribute data (<see cref="CharacterAttributeDto"/>) all in one request.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="fields"></param>
+        /// <returns></returns>
+        [ValidateModel]
+        [Route(CharactersRouteKey + "/{id}/details")]
+        public IHttpActionResult GetCharacterDetailsById(int id, [FromUri] string fields = "")
+        {
+            var characterContent = _metadataService.Get<Character, CharacterDto>(id, fields);
+            IEnumerable<dynamic> movementContent, characterAttributeContent;
+
+            //check if character data found. If not, don't bother searching for additional data.
+            if (characterContent != null)
+            {
+                movementContent = _metadataService.GetAll<Movement, MovementDto>(m => m.OwnerId == id, fields);
+                characterAttributeContent =
+                    _metadataService.GetAll<CharacterAttribute, CharacterAttributeDto>(a => a.OwnerId == id, fields);
+            }
+            else
+            {
+                return NotFound();
+            }
+
+            return Ok(new AggregateCharacterDataDto
+            {
+                Metadata = characterContent,
+                MovementData = movementContent,
+                CharacterAttributeData = characterAttributeContent
+            });
         }
 
         /// <summary>
@@ -131,7 +147,7 @@ namespace FrannHammer.Api.Controllers
                 return NotFound();
             }
 
-            return Ok(new AggregateCharacterData
+            return Ok(new AggregateCharacterDataDto
             {
                 Metadata = characterContent,
                 MovementData = movementContent,
@@ -140,18 +156,16 @@ namespace FrannHammer.Api.Controllers
         }
 
         /// <summary>
-        /// Get a specific <see cref="CharacterDto"/>s details by their name.
+        /// Get all the <see cref="Move"/> data for a specific <see cref="Character"/> broken out
+        /// into stronger typed response objects.  This is designed to make sifting through the data easier.
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
-        /// E.g., id,name to get back just the id and name.</para></param> 
+        /// <param name="id"></param>
+        /// <param name="fields"></param>
         /// <returns></returns>
-        [ResponseType(typeof(CharacterDto))]
-        [ValidateModel]
-        [Route(CharactersRouteKey + "/name/{name}")]
-        public IHttpActionResult GetCharacterByName(string name, [FromUri] string fields = "")
+        [Route(CharactersRouteKey + "/{id}/detailedmoves")]
+        public IHttpActionResult GetDetailedMovesForCharacter(int id, [FromUri] string fields = "")
         {
-            var content = _metadataService.Get<Character, CharacterDto>(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase), fields, false);
+            var content = _metadataService.GetDetailsForMovesOfCharacter(id, fields);
             return Ok(content);
         }
 
@@ -196,6 +210,22 @@ namespace FrannHammer.Api.Controllers
         }
 
         /// <summary>
+        /// Get all the <see cref="Movement"/> data for a specific <see cref="Character"/> by their name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param> 
+        /// <returns></returns>
+        [ResponseType(typeof(MovementDto))]
+        [ValidateModel]
+        [Route(CharactersRouteKey + "/name/{name}/movements")]
+        [HttpGet]
+        public IHttpActionResult GetMovementsForCharacterByName(string name, [FromUri] string fields = "")
+        {
+            return FindAllUsingCharacterName<Movement, MovementDto>(name, fields);
+        }
+
+        /// <summary>
         /// Get all the <see cref="Move"/> data for a specific <see cref="Character"/>.
         /// </summary>
         /// <param name="id"></param>
@@ -212,17 +242,18 @@ namespace FrannHammer.Api.Controllers
         }
 
         /// <summary>
-        /// Get all the <see cref="Move"/> data for a specific <see cref="Character"/> broken out
-        /// into stronger typed response objects.  This is designed to make sifting through the data easier.
+        /// Get all the <see cref="Move"/> data for a specific <see cref="Character"/> by their name.
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="fields"></param>
+        /// <param name="name"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param> 
         /// <returns></returns>
-        [Route(CharactersRouteKey + "/{id}/detailedmoves")]
-        public IHttpActionResult GetDetailedMovesForCharacter(int id, [FromUri] string fields = "")
+        [ResponseType(typeof(MoveDto))]
+        [ValidateModel]
+        [Route(CharactersRouteKey + "/name/{name}/moves")]
+        public IHttpActionResult GetMovesForCharacterByName(string name, [FromUri] string fields = "")
         {
-            var content = _metadataService.GetDetailsForMovesOfCharacter(id, fields);
-            return Ok(content);
+            return FindAllUsingCharacterName<Move, MoveDto>(name, fields);
         }
 
         /// <summary>
@@ -232,14 +263,28 @@ namespace FrannHammer.Api.Controllers
         /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
         /// E.g., id,name to get back just the id and name.</para></param> 
         /// <returns></returns>
-        [ValidateModel]
         [ResponseType(typeof(ThrowDto))]
         [ValidateModel]
         [Route(CharactersRouteKey + "/{id}/throws")]
         public IHttpActionResult GetThrowsForCharacter(int id, [FromUri] string fields = "")
         {
-            var content = _metadataService.GetAllForOwnerId<Move, Throw, ThrowDto>(id, fields);
+            var content = _metadataService.GetAllMoveDataForOwnerId<Throw, ThrowDto>(id, fields);
             return Ok(content);
+        }
+
+        /// <summary>
+        /// Get all the <see cref="Throw"/>s for the specific <see cref="Character"/> by their name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param> 
+        /// <returns></returns>
+        [ResponseType(typeof(ThrowDto))]
+        [ValidateModel]
+        [Route(CharactersRouteKey + "/name/{name}/throws")]
+        public IHttpActionResult GetThrowsForCharacterByName(string name, [FromUri] string fields = "")
+        {
+            return FindAllWithMoveUsingCharacterName<Throw, ThrowDto>(name, fields);
         }
 
         /// <summary>
@@ -258,6 +303,23 @@ namespace FrannHammer.Api.Controllers
         {
             var content = _metadataService.GetAll<CharacterAttribute, CharacterAttributeDto>(a => a.OwnerId == id, fields);
             return Ok(content);
+        }
+
+        /// <summary>
+        /// Get all the <see cref="CharacterAttribute"/>s of a specific <see cref="Character"/> by their name.
+        /// 
+        /// These will be returned as <see cref="CharacterAttributeDto"/>s.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param> 
+        /// <returns></returns>
+        [ResponseType(typeof(CharacterAttributeDto))]
+        [ValidateModel]
+        [Route(CharactersRouteKey + "/name/{name}/characterattributes")]
+        public IHttpActionResult GetCharacterAttributesForCharacterByName(string name, [FromUri] string fields = "")
+        {
+            return FindAllUsingCharacterName<CharacterAttribute, CharacterAttributeDto>(name, fields);
         }
 
         /// <summary>
@@ -281,6 +343,33 @@ namespace FrannHammer.Api.Controllers
         }
 
         /// <summary>
+        /// Get all the <see cref="CharacterAttribute"/>s of a specific <see cref="Character"/> by their name.
+        /// 
+        /// These will be returned as <see cref="CharacterAttributeDto"/>s.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="smashAttributeTypeName"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param> 
+        /// <returns></returns>
+        [ResponseType(typeof(CharacterAttributeDto))]
+        [ValidateModel]
+        [Route(CharactersRouteKey + "/name/{name}/smashattributetypes/name/{smashAttributeTypeName}")]
+        public IHttpActionResult GetCharacterAttributesForCharacterByName(string name, string smashAttributeTypeName, [FromUri] string fields = "")
+        {
+            var foundCharacter = FindCharacterUsingName(name);
+
+            if (foundCharacter != null)
+            {
+                int id = foundCharacter.Id;
+                var content = _metadataService.GetAll<CharacterAttribute, CharacterAttributeDto>(c =>
+                    c.OwnerId == id && c.SmashAttributeType.Name == smashAttributeTypeName, fields, false);
+                return Ok(content);
+            }
+            return NotFound();
+        }
+
+        /// <summary>
         /// Get all the <see cref="Angle"/>s of a specific <see cref="Character"/>'s moves.
         /// </summary>
         /// <param name="id"></param>
@@ -292,8 +381,23 @@ namespace FrannHammer.Api.Controllers
         [Route(CharactersRouteKey + "/{id}/angles")]
         public IHttpActionResult GetCharacterMoveAngles(int id, [FromUri] string fields = "")
         {
-            var content = _metadataService.GetAllForOwnerId<Move, Angle, AngleDto>(id, fields);
+            var content = _metadataService.GetAllMoveDataForOwnerId<Angle, AngleDto>(id, fields);
             return Ok(content);
+        }
+
+        /// <summary>
+        /// Get all the <see cref="Angle"/>s of a specific <see cref="Character"/>'s moves by their name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// E.g., id,name to get back just the id and name.</para></param> 
+        /// <returns></returns>
+        [ResponseType(typeof(AngleDto))]
+        [ValidateModel]
+        [Route(CharactersRouteKey + "/name/{name}/angles")]
+        public IHttpActionResult GetCharacterMoveAnglesByName(string name, [FromUri] string fields = "")
+        {
+            return FindAllWithMoveUsingCharacterName<Angle, AngleDto>(name, fields);
         }
 
         /// <summary>
@@ -308,8 +412,23 @@ namespace FrannHammer.Api.Controllers
         [Route(CharactersRouteKey + "/{id}/hitboxes")]
         public IHttpActionResult GetCharacterMoveHitboxes(int id, [FromUri] string fields = "")
         {
-            var content = _metadataService.GetAllForOwnerId<Move, Hitbox, HitboxDto>(id, fields);
+            var content = _metadataService.GetAllMoveDataForOwnerId<Hitbox, HitboxDto>(id, fields);
             return Ok(content);
+        }
+
+        /// <summary>
+        /// Get all the <see cref="Hitbox"/>es of a specific <see cref="Character"/>'s moves by their name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para>
+        /// E.g., id,name to get back just the id and name.</para></param> 
+        /// <returns></returns>
+        [ResponseType(typeof(HitboxDto))]
+        [ValidateModel]
+        [Route(CharactersRouteKey + "/name/{name}/hitboxes")]
+        public IHttpActionResult GetCharacterMoveHitboxesByName(string name, [FromUri] string fields = "")
+        {
+            return FindAllWithMoveUsingCharacterName<Hitbox, HitboxDto>(name, fields);
         }
 
         /// <summary>
@@ -324,8 +443,23 @@ namespace FrannHammer.Api.Controllers
         [Route(CharactersRouteKey + "/{id}/knockbackgrowths")]
         public IHttpActionResult GetCharacterMoveKnockbackGrowths(int id, [FromUri] string fields = "")
         {
-            var content = _metadataService.GetAllForOwnerId<Move, KnockbackGrowth, KnockbackGrowthDto>(id, fields);
+            var content = _metadataService.GetAllMoveDataForOwnerId<KnockbackGrowth, KnockbackGrowthDto>(id, fields);
             return Ok(content);
+        }
+
+        /// <summary>
+        /// Get all the <see cref="KnockbackGrowth"/>es of a specific <see cref="Character"/>'s moves by their name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para>
+        /// E.g., id,name to get back just the id and name.</para></param>
+        /// <returns></returns>
+        [ResponseType(typeof(KnockbackGrowthDto))]
+        [ValidateModel]
+        [Route(CharactersRouteKey + "/name/{name}/knockbackgrowths")]
+        public IHttpActionResult GetCharacterMoveKnockbackGrowthsByName(string name, [FromUri] string fields = "")
+        {
+            return FindAllWithMoveUsingCharacterName<KnockbackGrowth, KnockbackGrowthDto>(name, fields);
         }
 
         /// <summary>
@@ -340,8 +474,23 @@ namespace FrannHammer.Api.Controllers
         [Route(CharactersRouteKey + "/{id}/basedamages")]
         public IHttpActionResult GetCharacterMoveBaseDamages(int id, [FromUri] string fields = "")
         {
-            var content = _metadataService.GetAllForOwnerId<Move, BaseDamage, BaseDamageDto>(id, fields);
+            var content = _metadataService.GetAllMoveDataForOwnerId<BaseDamage, BaseDamageDto>(id, fields);
             return Ok(content);
+        }
+
+        /// <summary>
+        /// Get all the <see cref="BaseDamage"/>s of a specific <see cref="Character"/>'s moves by their name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+        /// /// E.g., id,name to get back just the id and name.</para></param> 
+        /// <returns></returns>
+        [ResponseType(typeof(BaseDamageDto))]
+        [ValidateModel]
+        [Route(CharactersRouteKey + "/name/{name}/basedamages")]
+        public IHttpActionResult GetCharacterMoveBaseDamagesByName(string name, [FromUri] string fields = "")
+        {
+            return FindAllWithMoveUsingCharacterName<BaseDamage, BaseDamageDto>(name, fields);
         }
 
         /// <summary>
@@ -392,6 +541,43 @@ namespace FrannHammer.Api.Controllers
         {
             _metadataService.Delete<Character>(id);
             return StatusCode(HttpStatusCode.OK);
+        }
+
+        private IHttpActionResult FindAllUsingCharacterName<T, TDto>(string characterName, string fields)
+            where T : class, IMoveEntity
+            where TDto : class
+        {
+            var foundCharacter = FindCharacterUsingName(characterName);
+
+            if (foundCharacter != null)
+            {
+                int id = foundCharacter.Id;
+                var content = _metadataService.GetAll<T, TDto>(m => m.OwnerId == id, fields);
+
+                return Ok(content);
+            }
+            return NotFound();
+        }
+
+        private IHttpActionResult FindAllWithMoveUsingCharacterName<T, TDto>(string characterName, string fields)
+           where T : class, IMoveIdEntity
+           where TDto : class
+        {
+            var foundCharacter = FindCharacterUsingName(characterName);
+
+            if (foundCharacter != null)
+            {
+                int id = foundCharacter.Id;
+                var content = _metadataService.GetAllMoveDataForOwnerId<T, TDto>(id, fields);
+
+                return Ok(content);
+            }
+            return NotFound();
+        }
+
+        private Character FindCharacterUsingName(string characterName)
+        {
+            return _metadataService.GetAllOfType<Character>().FirstOrDefault(c => c.Name.Equals(characterName, StringComparison.OrdinalIgnoreCase));
         }
     }
 }

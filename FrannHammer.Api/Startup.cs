@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using AutoMapper;
 using FrannHammer.Api;
 using FrannHammer.Models;
+using FrannHammer.Models.DTOs;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Owin;
@@ -34,6 +35,8 @@ namespace FrannHammer.Api
                 cfg.CreateMap<AutocancelDto, Autocancel>();
                 cfg.CreateMap<LandingLag, LandingLagDto>();
                 cfg.CreateMap<LandingLagDto, LandingLag>();
+                cfg.CreateMap<FirstActionableFrame, FirstActionableFrameDto>();
+                cfg.CreateMap<FirstActionableFrameDto, FirstActionableFrame>();
                 cfg.CreateMap<Throw, ThrowDto>();
                 cfg.CreateMap<ThrowDto, Throw>();
                 cfg.CreateMap<ThrowType, ThrowTypeDto>();

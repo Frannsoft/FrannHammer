@@ -232,6 +232,7 @@
     <Compile Include="Controllers\CharacterAttributesController.cs" />
     <Compile Include="Controllers\CharacterAttributeTypesController.cs" />
     <Compile Include="Controllers\CharactersController.cs" />
+    <Compile Include="Controllers\FirstActionableFramesController.cs" />
     <Compile Include="Controllers\HitboxesController.cs" />
     <Compile Include="Controllers\KnockbackGrowthsController.cs" />
     <Compile Include="Controllers\MovementsController.cs" />
@@ -263,12 +264,21 @@
     <Compile Include="Migrations\201701040146167_fullurl added to character.Designer.cs">
       <DependentUpon>201701040146167_fullurl added to character.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702110332294_faf-table.cs" />
+    <Compile Include="Migrations\201702110332294_faf-table.Designer.cs">
+      <DependentUpon>201702110332294_faf-table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702110413206_faf-support-2.cs" />
+    <Compile Include="Migrations\201702110413206_faf-support-2.Designer.cs">
+      <DependentUpon>201702110413206_faf-support-2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ModelFactory.cs" />
     <Compile Include="Models\RolesConstants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="SwaggerExtensions\SwaggerAccessDocumentFilter.cs" />
     <Compile Include="TelemetryProcessorFilters\ExcludedDataFilter.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -313,7 +323,14 @@
     <EmbeddedResource Include="Migrations\201701040146167_fullurl added to character.resx">
       <DependentUpon>201701040146167_fullurl added to character.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702110332294_faf-table.resx">
+      <DependentUpon>201702110332294_faf-table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702110413206_faf-support-2.resx">
+      <DependentUpon>201702110413206_faf-support-2.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SwaggerExtensions\onComplete.js" />
+    <EmbeddedResource Include="SwaggerExtensions\swagger.styles.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FrannHammer.Models;
 using FrannHammer.Models.DTOs;
@@ -8,7 +9,21 @@ namespace FrannHammer.Services
 {
     public interface ISmashAttributeTypeService : IMetadataService
     {
+        /// <summary>
+        /// Get all <see cref="CharacterAttribute"/> data for a <see cref="SmashAttributeType"/> by <paramref name="id"/>.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="fields"></param>
+        /// <returns></returns>
         IEnumerable<dynamic> GetAllCharacterAttributeOfSmashAttributeType(int id, string fields = "");
+
+        /// <summary>
+        /// Get all <see cref="CharacterAttribute"/> data for a <see cref="SmashAttributeType"/> by <see cref="name"/>.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="fields"></param>
+        /// <returns></returns>
+        IEnumerable<dynamic> GetAllCharacterAttributeOfSmashAttributeType(string name, string fields = "");
     }
 
     public class SmashAttributeTypeService : MetadataService, ISmashAttributeTypeService
@@ -21,6 +36,24 @@ namespace FrannHammer.Services
         {
             SmashAttributeType smashAttributeType = Db.SmashAttributeTypes.Find(id);
 
+            return smashAttributeType != null ?
+                    GetAllCharacterAttributeOfSmashAttributeTypeCore(smashAttributeType, fields) :
+                    null;
+        }
+
+        public IEnumerable<dynamic> GetAllCharacterAttributeOfSmashAttributeType(string name, string fields = "")
+        {
+            SmashAttributeType smashAttributeType =
+                Db.SmashAttributeTypes.FirstOrDefault(
+                    t => t.Name.Equals(name.ToUpper(), StringComparison.OrdinalIgnoreCase));
+
+            return smashAttributeType != null ?
+                    GetAllCharacterAttributeOfSmashAttributeTypeCore(smashAttributeType, fields) :
+                    null;
+        }
+
+        private IEnumerable<dynamic> GetAllCharacterAttributeOfSmashAttributeTypeCore(SmashAttributeType smashAttributeType, string fields)
+        {
             //create a 'row' from each pulled back characterattribute since a characterattribute only represents
             //a single cell of a row in the existing KH site.
             var characterAttributeRows =
@@ -45,7 +78,8 @@ namespace FrannHammer.Services
                         .ToList();
 
             ResultValidationService.ValidateMultipleResult<CharacterAttributeRowDto, CharacterAttributeRowDto>(
-                characterAttributeRows, id);
+                characterAttributeRows, smashAttributeType.Id);
+
             return BuildContentResponseMultiple<CharacterAttributeRowDto, CharacterAttributeRowDto>(characterAttributeRows, fields);
         }
     }

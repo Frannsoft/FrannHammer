@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -101,10 +102,23 @@ namespace KuroganeHammer.TransferDBTool
         [Explicit("Reloads smash attribute types")]
         public async Task ReloadSmashAttributeTypes()
         {
+            //main page
             var thumbnails = new HomePage("http://kuroganehammer.com/Smash4/Attributes")
                .GetThumbnailData();
 
             foreach (var attributeType in thumbnails
+                .Select(thumbnail => new SmashAttributeType
+                { Name = thumbnail.Key }))
+            {
+                var result = await LoggedInAdminClient.PostAsJsonAsync(Baseuri + "/SmashAttributeTypes", attributeType);
+                Assert.AreEqual(HttpStatusCode.Created, result.StatusCode);
+            }
+
+            //jumps
+            var jumpThumbnails = new HomePage("http://kuroganehammer.com/Smash4/Jumps")
+                .GetThumbnailDataFromLink(@"//table/tbody/tr/td/a");
+
+            foreach (var attributeType in jumpThumbnails
                 .Select(thumbnail => new SmashAttributeType
                 { Name = thumbnail.Key }))
             {
@@ -118,7 +132,7 @@ namespace KuroganeHammer.TransferDBTool
         public async Task ReloadMovements()
         {
             var characters = LoggedInBasicClient.GetAsync(Baseuri + "/Characters")
-                .Result.Content.ReadAsAsync<List<FrannHammer.Models.Character>>().Result;
+                .Result.Content.ReadAsAsync<List<Character>>().Result;
 
             foreach (var character in characters.Select(c => new WebCharacter(c)))
             {
@@ -164,12 +178,12 @@ namespace KuroganeHammer.TransferDBTool
             var attributeTypes = LoggedInAdminClient.GetAsync(Baseuri + "/smashattributetypes")
                 .Result.Content.ReadAsAsync<List<SmashAttributeType>>().Result;
 
-            var baseUrl = "http://kuroganehammer.com/Smash4/";
+            const string baseUrl = "http://kuroganehammer.com/Smash4/";
 
             foreach (var attributeType in attributeTypes)
             {
                 if (attributeType.Name.Contains("ITEMTOSS") ||
-                    attributeType.Name.Equals("LEDGEJUMP") ||
+                    //attributeType.Name.Equals("LEDGEJUMP") ||
                     attributeType.Name.Equals("TECH") ||
                     attributeType.Name.Equals("AIRDECELERATION") ||
                     attributeType.Name.Equals("AIRFRICTION") ||
@@ -182,17 +196,20 @@ namespace KuroganeHammer.TransferDBTool
                     attributeType.Name.Equals("SMASHCHARGERELEASE") ||
                     attributeType.Name.Equals("TRIP") ||
                     attributeType.Name.Equals("JABLOCK") ||
-                    attributeType.Name.Equals("RUNSPEED") ||
                     attributeType.Name.Equals("JUMPS"))
                 { continue; } //skip these for now since the tables are problematic
 
-                var page = new Page(baseUrl + attributeType.Name);
+                //runspeed page name is dashspeed on site
+                var page = attributeType.Name.Equals("RUNSPEED") ? 
+                    new Page(baseUrl + "DashSpeed") : 
+                    new Page(baseUrl + attributeType.Name);
+
                 Console.WriteLine(attributeType.Name);
                 var attributesFromPage = page.GetAttributes();
 
                 var fullAtts = new List<CharacterAttribute>();
                 var existingCharacters = LoggedInBasicClient.GetAsync(Baseuri + "/Characters")
-                 .Result.Content.ReadAsAsync<List<FrannHammer.Models.Character>>().Result;
+                 .Result.Content.ReadAsAsync<List<Character>>().Result;
 
                 foreach (var attributeRow in attributesFromPage.AttributeValues)
                 {
@@ -206,19 +223,32 @@ namespace KuroganeHammer.TransferDBTool
                                                                                      a.Name.ToLower() != "character")
                                           select attr).ToList();
 
-                    for (var i = 0; i < specificValues.Count(); i++)
+                    foreach (AttributeValue attrValue in specificValues)
                     {
-                        var attributeName = specificValues[i].Name;
-                        var dbAttributeType = attributeTypes.Find(a => a.Name.Equals(specificValues[i].AttributeFlag)); //   (CharacterAttributes)Enum.Parse(typeof(CharacterAttributes), specificValues[i].AttributeFlag, true);
-                        var value = specificValues[i].Value;
+                        var attributeName = attrValue.Name;
+
+                        //this is because the link to run speed data is called /dashspeed.  confusion..
+                        string nameToCompare = attrValue.AttributeFlag.Equals("DashSpeed")
+                            ? "RUNSPEED"
+                            : attrValue.AttributeFlag;
+
+                        var dbAttributeType = attributeTypes.Find(a => a.Name.Equals(nameToCompare)); 
+                        var value = attrValue.Value;
+
+                        if (dbAttributeType == null)
+                        {
+                            Debugger.Break();
+                        }
+
                         var characterAttribute = new CharacterAttribute
                         {
                             Rank = rank,
                             LastModified = DateTime.Now,
                             Name = attributeName,
-                            OwnerId = existingCharacters.First(c => c.Name.Equals(characterName, StringComparison.OrdinalIgnoreCase)).Id,
                             SmashAttributeTypeId = dbAttributeType.Id,
-                            Value = value
+                            Value = value,
+                            OwnerId = existingCharacters.First(
+                                c => c.Name.Equals(characterName, StringComparison.OrdinalIgnoreCase)).Id
                         };
                         fullAtts.Add(characterAttribute);
 
@@ -257,6 +287,10 @@ namespace KuroganeHammer.TransferDBTool
             {
                 retVal = Characters.Mrgamewatch.ToString();
             }
+            else if (rawName.Equals("PhDMario"))
+            {
+                retVal = Characters.Drmario.ToString();
+            }
             else if (rawName.Equals("Rosalina"))
             {
                 retVal = Characters.Rosalinaluma.ToString();
@@ -288,6 +322,10 @@ namespace KuroganeHammer.TransferDBTool
             else if (rawName.Equals("MiiSwordspider"))
             {
                 retVal = Characters.Miiswordfighter.ToString();
+            }
+            else if (rawName.Equals("MiBrawler"))
+            {
+                retVal = Characters.Miibrawler.ToString();
             }
             else
             {

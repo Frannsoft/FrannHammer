@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using FrannHammer.Models;
+using FrannHammer.Models.DTOs;
 using FrannHammer.Services.Exceptions;
 using FrannHammer.Services.Tests.Harnesses;
 using NUnit.Framework;
-using StackExchange.Redis;
 
 namespace FrannHammer.Services.Tests
 {
@@ -152,7 +152,7 @@ namespace FrannHammer.Services.Tests
         {
             Assert.Throws<EntityNotFoundException>(() =>
             {
-                new MetadataService(Context, ResultValidationService).GetAllForOwnerId<Move, Angle, AngleDto>(200);
+                new MetadataService(Context, ResultValidationService).GetAllMoveDataForOwnerId<Angle, AngleDto>(200);
             });
         }
     }
