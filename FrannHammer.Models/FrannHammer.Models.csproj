@@ -98,6 +98,7 @@
     <Compile Include="BaseCharacterModel.cs" />
     <Compile Include="BaseDamage.cs" />
     <Compile Include="DTOs\BaseDamageDto.cs" />
+    <Compile Include="Guard.cs" />
     <Compile Include="IMoveEntity.cs" />
     <Compile Include="BaseKnockback.cs" />
     <Compile Include="DTOs\BaseKnockbackDto.cs" />

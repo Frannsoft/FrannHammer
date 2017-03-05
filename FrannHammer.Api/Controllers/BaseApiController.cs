@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Data.Entity;
 using System.Dynamic;
 using System.Linq;
 using System.Net.Http;
@@ -54,7 +53,7 @@ namespace FrannHammer.Api.Controllers
         { }
 
         /// <summary>
-        /// Returns a content based response that is either a custom <see cref="ExpandoObject"/> or an
+        /// Returns a content based response that is either a custom response or an
         /// existing DTO depending on the passed in fields.
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
@@ -62,12 +61,36 @@ namespace FrannHammer.Api.Controllers
         /// <param name="entity"></param>
         /// <param name="fields"></param>
         /// <returns></returns>
-        protected dynamic BuildContentResponse<TEntity, TDto>(TEntity entity, string fields)
+        protected IDictionary<string, object> BuildContentResponse<TEntity, TDto>(TEntity entity, string fields)
             where TEntity : class
         {
-            return !string.IsNullOrEmpty(fields) ?
-                new DtoBuilder().Build<TEntity, TDto>(entity, fields) :
-                Mapper.Map<TEntity, TDto>(entity);
+            return !string.IsNullOrEmpty(fields)
+                ? new DtoBuilder().Build<TEntity, TDto>(entity, fields)
+                : Mapper.Map<TEntity, TDto>(entity).GetType().GetProperties().ToDictionary(p => p.Name, p => p.GetValue(entity));
+        }
+
+        protected IHttpActionResult ReturnResponse(IDictionary<string, object> content)
+        {
+            if (content.Count > 0)
+            {
+                return Ok(content);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        protected IHttpActionResult ReturnResponse(IList<IDictionary<string, object>> content)
+        {
+            if (content.Any())
+            {
+                return Ok(content);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         protected override void Dispose(bool disposing)
@@ -81,7 +104,7 @@ namespace FrannHammer.Api.Controllers
             base.Dispose(disposing);
         }
 
-        protected IEnumerable<dynamic> BuildContentResponseMultiple<TEntity, TDto>(IQueryable<TEntity> entities,
+        protected IEnumerable<IDictionary<string, object>> BuildContentResponseMultiple<TEntity, TDto>(IQueryable<TEntity> entities,
             string fields)
             where TEntity : class
             where TDto : class
@@ -97,7 +120,7 @@ namespace FrannHammer.Api.Controllers
             else
             {
                 return from entity in entitiesList
-                       select Mapper.Map<TEntity, TDto>(entity);
+                       select Mapper.Map<TEntity, TDto>(entity).GetType().GetProperties().ToDictionary(p => p.Name, p => p.GetValue(entity));
             }
         }
     }

@@ -54,7 +54,7 @@ namespace FrannHammer.Api.Controllers
         public IHttpActionResult GetThrowType(int id, [FromUri] string fields = "")
         {
             var content = _metadataService.Get<ThrowType, ThrowTypeDto>(id, fields);
-            return content == null ? NotFound() : Ok(content);
+            return ReturnResponse(content);
         }
 
         /// <summary>

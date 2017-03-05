@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Dynamic;
 using System.Linq;
 using AutoMapper;
 using FrannHammer.Core;
 using FrannHammer.Models;
+using FrannHammer.Models.DTOs;
 using FrannHammer.Services.Exceptions;
 
 namespace FrannHammer.Services
@@ -68,24 +68,24 @@ namespace FrannHammer.Services
             where T : class, IEntity => Db.Set<T>().Count(e => e.Id == id) > 0;
 
         /// <summary>
-        /// Returns a content based response that is either a custom <see cref="ExpandoObject"/> or an
-        /// existing DTO depending on the passed in fields.
+        /// Returns a content based response consisting of the user requested fields or the default
+        /// response model object.
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <typeparam name="TDto"></typeparam>
         /// <param name="entity"></param>
         /// <param name="fields"></param>
         /// <returns></returns>
-        protected dynamic BuildContentResponse<TEntity, TDto>(TEntity entity, string fields)
+        protected IDictionary<string, object> BuildContentResponse<TEntity, TDto>(TEntity entity, string fields)
             where TEntity : class
         {
             //if (entity == null)
             //{ throw new EntityNotFoundException($"Unable to find any entities of type '{typeof(TEntity).Name}'"); }
 
-            return entity != null ? DtoBuilder.Build<TEntity, TDto>(entity, fields) : default(dynamic);
+            return entity != null ? DtoBuilder.Build<TEntity, TDto>(entity, fields) : default(IDictionary<string, object>);
         }
 
-        protected IEnumerable<dynamic> BuildContentResponseMultiple<TEntity, TDto>(IList<TEntity> entities,
+        protected IEnumerable<IDictionary<string, object>> BuildContentResponseMultiple<TEntity, TDto>(IList<TEntity> entities,
             string fields)
             where TEntity : class
             where TDto : class

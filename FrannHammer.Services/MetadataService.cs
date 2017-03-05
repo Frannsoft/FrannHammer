@@ -40,7 +40,7 @@ namespace FrannHammer.Services
         /// <param name="id"></param>
         /// <param name="fields"></param>
         /// <returns></returns>
-        dynamic GetWithMovesOnEntity<TEntity, TDto>(int id, string fields = "")
+        IDictionary<string, object> GetWithMovesOnEntity<TEntity, TDto>(int id, string fields = "")
             where TEntity : class, IMoveIdEntity
             where TDto : class;
 
@@ -53,7 +53,7 @@ namespace FrannHammer.Services
         /// <param name="id"></param>
         /// <param name="fields"></param>
         /// <returns></returns>
-        dynamic GetWithMoves<TEntity, TDto>(int id, string fields = "")
+        IDictionary<string, object> GetWithMoves<TEntity, TDto>(int id, string fields = "")
         where TEntity : class, IMoveIdEntity
             where TDto : class;
 
@@ -66,7 +66,7 @@ namespace FrannHammer.Services
         /// <param name="ids"></param>
         /// <param name="fields"></param>
         /// <returns></returns>
-        IEnumerable<dynamic> GetMultipleWithMoves<TEntity, TDto>(IEnumerable<int> ids, string fields = "")
+        IEnumerable<IDictionary<string, object>> GetMultipleWithMoves<TEntity, TDto>(IEnumerable<int> ids, string fields = "")
             where TEntity : class, IMoveIdEntity
             where TDto : class;
 
@@ -87,7 +87,7 @@ namespace FrannHammer.Services
         /// <typeparam name="TDto"></typeparam>
         /// <param name="fields"></param>
         /// <returns></returns>
-        IEnumerable<dynamic> GetAllWithMoves<TEntity, TDto>(string fields = "")
+        IEnumerable<IDictionary<string, object>> GetAllWithMoves<TEntity, TDto>(string fields = "")
             where TEntity : class, IMoveIdEntity
             where TDto : class;
 
@@ -99,7 +99,7 @@ namespace FrannHammer.Services
         /// <param name="id"></param>
         /// <param name="fields"></param>
         /// <returns></returns>
-        IEnumerable<dynamic> GetAllMoveDataForOwnerId<TPrimaryEntity, TDto>(int id, string fields = "")
+        IEnumerable<IDictionary<string, object>> GetAllMoveDataForOwnerId<TPrimaryEntity, TDto>(int id, string fields = "")
             where TPrimaryEntity : class, IMoveIdEntity
             where TDto : class;
 
@@ -109,7 +109,7 @@ namespace FrannHammer.Services
         /// <param name="id"></param>
         /// <param name="fields"></param>
         /// <returns></returns>
-        dynamic Get<TEntity, TDto>(int id, string fields = "")
+        IDictionary<string, object> Get<TEntity, TDto>(int id, string fields = "")
             where TEntity : class, IEntity
             where TDto : class;
 
@@ -122,7 +122,7 @@ namespace FrannHammer.Services
         /// <param name="fields"></param>
         /// <param name="isValidatable"></param>
         /// <returns></returns>
-        dynamic Get<TEntity, TDto>(Expression<Func<TEntity, bool>> whereCondition, string fields = "", bool isValidatable = true)
+        IDictionary<string, object> Get<TEntity, TDto>(Expression<Func<TEntity, bool>> whereCondition, string fields = "", bool isValidatable = true)
             where TEntity : class, IEntity
             where TDto : class;
 
@@ -135,7 +135,7 @@ namespace FrannHammer.Services
         /// <param name="fields"></param>
         /// <param name="isValidatable"></param>
         /// <returns></returns>
-        IEnumerable<dynamic> GetAll<TEntity, TDto>(Expression<Func<TEntity, bool>> whereCondition, string fields = "",
+        IEnumerable<IDictionary<string, object>> GetAll<TEntity, TDto>(Expression<Func<TEntity, bool>> whereCondition, string fields = "",
             bool isValidatable = true)
             where TEntity : class, IEntity
             where TDto : class;
@@ -147,7 +147,7 @@ namespace FrannHammer.Services
         /// <param name="searchModel"></param>
         /// <param name="fields"></param>
         /// <returns></returns>
-        IEnumerable<dynamic> GetAll<TDto>(MoveSearchModel searchModel, IConnectionMultiplexer redisConnectionMultiplexer, string fields = "")
+        IEnumerable<IDictionary<string, object>> GetAll<TDto>(MoveSearchModel searchModel, IConnectionMultiplexer redisConnectionMultiplexer, string fields = "")
             where TDto : MoveSearchDto;
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace FrannHammer.Services
         /// </summary>
         /// <param name="fields"></param>
         /// <returns></returns>
-        IEnumerable<dynamic> GetAll<TEntity, TDto>(string fields = "")
+        IEnumerable<IDictionary<string, object>> GetAll<TEntity, TDto>(string fields = "")
             where TEntity : class, IEntity
             where TDto : class;
 
@@ -199,7 +199,7 @@ namespace FrannHammer.Services
             _moveSearchModelRedisService = new MoveSearchModelRedisService();
         }
 
-        public dynamic GetWithMovesOnEntity<TEntity, TDto>(int id, string fields = "")
+        public IDictionary<string, object> GetWithMovesOnEntity<TEntity, TDto>(int id, string fields = "")
             where TEntity : class, IMoveIdEntity
             where TDto : class
         {
@@ -229,8 +229,8 @@ namespace FrannHammer.Services
             {
                 foreach (var data in moveData)
                 {
-                    int moveId = data.Id;
-                    string moveName = data.Name;
+                    int moveId = (int)data["Id"];
+                    string moveName = (string)data["Name"];
 
                     //search each move attribute table for values
                     var angles = GetWithMoves<Angle, AngleDto>(moveId, moveDetailFields);
@@ -268,7 +268,7 @@ namespace FrannHammer.Services
             return detailedMoves;
         }
 
-        public dynamic GetWithMoves<TEntity, TDto>(int id, string fields = "")
+        public IDictionary<string, object> GetWithMoves<TEntity, TDto>(int id, string fields = "")
             where TEntity : class, IMoveIdEntity
             where TDto : class
         {
@@ -284,7 +284,7 @@ namespace FrannHammer.Services
             //return response ?? $"No data of type {typeof(TEntity).Name} found with Move id {id}";
         }
 
-        public IEnumerable<dynamic> GetMultipleWithMoves<TEntity, TDto>(IEnumerable<int> ids, string fields = "")
+        public IEnumerable<IDictionary<string, object>> GetMultipleWithMoves<TEntity, TDto>(IEnumerable<int> ids, string fields = "")
             where TEntity : class, IMoveIdEntity
             where TDto : class
         {
@@ -299,7 +299,7 @@ namespace FrannHammer.Services
             //return response ?? $"No data of type {typeof(TEntity).Name} found with Move id {id}";
         }
 
-        public IEnumerable<dynamic> GetAllWithMoves<TEntity, TDto>(string fields = "")
+        public IEnumerable<IDictionary<string, object>> GetAllWithMoves<TEntity, TDto>(string fields = "")
             where TEntity : class, IMoveIdEntity
             where TDto : class
         {
@@ -312,7 +312,7 @@ namespace FrannHammer.Services
             return BuildContentResponseMultiple<TDto, TDto>(entities, fields);
         }
 
-        public IEnumerable<dynamic> GetAllMoveDataForOwnerId<TPrimaryEntity, TDto>(int id, string fields = "")
+        public IEnumerable<IDictionary<string, object>> GetAllMoveDataForOwnerId<TPrimaryEntity, TDto>(int id, string fields = "")
             where TPrimaryEntity : class, IMoveIdEntity
             where TDto : class
         {
@@ -326,7 +326,7 @@ namespace FrannHammer.Services
             return BuildContentResponseMultiple<TDto, TDto>(entities, fields);
         }
 
-        public dynamic Get<TEntity, TDto>(int id, string fields = "")
+        public IDictionary<string, object> Get<TEntity, TDto>(int id, string fields = "")
             where TEntity : class, IEntity
             where TDto : class
         {
@@ -336,7 +336,7 @@ namespace FrannHammer.Services
             return BuildContentResponse<TEntity, TDto>(entity, fields);
         }
 
-        public dynamic Get<TEntity, TDto>(Expression<Func<TEntity, bool>> where, string fields = "", bool isValidatable = true)
+        public IDictionary<string, object> Get<TEntity, TDto>(Expression<Func<TEntity, bool>> where, string fields = "", bool isValidatable = true)
             where TEntity : class, IEntity
             where TDto : class
         {
@@ -348,7 +348,7 @@ namespace FrannHammer.Services
             return BuildContentResponse<TEntity, TDto>(entity, fields);
         }
 
-        public IEnumerable<dynamic> GetAll<TEntity, TDto>(Expression<Func<TEntity, bool>> where, string fields = "", bool isValidatable = true)
+        public IEnumerable<IDictionary<string, object>> GetAll<TEntity, TDto>(Expression<Func<TEntity, bool>> where, string fields = "", bool isValidatable = true)
             where TEntity : class, IEntity
             where TDto : class
         {
@@ -363,11 +363,11 @@ namespace FrannHammer.Services
             return BuildContentResponseMultiple<TDto, TDto>(entities, fields);
         }
 
-        public IEnumerable<dynamic> GetAll<TDto>(MoveSearchModel searchModel, IConnectionMultiplexer redisConnectionMultiplexer,
+        public IEnumerable<IDictionary<string, object>> GetAll<TDto>(MoveSearchModel searchModel, IConnectionMultiplexer redisConnectionMultiplexer,
             string fields = "")
             where TDto : MoveSearchDto
         {
-            IEnumerable<dynamic> results = default(IEnumerable<dynamic>);
+            IEnumerable<IDictionary<string, object>> results = default(IEnumerable<IDictionary<string, object>>);
             IDatabase redisDatabase = default(IDatabase);
             string redisValueForKey = string.Empty;
             string redisKey = string.Empty;
@@ -384,7 +384,7 @@ namespace FrannHammer.Services
             //if search already exists in cache just return the results.  Api data is almost all static.
             if (!string.IsNullOrEmpty(redisValueForKey) && redisValueForKey != RedisValue.Null)
             {
-                results = JsonConvert.DeserializeObject<IEnumerable<dynamic>>(redisValueForKey);
+                results = JsonConvert.DeserializeObject<IEnumerable<IDictionary<string, object>>>(redisValueForKey);
             }
             else
             {
@@ -463,7 +463,7 @@ namespace FrannHammer.Services
                 }
             }
             //return empty list if no results found
-            return results ?? new List<object> { new object() };
+            return results ?? new List<Dictionary<string, object>>();
         }
 
         private void CacheResults(IDatabase redisDatabase, string redisKey,
@@ -501,7 +501,7 @@ namespace FrannHammer.Services
         /// </summary>
         /// <param name="fields"></param>
         /// <returns></returns>
-        public virtual IEnumerable<dynamic> GetAll<TEntity, TDto>(string fields = "")
+        public virtual IEnumerable<IDictionary<string, object>> GetAll<TEntity, TDto>(string fields = "")
             where TEntity : class, IEntity
             where TDto : class
         {

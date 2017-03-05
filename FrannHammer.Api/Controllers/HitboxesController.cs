@@ -55,7 +55,7 @@ namespace FrannHammer.Api.Controllers
         {
             //ensure that data from joined can persist on the object
             var content = _metadataService.GetWithMovesOnEntity<Hitbox, HitboxDto>(id, fields);
-            return content == null ? NotFound() : Ok(content);
+            return ReturnResponse(content);
         }
 
         /// <summary>

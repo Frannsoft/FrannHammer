@@ -90,7 +90,7 @@
         </member>
         <member name="M:FrannHammer.Api.Controllers.BaseApiController.BuildContentResponse``2(``0,System.String)">
             <summary>
-            Returns a content based response that is either a custom <see cref="T:System.Dynamic.ExpandoObject"/> or an
+            Returns a content based response that is either a custom response or an
             existing DTO depending on the passed in fields.
             </summary>
             <typeparam name="TEntity"></typeparam>

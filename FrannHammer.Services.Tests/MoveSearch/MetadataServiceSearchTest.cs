@@ -35,7 +35,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
             _moveSearchHarness = new MoveSearchHarness(string.Empty);
         }
 
-        private IList<dynamic> AssertSearchResultsAreValid(MoveSearchModel searchModel, Action<List<dynamic>> countAssertion = null,
+        private IList<IDictionary<string, object>> AssertSearchResultsAreValid(MoveSearchModel searchModel, Action<List<IDictionary<string, object>>> countAssertion = null,
             string fields = "")
         {
             var results = _metadataService.GetAll<MoveSearchDto>(searchModel, null).ToList();
@@ -165,7 +165,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
 
             foreach (var result in results)
             {
-                Assert.That(result.Name.ToLower().Contains(valueUnderTest.Trim().ToLower()));
+                Assert.That(result["Name"].ToString().ToLower().Contains(valueUnderTest.Trim().ToLower()));
             }
         }
 
@@ -186,7 +186,7 @@ namespace FrannHammer.Services.Tests.MoveSearch
 
             foreach (var result in results)
             {
-                int moveOwnerId = result.OwnerId;
+                int moveOwnerId = (int)result["OwnerId"];
                 var characterName = Context.Characters.Single(c => c.Id == moveOwnerId).DisplayName;
                 Assert.That(characterName.ToLower().Contains(characterName.Trim().ToLower()));
             }
