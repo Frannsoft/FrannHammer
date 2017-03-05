@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
 using FrannHammer.Api.ActionFilterAttributes;
@@ -56,7 +58,7 @@ namespace FrannHammer.Api.Controllers
         public IHttpActionResult GetBaseDamage(int id, [FromUri] string fields = "")
         {
             var content = _metadataService.GetWithMovesOnEntity<BaseDamage, BaseDamageDto>(id, fields);
-            return content == null ? NotFound() : Ok(content);
+            return ReturnResponse(content);
         }
 
         /// <summary>

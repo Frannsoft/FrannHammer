@@ -54,7 +54,7 @@ namespace FrannHammer.Api.Controllers
         public IHttpActionResult GetSmashAttributeType(int id, [FromUri] string fields = "")
         {
             var content = _smashAttributeTypesService.Get<SmashAttributeType, SmashAttributeTypeDto>(id, fields);
-            return content == null ? NotFound() : Ok(content);
+            return ReturnResponse(content);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace FrannHammer.Api.Controllers
         public IHttpActionResult GetSmashAttributeTypeByName(string name, [FromUri] string fields = "")
         {
             var content = _smashAttributeTypesService.Get<SmashAttributeType, SmashAttributeTypeDto>(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase), fields, false);
-            return content == null ? NotFound() : Ok(content);
+            return ReturnResponse(content);
         }
 
         /// <summary>

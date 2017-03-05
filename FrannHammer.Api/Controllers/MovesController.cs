@@ -76,7 +76,7 @@ namespace FrannHammer.Api.Controllers
         public IHttpActionResult GetMoveHitboxData(int id, [FromUri] string fields = "")
         {
             var content = _metadataService.GetWithMoves<Hitbox, HitboxDto>(id, fields);
-            return content != null ? Ok(content) : NotFound();
+            return ReturnResponse(content);
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace FrannHammer.Api.Controllers
         public IHttpActionResult GetMoveAutocancelData(int id, [FromUri] string fields = "")
         {
             var content = _metadataService.GetWithMoves<Autocancel, AutocancelDto>(id, fields);
-            return content != null ? Ok(content) : NotFound();
+            return ReturnResponse(content);
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace FrannHammer.Api.Controllers
         public IHttpActionResult GetMoveLandingLagData(int id, [FromUri] string fields = "")
         {
             var content = _metadataService.GetWithMoves<LandingLag, LandingLagDto>(id, fields);
-            return content != null ? Ok(content) : NotFound();
+            return ReturnResponse(content);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace FrannHammer.Api.Controllers
         public IHttpActionResult GetMoveBaseKnockbackData(int id, [FromUri] string fields = "")
         {
             var content = _metadataService.GetWithMoves<BaseKnockback, BaseKnockbackDto>(id, fields);
-            return content != null ? Ok(content) : NotFound();
+            return ReturnResponse(content);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace FrannHammer.Api.Controllers
         public IHttpActionResult GetMoveSetKnockbackData(int id, [FromUri] string fields = "")
         {
             var content = _metadataService.GetWithMoves<SetKnockback, SetKnockbackDto>(id, fields);
-            return content != null ? Ok(content) : NotFound();
+            return ReturnResponse(content);
         }
 
         /// <summary>
@@ -231,7 +231,7 @@ namespace FrannHammer.Api.Controllers
         public IHttpActionResult GetMoveAngleData(int id, [FromUri] string fields = "")
         {
             var content = _metadataService.GetWithMoves<Angle, AngleDto>(id, fields);
-            return content != null ? Ok(content) : NotFound();
+            return ReturnResponse(content);
         }
 
         /// <summary>
@@ -261,7 +261,7 @@ namespace FrannHammer.Api.Controllers
         public IHttpActionResult GetMoveFirstActionableFrameData(int id, [FromUri] string fields = "")
         {
             var content = _metadataService.GetWithMoves<FirstActionableFrame, FirstActionableFrameDto>(id, fields);
-            return content != null ? Ok(content) : NotFound();
+            return ReturnResponse(content);
         }
 
         /// <summary>
@@ -291,7 +291,7 @@ namespace FrannHammer.Api.Controllers
         public IHttpActionResult GetMoveBaseDamageData(int id, [FromUri] string fields = "")
         {
             var content = _metadataService.GetWithMoves<BaseDamage, BaseDamageDto>(id, fields);
-            return content != null ? Ok(content) : NotFound();
+            return ReturnResponse(content);
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace FrannHammer.Api.Controllers
         public IHttpActionResult GetMoveKnockbackGrowthData(int id, [FromUri] string fields = "")
         {
             var content = _metadataService.GetWithMoves<KnockbackGrowth, KnockbackGrowthDto>(id, fields);
-            return content != null ? Ok(content) : NotFound();
+            return ReturnResponse(content);
         }
 
         /// <summary>
@@ -353,7 +353,7 @@ namespace FrannHammer.Api.Controllers
         public IHttpActionResult GetMove(int id, [FromUri] string fields = "")
         {
             var content = _metadataService.Get<Move, MoveDto>(id, fields);
-            return content == null ? NotFound() : Ok(content);
+            return ReturnResponse(content);
         }
 
         /// <summary>

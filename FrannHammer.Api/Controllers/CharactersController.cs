@@ -57,7 +57,7 @@ namespace FrannHammer.Api.Controllers
         public IHttpActionResult GetCharacter(int id, [FromUri] string fields = "")
         {
             var content = _metadataService.Get<Character, CharacterDto>(id, fields);
-            return content == null ? NotFound() : Ok(content);
+            return ReturnResponse(content);
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace FrannHammer.Api.Controllers
                 return NotFound();
             }
 
-            int id = nameContent.Id;
+            int id = (int)nameContent["Id"];
 
             var content = _metadataService.GetDetailsForMovesOfCharacter(id, fields);
             return Ok(content);

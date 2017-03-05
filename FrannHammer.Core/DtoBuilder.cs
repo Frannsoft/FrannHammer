@@ -53,7 +53,7 @@ namespace FrannHammer.Core
         /// <param name="entity"></param>
         /// <param name="fieldsRaw"></param>
         /// <returns></returns>
-        public dynamic Build<TEntity, TDto>(TEntity entity, string fieldsRaw)
+        public IDictionary<string, object> Build<TEntity, TDto>(TEntity entity, string fieldsRaw)
         {
             Guard.VerifyObjectNotNull(entity, nameof(entity));
 
@@ -67,7 +67,7 @@ namespace FrannHammer.Core
             return fieldsRaw.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
         }
 
-        private dynamic Assemble<TEntity, TDto>(TEntity entity, IEnumerable<string> requestedFieldNames)
+        private IDictionary<string, object> Assemble<TEntity, TDto>(TEntity entity, IEnumerable<string> requestedFieldNames)
         {
             Guard.VerifyObjectNotNull(requestedFieldNames, nameof(requestedFieldNames));
 
@@ -97,7 +97,7 @@ namespace FrannHammer.Core
                 }
             }
 
-            return customDto.ToDynamicObject();
+            return customDto;
         }
     }
 }

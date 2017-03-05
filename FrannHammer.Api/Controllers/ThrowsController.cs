@@ -57,7 +57,7 @@ namespace FrannHammer.Api.Controllers
         {
             var content = _metadataService.Get<Throw, ThrowDto>(id, fields);
 
-            return content == null ? NotFound() : Ok(content);
+            return ReturnResponse(content);
         }
 
         /// <summary>

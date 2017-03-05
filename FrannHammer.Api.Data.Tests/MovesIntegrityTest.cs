@@ -45,7 +45,7 @@ namespace FrannHammer.Api.Data.Tests
             var metadataService = new MetadataService(Context, new ResultValidationService());
             var controller = new MovesController(metadataService, null);
 
-            var response = controller.GetMove(moveId) as OkNegotiatedContentResult<ExpandoObject>;
+            var response = controller.GetMove(moveId) as OkNegotiatedContentResult<IDictionary<string, object>>;
             Assert.That(response, Is.Not.Null);
 
             // ReSharper disable once PossibleNullReferenceException
@@ -70,7 +70,7 @@ namespace FrannHammer.Api.Data.Tests
             };
 
             // ReSharper disable once PossibleNullReferenceException
-            IEnumerable<dynamic> response = (controller.MovesThatMeetCriteria(searchModel) as OkNegotiatedContentResult<IEnumerable<dynamic>>).Content;
+            IEnumerable<dynamic> response = (controller.MovesThatMeetCriteria(searchModel) as OkNegotiatedContentResult<IEnumerable<IDictionary<string, object>>>).Content;
 
             // ReSharper disable once PossibleNullReferenceException
             Assert.That(response, Is.Not.Null);

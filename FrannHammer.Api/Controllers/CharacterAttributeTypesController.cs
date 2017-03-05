@@ -55,8 +55,7 @@ namespace FrannHammer.Api.Controllers
         public IHttpActionResult GetCharacterAttributeType(int id, [FromUri] string fields = "")
         {
             var content = _metadataService.Get<CharacterAttributeType, CharacterAttributeTypeDto>(id, fields);
-
-            return content == null ? NotFound() : Ok(content);
+            return ReturnResponse(content);
         }
 
         /// <summary>

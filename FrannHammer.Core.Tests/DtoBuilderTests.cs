@@ -9,6 +9,7 @@ using FrannHammer.Models.DTOs;
 
 namespace FrannHammer.Core.Tests
 {
+    //TODO: This is most likely a candidate for Property Testing
     [TestFixture]
     public class DtoBuilderTests
     {

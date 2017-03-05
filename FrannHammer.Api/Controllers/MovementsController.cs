@@ -70,7 +70,7 @@ namespace FrannHammer.Api.Controllers
         public IHttpActionResult GetMovement(int id, [FromUri] string fields = "")
         {
             var content = _metadataService.Get<Movement, MovementDto>(id, fields);
-            return content == null ? NotFound() : Ok(content);
+            return ReturnResponse(content);
         }
 
         /// <summary>
