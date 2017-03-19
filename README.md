@@ -5,8 +5,6 @@ Master: [![Build status](https://ci.appveyor.com/api/projects/status/y2hs2u8ux4c
 
 [![Swagger Docs](https://img.shields.io/badge/Swagger%20Docs-Live-orange.svg)](http://api.kuroganehammer.com/swagger/ui/index)
 
-[//]: # ([![Test Coverage](https://frannhammerstaging.azurewebsites.net/buildArtifacts/develop/opencover/badge_combined.svg)] (https://frannhammerstaging.azurewebsites.net/buildArtifacts/develop/opencover/)
-
 [![Test Results](https://img.shields.io/badge/Test%20Results-develop-blue.svg)](https://frannhammerstaging.azurewebsites.net/buildArtifacts/develop/reportUnit/unit.html)
 
 Restful api and database layer for Sm4sh frame data as told by KuroganeHammer.
