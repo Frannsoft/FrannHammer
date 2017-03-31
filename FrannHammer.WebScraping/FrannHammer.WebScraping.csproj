@@ -45,10 +45,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AirSpeedScraper.cs" />
+    <Compile Include="AttributeScraper.cs" />
     <Compile Include="CharacterDataScrapingService.cs" />
     <Compile Include="DefaultAttributeProvider.cs" />
     <Compile Include="DefaultAttributeScrapingService.cs" />
     <Compile Include="DefaultHtmlParserProvider.cs" />
+    <Compile Include="DefaultScrapingServices.cs" />
     <Compile Include="HtmlDoc.cs" />
     <Compile Include="HtmlDocProvider.cs" />
     <Compile Include="HtmlParser.cs" />

@@ -8,6 +8,7 @@ using HtmlAgilityPack;
 
 namespace FrannHammer.WebScraping
 {
+    [Obsolete("Refactored scraping to no longer need this class. Initial example in AirSpeedScraper.cs")]
     public class DefaultAttributeScrapingService : IAttributeScrapingService
     {
         private readonly IHtmlParserProvider _htmlParserProvider;
@@ -27,6 +28,13 @@ namespace FrannHammer.WebScraping
             _pageDownloader = pageDownloader;
             _webClientProvider = webClientProvider;
         }
+
+        //public IEnumerable<IAttribute> GetAttributes<T>(string url, T attribute)
+        //    where T : IScrapableAttribute
+        //{
+        //    return attribute.AttributeScraper.Scrape(url, _pageDownloader, _webClientProvider, _htmlParserProvider,
+        //        _attributeProvider);
+        //}
 
         public IEnumerable<IAttribute> GetAttributes()
         {

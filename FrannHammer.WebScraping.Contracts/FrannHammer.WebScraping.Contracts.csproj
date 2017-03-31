@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IAttributeProvider.cs" />
+    <Compile Include="IAttributeScraper.cs" />
     <Compile Include="IAttributeScrapingService.cs" />
     <Compile Include="ICharacterDataScrapingService.cs" />
     <Compile Include="IHtmlDoc.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="IMoveProvider.cs" />
     <Compile Include="IMoveScrapingService.cs" />
     <Compile Include="IPageDownloader.cs" />
+    <Compile Include="IScrapingServices.cs" />
     <Compile Include="IUniqueDataScrapingService.cs" />
     <Compile Include="IWebClientProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
