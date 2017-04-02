@@ -45,25 +45,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AerialMoveScrapingService.cs" />
     <Compile Include="AirSpeedScraper.cs" />
     <Compile Include="AttributeScraper.cs" />
     <Compile Include="CharacterDataScrapingService.cs" />
     <Compile Include="DefaultAttributeProvider.cs" />
     <Compile Include="DefaultAttributeScrapingService.cs" />
     <Compile Include="DefaultHtmlParserProvider.cs" />
-    <Compile Include="DefaultScrapingServices.cs" />
+    <Compile Include="DefaultAttributeScrapingServices.cs" />
+    <Compile Include="DefaultMovementProvider.cs" />
+    <Compile Include="DefaultMovementScrapingServices.cs" />
+    <Compile Include="DefaultMoveProvider.cs" />
     <Compile Include="HtmlDoc.cs" />
     <Compile Include="HtmlDocProvider.cs" />
     <Compile Include="HtmlParser.cs" />
     <Compile Include="ImageScrapingProvider.cs" />
     <Compile Include="ImageScrapingService.cs" />
     <Compile Include="MovementProvider.cs" />
-    <Compile Include="MovementScrapingService.cs" />
+    <Compile Include="DefaultMovementScrapingService.cs" />
     <Compile Include="MoveProvider.cs" />
+    <Compile Include="GroundMoveScrapingService.cs" />
+    <Compile Include="DefaultPageDownloader.cs" />
     <Compile Include="MoveScrapingService.cs" />
-    <Compile Include="PageDownloader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebClientProvider.cs" />
+    <Compile Include="ScrapingXPathConstants.cs" />
+    <Compile Include="DefaultWebClientProvider.cs" />
+    <Compile Include="SpecialMoveScrapingService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FrannHammer.Domain.Contracts\FrannHammer.Domain.Contracts.csproj">

@@ -4,33 +4,33 @@ using System.Linq;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.Utility;
 using FrannHammer.WebScraping.Contracts;
+using FrannHammer.WebScraping.Domain.Contracts;
 using HtmlAgilityPack;
 
 namespace FrannHammer.WebScraping
 {
-    public class MovementScrapingService : IMovementScrapingService
+    public class DefaultMovementScrapingService : IMovementScrapingService
     {
-        private readonly IHtmlParser _htmlParser;
-        private readonly IMovementProvider _movementProvider;
+        private readonly IMovementScrapingServices _scrapingServices;
 
-        public MovementScrapingService(IHtmlParser htmlParser, IMovementProvider movementProvider)
+        public DefaultMovementScrapingService(IMovementScrapingServices scrapingServices)
         {
-            Guard.VerifyObjectNotNull(htmlParser, nameof(htmlParser));
-            Guard.VerifyObjectNotNull(movementProvider, nameof(movementProvider));
-
-            _htmlParser = htmlParser;
-            _movementProvider = movementProvider;
+            Guard.VerifyObjectNotNull(scrapingServices, nameof(scrapingServices));
+            _scrapingServices = scrapingServices;
         }
 
-        public IEnumerable<IMovement> GetMovements(string xpath)
+        public IEnumerable<IMovement> GetMovementsForCharacter(WebCharacter character)
         {
+            //pull down source page html
+            string pageHtml = _scrapingServices.DownloadPageSource(new Uri(character.SourceUrl));
+
             //get movement table html
-            string movementTableHtml = _htmlParser.GetSingle(xpath);
+            string movementTableHtml = _scrapingServices.CreateHtmlParser(pageHtml).GetSingle(ScrapingXPathConstants.XPathTableNodeMovementStats);
 
             var movementTableRows = HtmlNode.CreateNode(movementTableHtml)?.SelectNodes(ScrapingXPathConstants.XPathTableRows);
 
             if (movementTableRows == null)
-            { throw new Exception($"Error getting movement table data after attempting to scrape full table using xpath: '{xpath};"); }
+            { throw new Exception($"Error getting movement table data after attempting to scrape full table using xpath: '{ScrapingXPathConstants.XPathTableRows};"); }
 
             return movementTableRows.SelectMany(
                 row => row.SelectNodes(ScrapingXPathConstants.XPathMovementTableCellKeys),
@@ -60,7 +60,7 @@ namespace FrannHammer.WebScraping
                     value = rawValueText;
                 }
 
-                movement = _movementProvider.Create();
+                movement = _scrapingServices.CreateMovement();
                 movement.Name = name;
                 movement.Value = value;
             }

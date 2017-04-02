@@ -5,14 +5,14 @@ using FrannHammer.WebScraping.Contracts;
 
 namespace FrannHammer.WebScraping
 {
-    public class DefaultScrapingServices : IScrapingServices
+    public class DefaultAttributeScrapingServices : IAttributeScrapingServices
     {
         public IPageDownloader PageDownloader { get; }
         public IWebClientProvider WebClientProvider { get; }
         public IHtmlParserProvider HtmlParserProvider { get; }
         public IAttributeProvider AttributeProvider { get; }
 
-        public DefaultScrapingServices(IHtmlParserProvider htmlParserProvider, IAttributeProvider attributeProvider, IPageDownloader pageDownloader, IWebClientProvider webClientProvider)
+        public DefaultAttributeScrapingServices(IHtmlParserProvider htmlParserProvider, IAttributeProvider attributeProvider, IPageDownloader pageDownloader, IWebClientProvider webClientProvider)
         {
             Guard.VerifyObjectNotNull(htmlParserProvider, nameof(htmlParserProvider));
             Guard.VerifyObjectNotNull(attributeProvider, nameof(attributeProvider));

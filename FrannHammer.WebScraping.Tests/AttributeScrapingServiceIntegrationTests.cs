@@ -8,17 +8,17 @@ namespace FrannHammer.WebScraping.Tests
     [TestFixture]
     public class AttributeScrapingServiceIntegrationTests
     {
-        private IScrapingServices _scrapingServices;
+        private IAttributeScrapingServices _scrapingServices;
 
         [SetUp]
         public void SetUp()
         {
             var htmlParserProvider = new DefaultHtmlParserProvider();
             var attributeProvider = new DefaultAttributeProvider();
-            var pageDownloader = new PageDownloader();
-            var webClientProvider = new WebClientProvider();
+            var pageDownloader = new DefaultPageDownloader();
+            var webClientProvider = new DefaultWebClientProvider();
 
-            _scrapingServices = new DefaultScrapingServices(htmlParserProvider, attributeProvider, pageDownloader,
+            _scrapingServices = new DefaultAttributeScrapingServices(htmlParserProvider, attributeProvider, pageDownloader,
                 webClientProvider);
         }
 

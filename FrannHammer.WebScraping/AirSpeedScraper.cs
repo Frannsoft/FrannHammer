@@ -6,7 +6,7 @@ namespace FrannHammer.WebScraping
     {
         public override string AttributeName => "AirSpeed";
 
-        public AirSpeedScraper(IScrapingServices scrapingServices)
+        public AirSpeedScraper(IAttributeScrapingServices scrapingServices)
             : base("http://kuroganehammer.com/Smash4/AirSpeed", scrapingServices)
         { }
     }
@@ -15,7 +15,7 @@ namespace FrannHammer.WebScraping
     {
         public override string AttributeName => "AirDodge";
 
-        public AirDodgeScraper(IScrapingServices scrapingServices)
+        public AirDodgeScraper(IAttributeScrapingServices scrapingServices)
             : base("http://kuroganehammer.com/Smash4/Airdodge", scrapingServices)
         { }
     }

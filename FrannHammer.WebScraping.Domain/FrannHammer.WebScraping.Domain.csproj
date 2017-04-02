@@ -46,7 +46,6 @@
     <Compile Include="DefaultAttributeValueRowCollection.cs" />
     <Compile Include="Greninja.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebMovement.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FrannHammer.Domain.Contracts\FrannHammer.Domain.Contracts.csproj">

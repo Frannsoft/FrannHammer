@@ -3,7 +3,7 @@ using FrannHammer.Utility;
 
 namespace FrannHammer.WebScraping
 {
-    public class PageDownloader : IPageDownloader
+    public class DefaultPageDownloader : IPageDownloader
     {
         public string DownloadPageSource(Uri requestedPageSourceUri, IWebClientProvider webClientProvider)
         {

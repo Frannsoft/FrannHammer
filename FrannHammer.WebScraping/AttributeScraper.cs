@@ -13,7 +13,7 @@ namespace FrannHammer.WebScraping
         public abstract string AttributeName { get; }
         public virtual Func<IEnumerable<IAttribute>> Scrape { get; }
 
-        protected AttributeScraper(string sourceUrl, IScrapingServices scrapingServices)
+        protected AttributeScraper(string sourceUrl, IAttributeScrapingServices scrapingServices)
         {
             Guard.VerifyStringIsNotNullOrEmpty(sourceUrl, nameof(sourceUrl));
             Guard.VerifyObjectNotNull(scrapingServices, nameof(scrapingServices));

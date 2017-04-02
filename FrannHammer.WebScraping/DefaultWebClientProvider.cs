@@ -2,7 +2,7 @@
 
 namespace FrannHammer.WebScraping
 {
-    public class WebClientProvider : IWebClientProvider
+    public class DefaultWebClientProvider : IWebClientProvider
     {
         public WebClient Create() => new WebClient();
     }

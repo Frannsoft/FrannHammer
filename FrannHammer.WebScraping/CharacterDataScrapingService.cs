@@ -7,24 +7,6 @@ using HtmlAgilityPack;
 
 namespace FrannHammer.WebScraping
 {
-    public static class ScrapingXPathConstants
-    {
-        public const string XPathFrameDataVersion = @"/html/body/div[1]/div/h1|/html/body/div/div/*/h1";
-        public const string XPathImageUrl = @"html/body/div[1]/div/img";
-        public const string XPathMovementTableCellKeys = @"td[contains(@style, 'font-weight: bold')]";
-        public const string XPathTableCellValues = @"following-sibling::td[not(contains(@style, 'font-weight: bold'))]";
-        public const string XPathTableNodeMovementStats = @"(//*/table[@id='AutoNumber1'])[1]";
-        public const string XPathTableRows = "tbody/tr";
-        public const string XPathTableNodeGroundStats = @"(//*/table[@id='AutoNumber1'])[2]";
-        public const string XPathTableNodeAerialStats = @"(//*/table[@id='AutoNumber2'])[1]";
-        public const string XPathTableCells = "th|td";
-        public const string XPathTableNodeSpecialStats = @"(//*/table[@id='AutoNumber3'])[1]";
-        public const string XPathTableNodeAttributesWithDescription = @"(//*/table[@id='AutoNumber1'])[2]";
-        public const string XPathTableNodeAttributesWithNoDescription = @"(//*/table[@id='AutoNumber1'])[1]";
-        public const string XPathTableNodeAttributeHeaders = @"//*[@id='AutoNumber1'][2]/thead/tr";
-        public const string XPathTableNodeAttributeHeadersWithNoDescription = @"//*[@id='AutoNumber1'][1]/thead/tr";
-    }
-
     public class CharacterDataScrapingService : ICharacterDataScrapingService
     {
         private readonly IHtmlParser _htmlParser;
@@ -64,7 +46,7 @@ namespace FrannHammer.WebScraping
             string colorHex = _imageScrapingService.GetColorHexValue(mainImageUrl).Result;
 
             //movements
-            var movements = _movementScrapingService.GetMovements(ScrapingXPathConstants.XPathTableNodeMovementStats);
+            var movements = _movementScrapingService.GetMovementsForCharacter(character);
 
             //moves
             var groundMoves = _moveScrapingService.GetGroundMoves(ScrapingXPathConstants.XPathTableNodeGroundStats);
