@@ -41,24 +41,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IAttributeProvider.cs" />
-    <Compile Include="IAttributeScraper.cs" />
-    <Compile Include="IAttributeScrapingService.cs" />
-    <Compile Include="ICharacterDataScrapingService.cs" />
-    <Compile Include="IHtmlDoc.cs" />
-    <Compile Include="IHtmlParser.cs" />
-    <Compile Include="IHtmlDocProvider.cs" />
-    <Compile Include="IHtmlParserProvider.cs" />
-    <Compile Include="IImageScrapingProvider.cs" />
-    <Compile Include="IImageScrapingService.cs" />
-    <Compile Include="IMovementProvider.cs" />
-    <Compile Include="IMovementScrapingService.cs" />
-    <Compile Include="IMoveProvider.cs" />
-    <Compile Include="IMoveScrapingService.cs" />
-    <Compile Include="IPageDownloader.cs" />
-    <Compile Include="IScrapingServices.cs" />
-    <Compile Include="IUniqueDataScrapingService.cs" />
-    <Compile Include="IWebClientProvider.cs" />
+    <Compile Include="Attributes\IAttributeProvider.cs" />
+    <Compile Include="Attributes\IAttributeScraper.cs" />
+    <Compile Include="Attributes\IAttributeScrapingServices.cs" />
+    <Compile Include="Character\ICharacterDataScraper.cs" />
+    <Compile Include="Character\ICharacterDataScrapingServices.cs" />
+    <Compile Include="Character\ICharacterMoveScraper.cs" />
+    <Compile Include="HtmlDocs\IHtmlDoc.cs" />
+    <Compile Include="HtmlParsing\IHtmlParser.cs" />
+    <Compile Include="HtmlDocs\IHtmlDocProvider.cs" />
+    <Compile Include="HtmlParsing\IHtmlParserProvider.cs" />
+    <Compile Include="Images\IImageScrapingProvider.cs" />
+    <Compile Include="Images\IImageScrapingService.cs" />
+    <Compile Include="IWebServices.cs" />
+    <Compile Include="Movements\IMovementScrapingServices.cs" />
+    <Compile Include="Moves\IMoveScraper.cs" />
+    <Compile Include="Moves\IMoveScrapingServices.cs" />
+    <Compile Include="Movements\IMovementProvider.cs" />
+    <Compile Include="Movements\IMovementScraper.cs" />
+    <Compile Include="Moves\IMoveProvider.cs" />
+    <Compile Include="PageDownloading\IPageDownloader.cs" />
+    <Compile Include="UniqueData\IUniqueDataScrapingService.cs" />
+    <Compile Include="WebClients\IWebClientProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

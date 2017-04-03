@@ -1,7 +1,10 @@
-﻿using System;
-using System.Linq;
-using FrannHammer.WebScraping.Contracts;
+﻿using System.Linq;
+using FrannHammer.WebScraping.Contracts.Movements;
 using FrannHammer.WebScraping.Domain;
+using FrannHammer.WebScraping.HtmlParsing;
+using FrannHammer.WebScraping.Movements;
+using FrannHammer.WebScraping.PageDownloading;
+using FrannHammer.WebScraping.WebClients;
 using NUnit.Framework;
 
 namespace FrannHammer.WebScraping.Tests
@@ -18,15 +21,15 @@ namespace FrannHammer.WebScraping.Tests
             var movementProvider = new DefaultMovementProvider();
             var pageDownloader = new DefaultPageDownloader();
             var webClientProvider = new DefaultWebClientProvider();
+            var webServices = new DefaultWebServices(htmlParserProvider, webClientProvider, pageDownloader);
 
-            _scrapingServices = new DefaultMovementScrapingServices(htmlParserProvider, movementProvider, pageDownloader,
-                webClientProvider);
+            _scrapingServices = new DefaultMovementScrapingServices(movementProvider, webServices);
         }
 
         [Test]
         public void ScrapeMovementsForCharacter()
         {
-            var movementScrapingService = new DefaultMovementScrapingService(_scrapingServices);
+            var movementScrapingService = new DefaultMovementScraper(_scrapingServices);
             var movements = movementScrapingService.GetMovementsForCharacter(Characters.Greninja).ToList();
 
             CollectionAssert.AllItemsAreNotNull(movements);

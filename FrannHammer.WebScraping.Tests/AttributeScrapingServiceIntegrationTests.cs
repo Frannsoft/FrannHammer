@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using FrannHammer.WebScraping.Contracts;
+using FrannHammer.WebScraping.Attributes;
+using FrannHammer.WebScraping.Contracts.Attributes;
+using FrannHammer.WebScraping.HtmlParsing;
+using FrannHammer.WebScraping.PageDownloading;
+using FrannHammer.WebScraping.WebClients;
 using NUnit.Framework;
 
 namespace FrannHammer.WebScraping.Tests
@@ -17,9 +21,9 @@ namespace FrannHammer.WebScraping.Tests
             var attributeProvider = new DefaultAttributeProvider();
             var pageDownloader = new DefaultPageDownloader();
             var webClientProvider = new DefaultWebClientProvider();
+            var webServices = new DefaultWebServices(htmlParserProvider, webClientProvider, pageDownloader);
 
-            _scrapingServices = new DefaultAttributeScrapingServices(htmlParserProvider, attributeProvider, pageDownloader,
-                webClientProvider);
+            _scrapingServices = new DefaultAttributeScrapingServices(attributeProvider, webServices);
         }
 
         [Test]

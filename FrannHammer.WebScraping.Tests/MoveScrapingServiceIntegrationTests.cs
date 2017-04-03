@@ -1,6 +1,10 @@
 ﻿using System.Linq;
-using FrannHammer.WebScraping.Contracts;
+using FrannHammer.WebScraping.Contracts.Moves;
 using FrannHammer.WebScraping.Domain;
+using FrannHammer.WebScraping.HtmlParsing;
+using FrannHammer.WebScraping.Moves;
+using FrannHammer.WebScraping.PageDownloading;
+using FrannHammer.WebScraping.WebClients;
 using NUnit.Framework;
 
 namespace FrannHammer.WebScraping.Tests
@@ -17,17 +21,17 @@ namespace FrannHammer.WebScraping.Tests
             var moveProvider = new DefaultMoveProvider();
             var pageDownloader = new DefaultPageDownloader();
             var webClientProvider = new DefaultWebClientProvider();
+            var webServices = new DefaultWebServices(htmlParserProvider, webClientProvider, pageDownloader);
 
-            _scrapingServices = new DefaultMoveScrapingServices(htmlParserProvider, moveProvider, pageDownloader,
-                webClientProvider);
+            _scrapingServices = new DefaultMoveScrapingServices(moveProvider, webServices);
         }
 
         [Test]
         public void ScrapeGroundMovesForCharacter()
         {
-            var groundMoveScrapingService = new GroundMoveScrapingService(Characters.Greninja.SourceUrl, _scrapingServices);
+            var groundMoveScrapingService = new GroundMoveScraper(_scrapingServices);
 
-            var groundMoves = groundMoveScrapingService.Scrape().ToList();
+            var groundMoves = groundMoveScrapingService.Scrape(Characters.Greninja.SourceUrl).ToList();
 
             CollectionAssert.AllItemsAreNotNull(groundMoves);
             CollectionAssert.AllItemsAreUnique(groundMoves);
@@ -42,9 +46,9 @@ namespace FrannHammer.WebScraping.Tests
         [Test]
         public void ScrapeAerialMovesForCharacter()
         {
-            var aerialMoveScrapingService = new AerialMoveScrapingService(Characters.Greninja.SourceUrl, _scrapingServices);
+            var aerialMoveScrapingService = new AerialMoveScraper(_scrapingServices);
 
-            var aerialMoves = aerialMoveScrapingService.Scrape().ToList();
+            var aerialMoves = aerialMoveScrapingService.Scrape(Characters.Greninja.SourceUrl).ToList();
 
             CollectionAssert.AllItemsAreNotNull(aerialMoves);
             CollectionAssert.AllItemsAreUnique(aerialMoves);
@@ -59,9 +63,9 @@ namespace FrannHammer.WebScraping.Tests
         [Test]
         public void ScrapeSpecialMovesForCharacter()
         {
-            var specialMoveScrapingService = new SpecialMoveScrapingService(Characters.Greninja.SourceUrl, _scrapingServices);
+            var specialMoveScrapingService = new SpecialMoveScraper(_scrapingServices);
 
-            var specialMoves = specialMoveScrapingService.Scrape().ToList();
+            var specialMoves = specialMoveScrapingService.Scrape(Characters.Greninja.SourceUrl).ToList();
 
             CollectionAssert.AllItemsAreNotNull(specialMoves);
             CollectionAssert.AllItemsAreUnique(specialMoves);

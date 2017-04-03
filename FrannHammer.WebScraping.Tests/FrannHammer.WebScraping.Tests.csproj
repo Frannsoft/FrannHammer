@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AttributeScrapingServiceIntegrationTests.cs" />
-    <Compile Include="CharacterDataScrapingServiceIntegrationTests.cs" />
+    <Compile Include="DefaultCharacterDataScrapingServiceIntegrationTests.cs" />
     <Compile Include="MovementScrapingServiceIntegrationTests.cs" />
     <Compile Include="MoveScrapingServiceIntegrationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

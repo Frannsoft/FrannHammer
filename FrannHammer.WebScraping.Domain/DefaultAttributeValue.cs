@@ -22,6 +22,5 @@ namespace FrannHammer.WebScraping.Domain
             Value = value;
             AttributeFlag = flag;
         }
-
     }
 }
