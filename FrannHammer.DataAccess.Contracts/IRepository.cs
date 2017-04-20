@@ -1,4 +1,5 @@
-﻿using FrannHammer.Domain.Contracts;
+﻿using System.Collections.Generic;
+using FrannHammer.Domain.Contracts;
 
 namespace FrannHammer.DataAccess.Contracts
 {
@@ -6,6 +7,7 @@ namespace FrannHammer.DataAccess.Contracts
         where T : IModel
     {
         T Get(int id);
+        IEnumerable<T> GetAll();
         T Update(T model);
         void Delete(T model);
         T Add(T model);

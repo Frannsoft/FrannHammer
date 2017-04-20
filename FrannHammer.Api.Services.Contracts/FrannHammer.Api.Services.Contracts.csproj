@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContentResponseBuilder.cs" />
+    <Compile Include="ICharacterAttributeService.cs" />
+    <Compile Include="ICharacterService.cs" />
     <Compile Include="IDataCreationService.cs" />
     <Compile Include="IDataDeletionService.cs" />
     <Compile Include="IDataRetrievalService.cs" />

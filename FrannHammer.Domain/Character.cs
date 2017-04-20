@@ -1,0 +1,34 @@
+﻿using FrannHammer.Domain.Contracts;
+
+namespace FrannHammer.Domain
+{
+    public class Character : ICharacter
+    {
+        [FriendlyName("_id")]
+        public int Id { get; set; }
+
+        [FriendlyName("name")]
+        public string Name { get; set; }
+
+        [FriendlyName("fullUrl")]
+        public string FullUrl { get; set; }
+
+        [FriendlyName("style")]
+        public string Style { get; set; }
+
+        [FriendlyName("mainImageUrl")]
+        public string MainImageUrl { get; set; }
+
+        [FriendlyName("thumbnailUrl")]
+        public string ThumbnailUrl { get; set; }
+
+        [FriendlyName("description")]
+        public string Description { get; set; }
+
+        [FriendlyName("colorName")]
+        public string ColorTheme { get; set; }
+
+        [FriendlyName("displayName")]
+        public string DisplayName { get; set; }
+    }
+}

@@ -7,6 +7,6 @@ namespace FrannHammer.WebScraping.Contracts.Attributes
     public interface IAttributeScraper
     {
         string AttributeName { get; }
-        Func<IEnumerable<IAttribute>> Scrape { get; }
+        Func<IEnumerable<ICharacterAttributeRow>> Scrape { get; }
     }
 }

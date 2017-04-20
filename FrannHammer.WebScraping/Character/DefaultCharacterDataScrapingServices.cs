@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.Utility;
 using FrannHammer.WebScraping.Contracts;
@@ -52,10 +53,10 @@ namespace FrannHammer.WebScraping.Character
             var moves = _characterMoveScraper.ScrapeMoves(character);
 
             //attributes
-            var attributes = new List<IAttribute>();
+            var attributeRows = new List<ICharacterAttributeRow>();
             foreach (var attributeScraper in _attributeScrapers)
             {
-                attributes.AddRange(attributeScraper.Scrape());
+                attributeRows.AddRange(attributeScraper.Scrape());
             }
 
             character.DisplayName = displayName;
@@ -63,7 +64,7 @@ namespace FrannHammer.WebScraping.Character
             character.ColorHex = colorHex;
             character.Movements = movements;
             character.Moves = moves;
-            character.Attributes = attributes;
+            character.Attributes = attributeRows.SelectMany(a => a.Values);
         }
 
         private static string GetCharacterDisplayName(string rawDisplayNameHtml)

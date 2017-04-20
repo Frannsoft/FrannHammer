@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IAttribute.cs" />
+    <Compile Include="ICharacterAttributeRow.cs" />
     <Compile Include="ICharacter.cs" />
     <Compile Include="IModel.cs" />
     <Compile Include="IMove.cs" />

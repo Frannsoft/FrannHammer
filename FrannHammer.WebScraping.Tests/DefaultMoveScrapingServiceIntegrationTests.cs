@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace FrannHammer.WebScraping.Tests
 {
     [TestFixture]
-    public class MoveScrapingServiceIntegrationTests
+    public class DefaultMoveScrapingServiceIntegrationTests
     {
         private IMoveScrapingServices _scrapingServices;
 

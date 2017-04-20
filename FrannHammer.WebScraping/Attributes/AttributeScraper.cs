@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.Utility;
 using FrannHammer.WebScraping.Contracts.Attributes;
@@ -12,7 +13,7 @@ namespace FrannHammer.WebScraping.Attributes
     public abstract class AttributeScraper : IAttributeScraper
     {
         public abstract string AttributeName { get; }
-        public virtual Func<IEnumerable<IAttribute>> Scrape { get; }
+        public virtual Func<IEnumerable<ICharacterAttributeRow>> Scrape { get; }
 
         protected AttributeScraper(string sourceUrl, IAttributeScrapingServices scrapingServices)
         {
@@ -21,8 +22,7 @@ namespace FrannHammer.WebScraping.Attributes
 
             Scrape = () =>
             {
-                var attributeValues = new List<IAttribute>();
-
+                var attributeValueRows = new List<ICharacterAttributeRow>();
                 var htmlParser = scrapingServices.CreateParserFromSourceUrl(sourceUrl);
 
                 string attributeTableHtml =
@@ -41,22 +41,23 @@ namespace FrannHammer.WebScraping.Attributes
 
                 foreach (var row in attributeTableRows)
                 {
-                    var cells = row.SelectNodes(ScrapingXPathConstants.XPathTableCells);
+                    var attributeValues = new List<IAttribute>();
 
-                    var attributeValue = default(IAttribute);
+                    var cells = row.SelectNodes(ScrapingXPathConstants.XPathTableCells);
 
                     for (int i = 0; i < cells.Count; i++)
                     {
-                        attributeValue = scrapingServices.CreateAttribute();
+                        var attributeValue = scrapingServices.CreateAttribute();
                         attributeValue.Name = headers[i];
                         attributeValue.Value = cells[i].InnerText;
                         attributeValue.AttributeFlag = AttributeName;
+                        attributeValues.Add(attributeValue);
                     }
 
-                    attributeValues.Add(attributeValue);
+                    attributeValueRows.Add(new DefaultCharacterAttributeRow(attributeValues));
                 }
 
-                return attributeValues;
+                return attributeValueRows;
             };
         }
 

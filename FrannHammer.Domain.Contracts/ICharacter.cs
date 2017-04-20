@@ -1,13 +1,15 @@
-﻿namespace FrannHammer.Domain.Contracts
+﻿using System;
+
+namespace FrannHammer.Domain.Contracts
 {
     public interface ICharacter : IModel
     {
-        string FullUrl { get; }
-        string Style { get; }
-        string MainImageUrl { get; }
-        string ThumbnailUrl { get; }
-        string Description { get; }
-        string ColorTheme { get; }
-        string DisplayName { get; }
+        string FullUrl { get; set; }
+        string Style { get; set; }
+        string MainImageUrl { get; set; }
+        string ThumbnailUrl { get; set; }
+        string Description { get; set; }
+        string ColorTheme { get; set; }
+        string DisplayName { get; set; }
     }
 }

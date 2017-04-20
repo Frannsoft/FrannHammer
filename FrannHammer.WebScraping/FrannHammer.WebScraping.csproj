@@ -45,7 +45,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\AerialJumpScraper.cs" />
+    <Compile Include="Attributes\AirAccelerationScraper.cs" />
+    <Compile Include="Attributes\AirDecelerationScraper.cs" />
     <Compile Include="Attributes\AirDodgeScraper.cs" />
+    <Compile Include="Attributes\AirFrictionScraper.cs" />
+    <Compile Include="Attributes\CounterScraper.cs" />
+    <Compile Include="Attributes\DashLengthScraper.cs" />
+    <Compile Include="Attributes\FallSpeedScraper.cs" />
+    <Compile Include="Attributes\FullHopScraper.cs" />
+    <Compile Include="Attributes\GravityScraper.cs" />
+    <Compile Include="Attributes\JumpSquatScraper.cs" />
+    <Compile Include="Attributes\LedgeHopScraper.cs" />
+    <Compile Include="Attributes\ShortHopScraper.cs" />
+    <Compile Include="Attributes\SpotdodgeScraper.cs" />
+    <Compile Include="Attributes\TractionScraper.cs" />
+    <Compile Include="Attributes\WalkSpeedScraper.cs" />
     <Compile Include="Character\DefaultCharacterDataScrapingServices.cs" />
     <Compile Include="Character\DefaultCharacterMoveScraper.cs" />
     <Compile Include="DefaultWebServices.cs" />
