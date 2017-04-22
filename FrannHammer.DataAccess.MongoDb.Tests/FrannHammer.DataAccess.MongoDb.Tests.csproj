@@ -60,8 +60,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseRepositoryTests.cs" />
     <Compile Include="CharacterAttributeRepositoryTests.cs" />
     <Compile Include="CharacterRepositoryTests.cs" />
+    <Compile Include="MovementRepositoryTests.cs" />
+    <Compile Include="MoveRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

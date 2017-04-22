@@ -25,10 +25,10 @@ namespace FrannHammer.Domain
         [FriendlyName("displayName")]
         public string DisplayName { get; set; }
 
-        [FriendlyName("_id")]
+        [FriendlyName(FriendlyNameCommonConstants.Id)]
         public int Id { get; set; }
 
-        [FriendlyName("name")]
+        [FriendlyName(FriendlyNameCommonConstants.Name)]
         public string Name { get; set; }
     }
 }

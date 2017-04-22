@@ -44,7 +44,7 @@ namespace FrannHammer.WebScraping.Moves
                 move.Name = name;
                 move.Angle = angle;
                 move.BaseDamage = basedmg;
-                move.BaseKnockbackSetKnockback = bkbwbkb;
+                move.BaseKnockBackSetKnockback = bkbwbkb;
                 move.FirstActionableFrame = faf;
                 move.HitboxActive = hitboxActive;
                 move.KnockbackGrowth = kbg;

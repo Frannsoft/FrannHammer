@@ -56,7 +56,7 @@ namespace FrannHammer.WebApi.MongoDb.Integration.Tests
             Assert.That(move.Angle, Is.Not.Null);
             Assert.That(move.AutoCancel, Is.Not.Null);
             Assert.That(move.BaseDamage, Is.Not.Null);
-            Assert.That(move.BaseKnockbackSetKnockback, Is.Not.Null);
+            Assert.That(move.BaseKnockBackSetKnockback, Is.Not.Null);
             Assert.That(move.FirstActionableFrame, Is.Not.Null);
             Assert.That(move.HitboxActive, Is.Not.Null);
             Assert.That(move.Id, Is.GreaterThan(0));

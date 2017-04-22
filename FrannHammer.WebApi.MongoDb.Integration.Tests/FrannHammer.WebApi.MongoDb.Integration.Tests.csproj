@@ -72,7 +72,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CharacterRepositoryTests.cs" />
+    <Compile Include="CharacterControllerTests.cs" />
+    <Compile Include="MovementControllerTests.cs" />
     <Compile Include="MoveRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

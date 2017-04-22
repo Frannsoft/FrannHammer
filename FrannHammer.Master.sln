@@ -70,6 +70,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.WebApi.MongoDb.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.DataAccess.MongoDb.Tests", "FrannHammer.DataAccess.MongoDb.Tests\FrannHammer.DataAccess.MongoDb.Tests.csproj", "{B8C83EA1-A912-46FF-BA7E-39085A5FB533}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.Domain.Tests", "FrannHammer.Domain.Tests\FrannHammer.Domain.Tests.csproj", "{4E0A9B48-0F00-4B35-A6F5-DFD4A9A33B7E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -184,6 +186,10 @@ Global
 		{B8C83EA1-A912-46FF-BA7E-39085A5FB533}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8C83EA1-A912-46FF-BA7E-39085A5FB533}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8C83EA1-A912-46FF-BA7E-39085A5FB533}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E0A9B48-0F00-4B35-A6F5-DFD4A9A33B7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E0A9B48-0F00-4B35-A6F5-DFD4A9A33B7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E0A9B48-0F00-4B35-A6F5-DFD4A9A33B7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E0A9B48-0F00-4B35-A6F5-DFD4A9A33B7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -210,5 +216,6 @@ Global
 		{3E7D28F0-731C-4AA7-8C5A-4C9AE810651A} = {E9F69086-F07B-4093-ACEE-9A87FB656CEE}
 		{E8F53F04-4DCF-40ED-AAF1-7898C05E3679} = {AABA4930-73AB-4520-B1B8-F0384D1A1E10}
 		{B8C83EA1-A912-46FF-BA7E-39085A5FB533} = {AABA4930-73AB-4520-B1B8-F0384D1A1E10}
+		{4E0A9B48-0F00-4B35-A6F5-DFD4A9A33B7E} = {AABA4930-73AB-4520-B1B8-F0384D1A1E10}
 	EndGlobalSection
 EndGlobal

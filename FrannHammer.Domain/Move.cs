@@ -17,7 +17,7 @@ namespace FrannHammer.Domain
         public string Angle { get; set; }
 
         [FriendlyName("baseKnockBackSetKnockback")]
-        public string BaseKnockbackSetKnockback { get; set; }
+        public string BaseKnockBackSetKnockback { get; set; }
 
         [FriendlyName("landingLag")]
         public string LandingLag { get; set; }

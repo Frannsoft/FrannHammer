@@ -14,7 +14,7 @@ using NUnit.Framework;
 namespace FrannHammer.WebApi.Tests.Controllers
 {
     [TestFixture]
-    public class CharacterAttributeControllerTests
+    public class MoveControllerTests
     {
         [Test]
         public void ConstructorRejectsNullCharacterAttributeService()
@@ -22,7 +22,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
             Assert.Throws<ArgumentNullException>(() =>
             {
                 // ReSharper disable once ObjectCreationAsStatement
-                new CharacterAttributeController(null);
+                new MoveController(null);
             });
         }
 
@@ -45,58 +45,59 @@ namespace FrannHammer.WebApi.Tests.Controllers
         }
 
         [Test]
-        public void GetACharacterAttributeName()
+        public void GetAMoveName()
         {
-            var characterAttributeServiceMock = new Mock<ICharacterAttributeService>();
-            characterAttributeServiceMock.Setup(c => c.Get(It.IsAny<int>(), It.IsAny<string>()))
-                .Returns(() => new CharacterAttribute
+            const string expectedName = "testName";
+            var moveServiceMock = new Mock<IMoveService>();
+            moveServiceMock.Setup(c => c.Get(It.IsAny<int>(), It.IsAny<string>()))
+                .Returns(() => new Move
                 {
-                    Name = "testname"
+                    Name = expectedName
                 });
 
-            var controller = new CharacterAttributeController(characterAttributeServiceMock.Object);
+            var controller = new MoveController(moveServiceMock.Object);
 
-            var response = controller.GetCharacterAttribute(0) as OkNegotiatedContentResult<IAttribute>;
+            var response = controller.GetMove(0) as OkNegotiatedContentResult<IMove>;
 
             Assert.That(response, Is.Not.Null);
 
             // ReSharper disable once PossibleNullReferenceException
-            var attribute = response.Content;
+            var move = response.Content;
 
-            Assert.That(attribute.Name, Is.Not.Empty);
-            Assert.That(attribute.Name, Is.EqualTo("testname"), "Character name was not equal to testname");
+            Assert.That(move.Name, Is.Not.Empty);
+            Assert.That(move.Name, Is.EqualTo(expectedName), $"move name was not equal to {expectedName}");
         }
 
         [Test]
-        public void GetManyCharacterAttributes()
+        public void GetManyMoves()
         {
-            var characterAttributeServiceMock = new Mock<ICharacterAttributeService>();
-            characterAttributeServiceMock.Setup(c => c.GetAll(It.IsAny<string>()))
-                .Returns(() => new List<IAttribute>
+            var moveServiceMock = new Mock<IMoveService>();
+            moveServiceMock.Setup(c => c.GetAll(It.IsAny<string>()))
+                .Returns(() => new List<IMove>
                 {
-                    new CharacterAttribute
+                    new Move
                     {
                         Name = "testname"
                     },
-                    new CharacterAttribute
+                    new Move
                     {
                         Name = "testname2"
                     }
                 });
 
-            var controller = new CharacterAttributeController(characterAttributeServiceMock.Object);
+            var controller = new MoveController(moveServiceMock.Object);
 
-            var response = controller.GetCharacterAttributes() as OkNegotiatedContentResult<IEnumerable<IAttribute>>;
+            var response = controller.GetAllMoves() as OkNegotiatedContentResult<IEnumerable<IMove>>;
 
             Assert.That(response, Is.Not.Null);
 
             // ReSharper disable once PossibleNullReferenceException
-            var attributes = response.Content.ToList();
+            var moves = response.Content.ToList();
 
-            CollectionAssert.AllItemsAreUnique(attributes);
-            CollectionAssert.IsNotEmpty(attributes);
+            CollectionAssert.AllItemsAreUnique(moves);
+            CollectionAssert.IsNotEmpty(moves);
 
-            attributes.ForEach(attribute =>
+            moves.ForEach(attribute =>
             {
                 Assert.That(attribute.Name, Is.Not.Empty);
                 Assert.That(attribute.Name, Is.Not.Empty);

@@ -6,7 +6,7 @@
         string FirstActionableFrame { get; set; }
         string BaseDamage { get; set; }
         string Angle { get; set; }
-        string BaseKnockbackSetKnockback { get; set; }
+        string BaseKnockBackSetKnockback { get; set; }
         string LandingLag { get; set; }
         string AutoCancel { get; set; }
         string KnockbackGrowth { get; set; }

@@ -14,7 +14,7 @@ using FrannHammer.WebApi.Controllers;
 namespace FrannHammer.WebApi.MongoDb.Integration.Tests
 {
     [TestFixture]
-    public class CharacterRepositoryTests
+    public class CharacterControllerTests
     {
         private IMongoDatabase _mongoDatabase;
         private CharacterController _controller;

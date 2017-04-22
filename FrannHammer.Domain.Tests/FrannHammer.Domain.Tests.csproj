@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{70F9ADDE-E6A1-43AD-A458-061E86F8832C}</ProjectGuid>
+    <ProjectGuid>{4E0A9B48-0F00-4B35-A6F5-DFD4A9A33B7E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FrannHammer.Api.Services</RootNamespace>
-    <AssemblyName>FrannHammer.Api.Services</AssemblyName>
+    <RootNamespace>FrannHammer.Domain.Tests</RootNamespace>
+    <AssemblyName>FrannHammer.Domain.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework, Version=3.6.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.6.1\lib\net45\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,33 +44,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DefaultCharacterAttributeService.cs" />
-    <Compile Include="DefaultCharacterService.cs" />
-    <Compile Include="DefaultMovementService.cs" />
-    <Compile Include="DefaultMoveService.cs" />
+    <Compile Include="FriendlyNameTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FrannHammer.Api.Services.Contracts\FrannHammer.Api.Services.Contracts.csproj">
-      <Project>{62281D52-5B55-4976-B148-677B0BE6A18B}</Project>
-      <Name>FrannHammer.Api.Services.Contracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FrannHammer.Core\FrannHammer.Core.csproj">
-      <Project>{2904D4E7-8989-46BD-AC0A-B4356F190A15}</Project>
-      <Name>FrannHammer.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FrannHammer.DataAccess.Contracts\FrannHammer.DataAccess.Contracts.csproj">
-      <Project>{EB884173-904C-43C4-8DF1-FE2B275DD248}</Project>
-      <Name>FrannHammer.DataAccess.Contracts</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\FrannHammer.Domain.Contracts\FrannHammer.Domain.Contracts.csproj">
       <Project>{15A2565C-4611-4034-814A-931DA70ED8B1}</Project>
       <Name>FrannHammer.Domain.Contracts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FrannHammer.Utility\FrannHammer.Utility.csproj">
-      <Project>{4DB55C69-EAE5-4970-B8B2-A7A84900041A}</Project>
-      <Name>FrannHammer.Utility</Name>
+    <ProjectReference Include="..\FrannHammer.Domain\FrannHammer.Domain.csproj">
+      <Project>{4DB6C856-581A-4B69-BB6A-4AEBF3929C5E}</Project>
+      <Name>FrannHammer.Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
