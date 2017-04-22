@@ -72,6 +72,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.DataAccess.Mong
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.Domain.Tests", "FrannHammer.Domain.Tests\FrannHammer.Domain.Tests.csproj", "{4E0A9B48-0F00-4B35-A6F5-DFD4A9A33B7E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.Api.Services.Tests", "FrannHammer.Api.Services.Tests\FrannHammer.Api.Services.Tests.csproj", "{39022F7D-6DCC-40AF-AD45-9C3F701646CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.Seeding.Tests", "FrannHammer.Seeding.Tests\FrannHammer.Seeding.Tests.csproj", "{FB28F7F5-3B60-4801-A340-20F7994A80E4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -190,6 +194,14 @@ Global
 		{4E0A9B48-0F00-4B35-A6F5-DFD4A9A33B7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E0A9B48-0F00-4B35-A6F5-DFD4A9A33B7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E0A9B48-0F00-4B35-A6F5-DFD4A9A33B7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39022F7D-6DCC-40AF-AD45-9C3F701646CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39022F7D-6DCC-40AF-AD45-9C3F701646CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39022F7D-6DCC-40AF-AD45-9C3F701646CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39022F7D-6DCC-40AF-AD45-9C3F701646CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB28F7F5-3B60-4801-A340-20F7994A80E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB28F7F5-3B60-4801-A340-20F7994A80E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB28F7F5-3B60-4801-A340-20F7994A80E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB28F7F5-3B60-4801-A340-20F7994A80E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -217,5 +229,7 @@ Global
 		{E8F53F04-4DCF-40ED-AAF1-7898C05E3679} = {AABA4930-73AB-4520-B1B8-F0384D1A1E10}
 		{B8C83EA1-A912-46FF-BA7E-39085A5FB533} = {AABA4930-73AB-4520-B1B8-F0384D1A1E10}
 		{4E0A9B48-0F00-4B35-A6F5-DFD4A9A33B7E} = {AABA4930-73AB-4520-B1B8-F0384D1A1E10}
+		{39022F7D-6DCC-40AF-AD45-9C3F701646CB} = {AABA4930-73AB-4520-B1B8-F0384D1A1E10}
+		{FB28F7F5-3B60-4801-A340-20F7994A80E4} = {AABA4930-73AB-4520-B1B8-F0384D1A1E10}
 	EndGlobalSection
 EndGlobal

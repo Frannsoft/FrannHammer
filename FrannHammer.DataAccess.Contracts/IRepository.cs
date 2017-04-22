@@ -11,5 +11,6 @@ namespace FrannHammer.DataAccess.Contracts
         T Update(T model);
         void Delete(T model);
         T Add(T model);
+        void AddMany(IEnumerable<T> models);
     }
 }

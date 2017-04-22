@@ -44,7 +44,7 @@ namespace FrannHammer.WebScraping.Character
             string mainImageUrl = htmlParser.GetAttributeFromSingleNavigable("src", ScrapingXPathConstants.XPathImageUrl);
 
             //color hex
-            string colorHex = _imageScrapingService.GetColorHexValue(mainImageUrl).Result;
+            string colorTheme = _imageScrapingService.GetColorHexValue(mainImageUrl).Result;
 
             //movements
             var movements = _movementScraper.GetMovementsForCharacter(character);
@@ -61,7 +61,7 @@ namespace FrannHammer.WebScraping.Character
 
             character.DisplayName = displayName;
             character.MainImageUrl = mainImageUrl;
-            character.ColorHex = colorHex;
+            character.ColorTheme = colorTheme;
             character.Movements = movements;
             character.Moves = moves;
             character.Attributes = attributeRows.SelectMany(a => a.Values);

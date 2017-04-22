@@ -7,5 +7,7 @@ namespace FrannHammer.Api.Services.Contracts
     {
         IAttribute Get(int id, string fields = "");
         IEnumerable<IAttribute> GetAll(string fields = "");
+        IAttribute Add(IAttribute attribute);
+        void AddMany(IEnumerable<IAttribute> attributes);
     }
 }

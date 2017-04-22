@@ -36,5 +36,30 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
             CollectionAssert.IsNotEmpty(characters);
             CollectionAssert.AllItemsAreUnique(characters);
         }
+
+        //TODO - uses real mongodb to test add/delete.  Now do this for other model types
+        [Test]
+        public void AddAndRemoveSingleCharacter()
+        {
+            _repository = new MongoDbRepository<ICharacter>(MongoDatabase);
+
+            int previousCount = _repository.GetAll().Count();
+
+            var newCharacter = new Character
+            {
+                Id = 999,
+                Name = "test"
+            };
+
+            _repository.Add(newCharacter);
+
+            int newCount = _repository.GetAll().Count();
+
+            Assert.That(newCount, Is.EqualTo(previousCount + 1));
+
+            _repository.Delete(newCharacter);
+
+            Assert.That(_repository.GetAll().Count(), Is.EqualTo(previousCount));
+        }
     }
 }

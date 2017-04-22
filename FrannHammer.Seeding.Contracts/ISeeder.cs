@@ -1,10 +1,14 @@
-﻿using FrannHammer.Domain.Contracts;
+﻿using FrannHammer.Api.Services.Contracts;
+using FrannHammer.WebScraping.Domain.Contracts;
 
 namespace FrannHammer.Seeding.Contracts
 {
     public interface ISeeder
     {
-        void SeedCharacterMetadata<T>(T character) where T : ICharacter;
-        void SeedAttributeData(IAttribute attribute);
+        void SeedCharacterData(WebCharacter character,
+            ICharacterService characterService,
+            IMovementService movementService,
+            IMoveService moveService,
+            ICharacterAttributeService characterAttributeService);
     }
 }

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B8C83EA1-A912-46FF-BA7E-39085A5FB533}</ProjectGuid>
+    <ProjectGuid>{39022F7D-6DCC-40AF-AD45-9C3F701646CB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FrannHammer.DataAccess.MongoDb.Tests</RootNamespace>
-    <AssemblyName>FrannHammer.DataAccess.MongoDb.Tests</AssemblyName>
+    <RootNamespace>FrannHammer.Api.Services.Tests</RootNamespace>
+    <AssemblyName>FrannHammer.Api.Services.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -34,18 +34,6 @@
       <HintPath>..\packages\Castle.Core.4.0.0\lib\net45\Castle.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MongoDB.Bson, Version=2.4.3.23, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MongoDB.Bson.2.4.3\lib\net45\MongoDB.Bson.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="MongoDB.Driver, Version=2.4.3.23, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MongoDB.Driver.2.4.3\lib\net45\MongoDB.Driver.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="MongoDB.Driver.Core, Version=2.4.3.23, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MongoDB.Driver.Core.2.4.3\lib\net45\MongoDB.Driver.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Moq, Version=4.7.8.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.7.8\lib\net45\Moq.dll</HintPath>
       <Private>True</Private>
@@ -56,10 +44,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.0.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -68,24 +52,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseRepositoryTests.cs" />
-    <Compile Include="CharacterAttributeRepositoryTests.cs" />
-    <Compile Include="CharacterRepositoryTests.cs" />
-    <Compile Include="MovementRepositoryTests.cs" />
-    <Compile Include="MoveRepositoryTests.cs" />
+    <Compile Include="CharacterAttributeServiceTests.cs" />
+    <Compile Include="CharacterServiceTests.cs" />
+    <Compile Include="MovementServiceTests.cs" />
+    <Compile Include="MoveServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FrannHammer.Api.Services.Contracts\FrannHammer.Api.Services.Contracts.csproj">
+      <Project>{62281D52-5B55-4976-B148-677B0BE6A18B}</Project>
+      <Name>FrannHammer.Api.Services.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.Api.Services\FrannHammer.Api.Services.csproj">
+      <Project>{70F9ADDE-E6A1-43AD-A458-061E86F8832C}</Project>
+      <Name>FrannHammer.Api.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FrannHammer.DataAccess.Contracts\FrannHammer.DataAccess.Contracts.csproj">
       <Project>{EB884173-904C-43C4-8DF1-FE2B275DD248}</Project>
       <Name>FrannHammer.DataAccess.Contracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FrannHammer.DataAccess.MongoDb\FrannHammer.DataAccess.MongoDb.csproj">
-      <Project>{3E7D28F0-731C-4AA7-8C5A-4C9AE810651A}</Project>
-      <Name>FrannHammer.DataAccess.MongoDb</Name>
     </ProjectReference>
     <ProjectReference Include="..\FrannHammer.Domain.Contracts\FrannHammer.Domain.Contracts.csproj">
       <Project>{15A2565C-4611-4034-814A-931DA70ED8B1}</Project>

@@ -7,5 +7,7 @@ namespace FrannHammer.Api.Services.Contracts
     {
         IMovement Get(int id, string fields = "");
         IEnumerable<IMovement> GetAll(string fields = "");
+        IMovement Add(IMovement movement);
+        void AddMany(IEnumerable<IMovement> movements);
     }
 }

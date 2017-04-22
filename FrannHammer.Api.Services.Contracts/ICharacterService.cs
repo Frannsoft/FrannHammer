@@ -7,5 +7,6 @@ namespace FrannHammer.Api.Services.Contracts
     {
         ICharacter Get(int id, string fields = "");
         IEnumerable<ICharacter> GetAll(string fields = "");
+        ICharacter Add(ICharacter character);
     }
 }

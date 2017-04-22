@@ -45,5 +45,29 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
             CollectionAssert.IsNotEmpty(moves);
             CollectionAssert.AllItemsAreUnique(moves);
         }
+
+        [Test]
+        public void AddAndRemoveSingleMove()
+        {
+            _repository = new MongoDbRepository<IMove>(MongoDatabase);
+
+            int previousCount = _repository.GetAll().Count();
+
+            var newMove = new Move
+            {
+                Id = 99999,
+                Name = "test"
+            };
+
+            _repository.Add(newMove);
+
+            int newCount = _repository.GetAll().Count();
+
+            Assert.That(newCount, Is.EqualTo(previousCount + 1));
+
+            _repository.Delete(newMove);
+
+            Assert.That(_repository.GetAll().Count(), Is.EqualTo(previousCount));
+        }
     }
 }

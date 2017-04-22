@@ -45,6 +45,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FrannHammer.Api.Services.Contracts\FrannHammer.Api.Services.Contracts.csproj">
+      <Project>{62281D52-5B55-4976-B148-677B0BE6A18B}</Project>
+      <Name>FrannHammer.Api.Services.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FrannHammer.Domain.Contracts\FrannHammer.Domain.Contracts.csproj">
       <Project>{15a2565c-4611-4034-814a-931da70ed8b1}</Project>
       <Name>FrannHammer.Domain.Contracts</Name>

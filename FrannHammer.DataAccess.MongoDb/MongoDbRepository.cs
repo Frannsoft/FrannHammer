@@ -38,13 +38,20 @@ namespace FrannHammer.DataAccess.MongoDb
 
         public void Delete(T model)
         {
-            throw new NotImplementedException();
+            var filter = Builders<T>.Filter.Eq(KeyId, model.Id);
+            _mongoDatabase.GetCollection<T>(typeof(T).Name).DeleteOne(filter);
         }
 
         public T Add(T model)
         {
             _mongoDatabase.GetCollection<T>(typeof(T).Name).InsertOne(model);
             return model;
+        }
+
+        public void AddMany(IEnumerable<T> models)
+        {
+            Guard.VerifyObjectNotNull(models, nameof(models));
+            _mongoDatabase.GetCollection<T>(typeof(T).Name).InsertMany(models);
         }
     }
 }
