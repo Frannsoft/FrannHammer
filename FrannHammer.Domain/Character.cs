@@ -4,12 +4,6 @@ namespace FrannHammer.Domain
 {
     public class Character : ICharacter
     {
-        [FriendlyName("_id")]
-        public int Id { get; set; }
-
-        [FriendlyName("name")]
-        public string Name { get; set; }
-
         [FriendlyName("fullUrl")]
         public string FullUrl { get; set; }
 
@@ -30,5 +24,11 @@ namespace FrannHammer.Domain
 
         [FriendlyName("displayName")]
         public string DisplayName { get; set; }
+
+        [FriendlyName("_id")]
+        public int Id { get; set; }
+
+        [FriendlyName("name")]
+        public string Name { get; set; }
     }
 }

@@ -107,8 +107,6 @@
     <Compile Include="Controllers\CharacterAttributeControllerTests.cs" />
     <Compile Include="Controllers\CharacterControllerTests.cs" />
     <Compile Include="Controllers\ControllerRoutingTests.cs" />
-    <Compile Include="Controllers\Integration\CharacterAttributeControllerIntegrationTests.cs" />
-    <Compile Include="Controllers\Integration\CharacterControllerIntegrationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +153,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -9,7 +9,6 @@ using NUnit.Framework;
 using System.Linq;
 using System.Web.Http.Results;
 using FrannHammer.Api.Services;
-using FrannHammer.DataAccess.Contracts;
 using FrannHammer.WebApi.Controllers;
 
 namespace FrannHammer.WebApi.MongoDb.Integration.Tests
@@ -17,7 +16,6 @@ namespace FrannHammer.WebApi.MongoDb.Integration.Tests
     [TestFixture]
     public class CharacterRepositoryTests
     {
-        private IRepository<ICharacter> _repository;
         private IMongoDatabase _mongoDatabase;
         private CharacterController _controller;
 
@@ -25,7 +23,7 @@ namespace FrannHammer.WebApi.MongoDb.Integration.Tests
         public void OneTimeSetUp()
         {
             var classMap = new BsonClassMap(typeof(Character));
-            var characterProperties = typeof(Character).GetProperties(BindingFlags.Public).Where(p => p.GetCustomAttribute<FriendlyNameAttribute>() != null);
+            var characterProperties = typeof(Character).GetProperties().Where(p => p.GetCustomAttribute<FriendlyNameAttribute>() != null);
 
             foreach (var prop in characterProperties)
             {
@@ -40,20 +38,20 @@ namespace FrannHammer.WebApi.MongoDb.Integration.Tests
             _controller = new CharacterController(new DefaultCharacterService(new MongoDbRepository<ICharacter>(_mongoDatabase)));
         }
 
-        private void AssertCharacterIsValid(ICharacter character)
+        private static void AssertCharacterIsValid(ICharacter character)
         {
             Assert.That(character, Is.Not.Null);
-            Assert.That(character.ThumbnailUrl, Is.Not.Empty);
-            Assert.That(character.DisplayName, Is.Not.Empty);
-            Assert.That(character.ColorTheme, Is.Not.Empty);
-            Assert.That(character.Description, Is.Not.Empty);
-            Assert.That(character.DisplayName, Is.Not.Empty);
-            Assert.That(character.FullUrl, Is.Not.Empty);
-            Assert.That(character.Id, Is.Not.Empty);
-            Assert.That(character.MainImageUrl, Is.Not.Empty);
-            Assert.That(character.Name, Is.Not.Empty);
-            Assert.That(character.Style, Is.Not.Empty);
-            Assert.That(character.ThumbnailUrl, Is.Not.Empty);
+            Assert.That(character.ThumbnailUrl, Is.Not.Null);
+            Assert.That(character.DisplayName, Is.Not.Null);
+            Assert.That(character.ColorTheme, Is.Not.Null);
+            Assert.That(character.Description, Is.Not.Null);
+            Assert.That(character.DisplayName, Is.Not.Null);
+            Assert.That(character.FullUrl, Is.Not.Null);
+            Assert.That(character.Id, Is.GreaterThan(0));
+            Assert.That(character.MainImageUrl, Is.Not.Null);
+            Assert.That(character.Name, Is.Not.Null);
+            Assert.That(character.Style, Is.Not.Null);
+            Assert.That(character.ThumbnailUrl, Is.Not.Null);
         }
 
         [Test]

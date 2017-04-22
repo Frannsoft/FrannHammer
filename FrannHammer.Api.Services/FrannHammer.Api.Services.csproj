@@ -42,12 +42,17 @@
   <ItemGroup>
     <Compile Include="DefaultCharacterAttributeService.cs" />
     <Compile Include="DefaultCharacterService.cs" />
+    <Compile Include="DefaultMoveService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FrannHammer.Api.Services.Contracts\FrannHammer.Api.Services.Contracts.csproj">
       <Project>{62281D52-5B55-4976-B148-677B0BE6A18B}</Project>
       <Name>FrannHammer.Api.Services.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.Core\FrannHammer.Core.csproj">
+      <Project>{2904D4E7-8989-46BD-AC0A-B4356F190A15}</Project>
+      <Name>FrannHammer.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\FrannHammer.DataAccess.Contracts\FrannHammer.DataAccess.Contracts.csproj">
       <Project>{EB884173-904C-43C4-8DF1-FE2B275DD248}</Project>
@@ -56,6 +61,10 @@
     <ProjectReference Include="..\FrannHammer.Domain.Contracts\FrannHammer.Domain.Contracts.csproj">
       <Project>{15A2565C-4611-4034-814A-931DA70ED8B1}</Project>
       <Name>FrannHammer.Domain.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.Utility\FrannHammer.Utility.csproj">
+      <Project>{4DB55C69-EAE5-4970-B8B2-A7A84900041A}</Project>
+      <Name>FrannHammer.Utility</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

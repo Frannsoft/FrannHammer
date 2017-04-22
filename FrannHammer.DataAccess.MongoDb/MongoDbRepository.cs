@@ -22,7 +22,8 @@ namespace FrannHammer.DataAccess.MongoDb
         public T Get(int id)
         {
             var filter = Builders<T>.Filter.Eq(KeyId, id);
-            return _mongoDatabase.GetCollection<T>(typeof(T).Name).Find(filter).SingleOrDefault();
+            var raw = _mongoDatabase.GetCollection<T>(typeof(T).Name).Find(filter).SingleOrDefault();
+            return raw;
         }
 
         public IEnumerable<T> GetAll()

@@ -48,6 +48,7 @@
     <Compile Include="IDataRetrievalService.cs" />
     <Compile Include="IDataUpdaterService.cs" />
     <Compile Include="IMoveDataHandler.cs" />
+    <Compile Include="IMoveService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
