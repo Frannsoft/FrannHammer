@@ -12,6 +12,7 @@ namespace FrannHammer.Api.Services
 
         public DefaultCharacterAttributeService(IRepository<IAttribute> characterAttributeRepository)
         {
+            Guard.VerifyObjectNotNull(characterAttributeRepository, nameof(characterAttributeRepository));
             _characterAttributeRepository = characterAttributeRepository;
         }
 
