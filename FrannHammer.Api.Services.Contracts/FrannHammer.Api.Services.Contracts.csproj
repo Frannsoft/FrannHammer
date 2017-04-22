@@ -43,11 +43,6 @@
     <Compile Include="ContentResponseBuilder.cs" />
     <Compile Include="ICharacterAttributeService.cs" />
     <Compile Include="ICharacterService.cs" />
-    <Compile Include="IDataCreationService.cs" />
-    <Compile Include="IDataDeletionService.cs" />
-    <Compile Include="IDataRetrievalService.cs" />
-    <Compile Include="IDataUpdaterService.cs" />
-    <Compile Include="IMoveDataHandler.cs" />
     <Compile Include="IMovementService.cs" />
     <Compile Include="IMoveService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
