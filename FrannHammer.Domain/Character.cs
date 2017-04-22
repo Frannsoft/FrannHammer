@@ -19,7 +19,7 @@ namespace FrannHammer.Domain
         [FriendlyName("description")]
         public string Description { get; set; }
 
-        [FriendlyName("colorName")]
+        [FriendlyName("colorTheme")]
         public string ColorTheme { get; set; }
 
         [FriendlyName("displayName")]
