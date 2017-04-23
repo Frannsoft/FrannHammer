@@ -1,7 +1,9 @@
 ﻿using FrannHammer.Domain.Contracts;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace FrannHammer.Domain
 {
+    [BsonDiscriminator(nameof(IAttribute))]
     public class CharacterAttribute : IAttribute
     {
         [FriendlyName(FriendlyNameCommonConstants.Id)]
@@ -13,9 +15,6 @@ namespace FrannHammer.Domain
         [FriendlyName("ownerId")]
         public int OwnerId { get; set; }
 
-        [FriendlyName("rank")]
-        public string Rank { get; set; }
-
         [FriendlyName("value")]
         public string Value { get; set; }
 
@@ -25,7 +24,7 @@ namespace FrannHammer.Domain
         [FriendlyName("characterAttributeTypeId")]
         public int CharacterAttributeTypeId { get; set; }
 
-        [FriendlyName("attributeFlag")]
-        public string AttributeFlag { get; set; }
+        [FriendlyName("owner")]
+        public string Owner { get; set; }
     }
 }

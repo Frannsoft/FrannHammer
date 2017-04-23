@@ -40,7 +40,7 @@ namespace FrannHammer.Seeding
             characterService.Add(entityCharacter);
             movementService.AddMany(character.Movements);
             moveService.AddMany(character.Moves);
-            characterAttributeService.AddMany(character.Attributes);
+            characterAttributeService.AddMany(character.AttributeRows);
         }
     }
 }

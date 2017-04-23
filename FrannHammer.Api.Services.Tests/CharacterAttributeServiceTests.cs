@@ -15,14 +15,17 @@ namespace FrannHammer.Api.Services.Tests
         [Test]
         public void AddSingleCharacterAttribute()
         {
-            var fakeCharacterAttributes = new List<IAttribute>
+            var fakeCharacterAttributes = new List<ICharacterAttributeRow>
             {
-                new CharacterAttribute {Name = "one"}
+                new DefaultCharacterAttributeRow(new List<IAttribute>
+                {
+                    new CharacterAttribute {Name = "one"}
+                })
             };
 
-            var characterAttributeRepositoryMock = new Mock<IRepository<IAttribute>>();
+            var characterAttributeRepositoryMock = new Mock<IRepository<ICharacterAttributeRow>>();
             characterAttributeRepositoryMock.Setup(c => c.GetAll()).Returns(() => fakeCharacterAttributes);
-            characterAttributeRepositoryMock.Setup(c => c.Add(It.IsAny<IAttribute>())).Callback<IAttribute>(c =>
+            characterAttributeRepositoryMock.Setup(c => c.Add(It.IsAny<ICharacterAttributeRow>())).Callback<ICharacterAttributeRow>(c =>
             {
                 fakeCharacterAttributes.Add(c);
             });
@@ -30,12 +33,15 @@ namespace FrannHammer.Api.Services.Tests
 
             int previousCount = service.GetAll().Count();
 
-            var newCharacterAttribute = new CharacterAttribute
+            var newCharacterAttributeRow = new DefaultCharacterAttributeRow(new List<IAttribute>
             {
-                Id = 999,
-                Name = "two"
-            };
-            service.Add(newCharacterAttribute);
+                new CharacterAttribute
+                {
+                    Id = 999,
+                    Name = "two"
+                }
+            });
+            service.Add(newCharacterAttributeRow);
 
             int newCount = service.GetAll().Count();
 
@@ -45,16 +51,15 @@ namespace FrannHammer.Api.Services.Tests
         [Test]
         public void ReturnsNullForNoCharacterAttributeFoundById()
         {
-            var fakeCharacterAttributes = new List<IAttribute>
+            var fakeCharacterAttributes = new List<ICharacterAttributeRow>
             {
-                new CharacterAttribute
+                new DefaultCharacterAttributeRow(new List<IAttribute>
                 {
-                    Id = 1,
-                    Name = "one"
-                }
+                    new CharacterAttribute {Name = "one"}
+                })
             };
 
-            var characterAttributeRepositoryMock = new Mock<IRepository<IAttribute>>();
+            var characterAttributeRepositoryMock = new Mock<IRepository<ICharacterAttributeRow>>();
             characterAttributeRepositoryMock.Setup(c => c.Get(It.IsAny<int>())).Returns<int>(id => fakeCharacterAttributes.FirstOrDefault(c => c.Id == id));
 
             var service = new DefaultCharacterAttributeService(characterAttributeRepositoryMock.Object);
@@ -77,7 +82,7 @@ namespace FrannHammer.Api.Services.Tests
         [Test]
         public void Error_RejectsNullCharacterAttributeForAddition()
         {
-            var characterAttributeRepositoryMock = new Mock<IRepository<IAttribute>>();
+            var characterAttributeRepositoryMock = new Mock<IRepository<ICharacterAttributeRow>>();
 
             Assert.Throws<ArgumentNullException>(() =>
             {

@@ -29,11 +29,15 @@ namespace FrannHammer.WebApi.Tests.Controllers
         [Test]
         public void Error_ReturnsNotFoundResultWhenAttributeDoesNotExist()
         {
-            var characterAttributeRepositoryMock = new Mock<IRepository<IAttribute>>();
-            characterAttributeRepositoryMock.Setup(c => c.Get(It.IsInRange(0, 1, Range.Inclusive))).Returns(() => new CharacterAttribute
-            {
-                Name = "test"
-            });
+            var characterAttributeRepositoryMock = new Mock<IRepository<ICharacterAttributeRow>>();
+            characterAttributeRepositoryMock.Setup(c => c.Get(It.IsInRange(0, 1, Range.Inclusive))).Returns(() =>
+                new DefaultCharacterAttributeRow(new List<IAttribute>
+                {
+                    new CharacterAttribute
+                    {
+                        Name = "test"
+                    }
+                }));
 
             var controller =
                 new CharacterAttributeController(

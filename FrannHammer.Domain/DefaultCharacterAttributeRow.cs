@@ -8,6 +8,8 @@ namespace FrannHammer.Domain
 {
     public class DefaultCharacterAttributeRow : ICharacterAttributeRow
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
         public string CharacterName { get; }
         public IEnumerable<IAttribute> Values { get; }
 
@@ -18,5 +20,6 @@ namespace FrannHammer.Domain
 
             CharacterName = attributes.Single(a => a.Name.Equals("character", StringComparison.OrdinalIgnoreCase)).Value;
         }
+
     }
 }

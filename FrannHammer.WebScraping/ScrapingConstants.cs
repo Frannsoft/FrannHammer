@@ -1,6 +1,6 @@
 ﻿namespace FrannHammer.WebScraping
 {
-    public static class ScrapingXPathConstants
+    public static class ScrapingConstants
     {
         public const string XPathFrameDataVersion = @"/html/body/div[1]/div/h1|/html/body/div/div/*/h1";
         public const string XPathImageUrl = @"html/body/div[1]/div/img";
@@ -11,6 +11,8 @@
         public const string XPathTableNodeGroundStats = @"(//*/table[@id='AutoNumber1'])[2]";
         public const string XPathTableNodeAerialStats = @"(//*/table[@id='AutoNumber2'])[1]";
         public const string XPathTableCells = "th|td";
+        public const string EveryoneOneElseAttributeKey = "Everyone Else";
+        public const string XPathEveryoneElseTableRow = @"//table/tbody/tr/td[.='" + EveryoneOneElseAttributeKey + "']/parent::tr";
         public const string XPathTableNodeSpecialStats = @"(//*/table[@id='AutoNumber3'])[1]";
         public const string XPathTableNodeAttributesWithDescription = @"(//*/table[@id='AutoNumber1'])[2]";
         public const string XPathTableNodeAttributesWithNoDescription = @"(//*/table[@id='AutoNumber1'])[1]";

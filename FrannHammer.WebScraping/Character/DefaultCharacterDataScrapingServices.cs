@@ -36,12 +36,12 @@ namespace FrannHammer.WebScraping.Character
         public void PopulateCharacter(WebCharacter character)
         {
             var htmlParser = _webServices.CreateParserFromSourceUrl(character.SourceUrl);
-            string displayNameHtml = htmlParser.GetSingle(ScrapingXPathConstants.XPathFrameDataVersion);
+            string displayNameHtml = htmlParser.GetSingle(ScrapingConstants.XPathFrameDataVersion);
 
             string displayName = GetCharacterDisplayName(displayNameHtml);
 
             //character details
-            string mainImageUrl = htmlParser.GetAttributeFromSingleNavigable("src", ScrapingXPathConstants.XPathImageUrl);
+            string mainImageUrl = htmlParser.GetAttributeFromSingleNavigable("src", ScrapingConstants.XPathImageUrl);
 
             //color hex
             string colorTheme = _imageScrapingService.GetColorHexValue(mainImageUrl).Result;
@@ -56,7 +56,7 @@ namespace FrannHammer.WebScraping.Character
             var attributeRows = new List<ICharacterAttributeRow>();
             foreach (var attributeScraper in _attributeScrapers)
             {
-                attributeRows.AddRange(attributeScraper.Scrape());
+                attributeRows.AddRange(attributeScraper.Scrape(character.Name));
             }
 
             character.DisplayName = displayName;
@@ -65,6 +65,7 @@ namespace FrannHammer.WebScraping.Character
             character.Movements = movements;
             character.Moves = moves;
             character.Attributes = attributeRows.SelectMany(a => a.Values);
+            character.AttributeRows = attributeRows;
         }
 
         private static string GetCharacterDisplayName(string rawDisplayNameHtml)

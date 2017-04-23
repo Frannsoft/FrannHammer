@@ -29,8 +29,9 @@ namespace FrannHammer.WebApi.Tests.Controllers
         [Test]
         public void Error_ReturnsNotFoundResultWhenAttributeDoesNotExist()
         {
-            var characterAttributeRepositoryMock = new Mock<IRepository<IAttribute>>();
-            characterAttributeRepositoryMock.Setup(c => c.Get(It.IsInRange(0, 1, Range.Inclusive))).Returns(() => new CharacterAttribute
+            var characterAttributeRepositoryMock = new Mock<IRepository<ICharacterAttributeRow>>();
+            characterAttributeRepositoryMock.Setup(c => c.Get(It.IsInRange(0, 1, Range.Inclusive))).Returns(() => new DefaultCharacterAttributeRow(
+                new List<IAttribute> { new CharacterAttribute { Name = "one"} })
             {
                 Name = "test"
             });
@@ -49,7 +50,8 @@ namespace FrannHammer.WebApi.Tests.Controllers
         {
             var characterAttributeServiceMock = new Mock<ICharacterAttributeService>();
             characterAttributeServiceMock.Setup(c => c.Get(It.IsAny<int>(), It.IsAny<string>()))
-                .Returns(() => new CharacterAttribute
+                .Returns(() => new DefaultCharacterAttributeRow(
+                    new List<IAttribute> {  new CharacterAttribute {  Name = "two"} })
                 {
                     Name = "testname"
                 });
@@ -72,9 +74,11 @@ namespace FrannHammer.WebApi.Tests.Controllers
         {
             var characterAttributeServiceMock = new Mock<ICharacterAttributeService>();
             characterAttributeServiceMock.Setup(c => c.GetAll(It.IsAny<string>()))
-                .Returns(() => new List<IAttribute>
+                .Returns(() => new List<ICharacterAttributeRow>
                 {
-                    new CharacterAttribute
+                    new DefaultCharacterAttributeRow(new List<IAttribute>
+                    {
+                        new CharacterAttribute
                     {
                         Name = "testname"
                     },
@@ -82,6 +86,18 @@ namespace FrannHammer.WebApi.Tests.Controllers
                     {
                         Name = "testname2"
                     }
+                    }),
+                   new DefaultCharacterAttributeRow(new List<IAttribute>
+                    {
+                        new CharacterAttribute
+                    {
+                        Name = "testname3"
+                    },
+                    new CharacterAttribute
+                    {
+                        Name = "testname4"
+                    }
+                    })
                 });
 
             var controller = new CharacterAttributeController(characterAttributeServiceMock.Object);

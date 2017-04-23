@@ -86,8 +86,6 @@ namespace FrannHammer.Seeding.Tests
             _characterDataScraper = new DefaultCharacterDataScraper(_characterDataScrapingServices);
         }
 
-
-
         [Test]
         public void CanSeedCharacterData()
         {
@@ -95,7 +93,7 @@ namespace FrannHammer.Seeding.Tests
             var characters = new List<ICharacter>();
             var movements = new List<IMovement>();
             var moves = new List<IMove>();
-            var characterAttributes = new List<IAttribute>();
+            var characterAttributes = new List<ICharacterAttributeRow>();
 
             //mock repos
             var characterRepositoryMock = new Mock<IRepository<ICharacter>>();
@@ -121,14 +119,13 @@ namespace FrannHammer.Seeding.Tests
             });
             movesRepositoryMock.Setup(c => c.GetAll()).Returns(() => moves);
 
-            var characterAttributeRepositoryMock = new Mock<IRepository<IAttribute>>();
-            characterAttributeRepositoryMock.Setup(c => c.AddMany(It.IsAny<IEnumerable<IAttribute>>()))
-                .Callback<IEnumerable<IAttribute>>(c =>
+            var characterAttributeRepositoryMock = new Mock<IRepository<ICharacterAttributeRow>>();
+            characterAttributeRepositoryMock.Setup(c => c.AddMany(It.IsAny<IEnumerable<ICharacterAttributeRow>>()))
+                .Callback<IEnumerable<ICharacterAttributeRow>>(c =>
             {
                 characterAttributes.AddRange(c);
             });
             characterAttributeRepositoryMock.Setup(c => c.GetAll()).Returns(() => characterAttributes);
-
 
             //real api services using mocked repos
             var characterService = new DefaultCharacterService(characterRepositoryMock.Object);

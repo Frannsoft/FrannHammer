@@ -21,6 +21,7 @@ namespace FrannHammer.WebScraping.Domain.Contracts
         public IEnumerable<IMove> Moves { get; set; }
         public IEnumerable<IMovement> Movements { get; set; }
         public IEnumerable<IAttribute> Attributes { get; set; }
+        public IEnumerable<ICharacterAttributeRow> AttributeRows { get; set; }
 
         public WebCharacter(string name, string escapedCharacterName = "")
         {

@@ -8,24 +8,24 @@ namespace FrannHammer.Api.Services
 {
     public class DefaultCharacterAttributeService : ICharacterAttributeService
     {
-        private readonly IRepository<IAttribute> _characterAttributeRepository;
+        private readonly IRepository<ICharacterAttributeRow> _characterAttributeRepository;
 
-        public DefaultCharacterAttributeService(IRepository<IAttribute> characterAttributeRepository)
+        public DefaultCharacterAttributeService(IRepository<ICharacterAttributeRow> characterAttributeRepository)
         {
             Guard.VerifyObjectNotNull(characterAttributeRepository, nameof(characterAttributeRepository));
             _characterAttributeRepository = characterAttributeRepository;
         }
 
-        public IAttribute Get(int id, string fields = "") => _characterAttributeRepository.Get(id);
+        public ICharacterAttributeRow Get(int id, string fields = "") => _characterAttributeRepository.Get(id);
 
-        public IEnumerable<IAttribute> GetAll(string fields = "") => _characterAttributeRepository.GetAll();
-        public IAttribute Add(IAttribute attribute)
+        public IEnumerable<ICharacterAttributeRow> GetAll(string fields = "") => _characterAttributeRepository.GetAll();
+        public ICharacterAttributeRow Add(ICharacterAttributeRow attribute)
         {
             Guard.VerifyObjectNotNull(attribute, nameof(attribute));
             return _characterAttributeRepository.Add(attribute);
         }
 
-        public void AddMany(IEnumerable<IAttribute> attributes)
+        public void AddMany(IEnumerable<ICharacterAttributeRow> attributes)
         {
             Guard.VerifyObjectNotNull(attributes, nameof(attributes));
             _characterAttributeRepository.AddMany(attributes);

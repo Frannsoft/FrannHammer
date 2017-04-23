@@ -16,7 +16,7 @@ namespace FrannHammer.WebScraping.Moves
         {
             Scrape = url =>
             {
-                var moveTableRows = GetTableRows(url, ScrapingXPathConstants.XPathTableNodeAerialStats);
+                var moveTableRows = GetTableRows(url, ScrapingConstants.XPathTableNodeAerialStats);
                 return moveTableRows.Select(row => GetMove(GetTableCells(row)));
             };
         }

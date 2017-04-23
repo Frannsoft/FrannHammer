@@ -24,15 +24,15 @@ namespace FrannHammer.WebScraping.Movements
             var htmlParser = _scrapingServices.CreateParserFromSourceUrl(character.SourceUrl);
 
             //get movement table html
-            string movementTableHtml = htmlParser.GetSingle(ScrapingXPathConstants.XPathTableNodeMovementStats);
+            string movementTableHtml = htmlParser.GetSingle(ScrapingConstants.XPathTableNodeMovementStats);
 
-            var movementTableRows = HtmlNode.CreateNode(movementTableHtml)?.SelectNodes(ScrapingXPathConstants.XPathTableRows);
+            var movementTableRows = HtmlNode.CreateNode(movementTableHtml)?.SelectNodes(ScrapingConstants.XPathTableRows);
 
             if (movementTableRows == null)
-            { throw new Exception($"Error getting movement table data after attempting to scrape full table using xpath: '{ScrapingXPathConstants.XPathTableRows};"); }
+            { throw new Exception($"Error getting movement table data after attempting to scrape full table using xpath: '{ScrapingConstants.XPathTableRows};"); }
 
             return movementTableRows.SelectMany(
-                row => row.SelectNodes(ScrapingXPathConstants.XPathMovementTableCellKeys),
+                row => row.SelectNodes(ScrapingConstants.XPathMovementTableCellKeys),
                 (row, statName) => GetMovement(statName)).Where(stat => stat != null);
         }
 
@@ -44,7 +44,7 @@ namespace FrannHammer.WebScraping.Movements
             if (!string.IsNullOrEmpty(rawNameCellText))
             {
                 var name = GetStatName(nameCell);
-                var valueCell = nameCell.SelectSingleNode(ScrapingXPathConstants.XPathTableCellValues);
+                var valueCell = nameCell.SelectSingleNode(ScrapingConstants.XPathTableCellValues);
 
                 var rawValueText = valueCell.InnerText;
                 string value;

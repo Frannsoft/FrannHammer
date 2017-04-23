@@ -5,9 +5,9 @@ namespace FrannHammer.Api.Services.Contracts
 {
     public interface ICharacterAttributeService
     {
-        IAttribute Get(int id, string fields = "");
-        IEnumerable<IAttribute> GetAll(string fields = "");
-        IAttribute Add(IAttribute attribute);
-        void AddMany(IEnumerable<IAttribute> attributes);
+        ICharacterAttributeRow Get(int id, string fields = "");
+        IEnumerable<ICharacterAttributeRow> GetAll(string fields = "");
+        ICharacterAttributeRow Add(ICharacterAttributeRow attribute);
+        void AddMany(IEnumerable<ICharacterAttributeRow> attributes);
     }
 }

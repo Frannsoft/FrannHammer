@@ -2,7 +2,7 @@
 
 namespace FrannHammer.Domain.Contracts
 {
-    public interface ICharacterAttributeRow
+    public interface ICharacterAttributeRow : IModel
     {
         string CharacterName { get; }
         IEnumerable<IAttribute> Values { get; }

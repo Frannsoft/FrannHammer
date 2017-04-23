@@ -37,7 +37,6 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
             CollectionAssert.AllItemsAreUnique(characters);
         }
 
-        //TODO - uses real mongodb to test add/delete.  Now do this for other model types
         [Test]
         public void AddAndRemoveSingleCharacter()
         {

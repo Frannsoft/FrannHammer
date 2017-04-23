@@ -26,11 +26,9 @@ namespace FrannHammer.Domain.Tests
             yield return Tuple.Create("_id", nameof(CharacterAttribute.Id), typeof(CharacterAttribute));
             yield return Tuple.Create("name", nameof(CharacterAttribute.Name), typeof(CharacterAttribute));
             yield return Tuple.Create("ownerId", nameof(CharacterAttribute.OwnerId), typeof(CharacterAttribute));
-            yield return Tuple.Create("rank", nameof(CharacterAttribute.Rank), typeof(CharacterAttribute));
             yield return Tuple.Create("smashAttributeTypeId", nameof(CharacterAttribute.SmashAttributeTypeId), typeof(CharacterAttribute));
             yield return Tuple.Create("value", nameof(CharacterAttribute.Value), typeof(CharacterAttribute));
             yield return Tuple.Create("characterAttributeTypeId", nameof(CharacterAttribute.CharacterAttributeTypeId), typeof(CharacterAttribute));
-            yield return Tuple.Create("attributeFlag", nameof(CharacterAttribute.AttributeFlag), typeof(CharacterAttribute));
         }
 
         private static IEnumerable<Tuple<string, string, Type>> MoveFriendlyNameInfo()

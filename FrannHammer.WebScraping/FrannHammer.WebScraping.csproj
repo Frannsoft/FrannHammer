@@ -86,7 +86,7 @@
     <Compile Include="Moves\GroundMoveScraper.cs" />
     <Compile Include="PageDownloading\DefaultPageDownloader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScrapingXPathConstants.cs" />
+    <Compile Include="ScrapingConstants.cs" />
     <Compile Include="WebClients\DefaultWebClientProvider.cs" />
     <Compile Include="Moves\SpecialMoveScraper.cs" />
   </ItemGroup>
