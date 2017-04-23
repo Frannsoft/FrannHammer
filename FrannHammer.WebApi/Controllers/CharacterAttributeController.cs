@@ -9,9 +9,9 @@ namespace FrannHammer.WebApi.Controllers
     public class CharacterAttributeController : BaseApiController
     {
         private const string CharacterAttributesRouteKey = "characterattributes";
-        private readonly ICharacterAttributeService _characterAttributeService;
+        private readonly ICharacterAttributeRowService _characterAttributeService;
 
-        public CharacterAttributeController(ICharacterAttributeService characterAttributeService)
+        public CharacterAttributeController(ICharacterAttributeRowService characterAttributeService)
         {
             Guard.VerifyObjectNotNull(characterAttributeService, nameof(characterAttributeService));
             _characterAttributeService = characterAttributeService;

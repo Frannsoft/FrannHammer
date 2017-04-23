@@ -32,5 +32,11 @@ namespace FrannHammer.Api.Services
             Guard.VerifyObjectNotNull(character, nameof(character));
             return _repository.Add(character);
         }
+
+        public void AddMany(IEnumerable<ICharacter> models)
+        {
+            Guard.VerifyObjectNotNull(models, nameof(models));
+            _repository.AddMany(models);
+        }
     }
 }

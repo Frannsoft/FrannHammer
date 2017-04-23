@@ -6,29 +6,29 @@ using FrannHammer.Utility;
 
 namespace FrannHammer.Api.Services
 {
-    public class DefaultCharacterAttributeService : ICharacterAttributeService
+    public class DefaultCharacterAttributeService : ICharacterAttributeRowService
     {
-        private readonly IRepository<ICharacterAttributeRow> _characterAttributeRepository;
+        private readonly IRepository<ICharacterAttributeRow> _characterAttributeRowRepository;
 
-        public DefaultCharacterAttributeService(IRepository<ICharacterAttributeRow> characterAttributeRepository)
+        public DefaultCharacterAttributeService(IRepository<ICharacterAttributeRow> characterAttributeRowRepository)
         {
-            Guard.VerifyObjectNotNull(characterAttributeRepository, nameof(characterAttributeRepository));
-            _characterAttributeRepository = characterAttributeRepository;
+            Guard.VerifyObjectNotNull(characterAttributeRowRepository, nameof(characterAttributeRowRepository));
+            _characterAttributeRowRepository = characterAttributeRowRepository;
         }
 
-        public ICharacterAttributeRow Get(int id, string fields = "") => _characterAttributeRepository.Get(id);
+        public ICharacterAttributeRow Get(int id, string fields = "") => _characterAttributeRowRepository.Get(id);
 
-        public IEnumerable<ICharacterAttributeRow> GetAll(string fields = "") => _characterAttributeRepository.GetAll();
-        public ICharacterAttributeRow Add(ICharacterAttributeRow attribute)
+        public IEnumerable<ICharacterAttributeRow> GetAll(string fields = "") => _characterAttributeRowRepository.GetAll();
+        public ICharacterAttributeRow Add(ICharacterAttributeRow attributeRow)
         {
-            Guard.VerifyObjectNotNull(attribute, nameof(attribute));
-            return _characterAttributeRepository.Add(attribute);
+            Guard.VerifyObjectNotNull(attributeRow, nameof(attributeRow));
+            return _characterAttributeRowRepository.Add(attributeRow);
         }
 
-        public void AddMany(IEnumerable<ICharacterAttributeRow> attributes)
+        public void AddMany(IEnumerable<ICharacterAttributeRow> attributeRows)
         {
-            Guard.VerifyObjectNotNull(attributes, nameof(attributes));
-            _characterAttributeRepository.AddMany(attributes);
+            Guard.VerifyObjectNotNull(attributeRows, nameof(attributeRows));
+            _characterAttributeRowRepository.AddMany(attributeRows);
         }
     }
 }

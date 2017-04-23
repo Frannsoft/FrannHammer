@@ -1,12 +1,8 @@
-﻿using System.Collections.Generic;
-using FrannHammer.Domain.Contracts;
+﻿using FrannHammer.Domain.Contracts;
 
 namespace FrannHammer.Api.Services.Contracts
 {
-    public interface ICharacterService
+    public interface ICharacterService : ICrudService<ICharacter>
     {
-        ICharacter Get(int id, string fields = "");
-        IEnumerable<ICharacter> GetAll(string fields = "");
-        ICharacter Add(ICharacter character);
     }
 }

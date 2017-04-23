@@ -41,8 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContentResponseBuilder.cs" />
-    <Compile Include="ICharacterAttributeService.cs" />
+    <Compile Include="ICharacterAttributeRowService.cs" />
     <Compile Include="ICharacterService.cs" />
+    <Compile Include="ICrudService.cs" />
     <Compile Include="IMovementService.cs" />
     <Compile Include="IMoveService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

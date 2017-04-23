@@ -2,7 +2,7 @@
 
 namespace FrannHammer.Api.Services.Contracts
 {
-    public interface IMovementService : ICrudService<IMovement>
+    public interface ICharacterAttributeRowService : ICrudService<ICharacterAttributeRow>
     {
     }
 }

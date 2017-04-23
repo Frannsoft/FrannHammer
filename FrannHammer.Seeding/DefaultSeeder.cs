@@ -26,7 +26,7 @@ namespace FrannHammer.Seeding
             ICharacterService characterService,
             IMovementService movementService,
             IMoveService moveService,
-            ICharacterAttributeService characterAttributeService)
+            ICharacterAttributeRowService characterAttributeService)
         {
             Guard.VerifyObjectNotNull(character, nameof(character));
             Guard.VerifyObjectNotNull(characterService, nameof(characterService));

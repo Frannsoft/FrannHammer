@@ -48,7 +48,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
         [Test]
         public void GetACharacterAttributeName()
         {
-            var characterAttributeServiceMock = new Mock<ICharacterAttributeService>();
+            var characterAttributeServiceMock = new Mock<ICharacterAttributeRowService>();
             characterAttributeServiceMock.Setup(c => c.Get(It.IsAny<int>(), It.IsAny<string>()))
                 .Returns(() => new DefaultCharacterAttributeRow(
                     new List<IAttribute> { new CharacterAttribute { Name = "two" } })
@@ -73,7 +73,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
         [Test]
         public void GetManyCharacterAttributes()
         {
-            var characterAttributeServiceMock = new Mock<ICharacterAttributeService>();
+            var characterAttributeServiceMock = new Mock<ICharacterAttributeRowService>();
             characterAttributeServiceMock.Setup(c => c.GetAll(It.IsAny<string>()))
                 .Returns(() => new List<ICharacterAttributeRow>
                 {
