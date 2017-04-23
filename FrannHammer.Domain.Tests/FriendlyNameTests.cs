@@ -54,11 +54,20 @@ namespace FrannHammer.Domain.Tests
             yield return Tuple.Create("value", nameof(Movement.Value), typeof(Movement));
         }
 
+        private static IEnumerable<Tuple<string, string, Type>> CharacterAttributeRowFriendlyNameInfo()
+        {
+            yield return Tuple.Create("_id", nameof(DefaultCharacterAttributeRow.Id), typeof(DefaultCharacterAttributeRow));
+            yield return Tuple.Create("name", nameof(DefaultCharacterAttributeRow.Name), typeof(DefaultCharacterAttributeRow));
+            yield return Tuple.Create("characterName", nameof(DefaultCharacterAttributeRow.CharacterName), typeof(DefaultCharacterAttributeRow));
+            yield return Tuple.Create("values", nameof(DefaultCharacterAttributeRow.Values), typeof(DefaultCharacterAttributeRow));
+        }
+
         [Test]
         [TestCaseSource(nameof(CharacterFriendlyInfo))]
         [TestCaseSource(nameof(CharacterAttributeFriendlyInfo))]
         [TestCaseSource(nameof(MoveFriendlyNameInfo))]
         [TestCaseSource(nameof(MovementFriendlyNameInfo))]
+        [TestCaseSource(nameof(CharacterAttributeRowFriendlyNameInfo))]
         public void FriendlyNameCorrect(Tuple<string, string, Type> info)
         {
             string expectedFriendlyName = info.Item1;

@@ -88,6 +88,7 @@ namespace FrannHammer.WebScraping.Tests
             var greninja = Characters.Greninja;
             _characterDataScraper.PopulateCharacterFromWeb(greninja);
 
+            Assert.That(greninja.ColorTheme, Is.Not.Empty);
             Assert.That(greninja.DisplayName, Is.EqualTo("Greninja"));
             Assert.That(greninja.MainImageUrl, Is.Not.Empty);
             Assert.That(Uri.IsWellFormedUriString(greninja.MainImageUrl, UriKind.Absolute), $"Malformed main image url: '{greninja.MainImageUrl}'");

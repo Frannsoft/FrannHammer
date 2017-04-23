@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using FrannHammer.Api.Services;
 using FrannHammer.DataAccess.Contracts;
 using FrannHammer.Domain.Contracts;
@@ -143,10 +144,10 @@ namespace FrannHammer.Seeding.Tests
                 moveService, characterAttributeService);
 
             //assert data can be retrieved
-            Assert.That(characters.Count, Is.EqualTo(1));
-            Assert.That(moves.Count, Is.GreaterThan(0));
-            Assert.That(movements.Count, Is.GreaterThan(0));
-            Assert.That(characterAttributes.Count, Is.GreaterThan(0));
+            Assert.That(characterRepositoryMock.Object.GetAll().Count(), Is.EqualTo(1));
+            Assert.That(movesRepositoryMock.Object.GetAll().Count(), Is.GreaterThan(0));
+            Assert.That(movementRepositoryMock.Object.GetAll().Count(), Is.GreaterThan(0));
+            Assert.That(characterAttributeRepositoryMock.Object.GetAll().Count(), Is.GreaterThan(0));
         }
     }
 }
