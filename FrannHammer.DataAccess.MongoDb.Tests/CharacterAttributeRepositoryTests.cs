@@ -50,7 +50,7 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
 
             var newCharacterAttribute = new CharacterAttribute
             {
-                Id = 999,
+                Id = 99999,
                 Name = "test"
             };
 

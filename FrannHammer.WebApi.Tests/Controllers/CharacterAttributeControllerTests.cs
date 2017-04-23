@@ -31,7 +31,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
         {
             var characterAttributeRepositoryMock = new Mock<IRepository<ICharacterAttributeRow>>();
             characterAttributeRepositoryMock.Setup(c => c.Get(It.IsInRange(0, 1, Range.Inclusive))).Returns(() => new DefaultCharacterAttributeRow(
-                new List<IAttribute> { new CharacterAttribute { Name = "one"} })
+                new List<IAttribute> { new CharacterAttribute { Name = "one" } })
             {
                 Name = "test"
             });
@@ -51,14 +51,15 @@ namespace FrannHammer.WebApi.Tests.Controllers
             var characterAttributeServiceMock = new Mock<ICharacterAttributeService>();
             characterAttributeServiceMock.Setup(c => c.Get(It.IsAny<int>(), It.IsAny<string>()))
                 .Returns(() => new DefaultCharacterAttributeRow(
-                    new List<IAttribute> {  new CharacterAttribute {  Name = "two"} })
+                    new List<IAttribute> { new CharacterAttribute { Name = "two" } })
                 {
+                    Id = 0,
                     Name = "testname"
                 });
 
             var controller = new CharacterAttributeController(characterAttributeServiceMock.Object);
 
-            var response = controller.GetCharacterAttribute(0) as OkNegotiatedContentResult<IAttribute>;
+            var response = controller.GetCharacterAttribute(0) as OkNegotiatedContentResult<ICharacterAttributeRow>;
 
             Assert.That(response, Is.Not.Null);
 
@@ -86,7 +87,8 @@ namespace FrannHammer.WebApi.Tests.Controllers
                     {
                         Name = "testname2"
                     }
-                    }),
+                    })
+                    { Id = 0 },
                    new DefaultCharacterAttributeRow(new List<IAttribute>
                     {
                         new CharacterAttribute
@@ -98,11 +100,12 @@ namespace FrannHammer.WebApi.Tests.Controllers
                         Name = "testname4"
                     }
                     })
+                   { Id = 1 }
                 });
 
             var controller = new CharacterAttributeController(characterAttributeServiceMock.Object);
 
-            var response = controller.GetCharacterAttributes() as OkNegotiatedContentResult<IEnumerable<IAttribute>>;
+            var response = controller.GetCharacterAttributes() as OkNegotiatedContentResult<IEnumerable<ICharacterAttributeRow>>;
 
             Assert.That(response, Is.Not.Null);
 
