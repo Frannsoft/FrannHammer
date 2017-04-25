@@ -46,7 +46,7 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
 
             var newCharacter = new Character
             {
-                Id = 999,
+                Id = "999",
                 Name = "test"
             };
 

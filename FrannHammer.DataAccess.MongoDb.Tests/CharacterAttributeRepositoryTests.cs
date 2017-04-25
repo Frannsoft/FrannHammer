@@ -21,11 +21,9 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
 
             var characterAttribute = _repository.Get(1);
             Assert.That(characterAttribute, Is.Not.Null);
-            Assert.That(characterAttribute.CharacterAttributeTypeId, Is.Not.Null);
             Assert.That(characterAttribute.Id, Is.GreaterThan(0));
             Assert.That(characterAttribute.Name, Is.Not.Null);
-            Assert.That(characterAttribute.OwnerId, Is.GreaterThan(0));
-            Assert.That(characterAttribute.SmashAttributeTypeId, Is.Not.Null);
+            Assert.That(characterAttribute.Owner, Is.Not.Null);
             Assert.That(characterAttribute.Value, Is.Not.Null);
         }
 
@@ -50,7 +48,7 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
 
             var newCharacterAttribute = new CharacterAttribute
             {
-                Id = 99999,
+                Id = "99999",
                 Name = "test"
             };
 

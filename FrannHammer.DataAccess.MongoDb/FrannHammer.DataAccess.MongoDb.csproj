@@ -68,6 +68,10 @@
       <Project>{15A2565C-4611-4034-814A-931DA70ED8B1}</Project>
       <Name>FrannHammer.Domain.Contracts</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.Domain\FrannHammer.Domain.csproj">
+      <Project>{4DB6C856-581A-4B69-BB6A-4AEBF3929C5E}</Project>
+      <Name>FrannHammer.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FrannHammer.Utility\FrannHammer.Utility.csproj">
       <Project>{4DB55C69-EAE5-4970-B8B2-A7A84900041A}</Project>
       <Name>FrannHammer.Utility</Name>

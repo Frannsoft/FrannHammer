@@ -20,7 +20,6 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
 
             var movement = _repository.Get(1);
             Assert.That(movement, Is.Not.Null);
-            Assert.That(movement.Id, Is.GreaterThan(0));
             Assert.That(movement.OwnerId, Is.GreaterThan(0));
             Assert.That(movement.Value, Is.Not.Null);
         }
@@ -46,17 +45,19 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
 
             var newMovement = new Movement
             {
-                Id = 99999,
+                Id = "99999",
                 Name = "test"
             };
 
             _repository.Add(newMovement);
 
+            var newlyAddedMovement = _repository.GetAll().Last();
+
             int newCount = _repository.GetAll().Count();
 
             Assert.That(newCount, Is.EqualTo(previousCount + 1));
 
-            _repository.Delete(newMovement);
+            _repository.Delete(newlyAddedMovement);
 
             Assert.That(_repository.GetAll().Count(), Is.EqualTo(previousCount));
         }

@@ -2,7 +2,7 @@
 
 namespace FrannHammer.Domain
 {
-    public class Character : ICharacter
+    public class Character : MongoModel, ICharacter
     {
         [FriendlyName("fullUrl")]
         public string FullUrl { get; set; }
@@ -24,11 +24,5 @@ namespace FrannHammer.Domain
 
         [FriendlyName("displayName")]
         public string DisplayName { get; set; }
-
-        [FriendlyName(FriendlyNameCommonConstants.Id)]
-        public int Id { get; set; }
-
-        [FriendlyName(FriendlyNameCommonConstants.Name)]
-        public string Name { get; set; }
     }
 }

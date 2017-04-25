@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FrannHammer.Domain.Contracts;
+using MongoDB.Bson;
 
 namespace FrannHammer.WebScraping.Domain.Contracts
 {
@@ -8,8 +9,8 @@ namespace FrannHammer.WebScraping.Domain.Contracts
     {
         protected const string SourceUrlBase = "http://kuroganehammer.com/Smash4/";
 
+        public string Id { get; set; }
         public string SourceUrl { get; private set; }
-        public int Id { get; set; }
         public string FullUrl { get; set; }
         public string Style { get; set; }
         public string Description { get; set; }
@@ -31,21 +32,6 @@ namespace FrannHammer.WebScraping.Domain.Contracts
             { escapedCharacterName = name; }
 
             SourceUrl = SourceUrlBase + escapedCharacterName;
-        }
-
-        public virtual void ScrapeMoves()
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual void ScrapeMovements()
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual void GetAttributes()
-        {
-            throw new NotImplementedException();
         }
 
         public virtual IEnumerable<IUniqueData> GetUniqueData(IUniqueDataProvider uniqueDataProvider)

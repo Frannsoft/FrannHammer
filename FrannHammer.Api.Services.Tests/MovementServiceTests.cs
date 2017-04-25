@@ -4,6 +4,7 @@ using System.Linq;
 using FrannHammer.DataAccess.Contracts;
 using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
+using MongoDB.Bson;
 using Moq;
 using NUnit.Framework;
 
@@ -32,7 +33,7 @@ namespace FrannHammer.Api.Services.Tests
 
             var newMovement = new Movement
             {
-                Id = 999,
+                Id = "999",
                 Name = "two"
             };
             service.Add(newMovement);
@@ -49,13 +50,13 @@ namespace FrannHammer.Api.Services.Tests
             {
                 new Movement
                 {
-                    Id = 1,
+                    Id = "1",
                     Name = "one"
                 }
             };
 
             var movementRepositoryMock = new Mock<IRepository<IMovement>>();
-            movementRepositoryMock.Setup(c => c.Get(It.IsAny<int>())).Returns<int>(id => fakeMovements.FirstOrDefault(c => c.Id == id));
+            movementRepositoryMock.Setup(c => c.Get(It.IsAny<int>())).Returns<int>(id => fakeMovements.FirstOrDefault(c => c.Id == id.ToString()));
 
             var service = new DefaultMovementService(movementRepositoryMock.Object);
 

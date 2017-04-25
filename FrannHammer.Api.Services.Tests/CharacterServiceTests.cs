@@ -32,7 +32,7 @@ namespace FrannHammer.Api.Services.Tests
 
             var newCharacter = new Character
             {
-                Id = 999,
+                Id = "999",
                 Name = "two"
             };
             service.Add(newCharacter);
@@ -49,13 +49,13 @@ namespace FrannHammer.Api.Services.Tests
             {
                 new Character
                 {
-                    Id = 1,
+                    Id = "1",
                     Name = "one"
                 }
             };
 
             var characterRepositoryMock = new Mock<IRepository<ICharacter>>();
-            characterRepositoryMock.Setup(c => c.Get(It.IsAny<int>())).Returns<int>(id => fakeCharacters.FirstOrDefault(c => c.Id == id));
+            characterRepositoryMock.Setup(c => c.Get(It.IsAny<int>())).Returns<int>(id => fakeCharacters.FirstOrDefault(c => c.Id == id.ToString()));
 
             var service = new DefaultCharacterService(characterRepositoryMock.Object);
 

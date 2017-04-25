@@ -67,6 +67,7 @@ namespace FrannHammer.WebScraping.Attributes
                         var attributeValue = scrapingServices.CreateAttribute();
                         attributeValue.Name = headers[i];
                         attributeValue.Value = cells[i].InnerText;
+                        attributeValue.Owner = characterName;
                         attributeValues.Add(attributeValue);
                     }
 

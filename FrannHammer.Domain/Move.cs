@@ -2,7 +2,7 @@
 
 namespace FrannHammer.Domain
 {
-    public class Move : IMove
+    public class Move : MongoModel, IMove
     {
         [FriendlyName("hitboxActive")]
         public string HitboxActive { get; set; }
@@ -33,11 +33,5 @@ namespace FrannHammer.Domain
 
         [FriendlyName("ownerId")]
         public int OwnerId { get; set; }
-
-        [FriendlyName("_id")]
-        public int Id { get; set; }
-
-        [FriendlyName("name")]
-        public string Name { get; set; }
     }
 }

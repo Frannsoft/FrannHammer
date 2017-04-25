@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using FrannHammer.Api.Services.Contracts;
+using FrannHammer.Domain.Contracts;
 using FrannHammer.Utility;
 using static FrannHammer.WebApi.Controllers.ApiControllerBaseRoutingConstants;
 

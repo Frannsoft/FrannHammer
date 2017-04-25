@@ -27,10 +27,10 @@ namespace FrannHammer.Api.Services
             return _repository.GetAll();
         }
 
-        public IMove Add(IMove model)
+        public void Add(IMove model)
         {
             Guard.VerifyObjectNotNull(model, nameof(model));
-            return _repository.Add(model);
+            _repository.Add(model);
         }
 
         public void AddMany(IEnumerable<IMove> moves)

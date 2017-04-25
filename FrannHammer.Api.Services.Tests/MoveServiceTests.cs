@@ -32,7 +32,7 @@ namespace FrannHammer.Api.Services.Tests
 
             var newMove = new Move
             {
-                Id = 999,
+                Id = "999",
                 Name = "two"
             };
             service.Add(newMove);
@@ -49,13 +49,13 @@ namespace FrannHammer.Api.Services.Tests
             {
                 new Move
                 {
-                    Id = 1,
+                    Id = "1",
                     Name = "one"
                 }
             };
 
             var moveRepositoryMock = new Mock<IRepository<IMove>>();
-            moveRepositoryMock.Setup(c => c.Get(It.IsAny<int>())).Returns<int>(id => fakeMoves.FirstOrDefault(c => c.Id == id));
+            moveRepositoryMock.Setup(c => c.Get(It.IsAny<int>())).Returns<int>(id => fakeMoves.FirstOrDefault(c => c.Id == id.ToString()));
 
             var service = new DefaultMoveService(moveRepositoryMock.Object);
 

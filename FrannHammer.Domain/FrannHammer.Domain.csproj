@@ -48,6 +48,7 @@
     <Compile Include="DefaultCharacterAttributeRow.cs" />
     <Compile Include="FriendlyNameAttribute.cs" />
     <Compile Include="FriendlyNameCommonConstants.cs" />
+    <Compile Include="MongoModel.cs" />
     <Compile Include="Move.cs" />
     <Compile Include="Movement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

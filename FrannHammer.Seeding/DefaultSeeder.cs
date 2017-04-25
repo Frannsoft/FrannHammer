@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FrannHammer.Api.Services.Contracts;
 using FrannHammer.Domain;
+using FrannHammer.Domain.Contracts;
 using FrannHammer.Seeding.Contracts;
 using FrannHammer.Utility;
 using FrannHammer.WebScraping.Contracts.Character;

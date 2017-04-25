@@ -37,7 +37,7 @@ namespace FrannHammer.Api.Services.Tests
             {
                 new CharacterAttribute
                 {
-                    Id = 999,
+                    Id = "999",
                     Name = "two"
                 }
             });
@@ -60,7 +60,7 @@ namespace FrannHammer.Api.Services.Tests
             };
 
             var characterAttributeRepositoryMock = new Mock<IRepository<ICharacterAttributeRow>>();
-            characterAttributeRepositoryMock.Setup(c => c.Get(It.IsInRange(1,2, Range.Inclusive))).Returns<int>(id => fakeCharacterAttributes.FirstOrDefault(c => c.Id == id));
+            characterAttributeRepositoryMock.Setup(c => c.Get(It.IsInRange(1,2, Range.Inclusive))).Returns<int>(id => fakeCharacterAttributes.FirstOrDefault(c => c.Id == id.ToString()));
 
             var service = new DefaultCharacterAttributeService(characterAttributeRepositoryMock.Object);
 

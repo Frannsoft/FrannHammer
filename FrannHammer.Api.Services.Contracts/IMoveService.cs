@@ -2,7 +2,7 @@
 
 namespace FrannHammer.Api.Services.Contracts
 {
-    public interface IMoveService : ICrudService<IMove>
+    public interface IMoveService : IWriterService<IMove>, IReaderService<IMove>
     {
     }
 }

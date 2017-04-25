@@ -55,7 +55,7 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
 
             var newMove = new Move
             {
-                Id = 99999,
+                Id = "99999",
                 Name = "test"
             };
 

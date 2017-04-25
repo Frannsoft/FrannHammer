@@ -26,10 +26,10 @@ namespace FrannHammer.Api.Services
             return _repository.GetAll();
         }
 
-        public IMovement Add(IMovement movement)
+        public void Add(IMovement movement)
         {
             Guard.VerifyObjectNotNull(movement, nameof(movement));
-            return _repository.Add(movement);
+            _repository.Add(movement);
         }
 
         public void AddMany(IEnumerable<IMovement> movements)

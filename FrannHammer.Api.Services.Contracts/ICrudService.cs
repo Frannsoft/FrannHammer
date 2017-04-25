@@ -3,12 +3,17 @@ using FrannHammer.Domain.Contracts;
 
 namespace FrannHammer.Api.Services.Contracts
 {
-    public interface ICrudService<T>
+    public interface IWriterService<in T>
+        where T : IModel
+    {
+        void Add(T character);
+        void AddMany(IEnumerable<T> models);
+    }
+
+    public interface IReaderService<out T>
         where T : IModel
     {
         T Get(int id, string fields = "");
         IEnumerable<T> GetAll(string fields = "");
-        T Add(T character);
-        void AddMany(IEnumerable<T> models);
     }
 }

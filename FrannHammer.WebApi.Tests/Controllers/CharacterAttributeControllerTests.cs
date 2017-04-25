@@ -53,7 +53,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
                 .Returns(() => new DefaultCharacterAttributeRow(
                     new List<IAttribute> { new CharacterAttribute { Name = "two" } })
                 {
-                    Id = 0,
+                    Id = "0",
                     Name = "testname"
                 });
 
@@ -88,7 +88,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
                         Name = "testname2"
                     }
                     })
-                    { Id = 0 },
+                    { Id = "0" },
                    new DefaultCharacterAttributeRow(new List<IAttribute>
                     {
                         new CharacterAttribute
@@ -100,7 +100,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
                         Name = "testname4"
                     }
                     })
-                   { Id = 1 }
+                   { Id = "1" }
                 });
 
             var controller = new CharacterAttributeController(characterAttributeServiceMock.Object);

@@ -14,7 +14,6 @@ namespace FrannHammer.Domain.Tests
             yield return Tuple.Create("colorTheme", nameof(Character.ColorTheme), typeof(Character));
             yield return Tuple.Create("description", nameof(Character.Description), typeof(Character));
             yield return Tuple.Create("fullUrl", nameof(Character.FullUrl), typeof(Character));
-            yield return Tuple.Create("_id", nameof(Character.Id), typeof(Character));
             yield return Tuple.Create("mainImageUrl", nameof(Character.MainImageUrl), typeof(Character));
             yield return Tuple.Create("name", nameof(Character.Name), typeof(Character));
             yield return Tuple.Create("style", nameof(Character.Style), typeof(Character));
@@ -23,17 +22,13 @@ namespace FrannHammer.Domain.Tests
 
         private static IEnumerable<Tuple<string, string, Type>> CharacterAttributeFriendlyInfo()
         {
-            yield return Tuple.Create("_id", nameof(CharacterAttribute.Id), typeof(CharacterAttribute));
             yield return Tuple.Create("name", nameof(CharacterAttribute.Name), typeof(CharacterAttribute));
-            yield return Tuple.Create("ownerId", nameof(CharacterAttribute.OwnerId), typeof(CharacterAttribute));
-            yield return Tuple.Create("smashAttributeTypeId", nameof(CharacterAttribute.SmashAttributeTypeId), typeof(CharacterAttribute));
+            yield return Tuple.Create("owner", nameof(CharacterAttribute.Owner), typeof(CharacterAttribute));
             yield return Tuple.Create("value", nameof(CharacterAttribute.Value), typeof(CharacterAttribute));
-            yield return Tuple.Create("characterAttributeTypeId", nameof(CharacterAttribute.CharacterAttributeTypeId), typeof(CharacterAttribute));
         }
 
         private static IEnumerable<Tuple<string, string, Type>> MoveFriendlyNameInfo()
         {
-            yield return Tuple.Create("_id", nameof(Move.Id), typeof(Move));
             yield return Tuple.Create("angle", nameof(Move.Angle), typeof(Move));
             yield return Tuple.Create("autoCancel", nameof(Move.AutoCancel), typeof(Move));
             yield return Tuple.Create("baseDamage", nameof(Move.BaseDamage), typeof(Move));
@@ -48,7 +43,6 @@ namespace FrannHammer.Domain.Tests
 
         private static IEnumerable<Tuple<string, string, Type>> MovementFriendlyNameInfo()
         {
-            yield return Tuple.Create("_id", nameof(Movement.Id), typeof(Movement));
             yield return Tuple.Create("name", nameof(Movement.Name), typeof(Movement));
             yield return Tuple.Create("ownerId", nameof(Movement.OwnerId), typeof(Movement));
             yield return Tuple.Create("value", nameof(Movement.Value), typeof(Movement));
@@ -56,7 +50,6 @@ namespace FrannHammer.Domain.Tests
 
         private static IEnumerable<Tuple<string, string, Type>> CharacterAttributeRowFriendlyNameInfo()
         {
-            yield return Tuple.Create("_id", nameof(DefaultCharacterAttributeRow.Id), typeof(DefaultCharacterAttributeRow));
             yield return Tuple.Create("name", nameof(DefaultCharacterAttributeRow.Name), typeof(DefaultCharacterAttributeRow));
             yield return Tuple.Create("characterName", nameof(DefaultCharacterAttributeRow.CharacterName), typeof(DefaultCharacterAttributeRow));
             yield return Tuple.Create("values", nameof(DefaultCharacterAttributeRow.Values), typeof(DefaultCharacterAttributeRow));
@@ -81,7 +74,5 @@ namespace FrannHammer.Domain.Tests
 
             Assert.That(actualFriendlyName, Is.EqualTo(expectedFriendlyName));
         }
-
-
     }
 }
