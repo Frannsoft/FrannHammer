@@ -25,7 +25,7 @@ namespace FrannHammer.WebApi.Controllers
         }
 
         [Route(CharacterAttributesRouteKey + "/{id}")]
-        public IHttpActionResult GetCharacterAttribute(int id, [FromUri] string fields = "")
+        public IHttpActionResult GetCharacterAttribute(string id, [FromUri] string fields = "")
         {
             var content = _characterAttributeService.Get(id, fields);
             return Result(content);

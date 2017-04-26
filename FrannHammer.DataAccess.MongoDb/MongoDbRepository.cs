@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using FrannHammer.DataAccess.Contracts;
 using FrannHammer.Utility;
 using MongoDB.Driver;
@@ -26,11 +25,18 @@ namespace FrannHammer.DataAccess.MongoDb
             _mongoDatabase = mongoDatabase;
         }
 
-        public T Get(int id)
+        public T Get(string id)
         {
-            var filter = Builders<BsonDocument>.Filter.Eq(KeyId, id);
+            Guard.VerifyStringIsNotNullOrEmpty(id, nameof(id));
+            var objectId = new ObjectId(id);
+
+            var filter = Builders<BsonDocument>.Filter.Eq(KeyId, objectId);
             var raw = _mongoDatabase.GetCollection<BsonDocument>(typeof(T).Name).Find(filter).SingleOrDefault();
 
+            if (raw == null)
+            {
+                return default(T);
+            }
             var model = BsonSerializer.Deserialize<T>(raw);
 
             model.Id = raw[KeyId].ToString();
@@ -53,19 +59,31 @@ namespace FrannHammer.DataAccess.MongoDb
 
         public void Update(T model)
         {
-            throw new NotImplementedException();
+            Guard.VerifyObjectNotNull(model, nameof(model));
+            Guard.VerifyStringIsNotNullOrEmpty(model.Id, nameof(model.Id));
+
+            var objectId = new ObjectId(model.Id);
+
+            var replaceResult =_mongoDatabase.GetCollection<T>(typeof(T).Name).ReplaceOne(Builders<T>.Filter.Eq(KeyId, objectId), model);
         }
 
-        public void Delete(T model)
+        public void Delete(string id)
         {
-            var filter = Builders<T>.Filter.Eq(KeyId, model.Id);
+            Guard.VerifyStringIsNotNullOrEmpty(id, nameof(id));
+            var objectId = new ObjectId(id);
+            var filter = Builders<T>.Filter.Eq(KeyId, objectId);
             _mongoDatabase.GetCollection<T>(typeof(T).Name).DeleteOne(filter);
         }
 
-        public void Add(T model)
+        public T Add(T model)
         {
-            model.Id = ObjectId.GenerateNewId().ToString();
-            _mongoDatabase.GetCollection<T>(typeof(T).Name).InsertOne(model);
+            var objectId = ObjectId.GenerateNewId();
+            model.Id = objectId.ToString();
+
+            var collection = _mongoDatabase.GetCollection<T>(typeof(T).Name);
+            collection.InsertOne(model);
+
+            return collection.Find(Builders<T>.Filter.Eq(KeyId, objectId)).FirstOrDefault();
         }
 
         public void AddMany(IEnumerable<T> models)

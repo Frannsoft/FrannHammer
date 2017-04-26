@@ -30,7 +30,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
         public void Error_ReturnsNotFoundResultWhenAttributeDoesNotExist()
         {
             var characterAttributeRepositoryMock = new Mock<IRepository<ICharacterAttributeRow>>();
-            characterAttributeRepositoryMock.Setup(c => c.Get(It.IsInRange(0, 1, Range.Inclusive))).Returns(() =>
+            characterAttributeRepositoryMock.Setup(c => c.Get(It.IsInRange("0", "1", Range.Inclusive))).Returns(() =>
                 new DefaultCharacterAttributeRow(new List<IAttribute>
                 {
                     new CharacterAttribute
@@ -43,7 +43,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
                 new CharacterAttributeController(
                     new DefaultCharacterAttributeService(characterAttributeRepositoryMock.Object));
 
-            var response = controller.GetCharacterAttribute(-1) as NotFoundResult;
+            var response = controller.GetCharacterAttribute("-1") as NotFoundResult;
 
             Assert.That(response, Is.Not.Null);
         }
@@ -53,7 +53,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
         {
             const string expectedName = "testName";
             var moveServiceMock = new Mock<IMoveService>();
-            moveServiceMock.Setup(c => c.Get(It.IsAny<int>(), It.IsAny<string>()))
+            moveServiceMock.Setup(c => c.Get(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(() => new Move
                 {
                     Name = expectedName
@@ -61,7 +61,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
 
             var controller = new MoveController(moveServiceMock.Object);
 
-            var response = controller.GetMove(0) as OkNegotiatedContentResult<IMove>;
+            var response = controller.GetMove("0") as OkNegotiatedContentResult<IMove>;
 
             Assert.That(response, Is.Not.Null);
 

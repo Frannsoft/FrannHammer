@@ -35,7 +35,6 @@ namespace FrannHammer.Seeding.Tests
     public class DefaultSeederIntegrationTests
     {
         protected IMongoDatabase MongoDatabase { get; private set; }
-        protected Type ModelType { get; } = typeof(Character);
 
         [OneTimeSetUp]
         public virtual void OneTimeSetUp()
@@ -163,3 +162,5 @@ namespace FrannHammer.Seeding.Tests
         }
     }
 }
+
+//TODO - cleanup all dependencies.

@@ -30,7 +30,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
         public void Error_ReturnsNotFoundResultWhenAttributeDoesNotExist()
         {
             var movementRepositoryMock = new Mock<IRepository<IMovement>>();
-            movementRepositoryMock.Setup(c => c.Get(It.IsInRange(0, 1, Range.Inclusive))).Returns(() => new Movement
+            movementRepositoryMock.Setup(c => c.Get(It.IsInRange("0", "1", Range.Inclusive))).Returns(() => new Movement
             {
                 Name = "test"
             });
@@ -39,7 +39,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
                 new MovementController(
                     new DefaultMovementService(movementRepositoryMock.Object));
 
-            var response = controller.GetMovement(-1) as NotFoundResult;
+            var response = controller.GetMovement("-1") as NotFoundResult;
 
             Assert.That(response, Is.Not.Null);
         }
@@ -49,7 +49,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
         {
             const string expectedName = "testName";
             var movementServiceMock = new Mock<IMovementService>();
-            movementServiceMock.Setup(c => c.Get(It.IsAny<int>(), It.IsAny<string>()))
+            movementServiceMock.Setup(c => c.Get(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(() => new Movement
                 {
                     Name = expectedName
@@ -57,7 +57,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
 
             var controller = new MovementController(movementServiceMock.Object);
 
-            var response = controller.GetMovement(0) as OkNegotiatedContentResult<IMovement>;
+            var response = controller.GetMovement("0") as OkNegotiatedContentResult<IMovement>;
 
             Assert.That(response, Is.Not.Null);
 

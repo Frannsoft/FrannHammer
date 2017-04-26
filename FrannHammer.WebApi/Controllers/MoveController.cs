@@ -18,7 +18,7 @@ namespace FrannHammer.WebApi.Controllers
         }
 
         [Route(MovesRouteKey + "/{id}")]
-        public IHttpActionResult GetMove(int id, string fields = "")
+        public IHttpActionResult GetMove(string id, string fields = "")
         {
             var move = _moveService.Get(id, fields);
             return Result(move);

@@ -14,28 +14,18 @@ using FrannHammer.WebApi.Controllers;
 namespace FrannHammer.WebApi.MongoDb.Integration.Tests
 {
     [TestFixture]
-    public class CharacterControllerTests
+    public class CharacterControllerTests : BaseControllerTests
     {
-        private IMongoDatabase _mongoDatabase;
         private CharacterController _controller;
 
-        [OneTimeSetUp]
-        public void OneTimeSetUp()
+        public CharacterControllerTests()
+            : base(typeof(Character))
+        { }
+
+        [SetUp]
+        public void SetUp()
         {
-            var classMap = new BsonClassMap(typeof(Character));
-            var characterProperties = typeof(Character).GetProperties().Where(p => p.GetCustomAttribute<FriendlyNameAttribute>() != null);
-
-            foreach (var prop in characterProperties)
-            {
-                classMap.MapMember(prop).SetElementName(prop.GetCustomAttribute<FriendlyNameAttribute>().Name);
-            }
-
-            BsonClassMap.RegisterClassMap(classMap);
-
-            var mongoClient = new MongoClient(new MongoUrl("mongodb://testuser:password@ds058739.mlab.com:58739/testfranndotexe"));
-            _mongoDatabase = mongoClient.GetDatabase("testfranndotexe");
-
-            _controller = new CharacterController(new DefaultCharacterService(new MongoDbRepository<ICharacter>(_mongoDatabase)));
+            _controller = new CharacterController(new DefaultCharacterService(new MongoDbRepository<ICharacter>(MongoDatabase)));
         }
 
         private static void AssertCharacterIsValid(ICharacter character)
@@ -57,7 +47,7 @@ namespace FrannHammer.WebApi.MongoDb.Integration.Tests
         [Test]
         public void GetSingleCharacter()
         {
-            var response = _controller.GetCharacter(1) as OkNegotiatedContentResult<ICharacter>;
+            var response = _controller.GetCharacter("1") as OkNegotiatedContentResult<ICharacter>;
 
             Assert.That(response, Is.Not.Null);
 

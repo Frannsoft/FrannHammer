@@ -16,7 +16,7 @@ namespace FrannHammer.Api.Services
             _characterAttributeRowRepository = characterAttributeRowRepository;
         }
 
-        public ICharacterAttributeRow Get(int id, string fields = "") => _characterAttributeRowRepository.Get(id);
+        public ICharacterAttributeRow Get(string id, string fields = "") => _characterAttributeRowRepository.Get(id);
 
         public IEnumerable<ICharacterAttributeRow> GetAll(string fields = "") => _characterAttributeRowRepository.GetAll();
         public void Add(ICharacterAttributeRow attributeRow)

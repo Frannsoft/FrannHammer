@@ -1,41 +1,29 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Web.Http.Results;
 using FrannHammer.Api.Services;
 using FrannHammer.DataAccess.MongoDb;
 using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.WebApi.Controllers;
-using MongoDB.Bson.Serialization;
-using MongoDB.Driver;
 using NUnit.Framework;
 
 namespace FrannHammer.WebApi.MongoDb.Integration.Tests
 {
     [TestFixture]
-    public class MovementControllerTests
+    public class MovementControllerTests : BaseControllerTests
     {
-        private IMongoDatabase _mongoDatabase;
         private MovementController _controller;
 
-        [OneTimeSetUp]
-        public void OneTimeSetUp()
+
+        public MovementControllerTests()
+            : base(typeof(Movement))
+        { }
+
+        [SetUp]
+        public void SetUp()
         {
-            var classMap = new BsonClassMap(typeof(Movement));
-            var movementProperties = typeof(Movement).GetProperties().Where(p => p.GetCustomAttribute<FriendlyNameAttribute>() != null);
-
-            foreach (var prop in movementProperties)
-            {
-                classMap.MapMember(prop).SetElementName(prop.GetCustomAttribute<FriendlyNameAttribute>().Name);
-            }
-
-            BsonClassMap.RegisterClassMap(classMap);
-
-            var mongoClient = new MongoClient(new MongoUrl("mongodb://testuser:password@ds058739.mlab.com:58739/testfranndotexe"));
-            _mongoDatabase = mongoClient.GetDatabase("testfranndotexe");
-
-            _controller = new MovementController(new DefaultMovementService(new MongoDbRepository<IMovement>(_mongoDatabase)));
+            _controller = new MovementController(new DefaultMovementService(new MongoDbRepository<IMovement>(MongoDatabase)));
         }
 
         private static void AssertmovementIsValid(IMovement movement)
@@ -50,7 +38,7 @@ namespace FrannHammer.WebApi.MongoDb.Integration.Tests
         [Test]
         public void GetSingleMovement()
         {
-            var response = _controller.GetMovement(1) as OkNegotiatedContentResult<IMovement>;
+            var response = _controller.GetMovement("1") as OkNegotiatedContentResult<IMovement>;
 
             Assert.That(response, Is.Not.Null);
 

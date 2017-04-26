@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using FrannHammer.DataAccess.Contracts;
 using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
@@ -10,19 +9,23 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
     [TestFixture]
     public class MoveRepositoryTests : BaseRepositoryTests
     {
-        protected override Type ModelType => typeof(Move);
         private IRepository<IMove> _repository;
+
+        public MoveRepositoryTests()
+            : base(typeof(Move))
+        { }
 
         [Test]
         public void GetSingleMove()
         {
             _repository = new MongoDbRepository<IMove>(MongoDatabase);
 
-            var move = _repository.Get(1);
+            var newlyAddedMove = _repository.Add(new Move { Name = "one" });
+
+            var move = _repository.Get(newlyAddedMove.Id);
 
             Assert.That(move, Is.Not.Null);
-            Assert.That(move.Id, Is.GreaterThan(0));
-            Assert.That(move.OwnerId, Is.GreaterThan(0));
+            Assert.That(move.Id, Is.Not.Null);
             Assert.That(move.Angle, Is.Not.Null);
             Assert.That(move.AutoCancel, Is.Not.Null);
             Assert.That(move.BaseDamage, Is.Not.Null);
@@ -38,6 +41,11 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
         public void GetAllMoves()
         {
             _repository = new MongoDbRepository<IMove>(MongoDatabase);
+
+
+            _repository.Add(new Move { Name = "one" });
+            _repository.Add(new Move { Name = "two" });
+
 
             var moves = _repository.GetAll().ToList();
 
@@ -65,7 +73,7 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
 
             Assert.That(newCount, Is.EqualTo(previousCount + 1));
 
-            _repository.Delete(newMove);
+            _repository.Delete(newMove.Id);
 
             Assert.That(_repository.GetAll().Count(), Is.EqualTo(previousCount));
         }

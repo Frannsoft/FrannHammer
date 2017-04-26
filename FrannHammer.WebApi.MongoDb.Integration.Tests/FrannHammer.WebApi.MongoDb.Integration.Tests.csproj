@@ -72,6 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseControllerTests.cs" />
     <Compile Include="CharacterControllerTests.cs" />
     <Compile Include="MovementControllerTests.cs" />
     <Compile Include="MoveRepositoryTests.cs" />

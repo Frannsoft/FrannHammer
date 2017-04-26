@@ -6,15 +6,15 @@ using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using NUnit.Framework;
 
-namespace FrannHammer.DataAccess.MongoDb.Tests
+namespace FrannHammer.WebApi.MongoDb.Integration.Tests
 {
-    public abstract class BaseRepositoryTests
+    public abstract class BaseControllerTests
     {
         protected IMongoDatabase MongoDatabase { get; private set; }
 
-        protected BaseRepositoryTests(Type modelType)
+        protected BaseControllerTests(Type modelType)
         {
-            if(!BsonClassMap.IsClassMapRegistered(typeof(MongoModel)))
+            if (!BsonClassMap.IsClassMapRegistered(typeof(MongoModel)))
             {
                 BsonClassMap.RegisterClassMap<MongoModel>(m =>
                 {

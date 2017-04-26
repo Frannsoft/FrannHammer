@@ -10,17 +10,22 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
     [TestFixture]
     public class MovementRepositoryTests : BaseRepositoryTests
     {
-        protected override Type ModelType => typeof(Movement);
         private IRepository<IMovement> _repository;
+
+        public MovementRepositoryTests()
+            : base(typeof(Movement))
+        { }
 
         [Test]
         public void GetSingleMovement()
         {
             _repository = new MongoDbRepository<IMovement>(MongoDatabase);
 
-            var movement = _repository.Get(1);
+            var newlyAddedMovement = _repository.Add(new Movement { Name = "one", Value = "test" });
+
+            var movement = _repository.Get(newlyAddedMovement.Id);
+
             Assert.That(movement, Is.Not.Null);
-            Assert.That(movement.OwnerId, Is.GreaterThan(0));
             Assert.That(movement.Value, Is.Not.Null);
         }
 
@@ -28,6 +33,9 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
         public void GetAllMovements()
         {
             _repository = new MongoDbRepository<IMovement>(MongoDatabase);
+
+            _repository.Add(new Movement { Name = "one" });
+            _repository.Add(new Movement { Name = "two" });
 
             var movements = _repository.GetAll().ToList();
 
@@ -57,7 +65,7 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
 
             Assert.That(newCount, Is.EqualTo(previousCount + 1));
 
-            _repository.Delete(newlyAddedMovement);
+            _repository.Delete(newlyAddedMovement.Id);
 
             Assert.That(_repository.GetAll().Count(), Is.EqualTo(previousCount));
         }

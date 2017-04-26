@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FB28F7F5-3B60-4801-A340-20F7994A80E4}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{6034D27A-9E5A-473E-866C-B2462BB132E3}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FrannHammer.Seeding.Tests</RootNamespace>
-    <AssemblyName>FrannHammer.Seeding.Tests</AssemblyName>
+    <RootNamespace>FrannHammer.Seeder</RootNamespace>
+    <AssemblyName>FrannHammer.Seeder</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -34,10 +36,6 @@
       <HintPath>..\packages\Autofac.4.5.0\lib\net45\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Castle.Core.4.0.0\lib\net45\Castle.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="MongoDB.Bson, Version=2.4.3.23, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MongoDB.Bson.2.4.3\lib\net45\MongoDB.Bson.dll</HintPath>
       <Private>True</Private>
@@ -48,14 +46,6 @@
     </Reference>
     <Reference Include="MongoDB.Driver.Core, Version=2.4.3.23, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MongoDB.Driver.Core.2.4.3\lib\net45\MongoDB.Driver.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Moq, Version=4.7.8.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <HintPath>..\packages\Moq.4.7.8\lib\net45\Moq.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="nunit.framework, Version=3.6.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.3.6.1\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -72,12 +62,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DefaultSeederIntegrationTests.cs" />
-    <Compile Include="DefaultSeederTests.cs" />
+    <Compile Include="ContainerModules\ApiServicesModule.cs" />
+    <Compile Include="Container.cs" />
+    <Compile Include="ContainerModules\DatabaseModule.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ContainerModules\RepositoryModule.cs" />
+    <Compile Include="ContainerModules\ScrapingModule.cs" />
+    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -105,13 +100,13 @@
       <Project>{4DB6C856-581A-4B69-BB6A-4AEBF3929C5E}</Project>
       <Name>FrannHammer.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.Seeding.Contracts\FrannHammer.Seeding.Contracts.csproj">
+      <Project>{fee777b3-50b2-4e8d-8647-1c9b1ad6cb72}</Project>
+      <Name>FrannHammer.Seeding.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FrannHammer.Seeding\FrannHammer.Seeding.csproj">
       <Project>{0DAF993A-5379-4436-B1BF-A1D87ECBF40F}</Project>
       <Name>FrannHammer.Seeding</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FrannHammer.WebScraper\FrannHammer.WebScraper.csproj">
-      <Project>{9D3C1343-F4B4-4538-B0E0-590D3B2F5DE3}</Project>
-      <Name>FrannHammer.WebScraper</Name>
     </ProjectReference>
     <ProjectReference Include="..\FrannHammer.WebScraping.Contracts\FrannHammer.WebScraping.Contracts.csproj">
       <Project>{C6F2A84F-6B78-494F-9293-0BB666A64AB9}</Project>
@@ -129,9 +124,6 @@
       <Project>{B7686798-61B2-4208-86EF-0076BF1301BE}</Project>
       <Name>FrannHammer.WebScraping</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

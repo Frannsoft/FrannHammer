@@ -30,7 +30,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
         public void Error_ReturnsNotFoundResultWhenAttributeDoesNotExist()
         {
             var characterAttributeRepositoryMock = new Mock<IRepository<ICharacterAttributeRow>>();
-            characterAttributeRepositoryMock.Setup(c => c.Get(It.IsInRange(0, 1, Range.Inclusive))).Returns(() => new DefaultCharacterAttributeRow(
+            characterAttributeRepositoryMock.Setup(c => c.Get(It.IsInRange("0", "1", Range.Inclusive))).Returns(() => new DefaultCharacterAttributeRow(
                 new List<IAttribute> { new CharacterAttribute { Name = "one" } })
             {
                 Name = "test"
@@ -40,7 +40,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
                 new CharacterAttributeController(
                     new DefaultCharacterAttributeService(characterAttributeRepositoryMock.Object));
 
-            var response = controller.GetCharacterAttribute(-1) as NotFoundResult;
+            var response = controller.GetCharacterAttribute("-1") as NotFoundResult;
 
             Assert.That(response, Is.Not.Null);
         }
@@ -49,7 +49,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
         public void GetACharacterAttributeName()
         {
             var characterAttributeServiceMock = new Mock<ICharacterAttributeRowService>();
-            characterAttributeServiceMock.Setup(c => c.Get(It.IsAny<int>(), It.IsAny<string>()))
+            characterAttributeServiceMock.Setup(c => c.Get(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(() => new DefaultCharacterAttributeRow(
                     new List<IAttribute> { new CharacterAttribute { Name = "two" } })
                 {
@@ -59,7 +59,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
 
             var controller = new CharacterAttributeController(characterAttributeServiceMock.Object);
 
-            var response = controller.GetCharacterAttribute(0) as OkNegotiatedContentResult<ICharacterAttributeRow>;
+            var response = controller.GetCharacterAttribute("0") as OkNegotiatedContentResult<ICharacterAttributeRow>;
 
             Assert.That(response, Is.Not.Null);
 

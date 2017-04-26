@@ -55,11 +55,11 @@ namespace FrannHammer.Api.Services.Tests
             };
 
             var characterRepositoryMock = new Mock<IRepository<ICharacter>>();
-            characterRepositoryMock.Setup(c => c.Get(It.IsAny<int>())).Returns<int>(id => fakeCharacters.FirstOrDefault(c => c.Id == id.ToString()));
+            characterRepositoryMock.Setup(c => c.Get(It.IsAny<string>())).Returns<string>(id => fakeCharacters.FirstOrDefault(c => c.Id == id.ToString()));
 
             var service = new DefaultCharacterService(characterRepositoryMock.Object);
 
-            var character = service.Get(0);
+            var character = service.Get("0");
 
             Assert.That(character, Is.Null);
         }

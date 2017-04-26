@@ -13,7 +13,7 @@ namespace FrannHammer.Api.Services.Contracts
     public interface IReaderService<out T>
         where T : IModel
     {
-        T Get(int id, string fields = "");
+        T Get(string id, string fields = "");
         IEnumerable<T> GetAll(string fields = "");
     }
 }

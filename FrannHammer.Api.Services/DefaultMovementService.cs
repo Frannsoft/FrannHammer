@@ -16,7 +16,7 @@ namespace FrannHammer.Api.Services
             _repository = repository;
         }
 
-        public IMovement Get(int id, string fields = "")
+        public IMovement Get(string id, string fields = "")
         {
             return _repository.Get(id);
         }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using FrannHammer.DataAccess.Contracts;
 using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
@@ -12,16 +11,25 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
     {
         private IRepository<IAttribute> _repository;
 
-        protected override Type ModelType => typeof(CharacterAttribute);
+        public CharacterAttributeRepositoryTests()
+            : base(typeof(CharacterAttribute))
+        { }
 
         [Test]
         public void GetSingleCharacterAttribute()
         {
             _repository = new MongoDbRepository<IAttribute>(MongoDatabase);
 
-            var characterAttribute = _repository.Get(1);
+            var newlyAddedCharacterAttribute = _repository.Add(new CharacterAttribute
+            {
+                Name = "one",
+                Owner = "me",
+                Value = "test"
+            });
+            var characterAttribute = _repository.Get(newlyAddedCharacterAttribute.Id);
+
             Assert.That(characterAttribute, Is.Not.Null);
-            Assert.That(characterAttribute.Id, Is.GreaterThan(0));
+            Assert.That(characterAttribute.Id, Is.Not.Null);
             Assert.That(characterAttribute.Name, Is.Not.Null);
             Assert.That(characterAttribute.Owner, Is.Not.Null);
             Assert.That(characterAttribute.Value, Is.Not.Null);
@@ -31,6 +39,9 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
         public void GetAllCharacterAttributes()
         {
             _repository = new MongoDbRepository<IAttribute>(MongoDatabase);
+
+            _repository.Add(new CharacterAttribute { Name = "one" });
+            _repository.Add(new CharacterAttribute { Name = "two" });
 
             var characterAttributes = _repository.GetAll().ToList();
 
@@ -58,7 +69,7 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
 
             Assert.That(newCount, Is.EqualTo(previousCount + 1));
 
-            _repository.Delete(newCharacterAttribute);
+            _repository.Delete(newCharacterAttribute.Id);
 
             Assert.That(_repository.GetAll().Count(), Is.EqualTo(previousCount));
         }

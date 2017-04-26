@@ -56,11 +56,11 @@ namespace FrannHammer.Api.Services.Tests
             };
 
             var movementRepositoryMock = new Mock<IRepository<IMovement>>();
-            movementRepositoryMock.Setup(c => c.Get(It.IsAny<int>())).Returns<int>(id => fakeMovements.FirstOrDefault(c => c.Id == id.ToString()));
+            movementRepositoryMock.Setup(c => c.Get(It.IsAny<string>())).Returns<string>(id => fakeMovements.FirstOrDefault(c => c.Id == id.ToString()));
 
             var service = new DefaultMovementService(movementRepositoryMock.Object);
 
-            var movement = service.Get(0);
+            var movement = service.Get("0");
 
             Assert.That(movement, Is.Null);
         }

@@ -38,7 +38,7 @@ namespace FrannHammer.WebApi.Controllers
         /// E.g., id,name to get back just the id and name.</para></param>
         /// <returns></returns>
         [Route(MovementsRouteKey + "/{id}")]
-        public IHttpActionResult GetMovement(int id, [FromUri] string fields = "")
+        public IHttpActionResult GetMovement(string id, [FromUri] string fields = "")
         {
             var content = _movementService.Get(id, fields);
             return Result(content);

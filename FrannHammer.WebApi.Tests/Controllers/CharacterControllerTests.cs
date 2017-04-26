@@ -31,13 +31,13 @@ namespace FrannHammer.WebApi.Tests.Controllers
         public void GetCharacterDisplayName()
         {
             var characterServiceMock = new Mock<ICharacterService>();
-            characterServiceMock.Setup(c => c.Get(It.IsAny<int>(), It.IsAny<string>())).Returns(() => new Character
+            characterServiceMock.Setup(c => c.Get(It.IsAny<string>(), It.IsAny<string>())).Returns(() => new Character
             {
                 DisplayName = Characters.Greninja.DisplayName
             });
             var controller = new CharacterController(characterServiceMock.Object);
 
-            var response = controller.GetCharacter(0) as OkNegotiatedContentResult<ICharacter>;
+            var response = controller.GetCharacter("0") as OkNegotiatedContentResult<ICharacter>;
 
             Assert.That(response, Is.Not.Null);
 
@@ -52,14 +52,14 @@ namespace FrannHammer.WebApi.Tests.Controllers
         public void Error_ReturnsNotFoundResultWhenCharacterDoesNotExist()
         {
             var characterRepositoryMock = new Mock<IRepository<ICharacter>>();
-            characterRepositoryMock.Setup(c => c.Get(It.IsInRange(0, 1, Range.Inclusive))).Returns(() => new
+            characterRepositoryMock.Setup(c => c.Get(It.IsInRange("0", "1", Range.Inclusive))).Returns(() => new
                 Character
             {
                 Name = "test"
             });
 
             var controller = new CharacterController(new DefaultCharacterService(characterRepositoryMock.Object));
-            var response = controller.GetCharacter(-1) as NotFoundResult;
+            var response = controller.GetCharacter("-1") as NotFoundResult;
 
             Assert.That(response, Is.Not.Null);
         }
@@ -70,20 +70,20 @@ namespace FrannHammer.WebApi.Tests.Controllers
             const string characterName = "test";
 
             var characterRepositoryMock = new Mock<IRepository<ICharacter>>();
-            characterRepositoryMock.Setup(c => c.Get(It.IsInRange(0, 1, Range.Inclusive))).Returns(() => new
+            characterRepositoryMock.Setup(c => c.Get(It.IsInRange("0", "1", Range.Inclusive))).Returns(() => new
                 Character
             {
                 ColorTheme = "#fff",
                 Name = characterName
             });
-            characterRepositoryMock.Setup(c => c.Get(It.IsInRange(2, 3, Range.Inclusive))).Returns(() => new
+            characterRepositoryMock.Setup(c => c.Get(It.IsInRange("2", "3", Range.Inclusive))).Returns(() => new
                 Character
             {
                 Name = "test2"
             });
 
             var controller = new CharacterController(new DefaultCharacterService(characterRepositoryMock.Object));
-            var response = controller.GetCharacter(1) as OkNegotiatedContentResult<ICharacter>;
+            var response = controller.GetCharacter("1") as OkNegotiatedContentResult<ICharacter>;
 
             // ReSharper disable once PossibleNullReferenceException
             var character = response.Content;
