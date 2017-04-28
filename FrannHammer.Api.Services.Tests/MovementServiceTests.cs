@@ -7,19 +7,27 @@ using FrannHammer.Domain.Contracts;
 using MongoDB.Bson;
 using Moq;
 using NUnit.Framework;
+using Ploeh.AutoFixture;
+using Ploeh.AutoFixture.Kernel;
 
 namespace FrannHammer.Api.Services.Tests
 {
     [TestFixture]
-    public class MovementmentServiceTests
+    public class MovementmentServiceTests : BaseServiceTests
     {
+        [SetUp]
+        public override void SetUp()
+        {
+            Fixture.Customizations.Add(
+                new TypeRelay(
+                    typeof(IMovement),
+                    typeof(Movement)));
+        }
+
         [Test]
         public void AddSingleMovement()
         {
-            var fakeMovements = new List<IMovement>
-            {
-                new Movement {Name = "one"}
-            };
+            var fakeMovements = Fixture.CreateMany<IMovement>().ToList();
 
             var movementRepositoryMock = new Mock<IRepository<IMovement>>();
             movementRepositoryMock.Setup(c => c.GetAll()).Returns(() => fakeMovements);
@@ -31,11 +39,8 @@ namespace FrannHammer.Api.Services.Tests
 
             int previousCount = service.GetAll().Count();
 
-            var newMovement = new Movement
-            {
-                Id = "999",
-                Name = "two"
-            };
+            var newMovement = Fixture.Create<IMovement>();
+
             service.Add(newMovement);
 
             int newCount = service.GetAll().Count();
@@ -46,14 +51,7 @@ namespace FrannHammer.Api.Services.Tests
         [Test]
         public void ReturnsNullForNoMovementFoundById()
         {
-            var fakeMovements = new List<IMovement>
-            {
-                new Movement
-                {
-                    Id = "1",
-                    Name = "one"
-                }
-            };
+            var fakeMovements = Fixture.CreateMany<IMovement>().ToList();
 
             var movementRepositoryMock = new Mock<IRepository<IMovement>>();
             movementRepositoryMock.Setup(c => c.Get(It.IsAny<string>())).Returns<string>(id => fakeMovements.FirstOrDefault(c => c.Id == id.ToString()));

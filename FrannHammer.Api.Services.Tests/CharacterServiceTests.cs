@@ -6,19 +6,27 @@ using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
 using Moq;
 using NUnit.Framework;
+using Ploeh.AutoFixture;
+using Ploeh.AutoFixture.Kernel;
 
 namespace FrannHammer.Api.Services.Tests
 {
     [TestFixture]
-    public class CharacterServiceTests
+    public class CharacterServiceTests : BaseServiceTests
     {
+        [SetUp]
+        public override void SetUp()
+        {
+            Fixture.Customizations.Add(
+                new TypeRelay(
+                    typeof(ICharacter),
+                    typeof(Character)));
+        }
+
         [Test]
         public void AddSingleCharacter()
         {
-            var fakeCharacters = new List<ICharacter>
-            {
-                new Character {Name = "one"}
-            };
+            var fakeCharacters = Fixture.CreateMany<ICharacter>().ToList();
 
             var characterRepositoryMock = new Mock<IRepository<ICharacter>>();
             characterRepositoryMock.Setup(c => c.GetAll()).Returns(() => fakeCharacters);
@@ -30,11 +38,7 @@ namespace FrannHammer.Api.Services.Tests
 
             int previousCount = service.GetAll().Count();
 
-            var newCharacter = new Character
-            {
-                Id = "999",
-                Name = "two"
-            };
+            var newCharacter = Fixture.Create<ICharacter>();
             service.Add(newCharacter);
 
             int newCount = service.GetAll().Count();
@@ -45,14 +49,7 @@ namespace FrannHammer.Api.Services.Tests
         [Test]
         public void ReturnsNullForNoCharacterFoundById()
         {
-            var fakeCharacters = new List<ICharacter>
-            {
-                new Character
-                {
-                    Id = "1",
-                    Name = "one"
-                }
-            };
+            var fakeCharacters = Fixture.CreateMany<ICharacter>().ToList();
 
             var characterRepositoryMock = new Mock<IRepository<ICharacter>>();
             characterRepositoryMock.Setup(c => c.Get(It.IsAny<string>())).Returns<string>(id => fakeCharacters.FirstOrDefault(c => c.Id == id.ToString()));

@@ -6,22 +6,34 @@ using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
 using Moq;
 using NUnit.Framework;
+using Ploeh.AutoFixture;
+using Ploeh.AutoFixture.Kernel;
 
 namespace FrannHammer.Api.Services.Tests
 {
     [TestFixture]
-    public class CharacterAttributeServiceTests
+    public class CharacterAttributeServiceTests : BaseServiceTests
     {
+        [SetUp]
+        public override void SetUp()
+        {
+            Fixture.Customizations.Add(
+                new TypeRelay(
+                    typeof(IAttribute),
+                    typeof(CharacterAttribute)));
+
+            Fixture.Customizations.Add(
+                new TypeRelay(
+                    typeof(ICharacterAttributeRow),
+                    typeof(DefaultCharacterAttributeRow)));
+        }
+
         [Test]
         public void AddSingleCharacterAttribute()
         {
-            var fakeCharacterAttributes = new List<ICharacterAttributeRow>
-            {
-                new DefaultCharacterAttributeRow(new List<IAttribute>
-                {
-                    new CharacterAttribute {Name = "one"}
-                })
-            };
+            var characterAttributeRows = Fixture.CreateMany<ICharacterAttributeRow>();
+
+            var fakeCharacterAttributes = new List<ICharacterAttributeRow>(characterAttributeRows);
 
             var characterAttributeRepositoryMock = new Mock<IRepository<ICharacterAttributeRow>>();
             characterAttributeRepositoryMock.Setup(c => c.GetAll()).Returns(() => fakeCharacterAttributes);
@@ -33,14 +45,8 @@ namespace FrannHammer.Api.Services.Tests
 
             int previousCount = service.GetAll().Count();
 
-            var newCharacterAttributeRow = new DefaultCharacterAttributeRow(new List<IAttribute>
-            {
-                new CharacterAttribute
-                {
-                    Id = "999",
-                    Name = "two"
-                }
-            });
+            var newCharacterAttributes = Fixture.CreateMany<IAttribute>();
+            var newCharacterAttributeRow = new DefaultCharacterAttributeRow(newCharacterAttributes);
             service.Add(newCharacterAttributeRow);
 
             int newCount = service.GetAll().Count();
@@ -51,16 +57,12 @@ namespace FrannHammer.Api.Services.Tests
         [Test]
         public void ReturnsNullForNoCharacterAttributeFoundById()
         {
-            var fakeCharacterAttributes = new List<ICharacterAttributeRow>
-            {
-                new DefaultCharacterAttributeRow(new List<IAttribute>
-                {
-                    new CharacterAttribute {Name = "one"}
-                })
-            };
+            var characterAttributeRows = Fixture.CreateMany<DefaultCharacterAttributeRow>();
+
+            var fakeCharacterAttributeRows = new List<ICharacterAttributeRow>(characterAttributeRows);
 
             var characterAttributeRepositoryMock = new Mock<IRepository<ICharacterAttributeRow>>();
-            characterAttributeRepositoryMock.Setup(c => c.Get(It.IsInRange("1","2", Range.Inclusive))).Returns<string>(id => fakeCharacterAttributes.FirstOrDefault(c => c.Id == id.ToString()));
+            characterAttributeRepositoryMock.Setup(c => c.Get(It.IsInRange("1", "2", Range.Inclusive))).Returns<string>(id => fakeCharacterAttributeRows.FirstOrDefault(c => c.Id == id.ToString()));
 
             var service = new DefaultCharacterAttributeService(characterAttributeRepositoryMock.Object);
 

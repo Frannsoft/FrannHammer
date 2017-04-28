@@ -14,7 +14,7 @@ namespace FrannHammer.Domain
         [FriendlyName("values")]
         public IEnumerable<IAttribute> Values { get; }
 
-        public DefaultCharacterAttributeRow(IList<IAttribute> attributes)
+        public DefaultCharacterAttributeRow(IEnumerable<IAttribute> attributes)
         {
             Guard.VerifyObjectNotNull(attributes, nameof(attributes));
             Values = attributes;
