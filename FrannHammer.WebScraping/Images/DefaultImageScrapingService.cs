@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Threading.Tasks;
 using FrannHammer.Utility;
 using FrannHammer.WebScraping.Contracts.Images;

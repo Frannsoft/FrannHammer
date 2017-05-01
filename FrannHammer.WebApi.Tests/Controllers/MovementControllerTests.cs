@@ -10,12 +10,23 @@ using FrannHammer.Domain.Contracts;
 using FrannHammer.WebApi.Controllers;
 using Moq;
 using NUnit.Framework;
+using Ploeh.AutoFixture;
+using Ploeh.AutoFixture.Kernel;
 
 namespace FrannHammer.WebApi.Tests.Controllers
 {
     [TestFixture]
-    public class MovementControllerTests
+    public class MovementControllerTests : BaseControllerTests
     {
+        [SetUp]
+        public override void SetUp()
+        {
+            Fixture.Customizations.Add(
+                new TypeRelay(
+                    typeof(IMovement),
+                    typeof(Movement)));
+        }
+
         [Test]
         public void ConstructorRejectsNullMovementService()
         {
@@ -30,10 +41,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
         public void Error_ReturnsNotFoundResultWhenAttributeDoesNotExist()
         {
             var movementRepositoryMock = new Mock<IRepository<IMovement>>();
-            movementRepositoryMock.Setup(c => c.Get(It.IsInRange("0", "1", Range.Inclusive))).Returns(() => new Movement
-            {
-                Name = "test"
-            });
+            movementRepositoryMock.Setup(c => c.Get(It.IsInRange("0", "1", Range.Inclusive))).Returns(() => Fixture.Create<IMovement>());
 
             var controller =
                 new MovementController(
@@ -47,13 +55,10 @@ namespace FrannHammer.WebApi.Tests.Controllers
         [Test]
         public void GetAMovementName()
         {
-            const string expectedName = "testName";
+            var testMovement = Fixture.Create<IMovement>();
             var movementServiceMock = new Mock<IMovementService>();
             movementServiceMock.Setup(c => c.Get(It.IsAny<string>(), It.IsAny<string>()))
-                .Returns(() => new Movement
-                {
-                    Name = expectedName
-                });
+                .Returns(() => testMovement);
 
             var controller = new MovementController(movementServiceMock.Object);
 
@@ -65,7 +70,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
             var movement = response.Content;
 
             Assert.That(movement.Name, Is.Not.Empty);
-            Assert.That(movement.Name, Is.EqualTo(expectedName), $"Movement name was not equal to {expectedName}");
+            Assert.That(movement.Name, Is.EqualTo(testMovement.Name), $"Movement name was not equal to {testMovement.Name}");
         }
 
         [Test]
@@ -73,17 +78,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
         {
             var movementServiceMock = new Mock<IMovementService>();
             movementServiceMock.Setup(c => c.GetAll(It.IsAny<string>()))
-                .Returns(() => new List<IMovement>
-                {
-                    new Movement
-                    {
-                        Name = "testname"
-                    },
-                    new Movement
-                    {
-                        Name = "testname2"
-                    }
-                });
+                .Returns(() => Fixture.CreateMany<IMovement>());
 
             var controller = new MovementController(movementServiceMock.Object);
 
@@ -100,7 +95,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
             movements.ForEach(attribute =>
             {
                 Assert.That(attribute.Name, Is.Not.Empty);
-                Assert.That(attribute.Name, Is.Not.Empty);
+                Assert.That(attribute.Value, Is.Not.Empty);
             });
         }
     }

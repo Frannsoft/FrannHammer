@@ -10,12 +10,28 @@ using FrannHammer.Domain.Contracts;
 using FrannHammer.WebApi.Controllers;
 using Moq;
 using NUnit.Framework;
+using Ploeh.AutoFixture;
+using Ploeh.AutoFixture.Kernel;
 
 namespace FrannHammer.WebApi.Tests.Controllers
 {
     [TestFixture]
-    public class CharacterAttributeControllerTests
+    public class CharacterAttributeControllerTests : BaseControllerTests
     {
+        [SetUp]
+        public override void SetUp()
+        {
+            Fixture.Customizations.Add(
+                new TypeRelay(
+                    typeof(IAttribute),
+                    typeof(CharacterAttribute)));
+
+            Fixture.Customizations.Add(
+               new TypeRelay(
+                   typeof(ICharacterAttributeRow),
+                   typeof(DefaultCharacterAttributeRow)));
+        }
+
         [Test]
         public void ConstructorRejectsNullCharacterAttributeService()
         {
@@ -30,36 +46,32 @@ namespace FrannHammer.WebApi.Tests.Controllers
         public void Error_ReturnsNotFoundResultWhenAttributeDoesNotExist()
         {
             var characterAttributeRepositoryMock = new Mock<IRepository<ICharacterAttributeRow>>();
-            characterAttributeRepositoryMock.Setup(c => c.Get(It.IsInRange("0", "1", Range.Inclusive))).Returns(() => new DefaultCharacterAttributeRow(
-                new List<IAttribute> { new CharacterAttribute { Name = "one" } })
-            {
-                Name = "test"
-            });
+            characterAttributeRepositoryMock.Setup(c => c.Get(It.IsInRange("0", "1", Range.Inclusive))).Returns(()
+                => Fixture.Create<ICharacterAttributeRow>());
 
             var controller =
                 new CharacterAttributeController(
                     new DefaultCharacterAttributeService(characterAttributeRepositoryMock.Object));
 
-            var response = controller.GetCharacterAttribute("-1") as NotFoundResult;
+            var response = controller.Get("-1") as NotFoundResult;
 
             Assert.That(response, Is.Not.Null);
         }
 
         [Test]
-        public void GetACharacterAttributeName()
+        public void GetSingleCharacterAttributeRow()
         {
+            var fakeCharacterAttributeRow = Fixture.Create<ICharacterAttributeRow>();
+            var fakeAttributes = fakeCharacterAttributeRow.Values.ToList();
+            var firstFakeAttribute = fakeAttributes[0];
+
             var characterAttributeServiceMock = new Mock<ICharacterAttributeRowService>();
             characterAttributeServiceMock.Setup(c => c.Get(It.IsAny<string>(), It.IsAny<string>()))
-                .Returns(() => new DefaultCharacterAttributeRow(
-                    new List<IAttribute> { new CharacterAttribute { Name = "two" } })
-                {
-                    Id = "0",
-                    Name = "testname"
-                });
+                .Returns(() => fakeCharacterAttributeRow);
 
             var controller = new CharacterAttributeController(characterAttributeServiceMock.Object);
 
-            var response = controller.GetCharacterAttribute("0") as OkNegotiatedContentResult<ICharacterAttributeRow>;
+            var response = controller.Get(firstFakeAttribute.Id) as OkNegotiatedContentResult<ICharacterAttributeRow>;
 
             Assert.That(response, Is.Not.Null);
 
@@ -67,45 +79,20 @@ namespace FrannHammer.WebApi.Tests.Controllers
             var attribute = response.Content;
 
             Assert.That(attribute.Name, Is.Not.Empty);
-            Assert.That(attribute.Name, Is.EqualTo("testname"), "Character name was not equal to testname");
+            Assert.That(attribute.Name, Is.EqualTo(fakeCharacterAttributeRow.Name), $"Character name was not equal to {fakeCharacterAttributeRow.Name}");
+            Assert.That(attribute.Values.Count, Is.GreaterThan(0));
         }
 
         [Test]
-        public void GetManyCharacterAttributes()
+        public void GetManyCharacterAttributeRows()
         {
             var characterAttributeServiceMock = new Mock<ICharacterAttributeRowService>();
             characterAttributeServiceMock.Setup(c => c.GetAll(It.IsAny<string>()))
-                .Returns(() => new List<ICharacterAttributeRow>
-                {
-                    new DefaultCharacterAttributeRow(new List<IAttribute>
-                    {
-                        new CharacterAttribute
-                    {
-                        Name = "testname"
-                    },
-                    new CharacterAttribute
-                    {
-                        Name = "testname2"
-                    }
-                    })
-                    { Id = "0" },
-                   new DefaultCharacterAttributeRow(new List<IAttribute>
-                    {
-                        new CharacterAttribute
-                    {
-                        Name = "testname3"
-                    },
-                    new CharacterAttribute
-                    {
-                        Name = "testname4"
-                    }
-                    })
-                   { Id = "1" }
-                });
+                .Returns(() => Fixture.CreateMany<ICharacterAttributeRow>());
 
             var controller = new CharacterAttributeController(characterAttributeServiceMock.Object);
 
-            var response = controller.GetCharacterAttributes() as OkNegotiatedContentResult<IEnumerable<ICharacterAttributeRow>>;
+            var response = controller.GetAll() as OkNegotiatedContentResult<IEnumerable<ICharacterAttributeRow>>;
 
             Assert.That(response, Is.Not.Null);
 

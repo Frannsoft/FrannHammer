@@ -6,6 +6,7 @@ using FrannHammer.Domain.Contracts;
 using FrannHammer.Utility;
 using FrannHammer.WebScraping.Contracts.Attributes;
 using FrannHammer.WebScraping.Contracts.HtmlParsing;
+using FrannHammer.WebScraping.Domain.Contracts;
 using HtmlAgilityPack;
 
 namespace FrannHammer.WebScraping.Attributes
@@ -13,16 +14,18 @@ namespace FrannHammer.WebScraping.Attributes
     public abstract class AttributeScraper : IAttributeScraper
     {
         public abstract string AttributeName { get; }
-        public virtual Func<string, IEnumerable<ICharacterAttributeRow>> Scrape { get; }
+        public virtual Func<WebCharacter, IEnumerable<ICharacterAttributeRow>> Scrape { get; }
 
         protected AttributeScraper(string sourceUrl, IAttributeScrapingServices scrapingServices)
         {
             Guard.VerifyStringIsNotNullOrEmpty(sourceUrl, nameof(sourceUrl));
             Guard.VerifyObjectNotNull(scrapingServices, nameof(scrapingServices));
 
-            Scrape = characterName =>
+            Scrape = character =>
             {
-                Guard.VerifyStringIsNotNullOrEmpty(characterName, nameof(characterName));
+                Guard.VerifyObjectNotNull(character, nameof(character));
+                Guard.VerifyStringIsNotNullOrEmpty(character.Name, nameof(character.Name));
+
                 var attributeValueRows = new List<ICharacterAttributeRow>();
                 var htmlParser = scrapingServices.CreateParserFromSourceUrl(sourceUrl);
 
@@ -30,26 +33,47 @@ namespace FrannHammer.WebScraping.Attributes
                     htmlParser.GetSingle(ScrapingConstants.XPathTableNodeAttributesWithDescription) ??
                     htmlParser.GetSingle(ScrapingConstants.XPathTableNodeAttributesWithNoDescription);
 
-                string xpath = ScrapingConstants.XPathEveryoneElseTableRow.Replace(ScrapingConstants.EveryoneOneElseAttributeKey, characterName);
-                var attributeTableRows = HtmlNode.CreateNode(attributeTableHtml)?.SelectNodes(xpath);
+                string xpath = ScrapingConstants.XPathEveryoneElseTableRow.Replace(ScrapingConstants.EveryoneOneElseAttributeKey, character.Name);
+                var tableHtmlNode = HtmlNode.CreateNode(attributeTableHtml);
+
+                //scrape using default character name
+                var attributeTableRows = tableHtmlNode?.SelectNodes(xpath);
 
                 if (attributeTableRows == null)
                 {
-                    attributeTableRows =
-                        HtmlNode.CreateNode(attributeTableHtml)?
-                            .SelectNodes(ScrapingConstants.XPathEveryoneElseTableRow);
+                    //try all configured potential names for the character
+                    foreach (string name in character.PotentialScrapingNames)
+                    {
+                        string altCharacterNameXPath = ScrapingConstants.XPathEveryoneElseTableRow.Replace(ScrapingConstants.EveryoneOneElseAttributeKey, name);
+                        attributeTableRows = tableHtmlNode?.SelectNodes(altCharacterNameXPath);
 
+                        if (attributeTableRows != null)
+                        {
+                            break;
+                        }
+                    }
+
+                    //assume it's lumped in with everyone else value
+                    if (attributeTableRows == null)
+                    {
+                        attributeTableRows =
+                            tableHtmlNode?
+                                .SelectNodes(ScrapingConstants.XPathEveryoneElseTableRow);
+                    }
+
+                    //try with modified 'everyone else' casing
                     if (attributeTableRows == null)
                     {
                         //GRRR CASING...'Everyone Else' vs 'Everyone else'.  I hate xpath.
                         attributeTableRows =
-                       HtmlNode.CreateNode(attributeTableHtml)?
-                           .SelectNodes(ScrapingConstants.XPathEveryoneElseTableRow.Replace(ScrapingConstants.EveryoneOneElseAttributeKey, "Everyone else"));
+                       tableHtmlNode?.SelectNodes(ScrapingConstants.XPathEveryoneElseTableRow.Replace(ScrapingConstants.EveryoneOneElseAttributeKey, "Everyone else"));
 
                         if (attributeTableRows == null)
                         {
-                            throw new Exception(
-                                "Error getting attribute table data after attempting to scrape full table");
+                            //There is no data here.  Just return empty.  Sometimes that might be expected (like in Counters) so we shouldn't throw.
+                            //throw new Exception(
+                            //    $"Error getting attribute table data after attempting to scrape full table for character '{character.Name}' at url '{sourceUrl}'");
+                            return attributeValueRows; 
                         }
                     }
                 }
@@ -67,7 +91,7 @@ namespace FrannHammer.WebScraping.Attributes
                         var attributeValue = scrapingServices.CreateAttribute();
                         attributeValue.Name = headers[i];
                         attributeValue.Value = cells[i].InnerText;
-                        attributeValue.Owner = characterName;
+                        attributeValue.Owner = character.Name;
                         attributeValues.Add(attributeValue);
                     }
 

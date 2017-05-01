@@ -3,6 +3,8 @@ using FrannHammer.DataAccess.Contracts;
 using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
 using NUnit.Framework;
+using Ploeh.AutoFixture;
+using Ploeh.AutoFixture.Kernel;
 
 namespace FrannHammer.DataAccess.MongoDb.Tests
 {
@@ -15,12 +17,21 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
             : base(typeof(Character))
         { }
 
+        [SetUp]
+        public void SetUp()
+        {
+            Fixture.Customizations.Add(
+                new TypeRelay(
+                    typeof(ICharacter),
+                    typeof(Character)));
+        }
+
         [Test]
         public void GetSingleCharacter()
         {
             _repository = new MongoDbRepository<ICharacter>(MongoDatabase);
 
-            var newlyAddedCharacter = _repository.Add(new Character { Name = "one" });
+            var newlyAddedCharacter = _repository.Add(Fixture.Create<ICharacter>());
 
             var character = _repository.Get(newlyAddedCharacter.Id);
             Assert.That(character, Is.Not.Null);
@@ -33,8 +44,8 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
         {
             _repository = new MongoDbRepository<ICharacter>(MongoDatabase);
 
-            _repository.Add(new Character { Name = "one" });
-            _repository.Add(new Character { Name = "two" });
+            _repository.Add(Fixture.Create<ICharacter>());
+            _repository.Add(Fixture.Create<ICharacter>());
 
             var characters = _repository.GetAll().ToList();
 
@@ -50,10 +61,7 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
 
             int previousCount = _repository.GetAll().Count();
 
-            var newCharacter = new Character
-            {
-                Name = "test"
-            };
+            var newCharacter = Fixture.Create<ICharacter>();
 
             var newlyAddedCharacter = _repository.Add(newCharacter);
 

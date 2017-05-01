@@ -3,6 +3,8 @@ using FrannHammer.DataAccess.Contracts;
 using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
 using NUnit.Framework;
+using Ploeh.AutoFixture;
+using Ploeh.AutoFixture.Kernel;
 
 namespace FrannHammer.DataAccess.MongoDb.Tests
 {
@@ -15,12 +17,21 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
             : base(typeof(Move))
         { }
 
+        [SetUp]
+        public void SetUp()
+        {
+            Fixture.Customizations.Add(
+                new TypeRelay(
+                typeof(IMove),
+                typeof(Move)));
+        }
+
         [Test]
         public void GetSingleMove()
         {
             _repository = new MongoDbRepository<IMove>(MongoDatabase);
 
-            var newlyAddedMove = _repository.Add(new Move { Name = "one" });
+            var newlyAddedMove = _repository.Add(Fixture.Create<IMove>());
 
             var move = _repository.Get(newlyAddedMove.Id);
 
@@ -42,10 +53,8 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
         {
             _repository = new MongoDbRepository<IMove>(MongoDatabase);
 
-
-            _repository.Add(new Move { Name = "one" });
-            _repository.Add(new Move { Name = "two" });
-
+            _repository.Add(Fixture.Create<IMove>());
+            _repository.Add(Fixture.Create<IMove>());
 
             var moves = _repository.GetAll().ToList();
 
@@ -61,11 +70,7 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
 
             int previousCount = _repository.GetAll().Count();
 
-            var newMove = new Move
-            {
-                Id = "99999",
-                Name = "test"
-            };
+            var newMove = Fixture.Create<IMove>();
 
             _repository.Add(newMove);
 

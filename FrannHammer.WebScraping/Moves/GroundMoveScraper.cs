@@ -21,6 +21,47 @@ namespace FrannHammer.WebScraping.Moves
             };
         }
 
+        protected override HtmlNodeCollection GetTableRows(string sourceUrl, string xpath)
+        {
+            const string exceptionMessageBase = "Error getting move table data after attempting to scrape full table using xpath: ";
+            var htmlParser = ScrapingServices.CreateParserFromSourceUrl(sourceUrl);
+
+            //account for extra info tables having the same id
+            if (htmlParser.GetCollection(ScrapingConstants.XPathTableNodeGroundStats + "//thead/tr/*").Count() > 4)
+            {
+                string movesTableHtml = htmlParser.GetSingle(xpath);
+
+                var movesTableHtmlNode = HtmlNode.CreateNode(movesTableHtml);
+
+                //get row data
+                var tableRows = movesTableHtmlNode.SelectNodes(ScrapingConstants.XPathTableRows);
+
+                if (tableRows == null)
+                {
+                    throw new Exception(
+                        $"{exceptionMessageBase}'{ScrapingConstants.XPathTableRows};");
+                }
+
+                return tableRows;
+            }
+            else
+            {
+                string movesTableHtml = htmlParser.GetSingle(ScrapingConstants.XPathTableNodeGroundStatsAdjusted);
+
+                var movesTableHtmlNode = HtmlNode.CreateNode(movesTableHtml);
+
+                var tableRows = movesTableHtmlNode.SelectNodes(ScrapingConstants.XPathTableRows);
+
+                if (tableRows == null)
+                {
+                    throw new Exception(
+                        $"{exceptionMessageBase}'{ScrapingConstants.XPathTableRows};");
+                }
+
+                return tableRows;
+            }
+        }
+
         protected override IMove GetMove(HtmlNodeCollection cells)
         {
             var move = default(IMove);

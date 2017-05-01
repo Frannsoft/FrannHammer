@@ -71,3 +71,9 @@ ConnectionStringsTest.config
 **/buildArtifacts/**/*
 **/tools/**/*
 !/tools/packages.config
+/FakeKhSite/hts-cache
+/FakeKhSite/i.imgur.com
+/FakeKhSite/kuroganehammer.com/Melee
+/FakeKhSite/kuroganehammer.com/Pokken
+/FakeKhSite/kuroganehammer.com/RivalsofAether
+/FakeKhSite

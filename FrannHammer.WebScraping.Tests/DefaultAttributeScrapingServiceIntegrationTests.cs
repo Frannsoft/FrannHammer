@@ -64,8 +64,7 @@ namespace FrannHammer.WebScraping.Tests
         [TestCaseSource(nameof(Scrapers))]
         public void ScrapeData(AttributeScraper scraper)
         {
-            string characterName = Characters.Greninja.Name;
-            var attributes = scraper.Scrape(characterName).ToList();
+            var attributes = scraper.Scrape(Characters.Greninja).ToList();
 
             AssertAttributeCollectionIsValid(scraper, attributes);
         }

@@ -35,8 +35,8 @@ namespace FrannHammer.WebApi.Tests.Controllers
         {
             yield return Tuple.Create("characters/{id}", typeof(CharacterController), nameof(CharacterController.GetCharacter));
             yield return Tuple.Create("characters", typeof(CharacterController), nameof(CharacterController.GetAllCharacters));
-            yield return Tuple.Create("characterattributes/{id}", typeof(CharacterAttributeController), nameof(CharacterAttributeController.GetCharacterAttribute));
-            yield return Tuple.Create("characterattributes", typeof(CharacterAttributeController), nameof(CharacterAttributeController.GetCharacterAttributes));
+            yield return Tuple.Create("characterattributes/{id}", typeof(CharacterAttributeController), nameof(CharacterAttributeController.Get));
+            yield return Tuple.Create("characterattributes", typeof(CharacterAttributeController), nameof(CharacterAttributeController.GetAll));
             yield return Tuple.Create("moves/{id}", typeof(MoveController), nameof(MoveController.GetMove));
             yield return Tuple.Create("moves", typeof(MoveController), nameof(MoveController.GetAllMoves));
             yield return Tuple.Create("movements", typeof(MovementController), nameof(MovementController.GetAllMovements));

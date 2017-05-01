@@ -4,7 +4,7 @@ using FrannHammer.DataAccess.MongoDb;
 using FrannHammer.Domain.Contracts;
 using MongoDB.Driver;
 
-namespace FrannHammer.Seeder
+namespace FrannHammer.Seeder.ContainerModules
 {
     public class RepositoryModule : Module
     {

@@ -35,13 +35,43 @@ namespace FrannHammer.WebScraping.Character
 
         public void PopulateCharacter(WebCharacter character)
         {
+            const string srcAttributeKey = "src";
+            const string characterNameKey = "[charactername]";
             var htmlParser = _webServices.CreateParserFromSourceUrl(character.SourceUrl);
             string displayNameHtml = htmlParser.GetSingle(ScrapingConstants.XPathFrameDataVersion);
 
             string displayName = GetCharacterDisplayName(displayNameHtml);
 
+            var thumbnailHtmlParser = _webServices.CreateParserFromSourceUrl(WebCharacter.SourceUrlBase);
+            string thumbnailHtml = thumbnailHtmlParser.GetSingle(ScrapingConstants.XPathThumbnailUrl.Replace(characterNameKey, character.Name));
+
+            string thumbnailUrl = string.Empty;
+
+            if (string.IsNullOrEmpty(thumbnailHtml))
+            {
+                //try potential scraping names if there are any for the character
+                foreach (string name in character.PotentialScrapingNames)
+                {
+                    thumbnailHtml = thumbnailHtmlParser.GetSingle(ScrapingConstants.XPathThumbnailUrl.Replace(characterNameKey, name));
+
+                    if (!string.IsNullOrEmpty(thumbnailHtml))
+                    {
+                        thumbnailUrl = GetThumbnailUrl(srcAttributeKey, thumbnailHtml);
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                thumbnailUrl = GetThumbnailUrl(srcAttributeKey, thumbnailHtml);
+            }
+
             //character details
-            string mainImageUrl = htmlParser.GetAttributeFromSingleNavigable("src", ScrapingConstants.XPathImageUrl);
+            string mainImageUrl = htmlParser.GetAttributeFromSingleNavigable(srcAttributeKey, ScrapingConstants.XPathImageUrl);
+            if (!Uri.IsWellFormedUriString(mainImageUrl, UriKind.Absolute)) //add base address if it doesn't exist
+            {
+                mainImageUrl = WebCharacter.SourceUrlBase + mainImageUrl;
+            }
 
             //color hex
             string colorTheme = _imageScrapingService.GetColorHexValue(mainImageUrl).Result;
@@ -56,16 +86,22 @@ namespace FrannHammer.WebScraping.Character
             var attributeRows = new List<ICharacterAttributeRow>();
             foreach (var attributeScraper in _attributeScrapers)
             {
-                attributeRows.AddRange(attributeScraper.Scrape(character.Name));
+                attributeRows.AddRange(attributeScraper.Scrape(character));
             }
 
             character.DisplayName = displayName;
+            character.ThumbnailUrl = thumbnailUrl;
             character.MainImageUrl = mainImageUrl;
             character.ColorTheme = colorTheme;
             character.Movements = movements;
             character.Moves = moves;
             character.Attributes = attributeRows.SelectMany(a => a.Values);
             character.AttributeRows = attributeRows;
+        }
+
+        private static string GetThumbnailUrl(string attributeKey, string thumbnailHtml)
+        {
+            return HtmlNode.CreateNode(thumbnailHtml).GetAttributeValue(attributeKey, string.Empty);
         }
 
         private static string GetCharacterDisplayName(string rawDisplayNameHtml)

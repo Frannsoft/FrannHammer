@@ -10,12 +10,23 @@ using FrannHammer.Domain.Contracts;
 using FrannHammer.WebApi.Controllers;
 using Moq;
 using NUnit.Framework;
+using Ploeh.AutoFixture;
+using Ploeh.AutoFixture.Kernel;
 
 namespace FrannHammer.WebApi.Tests.Controllers
 {
     [TestFixture]
-    public class MoveControllerTests
+    public class MoveControllerTests : BaseControllerTests
     {
+        [SetUp]
+        public override void SetUp()
+        {
+            Fixture.Customizations.Add(
+                new TypeRelay(
+                    typeof(IMove),
+                    typeof(Move)));
+        }
+
         [Test]
         public void ConstructorRejectsNullCharacterAttributeService()
         {
@@ -29,21 +40,12 @@ namespace FrannHammer.WebApi.Tests.Controllers
         [Test]
         public void Error_ReturnsNotFoundResultWhenAttributeDoesNotExist()
         {
-            var characterAttributeRepositoryMock = new Mock<IRepository<ICharacterAttributeRow>>();
-            characterAttributeRepositoryMock.Setup(c => c.Get(It.IsInRange("0", "1", Range.Inclusive))).Returns(() =>
-                new DefaultCharacterAttributeRow(new List<IAttribute>
-                {
-                    new CharacterAttribute
-                    {
-                        Name = "test"
-                    }
-                }));
+            var moveRepositoryMock = new Mock<IRepository<IMove>>();
+            moveRepositoryMock.Setup(c => c.Get(It.IsInRange("0", "1", Range.Inclusive))).Returns(() => Fixture.Create<IMove>());
 
-            var controller =
-                new CharacterAttributeController(
-                    new DefaultCharacterAttributeService(characterAttributeRepositoryMock.Object));
+            var controller = new MoveController(new DefaultMoveService(moveRepositoryMock.Object));
 
-            var response = controller.GetCharacterAttribute("-1") as NotFoundResult;
+            var response = controller.GetMove("-1") as NotFoundResult;
 
             Assert.That(response, Is.Not.Null);
         }
@@ -51,17 +53,15 @@ namespace FrannHammer.WebApi.Tests.Controllers
         [Test]
         public void GetAMoveName()
         {
-            const string expectedName = "testName";
+            var testMove = Fixture.Create<IMove>();
+
             var moveServiceMock = new Mock<IMoveService>();
             moveServiceMock.Setup(c => c.Get(It.IsAny<string>(), It.IsAny<string>()))
-                .Returns(() => new Move
-                {
-                    Name = expectedName
-                });
+                .Returns(() => testMove);
 
             var controller = new MoveController(moveServiceMock.Object);
 
-            var response = controller.GetMove("0") as OkNegotiatedContentResult<IMove>;
+            var response = controller.GetMove(testMove.Id) as OkNegotiatedContentResult<IMove>;
 
             Assert.That(response, Is.Not.Null);
 
@@ -69,7 +69,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
             var move = response.Content;
 
             Assert.That(move.Name, Is.Not.Empty);
-            Assert.That(move.Name, Is.EqualTo(expectedName), $"move name was not equal to {expectedName}");
+            Assert.That(move.Name, Is.EqualTo(testMove.Name), $"move name was not equal to {testMove.Name}");
         }
 
         [Test]
@@ -77,17 +77,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
         {
             var moveServiceMock = new Mock<IMoveService>();
             moveServiceMock.Setup(c => c.GetAll(It.IsAny<string>()))
-                .Returns(() => new List<IMove>
-                {
-                    new Move
-                    {
-                        Name = "testname"
-                    },
-                    new Move
-                    {
-                        Name = "testname2"
-                    }
-                });
+                .Returns(() => Fixture.CreateMany<IMove>());
 
             var controller = new MoveController(moveServiceMock.Object);
 

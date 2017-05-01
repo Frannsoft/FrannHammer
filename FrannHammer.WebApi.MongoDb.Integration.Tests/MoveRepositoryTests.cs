@@ -28,7 +28,7 @@ namespace FrannHammer.WebApi.MongoDb.Integration.Tests
         [Test]
         public void GetSingleMoveById()
         {
-            var response = _controller.GetMove("1") as OkNegotiatedContentResult<IMove>;
+            var response = _controller.GetMove("5905f9a04696591ea4062d19") as OkNegotiatedContentResult<IMove>;
 
             Assert.That(response, Is.Not.Null);
 
@@ -45,7 +45,7 @@ namespace FrannHammer.WebApi.MongoDb.Integration.Tests
             Assert.That(move.BaseKnockBackSetKnockback, Is.Not.Null);
             Assert.That(move.FirstActionableFrame, Is.Not.Null);
             Assert.That(move.HitboxActive, Is.Not.Null);
-            Assert.That(move.Id, Is.GreaterThan(0));
+            Assert.That(move.Id, Is.Not.Null);
             Assert.That(move.KnockbackGrowth, Is.Not.Null);
             Assert.That(move.Name, Is.Not.Null);
             Assert.That(move.OwnerId, Is.GreaterThan(0));

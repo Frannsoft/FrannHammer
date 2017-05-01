@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using FrannHammer.Domain.Contracts;
-using MongoDB.Bson;
 
 namespace FrannHammer.WebScraping.Domain.Contracts
 {
     public class WebCharacter : ICharacter
     {
-        protected const string SourceUrlBase = "http://kuroganehammer.com/Smash4/";
+#if DEBUG
+        public const string SourceUrlBase = "http://localhost:81/kuroganehammer.com/Smash4/";
+#else
+        public const string SourceUrlBase = "http://kuroganehammer.com/Smash4/";
+#endif
+
+        public string[] PotentialScrapingNames { get; }
 
         public string Id { get; set; }
         public string SourceUrl { get; private set; }
@@ -24,19 +29,25 @@ namespace FrannHammer.WebScraping.Domain.Contracts
         public IEnumerable<IAttribute> Attributes { get; set; }
         public IEnumerable<ICharacterAttributeRow> AttributeRows { get; set; }
 
-        public WebCharacter(string name, string escapedCharacterName = "")
+        public WebCharacter(string name, string escapedCharacterName = "", params string[] potentialScrapingNames)
         {
             Name = name;
 
-            if(string.IsNullOrEmpty(escapedCharacterName))
+            if (string.IsNullOrEmpty(escapedCharacterName))
             { escapedCharacterName = name; }
 
             SourceUrl = SourceUrlBase + escapedCharacterName;
+            PotentialScrapingNames = potentialScrapingNames;
         }
 
         public virtual IEnumerable<IUniqueData> GetUniqueData(IUniqueDataProvider uniqueDataProvider)
         {
             throw new NotImplementedException();
+        }
+
+        public override string ToString()
+        {
+            return $"{nameof(Name)}: {Name}";
         }
     }
 }

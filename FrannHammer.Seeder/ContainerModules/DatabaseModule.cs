@@ -1,13 +1,13 @@
 ﻿using Autofac;
 using MongoDB.Driver;
 
-namespace FrannHammer.Seeder
+namespace FrannHammer.Seeder.ContainerModules
 {
     public class DatabaseModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
-            //TODO - get this values from config settings
+            //TODO - get thes values from config settings
 
             builder.RegisterType<MongoClient>()
                .AsSelf()

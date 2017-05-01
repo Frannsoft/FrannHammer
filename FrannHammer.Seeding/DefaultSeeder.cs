@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using FrannHammer.Api.Services.Contracts;
 using FrannHammer.Domain;
-using FrannHammer.Domain.Contracts;
 using FrannHammer.Seeding.Contracts;
 using FrannHammer.Utility;
 using FrannHammer.WebScraping.Contracts.Character;
@@ -27,13 +26,13 @@ namespace FrannHammer.Seeding
             ICharacterService characterService,
             IMovementService movementService,
             IMoveService moveService,
-            ICharacterAttributeRowService characterAttributeService)
+            ICharacterAttributeRowService characterAttributeRowService)
         {
             Guard.VerifyObjectNotNull(character, nameof(character));
             Guard.VerifyObjectNotNull(characterService, nameof(characterService));
             Guard.VerifyObjectNotNull(movementService, nameof(movementService));
             Guard.VerifyObjectNotNull(moveService, nameof(moveService));
-            Guard.VerifyObjectNotNull(characterAttributeService, nameof(characterAttributeService));
+            Guard.VerifyObjectNotNull(characterAttributeRowService, nameof(characterAttributeRowService));
 
             _characterDataScraper.PopulateCharacterFromWeb(character);
 
@@ -41,7 +40,7 @@ namespace FrannHammer.Seeding
             characterService.Add(entityCharacter);
             movementService.AddMany(character.Movements);
             moveService.AddMany(character.Moves);
-            characterAttributeService.AddMany(character.AttributeRows);
+            characterAttributeRowService.AddMany(character.AttributeRows);
         }
     }
 }

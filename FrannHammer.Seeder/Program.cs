@@ -1,7 +1,10 @@
-﻿using FrannHammer.Api.Services.Contracts;
+﻿using System;
+using System.Collections.Generic;
+using FrannHammer.Api.Services.Contracts;
 using FrannHammer.WebScraping.Contracts.Character;
 using FrannHammer.WebScraping.Domain;
 using FrannHammer.Seeding;
+using FrannHammer.WebScraping.Domain.Contracts;
 
 namespace FrannHammer.Seeder
 {
@@ -13,15 +16,18 @@ namespace FrannHammer.Seeder
 
             var characterDataScraper = Container.Instance.Resolve<ICharacterDataScraper>();
 
-            var character = Characters.Greninja;
-            characterDataScraper.PopulateCharacterFromWeb(character);
+            foreach (var character in Characters.All)
+            {
+                Console.WriteLine($"Scraping data for '{character.Name}'...");
+                characterDataScraper.PopulateCharacterFromWeb(character);
 
-            var seeder = Container.Instance.Resolve<DefaultSeeder>();
-            seeder.SeedCharacterData(character,
-                Container.Instance.Resolve<ICharacterService>(),
-                Container.Instance.Resolve<IMovementService>(),
-                Container.Instance.Resolve<IMoveService>(),
-                Container.Instance.Resolve<ICharacterAttributeRowService>());
+                var seeder = Container.Instance.Resolve<DefaultSeeder>();
+                seeder.SeedCharacterData(character,
+                    Container.Instance.Resolve<ICharacterService>(),
+                    Container.Instance.Resolve<IMovementService>(),
+                    Container.Instance.Resolve<IMoveService>(),
+                    Container.Instance.Resolve<ICharacterAttributeRowService>());
+            }
         }
     }
 }

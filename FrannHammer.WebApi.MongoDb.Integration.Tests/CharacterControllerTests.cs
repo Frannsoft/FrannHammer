@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Reflection;
 using FrannHammer.DataAccess.MongoDb;
 using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
-using MongoDB.Bson.Serialization;
-using MongoDB.Driver;
 using NUnit.Framework;
 using System.Linq;
 using System.Web.Http.Results;
@@ -37,7 +34,7 @@ namespace FrannHammer.WebApi.MongoDb.Integration.Tests
             Assert.That(character.Description, Is.Not.Null);
             Assert.That(character.DisplayName, Is.Not.Null);
             Assert.That(character.FullUrl, Is.Not.Null);
-            //Assert.That(character.Id, Is.GreaterThan(0));
+            Assert.That(character.Id, Is.Not.Null);
             Assert.That(character.MainImageUrl, Is.Not.Null);
             Assert.That(character.Name, Is.Not.Null);
             Assert.That(character.Style, Is.Not.Null);
@@ -47,7 +44,7 @@ namespace FrannHammer.WebApi.MongoDb.Integration.Tests
         [Test]
         public void GetSingleCharacter()
         {
-            var response = _controller.GetCharacter("1") as OkNegotiatedContentResult<ICharacter>;
+            var response = _controller.GetCharacter("5905f99f4696591ea4062d06") as OkNegotiatedContentResult<ICharacter>;
 
             Assert.That(response, Is.Not.Null);
 

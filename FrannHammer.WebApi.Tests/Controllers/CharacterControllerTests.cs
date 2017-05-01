@@ -8,15 +8,25 @@ using FrannHammer.DataAccess.Contracts;
 using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.WebApi.Controllers;
-using FrannHammer.WebScraping.Domain;
 using NUnit.Framework;
 using Moq;
+using Ploeh.AutoFixture;
+using Ploeh.AutoFixture.Kernel;
 
 namespace FrannHammer.WebApi.Tests.Controllers
 {
     [TestFixture]
-    public class CharacterControllerTests
+    public class CharacterControllerTests : BaseControllerTests
     {
+        [SetUp]
+        public override void SetUp()
+        {
+            Fixture.Customizations.Add(
+                new TypeRelay(
+                    typeof(ICharacter),
+                    typeof(Character)));
+        }
+
         [Test]
         public void ConstructorRejectsNullCharacterAttributeService()
         {
@@ -30,14 +40,12 @@ namespace FrannHammer.WebApi.Tests.Controllers
         [Test]
         public void GetCharacterDisplayName()
         {
+            var testCharacter = Fixture.Create<ICharacter>();
             var characterServiceMock = new Mock<ICharacterService>();
-            characterServiceMock.Setup(c => c.Get(It.IsAny<string>(), It.IsAny<string>())).Returns(() => new Character
-            {
-                DisplayName = Characters.Greninja.DisplayName
-            });
+            characterServiceMock.Setup(c => c.Get(It.IsAny<string>(), It.IsAny<string>())).Returns(() => testCharacter);
             var controller = new CharacterController(characterServiceMock.Object);
 
-            var response = controller.GetCharacter("0") as OkNegotiatedContentResult<ICharacter>;
+            var response = controller.GetCharacter(testCharacter.Id) as OkNegotiatedContentResult<ICharacter>;
 
             Assert.That(response, Is.Not.Null);
 
@@ -45,18 +53,16 @@ namespace FrannHammer.WebApi.Tests.Controllers
             var character = response.Content;
 
             Assert.That(character.DisplayName, Is.Not.Empty);
-            Assert.That(character.DisplayName, Is.EqualTo(Characters.Greninja.DisplayName), $"Character name was not equal to {Characters.Greninja.DisplayName}");
+            Assert.That(character.DisplayName, Is.EqualTo(testCharacter.DisplayName), $"Character name was not equal to {testCharacter.DisplayName}");
         }
 
         [Test]
         public void Error_ReturnsNotFoundResultWhenCharacterDoesNotExist()
         {
+            var testCharacter = Fixture.Create<ICharacter>();
+
             var characterRepositoryMock = new Mock<IRepository<ICharacter>>();
-            characterRepositoryMock.Setup(c => c.Get(It.IsInRange("0", "1", Range.Inclusive))).Returns(() => new
-                Character
-            {
-                Name = "test"
-            });
+            characterRepositoryMock.Setup(c => c.Get(It.IsInRange("0", "1", Range.Inclusive))).Returns(() => testCharacter);
 
             var controller = new CharacterController(new DefaultCharacterService(characterRepositoryMock.Object));
             var response = controller.GetCharacter("-1") as NotFoundResult;
@@ -67,42 +73,30 @@ namespace FrannHammer.WebApi.Tests.Controllers
         [Test]
         public void GetReturnsExpectedCharacterById()
         {
-            const string characterName = "test";
+            var testCharacter1 = Fixture.Create<ICharacter>();
+            var testCharacter2 = Fixture.Create<ICharacter>();
 
             var characterRepositoryMock = new Mock<IRepository<ICharacter>>();
-            characterRepositoryMock.Setup(c => c.Get(It.IsInRange("0", "1", Range.Inclusive))).Returns(() => new
-                Character
-            {
-                ColorTheme = "#fff",
-                Name = characterName
-            });
-            characterRepositoryMock.Setup(c => c.Get(It.IsInRange("2", "3", Range.Inclusive))).Returns(() => new
-                Character
-            {
-                Name = "test2"
-            });
+            characterRepositoryMock.Setup(c => c.Get(It.IsInRange("0", testCharacter1.Id, Range.Inclusive))).Returns(() => testCharacter1);
+            characterRepositoryMock.Setup(c => c.Get(It.IsInRange("2", "3", Range.Inclusive))).Returns(() => testCharacter2);
 
             var controller = new CharacterController(new DefaultCharacterService(characterRepositoryMock.Object));
-            var response = controller.GetCharacter("1") as OkNegotiatedContentResult<ICharacter>;
+            var response = controller.GetCharacter(testCharacter1.Id) as OkNegotiatedContentResult<ICharacter>;
 
             // ReSharper disable once PossibleNullReferenceException
             var character = response.Content;
 
             Assert.That(character.Name, Is.Not.Empty);
-            Assert.That(character.Name, Is.EqualTo(characterName), $"Character name was not equal to {characterName}");
+            Assert.That(character.Name, Is.EqualTo(testCharacter1.Name), $"Character name was not equal to {testCharacter1.Name}");
         }
 
         [Test]
         public void GetAllReturnsAllCharacters()
         {
+            var fakeCharacters = Fixture.CreateMany<ICharacter>().ToList();
+
             var characterRepositoryMock = new Mock<IRepository<ICharacter>>();
-            characterRepositoryMock.Setup(c => c.GetAll()).Returns(() =>
-                new List<ICharacter>
-                {
-                    new Character {Name = "one"},
-                    new Character {Name = "two"}
-                }
-            );
+            characterRepositoryMock.Setup(c => c.GetAll()).Returns(() => fakeCharacters);
 
             var controller = new CharacterController(new DefaultCharacterService(characterRepositoryMock.Object));
             var response = controller.GetAllCharacters() as OkNegotiatedContentResult<IEnumerable<ICharacter>>;
@@ -112,7 +106,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
             // ReSharper disable once PossibleNullReferenceException
             var characters = response.Content.ToList();
 
-            Assert.That(characters.Count, Is.EqualTo(2));
+            Assert.That(characters.Count, Is.EqualTo(fakeCharacters.Count));
         }
     }
 }

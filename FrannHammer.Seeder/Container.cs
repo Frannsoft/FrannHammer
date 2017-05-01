@@ -1,4 +1,5 @@
 using Autofac;
+using FrannHammer.Seeder.ContainerModules;
 using FrannHammer.Seeding;
 
 namespace FrannHammer.Seeder

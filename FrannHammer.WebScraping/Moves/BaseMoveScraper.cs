@@ -23,7 +23,7 @@ namespace FrannHammer.WebScraping.Moves
 
         protected static HtmlNodeCollection GetTableCells(HtmlNode row) => row.SelectNodes(ScrapingConstants.XPathTableCells);
 
-        protected HtmlNodeCollection GetTableRows(string sourceUrl, string xpath)
+        protected virtual HtmlNodeCollection GetTableRows(string sourceUrl, string xpath)
         {
             var htmlParser = ScrapingServices.CreateParserFromSourceUrl(sourceUrl);
 
@@ -33,7 +33,7 @@ namespace FrannHammer.WebScraping.Moves
             var moveTableRows = HtmlNode.CreateNode(movesTableHtml)?.SelectNodes(ScrapingConstants.XPathTableRows);
 
             if (moveTableRows == null)
-            { throw new Exception($"Error getting move table data after attempting to scrape full table using xpath: '{ScrapingConstants.XPathTableNodeGroundStats};"); }
+            { throw new Exception($"Error getting move table data after attempting to scrape full table using xpath: '{ScrapingConstants.XPathTableRows};"); }
 
             return moveTableRows;
         }

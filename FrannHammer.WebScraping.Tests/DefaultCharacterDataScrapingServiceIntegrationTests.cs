@@ -12,6 +12,7 @@ using FrannHammer.WebScraping.Contracts.Moves;
 using FrannHammer.WebScraping.Contracts.PageDownloading;
 using FrannHammer.WebScraping.Contracts.WebClients;
 using FrannHammer.WebScraping.Domain;
+using FrannHammer.WebScraping.Domain.Contracts;
 using FrannHammer.WebScraping.HtmlParsing;
 using FrannHammer.WebScraping.Images;
 using FrannHammer.WebScraping.Movements;
@@ -71,8 +72,22 @@ namespace FrannHammer.WebScraping.Tests
 
             var attributeScrapers = new List<IAttributeScraper>
             {
-                new AirSpeedScraper(_attributeScrapingServices),
-                new AirDodgeScraper(_attributeScrapingServices)
+                            new AerialJumpScraper(_attributeScrapingServices),
+                            new AirAccelerationScraper(_attributeScrapingServices),
+                            new AirDecelerationScraper(_attributeScrapingServices),
+                            new AirFrictionScraper(_attributeScrapingServices),
+                            new DashLengthScraper(_attributeScrapingServices),
+                            new FallSpeedScraper(_attributeScrapingServices),
+                            new FullHopScraper(_attributeScrapingServices),
+                            new GravityScraper(_attributeScrapingServices),
+                            new JumpSquatScraper(_attributeScrapingServices),
+                            new LedgeHopScraper(_attributeScrapingServices),
+                            new ShortHopScraper(_attributeScrapingServices),
+                            new SpotdodgeScraper(_attributeScrapingServices),
+                            new TractionScraper(_attributeScrapingServices),
+                            new WalkSpeedScraper(_attributeScrapingServices),
+                            new AirSpeedScraper(_attributeScrapingServices),
+                            new AirDodgeScraper(_attributeScrapingServices)
             };
             _movementScraper = new DefaultMovementScraper(_movementScrapingServices);
 
@@ -83,18 +98,47 @@ namespace FrannHammer.WebScraping.Tests
         }
 
         [Test]
-        public void PopulateCharacterDataFromWeb()
+        [TestCaseSource(nameof(Characters))]
+        public void PopulateCharacterDataFromWeb(WebCharacter character)
         {
-            var greninja = Characters.Greninja;
-            _characterDataScraper.PopulateCharacterFromWeb(greninja);
+            _characterDataScraper.PopulateCharacterFromWeb(character);
 
-            Assert.That(greninja.ColorTheme, Is.Not.Empty);
-            Assert.That(greninja.DisplayName, Is.EqualTo("Greninja"));
-            Assert.That(greninja.MainImageUrl, Is.Not.Empty);
-            Assert.That(Uri.IsWellFormedUriString(greninja.MainImageUrl, UriKind.Absolute), $"Malformed main image url: '{greninja.MainImageUrl}'");
-            CollectionAssert.IsNotEmpty(greninja.Movements, $"Movements for character '{greninja.Name}' are empty.");
-            CollectionAssert.IsNotEmpty(greninja.Moves, $"Moves for character '{greninja.Name}' are empty.");
-            CollectionAssert.IsNotEmpty(greninja.Attributes, $"Attributes for character '{greninja.Name}' are empty.");
+            Assert.That(character.ColorTheme, Is.Not.Null);
+            Assert.That(character.DisplayName, Is.Not.Null);
+            Assert.That(character.ThumbnailUrl, Is.Not.Null);
+            Assert.That(character.MainImageUrl, Is.Not.Null);
+            Assert.That(Uri.IsWellFormedUriString(character.MainImageUrl, UriKind.Absolute), $"Malformed main image url: '{character.MainImageUrl}'");
+            CollectionAssert.IsNotEmpty(character.Movements, $"Movements for character '{character.Name}' are empty.");
+            CollectionAssert.IsNotEmpty(character.Moves, $"Moves for character '{character.Name}' are empty.");
+            CollectionAssert.IsNotEmpty(character.Attributes, $"Attributes for character '{character.Name}' are empty.");
         }
+
+        #region problematic characters due to their naming in areas of the web site
+
+        private static IEnumerable<WebCharacter> Characters()
+        {
+            foreach (var character in Domain.Characters.All)
+            {
+                yield return character;
+            }
+        }
+
+        [Test]
+        [TestCaseSource(nameof(Characters))]
+        public void EnsureCharactersCanBeScraped(WebCharacter character)
+        {
+            _characterDataScraper.PopulateCharacterFromWeb(character);
+
+            Assert.That(character.ColorTheme, Is.Not.Empty);
+            Assert.That(character.DisplayName, Is.Not.Empty);
+            Assert.That(character.ThumbnailUrl, Is.Not.Null);
+            Assert.That(character.MainImageUrl, Is.Not.Empty);
+            Assert.That(Uri.IsWellFormedUriString(character.MainImageUrl, UriKind.Absolute), $"Malformed main image url: '{character.MainImageUrl}'");
+            CollectionAssert.IsNotEmpty(character.Movements, $"Movements for character '{character.Name}' are empty.");
+            CollectionAssert.IsNotEmpty(character.Moves, $"Moves for character '{character.Name}' are empty.");
+            CollectionAssert.IsNotEmpty(character.Attributes, $"Attributes for character '{character.Name}' are empty.");
+        }
+
+        #endregion
     }
 }

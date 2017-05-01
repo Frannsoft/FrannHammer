@@ -1,6 +1,4 @@
-﻿using MongoDB.Bson;
-
-namespace FrannHammer.Domain.Contracts
+﻿namespace FrannHammer.Domain.Contracts
 {
     public interface IModel
     {

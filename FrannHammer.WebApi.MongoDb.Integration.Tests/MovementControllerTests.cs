@@ -32,13 +32,13 @@ namespace FrannHammer.WebApi.MongoDb.Integration.Tests
             Assert.That(movement.Name, Is.Not.Null);
             Assert.That(movement.OwnerId, Is.Not.Null);
             Assert.That(movement.Value, Is.Not.Null);
-            Assert.That(movement.Id, Is.GreaterThan(0));
+            Assert.That(movement.Id, Is.Not.Null);
         }
 
         [Test]
         public void GetSingleMovement()
         {
-            var response = _controller.GetMovement("1") as OkNegotiatedContentResult<IMovement>;
+            var response = _controller.GetMovement("5905f9a04696591ea4062d07") as OkNegotiatedContentResult<IMovement>;
 
             Assert.That(response, Is.Not.Null);
 

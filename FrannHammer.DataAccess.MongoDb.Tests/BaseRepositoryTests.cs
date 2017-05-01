@@ -5,15 +5,19 @@ using FrannHammer.Domain;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using NUnit.Framework;
+using Ploeh.AutoFixture;
 
 namespace FrannHammer.DataAccess.MongoDb.Tests
 {
     public abstract class BaseRepositoryTests
     {
         protected IMongoDatabase MongoDatabase { get; private set; }
+        protected Fixture Fixture { get; }
 
         protected BaseRepositoryTests(Type modelType)
         {
+            Fixture = new Fixture();
+
             if(!BsonClassMap.IsClassMapRegistered(typeof(MongoModel)))
             {
                 BsonClassMap.RegisterClassMap<MongoModel>(m =>

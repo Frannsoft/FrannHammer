@@ -9,10 +9,12 @@
         public const string XPathTableNodeMovementStats = @"(//*/table[@id='AutoNumber1'])[1]";
         public const string XPathTableRows = "tbody/tr";
         public const string XPathTableNodeGroundStats = @"(//*/table[@id='AutoNumber1'])[2]";
+        public const string XPathTableNodeGroundStatsAdjusted = @"(//*/table[@id='AutoNumber1'])[3]";
         public const string XPathTableNodeAerialStats = @"(//*/table[@id='AutoNumber2'])[1]";
         public const string XPathTableCells = "th|td";
+        public const string XPathThumbnailUrl = "//img[@alt='[charactername]']";
         public const string EveryoneOneElseAttributeKey = "Everyone Else";
-        public const string XPathEveryoneElseTableRow = @"//table/tbody/tr/td[.='" + EveryoneOneElseAttributeKey + "']/parent::tr";
+        public const string XPathEveryoneElseTableRow = "//table/tbody/tr/td[.=\"" + EveryoneOneElseAttributeKey + "\"]/parent::tr";
         public const string XPathTableNodeSpecialStats = @"(//*/table[@id='AutoNumber3'])[1]";
         public const string XPathTableNodeAttributesWithDescription = @"(//*/table[@id='AutoNumber1'])[2]";
         public const string XPathTableNodeAttributesWithNoDescription = @"(//*/table[@id='AutoNumber1'])[1]";

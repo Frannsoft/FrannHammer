@@ -3,6 +3,8 @@ using FrannHammer.DataAccess.Contracts;
 using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
 using NUnit.Framework;
+using Ploeh.AutoFixture;
+using Ploeh.AutoFixture.Kernel;
 
 namespace FrannHammer.DataAccess.MongoDb.Tests
 {
@@ -15,17 +17,21 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
             : base(typeof(CharacterAttribute))
         { }
 
+        [SetUp]
+        public void SetUp()
+        {
+            Fixture.Customizations.Add(
+                new TypeRelay(
+                    typeof(IAttribute),
+                    typeof(CharacterAttribute)));
+        }
+
         [Test]
         public void GetSingleCharacterAttribute()
         {
             _repository = new MongoDbRepository<IAttribute>(MongoDatabase);
 
-            var newlyAddedCharacterAttribute = _repository.Add(new CharacterAttribute
-            {
-                Name = "one",
-                Owner = "me",
-                Value = "test"
-            });
+            var newlyAddedCharacterAttribute = _repository.Add(Fixture.Create<CharacterAttribute>());
             var characterAttribute = _repository.Get(newlyAddedCharacterAttribute.Id);
 
             Assert.That(characterAttribute, Is.Not.Null);
@@ -40,8 +46,8 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
         {
             _repository = new MongoDbRepository<IAttribute>(MongoDatabase);
 
-            _repository.Add(new CharacterAttribute { Name = "one" });
-            _repository.Add(new CharacterAttribute { Name = "two" });
+            _repository.Add(Fixture.Create<CharacterAttribute>());
+            _repository.Add(Fixture.Create<CharacterAttribute>());
 
             var characterAttributes = _repository.GetAll().ToList();
 
@@ -57,11 +63,7 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
 
             int previousCount = _repository.GetAll().Count();
 
-            var newCharacterAttribute = new CharacterAttribute
-            {
-                Id = "99999",
-                Name = "test"
-            };
+            var newCharacterAttribute = Fixture.Create<CharacterAttribute>();
 
             _repository.Add(newCharacterAttribute);
 
