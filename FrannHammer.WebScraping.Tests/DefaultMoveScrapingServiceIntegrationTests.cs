@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using FrannHammer.Domain.Contracts;
 using FrannHammer.WebScraping.Contracts.Moves;
 using FrannHammer.WebScraping.Domain;
 using FrannHammer.WebScraping.HtmlParsing;
@@ -26,6 +27,21 @@ namespace FrannHammer.WebScraping.Tests
             _scrapingServices = new DefaultMoveScrapingServices(moveProvider, webServices);
         }
 
+        private static void AssertMoveIsValid(IMove move)
+        {
+            Assert.That(move, Is.Not.Null);
+            Assert.That(move.Name, Is.Not.Null);
+            Assert.That(move.Angle, Is.Not.Null);
+            Assert.That(move.AutoCancel, Is.Not.Null);
+            Assert.That(move.BaseDamage, Is.Not.Null);
+            Assert.That(move.BaseKnockBackSetKnockback, Is.Not.Null);
+            Assert.That(move.FirstActionableFrame, Is.Not.Null);
+            Assert.That(move.HitboxActive, Is.Not.Null);
+            Assert.That(move.KnockbackGrowth, Is.Not.Null);
+            Assert.That(move.LandingLag, Is.Not.Null);
+            Assert.That(move.Owner, Is.Not.Null);
+        }
+
         [Test]
         public void ScrapeGroundMovesForCharacter()
         {
@@ -37,10 +53,7 @@ namespace FrannHammer.WebScraping.Tests
             CollectionAssert.AllItemsAreUnique(groundMoves);
             CollectionAssert.IsNotEmpty(groundMoves);
 
-            groundMoves.ForEach(move =>
-            {
-                Assert.That(move.Name, Is.Not.Empty, "Move name should not be empty.");
-            });
+            groundMoves.ForEach(AssertMoveIsValid);
         }
 
         [Test]
@@ -56,7 +69,9 @@ namespace FrannHammer.WebScraping.Tests
 
             aerialMoves.ForEach(move =>
             {
-                Assert.That(move.Name, Is.Not.Empty, "Move name should not be empty.");
+                AssertMoveIsValid(move);
+                Assert.That(move.LandingLag, Is.Not.Null);
+                Assert.That(move.AutoCancel, Is.Not.Null);
             });
         }
 
@@ -71,10 +86,7 @@ namespace FrannHammer.WebScraping.Tests
             CollectionAssert.AllItemsAreUnique(specialMoves);
             CollectionAssert.IsNotEmpty(specialMoves);
 
-            specialMoves.ForEach(move =>
-            {
-                Assert.That(move.Name, Is.Not.Empty, "Move name should not be empty.");
-            });
+            specialMoves.ForEach(AssertMoveIsValid);
         }
     }
 }

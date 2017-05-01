@@ -97,30 +97,9 @@ namespace FrannHammer.WebScraping.Tests
             _characterDataScraper = new DefaultCharacterDataScraper(_characterDataScrapingServices);
         }
 
-        [Test]
-        [TestCaseSource(nameof(Characters))]
-        public void PopulateCharacterDataFromWeb(WebCharacter character)
-        {
-            _characterDataScraper.PopulateCharacterFromWeb(character);
-
-            Assert.That(character.ColorTheme, Is.Not.Null);
-            Assert.That(character.DisplayName, Is.Not.Null);
-            Assert.That(character.ThumbnailUrl, Is.Not.Null);
-            Assert.That(character.MainImageUrl, Is.Not.Null);
-            Assert.That(Uri.IsWellFormedUriString(character.MainImageUrl, UriKind.Absolute), $"Malformed main image url: '{character.MainImageUrl}'");
-            CollectionAssert.IsNotEmpty(character.Movements, $"Movements for character '{character.Name}' are empty.");
-            CollectionAssert.IsNotEmpty(character.Moves, $"Moves for character '{character.Name}' are empty.");
-            CollectionAssert.IsNotEmpty(character.Attributes, $"Attributes for character '{character.Name}' are empty.");
-        }
-
-        #region problematic characters due to their naming in areas of the web site
-
         private static IEnumerable<WebCharacter> Characters()
         {
-            foreach (var character in Domain.Characters.All)
-            {
-                yield return character;
-            }
+            return Domain.Characters.All;
         }
 
         [Test]
@@ -133,12 +112,13 @@ namespace FrannHammer.WebScraping.Tests
             Assert.That(character.DisplayName, Is.Not.Empty);
             Assert.That(character.ThumbnailUrl, Is.Not.Null);
             Assert.That(character.MainImageUrl, Is.Not.Empty);
-            Assert.That(Uri.IsWellFormedUriString(character.MainImageUrl, UriKind.Absolute), $"Malformed main image url: '{character.MainImageUrl}'");
+
+            Uri testUri;
+            Assert.That(Uri.TryCreate(character.MainImageUrl, UriKind.RelativeOrAbsolute, out testUri), $"Malformed main image url: '{character.MainImageUrl}'");
+
             CollectionAssert.IsNotEmpty(character.Movements, $"Movements for character '{character.Name}' are empty.");
             CollectionAssert.IsNotEmpty(character.Moves, $"Moves for character '{character.Name}' are empty.");
             CollectionAssert.IsNotEmpty(character.Attributes, $"Attributes for character '{character.Name}' are empty.");
         }
-
-        #endregion
     }
 }

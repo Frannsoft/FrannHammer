@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using FrannHammer.Api.Services.Contracts;
 using FrannHammer.WebScraping.Contracts.Character;
 using FrannHammer.WebScraping.Domain;
 using FrannHammer.Seeding;
-using FrannHammer.WebScraping.Domain.Contracts;
 
 namespace FrannHammer.Seeder
 {
@@ -28,6 +26,9 @@ namespace FrannHammer.Seeder
                     Container.Instance.Resolve<IMoveService>(),
                     Container.Instance.Resolve<ICharacterAttributeRowService>());
             }
+
+            Console.WriteLine("Seeding completed.  Press any key to close.");
+            Console.Read();
         }
     }
 }

@@ -11,6 +11,6 @@
         string AutoCancel { get; set; }
         string KnockbackGrowth { get; set; }
         MoveType MoveType { get; set; }
-        int OwnerId { get; set; }
+        string Owner { get; set; }
     }
 }

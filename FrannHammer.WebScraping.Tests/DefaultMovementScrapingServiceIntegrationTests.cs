@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using FrannHammer.Domain.Contracts;
 using FrannHammer.WebScraping.Contracts.Movements;
 using FrannHammer.WebScraping.Domain;
 using FrannHammer.WebScraping.HtmlParsing;
@@ -26,6 +27,15 @@ namespace FrannHammer.WebScraping.Tests
             _scrapingServices = new DefaultMovementScrapingServices(movementProvider, webServices);
         }
 
+        private static void AssertMovementIsValid(IMovement movement)
+        {
+            Assert.That(movement, Is.Not.Null);
+            Assert.That(movement.Name, Is.Not.Null);
+            Assert.That(movement.Value, Is.Not.Null);
+            Assert.That(movement.OwnerId, Is.Not.Null);
+        }
+
+
         [Test]
         public void ScrapeMovementsForCharacter()
         {
@@ -36,11 +46,7 @@ namespace FrannHammer.WebScraping.Tests
             CollectionAssert.AllItemsAreUnique(movements);
             CollectionAssert.IsNotEmpty(movements);
 
-            movements.ForEach(movement =>
-            {
-                Assert.That(movement.Name, Is.Not.Empty, "Movement name should not be empty.");
-                Assert.That(movement.Value, Is.Not.Empty, "Movement value should not be empty.");
-            });
+            movements.ForEach(AssertMovementIsValid);
         }
     }
 }

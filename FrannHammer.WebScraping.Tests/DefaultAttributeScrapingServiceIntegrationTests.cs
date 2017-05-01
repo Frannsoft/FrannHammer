@@ -26,8 +26,9 @@ namespace FrannHammer.WebScraping.Tests
                 Assert.That(row.Name, Is.EqualTo(attributeScraper.AttributeName));
                 row.Values.ToList().ForEach(attribute =>
                 {
-                    Assert.That(attribute.Value, Is.Not.Empty);
-                    Assert.That(attribute.Name, Is.Not.Empty);
+                    Assert.That(attribute.Owner, Is.Not.Null);
+                    Assert.That(attribute.Value, Is.Not.Null);
+                    Assert.That(attribute.Name, Is.Not.Null);
                 });
             });
         }
@@ -62,11 +63,11 @@ namespace FrannHammer.WebScraping.Tests
 
         [Test]
         [TestCaseSource(nameof(Scrapers))]
-        public void ScrapeData(AttributeScraper scraper)
+        public void ScrapeAttributeRowData(AttributeScraper scraper)
         {
-            var attributes = scraper.Scrape(Characters.Greninja).ToList();
+            var attributeRows = scraper.Scrape(Characters.Greninja).ToList();
 
-            AssertAttributeCollectionIsValid(scraper, attributes);
+            AssertAttributeCollectionIsValid(scraper, attributeRows);
         }
     }
 }

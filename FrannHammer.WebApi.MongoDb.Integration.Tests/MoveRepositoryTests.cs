@@ -40,7 +40,6 @@ namespace FrannHammer.WebApi.MongoDb.Integration.Tests
         private static void AssertMoveIsValid(IMove move)
         {
             Assert.That(move.Angle, Is.Not.Null);
-            Assert.That(move.AutoCancel, Is.Not.Null);
             Assert.That(move.BaseDamage, Is.Not.Null);
             Assert.That(move.BaseKnockBackSetKnockback, Is.Not.Null);
             Assert.That(move.FirstActionableFrame, Is.Not.Null);
@@ -48,7 +47,7 @@ namespace FrannHammer.WebApi.MongoDb.Integration.Tests
             Assert.That(move.Id, Is.Not.Null);
             Assert.That(move.KnockbackGrowth, Is.Not.Null);
             Assert.That(move.Name, Is.Not.Null);
-            Assert.That(move.OwnerId, Is.GreaterThan(0));
+            Assert.That(move.Owner, Is.Not.Null);
         }
 
         [Test]

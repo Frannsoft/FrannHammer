@@ -38,7 +38,7 @@ namespace FrannHammer.Domain.Tests
             yield return Tuple.Create("knockbackGrowth", nameof(Move.KnockbackGrowth), typeof(Move));
             yield return Tuple.Create("moveType", nameof(Move.MoveType), typeof(Move));
             yield return Tuple.Create("landingLag", nameof(Move.LandingLag), typeof(Move));
-            yield return Tuple.Create("ownerId", nameof(Move.OwnerId), typeof(Move));
+            yield return Tuple.Create("ownerId", nameof(Move.Owner), typeof(Move));
         }
 
         private static IEnumerable<Tuple<string, string, Type>> MovementFriendlyNameInfo()

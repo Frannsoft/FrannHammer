@@ -68,7 +68,8 @@ namespace FrannHammer.WebScraping.Character
 
             //character details
             string mainImageUrl = htmlParser.GetAttributeFromSingleNavigable(srcAttributeKey, ScrapingConstants.XPathImageUrl);
-            if (!Uri.IsWellFormedUriString(mainImageUrl, UriKind.Absolute)) //add base address if it doesn't exist
+            Uri mainImageUri;
+            if (!Uri.TryCreate(mainImageUrl, UriKind.Absolute, out mainImageUri)) //add base address if it doesn't exist
             {
                 mainImageUrl = WebCharacter.SourceUrlBase + mainImageUrl;
             }

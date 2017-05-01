@@ -32,6 +32,6 @@ namespace FrannHammer.Domain
         public MoveType MoveType { get; set; }
 
         [FriendlyName("ownerId")]
-        public int OwnerId { get; set; }
+        public string Owner { get; set; }
     }
 }
