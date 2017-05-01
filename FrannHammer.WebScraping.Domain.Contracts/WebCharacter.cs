@@ -6,12 +6,12 @@ namespace FrannHammer.WebScraping.Domain.Contracts
 {
     public class WebCharacter : ICharacter
     {
+
 #if DEBUG
         public const string SourceUrlBase = "http://localhost:81/kuroganehammer.com/Smash4/";
 #else
         public const string SourceUrlBase = "http://kuroganehammer.com/Smash4/";
 #endif
-
         public string[] PotentialScrapingNames { get; }
 
         public string Id { get; set; }

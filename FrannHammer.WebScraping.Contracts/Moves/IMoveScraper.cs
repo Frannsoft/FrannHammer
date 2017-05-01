@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using FrannHammer.Domain.Contracts;
+using FrannHammer.WebScraping.Domain.Contracts;
 
 namespace FrannHammer.WebScraping.Contracts.Moves
 {
     public interface IMoveScraper
     {
-        Func<string, IEnumerable<IMove>> Scrape { get; }
+        Func<WebCharacter, IEnumerable<IMove>> Scrape { get; }
     }
 }

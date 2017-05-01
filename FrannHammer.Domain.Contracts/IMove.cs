@@ -10,7 +10,7 @@
         string LandingLag { get; set; }
         string AutoCancel { get; set; }
         string KnockbackGrowth { get; set; }
-        MoveType MoveType { get; set; }
+        string MoveType { get; set; }
         string Owner { get; set; }
     }
 }

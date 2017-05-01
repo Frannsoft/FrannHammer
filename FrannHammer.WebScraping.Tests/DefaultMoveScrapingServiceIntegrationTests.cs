@@ -47,7 +47,7 @@ namespace FrannHammer.WebScraping.Tests
         {
             var groundMoveScrapingService = new GroundMoveScraper(_scrapingServices);
 
-            var groundMoves = groundMoveScrapingService.Scrape(Characters.Greninja.SourceUrl).ToList();
+            var groundMoves = groundMoveScrapingService.Scrape(Characters.Greninja).ToList();
 
             CollectionAssert.AllItemsAreNotNull(groundMoves);
             CollectionAssert.AllItemsAreUnique(groundMoves);
@@ -61,7 +61,7 @@ namespace FrannHammer.WebScraping.Tests
         {
             var aerialMoveScrapingService = new AerialMoveScraper(_scrapingServices);
 
-            var aerialMoves = aerialMoveScrapingService.Scrape(Characters.Greninja.SourceUrl).ToList();
+            var aerialMoves = aerialMoveScrapingService.Scrape(Characters.Greninja).ToList();
 
             CollectionAssert.AllItemsAreNotNull(aerialMoves);
             CollectionAssert.AllItemsAreUnique(aerialMoves);
@@ -80,7 +80,7 @@ namespace FrannHammer.WebScraping.Tests
         {
             var specialMoveScrapingService = new SpecialMoveScraper(_scrapingServices);
 
-            var specialMoves = specialMoveScrapingService.Scrape(Characters.Greninja.SourceUrl).ToList();
+            var specialMoves = specialMoveScrapingService.Scrape(Characters.Greninja).ToList();
 
             CollectionAssert.AllItemsAreNotNull(specialMoves);
             CollectionAssert.AllItemsAreUnique(specialMoves);

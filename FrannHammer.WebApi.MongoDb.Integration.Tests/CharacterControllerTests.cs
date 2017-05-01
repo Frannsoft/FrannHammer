@@ -31,13 +31,13 @@ namespace FrannHammer.WebApi.MongoDb.Integration.Tests
             Assert.That(character.ThumbnailUrl, Is.Not.Null);
             Assert.That(character.DisplayName, Is.Not.Null);
             Assert.That(character.ColorTheme, Is.Not.Null);
-            Assert.That(character.Description, Is.Not.Null);
+            //Assert.That(character.Description, Is.Not.Null);
             Assert.That(character.DisplayName, Is.Not.Null);
             Assert.That(character.FullUrl, Is.Not.Null);
             Assert.That(character.Id, Is.Not.Null);
             Assert.That(character.MainImageUrl, Is.Not.Null);
             Assert.That(character.Name, Is.Not.Null);
-            Assert.That(character.Style, Is.Not.Null);
+            //Assert.That(character.Style, Is.Not.Null);
             Assert.That(character.ThumbnailUrl, Is.Not.Null);
         }
 

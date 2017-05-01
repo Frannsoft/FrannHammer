@@ -3,25 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.WebScraping.Contracts.Moves;
+using FrannHammer.WebScraping.Domain.Contracts;
 using HtmlAgilityPack;
 
 namespace FrannHammer.WebScraping.Moves
 {
     public class SpecialMoveScraper : BaseMoveScraper
     {
-        public sealed override Func<string, IEnumerable<IMove>> Scrape { get; protected set; }
+        public sealed override Func<WebCharacter, IEnumerable<IMove>> Scrape { get; protected set; }
 
         public SpecialMoveScraper(IMoveScrapingServices scrapingServices)
             : base(scrapingServices)
         {
-            Scrape = url =>
+            Scrape = character =>
             {
-                var moveTableRows = GetTableRows(url, ScrapingConstants.XPathTableNodeSpecialStats);
-                return moveTableRows.Select(row => GetMove(GetTableCells(row)));
+                var moveTableRows = GetTableRows(character.SourceUrl, ScrapingConstants.XPathTableNodeSpecialStats);
+                return moveTableRows.Select(row => GetMove(GetTableCells(row), character.Name));
             };
         }
 
-        protected override IMove GetMove(HtmlNodeCollection cells)
+        protected override IMove GetMove(HtmlNodeCollection cells, string characterName)
         {
             var move = default(IMove);
 
@@ -44,7 +45,8 @@ namespace FrannHammer.WebScraping.Moves
                 move.FirstActionableFrame = faf;
                 move.HitboxActive = hitboxActive;
                 move.KnockbackGrowth = kbg;
-                move.MoveType = MoveType.Special;
+                move.MoveType = MoveType.Special.GetEnumDescription();
+                move.Owner = characterName;
             }
 
             return move;

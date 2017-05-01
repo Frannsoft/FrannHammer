@@ -108,6 +108,7 @@ namespace FrannHammer.WebScraping.Tests
         {
             _characterDataScraper.PopulateCharacterFromWeb(character);
 
+            Assert.That(character.FullUrl, Is.Not.Empty);
             Assert.That(character.ColorTheme, Is.Not.Empty);
             Assert.That(character.DisplayName, Is.Not.Empty);
             Assert.That(character.ThumbnailUrl, Is.Not.Null);

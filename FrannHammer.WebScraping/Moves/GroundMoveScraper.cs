@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.WebScraping.Contracts.Moves;
+using FrannHammer.WebScraping.Domain.Contracts;
 using HtmlAgilityPack;
 
 namespace FrannHammer.WebScraping.Moves
 {
     public class GroundMoveScraper : BaseMoveScraper
     {
-        public sealed override Func<string, IEnumerable<IMove>> Scrape { get; protected set; }
+        public sealed override Func<WebCharacter, IEnumerable<IMove>> Scrape { get; protected set; }
 
         public GroundMoveScraper(IMoveScrapingServices scrapingServices)
             : base(scrapingServices)
         {
-            Scrape = url =>
+            Scrape = character =>
             {
-                var moveTableRows = GetTableRows(url, ScrapingConstants.XPathTableNodeGroundStats);
-                return moveTableRows.Select(row => GetMove(GetTableCells(row)));
+                var moveTableRows = GetTableRows(character.SourceUrl, ScrapingConstants.XPathTableNodeGroundStats);
+                return moveTableRows.Select(row => GetMove(GetTableCells(row), character.Name));
             };
         }
 
@@ -62,7 +63,7 @@ namespace FrannHammer.WebScraping.Moves
             }
         }
 
-        protected override IMove GetMove(HtmlNodeCollection cells)
+        protected override IMove GetMove(HtmlNodeCollection cells, string characterName)
         {
             var move = default(IMove);
 
@@ -85,7 +86,8 @@ namespace FrannHammer.WebScraping.Moves
                 move.FirstActionableFrame = faf;
                 move.HitboxActive = hitboxActive;
                 move.KnockbackGrowth = kbg;
-                move.MoveType = MoveType.Ground;
+                move.MoveType = MoveType.Ground.GetEnumDescription();
+                move.Owner = characterName;
             }
 
             return move;

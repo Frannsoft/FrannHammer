@@ -29,7 +29,7 @@ namespace FrannHammer.Domain
         public string KnockbackGrowth { get; set; }
 
         [FriendlyName("moveType")]
-        public MoveType MoveType { get; set; }
+        public string MoveType { get; set; }
 
         [FriendlyName("ownerId")]
         public string Owner { get; set; }

@@ -3,25 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.WebScraping.Contracts.Moves;
+using FrannHammer.WebScraping.Domain.Contracts;
 using HtmlAgilityPack;
 
 namespace FrannHammer.WebScraping.Moves
 {
     public class AerialMoveScraper : BaseMoveScraper
     {
-        public sealed override Func<string, IEnumerable<IMove>> Scrape { get; protected set; }
+        public sealed override Func<WebCharacter, IEnumerable<IMove>> Scrape { get; protected set; }
 
         public AerialMoveScraper(IMoveScrapingServices scrapingServices)
             : base(scrapingServices)
         {
-            Scrape = url =>
+            Scrape = character =>
             {
-                var moveTableRows = GetTableRows(url, ScrapingConstants.XPathTableNodeAerialStats);
-                return moveTableRows.Select(row => GetMove(GetTableCells(row)));
+                var moveTableRows = GetTableRows(character.SourceUrl, ScrapingConstants.XPathTableNodeAerialStats);
+                return moveTableRows.Select(row => GetMove(GetTableCells(row), character.Name));
             };
         }
 
-        protected override IMove GetMove(HtmlNodeCollection cells)
+        protected override IMove GetMove(HtmlNodeCollection cells, string characterName)
         {
             var move = default(IMove);
 
@@ -50,7 +51,8 @@ namespace FrannHammer.WebScraping.Moves
                 move.KnockbackGrowth = kbg;
                 move.LandingLag = landingLag;
                 move.AutoCancel = autocancel;
-                move.MoveType = MoveType.Aerial;
+                move.MoveType = MoveType.Aerial.GetEnumDescription();
+                move.Owner = characterName;
             }
 
             return move;

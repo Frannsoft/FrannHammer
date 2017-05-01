@@ -90,6 +90,7 @@ namespace FrannHammer.WebScraping.Character
                 attributeRows.AddRange(attributeScraper.Scrape(character));
             }
 
+            character.FullUrl = character.SourceUrl;
             character.DisplayName = displayName;
             character.ThumbnailUrl = thumbnailUrl;
             character.MainImageUrl = mainImageUrl;

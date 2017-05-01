@@ -64,6 +64,7 @@
     <Compile Include="Character\DefaultCharacterDataScrapingServices.cs" />
     <Compile Include="Character\DefaultCharacterMoveScraper.cs" />
     <Compile Include="DefaultWebServices.cs" />
+    <Compile Include="EnumExtensions.cs" />
     <Compile Include="Moves\BaseMoveScraper.cs" />
     <Compile Include="Moves\DefaultMoveScrapingServices.cs" />
     <Compile Include="Moves\AerialMoveScraper.cs" />

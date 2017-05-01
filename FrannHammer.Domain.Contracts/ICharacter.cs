@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace FrannHammer.Domain.Contracts
+﻿namespace FrannHammer.Domain.Contracts
 {
     public interface ICharacter : IModel
     {

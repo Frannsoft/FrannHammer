@@ -28,9 +28,9 @@ namespace FrannHammer.WebScraping.Character
 
         public IEnumerable<IMove> ScrapeMoves(WebCharacter character)
         {
-            return _groundMoveScraper.Scrape(character.SourceUrl)
-                .Concat(_aerialMoveScraper.Scrape(character.SourceUrl))
-                    .Concat(_specialMoveScraper.Scrape(character.SourceUrl));
+            return _groundMoveScraper.Scrape(character)
+                .Concat(_aerialMoveScraper.Scrape(character))
+                    .Concat(_specialMoveScraper.Scrape(character));
         }
     }
 }
