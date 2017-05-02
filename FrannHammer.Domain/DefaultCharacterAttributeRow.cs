@@ -19,7 +19,7 @@ namespace FrannHammer.Domain
             Guard.VerifyObjectNotNull(attributes, nameof(attributes));
             Values = attributes;
 
-            CharacterName = attributes.SingleOrDefault(a => a.Name.Equals("character", StringComparison.OrdinalIgnoreCase))?.Value;
+            CharacterName = attributes.SingleOrDefault(a => !string.IsNullOrEmpty(a.Name) && a.Name.Equals("character", StringComparison.OrdinalIgnoreCase))?.Value;
         }
     }
 }

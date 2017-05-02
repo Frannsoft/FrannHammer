@@ -8,6 +8,7 @@ using Ploeh.AutoFixture.Kernel;
 
 namespace FrannHammer.DataAccess.MongoDb.Tests
 {
+    //TODO - this is a candidate for generic test fixture attribute
     [TestFixture]
     public class CharacterRepositoryTests : BaseRepositoryTests
     {

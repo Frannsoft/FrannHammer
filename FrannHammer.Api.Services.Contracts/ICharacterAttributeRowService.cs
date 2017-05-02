@@ -2,7 +2,7 @@
 
 namespace FrannHammer.Api.Services.Contracts
 {
-    public interface ICharacterAttributeRowService : IWriterService<ICharacterAttributeRow>, IReaderService<ICharacterAttributeRow>
+    public interface ICharacterAttributeRowService : ICrudService<ICharacterAttributeRow>
     {
     }
 }

@@ -11,7 +11,6 @@ using FrannHammer.WebScraping.Contracts.Movements;
 using FrannHammer.WebScraping.Contracts.Moves;
 using FrannHammer.WebScraping.Contracts.PageDownloading;
 using FrannHammer.WebScraping.Contracts.WebClients;
-using FrannHammer.WebScraping.Domain;
 using FrannHammer.WebScraping.Domain.Contracts;
 using FrannHammer.WebScraping.HtmlParsing;
 using FrannHammer.WebScraping.Images;

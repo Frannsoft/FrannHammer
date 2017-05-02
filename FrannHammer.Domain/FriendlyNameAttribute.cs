@@ -7,7 +7,7 @@ namespace FrannHammer.Domain
     /// Can be used as a Json-friendly name for the deserialized output of the assigned Property.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
-    public class FriendlyNameAttribute : Attribute
+    public class FriendlyNameAttribute : System.Attribute
     {
         public string Name { get; }
 
