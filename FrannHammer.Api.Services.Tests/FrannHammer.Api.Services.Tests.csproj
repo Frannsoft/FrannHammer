@@ -65,7 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseServiceTests.cs" />
-    <Compile Include="CharacterAttributeServiceTests.cs" />
+    <Compile Include="CharacterAttributeRowServiceTests.cs" />
     <Compile Include="CharacterServiceTests.cs" />
     <Compile Include="GeneralServiceTests.cs" />
     <Compile Include="MovementServiceTests.cs" />

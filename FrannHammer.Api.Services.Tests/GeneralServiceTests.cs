@@ -10,10 +10,10 @@ using Ploeh.AutoFixture.AutoMoq;
 
 namespace FrannHammer.Api.Services.Tests
 {
-    //[TestFixture(typeof(IMove), typeof(DefaultMoveService))]
-    //[TestFixture(typeof(IMovement), typeof(DefaultMovementService))]
-    //[TestFixture(typeof(ICharacter), typeof(DefaultCharacterService))]
-    //[TestFixture(typeof(ICharacterAttributeRow), typeof(DefaultCharacterAttributeService))]
+    [TestFixture(typeof(IMove), typeof(DefaultMoveService))]
+    [TestFixture(typeof(IMovement), typeof(DefaultMovementService))]
+    [TestFixture(typeof(ICharacter), typeof(DefaultCharacterService))]
+    [TestFixture(typeof(ICharacterAttributeRow), typeof(DefaultCharacterAttributeService))]
     public class GeneralServiceTests<TModel, TSut>
         where TModel : class, IModel
         where TSut : ICrudService<TModel>
@@ -66,7 +66,7 @@ namespace FrannHammer.Api.Services.Tests
             Assert.That(item, Is.Null);
         }
 
-       
+     
 
         [Test]
         public void RejectsNullItemForAddition()
@@ -76,7 +76,6 @@ namespace FrannHammer.Api.Services.Tests
             Assert.Throws<ArgumentNullException>(() =>
             {
                 var sut = CreateCrudServiceSut(repositoryMock.Object);
-
                 sut.Add(null);
             });
         }

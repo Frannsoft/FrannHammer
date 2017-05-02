@@ -1,10 +1,11 @@
-﻿using System;
+using System;
+using FrannHammer.Domain.Contracts;
 using NUnit.Framework;
 
 namespace FrannHammer.Api.Services.Tests
 {
     [TestFixture]
-    public class MoveServiceTests
+    public class CharacterAttributeRowServiceTests
     {
         [Test]
         public void ThrowsArgumentNullExceptionForNullRepositoryInConstructor()
@@ -12,7 +13,7 @@ namespace FrannHammer.Api.Services.Tests
             Assert.Throws<ArgumentNullException>(() =>
             {
                 // ReSharper disable once ObjectCreationAsStatement
-                new DefaultMoveService(null);
+                new DefaultCharacterAttributeService(null);
             });
         }
     }
