@@ -28,7 +28,7 @@ namespace FrannHammer.WebApi.MongoDb.Integration.Tests
         [Test]
         public void GetSingleMoveById()
         {
-            var response = _controller.GetMove("5905f9a04696591ea4062d19") as OkNegotiatedContentResult<IMove>;
+            var response = _controller.Get("5905f9a04696591ea4062d19") as OkNegotiatedContentResult<IMove>;
 
             Assert.That(response, Is.Not.Null);
 
@@ -53,7 +53,7 @@ namespace FrannHammer.WebApi.MongoDb.Integration.Tests
         [Test]
         public void GetAllMoves()
         {
-            var response = _controller.GetAllMoves() as OkNegotiatedContentResult<IEnumerable<IMove>>;
+            var response = _controller.GetAll() as OkNegotiatedContentResult<IEnumerable<IMove>>;
 
             Assert.That(response, Is.Not.Null);
 

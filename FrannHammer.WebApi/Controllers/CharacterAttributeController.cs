@@ -18,14 +18,14 @@ namespace FrannHammer.WebApi.Controllers
         }
 
         [Route(CharacterAttributesRouteKey)]
-        public IHttpActionResult GetAll([FromUri] string fields = "")
+        public override IHttpActionResult GetAll([FromUri] string fields = "")
         {
             var content = _characterAttributeService.GetAll(fields);
             return Result(content);
         }
 
         [Route(CharacterAttributesRouteKey + "/{id}")]
-        public IHttpActionResult Get(string id, [FromUri] string fields = "")
+        public override IHttpActionResult Get(string id, [FromUri] string fields = "")
         {
             var content = _characterAttributeService.Get(id, fields);
             return Result(content);

@@ -44,7 +44,7 @@ namespace FrannHammer.WebApi.MongoDb.Integration.Tests
         [Test]
         public void GetSingleCharacter()
         {
-            var response = _controller.GetCharacter("5905f99f4696591ea4062d06") as OkNegotiatedContentResult<ICharacter>;
+            var response = _controller.Get("5905f99f4696591ea4062d06") as OkNegotiatedContentResult<ICharacter>;
 
             Assert.That(response, Is.Not.Null);
 
@@ -56,7 +56,7 @@ namespace FrannHammer.WebApi.MongoDb.Integration.Tests
         [Test]
         public void GetAllCharacters()
         {
-            var response = _controller.GetAllCharacters() as OkNegotiatedContentResult<IEnumerable<ICharacter>>;
+            var response = _controller.GetAll() as OkNegotiatedContentResult<IEnumerable<ICharacter>>;
 
             Assert.That(response, Is.Not.Null);
 

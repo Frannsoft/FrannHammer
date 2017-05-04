@@ -18,14 +18,14 @@ namespace FrannHammer.WebApi.Controllers
         }
 
         [Route(MovesRouteKey + "/{id}")]
-        public IHttpActionResult GetMove(string id, string fields = "")
+        public override IHttpActionResult Get(string id, [FromUri]string fields = "")
         {
             var move = _moveService.Get(id, fields);
             return Result(move);
         }
 
         [Route(MovesRouteKey)]
-        public IHttpActionResult GetAllMoves(string fields = "")
+        public override IHttpActionResult GetAll([FromUri]string fields = "")
         {
             var moves = _moveService.GetAll(fields);
             return Result(moves);

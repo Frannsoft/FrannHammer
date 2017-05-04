@@ -33,14 +33,14 @@ namespace FrannHammer.WebApi.Tests.Controllers
 
         private static IEnumerable<Tuple<string, Type, string>> ControllerRouteInfo()
         {
-            yield return Tuple.Create("characters/{id}", typeof(CharacterController), nameof(CharacterController.GetCharacter));
-            yield return Tuple.Create("characters", typeof(CharacterController), nameof(CharacterController.GetAllCharacters));
+            yield return Tuple.Create("characters/{id}", typeof(CharacterController), nameof(CharacterController.Get));
+            yield return Tuple.Create("characters", typeof(CharacterController), nameof(CharacterController.GetAll));
             yield return Tuple.Create("characterattributes/{id}", typeof(CharacterAttributeController), nameof(CharacterAttributeController.Get));
             yield return Tuple.Create("characterattributes", typeof(CharacterAttributeController), nameof(CharacterAttributeController.GetAll));
-            yield return Tuple.Create("moves/{id}", typeof(MoveController), nameof(MoveController.GetMove));
-            yield return Tuple.Create("moves", typeof(MoveController), nameof(MoveController.GetAllMoves));
-            yield return Tuple.Create("movements", typeof(MovementController), nameof(MovementController.GetAllMovements));
-            yield return Tuple.Create("movements/{id}", typeof(MovementController), nameof(MovementController.GetMovement));
+            yield return Tuple.Create("moves/{id}", typeof(MoveController), nameof(MoveController.Get));
+            yield return Tuple.Create("moves", typeof(MoveController), nameof(MoveController.GetAll));
+            yield return Tuple.Create("movements", typeof(MovementController), nameof(MovementController.GetAll));
+            yield return Tuple.Create("movements/{id}", typeof(MovementController), nameof(MovementController.Get));
         }
 
         [Test]

@@ -38,7 +38,7 @@ namespace FrannHammer.Api.Services.Tests
             {
                 repositoryItems.Add(c);
             });
-            var sut = CreateCrudServiceSut(repositoryMock.Object);
+            var sut = CreateCrudService(repositoryMock.Object);
 
             int previousCount = sut.GetAll().Count();
 
@@ -59,14 +59,12 @@ namespace FrannHammer.Api.Services.Tests
             var repositoryMock = new Mock<IRepository<TModel>>();
             repositoryMock.Setup(c => c.Get(It.IsAny<string>())).Returns<string>(id => items.FirstOrDefault(c => c.Id == id.ToString()));
 
-            var sut = CreateCrudServiceSut(repositoryMock.Object);
+            var sut = CreateCrudService(repositoryMock.Object);
 
             var item = sut.Get("0");
 
             Assert.That(item, Is.Null);
         }
-
-     
 
         [Test]
         public void RejectsNullItemForAddition()
@@ -75,12 +73,12 @@ namespace FrannHammer.Api.Services.Tests
 
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var sut = CreateCrudServiceSut(repositoryMock.Object);
+                var sut = CreateCrudService(repositoryMock.Object);
                 sut.Add(null);
             });
         }
 
-        private static ICrudService<TModel> CreateCrudServiceSut(IRepository<TModel> repository)
+        private static ICrudService<TModel> CreateCrudService(IRepository<TModel> repository)
         {
             return (ICrudService<TModel>)Activator.CreateInstance(typeof(TSut), repository);
         }

@@ -2,7 +2,7 @@
 
 namespace FrannHammer.WebApi.Controllers
 {
-    public class BaseApiController : ApiController
+    public abstract class BaseApiController : ApiController
     {
         protected IHttpActionResult Result<T>(T content)
         {
@@ -12,5 +12,8 @@ namespace FrannHammer.WebApi.Controllers
             }
             return Ok(content);
         }
+
+        public abstract IHttpActionResult Get(string id, string fields = "");
+        public abstract IHttpActionResult GetAll(string fields = "");
     }
 }

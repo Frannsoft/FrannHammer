@@ -38,7 +38,7 @@ namespace FrannHammer.WebApi.MongoDb.Integration.Tests
         [Test]
         public void GetSingleMovement()
         {
-            var response = _controller.GetMovement("5905f9a04696591ea4062d07") as OkNegotiatedContentResult<IMovement>;
+            var response = _controller.Get("5905f9a04696591ea4062d07") as OkNegotiatedContentResult<IMovement>;
 
             Assert.That(response, Is.Not.Null);
 
@@ -50,7 +50,7 @@ namespace FrannHammer.WebApi.MongoDb.Integration.Tests
         [Test]
         public void GetAllMovements()
         {
-            var response = _controller.GetAllMovements() as OkNegotiatedContentResult<IEnumerable<IMovement>>;
+            var response = _controller.GetAll() as OkNegotiatedContentResult<IEnumerable<IMovement>>;
 
             Assert.That(response, Is.Not.Null);
 
