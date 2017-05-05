@@ -62,13 +62,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContainerModules\ApiServicesModule.cs" />
-    <Compile Include="Container.cs" />
-    <Compile Include="ContainerModules\DatabaseModule.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ContainerModules\RepositoryModule.cs" />
-    <Compile Include="ContainerModules\ScrapingModule.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +86,10 @@
     <ProjectReference Include="..\FrannHammer.DataAccess.MongoDb\FrannHammer.DataAccess.MongoDb.csproj">
       <Project>{3E7D28F0-731C-4AA7-8C5A-4C9AE810651A}</Project>
       <Name>FrannHammer.DataAccess.MongoDb</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.DefaultContainer.Configuration\FrannHammer.DefaultContainer.Configuration.csproj">
+      <Project>{D0A0B3FE-CFB3-4759-AD3C-D3FC20FAE191}</Project>
+      <Name>FrannHammer.DefaultContainer.Configuration</Name>
     </ProjectReference>
     <ProjectReference Include="..\FrannHammer.Domain.Contracts\FrannHammer.Domain.Contracts.csproj">
       <Project>{15A2565C-4611-4034-814A-931DA70ED8B1}</Project>

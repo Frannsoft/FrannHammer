@@ -50,6 +50,7 @@
     <Compile Include="Attributes\AirDecelerationScraper.cs" />
     <Compile Include="Attributes\AirDodgeScraper.cs" />
     <Compile Include="Attributes\AirFrictionScraper.cs" />
+    <Compile Include="Attributes\AttributeScrapers.cs" />
     <Compile Include="Attributes\CounterScraper.cs" />
     <Compile Include="Attributes\DashLengthScraper.cs" />
     <Compile Include="Attributes\FallSpeedScraper.cs" />

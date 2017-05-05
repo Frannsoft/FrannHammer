@@ -19,7 +19,7 @@ using FrannHammer.WebScraping.Moves;
 using FrannHammer.WebScraping.PageDownloading;
 using FrannHammer.WebScraping.WebClients;
 
-namespace FrannHammer.Seeder.ContainerModules
+namespace FrannHammer.DefaultContainer.Configuration.ContainerModules
 {
     public class ScrapingModule : Module
     {

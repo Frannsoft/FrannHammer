@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using MongoDB.Driver;
 
-namespace FrannHammer.Seeder.ContainerModules
+namespace FrannHammer.DefaultContainer.Configuration.ContainerModules
 {
     public class DatabaseModule : Module
     {

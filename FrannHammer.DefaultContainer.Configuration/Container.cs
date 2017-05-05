@@ -1,16 +1,21 @@
-using Autofac;
-using FrannHammer.Seeder.ContainerModules;
-using FrannHammer.Seeding;
+﻿using Autofac;
+using FrannHammer.DefaultContainer.Configuration.ContainerModules;
 
-namespace FrannHammer.Seeder
+namespace FrannHammer.DefaultContainer.Configuration
 {
     public class Container
     {
-        private readonly IContainer _container;
+        private IContainer _container;
 
-        internal static Container Instance = new Container();
+        public static Container Instance = new Container();
 
         private Container()
+        { }
+
+        static Container()
+        { }
+
+        public Container BuildDefault()
         {
             var builder = new ContainerBuilder();
 
@@ -19,15 +24,8 @@ namespace FrannHammer.Seeder
             builder.RegisterModule<RepositoryModule>();
             builder.RegisterModule<ApiServicesModule>();
 
-            //seeder
-            builder.RegisterType<DefaultSeeder>()
-                .AsSelf();
-
-            _container = builder.Build();
+            return this;
         }
-
-        static Container()
-        { }
 
         public T Resolve<T>()
         {

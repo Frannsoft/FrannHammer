@@ -32,13 +32,11 @@ namespace FrannHammer.WebScraping.Tests
             Assert.That(move, Is.Not.Null);
             Assert.That(move.Name, Is.Not.Null);
             Assert.That(move.Angle, Is.Not.Null);
-            Assert.That(move.AutoCancel, Is.Not.Null);
             Assert.That(move.BaseDamage, Is.Not.Null);
             Assert.That(move.BaseKnockBackSetKnockback, Is.Not.Null);
             Assert.That(move.FirstActionableFrame, Is.Not.Null);
             Assert.That(move.HitboxActive, Is.Not.Null);
             Assert.That(move.KnockbackGrowth, Is.Not.Null);
-            Assert.That(move.LandingLag, Is.Not.Null);
             Assert.That(move.Owner, Is.Not.Null);
         }
 

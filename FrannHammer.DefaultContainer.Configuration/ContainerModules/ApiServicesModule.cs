@@ -4,7 +4,7 @@ using FrannHammer.Api.Services.Contracts;
 using FrannHammer.DataAccess.Contracts;
 using FrannHammer.Domain.Contracts;
 
-namespace FrannHammer.Seeder.ContainerModules
+namespace FrannHammer.DefaultContainer.Configuration.ContainerModules
 {
     public class ApiServicesModule : Module
     {

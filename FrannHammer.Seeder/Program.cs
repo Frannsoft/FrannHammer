@@ -3,6 +3,7 @@ using FrannHammer.Api.Services.Contracts;
 using FrannHammer.WebScraping.Contracts.Character;
 using FrannHammer.WebScraping.Domain;
 using FrannHammer.Seeding;
+using FrannHammer.DefaultContainer.Configuration;
 
 namespace FrannHammer.Seeder
 {
@@ -12,6 +13,7 @@ namespace FrannHammer.Seeder
         {
             Startup.InitializeMapping();
 
+            Container.Instance.BuildDefault();
             var characterDataScraper = Container.Instance.Resolve<ICharacterDataScraper>();
 
             foreach (var character in Characters.All)

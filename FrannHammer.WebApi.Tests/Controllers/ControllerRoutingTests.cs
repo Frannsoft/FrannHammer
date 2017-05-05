@@ -15,6 +15,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
             yield return typeof(CharacterAttributeController);
             yield return typeof(CharacterController);
             yield return typeof(MoveController);
+            yield return typeof(MovementController);
         }
 
         [Test]

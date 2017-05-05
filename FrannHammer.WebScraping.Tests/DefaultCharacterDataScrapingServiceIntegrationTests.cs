@@ -69,25 +69,8 @@ namespace FrannHammer.WebScraping.Tests
 
             _characterMoveScraper = new DefaultCharacterMoveScraper(_groundMoveScraper, _aerialMoveScraper, _specialMoveScraper);
 
-            var attributeScrapers = new List<IAttributeScraper>
-            {
-                            new AerialJumpScraper(_attributeScrapingServices),
-                            new AirAccelerationScraper(_attributeScrapingServices),
-                            new AirDecelerationScraper(_attributeScrapingServices),
-                            new AirFrictionScraper(_attributeScrapingServices),
-                            new DashLengthScraper(_attributeScrapingServices),
-                            new FallSpeedScraper(_attributeScrapingServices),
-                            new FullHopScraper(_attributeScrapingServices),
-                            new GravityScraper(_attributeScrapingServices),
-                            new JumpSquatScraper(_attributeScrapingServices),
-                            new LedgeHopScraper(_attributeScrapingServices),
-                            new ShortHopScraper(_attributeScrapingServices),
-                            new SpotdodgeScraper(_attributeScrapingServices),
-                            new TractionScraper(_attributeScrapingServices),
-                            new WalkSpeedScraper(_attributeScrapingServices),
-                            new AirSpeedScraper(_attributeScrapingServices),
-                            new AirDodgeScraper(_attributeScrapingServices)
-            };
+            var attributeScrapers = AttributeScrapers.AllWithScrapingServices(_attributeScrapingServices);
+
             _movementScraper = new DefaultMovementScraper(_movementScrapingServices);
 
             _characterDataScrapingServices = new DefaultCharacterDataScrapingServices(_imageScrapingService, _movementScraper,
@@ -103,7 +86,7 @@ namespace FrannHammer.WebScraping.Tests
 
         [Test]
         [TestCaseSource(nameof(Characters))]
-        public void EnsureCharactersCanBeScraped(WebCharacter character)
+        public void ExpectedCharacterDataCanBeScraped(WebCharacter character)
         {
             _characterDataScraper.PopulateCharacterFromWeb(character);
 
