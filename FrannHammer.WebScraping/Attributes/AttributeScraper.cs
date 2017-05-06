@@ -73,7 +73,7 @@ namespace FrannHammer.WebScraping.Attributes
                             //There is no data here.  Just return empty.  Sometimes that might be expected (like in Counters) so we shouldn't throw.
                             //throw new Exception(
                             //    $"Error getting attribute table data after attempting to scrape full table for character '{character.Name}' at url '{sourceUrl}'");
-                            return attributeValueRows; 
+                            return attributeValueRows;
                         }
                     }
                 }
@@ -95,9 +95,11 @@ namespace FrannHammer.WebScraping.Attributes
                         attributeValues.Add(attributeValue);
                     }
 
-                    var characterAttributeRow = new DefaultCharacterAttributeRow(attributeValues)
+                    var characterAttributeRow = new DefaultCharacterAttributeRow
                     {
-                        Name = AttributeName
+                        Values = attributeValues,
+                        Name = AttributeName,
+                        CharacterName = character.Name
                     };
                     attributeValueRows.Add(characterAttributeRow);
                 }

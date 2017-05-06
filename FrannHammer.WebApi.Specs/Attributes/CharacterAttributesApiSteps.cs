@@ -44,14 +44,13 @@ namespace FrannHammer.WebApi.Specs.Attributes
         [Then(@"The result should be a list of all character attribute row entries")]
         public void ThenTheResultShouldBeAListOfAllCharacterAttributeRowEntries()
         {
-            var characterMetadata = ApiClient
+            var characterAttributeRows = ApiClient
                 .DeserializeResponse<IEnumerable<DefaultCharacterAttributeRow>>(ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey).Content)
                 .ToList();
 
-            CollectionAssert.AllItemsAreNotNull(characterMetadata);
-            CollectionAssert.AllItemsAreUnique(characterMetadata);
-            Assert.That(characterMetadata.Count, Is.EqualTo(58));
-            characterMetadata.ForEach(AssertCharacterAttributeRowIsValid);
+            CollectionAssert.AllItemsAreNotNull(characterAttributeRows);
+            CollectionAssert.AllItemsAreUnique(characterAttributeRows);
+            characterAttributeRows.ForEach(AssertCharacterAttributeRowIsValid);
         }
 
         [Then(@"The result should be just that character attribute row")]

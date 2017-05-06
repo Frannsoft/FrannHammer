@@ -1,4 +1,6 @@
-﻿using Autofac;
+﻿using System.Configuration;
+using Autofac;
+using FrannHammer.Utility;
 using MongoDB.Driver;
 
 namespace FrannHammer.DefaultContainer.Configuration.ContainerModules
@@ -7,12 +9,17 @@ namespace FrannHammer.DefaultContainer.Configuration.ContainerModules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            //TODO - get thes values from config settings
+            string username = ConfigurationManager.AppSettings[ConfigurationKeys.Username];
+            string password = ConfigurationManager.AppSettings[ConfigurationKeys.Password];
+            string databaseName = ConfigurationManager.AppSettings[ConfigurationKeys.DatabaseName];
+            string connectionString = ConfigurationManager.ConnectionStrings[ConfigurationKeys.DefaultConnection].ConnectionString;
+
+            string mongoUrlRaw = $"mongodb://{username}:{password}@{connectionString}{databaseName}";
 
             builder.RegisterType<MongoClient>()
                .AsSelf()
                .WithParameter((pi, c) => pi.Name == "url",
-                   (pi, c) => new MongoUrl("mongodb://testuser:password@ds119151.mlab.com:19151/playgroundfranndotexe"));
+                   (pi, c) => new MongoUrl(mongoUrlRaw));
         }
     }
 }

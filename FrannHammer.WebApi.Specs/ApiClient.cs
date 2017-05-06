@@ -1,5 +1,7 @@
 ﻿using System.Net.Http;
+using Autofac;
 using FrannHammer.Utility;
+using Newtonsoft.Json;
 
 namespace FrannHammer.WebApi.Specs
 {
@@ -12,8 +14,15 @@ namespace FrannHammer.WebApi.Specs
             Guard.VerifyObjectNotNull(httpClient, nameof(httpClient));
             _httpClient = httpClient;
         }
-
         public HttpResponseMessage GetResult(string requestUri) => _httpClient.GetAsync(requestUri).Result;
-        public T DeserializeResponse<T>(HttpContent responseContent) => responseContent.ReadAsAsync<T>().Result;
+
+        public T DeserializeResponse<T>(HttpContent responseContent)
+        {
+            return JsonConvert.DeserializeObject<T>(responseContent.ReadAsStringAsync().Result,
+                new JsonSerializerSettings
+                {
+                    ContractResolver = Startup.Container.Resolve<AutofacContractResolver>()
+                });
+        }
     }
 }

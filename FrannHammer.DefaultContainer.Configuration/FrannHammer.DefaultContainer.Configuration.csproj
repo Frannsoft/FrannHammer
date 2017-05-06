@@ -47,6 +47,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.0.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
@@ -60,9 +61,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Container.cs" />
     <Compile Include="ContainerModules\ApiServicesModule.cs" />
     <Compile Include="ContainerModules\DatabaseModule.cs" />
+    <Compile Include="ContainerModules\ModelModule.cs" />
     <Compile Include="ContainerModules\RepositoryModule.cs" />
     <Compile Include="ContainerModules\ScrapingModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -87,6 +88,14 @@
     <ProjectReference Include="..\FrannHammer.Domain.Contracts\FrannHammer.Domain.Contracts.csproj">
       <Project>{15a2565c-4611-4034-814a-931da70ed8b1}</Project>
       <Name>FrannHammer.Domain.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.Domain\FrannHammer.Domain.csproj">
+      <Project>{4DB6C856-581A-4B69-BB6A-4AEBF3929C5E}</Project>
+      <Name>FrannHammer.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.Utility\FrannHammer.Utility.csproj">
+      <Project>{4DB55C69-EAE5-4970-B8B2-A7A84900041A}</Project>
+      <Name>FrannHammer.Utility</Name>
     </ProjectReference>
     <ProjectReference Include="..\FrannHammer.WebScraping.Contracts\FrannHammer.WebScraping.Contracts.csproj">
       <Project>{C6F2A84F-6B78-494F-9293-0BB666A64AB9}</Project>
