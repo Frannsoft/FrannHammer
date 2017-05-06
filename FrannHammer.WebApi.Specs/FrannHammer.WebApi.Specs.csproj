@@ -128,13 +128,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiClient.cs" />
     <Compile Include="Attributes\CharacterAttributesApi.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CharacterAttributesApi.feature</DependentUpon>
     </Compile>
     <Compile Include="Attributes\CharacterAttributesApiSteps.cs" />
-    <Compile Include="BaseControllerTests.cs" />
     <Compile Include="BaseSteps.cs" />
     <Compile Include="Characters\CharacterApi.feature.cs">
       <AutoGen>True</AutoGen>
@@ -142,10 +142,19 @@
       <DependentUpon>CharacterApi.feature</DependentUpon>
     </Compile>
     <Compile Include="Characters\CharacterApiSteps.cs" />
-    <Compile Include="MovementControllerTests.cs" />
-    <Compile Include="MoveRepositoryTests.cs" />
+    <Compile Include="Movements\MovementsApi.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MovementsApi.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Movements\MovementsApiSteps.cs" />
+    <Compile Include="Moves\MovesApi.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MovesApi.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Moves\MovesApiSteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RouteTemplateTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -159,6 +168,14 @@
     </None>
     <None Include="Default.srprofile">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Movements\MovementsApi.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>MovementsApi.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Moves\MovesApi.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>MovesApi.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
     <None Include="runtests.cmd" />
@@ -193,6 +210,10 @@
     <ProjectReference Include="..\FrannHammer.Domain\FrannHammer.Domain.csproj">
       <Project>{4DB6C856-581A-4B69-BB6A-4AEBF3929C5E}</Project>
       <Name>FrannHammer.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.Utility\FrannHammer.Utility.csproj">
+      <Project>{4DB55C69-EAE5-4970-B8B2-A7A84900041A}</Project>
+      <Name>FrannHammer.Utility</Name>
     </ProjectReference>
     <ProjectReference Include="..\FrannHammer.WebApi\FrannHammer.WebApi.csproj">
       <Project>{80f48c0d-9731-406f-aae6-baa30b331e48}</Project>

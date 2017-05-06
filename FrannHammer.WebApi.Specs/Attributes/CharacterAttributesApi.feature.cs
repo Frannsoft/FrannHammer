@@ -74,8 +74,10 @@ namespace FrannHammer.WebApi.Specs.Attributes
 #line 6
 this.ScenarioSetup(scenarioInfo);
 #line 7
- testRunner.When("I request all character attribute rows", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Given("The api route of api/characterattributes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 8
+ testRunner.When("I request all data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 9
  testRunner.Then("The result should be a list of all character attribute row entries", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -88,11 +90,13 @@ this.ScenarioSetup(scenarioInfo);
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Request one single Character Attribute Row", new string[] {
                         "Get"});
-#line 11
-this.ScenarioSetup(scenarioInfo);
 #line 12
- testRunner.When("I request one specific character attribute row by id 58ff7e0306eafb0d9cf025f4", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+this.ScenarioSetup(scenarioInfo);
 #line 13
+ testRunner.Given("The api route of api/characterattributes/{id}", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 14
+ testRunner.When("I request one specific item by id 58ff7e0306eafb0d9cf025f4", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 15
  testRunner.Then("The result should be just that character attribute row", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

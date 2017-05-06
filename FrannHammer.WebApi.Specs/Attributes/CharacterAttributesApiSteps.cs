@@ -3,51 +3,50 @@ using System.Linq;
 using System.Net.Http;
 using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
-using Microsoft.Owin.Testing;
 using NUnit.Framework;
 using TechTalk.SpecFlow;
 
 namespace FrannHammer.WebApi.Specs.Attributes
 {
     [Binding]
+    [Scope(Feature = "CharacterAttributesApi")]
     public class CharacterAttributesApiSteps : BaseSteps
     {
         private static void AssertCharacterAttributeRowIsValid(ICharacterAttributeRow characterAttributeRow)
         {
-            Assert.That(characterAttributeRow, Is.Not.Null);
-            Assert.That(characterAttributeRow.Id, Is.Not.Null);
-            Assert.That(characterAttributeRow.Name, Is.Not.Null);
-            Assert.That(characterAttributeRow.CharacterName, Is.Not.Null);
+            Assert.That(characterAttributeRow, Is.Not.Null, $"{nameof(characterAttributeRow)}");
+            Assert.That(characterAttributeRow.Id, Is.Not.Null, $"{nameof(characterAttributeRow.Id)}");
+            Assert.That(characterAttributeRow.Name, Is.Not.Null, $"{nameof(characterAttributeRow.Name)}");
+            Assert.That(characterAttributeRow.CharacterName, Is.Not.Null, $"{nameof(characterAttributeRow.CharacterName)}");
 
             var attributeValues = characterAttributeRow.Values.ToList();
             attributeValues.ForEach(value =>
             {
-                Assert.That(value.Id, Is.Not.Null, $"{nameof(IAttribute.Id)} is null.");
-                Assert.That(value.Id, Is.Not.Null, $"{nameof(IAttribute.Name)} is null.");
-                Assert.That(value.Id, Is.Not.Null, $"{nameof(IAttribute.Owner)} is null.");
-                Assert.That(value.Id, Is.Not.Null, $"{nameof(IAttribute.Value)} is null.");
+                Assert.That(value.Id, Is.Not.Null, $"{nameof(IAttribute.Id)}");
+                Assert.That(value.Name, Is.Not.Null, $"{nameof(IAttribute.Name)}");
+                Assert.That(value.Owner, Is.Not.Null, $"{nameof(IAttribute.Owner)}");
+                Assert.That(value.Value, Is.Not.Null, $"{nameof(IAttribute.Value)}");
             });
         }
 
-        [When(@"I request all character attribute rows")]
-        public void WhenIRequestAllCharacterAttributeRows()
+        [BeforeFeature]
+        public static void BeforeFeature()
         {
-            var requestResult = TestServer.HttpClient.GetAsync("/api/characterattributes").Result;
-            ScenarioContext.Current[RequestResultKey] = requestResult;
+            CreateTestServer();
         }
 
-        [When(@"I request one specific character attribute row by id (.*)")]
-        public void WhenIRequestOneSpecificCharacterAttributeRowById(string id)
+        [AfterFeature]
+        public static void AfterFeature()
         {
-            var requestResult = TestServer.HttpClient.GetAsync("/api/characterattributes/" + id).Result;
-            ScenarioContext.Current.Set(requestResult, RequestResultKey);
+            DisposeOfTestServer();
         }
 
         [Then(@"The result should be a list of all character attribute row entries")]
         public void ThenTheResultShouldBeAListOfAllCharacterAttributeRowEntries()
         {
-            var requestResult = ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey);
-            var characterMetadata = requestResult.Content.ReadAsAsync<IEnumerable<DefaultCharacterAttributeRow>>().Result.ToList();
+            var characterMetadata = ApiClient
+                .DeserializeResponse<IEnumerable<DefaultCharacterAttributeRow>>(ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey).Content)
+                .ToList();
 
             CollectionAssert.AllItemsAreNotNull(characterMetadata);
             CollectionAssert.AllItemsAreUnique(characterMetadata);
@@ -58,8 +57,10 @@ namespace FrannHammer.WebApi.Specs.Attributes
         [Then(@"The result should be just that character attribute row")]
         public void ThenTheResultShouldBeJustThatCharacterAttributeRow()
         {
-            var requestResult = ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey);
-            var characterMetadata = requestResult.Content.ReadAsAsync<DefaultCharacterAttributeRow>().Result;
+            var characterMetadata = ApiClient
+                .DeserializeResponse<DefaultCharacterAttributeRow>(
+                    ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey).Content);
+
             AssertCharacterAttributeRowIsValid(characterMetadata);
         }
     }

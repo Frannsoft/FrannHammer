@@ -12,11 +12,9 @@ namespace FrannHammer.Domain.Tests
         {
             yield return Tuple.Create("displayName", nameof(Character.DisplayName), typeof(Character));
             yield return Tuple.Create("colorTheme", nameof(Character.ColorTheme), typeof(Character));
-            yield return Tuple.Create("description", nameof(Character.Description), typeof(Character));
             yield return Tuple.Create("fullUrl", nameof(Character.FullUrl), typeof(Character));
             yield return Tuple.Create("mainImageUrl", nameof(Character.MainImageUrl), typeof(Character));
             yield return Tuple.Create("name", nameof(Character.Name), typeof(Character));
-            yield return Tuple.Create("style", nameof(Character.Style), typeof(Character));
             yield return Tuple.Create("thumbnailUrl", nameof(Character.ThumbnailUrl), typeof(Character));
         }
 

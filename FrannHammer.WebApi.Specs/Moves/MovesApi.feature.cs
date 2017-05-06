@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace FrannHammer.WebApi.Specs.Characters
+namespace FrannHammer.WebApi.Specs.Moves
 {
     using TechTalk.SpecFlow;
     
@@ -18,21 +18,21 @@ namespace FrannHammer.WebApi.Specs.Characters
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "2.1.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("CharactersApi")]
-    public partial class CharactersApiFeature
+    [NUnit.Framework.DescriptionAttribute("MovesApi")]
+    public partial class MovesApiFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "CharacterApi.feature"
+#line 1 "MovesApi.feature"
 #line hidden
         
         [NUnit.Framework.TestFixtureSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "CharactersApi", "\tAs an api consumer who needs character data\r\n\tI want to be given character metad" +
-                    "ata when requested", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "MovesApi", "\tAs an api consumer who needs move data\r\n\tI want to be given move data when reque" +
+                    "sted", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -65,39 +65,39 @@ namespace FrannHammer.WebApi.Specs.Characters
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Request all character metadata")]
+        [NUnit.Framework.DescriptionAttribute("Request all move data")]
         [NUnit.Framework.CategoryAttribute("GetAll")]
-        public virtual void RequestAllCharacterMetadata()
+        public virtual void RequestAllMoveData()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Request all character metadata", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Request all move data", new string[] {
                         "GetAll"});
 #line 6
 this.ScenarioSetup(scenarioInfo);
 #line 7
- testRunner.Given("The api route of api/characters", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("The api route of api/moves", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 8
  testRunner.When("I request all data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 9
- testRunner.Then("the result should be a list of all character metadata", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("The result should be a list of all move data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Request one single characters metadata")]
+        [NUnit.Framework.DescriptionAttribute("Request one single moves data")]
         [NUnit.Framework.CategoryAttribute("Get")]
-        public virtual void RequestOneSingleCharactersMetadata()
+        public virtual void RequestOneSingleMovesData()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Request one single characters metadata", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Request one single moves data", new string[] {
                         "Get"});
 #line 12
 this.ScenarioSetup(scenarioInfo);
 #line 13
- testRunner.Given("The api route of api/characters/{id}", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("The api route of api/moves/{id}", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 14
- testRunner.When("I request one specific item by id 5906b9c34696595e4c610707", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I request one specific item by id 58ff7e0306eafb0d9cf025bf", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 15
- testRunner.Then("the result should be just that characters metadata", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("The result should be just that moves data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

@@ -6,7 +6,6 @@ namespace FrannHammer.WebScraping.Domain.Contracts
 {
     public class WebCharacter : ICharacter
     {
-
 #if DEBUG
         public const string SourceUrlBase = "http://localhost:81/kuroganehammer.com/Smash4/";
 #else
@@ -17,8 +16,6 @@ namespace FrannHammer.WebScraping.Domain.Contracts
         public string Id { get; set; }
         public string SourceUrl { get; private set; }
         public string FullUrl { get; set; }
-        public string Style { get; set; }
-        public string Description { get; set; }
         public string ColorTheme { get; set; }
         public string Name { get; set; }
         public string MainImageUrl { get; set; }

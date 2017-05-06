@@ -3,50 +3,45 @@ using System.Linq;
 using System.Net.Http;
 using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
-using Microsoft.Owin.Testing;
 using NUnit.Framework;
 using TechTalk.SpecFlow;
 
 namespace FrannHammer.WebApi.Specs.Characters
 {
     [Binding]
+    [Scope(Feature = "CharactersApi")]
     public class CharacterApiSteps : BaseSteps
     {
         private static void AssertCharacterIsValid(ICharacter character)
         {
-            Assert.That(character, Is.Not.Null);
-            Assert.That(character.ThumbnailUrl, Is.Not.Null);
-            Assert.That(character.DisplayName, Is.Not.Null);
-            Assert.That(character.ColorTheme, Is.Not.Null);
-            //Assert.That(character.Description, Is.Not.Null);
-            Assert.That(character.DisplayName, Is.Not.Null);
-            Assert.That(character.FullUrl, Is.Not.Null);
-            Assert.That(character.Id, Is.Not.Null);
-            Assert.That(character.MainImageUrl, Is.Not.Null);
-            Assert.That(character.Name, Is.Not.Null);
-            //Assert.That(character.Style, Is.Not.Null);
-            Assert.That(character.ThumbnailUrl, Is.Not.Null);
+            Assert.That(character, Is.Not.Null, $"{nameof(character)}");
+            Assert.That(character.ThumbnailUrl, Is.Not.Null, $"{nameof(character.ThumbnailUrl)}");
+            Assert.That(character.DisplayName, Is.Not.Null, $"{nameof(character.DisplayName)}");
+            Assert.That(character.ColorTheme, Is.Not.Null, $"{nameof(character.ColorTheme)}");
+            Assert.That(character.FullUrl, Is.Not.Null, $"{nameof(character.FullUrl)}");
+            Assert.That(character.Id, Is.Not.Null, $"{nameof(character.Id)}");
+            Assert.That(character.MainImageUrl, Is.Not.Null, $"{nameof(character.MainImageUrl)}");
+            Assert.That(character.Name, Is.Not.Null, $"{nameof(character.Name)}");
         }
 
-        [When(@"I request all character metadata")]
-        public void WhenIRequestAllCharacterMetadata()
+        [BeforeFeature]
+        public static void BeforeFeature()
         {
-            var requestResult = TestServer.HttpClient.GetAsync("/api/characters").Result;
-            ScenarioContext.Current[RequestResultKey] = requestResult;
+            CreateTestServer();
         }
 
-        [When(@"I request one specific character's metadata by id (.*)")]
-        public void WhenIRequestOneSpecificCharacterSMetadata(string id)
+        [AfterFeature]
+        public static void AfterFeature()
         {
-            var requestResult = TestServer.HttpClient.GetAsync("/api/characters/" + id).Result;
-             ScenarioContext.Current.Set(requestResult, RequestResultKey);
+            DisposeOfTestServer();
         }
 
         [Then(@"the result should be a list of all character metadata")]
         public void ThenTheResultShouldBeAListOfAllCharacterMetadata()
         {
-            var requestResult = ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey);
-            var characterMetadata = requestResult.Content.ReadAsAsync<IEnumerable<Character>>().Result.ToList();
+            var characterMetadata = ApiClient
+                .DeserializeResponse<IEnumerable<Character>>(ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey).Content)
+                .ToList();
 
             CollectionAssert.AllItemsAreNotNull(characterMetadata);
             CollectionAssert.AllItemsAreUnique(characterMetadata);
@@ -54,11 +49,13 @@ namespace FrannHammer.WebApi.Specs.Characters
             characterMetadata.ForEach(AssertCharacterIsValid);
         }
 
-        [Then(@"the result should be just that character metadata")]
-        public void ThenTheResultShouldBeJustThatCharacterMetadata()
+        [Then(@"the result should be just that characters metadata")]
+        public void ThenTheResultShouldBeJustThatCharactersMetadata()
         {
-            var requestResult = ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey);
-            var characterMetadata = requestResult.Content.ReadAsAsync<Character>().Result;
+            var characterMetadata = ApiClient
+                .DeserializeResponse<Character>(
+                    ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey).Content);
+
             AssertCharacterIsValid(characterMetadata);
         }
     }
