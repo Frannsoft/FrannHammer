@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("FrannHammer.WebApi.MongoDb.Integration.Tests")]
+[assembly: AssemblyTitle("FrannHammer.WebApi.Specs")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("FrannHammer.WebApi.MongoDb.Integration.Tests")]
+[assembly: AssemblyProduct("FrannHammer.WebApi.Specs")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
