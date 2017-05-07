@@ -26,6 +26,8 @@ namespace FrannHammer.WebScraping.Tests
                 Assert.That(row.Name, Is.EqualTo(attributeScraper.AttributeName));
                 row.Values.ToList().ForEach(attribute =>
                 {
+                    Assert.That(attribute.Name, Is.Not.EqualTo("RANK"));
+                    Assert.That(attribute.Name, Is.Not.EqualTo("CHARACTER"));
                     Assert.That(attribute.Owner, Is.Not.Null);
                     Assert.That(attribute.Value, Is.Not.Null);
                     Assert.That(attribute.Name, Is.Not.Null);

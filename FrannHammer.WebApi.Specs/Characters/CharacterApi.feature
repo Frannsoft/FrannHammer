@@ -11,5 +11,5 @@ Scenario: Request all character metadata
 @Get
 Scenario: Request one single characters metadata
 	Given The api route of api/characters/{id}
-	When I request one specific item by id 5906b9c34696595e4c610707
+	When I request one specific item by id 590e8b844696594ed496842f
 	Then the result should be just that characters metadata

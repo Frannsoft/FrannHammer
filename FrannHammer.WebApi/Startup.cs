@@ -53,12 +53,17 @@ namespace FrannHammer.WebApi
 
             //configure mongo db model mapping
             var mongoDbBsonMapper = new MongoDbBsonMapper();
-            mongoDbBsonMapper.MapAllLoadedTypesDerivingFrom<MongoModel>(
-                Assembly
+
+            var assembliesToScanForModels = Assembly
                 .GetExecutingAssembly()
                 .GetReferencedAssemblies()
                 .Where(a => a.FullName.StartsWith("FrannHammer"))
-                .Select(Assembly.Load));
+                .Select(Assembly.Load).ToList();
+
+            mongoDbBsonMapper.MapAllLoadedTypesDerivingFrom<MongoModel>(assembliesToScanForModels);
+
+            //character attribute is special
+            mongoDbBsonMapper.MapAllLoadedTypesDerivingFrom<CharacterAttribute>(assembliesToScanForModels);
 
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();

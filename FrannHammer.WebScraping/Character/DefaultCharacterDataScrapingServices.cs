@@ -97,7 +97,6 @@ namespace FrannHammer.WebScraping.Character
             character.ColorTheme = colorTheme;
             character.Movements = movements;
             character.Moves = moves;
-            character.Attributes = attributeRows.SelectMany(a => a.Values);
             character.AttributeRows = attributeRows;
         }
 

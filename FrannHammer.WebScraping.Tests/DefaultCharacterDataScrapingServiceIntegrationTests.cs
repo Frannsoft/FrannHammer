@@ -101,7 +101,7 @@ namespace FrannHammer.WebScraping.Tests
 
             CollectionAssert.IsNotEmpty(character.Movements, $"Movements for character '{character.Name}' are empty.");
             CollectionAssert.IsNotEmpty(character.Moves, $"Moves for character '{character.Name}' are empty.");
-            CollectionAssert.IsNotEmpty(character.Attributes, $"Attributes for character '{character.Name}' are empty.");
+            CollectionAssert.IsNotEmpty(character.AttributeRows, $"Attributes Rows for character '{character.Name}' are empty.");
         }
     }
 }

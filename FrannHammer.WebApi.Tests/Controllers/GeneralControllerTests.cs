@@ -16,7 +16,7 @@ using Ploeh.AutoFixture.AutoMoq;
 namespace FrannHammer.WebApi.Tests.Controllers
 {
     [TestFixture(typeof(ICharacter), typeof(Character), typeof(DefaultCharacterService), typeof(CharacterController))]
-    [TestFixture(typeof(ICharacterAttributeRow), typeof(DefaultCharacterAttributeRow), typeof(DefaultCharacterAttributeService), typeof(CharacterAttributeController))]
+    [TestFixture(typeof(ICharacterAttributeRow), typeof(CharacterAttributeRow), typeof(DefaultCharacterAttributeService), typeof(CharacterAttributeController))]
     [TestFixture(typeof(IMove), typeof(Move), typeof(DefaultMoveService), typeof(MoveController))]
     [TestFixture(typeof(IMovement), typeof(Movement), typeof(DefaultMovementService), typeof(MovementController))]
     public class GeneralControllerTests<TModelInterface, TModel, TService, TSut>

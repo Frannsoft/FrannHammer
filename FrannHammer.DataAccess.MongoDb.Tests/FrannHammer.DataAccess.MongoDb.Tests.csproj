@@ -77,7 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseRepositoryTests.cs" />
-    <Compile Include="CharacterAttributeRepositoryTests.cs" />
+    <Compile Include="CharacterAttributeRowRepositoryTests.cs" />
     <Compile Include="CharacterRepositoryTests.cs" />
     <Compile Include="MovementRepositoryTests.cs" />
     <Compile Include="MoveRepositoryTests.cs" />

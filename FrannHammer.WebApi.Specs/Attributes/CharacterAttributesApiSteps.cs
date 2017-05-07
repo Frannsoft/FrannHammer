@@ -22,7 +22,6 @@ namespace FrannHammer.WebApi.Specs.Attributes
             var attributeValues = characterAttributeRow.Values.ToList();
             attributeValues.ForEach(value =>
             {
-                Assert.That(value.Id, Is.Not.Null, $"{nameof(IAttribute.Id)}");
                 Assert.That(value.Name, Is.Not.Null, $"{nameof(IAttribute.Name)}");
                 Assert.That(value.Owner, Is.Not.Null, $"{nameof(IAttribute.Owner)}");
                 Assert.That(value.Value, Is.Not.Null, $"{nameof(IAttribute.Value)}");
@@ -45,7 +44,7 @@ namespace FrannHammer.WebApi.Specs.Attributes
         public void ThenTheResultShouldBeAListOfAllCharacterAttributeRowEntries()
         {
             var characterAttributeRows = ApiClient
-                .DeserializeResponse<IEnumerable<DefaultCharacterAttributeRow>>(ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey).Content)
+                .DeserializeResponse<IEnumerable<CharacterAttributeRow>>(ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey).Content)
                 .ToList();
 
             CollectionAssert.AllItemsAreNotNull(characterAttributeRows);
@@ -57,7 +56,7 @@ namespace FrannHammer.WebApi.Specs.Attributes
         public void ThenTheResultShouldBeJustThatCharacterAttributeRow()
         {
             var characterMetadata = ApiClient
-                .DeserializeResponse<DefaultCharacterAttributeRow>(
+                .DeserializeResponse<CharacterAttributeRow>(
                     ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey).Content);
 
             AssertCharacterAttributeRowIsValid(characterMetadata);

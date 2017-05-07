@@ -9,25 +9,25 @@ namespace FrannHammer.WebApi.Controllers
     public class CharacterAttributeController : BaseApiController
     {
         private const string CharacterAttributesRouteKey = "characterattributes";
-        private readonly ICharacterAttributeRowService _characterAttributeService;
+        private readonly ICharacterAttributeRowService _characterAttributeRowService;
 
-        public CharacterAttributeController(ICharacterAttributeRowService characterAttributeService)
+        public CharacterAttributeController(ICharacterAttributeRowService characterAttributeRowService)
         {
-            Guard.VerifyObjectNotNull(characterAttributeService, nameof(characterAttributeService));
-            _characterAttributeService = characterAttributeService;
+            Guard.VerifyObjectNotNull(characterAttributeRowService, nameof(characterAttributeRowService));
+            _characterAttributeRowService = characterAttributeRowService;
         }
 
         [Route(CharacterAttributesRouteKey)]
         public override IHttpActionResult GetAll([FromUri] string fields = "")
         {
-            var content = _characterAttributeService.GetAll(fields);
+            var content = _characterAttributeRowService.GetAll(fields);
             return Result(content);
         }
 
         [Route(CharacterAttributesRouteKey + "/{id}")]
         public override IHttpActionResult Get(string id, [FromUri] string fields = "")
         {
-            var content = _characterAttributeService.Get(id, fields);
+            var content = _characterAttributeRowService.Get(id, fields);
             return Result(content);
         }
     }

@@ -88,14 +88,19 @@ namespace FrannHammer.WebScraping.Attributes
 
                     for (int i = 0; i < cells.Count; i++)
                     {
+                        string headerValue = headers[i];
+                        if (headerValue.Equals("character", StringComparison.OrdinalIgnoreCase) ||
+                            headerValue.Equals("rank", StringComparison.OrdinalIgnoreCase))
+                        { continue; }
+
                         var attributeValue = scrapingServices.CreateAttribute();
-                        attributeValue.Name = headers[i];
+                        attributeValue.Name = headerValue;
                         attributeValue.Value = cells[i].InnerText;
                         attributeValue.Owner = character.Name;
                         attributeValues.Add(attributeValue);
                     }
 
-                    var characterAttributeRow = new DefaultCharacterAttributeRow
+                    var characterAttributeRow = new CharacterAttributeRow
                     {
                         Values = attributeValues,
                         Name = AttributeName,

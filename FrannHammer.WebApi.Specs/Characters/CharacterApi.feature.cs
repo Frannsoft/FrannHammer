@@ -95,7 +95,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 13
  testRunner.Given("The api route of api/characters/{id}", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 14
- testRunner.When("I request one specific item by id 5906b9c34696595e4c610707", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I request one specific item by id 590e8b844696594ed496842f", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 15
  testRunner.Then("the result should be just that characters metadata", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden

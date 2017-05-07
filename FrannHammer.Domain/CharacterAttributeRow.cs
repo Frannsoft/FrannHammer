@@ -3,7 +3,7 @@ using FrannHammer.Domain.Contracts;
 
 namespace FrannHammer.Domain
 {
-    public class DefaultCharacterAttributeRow : MongoModel, ICharacterAttributeRow
+    public class CharacterAttributeRow : MongoModel, ICharacterAttributeRow
     {
         [FriendlyName("characterName")]
         public string CharacterName { get; set; }

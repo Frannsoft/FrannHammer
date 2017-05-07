@@ -45,7 +45,7 @@
   <ItemGroup>
     <Compile Include="Character.cs" />
     <Compile Include="CharacterAttribute.cs" />
-    <Compile Include="DefaultCharacterAttributeRow.cs" />
+    <Compile Include="CharacterAttributeRow.cs" />
     <Compile Include="FriendlyNameAttribute.cs" />
     <Compile Include="FriendlyNameCommonConstants.cs" />
     <Compile Include="MongoModel.cs" />

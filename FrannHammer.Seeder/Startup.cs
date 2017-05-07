@@ -18,7 +18,7 @@ namespace FrannHammer.Seeder
             InitializeClassMap(typeof(Character));
             InitializeClassMap(typeof(Movement));
             InitializeClassMap(typeof(Move));
-            InitializeClassMap(typeof(DefaultCharacterAttributeRow));
+            InitializeClassMap(typeof(CharacterAttributeRow));
         }
 
         private static void InitializeClassMap(Type modelType)

@@ -48,9 +48,9 @@ namespace FrannHammer.Domain.Tests
 
         private static IEnumerable<Tuple<string, string, Type>> CharacterAttributeRowFriendlyNameInfo()
         {
-            yield return Tuple.Create("name", nameof(DefaultCharacterAttributeRow.Name), typeof(DefaultCharacterAttributeRow));
-            yield return Tuple.Create("characterName", nameof(DefaultCharacterAttributeRow.CharacterName), typeof(DefaultCharacterAttributeRow));
-            yield return Tuple.Create("values", nameof(DefaultCharacterAttributeRow.Values), typeof(DefaultCharacterAttributeRow));
+            yield return Tuple.Create("name", nameof(CharacterAttributeRow.Name), typeof(CharacterAttributeRow));
+            yield return Tuple.Create("characterName", nameof(CharacterAttributeRow.CharacterName), typeof(CharacterAttributeRow));
+            yield return Tuple.Create("values", nameof(CharacterAttributeRow.Values), typeof(CharacterAttributeRow));
         }
 
         [Test]

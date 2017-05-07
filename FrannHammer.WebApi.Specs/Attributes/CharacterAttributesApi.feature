@@ -11,5 +11,5 @@ Scenario: Request All Character Attribute Rows
 @Get
 Scenario: Request one single Character Attribute Row
 	Given The api route of api/characterattributes/{id}
-	When I request one specific item by id 58ff7e0306eafb0d9cf025f4
+	When I request one specific item by id 590e8b844696594ed496848c
 	Then The result should be just that character attribute row

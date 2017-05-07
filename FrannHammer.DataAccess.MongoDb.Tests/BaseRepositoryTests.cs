@@ -14,7 +14,7 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
         protected IMongoDatabase MongoDatabase { get; private set; }
         protected Fixture Fixture { get; }
 
-        protected BaseRepositoryTests(Type modelType)
+        protected BaseRepositoryTests(params Type[] modelTypes)
         {
             Fixture = new Fixture();
 
@@ -26,23 +26,29 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
                 });
             }
 
-            var classMap = new BsonClassMap(modelType);
-            var properties =
-                modelType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
-                    .Where(p => p.GetCustomAttribute<FriendlyNameAttribute>() != null)
-                    .ToList();
-
-            Assert.That(properties.Count > 0);
-
-            foreach (var prop in properties)
+            foreach (var modelType in modelTypes)
             {
-                classMap.MapMember(prop).SetElementName(prop.GetCustomAttribute<FriendlyNameAttribute>().Name);
+                if(BsonClassMap.IsClassMapRegistered(modelType))
+                { continue; }
+
+                var classMap = new BsonClassMap(modelType);
+                var properties =
+                    modelType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
+                        .Where(p => p.GetCustomAttribute<FriendlyNameAttribute>() != null)
+                        .ToList();
+
+                Assert.That(properties.Count > 0);
+
+                foreach (var prop in properties)
+                {
+                    classMap.MapMember(prop).SetElementName(prop.GetCustomAttribute<FriendlyNameAttribute>().Name);
+                }
+
+                BsonClassMap.RegisterClassMap(classMap);
             }
 
-            BsonClassMap.RegisterClassMap(classMap);
-
-            var mongoClient = new MongoClient(new MongoUrl("mongodb://testuser:password@ds058739.mlab.com:58739/testfranndotexe"));
-            MongoDatabase = mongoClient.GetDatabase("testfranndotexe");
+            var mongoClient = new MongoClient(new MongoUrl("mongodb://testuser:password@ds119151.mlab.com:19151/playgroundfranndotexe"));
+            MongoDatabase = mongoClient.GetDatabase("playgroundfranndotexe");
         }
     }
 }

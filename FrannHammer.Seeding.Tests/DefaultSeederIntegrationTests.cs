@@ -47,10 +47,11 @@ namespace FrannHammer.Seeding.Tests
             InitializeClassMap(typeof(Character));
             InitializeClassMap(typeof(Movement));
             InitializeClassMap(typeof(Move));
-            InitializeClassMap(typeof(DefaultCharacterAttributeRow));
+            InitializeClassMap(typeof(CharacterAttribute));
+            InitializeClassMap(typeof(CharacterAttributeRow));
 
-            var mongoClient = new MongoClient(new MongoUrl("mongodb://testuser:password@ds115411.mlab.com:15411/integrationtestfranndotexe"));
-            MongoDatabase = mongoClient.GetDatabase("integrationtestfranndotexe");
+            var mongoClient = new MongoClient(new MongoUrl("mongodb://testuser:password@ds119151.mlab.com:19151/playgroundfranndotexe"));
+            MongoDatabase = mongoClient.GetDatabase("playgroundfranndotexe");
         }
 
         private static void InitializeClassMap(Type modelType)
@@ -58,11 +59,11 @@ namespace FrannHammer.Seeding.Tests
             var classMap = new BsonClassMap(modelType);
             var properties =
                 modelType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
-                    .Where(p => p.GetCustomAttribute<FriendlyNameAttribute>(false) != null)
+                    .Where(p => p.GetCustomAttribute<FriendlyNameAttribute>() != null)
                     .ToList();
 
             Assert.That(properties.Count > 0);
-            classMap.AutoMap();
+            //classMap.AutoMap();
 
             foreach (var prop in properties)
             {
@@ -131,7 +132,6 @@ namespace FrannHammer.Seeding.Tests
 
 
         [Test]
-        [Explicit("Actually pushes data to the test db")]
         public void CanPushDataToActualMongoDb()
         {
             var characterRepository = new MongoDbRepository<ICharacter>(MongoDatabase);
@@ -149,18 +149,18 @@ namespace FrannHammer.Seeding.Tests
             var greninja = Characters.Greninja;
             _characterDataScraper.PopulateCharacterFromWeb(greninja);
 
+            int previousCount = characterRepository.GetAll().Count();
+
             //insert data into mock repos using api services
             var seeder = new DefaultSeeder(_characterDataScraper);
             seeder.SeedCharacterData(greninja, characterService, movementService,
                 moveService, characterAttributeService);
 
             //assert data can be retrieved
-            Assert.That(characterRepository.GetAll().Count(), Is.EqualTo(1));
+            Assert.That(characterRepository.GetAll().Count(), Is.EqualTo(previousCount + 1));
             Assert.That(moveRepository.GetAll().Count(), Is.GreaterThan(0));
             Assert.That(movementRepository.GetAll().Count(), Is.GreaterThan(0));
             Assert.That(characterAttributeRepository.GetAll().Count(), Is.GreaterThan(0));
         }
     }
 }
-
-//TODO - cleanup all dependencies.
