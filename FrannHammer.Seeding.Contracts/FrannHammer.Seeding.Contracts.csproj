@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FEE777B3-50B2-4E8D-8647-1C9B1AD6CB72}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FrannHammer.Seeding.Contracts</RootNamespace>
+    <AssemblyName>FrannHammer.Seeding.Contracts</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IScrapedDataRetriever.cs" />
+    <Compile Include="ISeeder.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FrannHammer.Api.Services.Contracts\FrannHammer.Api.Services.Contracts.csproj">
+      <Project>{62281D52-5B55-4976-B148-677B0BE6A18B}</Project>
+      <Name>FrannHammer.Api.Services.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.Domain.Contracts\FrannHammer.Domain.Contracts.csproj">
+      <Project>{15a2565c-4611-4034-814a-931da70ed8b1}</Project>
+      <Name>FrannHammer.Domain.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.WebScraping.Domain.Contracts\FrannHammer.WebScraping.Domain.Contracts.csproj">
+      <Project>{40C0A772-8A77-484F-919C-DB55CAEAEAA1}</Project>
+      <Name>FrannHammer.WebScraping.Domain.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.WebScraping.Domain\FrannHammer.WebScraping.Domain.csproj">
+      <Project>{D7A6E280-119B-4D41-B512-8D016A3BED5C}</Project>
+      <Name>FrannHammer.WebScraping.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

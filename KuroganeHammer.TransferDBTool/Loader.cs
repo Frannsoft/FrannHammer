@@ -260,8 +260,6 @@ namespace KuroganeHammer.TransferDBTool
             }
         }
 
-
-
         /// <summary>
         /// Not all values in the character field match values in enum.  Manually map those that don't.
         /// </summary>

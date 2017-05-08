@@ -38,7 +38,8 @@ namespace FrannHammer.Api.Controllers
         [Route(AnglesRouteKey)]
         public IHttpActionResult GetAngles([FromUri] string fields = "")
         {
-            var content = _metadataService.GetAllWithMoves<Angle, AngleDto>(fields);
+            //var content = _metadataService.GetAllWithMoves<Angle, AngleDto>(fields);
+            var content = _metadataService.GetAll<Angle, AngleDto>(fields);
             return Ok(content);
         }
 

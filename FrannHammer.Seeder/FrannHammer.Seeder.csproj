@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6034D27A-9E5A-473E-866C-B2462BB132E3}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FrannHammer.Seeder</RootNamespace>
+    <AssemblyName>FrannHammer.Seeder</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=4.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.5.0\lib\net45\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoDB.Bson, Version=2.4.3.23, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Bson.2.4.3\lib\net45\MongoDB.Bson.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoDB.Driver, Version=2.4.3.23, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Driver.2.4.3\lib\net45\MongoDB.Driver.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Core, Version=2.4.3.23, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Driver.Core.2.4.3\lib\net45\MongoDB.Driver.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.0.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FrannHammer.Api.Services.Contracts\FrannHammer.Api.Services.Contracts.csproj">
+      <Project>{62281D52-5B55-4976-B148-677B0BE6A18B}</Project>
+      <Name>FrannHammer.Api.Services.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.Api.Services\FrannHammer.Api.Services.csproj">
+      <Project>{70F9ADDE-E6A1-43AD-A458-061E86F8832C}</Project>
+      <Name>FrannHammer.Api.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.DataAccess.Contracts\FrannHammer.DataAccess.Contracts.csproj">
+      <Project>{EB884173-904C-43C4-8DF1-FE2B275DD248}</Project>
+      <Name>FrannHammer.DataAccess.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.DataAccess.MongoDb\FrannHammer.DataAccess.MongoDb.csproj">
+      <Project>{3E7D28F0-731C-4AA7-8C5A-4C9AE810651A}</Project>
+      <Name>FrannHammer.DataAccess.MongoDb</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.DefaultContainer.Configuration\FrannHammer.DefaultContainer.Configuration.csproj">
+      <Project>{D0A0B3FE-CFB3-4759-AD3C-D3FC20FAE191}</Project>
+      <Name>FrannHammer.DefaultContainer.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.Domain.Contracts\FrannHammer.Domain.Contracts.csproj">
+      <Project>{15A2565C-4611-4034-814A-931DA70ED8B1}</Project>
+      <Name>FrannHammer.Domain.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.Domain\FrannHammer.Domain.csproj">
+      <Project>{4DB6C856-581A-4B69-BB6A-4AEBF3929C5E}</Project>
+      <Name>FrannHammer.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.Seeding.Contracts\FrannHammer.Seeding.Contracts.csproj">
+      <Project>{fee777b3-50b2-4e8d-8647-1c9b1ad6cb72}</Project>
+      <Name>FrannHammer.Seeding.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.Seeding\FrannHammer.Seeding.csproj">
+      <Project>{0DAF993A-5379-4436-B1BF-A1D87ECBF40F}</Project>
+      <Name>FrannHammer.Seeding</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.WebScraping.Contracts\FrannHammer.WebScraping.Contracts.csproj">
+      <Project>{C6F2A84F-6B78-494F-9293-0BB666A64AB9}</Project>
+      <Name>FrannHammer.WebScraping.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.WebScraping.Domain.Contracts\FrannHammer.WebScraping.Domain.Contracts.csproj">
+      <Project>{40C0A772-8A77-484F-919C-DB55CAEAEAA1}</Project>
+      <Name>FrannHammer.WebScraping.Domain.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.WebScraping.Domain\FrannHammer.WebScraping.Domain.csproj">
+      <Project>{D7A6E280-119B-4D41-B512-8D016A3BED5C}</Project>
+      <Name>FrannHammer.WebScraping.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.WebScraping\FrannHammer.WebScraping.csproj">
+      <Project>{B7686798-61B2-4208-86EF-0076BF1301BE}</Project>
+      <Name>FrannHammer.WebScraping</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
