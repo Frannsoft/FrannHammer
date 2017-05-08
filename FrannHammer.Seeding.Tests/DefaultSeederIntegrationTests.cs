@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using FrannHammer.Api.Services;
 using FrannHammer.DataAccess.MongoDb;
 using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
+using FrannHammer.Tests.Utility;
 using FrannHammer.WebScraping;
 using FrannHammer.WebScraping.Attributes;
 using FrannHammer.WebScraping.Character;
@@ -25,7 +24,6 @@ using FrannHammer.WebScraping.Movements;
 using FrannHammer.WebScraping.Moves;
 using FrannHammer.WebScraping.PageDownloading;
 using FrannHammer.WebScraping.WebClients;
-using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using NUnit.Framework;
 
@@ -39,38 +37,12 @@ namespace FrannHammer.Seeding.Tests
         [OneTimeSetUp]
         public virtual void OneTimeSetUp()
         {
-            BsonClassMap.RegisterClassMap<MongoModel>(m =>
-            {
-                m.AutoMap();
-            });
+            BsonMapper.RegisterTypeWithAutoMap<MongoModel>();
 
-            InitializeClassMap(typeof(Character));
-            InitializeClassMap(typeof(Movement));
-            InitializeClassMap(typeof(Move));
-            InitializeClassMap(typeof(CharacterAttribute));
-            InitializeClassMap(typeof(CharacterAttributeRow));
+            BsonMapper.RegisterClassMaps(typeof(Character), typeof(Movement), typeof(Move), typeof(CharacterAttribute),
+                typeof(CharacterAttributeRow));
 
-            var mongoClient = new MongoClient(new MongoUrl("mongodb://testuser:password@ds119151.mlab.com:19151/playgroundfranndotexe"));
-            MongoDatabase = mongoClient.GetDatabase("playgroundfranndotexe");
-        }
-
-        private static void InitializeClassMap(Type modelType)
-        {
-            var classMap = new BsonClassMap(modelType);
-            var properties =
-                modelType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
-                    .Where(p => p.GetCustomAttribute<FriendlyNameAttribute>() != null)
-                    .ToList();
-
-            Assert.That(properties.Count > 0);
-            //classMap.AutoMap();
-
-            foreach (var prop in properties)
-            {
-                classMap.MapMember(prop).SetElementName(prop.GetCustomAttribute<FriendlyNameAttribute>().Name);
-            }
-
-            BsonClassMap.RegisterClassMap(classMap);
+            MongoDatabase = MongoDbConnectionFactory.GetDatabaseFromAppConfig();// .GetDatabase("mongodb://testuser:password@ds119151.mlab.com:19151/playgroundfranndotexe");
         }
 
         private IMovementScrapingServices _movementScrapingServices;

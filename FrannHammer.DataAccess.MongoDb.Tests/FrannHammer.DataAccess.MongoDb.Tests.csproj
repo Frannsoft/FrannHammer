@@ -104,6 +104,10 @@
       <Project>{4DB6C856-581A-4B69-BB6A-4AEBF3929C5E}</Project>
       <Name>FrannHammer.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.Tests.Utility\FrannHammer.Tests.Utility.csproj">
+      <Project>{86AD0285-BE01-4C99-9D3C-84D26A0989F3}</Project>
+      <Name>FrannHammer.Tests.Utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

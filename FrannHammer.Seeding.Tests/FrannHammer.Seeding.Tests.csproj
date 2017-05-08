@@ -109,6 +109,10 @@
       <Project>{0DAF993A-5379-4436-B1BF-A1D87ECBF40F}</Project>
       <Name>FrannHammer.Seeding</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.Tests.Utility\FrannHammer.Tests.Utility.csproj">
+      <Project>{86AD0285-BE01-4C99-9D3C-84D26A0989F3}</Project>
+      <Name>FrannHammer.Tests.Utility</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FrannHammer.WebScraper\FrannHammer.WebScraper.csproj">
       <Project>{9D3C1343-F4B4-4538-B0E0-590D3B2F5DE3}</Project>
       <Name>FrannHammer.WebScraper</Name>
