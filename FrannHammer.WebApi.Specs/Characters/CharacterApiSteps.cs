@@ -40,7 +40,7 @@ namespace FrannHammer.WebApi.Specs.Characters
         public void ThenTheResultShouldBeAListOfAllCharacterMetadata()
         {
             var characterMetadata = ApiClient
-                .DeserializeResponse<IEnumerable<Character>>(ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey).Content)
+                .DeserializeResponse<IEnumerable<Character>>(ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey))
                 .ToList();
 
             CollectionAssert.AllItemsAreNotNull(characterMetadata);
@@ -54,7 +54,7 @@ namespace FrannHammer.WebApi.Specs.Characters
         {
             var characterMetadata = ApiClient
                 .DeserializeResponse<Character>(
-                    ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey).Content);
+                    ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey));
 
             AssertCharacterIsValid(characterMetadata);
         }

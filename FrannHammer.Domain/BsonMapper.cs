@@ -15,15 +15,7 @@ namespace FrannHammer.Domain
                 { continue;}
 
                 var classMap = new BsonClassMap(type);
-                var properties =
-                    type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
-                        .Where(p => p.GetCustomAttribute<FriendlyNameAttribute>() != null)
-                        .ToList();
-
-                foreach (var prop in properties)
-                {
-                    classMap.MapMember(prop).SetElementName(prop.GetCustomAttribute<FriendlyNameAttribute>().Name);
-                }
+                MapProperties(type, classMap);
 
                 BsonClassMap.RegisterClassMap(classMap);
             }
@@ -36,7 +28,21 @@ namespace FrannHammer.Domain
                 BsonClassMap.RegisterClassMap<T>(m =>
                 {
                     m.AutoMap();
+                    MapProperties(typeof(T), m);
                 });
+            }
+        }
+
+        private static void MapProperties(Type type, BsonClassMap classMap)
+        {
+            var properties =
+                    type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
+                        .Where(p => p.GetCustomAttribute<FriendlyNameAttribute>() != null)
+                        .ToList();
+
+            foreach (var prop in properties)
+            {
+                classMap.MapMember(prop).SetElementName(prop.GetCustomAttribute<FriendlyNameAttribute>().Name);
             }
         }
     }

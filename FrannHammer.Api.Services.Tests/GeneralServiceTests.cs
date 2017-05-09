@@ -26,7 +26,7 @@ namespace FrannHammer.Api.Services.Tests
             _fixture = new Fixture();
             _fixture.Customize(new AutoMoqCustomization());
         }
-         
+
         [Test]
         public void CanAddSingleItemToRepository()
         {
@@ -52,16 +52,31 @@ namespace FrannHammer.Api.Services.Tests
         }
 
         [Test]
+        public void GetSingleItemByNameCallRepositoryGetByName()
+        {
+            string name = _fixture.Create<string>();
+
+            var repositoryMock = new Mock<IRepository<TModel>>();
+            repositoryMock.Setup(c => c.GetByName(It.Is<string>(s => s == name)));
+
+            var sut = CreateCrudService(repositoryMock.Object);
+
+            sut.GetByName(name);
+
+            repositoryMock.Verify(c => c.GetByName(It.Is<string>(s => s == name)));
+        }
+
+        [Test]
         public void ReturnsNullForNoItemFoundById()
         {
             var items = _fixture.CreateMany<TModel>().ToList();
 
             var repositoryMock = new Mock<IRepository<TModel>>();
-            repositoryMock.Setup(c => c.Get(It.IsAny<string>())).Returns<string>(id => items.FirstOrDefault(c => c.Id == id.ToString()));
+            repositoryMock.Setup(c => c.GetById(It.IsAny<string>())).Returns<string>(id => items.FirstOrDefault(c => c.Id == id.ToString()));
 
             var sut = CreateCrudService(repositoryMock.Object);
 
-            var item = sut.Get("0");
+            var item = sut.GetById("0");
 
             Assert.That(item, Is.Null);
         }

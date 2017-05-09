@@ -16,9 +16,15 @@ namespace FrannHammer.Api.Services
             _repository = repository;
         }
 
-        public ICharacter Get(string id, string fields = "")
+        public ICharacter GetById(string id, string fields = "")
         {
-            var character = _repository.Get(id);
+            var character = _repository.GetById(id);
+            return character;
+        }
+
+        public ICharacter GetByName(string name, string fields = "")
+        {
+            var character = _repository.GetByName(name);
             return character;
         }
 

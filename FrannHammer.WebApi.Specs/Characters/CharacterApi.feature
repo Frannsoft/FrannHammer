@@ -13,3 +13,9 @@ Scenario: Request one single characters metadata
 	Given The api route of api/characters/{id}
 	When I request one specific item by id 590e8b844696594ed496842f
 	Then the result should be just that characters metadata
+
+@GetByName
+Scenario: Request one single characters metadata by name
+	Given The api route of api/characters/name/{name}
+	When I request one specific item by name bowser
+	Then the result should be just that characters metadata

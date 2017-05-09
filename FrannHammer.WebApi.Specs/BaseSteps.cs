@@ -50,5 +50,14 @@ namespace FrannHammer.WebApi.Specs
             var requestResult = ApiClient.GetResult(requestUrl);
             ScenarioContext.Current.Set(requestResult, RequestResultKey);
         }
+
+        [When(@"I request one specific item by name (.*)")]
+        public void WhenIRequestOneSpecificItemByName(string name)
+        {
+            string requestUrl = InjectRouteParameterIntoRequestUrl(ScenarioContext.Current.Get<string>(RouteUrlKey), name);
+
+            var requestResult = ApiClient.GetResult(requestUrl);
+            ScenarioContext.Current.Set(requestResult, RequestResultKey);
+        }
     }
 }

@@ -32,7 +32,7 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
             _repository = new MongoDbRepository<ICharacterAttributeRow>(MongoDatabase);
 
             var newlyAddedCharacterAttribute = _repository.Add(Fixture.Create<CharacterAttributeRow>());
-            var characterAttributeRow = _repository.Get(newlyAddedCharacterAttribute.Id);
+            var characterAttributeRow = _repository.GetById(newlyAddedCharacterAttribute.Id);
 
             Assert.That(characterAttributeRow, Is.Not.Null);
             Assert.That(characterAttributeRow.Id, Is.Not.Null);

@@ -18,6 +18,7 @@ namespace FrannHammer.DataAccess.MongoDb
     {
         private readonly IMongoDatabase _mongoDatabase;
         private const string KeyId = "_id";
+        private const string KeyName = "name";
 
         public MongoDbRepository(IMongoDatabase mongoDatabase)
         {
@@ -25,7 +26,7 @@ namespace FrannHammer.DataAccess.MongoDb
             _mongoDatabase = mongoDatabase;
         }
 
-        public T Get(string id)
+        public T GetById(string id)
         {
             Guard.VerifyStringIsNotNullOrEmpty(id, nameof(id));
             var objectId = new ObjectId(id);
@@ -33,26 +34,24 @@ namespace FrannHammer.DataAccess.MongoDb
             var filter = Builders<BsonDocument>.Filter.Eq(KeyId, objectId);
             var raw = _mongoDatabase.GetCollection<BsonDocument>(typeof(T).Name).Find(filter).SingleOrDefault();
 
-            if (raw == null)
-            {
-                return default(T);
-            }
-            var model = BsonSerializer.Deserialize<T>(raw);
+            return DeserializeWithId(raw);
+        }
 
-            model.Id = raw[KeyId].ToString();
-            return model;
+        public T GetByName(string name)
+        {
+            Guard.VerifyStringIsNotNullOrEmpty(name, nameof(name));
+
+            var filter = Builders<BsonDocument>.Filter.Eq(KeyName, name);
+            var raw = _mongoDatabase.GetCollection<BsonDocument>(typeof(T).Name).Find(filter).SingleOrDefault();
+
+            return DeserializeWithId(raw);
         }
 
         public IEnumerable<T> GetAll()
         {
             var rawCollection = _mongoDatabase.GetCollection<BsonDocument>(typeof(T).Name).AsQueryable().ToList();
 
-            var col = rawCollection.Select(raw =>
-            {
-                var model = BsonSerializer.Deserialize<T>(raw);
-                model.Id = raw[KeyId].ToString();
-                return model;
-            });
+            var col = rawCollection.Select(DeserializeWithId);
 
             return col;
         }
@@ -64,7 +63,7 @@ namespace FrannHammer.DataAccess.MongoDb
 
             var objectId = new ObjectId(model.Id);
 
-            var replaceResult =_mongoDatabase.GetCollection<T>(typeof(T).Name).ReplaceOne(Builders<T>.Filter.Eq(KeyId, objectId), model);
+            var replaceResult = _mongoDatabase.GetCollection<T>(typeof(T).Name).ReplaceOne(Builders<T>.Filter.Eq(KeyId, objectId), model);
         }
 
         public void Delete(string id)
@@ -97,6 +96,16 @@ namespace FrannHammer.DataAccess.MongoDb
             }
 
             _mongoDatabase.GetCollection<T>(typeof(T).Name).InsertMany(modelsList);
+        }
+
+        private static T DeserializeWithId(BsonDocument rawDocument)
+        {
+            if (rawDocument == null)
+            { return default(T); }
+
+            var model = BsonSerializer.Deserialize<T>(rawDocument);
+            model.Id = rawDocument[KeyId].ToString();
+            return model;
         }
     }
 }

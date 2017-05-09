@@ -42,7 +42,7 @@ namespace FrannHammer.WebApi.Specs.Moves
         public void ThenTheResultShouldBeAListOfAllMoveData()
         {
             var moveMetadata = ApiClient
-                .DeserializeResponse<IEnumerable<Move>>(ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey).Content)
+                .DeserializeResponse<IEnumerable<Move>>(ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey))
                 .ToList();
 
             CollectionAssert.AllItemsAreNotNull(moveMetadata);
@@ -55,7 +55,7 @@ namespace FrannHammer.WebApi.Specs.Moves
         {
             var move = ApiClient
                 .DeserializeResponse<Move>(
-                    ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey).Content);
+                    ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey));
             AssertMoveIsValid(move);
         }
     }

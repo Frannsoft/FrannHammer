@@ -20,7 +20,7 @@ namespace FrannHammer.WebApi.Controllers
         [Route(MovesRouteKey + "/{id}")]
         public override IHttpActionResult Get(string id, [FromUri]string fields = "")
         {
-            var move = _moveService.Get(id, fields);
+            var move = _moveService.GetById(id, fields);
             return Result(move);
         }
 

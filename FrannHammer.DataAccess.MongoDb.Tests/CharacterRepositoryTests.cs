@@ -9,6 +9,10 @@ using Ploeh.AutoFixture.Kernel;
 namespace FrannHammer.DataAccess.MongoDb.Tests
 {
     //TODO - this is a candidate for generic test fixture attribute
+    //not really.  Generic test fixtures support is sketchy at best it seems.  
+    //Plus, there's not really a clean way to add a type for character attribute row's Values property in the generic
+    //type specifiers.  Refactoring these tests to call more generic base methods where possible should
+    //alleviate most of the pain.
     [TestFixture]
     public class CharacterRepositoryTests : BaseRepositoryTests
     {
@@ -28,16 +32,29 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
         }
 
         [Test]
-        public void GetSingleCharacter()
+        public void GetSingleCharacterById()
         {
             _repository = new MongoDbRepository<ICharacter>(MongoDatabase);
 
             var newlyAddedCharacter = _repository.Add(Fixture.Create<ICharacter>());
 
-            var character = _repository.Get(newlyAddedCharacter.Id);
+            var character = _repository.GetById(newlyAddedCharacter.Id);
             Assert.That(character, Is.Not.Null);
             Assert.That(character.ThumbnailUrl, Is.Not.Empty);
             Assert.That(character.DisplayName, Is.Not.Empty);
+        }
+
+        [Test]
+        public void GetSingleCharacterByName()
+        {
+            _repository = new MongoDbRepository<ICharacter>(MongoDatabase);
+
+            var newlyAddedCharacter = _repository.Add(Fixture.Create<ICharacter>());
+
+            var character = _repository.GetByName(newlyAddedCharacter.Name);
+            Assert.That(character, Is.Not.Null, $"{nameof(character)}");
+            Assert.That(character.Id, Is.EqualTo(newlyAddedCharacter.Id), $"{nameof(character.Id)}");
+            Assert.That(character.Name, Is.EqualTo(newlyAddedCharacter.Name), $"{nameof(character.Name)}");
         }
 
         [Test]
@@ -64,7 +81,7 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
 
             var newCharacter = Fixture.Create<ICharacter>();
 
-            var newlyAddedCharacter = _repository.Add(newCharacter);
+            _repository.Add(newCharacter);
 
             var allCharacters = _repository.GetAll().ToList();
             int newCount = allCharacters.Count;

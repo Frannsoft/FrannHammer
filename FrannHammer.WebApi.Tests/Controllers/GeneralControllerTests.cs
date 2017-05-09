@@ -41,8 +41,8 @@ namespace FrannHammer.WebApi.Tests.Controllers
             var expectedTestItem = _fixture.Create<TModel>();
 
             var repositoryMock = new Mock<IRepository<TModelInterface>>();
-            repositoryMock.Setup(c => c.Get(It.IsInRange("0", anonymousTestItem.Id, Range.Inclusive))).Returns(() => anonymousTestItem);
-            repositoryMock.Setup(c => c.Get(It.Is<string>(id => id == expectedTestItem.Id))).Returns(() => expectedTestItem);
+            repositoryMock.Setup(c => c.GetById(It.IsInRange("0", anonymousTestItem.Id, Range.Inclusive))).Returns(() => anonymousTestItem);
+            repositoryMock.Setup(c => c.GetById(It.Is<string>(id => id == expectedTestItem.Id))).Returns(() => expectedTestItem);
 
             var crudService = CreateCrudService(repositoryMock.Object);
             var sut = CreateController(crudService);
@@ -96,7 +96,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
             const string id = "-1";
 
             var repositoryMock = new Mock<IRepository<TModelInterface>>();
-            repositoryMock.Setup(c => c.Get(It.IsInRange("0", "1", Range.Inclusive))).Returns(()
+            repositoryMock.Setup(c => c.GetById(It.IsInRange("0", "1", Range.Inclusive))).Returns(()
                 => _fixture.Create<TModelInterface>());
 
             var crudService = CreateCrudService(repositoryMock.Object);
