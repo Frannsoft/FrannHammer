@@ -8,11 +8,6 @@ using Ploeh.AutoFixture.Kernel;
 
 namespace FrannHammer.DataAccess.MongoDb.Tests
 {
-    //TODO - this is a candidate for generic test fixture attribute
-    //not really.  Generic test fixtures support is sketchy at best it seems.  
-    //Plus, there's not really a clean way to add a type for character attribute row's Values property in the generic
-    //type specifiers.  Refactoring these tests to call more generic base methods where possible should
-    //alleviate most of the pain.
     [TestFixture]
     public class CharacterRepositoryTests : BaseRepositoryTests
     {

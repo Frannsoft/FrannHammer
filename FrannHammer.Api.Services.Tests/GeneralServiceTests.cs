@@ -52,7 +52,7 @@ namespace FrannHammer.Api.Services.Tests
         }
 
         [Test]
-        public void GetSingleItemByNameCallRepositoryGetByName()
+        public void GetItemByNameCallsRepositoryGetByNameMethod()
         {
             string name = _fixture.Create<string>();
 

@@ -9,6 +9,7 @@ using TechTalk.SpecFlow;
 namespace FrannHammer.WebApi.Specs.Movements
 {
     [Binding]
+    [Scope(Feature = "MovementsApi")]
     public class MovementsApiSteps : BaseSteps
     {
         private static void AssertMovementIsValid(IMovement movement)

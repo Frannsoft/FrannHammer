@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.Utility;
 using FrannHammer.WebScraping.Contracts;

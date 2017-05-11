@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using FrannHammer.Domain;
 using FrannHammer.Utility;
-using MongoDB.Bson.Serialization;
 
 namespace FrannHammer.WebApi
 {
@@ -29,23 +28,8 @@ namespace FrannHammer.WebApi
         {
             Guard.VerifyObjectNotNull(assemblyToReflectOver, nameof(assemblyToReflectOver));
 
-            if (!IsTypeAlreadyRegistered(typeof(T)))
-            {
-                RegisterBaseType<T>();
-            }
-
-            RegisterModelTypes(GetModelTypes<T>());
+            BsonMapper.RegisterClassMaps(GetModelTypes<T>().ToArray());
         }
-
-        private static void RegisterBaseType<T>()
-        {
-            BsonClassMap.RegisterClassMap<T>(m =>
-            {
-                m.AutoMap();
-            });
-        }
-
-        private static bool IsTypeAlreadyRegistered(Type type) => BsonClassMap.IsClassMapRegistered(type);
 
         private static IEnumerable<Type> GetModelTypes<T>()
         {
@@ -58,28 +42,6 @@ namespace FrannHammer.WebApi
                    });
 
             return modelTypes;
-        }
-
-        private static void RegisterModelTypes(IEnumerable<Type> modelTypes)
-        {
-            foreach (var modelType in modelTypes)
-            {
-                if (IsTypeAlreadyRegistered(modelType))
-                { continue;}
-
-                var classMap = new BsonClassMap(modelType);
-                var properties =
-                    modelType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
-                        .Where(p => p.GetCustomAttribute<FriendlyNameAttribute>() != null)
-                        .ToList();
-
-                foreach (var prop in properties)
-                {
-                    classMap.MapMember(prop).SetElementName(prop.GetCustomAttribute<FriendlyNameAttribute>().Name);
-                }
-
-                BsonClassMap.RegisterClassMap(classMap);
-            }
         }
     }
 }

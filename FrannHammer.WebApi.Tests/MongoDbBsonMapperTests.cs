@@ -22,7 +22,7 @@ namespace FrannHammer.WebApi.Tests
         }
 
         [Test]
-        public void RegistersExpectedTypes()
+        public void RegistersTypesThatDeriveFromBaseType()
         {
             Type baseType = typeof(MongoModel);
 
@@ -34,8 +34,6 @@ namespace FrannHammer.WebApi.Tests
                     .GetExportedTypes()
                     .Where(type => type.IsSubclassOf(baseType))
                     .ToList();
-
-            expectedRegisteredTypes.Add(baseType);
 
             //assert that types are not registered
             var preRegistrationClassMaps = BsonClassMap.GetRegisteredClassMaps();

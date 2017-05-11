@@ -22,7 +22,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
     public class GeneralControllerTests<TModelInterface, TModel, TService, TSut>
         where TModelInterface : IModel
         where TModel : TModelInterface
-        where TService : ICrudService<TModelInterface>
+        where TService : class, ICrudService<TModelInterface>
         where TSut : BaseApiController
     {
         private Fixture _fixture;
@@ -47,7 +47,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
             var crudService = CreateCrudService(repositoryMock.Object);
             var sut = CreateController(crudService);
 
-            var response = sut.Get(expectedTestItem.Id) as OkNegotiatedContentResult<TModelInterface>;
+            var response = sut.GetById(expectedTestItem.Id) as OkNegotiatedContentResult<TModelInterface>;
 
             Assert.That(response, Is.Not.Null, $"{nameof(response)} was null.");
 
@@ -59,6 +59,49 @@ namespace FrannHammer.WebApi.Tests.Controllers
 
             Assert.That(result.Name, Is.Not.Null, $"{nameof(IModel.Name)} is null.");
             Assert.That(result.Name, Is.EqualTo(expectedTestItem.Name));
+        }
+
+        [Test]
+        public void GetByNameReturnsExpectedItem()
+        {
+            var anonymousTestItem = _fixture.Create<TModel>();
+            var expectedTestItem = _fixture.Create<TModel>();
+
+            var repositoryMock = new Mock<IRepository<TModelInterface>>();
+            repositoryMock.Setup(c => c.GetByName(It.IsInRange("0", anonymousTestItem.Id, Range.Inclusive))).Returns(() => anonymousTestItem);
+            repositoryMock.Setup(c => c.GetByName(It.Is<string>(name => name == expectedTestItem.Name))).Returns(() => expectedTestItem);
+
+            var crudService = CreateCrudService(repositoryMock.Object);
+            var sut = CreateController(crudService);
+
+            var response = sut.GetByName(expectedTestItem.Name) as OkNegotiatedContentResult<TModelInterface>;
+
+            Assert.That(response, Is.Not.Null, $"{nameof(response)} was null.");
+
+            // ReSharper disable once PossibleNullReferenceException
+            var result = response.Content;
+
+            Assert.That(result.Id, Is.Not.Null, $"{nameof(IModel.Id)} is null.");
+            Assert.That(result.Id, Is.EqualTo(expectedTestItem.Id));
+
+            Assert.That(result.Name, Is.Not.Null, $"{nameof(IModel.Name)} is null.");
+            Assert.That(result.Name, Is.EqualTo(expectedTestItem.Name));
+        }
+
+        [Test]
+        public void GetByNameCallsGetByNameServiceMethod()
+        {
+            const string testName = "test";
+            var repositoryMock = new Mock<IRepository<TModelInterface>>();
+
+            var crudServiceMock = new Mock<TService>(repositoryMock.Object);
+            crudServiceMock.Setup(c => c.GetByName(It.Is<string>(s => s == testName), It.IsAny<string>()));
+
+            var sut = CreateController(crudServiceMock.Object);
+
+            sut.GetByName(testName);
+
+            crudServiceMock.Verify(c => c.GetByName(It.Is<string>(s => s == testName), It.IsAny<string>()));
         }
 
         [Test]
@@ -102,7 +145,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
             var crudService = CreateCrudService(repositoryMock.Object);
             var sut = CreateController(crudService);
 
-            var response = sut.Get(id) as NotFoundResult;
+            var response = sut.GetById(id) as NotFoundResult;
 
             Assert.That(response, Is.Not.Null, $"Did not expect to find a result for id of '{id}'");
         }
