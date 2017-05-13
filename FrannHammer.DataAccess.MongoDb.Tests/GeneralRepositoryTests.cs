@@ -1,10 +1,4 @@
-﻿using FrannHammer.DataAccess.Contracts;
-using FrannHammer.Domain;
-using FrannHammer.Domain.Contracts;
-using NUnit.Framework;
-using Ploeh.AutoFixture;
-
-namespace FrannHammer.DataAccess.MongoDb.Tests
+﻿namespace FrannHammer.DataAccess.MongoDb.Tests
 {
     //Commenting these out for now.  Setting up generic tests that have multi-layered Interface properties (character attribute row's IAttribute Value property) 
     //is proving to take quite some time to get just a little benefit since these tests are so basic.

@@ -11,6 +11,7 @@ using Owin;
 using System.Linq;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
+using FrannHammer.Domain.Contracts;
 
 [assembly: OwinStartup(typeof(Startup))]
 
@@ -62,6 +63,9 @@ namespace FrannHammer.WebApi
 
             //character attribute is special.. thanks to mongodb not being able to deserialize to interfaces naturally (FINE.)
             BsonMapper.RegisterClassMaps(typeof(CharacterAttribute));
+
+            //Register IMove implementation to move implementation map
+            MoveParseClassMap.RegisterType<IMove, Move>();
 
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();

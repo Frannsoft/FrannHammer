@@ -5,7 +5,6 @@ using System.Linq;
 using AutoMapper;
 using FrannHammer.Core;
 using FrannHammer.Models;
-using FrannHammer.Models.DTOs;
 using FrannHammer.Services.Exceptions;
 
 namespace FrannHammer.Services

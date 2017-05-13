@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Autofac;
+﻿using Autofac;
 using FrannHammer.WebScraping;
 using FrannHammer.WebScraping.Attributes;
 using FrannHammer.WebScraping.Character;

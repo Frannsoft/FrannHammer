@@ -1,4 +1,5 @@
 ﻿using FrannHammer.Domain.Contracts;
+using FrannHammer.Domain.PropertyParsers;
 
 namespace FrannHammer.Domain
 {
@@ -10,6 +11,7 @@ namespace FrannHammer.Domain
         [FriendlyName("firstActionableFrame")]
         public string FirstActionableFrame { get; set; }
 
+        [PropertyParser(typeof(BaseDamageParser))]
         [FriendlyName("baseDamage")]
         public string BaseDamage { get; set; }
 

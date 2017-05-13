@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace FrannHammer.WebScraper.Stats
+﻿namespace FrannHammer.WebScraper.Stats
 {
     public class MoveStat : Stat
     {

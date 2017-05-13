@@ -52,10 +52,6 @@
       <Project>{62281D52-5B55-4976-B148-677B0BE6A18B}</Project>
       <Name>FrannHammer.Api.Services.Contracts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FrannHammer.Core\FrannHammer.Core.csproj">
-      <Project>{2904D4E7-8989-46BD-AC0A-B4356F190A15}</Project>
-      <Name>FrannHammer.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FrannHammer.DataAccess.Contracts\FrannHammer.DataAccess.Contracts.csproj">
       <Project>{EB884173-904C-43C4-8DF1-FE2B275DD248}</Project>
       <Name>FrannHammer.DataAccess.Contracts</Name>

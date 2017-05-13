@@ -1,5 +1,4 @@
-﻿using FrannHammer.WebScraping.Domain;
-using FrannHammer.WebScraping.Domain.Contracts;
+﻿using FrannHammer.WebScraping.Domain.Contracts;
 
 namespace FrannHammer.Seeding.Contracts
 {

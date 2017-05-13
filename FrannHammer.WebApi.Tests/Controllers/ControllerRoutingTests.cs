@@ -34,6 +34,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
 
         private static IEnumerable<Tuple<string, Type, string>> MoveControllerRouteInfo()
         {
+            yield return Tuple.Create("moves/name/{name}/{property}", typeof(MoveController), nameof(MoveController.GetAllPropertyDataForMoveByName));
             yield return Tuple.Create("moves/name/{name}", typeof(MoveController), nameof(MoveController.GetAllWhereName));
             yield return Tuple.Create("moves/{id}", typeof(MoveController), nameof(MoveController.GetById));
             yield return Tuple.Create("moves", typeof(MoveController), nameof(MoveController.GetAll));

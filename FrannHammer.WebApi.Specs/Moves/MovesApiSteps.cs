@@ -5,6 +5,8 @@ using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
 using NUnit.Framework;
 using TechTalk.SpecFlow;
+using static FrannHammer.Domain.PropertyParsers.MoveDataNameConstants;
+
 
 namespace FrannHammer.WebApi.Specs.Moves
 {
@@ -76,6 +78,31 @@ namespace FrannHammer.WebApi.Specs.Moves
             moves.ForEach(move =>
             {
                 Assert.That(move.Name, Contains.Substring(routeParameter), $"{move.Name} does not contain {routeParameter}");
+            });
+        }
+
+        [When(@"I request all of the (.*) property data for a move by name (.*)")]
+        public void WhenIRequestAllOfTheBaseDamagesPropertyDataForAMoveByNameJab(string property, string name)
+        {
+            ScenarioContext.Current.Set(name, MoveNameKey);
+            string requestUrl = ScenarioContext.Current.Get<string>(RouteUrlKey).Replace("{name}", name).Replace("{property}", property);
+            var requestResult = ApiClient.GetResult(requestUrl);
+            ScenarioContext.Current.Set(requestResult, RequestResultKey);
+        }
+
+        [Then(@"The result should be a list of data for the specific property for moves that match that name")]
+        public void ThenTheResultShouldBeAListOfBaseDamagesForMovesThatMatchThatName()
+        {
+            var results = ApiClient.DeserializeResponse<IEnumerable<Dictionary<string, string>>>(
+                    ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey))
+                .ToList();
+
+            string moveName = ScenarioContext.Current.Get<string>(MoveNameKey);
+
+            results.ForEach(propertyData =>
+            {
+                Assert.That(propertyData[MoveNameKey], Contains.Substring(moveName), $"{propertyData[MoveNameKey]} does not contain {moveName}");
+                Assert.That(propertyData[Hitbox1Key], Is.Not.Empty, $"{nameof(propertyData)}.Hitbox1Key");
             });
         }
     }

@@ -19,3 +19,9 @@ Scenario: Request all moves by name
 	Given The api route of api/moves/name/{name}
 	When I request one specific item by name Jab 1
 	Then The result should be all moves that match that name
+
+@GetAllPropertyDataForMoveByName
+Scenario: Request specific property of a move
+	Given The api route of api/moves/name/{name}/{property}
+	When I request all of the baseDamage property data for a move by name Jab 1
+	Then The result should be a list of data for the specific property for moves that match that name

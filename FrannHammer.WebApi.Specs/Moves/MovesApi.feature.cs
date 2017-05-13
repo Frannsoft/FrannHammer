@@ -120,6 +120,26 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Request specific property of a move")]
+        [NUnit.Framework.CategoryAttribute("GetAllPropertyDataForMoveByName")]
+        public virtual void RequestSpecificPropertyOfAMove()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Request specific property of a move", new string[] {
+                        "GetAllPropertyDataForMoveByName"});
+#line 24
+this.ScenarioSetup(scenarioInfo);
+#line 25
+ testRunner.Given("The api route of api/moves/name/{name}/{property}", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 26
+ testRunner.When("I request all of the baseDamage property data for a move by name Jab 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 27
+ testRunner.Then("The result should be a list of data for the specific property for moves that matc" +
+                    "h that name", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore
