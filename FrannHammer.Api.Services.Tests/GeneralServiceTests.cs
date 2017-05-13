@@ -2,6 +2,7 @@
 using System.Linq;
 using FrannHammer.Api.Services.Contracts;
 using FrannHammer.DataAccess.Contracts;
+using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
 using Moq;
 using NUnit.Framework;
@@ -10,13 +11,14 @@ using Ploeh.AutoFixture.AutoMoq;
 
 namespace FrannHammer.Api.Services.Tests
 {
-    [TestFixture(typeof(IMove), typeof(DefaultMoveService))]
-    [TestFixture(typeof(IMovement), typeof(DefaultMovementService))]
-    [TestFixture(typeof(ICharacter), typeof(DefaultCharacterService))]
-    [TestFixture(typeof(ICharacterAttributeRow), typeof(DefaultCharacterAttributeService))]
-    public class GeneralServiceTests<TModel, TSut>
-        where TModel : class, IModel
-        where TSut : ICrudService<TModel>
+    [TestFixture(typeof(IMove), typeof(Move), typeof(DefaultMoveService))]
+    [TestFixture(typeof(IMovement), typeof(Movement), typeof(DefaultMovementService))]
+    [TestFixture(typeof(ICharacter), typeof(Character), typeof(DefaultCharacterService))]
+    [TestFixture(typeof(ICharacterAttributeRow), typeof(CharacterAttributeRow), typeof(DefaultCharacterAttributeService))]
+    public class GeneralServiceTests<TModelInterface, TModel, TSut>
+        where TModelInterface : class, IModel
+        where TModel : TModelInterface
+        where TSut : ICrudService<TModelInterface>
     {
         private Fixture _fixture;
 
@@ -30,11 +32,11 @@ namespace FrannHammer.Api.Services.Tests
         [Test]
         public void CanAddSingleItemToRepository()
         {
-            var repositoryItems = _fixture.CreateMany<TModel>().ToList();
+            var repositoryItems = _fixture.CreateMany<TModelInterface>().ToList();
 
-            var repositoryMock = new Mock<IRepository<TModel>>();
+            var repositoryMock = new Mock<IRepository<TModelInterface>>();
             repositoryMock.Setup(c => c.GetAll()).Returns(() => repositoryItems);
-            repositoryMock.Setup(c => c.Add(It.IsAny<TModel>())).Callback<TModel>(c =>
+            repositoryMock.Setup(c => c.Add(It.IsAny<TModelInterface>())).Callback<TModelInterface>(c =>
             {
                 repositoryItems.Add(c);
             });
@@ -42,7 +44,7 @@ namespace FrannHammer.Api.Services.Tests
 
             int previousCount = sut.GetAll().Count();
 
-            var newItem = _fixture.Create<TModel>();
+            var newItem = _fixture.Create<TModelInterface>();
 
             sut.Add(newItem);
 
@@ -52,18 +54,19 @@ namespace FrannHammer.Api.Services.Tests
         }
 
         [Test]
-        public void GetItemByNameCallsRepositoryGetByNameMethod()
+        public void GetItemByNameCallsRepositoryGetSingleWhereNameIsMethod()
         {
-            string name = _fixture.Create<string>();
+            var items = _fixture.CreateMany<TModel>().ToList();
+            string name = items.First().Name;
 
-            var repositoryMock = new Mock<IRepository<TModel>>();
-            repositoryMock.Setup(c => c.GetByName(It.Is<string>(s => s == name)));
+            var repositoryMock = new Mock<IRepository<TModelInterface>>();
+            repositoryMock.Setup(r => r.GetSingleWhere(It.IsAny<Func<TModelInterface, bool>>())).Returns((Func<TModel, bool> where) => items.Single(where));
 
             var sut = CreateCrudService(repositoryMock.Object);
 
-            sut.GetByName(name);
+            sut.GetSingleWhere(t => t.Name == name);
 
-            repositoryMock.Verify(c => c.GetByName(It.Is<string>(s => s == name)));
+            repositoryMock.VerifyAll();
         }
 
         [Test]
@@ -71,12 +74,12 @@ namespace FrannHammer.Api.Services.Tests
         {
             var items = _fixture.CreateMany<TModel>().ToList();
 
-            var repositoryMock = new Mock<IRepository<TModel>>();
-            repositoryMock.Setup(c => c.GetById(It.IsAny<string>())).Returns<string>(id => items.FirstOrDefault(c => c.Id == id.ToString()));
+            var repositoryMock = new Mock<IRepository<TModelInterface>>();
+            repositoryMock.Setup(c => c.GetSingleWhere(It.IsAny<Func<TModelInterface, bool>>())).Returns((Func<TModel, bool> where) => items.SingleOrDefault(where));
 
             var sut = CreateCrudService(repositoryMock.Object);
 
-            var item = sut.GetById("0");
+            var item = sut.GetSingleById("0");
 
             Assert.That(item, Is.Null);
         }
@@ -84,7 +87,7 @@ namespace FrannHammer.Api.Services.Tests
         [Test]
         public void RejectsNullItemForAddition()
         {
-            var repositoryMock = new Mock<IRepository<TModel>>();
+            var repositoryMock = new Mock<IRepository<TModelInterface>>();
 
             Assert.Throws<ArgumentNullException>(() =>
             {
@@ -93,9 +96,9 @@ namespace FrannHammer.Api.Services.Tests
             });
         }
 
-        private static ICrudService<TModel> CreateCrudService(IRepository<TModel> repository)
+        private static ICrudService<TModelInterface> CreateCrudService(IRepository<TModelInterface> repository)
         {
-            return (ICrudService<TModel>)Activator.CreateInstance(typeof(TSut), repository);
+            return (ICrudService<TModelInterface>)Activator.CreateInstance(typeof(TSut), repository);
         }
     }
 }

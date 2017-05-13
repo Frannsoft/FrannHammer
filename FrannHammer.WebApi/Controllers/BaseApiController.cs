@@ -14,7 +14,7 @@ namespace FrannHammer.WebApi.Controllers
         }
 
         public abstract IHttpActionResult GetById(string id, string fields = "");
-        public abstract IHttpActionResult GetByName(string name, string fields = "");
+        public abstract IHttpActionResult GetAllWhereName(string name, string fields = "");
         public abstract IHttpActionResult GetAll(string fields = "");
     }
 }

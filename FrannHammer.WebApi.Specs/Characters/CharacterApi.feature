@@ -18,4 +18,4 @@ Scenario: Request one single characters metadata
 Scenario: Request one single characters metadata by name
 	Given The api route of api/characters/name/{name}
 	When I request one specific item by name Bowser
-	Then the result should be just that characters metadata
+	Then the result should be a list containing just that characters metadata

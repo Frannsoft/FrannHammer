@@ -116,7 +116,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 20
  testRunner.When("I request one specific item by name Bowser", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 21
- testRunner.Then("the result should be just that characters metadata", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the result should be a list containing just that characters metadata", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

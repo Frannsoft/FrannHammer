@@ -58,5 +58,25 @@ namespace FrannHammer.WebApi.Specs.Moves
                     ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey));
             AssertMoveIsValid(move);
         }
+
+        [Then(@"The result should be all moves that match that name")]
+        public void ThenTheResultShouldBeAllMovesThatMatchThatName()
+        {
+            var moves =
+                ApiClient.DeserializeResponse<IEnumerable<Move>>(
+                        ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey))
+                    .ToList();
+
+            CollectionAssert.AllItemsAreNotNull(moves);
+            CollectionAssert.AllItemsAreUnique(moves);
+            moves.ForEach(AssertMoveIsValid);
+
+            string routeParameter = ScenarioContext.Current.Get<string>(RouteParameter);
+
+            moves.ForEach(move =>
+            {
+                Assert.That(move.Name, Contains.Substring(routeParameter), $"{move.Name} does not contain {routeParameter}");
+            });
+        }
     }
 }

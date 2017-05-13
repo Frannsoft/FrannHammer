@@ -4,5 +4,6 @@ namespace FrannHammer.Api.Services.Contracts
 {
     public interface IMoveService : ICrudService<IMove>
     {
+
     }
 }

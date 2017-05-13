@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FrannHammer.Domain.Contracts;
 
 namespace FrannHammer.Api.Services.Contracts
@@ -17,8 +18,10 @@ namespace FrannHammer.Api.Services.Contracts
     public interface IReaderService<out T>
         where T : IModel
     {
-        T GetById(string id, string fields = "");
-        T GetByName(string name, string fields = "");
+        T GetSingleWhere(Func<T, bool> where, string fields = "");
+        IEnumerable<T> GetAllWhere(Func<T, bool> where, string fields = "");
         IEnumerable<T> GetAll(string fields = "");
+        T GetSingleById(string id, string fields = "");
+        IEnumerable<T> GetAllWhereName(string name, string fields = "");
     }
 }

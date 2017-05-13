@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseApiService.cs" />
     <Compile Include="DefaultCharacterAttributeService.cs" />
     <Compile Include="DefaultCharacterService.cs" />
     <Compile Include="DefaultMovementService.cs" />

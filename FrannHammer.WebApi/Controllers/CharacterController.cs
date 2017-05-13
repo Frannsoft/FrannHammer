@@ -20,7 +20,7 @@ namespace FrannHammer.WebApi.Controllers
         [Route(CharactersRouteKey + "/{id}")]
         public override IHttpActionResult GetById(string id, [FromUri]string fields = "")
         {
-            var character = _characterService.GetById(id, fields);
+            var character = _characterService.GetSingleById(id, fields);
             return Result(character);
         }
 
@@ -32,9 +32,9 @@ namespace FrannHammer.WebApi.Controllers
         }
 
         [Route(CharactersRouteKey + "/name/{name}")]
-        public override IHttpActionResult GetByName(string name, string fields = "")
+        public override IHttpActionResult GetAllWhereName(string name, string fields = "")
         {
-            var character = _characterService.GetByName(name, fields);
+            var character = _characterService.GetAllWhereName(name, fields);
             return Result(character);
         }
     }

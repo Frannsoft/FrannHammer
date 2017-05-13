@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FrannHammer.DataAccess.Contracts;
 using FrannHammer.Utility;
 using MongoDB.Driver;
@@ -45,6 +46,20 @@ namespace FrannHammer.DataAccess.MongoDb
             var raw = _mongoDatabase.GetCollection<BsonDocument>(typeof(T).Name).Find(filter).SingleOrDefault();
 
             return DeserializeWithId(raw);
+        }
+
+        public T GetSingleWhere(Func<T, bool> where)
+        {
+            var result = _mongoDatabase.GetCollection<T>(typeof(T).Name).AsQueryable().SingleOrDefault(where);
+            return result;
+        }
+
+        public IEnumerable<T> GetAllWhere(Func<T, bool> where)
+        {
+            var rawCollection =
+                _mongoDatabase.GetCollection<T>(typeof(T).Name).AsQueryable().Where(where).ToList();
+
+            return rawCollection;
         }
 
         public IEnumerable<T> GetAll()

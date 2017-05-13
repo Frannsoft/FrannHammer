@@ -33,7 +33,7 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
 
             var newlyAddedMovement = _repository.Add(Fixture.Create<IMovement>());
 
-            var movement = _repository.GetById(newlyAddedMovement.Id);
+            var movement = _repository.GetSingleWhere(m => m.Id == newlyAddedMovement.Id);
 
             Assert.That(movement, Is.Not.Null);
             Assert.That(movement.Value, Is.Not.Null);

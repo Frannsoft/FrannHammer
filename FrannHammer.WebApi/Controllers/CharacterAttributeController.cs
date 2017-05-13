@@ -27,14 +27,14 @@ namespace FrannHammer.WebApi.Controllers
         [Route(CharacterAttributesRouteKey + "/{id}")]
         public override IHttpActionResult GetById(string id, [FromUri] string fields = "")
         {
-            var content = _characterAttributeRowService.GetById(id, fields);
+            var content = _characterAttributeRowService.GetSingleById(id, fields);
             return Result(content);
         }
 
         [Route(CharacterAttributesRouteKey + "/name/{name}")]
-        public override IHttpActionResult GetByName(string name, string fields = "")
+        public override IHttpActionResult GetAllWhereName(string name, string fields = "")
         {
-            var content = _characterAttributeRowService.GetByName(name, fields);
+            var content = _characterAttributeRowService.GetAllWhereName(name, fields);
             return Result(content);
         }
     }
