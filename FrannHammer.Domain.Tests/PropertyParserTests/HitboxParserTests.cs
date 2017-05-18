@@ -5,14 +5,20 @@ using static FrannHammer.Domain.PropertyParsers.MoveDataNameConstants;
 namespace FrannHammer.Domain.Tests.PropertyParserTests
 {
     [TestFixture]
-    public class BaseDamageParserTests
+    public class HitboxParserTests
     {
+        private HitboxParser _sut;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _sut = new HitboxParser();
+        }
+
         [Test]
         public void ParsingValidRawDataProducesExpectedResultForMultipleHitboxMoves()
         {
-            var sut = new BaseDamageParser();
-
-            var results = sut.Parse("16/14");
+            var results = _sut.Parse("16/14");
 
             Assert.That(results[Hitbox1Key], Is.EqualTo("16"), $"{nameof(results)}.{Hitbox1Key}");
             Assert.That(results[Hitbox2Key], Is.EqualTo("14"), $"{nameof(results)}.{Hitbox2Key}");
@@ -22,22 +28,11 @@ namespace FrannHammer.Domain.Tests.PropertyParserTests
         [Test]
         public void ParsingValidRawDataProducesExpectedResultForSingleHitboxMoves()
         {
-            var sut = new BaseDamageParser();
+            const string testValue = "1.7";
+            var results = _sut.Parse(testValue);
 
-            var results = sut.Parse("1.7");
-
-            Assert.That(results[Hitbox1Key], Is.EqualTo("1.7"), $"{nameof(results)}.{Hitbox1Key}");
-        }
-
-        [Test]
-        public void AtteptToParseEmptyDataReturnsEmptyDictionary()
-        {
-            var sut = new BaseDamageParser();
-
-            var results = sut.Parse(string.Empty);
-
-            Assert.That(results, Is.Not.Null, $"{nameof(results)}");
-            Assert.That(results.Keys.Count, Is.EqualTo(0), $"{nameof(results.Keys.Count)}");
+            Assert.That(results[RawValueKey], Is.EqualTo(testValue), $"{nameof(results)}.{RawValueKey}");
+            Assert.That(results[Hitbox1Key], Is.EqualTo(testValue), $"{nameof(results)}.{Hitbox1Key}");
         }
     }
 }

@@ -2,13 +2,17 @@
 {
     public static class MoveDataNameConstants
     {
-        public const string RawValueKey = "RawValue";
-        public const string NotesKey = "Notes";
-        public const string Hitbox1Key = "Hitbox1";
-        public const string Hitbox2Key = "Hitbox2";
-        public const string Hitbox3Key = "Hitbox3";
-        public const string Hitbox4Key = "Hitbox4";
-        public const string Hitbox5Key = "Hitbox5";
+        public const string RawValueKey = "rawValue";
+        public const string NotesKey = "notes";
+        public const string Hitbox1Key = "hitbox1";
+        public const string Hitbox2Key = "hitbox2";
+        public const string Hitbox3Key = "hitbox3";
+        public const string Hitbox4Key = "hitbox4";
+        public const string Hitbox5Key = "hitbox5";
         public const string MoveNameKey = "moveName";
+        public const string Cancel1Key = "cancel1";
+        public const string Cancel2Key = "cancel2";
+        public const string FrameKey = "frame";
+        public const string FramesKey = "frames";
     }
 }

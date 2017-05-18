@@ -5,30 +5,38 @@ namespace FrannHammer.Domain
 {
     public class Move : MongoModel, IMove
     {
+        [PropertyParser(typeof(HitboxParser))]
         [FriendlyName("hitboxActive")]
         public string HitboxActive { get; set; }
 
-        [FriendlyName("firstActionableFrame")]
-        public string FirstActionableFrame { get; set; }
-
-        [PropertyParser(typeof(BaseDamageParser))]
+        [PropertyParser(typeof(HitboxParser))]
         [FriendlyName("baseDamage")]
         public string BaseDamage { get; set; }
 
+        [PropertyParser(typeof(HitboxParser))]
         [FriendlyName("angle")]
         public string Angle { get; set; }
 
-        [FriendlyName("baseKnockBackSetKnockback")]
-        public string BaseKnockBackSetKnockback { get; set; }
+        [PropertyParser(typeof(HitboxParser))]
+        [FriendlyName("knockbackGrowth")]
+        public string KnockbackGrowth { get; set; }
 
-        [FriendlyName("landingLag")]
-        public string LandingLag { get; set; }
-
+        [PropertyParser(typeof(AutocancelParser))]
         [FriendlyName("autoCancel")]
         public string AutoCancel { get; set; }
 
-        [FriendlyName("knockbackGrowth")]
-        public string KnockbackGrowth { get; set; }
+        [PropertyParser(typeof(BaseKnockbackParser), "baseKnockback")]
+        [PropertyParser(typeof(SetKnockbackParser), "setKnockback")]
+        [FriendlyName("baseKnockBackSetKnockback")]
+        public string BaseKnockBackSetKnockback { get; set; }
+
+        [PropertyParser(typeof(FirstActionableFrameParser))]
+        [FriendlyName("firstActionableFrame")]
+        public string FirstActionableFrame { get; set; }
+
+        [PropertyParser(typeof(LandingLagParser))]
+        [FriendlyName("landingLag")]
+        public string LandingLag { get; set; }
 
         [FriendlyName("moveType")]
         public string MoveType { get; set; }

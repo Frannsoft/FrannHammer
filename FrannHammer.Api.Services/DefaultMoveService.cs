@@ -24,7 +24,9 @@ namespace FrannHammer.Api.Services
             Guard.VerifyStringIsNotNullOrEmpty(property, nameof(property));
 
             var registeredMoveType = MoveParseClassMap.GetRegisteredImplementationTypeFor<IMove>();
-            var propertyInfo = registeredMoveType.GetProperty(property, BindingFlags.IgnoreCase | BindingFlags.Instance | BindingFlags.Public);
+
+            //case-insensitive check for matching property name
+            var propertyInfo = registeredMoveType.GetProperties(BindingFlags.IgnoreCase | BindingFlags.Instance | BindingFlags.Public).FirstOrDefault(p => p.Name.IndexOf(property, 0, StringComparison.CurrentCultureIgnoreCase) != -1);
 
             if (propertyInfo == null)
             { throw new ArgumentException($"Move property name of '{property}' does not exist on {registeredMoveType.Name}."); }
@@ -37,9 +39,24 @@ namespace FrannHammer.Api.Services
             //parse into strongly typed result...
             var moves = GetAllWhereName(name);
 
-            var requestedRawPropertyForAllMatchingMoves = moves.Select(move => new { Property = propertyInfo.GetValue(move).ToString() });
+            var requestedRawPropertyForAllMatchingMoves = moves.Select(move => new { RawValue = propertyInfo.GetValue(move)?.ToString() });
 
-            var parserType = propertyInfo?.GetCustomAttribute<PropertyParserAttribute>()?.ParserType;
+            //Pull back all parser type attributes for the property being parsed.
+            //If there are more than one assigned, pick the one that matches the property 
+            //name value passed into this method.  
+            //This allows for multiple types of parsing on single properties - 
+            //something that is necessary for base/set knockback.
+            var propertyParserAttributes = propertyInfo.GetCustomAttributes<PropertyParserAttribute>().ToList();
+
+            var parserType = default(Type);
+            if (propertyParserAttributes.Count > 1)
+            {
+                parserType = propertyParserAttributes.First(p => p.MatchingPropertyName == property)?.ParserType;
+            }
+            else if (propertyParserAttributes.Count > 0)
+            {
+                parserType = propertyParserAttributes[0].ParserType;
+            }
 
             //if parserType is null, just return raw properties instead of throwing an exception.  The consumer doesn't necessarily care.
             if (parserType == null)
@@ -47,7 +64,7 @@ namespace FrannHammer.Api.Services
                 return requestedRawPropertyForAllMatchingMoves.Select(p =>
                 new Dictionary<string, string>
                 {
-                    { "Property", p.Property },
+                    { RawValueKey, p.RawValue },
                     { MoveNameKey, name }
                 });
             }
@@ -58,7 +75,7 @@ namespace FrannHammer.Api.Services
             var strongTypedPropertyInEachMove = requestedRawPropertyForAllMatchingMoves
                 .Select(rawProperty =>
                 {
-                    var parsedData = parser.Parse(rawProperty.Property);
+                    var parsedData = parser.Parse(rawProperty.RawValue);
                     parsedData[MoveNameKey] = name;
                     return parsedData;
                 })

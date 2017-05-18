@@ -50,7 +50,7 @@ namespace FrannHammer.WebApi.Specs.Characters
         }
 
         [Then(@"the result should be a list containing just that characters metadata")]
-        public void ThenTheResultShouldBeJustThatCharactersMetadata()
+        public void ThenTheResultShouldBeAListContainingJustThatCharactersMetadata()
         {
             var characterMetadata = ApiClient
                 .DeserializeResponse<IEnumerable<Character>>(
@@ -58,6 +58,16 @@ namespace FrannHammer.WebApi.Specs.Characters
 
             Assert.That(characterMetadata.Count, Is.EqualTo(1));
             characterMetadata.ForEach(AssertCharacterIsValid);
+        }
+
+        [Then(@"the result should be just that characters metadata")]
+        public void ThenTheResultShouldBeJustThatCharactersMetadata()
+        {
+            var characterMetadata = ApiClient
+               .DeserializeResponse<Character>(
+                   ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey));
+
+            AssertCharacterIsValid(characterMetadata);
         }
     }
 }

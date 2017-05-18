@@ -4,28 +4,26 @@ using static FrannHammer.Domain.PropertyParsers.MoveDataNameConstants;
 
 namespace FrannHammer.Domain.PropertyParsers
 {
-    public class BaseDamageParser : PropertyParser
+    //TODO - ADD BASIC TESTS AT CONTROLLER LEVEL
+
+    public class HitboxParser : PropertyParser
     {
         public override IDictionary<string, string> Parse(string rawData)
         {
-            if (string.IsNullOrEmpty(rawData))
-            { return new Dictionary<string, string>(); }
+            return Parse(rawData, results =>
+             {
+                 var splitData = rawData.Split('/');
 
-            var splitData = rawData.Split('/');
+                 //hard copy of data prior to parsing
 
-            var retVal = new Dictionary<string, string>
-            {
-                [RawValueKey] = rawData
-            };
-            //hard copy of data prior to parsing
+                 if (!rawData.Contains("No") &&
+                      !rawData.Contains("Yes"))
+                 {
+                     SetHitboxesData(results, splitData);
+                 }
 
-            if (!rawData.Contains("No") &&
-                !rawData.Contains("Yes"))
-            {
-                SetHitboxesData(retVal, splitData);
-            }
-
-            return retVal;
+                 return results;
+             }, Hitbox1Key, Hitbox2Key, Hitbox3Key, Hitbox4Key, Hitbox5Key);
         }
 
         private static string GetNoteDataFromHitboxActiveData(string rawHitboxData)
@@ -50,7 +48,7 @@ namespace FrannHammer.Domain.PropertyParsers
             return !string.IsNullOrEmpty(noteData) ? rawData.Replace(noteData, string.Empty).Trim() : rawData;
         }
 
-        private static void SetHitboxesData(IDictionary<string, string> model, string[] rawData)
+        protected static void SetHitboxesData(IDictionary<string, string> model, string[] rawData)
         {
             if (rawData.Length > 0)
             {
@@ -82,6 +80,5 @@ namespace FrannHammer.Domain.PropertyParsers
                 model[Hitbox5Key] = hitboxActiveNoParens;
             }
         }
-
     }
 }

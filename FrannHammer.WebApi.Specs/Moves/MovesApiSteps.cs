@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using FrannHammer.Domain;
@@ -81,28 +82,30 @@ namespace FrannHammer.WebApi.Specs.Moves
             });
         }
 
-        [When(@"I request all of the (.*) property data for a move by name (.*)")]
-        public void WhenIRequestAllOfTheBaseDamagesPropertyDataForAMoveByNameJab(string property, string name)
+        [When(@"I request all of the (.*) property data for a move by (.*) (.*)")]
+        public void WhenIRequestAllOfTheBaseDamagesPropertyDataForAMoveByName(string property, string identifierKey, string identifierValue)
         {
-            ScenarioContext.Current.Set(name, MoveNameKey);
-            string requestUrl = ScenarioContext.Current.Get<string>(RouteUrlKey).Replace("{name}", name).Replace("{property}", property);
+            ScenarioContext.Current.Set(identifierValue, "moveIdentifierKey");
+            string requestUrl = ScenarioContext.Current.Get<string>(RouteUrlKey).Replace("{" + identifierKey+ "}", identifierValue).Replace("{property}", property);
             var requestResult = ApiClient.GetResult(requestUrl);
             ScenarioContext.Current.Set(requestResult, RequestResultKey);
         }
 
-        [Then(@"The result should be a list of data for the specific property for moves that match that name")]
-        public void ThenTheResultShouldBeAListOfBaseDamagesForMovesThatMatchThatName()
+        [Then(@"The result should be a list of (.*) for the specific property in the moves that match that name")]
+        public void ThenTheResultShouldBeAListOfBaseDamagesForMovesThatMatchThatName(string expectedResultProperties)
         {
             var results = ApiClient.DeserializeResponse<IEnumerable<Dictionary<string, string>>>(
                     ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey))
                 .ToList();
 
-            string moveName = ScenarioContext.Current.Get<string>(MoveNameKey);
-
             results.ForEach(propertyData =>
             {
-                Assert.That(propertyData[MoveNameKey], Contains.Substring(moveName), $"{propertyData[MoveNameKey]} does not contain {moveName}");
-                Assert.That(propertyData[Hitbox1Key], Is.Not.Empty, $"{nameof(propertyData)}.Hitbox1Key");
+                Assert.That(propertyData[MoveNameKey], Is.Not.Empty, $"{propertyData[MoveNameKey]} should not be empty.");
+
+                foreach (string propertyKey in expectedResultProperties.Split(';'))
+                {
+                    Assert.That(propertyData.Any(kvp => kvp.Key.Equals(propertyKey, StringComparison.CurrentCultureIgnoreCase)), $"{nameof(propertyData)}.{propertyKey} was not present.");
+                }
             });
         }
     }

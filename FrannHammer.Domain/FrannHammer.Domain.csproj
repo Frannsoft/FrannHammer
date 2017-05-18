@@ -53,11 +53,17 @@
     <Compile Include="Move.cs" />
     <Compile Include="Movement.cs" />
     <Compile Include="MoveParseClassMap.cs" />
+    <Compile Include="PropertyParsers\AutocancelParser.cs" />
+    <Compile Include="PropertyParsers\BaseKnockbackParser.cs" />
+    <Compile Include="PropertyParsers\FirstActionableFrameParser.cs" />
+    <Compile Include="PropertyParsers\KnockbackParser.cs" />
+    <Compile Include="PropertyParsers\LandingLagParser.cs" />
     <Compile Include="PropertyParsers\MoveDataNameConstants.cs" />
     <Compile Include="PropertyParsers\PropertyParser.cs" />
     <Compile Include="PropertyParsers\PropertyParserAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PropertyParsers\BaseDamageParser.cs" />
+    <Compile Include="PropertyParsers\HitboxParser.cs" />
+    <Compile Include="PropertyParsers\SetKnockbackParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FrannHammer.Domain.Contracts\FrannHammer.Domain.Contracts.csproj">

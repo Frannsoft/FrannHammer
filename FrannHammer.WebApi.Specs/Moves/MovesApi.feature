@@ -14,14 +14,34 @@ Scenario: Request one single moves data
 	When I request one specific item by id 5913c30e4696591c50f28629
 	Then The result should be just that moves data
 
-@GetByName
+@GetAllWithName
 Scenario: Request all moves by name
 	Given The api route of api/moves/name/{name}
 	When I request one specific item by name Jab 1
 	Then The result should be all moves that match that name
 
-@GetAllPropertyDataForMoveByName
-Scenario: Request specific property of a move
+@GetAllNonHitboxDataForMovesByName
+Scenario Outline: Requesting specific property of moves matching the given name returns parsed data for that property of those moves
 	Given The api route of api/moves/name/{name}/{property}
-	When I request all of the baseDamage property data for a move by name Jab 1
-	Then The result should be a list of data for the specific property for moves that match that name
+	When I request all of the <property> property data for a move by name Nair
+	Then The result should be a list of <moveproperties> for the specific property in the moves that match that name
+
+	Examples: 
+	| property             | moveproperties                          |
+	| autoCancel           | cancel1;cancel2;rawvalue;movename		 |
+	| firstActionableFrame | frame;rawvalue;movename                 |
+	| landingLag           | frames;rawvalue;movename                |
+
+Scenario Outline: Request hitbox-based property of moves by name
+	Given The api route of api/moves/name/{name}/{property}
+	When I request all of the <property> property data for a move by name Jab 1
+	Then The result should be a list of hitbox1;hitbox2;hitbox3;hitbox4;hitbox4;rawvalue;movename for the specific property in the moves that match that name
+
+	Examples: 
+	| property        | 
+	| baseDamage      |
+	| baseKnockback   |
+	| hitboxActive    |
+	| angle           |
+	| setKnockback    |
+	| knockbackGrowth |
