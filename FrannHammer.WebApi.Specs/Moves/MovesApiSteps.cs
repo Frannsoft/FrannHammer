@@ -82,11 +82,10 @@ namespace FrannHammer.WebApi.Specs.Moves
             });
         }
 
-        [When(@"I request all of the (.*) property data for a move by (.*) (.*)")]
-        public void WhenIRequestAllOfTheBaseDamagesPropertyDataForAMoveByName(string property, string identifierKey, string identifierValue)
+        [When(@"I request all of the (.*) property data for a move by (.*)")]
+        public void WhenIRequestAllOfTheBaseDamagesPropertyDataForAMoveByName(string property, string name)
         {
-            ScenarioContext.Current.Set(identifierValue, "moveIdentifierKey");
-            string requestUrl = ScenarioContext.Current.Get<string>(RouteUrlKey).Replace("{" + identifierKey+ "}", identifierValue).Replace("{property}", property);
+            string requestUrl = ScenarioContext.Current.Get<string>(RouteUrlKey).Replace("{name}", name).Replace("{property}", property);
             var requestResult = ApiClient.GetResult(requestUrl);
             ScenarioContext.Current.Set(requestResult, RequestResultKey);
         }

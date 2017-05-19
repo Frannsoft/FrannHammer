@@ -44,5 +44,12 @@ namespace FrannHammer.WebApi.Controllers
             var content = _moveService.GetAllPropertyDataWhereName(name, property, fields);
             return Result(content);
         }
+
+        [Route(MovesRouteKey + "/{id}/{property}")]
+        public IHttpActionResult GetAllPropertyDataForMoveById(string id, string property, string fields = "")
+        {
+            var content = _moveService.GetPropertyDataWhereId(id, property, fields);
+            return Result(content);
+        }
     }
 }

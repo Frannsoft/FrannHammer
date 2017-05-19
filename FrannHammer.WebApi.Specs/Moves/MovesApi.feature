@@ -23,7 +23,7 @@ Scenario: Request all moves by name
 @GetAllNonHitboxDataForMovesByName
 Scenario Outline: Requesting specific property of moves matching the given name returns parsed data for that property of those moves
 	Given The api route of api/moves/name/{name}/{property}
-	When I request all of the <property> property data for a move by name Nair
+	When I request all of the <property> property data for a move by Nair
 	Then The result should be a list of <moveproperties> for the specific property in the moves that match that name
 
 	Examples: 
@@ -34,7 +34,7 @@ Scenario Outline: Requesting specific property of moves matching the given name 
 
 Scenario Outline: Request hitbox-based property of moves by name
 	Given The api route of api/moves/name/{name}/{property}
-	When I request all of the <property> property data for a move by name Jab 1
+	When I request all of the <property> property data for a move by Jab 1
 	Then The result should be a list of hitbox1;hitbox2;hitbox3;hitbox4;hitbox4;rawvalue;movename for the specific property in the moves that match that name
 
 	Examples: 

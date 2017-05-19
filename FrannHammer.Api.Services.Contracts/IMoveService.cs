@@ -8,5 +8,6 @@ namespace FrannHammer.Api.Services.Contracts
         IEnumerable<IDictionary<string, string>> GetAllPropertyDataWhereName(string name, string property,
             string fields = "");
 
+        IDictionary<string, string> GetPropertyDataWhereId(string id, string property, string fields = "");
     }
 }

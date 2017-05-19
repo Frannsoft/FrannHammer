@@ -68,7 +68,7 @@
     <Compile Include="CharacterServiceTests.cs" />
     <Compile Include="GeneralServiceTests.cs" />
     <Compile Include="MovementServiceTests.cs" />
-    <Compile Include="MoveServiceTests.cs" />
+    <Compile Include="DefaultMoveServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

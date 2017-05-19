@@ -143,7 +143,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 25
  testRunner.Given("The api route of api/moves/name/{name}/{property}", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 26
- testRunner.When(string.Format("I request all of the {0} property data for a move by name Nair", property), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When(string.Format("I request all of the {0} property data for a move by Nair", property), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 27
  testRunner.Then(string.Format("The result should be a list of {0} for the specific property in the moves that ma" +
                         "tch that name", moveproperties), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -167,7 +167,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 36
  testRunner.Given("The api route of api/moves/name/{name}/{property}", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 37
- testRunner.When(string.Format("I request all of the {0} property data for a move by name Jab 1", property), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When(string.Format("I request all of the {0} property data for a move by Jab 1", property), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 38
  testRunner.Then("The result should be a list of hitbox1;hitbox2;hitbox3;hitbox4;hitbox4;rawvalue;m" +
                     "ovename for the specific property in the moves that match that name", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");

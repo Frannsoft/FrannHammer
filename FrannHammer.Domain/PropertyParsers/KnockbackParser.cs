@@ -16,13 +16,10 @@ namespace FrannHammer.Domain.PropertyParsers
                 var trimmed = baseKbksRegexMatch.Trim(trimValues);
                 return base.Parse(trimmed);
             }
-
-            if (!doesRawContainKnockBackValue(rawKbk))
+            else
             {
                 return base.Parse(rawKbk);
             }
-
-            return base.Parse(rawKbk);
         }
     }
 }
