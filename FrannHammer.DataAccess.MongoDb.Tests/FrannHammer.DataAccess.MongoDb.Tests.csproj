@@ -79,6 +79,7 @@
     <Compile Include="BaseRepositoryTests.cs" />
     <Compile Include="CharacterAttributeRowRepositoryTests.cs" />
     <Compile Include="CharacterRepositoryTests.cs" />
+    <Compile Include="GeneralRepositoryTests.cs" />
     <Compile Include="MovementRepositoryTests.cs" />
     <Compile Include="MoveRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

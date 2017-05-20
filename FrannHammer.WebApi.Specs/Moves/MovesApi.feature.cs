@@ -95,9 +95,82 @@ this.ScenarioSetup(scenarioInfo);
 #line 13
  testRunner.Given("The api route of api/moves/{id}", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 14
- testRunner.When("I request one specific item by id 590e8b844696594ed4968442", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I request one specific item by id 5913c30e4696591c50f28629", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 15
  testRunner.Then("The result should be just that moves data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Request all moves by name")]
+        [NUnit.Framework.CategoryAttribute("GetAllWithName")]
+        public virtual void RequestAllMovesByName()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Request all moves by name", new string[] {
+                        "GetAllWithName"});
+#line 18
+this.ScenarioSetup(scenarioInfo);
+#line 19
+ testRunner.Given("The api route of api/moves/name/{name}", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 20
+ testRunner.When("I request one specific item by name Jab 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 21
+ testRunner.Then("The result should be all moves that match that name", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Requesting specific property of moves matching the given name returns parsed data" +
+            " for that property of those moves")]
+        [NUnit.Framework.CategoryAttribute("GetAllNonHitboxDataForMovesByName")]
+        [NUnit.Framework.TestCaseAttribute("autoCancel", "cancel1;cancel2;rawvalue;movename", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("firstActionableFrame", "frame;rawvalue;movename", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("landingLag", "frames;rawvalue;movename", new string[0])]
+        public virtual void RequestingSpecificPropertyOfMovesMatchingTheGivenNameReturnsParsedDataForThatPropertyOfThoseMoves(string property, string moveproperties, string[] exampleTags)
+        {
+            string[] @__tags = new string[] {
+                    "GetAllNonHitboxDataForMovesByName"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting specific property of moves matching the given name returns parsed data" +
+                    " for that property of those moves", @__tags);
+#line 24
+this.ScenarioSetup(scenarioInfo);
+#line 25
+ testRunner.Given("The api route of api/moves/name/{name}/{property}", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 26
+ testRunner.When(string.Format("I request all of the {0} property data for a move by Nair", property), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 27
+ testRunner.Then(string.Format("The result should be a list of {0} for the specific property in the moves that ma" +
+                        "tch that name", moveproperties), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Request hitbox-based property of moves by name")]
+        [NUnit.Framework.TestCaseAttribute("baseDamage", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("baseKnockback", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("hitboxActive", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("angle", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("setKnockback", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("knockbackGrowth", new string[0])]
+        public virtual void RequestHitbox_BasedPropertyOfMovesByName(string property, string[] exampleTags)
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Request hitbox-based property of moves by name", exampleTags);
+#line 35
+this.ScenarioSetup(scenarioInfo);
+#line 36
+ testRunner.Given("The api route of api/moves/name/{name}/{property}", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 37
+ testRunner.When(string.Format("I request all of the {0} property data for a move by Jab 1", property), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 38
+ testRunner.Then("The result should be a list of hitbox1;hitbox2;hitbox3;hitbox4;hitbox4;rawvalue;m" +
+                    "ovename for the specific property in the moves that match that name", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

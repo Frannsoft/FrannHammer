@@ -1,6 +1,5 @@
 namespace FrannHammer.Api.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
     
     public partial class fafsupport2 : DbMigration

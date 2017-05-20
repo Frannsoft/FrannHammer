@@ -18,9 +18,9 @@ namespace FrannHammer.WebApi.Controllers
         }
 
         [Route(MovesRouteKey + "/{id}")]
-        public override IHttpActionResult Get(string id, [FromUri]string fields = "")
+        public override IHttpActionResult GetById(string id, [FromUri]string fields = "")
         {
-            var move = _moveService.Get(id, fields);
+            var move = _moveService.GetSingleById(id, fields);
             return Result(move);
         }
 
@@ -29,6 +29,27 @@ namespace FrannHammer.WebApi.Controllers
         {
             var moves = _moveService.GetAll(fields);
             return Result(moves);
+        }
+
+        [Route(MovesRouteKey + "/name/{name}")]
+        public override IHttpActionResult GetAllWhereName(string name, string fields = "")
+        {
+            var content = _moveService.GetAllWhereName(name, fields);
+            return Result(content);
+        }
+
+        [Route(MovesRouteKey + "/name/{name}/{property}")]
+        public IHttpActionResult GetAllPropertyDataForMoveByName(string name, string property, string fields = "")
+        {
+            var content = _moveService.GetAllPropertyDataWhereName(name, property, fields);
+            return Result(content);
+        }
+
+        [Route(MovesRouteKey + "/{id}/{property}")]
+        public IHttpActionResult GetAllPropertyDataForMoveById(string id, string property, string fields = "")
+        {
+            var content = _moveService.GetPropertyDataWhereId(id, property, fields);
+            return Result(content);
         }
     }
 }

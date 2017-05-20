@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Web.Http;
 using Autofac;
 using Autofac.Integration.WebApi;
@@ -13,7 +12,6 @@ using System.Linq;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using FrannHammer.Domain.Contracts;
-using Newtonsoft.Json.Serialization;
 
 [assembly: OwinStartup(typeof(Startup))]
 
@@ -60,10 +58,14 @@ namespace FrannHammer.WebApi
                 .Where(a => a.FullName.StartsWith("FrannHammer"))
                 .Select(Assembly.Load).ToList();
 
+            BsonMapper.RegisterTypeWithAutoMap<MongoModel>();
             mongoDbBsonMapper.MapAllLoadedTypesDerivingFrom<MongoModel>(assembliesToScanForModels);
 
-            //character attribute is special
-            mongoDbBsonMapper.MapAllLoadedTypesDerivingFrom<CharacterAttribute>(assembliesToScanForModels);
+            //character attribute is special.. thanks to mongodb not being able to deserialize to interfaces naturally (FINE.)
+            BsonMapper.RegisterClassMaps(typeof(CharacterAttribute));
+
+            //Register IMove implementation to move implementation map
+            MoveParseClassMap.RegisterType<IMove, Move>();
 
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
@@ -74,30 +76,6 @@ namespace FrannHammer.WebApi
             app.UseAutofacWebApi(config);
             app.UseWebApi(config);
             app.UseCors(CorsOptions.AllowAll);
-        }
-    }
-
-
-    public class AutofacContractResolver : DefaultContractResolver
-    {
-        private readonly IContainer _container;
-
-        public AutofacContractResolver(IContainer container)
-        {
-            _container = container;
-        }
-
-        protected override JsonObjectContract CreateObjectContract(Type objectType)
-        {
-            JsonObjectContract contract = base.CreateObjectContract(objectType);
-
-            // use Autofac to create types that have been registered with it
-            if (_container.IsRegistered(objectType))
-            {
-                contract.DefaultCreator = () => _container.Resolve(objectType);
-            }
-
-            return contract;
         }
     }
 }

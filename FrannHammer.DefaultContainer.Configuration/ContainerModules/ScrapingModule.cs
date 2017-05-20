@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Autofac;
+﻿using Autofac;
 using FrannHammer.WebScraping;
 using FrannHammer.WebScraping.Attributes;
 using FrannHammer.WebScraping.Character;
@@ -59,26 +58,7 @@ namespace FrannHammer.DefaultContainer.Configuration.ContainerModules
                     (pi, c) =>
                     {
                         var attributeScrapingServices = c.Resolve<IAttributeScrapingServices>();
-                        return new List<IAttributeScraper>
-                        {
-                            new AerialJumpScraper(attributeScrapingServices),
-                            new AirAccelerationScraper(attributeScrapingServices),
-                            new AirDecelerationScraper(attributeScrapingServices),
-                            new AirFrictionScraper(attributeScrapingServices),
-                            new CounterScraper(attributeScrapingServices),
-                            new DashLengthScraper(attributeScrapingServices),
-                            new FallSpeedScraper(attributeScrapingServices),
-                            new FullHopScraper(attributeScrapingServices),
-                            new GravityScraper(attributeScrapingServices),
-                            new JumpSquatScraper(attributeScrapingServices),
-                            new LedgeHopScraper(attributeScrapingServices),
-                            new ShortHopScraper(attributeScrapingServices),
-                            new SpotdodgeScraper(attributeScrapingServices),
-                            new TractionScraper(attributeScrapingServices),
-                            new WalkSpeedScraper(attributeScrapingServices),
-                            new AirSpeedScraper(attributeScrapingServices),
-                            new AirDodgeScraper(attributeScrapingServices)
-                        };
+                        return AttributeScrapers.AllWithScrapingServices(attributeScrapingServices);
                     });
 
             builder.RegisterType<DefaultCharacterDataScraper>().As<ICharacterDataScraper>();

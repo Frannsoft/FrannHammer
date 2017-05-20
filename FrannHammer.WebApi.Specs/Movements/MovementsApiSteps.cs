@@ -9,6 +9,7 @@ using TechTalk.SpecFlow;
 namespace FrannHammer.WebApi.Specs.Movements
 {
     [Binding]
+    [Scope(Feature = "MovementsApi")]
     public class MovementsApiSteps : BaseSteps
     {
         private static void AssertMovementIsValid(IMovement movement)
@@ -36,7 +37,7 @@ namespace FrannHammer.WebApi.Specs.Movements
         public void ThenTheResultShouldBeAListOfAllCharacterMovementData()
         {
             var movements = ApiClient
-                .DeserializeResponse<IEnumerable<Movement>>(ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey).Content)
+                .DeserializeResponse<IEnumerable<Movement>>(ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey))
                 .ToList();
 
             CollectionAssert.AllItemsAreNotNull(movements);
@@ -49,7 +50,7 @@ namespace FrannHammer.WebApi.Specs.Movements
         {
             var movement = ApiClient
                 .DeserializeResponse<Movement>(
-                    ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey).Content);
+                    ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey));
             AssertMovementIsValid(movement);
         }
     }

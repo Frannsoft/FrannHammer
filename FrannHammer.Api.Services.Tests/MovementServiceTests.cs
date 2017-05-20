@@ -1,5 +1,4 @@
 ﻿using System;
-using FrannHammer.Domain.Contracts;
 using NUnit.Framework;
 
 namespace FrannHammer.Api.Services.Tests

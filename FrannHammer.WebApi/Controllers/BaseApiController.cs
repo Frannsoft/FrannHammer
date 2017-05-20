@@ -13,7 +13,8 @@ namespace FrannHammer.WebApi.Controllers
             return Ok(content);
         }
 
-        public abstract IHttpActionResult Get(string id, string fields = "");
+        public abstract IHttpActionResult GetById(string id, string fields = "");
+        public abstract IHttpActionResult GetAllWhereName(string name, string fields = "");
         public abstract IHttpActionResult GetAll(string fields = "");
     }
 }

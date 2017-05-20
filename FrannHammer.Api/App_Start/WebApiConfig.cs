@@ -7,13 +7,11 @@ using System.Reflection;
 using System.Web.Http;
 using Autofac.Integration.WebApi;
 using CacheCow.Server;
-using CacheCow.Server.EntityTagStore.SqlServer;
 using FrannHammer.Api.SwaggerExtensions;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 using StackExchange.Redis;
 using Swashbuckle.Application;
-using WebApiThrottle;
 
 namespace FrannHammer.Api
 {

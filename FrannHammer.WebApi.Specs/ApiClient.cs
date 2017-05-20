@@ -16,9 +16,10 @@ namespace FrannHammer.WebApi.Specs
         }
         public HttpResponseMessage GetResult(string requestUri) => _httpClient.GetAsync(requestUri).Result;
 
-        public T DeserializeResponse<T>(HttpContent responseContent)
+        public T DeserializeResponse<T>(HttpResponseMessage responseMessage)
         {
-            return JsonConvert.DeserializeObject<T>(responseContent.ReadAsStringAsync().Result,
+            responseMessage.EnsureSuccessStatusCode();
+            return JsonConvert.DeserializeObject<T>(responseMessage.Content.ReadAsStringAsync().Result,
                 new JsonSerializerSettings
                 {
                     ContractResolver = Startup.Container.Resolve<AutofacContractResolver>()

@@ -40,7 +40,7 @@ namespace FrannHammer.WebApi.Specs.Characters
         public void ThenTheResultShouldBeAListOfAllCharacterMetadata()
         {
             var characterMetadata = ApiClient
-                .DeserializeResponse<IEnumerable<Character>>(ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey).Content)
+                .DeserializeResponse<IEnumerable<Character>>(ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey))
                 .ToList();
 
             CollectionAssert.AllItemsAreNotNull(characterMetadata);
@@ -49,12 +49,23 @@ namespace FrannHammer.WebApi.Specs.Characters
             characterMetadata.ForEach(AssertCharacterIsValid);
         }
 
+        [Then(@"the result should be a list containing just that characters metadata")]
+        public void ThenTheResultShouldBeAListContainingJustThatCharactersMetadata()
+        {
+            var characterMetadata = ApiClient
+                .DeserializeResponse<IEnumerable<Character>>(
+                    ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey)).ToList();
+
+            Assert.That(characterMetadata.Count, Is.EqualTo(1));
+            characterMetadata.ForEach(AssertCharacterIsValid);
+        }
+
         [Then(@"the result should be just that characters metadata")]
         public void ThenTheResultShouldBeJustThatCharactersMetadata()
         {
             var characterMetadata = ApiClient
-                .DeserializeResponse<Character>(
-                    ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey).Content);
+               .DeserializeResponse<Character>(
+                   ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey));
 
             AssertCharacterIsValid(characterMetadata);
         }
