@@ -12,5 +12,6 @@
         string KnockbackGrowth { get; set; }
         string MoveType { get; set; }
         string Owner { get; set; }
+        bool IsWeightDependent { get; set; }
     }
 }

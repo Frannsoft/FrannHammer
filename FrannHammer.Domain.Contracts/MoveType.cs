@@ -4,13 +4,16 @@ namespace FrannHammer.Domain.Contracts
 {
     public enum MoveType
     {
-        [Description("Aerial")]
+        [Description("aerial")]
         Aerial,
 
-        [Description("Ground")]
+        [Description("ground")]
         Ground,
 
-        [Description("Special")]
-        Special
+        [Description("special")]
+        Special,
+
+        [Description("throw")]
+        Throw
     }
 }

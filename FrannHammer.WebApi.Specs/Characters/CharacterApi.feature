@@ -19,3 +19,8 @@ Scenario: Request one single characters metadata by name
 	Given The api route of api/characters/name/{name}
 	When I request one specific item by name Bowser
 	Then the result should be a list containing just that characters metadata
+
+Scenario: I want all of the throw data for a character
+	Given The api route of api/characters/name/{name}/throws
+	When I request one specific item by name Bowser
+	Then the result should be a list containing just that characters throw data

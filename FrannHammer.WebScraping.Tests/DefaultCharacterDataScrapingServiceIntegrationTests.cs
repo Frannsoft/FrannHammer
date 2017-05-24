@@ -41,6 +41,7 @@ namespace FrannHammer.WebScraping.Tests
         private GroundMoveScraper _groundMoveScraper;
         private AerialMoveScraper _aerialMoveScraper;
         private SpecialMoveScraper _specialMoveScraper;
+        private ThrowMoveScraper _throwMoveScraper;
         private ICharacterMoveScraper _characterMoveScraper;
         private IWebServices _webServices;
         private DefaultCharacterDataScraper _characterDataScraper;
@@ -66,8 +67,9 @@ namespace FrannHammer.WebScraping.Tests
             _groundMoveScraper = new GroundMoveScraper(_moveScrapingServices);
             _aerialMoveScraper = new AerialMoveScraper(_moveScrapingServices);
             _specialMoveScraper = new SpecialMoveScraper(_moveScrapingServices);
-
-            _characterMoveScraper = new DefaultCharacterMoveScraper(_groundMoveScraper, _aerialMoveScraper, _specialMoveScraper);
+            _throwMoveScraper = new ThrowMoveScraper(_moveScrapingServices);
+            _characterMoveScraper = new DefaultCharacterMoveScraper(new List<IMoveScraper> {
+                _groundMoveScraper, _aerialMoveScraper, _specialMoveScraper, _throwMoveScraper});
 
             var attributeScrapers = AttributeScrapers.AllWithScrapingServices(_attributeScrapingServices);
 

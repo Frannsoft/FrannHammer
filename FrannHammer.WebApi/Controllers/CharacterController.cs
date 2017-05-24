@@ -10,11 +10,15 @@ namespace FrannHammer.WebApi.Controllers
     {
         private const string CharactersRouteKey = "characters";
         private readonly ICharacterService _characterService;
+        private readonly IMoveService _moveService;
 
-        public CharacterController(ICharacterService characterService)
+        public CharacterController(ICharacterService characterService, IMoveService moveService)
         {
             Guard.VerifyObjectNotNull(characterService, nameof(characterService));
+            Guard.VerifyObjectNotNull(moveService, nameof(moveService));
+
             _characterService = characterService;
+            _moveService = moveService;
         }
 
         [Route(CharactersRouteKey + "/{id}")]
@@ -36,6 +40,13 @@ namespace FrannHammer.WebApi.Controllers
         {
             var character = _characterService.GetAllWhereName(name, fields);
             return Result(character);
+        }
+
+        [Route(CharactersRouteKey + "/name/{name}/throws")]
+        public IHttpActionResult GetAllThrowsForCharacterWhereName(string name, string fields = "")
+        {
+            var throws = _moveService.GetAllThrowsWhereCharacterNameIs(name, fields);
+            return Result(throws);
         }
     }
 }

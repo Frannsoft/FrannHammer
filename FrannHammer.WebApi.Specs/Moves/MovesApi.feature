@@ -45,3 +45,5 @@ Scenario Outline: Request hitbox-based property of moves by name
 	| angle           |
 	| setKnockback    |
 	| knockbackGrowth |
+
+

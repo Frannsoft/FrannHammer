@@ -236,6 +236,7 @@ namespace FrannHammer.Api.Services.Tests
             public string KnockbackGrowth { get; set; }
             public string MoveType { get; set; }
             public string Owner { get; set; }
+            public bool IsWeightDependent { get; set; }
         }
     }
 }

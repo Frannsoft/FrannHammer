@@ -9,6 +9,7 @@ using System.Reflection;
 using FrannHammer.Domain;
 using FrannHammer.Domain.PropertyParsers;
 using static FrannHammer.Domain.PropertyParsers.MoveDataNameConstants;
+using FrannHammer.WebScraping;
 
 namespace FrannHammer.Api.Services
 {
@@ -113,7 +114,7 @@ namespace FrannHammer.Api.Services
             return parsedData;
         }
 
-        private PropertyInfo FindPropertyInfo(string property)
+        private static PropertyInfo FindPropertyInfo(string property)
         {
             var registeredMoveType = MoveParseClassMap.GetRegisteredImplementationTypeFor<IMove>();
 
@@ -146,6 +147,14 @@ namespace FrannHammer.Api.Services
             }
 
             return parserType;
+        }
+
+        public IEnumerable<IMove> GetAllThrowsWhereCharacterNameIs(string name, string fields = "")
+        {
+            var throwMoves = GetAllWhere(move => EqualityComparer<string>.Default.Equals(move.Owner, name) &&
+                                                 move.MoveType == MoveType.Throw.GetEnumDescription());
+
+            return throwMoves;
         }
     }
 }
