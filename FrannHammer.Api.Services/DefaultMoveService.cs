@@ -151,6 +151,8 @@ namespace FrannHammer.Api.Services
 
         public IEnumerable<IMove> GetAllThrowsWhereCharacterNameIs(string name, string fields = "")
         {
+            Guard.VerifyStringIsNotNullOrEmpty(name, nameof(name));
+
             var throwMoves = GetAllWhere(move => EqualityComparer<string>.Default.Equals(move.Owner, name) &&
                                                  move.MoveType == MoveType.Throw.GetEnumDescription());
 

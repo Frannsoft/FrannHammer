@@ -4,6 +4,7 @@ using System.Linq;
 using FrannHammer.DataAccess.Contracts;
 using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
+using FrannHammer.WebScraping;
 using Moq;
 using NUnit.Framework;
 using Ploeh.AutoFixture;
@@ -39,6 +40,12 @@ namespace FrannHammer.Api.Services.Tests
             });
         }
 
+        private void ConfigureGetAllWhereOnMockRepository(Mock<IRepository<IMove>> mockRepository, IEnumerable<IMove> testDataStore)
+        {
+            mockRepository.Setup(r => r.GetAllWhere(It.IsAny<Func<IMove, bool>>()))
+               .Returns((Func<IMove, bool> where) => testDataStore.Where(where));
+        }
+
         private IRepository<IMove> ConfigureMockRepositoryWithSeedMoves(IEnumerable<Move> matchingMoves)
         {
             //add fake moves with all properties filled out.  Some should match the passed in name, others should not
@@ -49,8 +56,9 @@ namespace FrannHammer.Api.Services.Tests
 
             //mock repository
             var mockRepository = new Mock<IRepository<IMove>>();
-            mockRepository.Setup(r => r.GetAllWhere(It.IsAny<Func<IMove, bool>>()))
-                .Returns((Func<IMove, bool> where) => itemsForMockRepository.Where(where));
+
+            ConfigureGetAllWhereOnMockRepository(mockRepository, itemsForMockRepository);
+
             mockRepository.Setup(r => r.GetSingleWhere(It.IsAny<Func<IMove, bool>>()))
                 .Returns((Func<IMove, bool> where) => itemsForMockRepository.Single(where));
             mockRepository.Setup(r => r.GetAll()).Returns(() => itemsForMockRepository);
@@ -171,8 +179,8 @@ namespace FrannHammer.Api.Services.Tests
             };
 
             var mockRepository = new Mock<IRepository<IMove>>();
-            mockRepository.Setup(r => r.GetAllWhere(It.IsAny<Func<IMove, bool>>()))
-               .Returns((Func<IMove, bool> where) => items.Where(where));
+
+            ConfigureGetAllWhereOnMockRepository(mockRepository, items);
 
             var sut = new DefaultMoveService(mockRepository.Object);
 
@@ -193,6 +201,99 @@ namespace FrannHammer.Api.Services.Tests
         }
 
         [Test]
+        public void GetThrowsForCharacterGetsOnlyThrowMovesForThatCharacter()
+        {
+            const string expectedCharacterName = "mario";
+            const string throwName = "throw";
+            const string grabName = "grab";
+            var items = new List<Move>
+            {
+                new Move {Name = "fthrow", MoveType = MoveType.Throw.GetEnumDescription(), Owner = expectedCharacterName},
+                new Move {Name = "dash grab", MoveType = MoveType.Throw.GetEnumDescription(), Owner = "ganondorf"},
+                new Move {Name = "nair", MoveType = MoveType.Aerial.GetEnumDescription(), Owner = expectedCharacterName}
+            };
+
+            var mockRepository = new Mock<IRepository<IMove>>();
+            ConfigureGetAllWhereOnMockRepository(mockRepository, items);
+
+            var sut = new DefaultMoveService(mockRepository.Object);
+
+            var results = sut.GetAllThrowsWhereCharacterNameIs(expectedCharacterName).ToList();
+
+            Assert.That(results.Count, Is.EqualTo(1), $"{nameof(results.Count)}");
+
+            results.ForEach(result =>
+            {
+                Assert.That(result.Owner, Is.EqualTo(expectedCharacterName), $"{result.Owner}");
+                Assert.That(result.MoveType, Is.EqualTo(MoveType.Throw.GetEnumDescription()),
+                    $"{nameof(result.MoveType)}");
+                Assert.That(result.Name.Contains(throwName) || result.Name.Contains(grabName),
+                    $"expecting name '{result.Name} to contain {throwName} or '{grabName}'");
+            });
+        }
+
+        [Test]
+        public void ThrowsArgumentExceptionWhereCharacterNameParameterEmptyForGetAllThrows()
+        {
+            var sut = new DefaultMoveService(new Mock<IRepository<IMove>>().Object);
+
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                sut.GetAllThrowsWhereCharacterNameIs(string.Empty);
+            });
+        }
+
+        [Test]
+        public void ThrowsArgumentExceptionWhereCharacterNameParameterNullForGetAllThrows()
+        {
+            var sut = new DefaultMoveService(new Mock<IRepository<IMove>>().Object);
+
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                sut.GetAllThrowsWhereCharacterNameIs(null);
+            });
+        }
+
+        [Test]
+        public void ReturnsEmptyEnumerableForNoThrowMovesForValidCharacter()
+        {
+            const string expectedCharacterName = "testCharacter";
+
+            var items = new List<Move>
+            {
+                new Move {Name = "test", Owner = expectedCharacterName, MoveType = MoveType.Aerial.GetEnumDescription()}
+            };
+
+            var mockRepository = new Mock<IRepository<IMove>>();
+            ConfigureGetAllWhereOnMockRepository(mockRepository, items);
+
+            var sut = new DefaultMoveService(mockRepository.Object);
+
+            var results = sut.GetAllThrowsWhereCharacterNameIs(expectedCharacterName);
+
+            Assert.That(results, Is.Not.Null, "should not be null.");
+            Assert.That(results, Is.Empty, "should be empty.");
+        }
+
+        [Test]
+        public void GetAllThrowsForCharacterCallsGetAllWhere()
+        {
+            var items = new List<Move>
+            {
+                new Move {Name = "test"}
+            };
+
+            var mockRepository = new Mock<IRepository<IMove>>();
+            ConfigureGetAllWhereOnMockRepository(mockRepository, items);
+
+            var sut = new DefaultMoveService(mockRepository.Object);
+
+            sut.GetAllThrowsWhereCharacterNameIs("dummyValue");
+
+            mockRepository.VerifyAll();
+        }
+
+        [Test]
         public void MissingPropertyParserTypeReturnsDictionaryWithJustMoveAndRawPropertyValue()
         {
             //register test double
@@ -209,8 +310,7 @@ namespace FrannHammer.Api.Services.Tests
             };
 
             var mockRepository = new Mock<IRepository<IMove>>();
-            mockRepository.Setup(r => r.GetAllWhere(It.IsAny<Func<IMove, bool>>()))
-               .Returns((Func<IMove, bool> where) => items.Where(where));
+            ConfigureGetAllWhereOnMockRepository(mockRepository, items);
 
             var sut = new DefaultMoveService(mockRepository.Object);
 

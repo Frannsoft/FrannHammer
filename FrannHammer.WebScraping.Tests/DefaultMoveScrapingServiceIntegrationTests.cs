@@ -65,7 +65,7 @@ namespace FrannHammer.WebScraping.Tests
 
             throwMoves.ForEach(move =>
             {
-                Assert.That(move.MoveType.ToLower(), Is.EqualTo("throw"));
+                Assert.That(move.MoveType, Is.EqualTo("throw"));
             });
         }
 
