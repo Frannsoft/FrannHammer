@@ -68,6 +68,10 @@
       <Project>{4DB55C69-EAE5-4970-B8B2-A7A84900041A}</Project>
       <Name>FrannHammer.Utility</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.WebScraping\FrannHammer.WebScraping.csproj">
+      <Project>{B7686798-61B2-4208-86EF-0076BF1301BE}</Project>
+      <Name>FrannHammer.WebScraping</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -61,6 +61,7 @@ namespace FrannHammer.Seeding.Tests
         private GroundMoveScraper _groundMoveScraper;
         private AerialMoveScraper _aerialMoveScraper;
         private SpecialMoveScraper _specialMoveScraper;
+        private ThrowMoveScraper _throwMovesScraper;
         private ICharacterMoveScraper _characterMoveScraper;
         private IWebServices _webServices;
         private DefaultCharacterDataScraper _characterDataScraper;
@@ -86,8 +87,11 @@ namespace FrannHammer.Seeding.Tests
             _groundMoveScraper = new GroundMoveScraper(_moveScrapingServices);
             _aerialMoveScraper = new AerialMoveScraper(_moveScrapingServices);
             _specialMoveScraper = new SpecialMoveScraper(_moveScrapingServices);
-
-            _characterMoveScraper = new DefaultCharacterMoveScraper(_groundMoveScraper, _aerialMoveScraper, _specialMoveScraper);
+            _throwMovesScraper = new ThrowMoveScraper(_moveScrapingServices);
+            _characterMoveScraper = new DefaultCharacterMoveScraper(new List<IMoveScraper>
+            {
+                _groundMoveScraper, _aerialMoveScraper, _specialMoveScraper, _throwMovesScraper
+            });
 
             var attributeScrapers = new List<IAttributeScraper>
             {

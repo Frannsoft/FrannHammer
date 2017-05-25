@@ -31,10 +31,10 @@ namespace FrannHammer.WebApi.Specs
             ScenarioContext.Current[RequestResultKey] = requestResult;
         }
 
-        protected string InjectRouteParameterIntoRequestUrl(string requestUrl, string routeParameter)
+        protected string InjectRouteParameterIntoRequestUrl(string requestUrl, string routeParameter, string routeTemplateValueToReplace)
         {
-            string urlTail = requestUrl.Split('/').Last();
-            return requestUrl.Replace(urlTail, routeParameter);
+            string urlPortionToReplace = requestUrl.Split('/').Single(s => s.Contains("{" + routeTemplateValueToReplace + "}"));
+            return requestUrl.Replace(urlPortionToReplace, routeParameter);
         }
 
         [Given(@"The api route of (.*)")]
@@ -46,7 +46,7 @@ namespace FrannHammer.WebApi.Specs
         [When(@"I request one specific item by id (.*)")]
         public void WhenIRequestOneSpecificItemById(string id)
         {
-            string requestUrl = InjectRouteParameterIntoRequestUrl(ScenarioContext.Current.Get<string>(RouteUrlKey), id);
+            string requestUrl = InjectRouteParameterIntoRequestUrl(ScenarioContext.Current.Get<string>(RouteUrlKey), id, "id");
 
             var requestResult = ApiClient.GetResult(requestUrl);
             ScenarioContext.Current.Set(requestResult, RequestResultKey);
@@ -56,7 +56,7 @@ namespace FrannHammer.WebApi.Specs
         public void WhenIRequestOneSpecificItemByName(string name)
         {
             ScenarioContext.Current.Set(name, RouteParameter);
-            string requestUrl = InjectRouteParameterIntoRequestUrl(ScenarioContext.Current.Get<string>(RouteUrlKey), name);
+            string requestUrl = InjectRouteParameterIntoRequestUrl(ScenarioContext.Current.Get<string>(RouteUrlKey), name, "name");
 
             var requestResult = ApiClient.GetResult(requestUrl);
             ScenarioContext.Current.Set(requestResult, RequestResultKey);

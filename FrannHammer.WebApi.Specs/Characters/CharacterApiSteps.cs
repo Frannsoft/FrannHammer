@@ -69,5 +69,18 @@ namespace FrannHammer.WebApi.Specs.Characters
 
             AssertCharacterIsValid(characterMetadata);
         }
+
+        [Then(@"the result should be a list containing just that characters throw data")]
+        public void ThenTheResultShouldBeJustThatCharactersThrowData()
+        {
+            var characterThrowData = ApiClient
+                .DeserializeResponse<IEnumerable<Move>>(
+                    ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey)).ToList();
+
+            characterThrowData.ForEach(charThrow =>
+            {
+                Assert.That(charThrow.MoveType, Is.EqualTo("throw"));
+            });
+        }
     }
 }

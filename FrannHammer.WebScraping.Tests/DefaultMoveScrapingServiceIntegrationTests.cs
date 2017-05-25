@@ -55,6 +55,21 @@ namespace FrannHammer.WebScraping.Tests
         }
 
         [Test]
+        public void ScrapeThrowMovesForCharacter()
+        {
+            var throwMoveScrapingService = new ThrowMoveScraper(_scrapingServices);
+
+            var throwMoves = throwMoveScrapingService.Scrape(Characters.Greninja).ToList();
+
+            CollectionAssert.IsNotEmpty(throwMoves);
+
+            throwMoves.ForEach(move =>
+            {
+                Assert.That(move.MoveType, Is.EqualTo("throw"));
+            });
+        }
+
+        [Test]
         public void ScrapeAerialMovesForCharacter()
         {
             var aerialMoveScrapingService = new AerialMoveScraper(_scrapingServices);

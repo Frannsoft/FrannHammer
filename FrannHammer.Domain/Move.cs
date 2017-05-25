@@ -43,5 +43,8 @@ namespace FrannHammer.Domain
 
         [FriendlyName("ownerId")]
         public string Owner { get; set; }
+
+        [FriendlyName("weightDependent")]
+        public bool IsWeightDependent { get; set; }
     }
 }

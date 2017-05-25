@@ -10,27 +10,18 @@ namespace FrannHammer.WebScraping.Character
 {
     public class DefaultCharacterMoveScraper : ICharacterMoveScraper
     {
-        private readonly IMoveScraper _groundMoveScraper;
-        private readonly IMoveScraper _aerialMoveScraper;
-        private readonly IMoveScraper _specialMoveScraper;
+        private readonly IEnumerable<IMoveScraper> _scrapers;
 
-        public DefaultCharacterMoveScraper(IMoveScraper groundMoveScraper, IMoveScraper aerialMoveScraper,
-            IMoveScraper specialMoveScraper)
+        public DefaultCharacterMoveScraper(IEnumerable<IMoveScraper> scrapers)
         {
-            Guard.VerifyObjectNotNull(groundMoveScraper, nameof(groundMoveScraper));
-            Guard.VerifyObjectNotNull(aerialMoveScraper, nameof(aerialMoveScraper));
-            Guard.VerifyObjectNotNull(specialMoveScraper, nameof(specialMoveScraper));
-
-            _groundMoveScraper = groundMoveScraper;
-            _aerialMoveScraper = aerialMoveScraper;
-            _specialMoveScraper = specialMoveScraper;
+            Guard.VerifyObjectNotNull(scrapers, nameof(scrapers));
+            _scrapers = scrapers;
         }
 
         public IEnumerable<IMove> ScrapeMoves(WebCharacter character)
         {
-            return _groundMoveScraper.Scrape(character)
-                .Concat(_aerialMoveScraper.Scrape(character))
-                    .Concat(_specialMoveScraper.Scrape(character));
+            Guard.VerifyObjectNotNull(character, nameof(character));
+            return _scrapers.SelectMany(scraper => scraper.Scrape(character));
         }
     }
 }
