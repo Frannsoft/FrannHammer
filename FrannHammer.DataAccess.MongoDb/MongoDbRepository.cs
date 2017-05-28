@@ -62,6 +62,33 @@ namespace FrannHammer.DataAccess.MongoDb
             return rawCollection;
         }
 
+        public IEnumerable<T> GetAllWhere(IDictionary<string, string> queryParameters)
+        {
+            Guard.VerifyObjectNotNull(queryParameters, nameof(queryParameters));
+
+            if (queryParameters.Count == 0)
+            {
+                throw new InvalidOperationException($"Must specify at least one query parameter in {queryParameters}");
+            }
+
+            var filterDefinition = default(FilterDefinition<BsonDocument>);
+
+            foreach (var kvp in queryParameters)
+            {
+                if (filterDefinition == null)
+                {
+                    filterDefinition = Builders<BsonDocument>.Filter.Eq(kvp.Key, kvp.Value);
+                    continue;
+                }
+                filterDefinition = filterDefinition & Builders<BsonDocument>.Filter.Regex(kvp.Key, new BsonRegularExpression($"^{kvp.Value}$", "i"));
+            }
+
+            var rawCollection =
+                _mongoDatabase.GetCollection<BsonDocument>(typeof(T).Name).Find(filterDefinition).ToList();
+
+            return DeserializeWithId(rawCollection);
+        }
+
         public IEnumerable<T> GetAll()
         {
             var rawCollection = _mongoDatabase.GetCollection<BsonDocument>(typeof(T).Name).AsQueryable().ToList();
@@ -121,6 +148,11 @@ namespace FrannHammer.DataAccess.MongoDb
             var model = BsonSerializer.Deserialize<T>(rawDocument);
             model.Id = rawDocument[KeyId].ToString();
             return model;
+        }
+
+        private static IEnumerable<T> DeserializeWithId(IEnumerable<BsonDocument> rawDocuments)
+        {
+            return rawDocuments.Select(DeserializeWithId);
         }
     }
 }

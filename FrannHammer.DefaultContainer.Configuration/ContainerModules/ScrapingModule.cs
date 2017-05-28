@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System.Collections.Generic;
+using Autofac;
 using FrannHammer.WebScraping;
 using FrannHammer.WebScraping.Attributes;
 using FrannHammer.WebScraping.Character;
@@ -40,15 +41,18 @@ namespace FrannHammer.DefaultContainer.Configuration.ContainerModules
             builder.RegisterType<GroundMoveScraper>().AsSelf();
             builder.RegisterType<AerialMoveScraper>().AsSelf();
             builder.RegisterType<SpecialMoveScraper>().AsSelf();
+            builder.RegisterType<ThrowMoveScraper>().AsSelf();
 
             builder.RegisterType<DefaultCharacterMoveScraper>()
                 .As<ICharacterMoveScraper>()
-                .WithParameter((pi, c) => pi.Name == "groundMoveScraper",
-                    (pi, c) => c.Resolve<GroundMoveScraper>())
-                .WithParameter((pi, c) => pi.Name == "aerialMoveScraper",
-                    (pi, c) => c.Resolve<AerialMoveScraper>())
-                .WithParameter((pi, c) => pi.Name == "specialMoveScraper",
-                    (pi, c) => c.Resolve<SpecialMoveScraper>());
+                .WithParameter((pi, c) => pi.Name == "scrapers",
+                    (pi, c) => new List<IMoveScraper>
+                    {
+                         c.Resolve<GroundMoveScraper>(),
+                         c.Resolve<AerialMoveScraper>(),
+                         c.Resolve<SpecialMoveScraper>(),
+                         c.Resolve<ThrowMoveScraper>()
+                    });
 
             builder.RegisterType<DefaultMovementScraper>().As<IMovementScraper>();
 

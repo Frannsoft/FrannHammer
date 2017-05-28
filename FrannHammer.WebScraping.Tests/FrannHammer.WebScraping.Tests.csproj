@@ -57,6 +57,7 @@
     <Compile Include="DefaultCharacterDataScrapingServiceIntegrationTests.cs" />
     <Compile Include="DefaultMovementScrapingServiceIntegrationTests.cs" />
     <Compile Include="DefaultMoveScrapingServiceIntegrationTests.cs" />
+    <Compile Include="DefaultWebServicesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

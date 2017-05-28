@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace FrannHammer.Api.Services.Tests
 {
     [TestFixture]
-    public class MovementServiceTests
+    public class DefaultMovementServiceTests
     {
         [Test]
         public void ThrowsArgumentNullExceptionForNullRepositoryInConstructor()
@@ -15,5 +15,7 @@ namespace FrannHammer.Api.Services.Tests
                 new DefaultMovementService(null);
             });
         }
+
+
     }
 }

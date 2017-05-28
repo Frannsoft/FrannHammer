@@ -5,10 +5,13 @@ namespace FrannHammer.Domain
 {
     public class CharacterAttributeRow : MongoModel, ICharacterAttributeRow
     {
-        [FriendlyName("characterName")]
-        public string CharacterName { get; set; }
+        [FriendlyName("ownerId")]
+        public string Owner { get; set; }
 
         [FriendlyName("values")]
         public IEnumerable<IAttribute> Values { get; set; }
+
+        [FriendlyName("characterName")]
+        public string CharacterName { get; set; }
     }
 }

@@ -56,5 +56,11 @@ namespace FrannHammer.Api.Services
             var moves = Repository.GetAllWhere(where);
             return moves;
         }
+
+        public IEnumerable<T> GetAllWhere(IDictionary<string, string> queryParameters)
+        {
+            var moves = Repository.GetAllWhere(queryParameters);
+            return moves;
+        }
     }
 }

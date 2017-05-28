@@ -25,6 +25,7 @@ using FrannHammer.WebScraping.Moves;
 using FrannHammer.WebScraping.PageDownloading;
 using FrannHammer.WebScraping.WebClients;
 using MongoDB.Driver;
+using Moq;
 using NUnit.Framework;
 
 namespace FrannHammer.Seeding.Tests
@@ -118,7 +119,7 @@ namespace FrannHammer.Seeding.Tests
             //real api services using mocked repos
             var characterService = new DefaultCharacterService(characterRepository);
             var movementService = new DefaultMovementService(movementRepository);
-            var moveService = new DefaultMoveService(moveRepository);
+            var moveService = new DefaultMoveService(moveRepository, new Mock<IQueryMappingService>().Object);
             var characterAttributeService = new DefaultCharacterAttributeService(characterAttributeRepository);
 
             //real scraping from web to get data

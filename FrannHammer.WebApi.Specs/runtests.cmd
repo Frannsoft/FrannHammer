@@ -14,3 +14,4 @@ SpecRun.exe run %profile%.srprofile "/baseFolder:%~dp0\bin\Debug" /log:specrun.l
 :end
 
 @popd
+set /p temp="Hit enter to continue"

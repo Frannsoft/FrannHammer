@@ -1,8 +1,7 @@
 ﻿namespace FrannHammer.Domain.Contracts
 {
-    public interface IMovement : IModel
+    public interface IMovement : IModel, IHaveAnOwner
     {
-        int OwnerId { get; set; }
         string Value { get; set; }
     }
 }

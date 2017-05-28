@@ -18,7 +18,10 @@ namespace FrannHammer.WebScraping.Moves
             Scrape = character =>
             {
                 var moveTableRows = GetTableRows(character.SourceUrl, ScrapingConstants.XPathTableNodeGroundStats);
-                return moveTableRows.Select(row => GetMove(GetTableCells(row), character.Name));
+
+                //filter out null results.  The below scraping logic returns null for values that do not meet the criteria
+                //for a ground move.
+                return moveTableRows.Select(row => GetMove(GetTableCells(row), character.Name)).Where(move => move != null);
             };
         }
 
@@ -67,9 +70,17 @@ namespace FrannHammer.WebScraping.Moves
         {
             var move = default(IMove);
 
+            string name = GetStatName(cells[0]);
+
+            //a throw move is not a ground move
+            if (name.EndsWith("grab", StringComparison.CurrentCultureIgnoreCase) ||
+                name.EndsWith("throw", StringComparison.CurrentCultureIgnoreCase))
+            {
+                return default(IMove);
+            }
+
             if (!string.IsNullOrEmpty(cells[0].InnerText) && cells.Count > 1)
             {
-                string name = GetStatName(cells[0]);
                 string hitboxActive = cells[1].InnerText;
                 string faf = cells[2].InnerText;
                 string basedmg = cells[3].InnerText;

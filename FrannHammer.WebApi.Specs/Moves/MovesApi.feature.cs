@@ -84,25 +84,6 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Request one single moves data")]
-        [NUnit.Framework.CategoryAttribute("Get")]
-        public virtual void RequestOneSingleMovesData()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Request one single moves data", new string[] {
-                        "Get"});
-#line 12
-this.ScenarioSetup(scenarioInfo);
-#line 13
- testRunner.Given("The api route of api/moves/{id}", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 14
- testRunner.When("I request one specific item by id 5913c30e4696591c50f28629", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 15
- testRunner.Then("The result should be just that moves data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            this.ScenarioCleanup();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Request all moves by name")]
         [NUnit.Framework.CategoryAttribute("GetAllWithName")]
         public virtual void RequestAllMovesByName()

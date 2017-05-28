@@ -15,7 +15,6 @@ using FrannHammer.WebScraping.Contracts.Movements;
 using FrannHammer.WebScraping.Contracts.Moves;
 using FrannHammer.WebScraping.Contracts.PageDownloading;
 using FrannHammer.WebScraping.Contracts.WebClients;
-using FrannHammer.WebScraping.Domain;
 using FrannHammer.WebScraping.HtmlParsing;
 using FrannHammer.WebScraping.Images;
 using FrannHammer.WebScraping.Movements;
@@ -24,6 +23,7 @@ using FrannHammer.WebScraping.PageDownloading;
 using FrannHammer.WebScraping.WebClients;
 using Moq;
 using NUnit.Framework;
+using Characters = FrannHammer.WebScraping.Domain.Characters;
 
 namespace FrannHammer.Seeding.Tests
 {
@@ -134,7 +134,7 @@ namespace FrannHammer.Seeding.Tests
             //real api services using mocked repos
             var characterService = new DefaultCharacterService(characterRepositoryMock.Object);
             var movementService = new DefaultMovementService(movementRepositoryMock.Object);
-            var moveService = new DefaultMoveService(movesRepositoryMock.Object);
+            var moveService = new DefaultMoveService(movesRepositoryMock.Object, new Mock<IQueryMappingService>().Object);
             var characterAttributeService = new DefaultCharacterAttributeService(characterAttributeRepositoryMock.Object);
 
             //real scraping from web to get data

@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using System.Web.Http;
 using Autofac;
 using Autofac.Integration.WebApi;
@@ -12,6 +13,8 @@ using System.Linq;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using FrannHammer.Domain.Contracts;
+using FrannHammer.WebApi.SwaggerExtensions;
+using Swashbuckle.Application;
 
 [assembly: OwinStartup(typeof(Startup))]
 
@@ -31,6 +34,13 @@ namespace FrannHammer.WebApi
                routeTemplate: "api/{controller}/{id}",
                defaults: new { id = RouteParameter.Optional }
            );
+
+#if DEBUG
+            config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
+#elif !DEBUG
+            config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Default;
+#endif
+       
 
             //configure container
             var containerBuilder = new ContainerBuilder();
@@ -66,6 +76,24 @@ namespace FrannHammer.WebApi
 
             //Register IMove implementation to move implementation map
             MoveParseClassMap.RegisterType<IMove, Move>();
+
+            config.EnableSwagger(c =>
+            {
+                c.SingleApiVersion("v0.5.0", "FrannHammer Api")
+                        .Contact(cc => cc.Email("FrannSoftDev@outlook.com")
+                                    .Name("@FrannDotExe")
+                                    .Url("https://github.com/Frannsoft/FrannHammer/wiki"))
+                    .Description("Restful api for Sm4sh frame data as told by @KuroganeHammer.")
+                    .License(lc => lc.Name("License: MIT").Url("https://github.com/Frannsoft/FrannHammer/blob/develop/License.md"));
+                c.DocumentFilter(() => new SwaggerAccessDocumentFilter());
+                c.IncludeXmlComments($@"{AppDomain.CurrentDomain.BaseDirectory}\App_Data\XmlDocument.XML");
+            })
+               .EnableSwaggerUi(c =>
+               {
+                   c.InjectStylesheet(Assembly.GetExecutingAssembly(),
+                       "FrannHammer.WebApi.SwaggerExtensions.swagger.styles.css");
+               });
+
 
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();

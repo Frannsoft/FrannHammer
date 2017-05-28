@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using Autofac;
 using FrannHammer.Utility;
 using Newtonsoft.Json;
@@ -18,8 +19,21 @@ namespace FrannHammer.WebApi.Specs
 
         public T DeserializeResponse<T>(HttpResponseMessage responseMessage)
         {
-            responseMessage.EnsureSuccessStatusCode();
-            return JsonConvert.DeserializeObject<T>(responseMessage.Content.ReadAsStringAsync().Result,
+            string content = responseMessage.Content.ReadAsStringAsync().Result;
+
+            try
+            {
+                responseMessage.EnsureSuccessStatusCode();
+            }
+            catch (HttpRequestException e)
+            {
+                throw new HttpRequestException($"{e.Message}{Environment.NewLine} Reason Phrase:" +
+                                               $" {responseMessage.ReasonPhrase}{Environment.NewLine}" +
+                                               $"Request url: {responseMessage.RequestMessage}{Environment.NewLine} " +
+                                               $"Content: {content}" +
+                                               $"Raw exception: {e}");
+            }
+            return JsonConvert.DeserializeObject<T>(content,
                 new JsonSerializerSettings
                 {
                     ContractResolver = Startup.Container.Resolve<AutofacContractResolver>()

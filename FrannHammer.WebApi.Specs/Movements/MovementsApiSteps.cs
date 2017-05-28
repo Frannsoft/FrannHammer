@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Net.Http;
 using FrannHammer.Domain;
-using FrannHammer.Domain.Contracts;
 using NUnit.Framework;
 using TechTalk.SpecFlow;
 
@@ -12,15 +11,6 @@ namespace FrannHammer.WebApi.Specs.Movements
     [Scope(Feature = "MovementsApi")]
     public class MovementsApiSteps : BaseSteps
     {
-        private static void AssertMovementIsValid(IMovement movement)
-        {
-            Assert.That(movement, Is.Not.Null);
-            Assert.That(movement.Name, Is.Not.Null);
-            Assert.That(movement.OwnerId, Is.Not.Null);
-            Assert.That(movement.Value, Is.Not.Null);
-            Assert.That(movement.Id, Is.Not.Null);
-        }
-
         [BeforeFeature]
         public static void BeforeFeature()
         {

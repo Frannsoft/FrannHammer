@@ -18,21 +18,23 @@ namespace FrannHammer.WebScraping.Moves
             Scrape = character =>
             {
                 var moveTableRows = GetTableRows(character.SourceUrl, ScrapingConstants.XPathTableNodeGroundStats);
-                return moveTableRows.Select(row => GetMove(GetTableCells(row), character.Name));
+
+                //filter out null results since they are not throw data.
+                var throws = moveTableRows.Select(row => GetMove(GetTableCells(row), character.Name)).Where(move => move != null);
+                return throws;
             };
         }
 
         protected override IMove GetMove(HtmlNodeCollection cells, string characterName)
         {
-            var move = default(IMove);
-
             if (!string.IsNullOrEmpty(cells[0].InnerText) && cells.Count > 1)
             {
                 string name = GetStatName(cells[0]);
 
-                move = ScrapingServices.CreateMove();
+                IMove move = ScrapingServices.CreateMove();
 
                 move.Name = name;
+                move.Owner = characterName;
                 move.MoveType = MoveType.Throw.GetEnumDescription();
 
                 //grab data is different than 'throw' data.  If the cell contains neither of these this scraper
@@ -44,10 +46,12 @@ namespace FrannHammer.WebScraping.Moves
 
                     move.HitboxActive = hitboxActive;
                     move.FirstActionableFrame = faf;
+                    return move;
                 }
                 else if (name.EndsWith("throw", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    bool isWeightDependent = TranslateYesNoToBool(cells[1].InnerText); //throw here because we don't want to store bad data
+                    bool isWeightDependent = TranslateYesNoToBool(cells[1].InnerText);
+
                     string baseDamage = cells[2].InnerText;
                     string angle = cells[3].InnerText;
                     string baseKnockbackSetKnockback = cells[4].InnerText;
@@ -58,10 +62,17 @@ namespace FrannHammer.WebScraping.Moves
                     move.Angle = angle;
                     move.BaseKnockBackSetKnockback = baseKnockbackSetKnockback;
                     move.KnockbackGrowth = knockbackGrowth;
+                    return move;
+                }
+                else
+                {
+                    return default(IMove);
                 }
             }
-
-            return move;
+            else
+            {
+                return default(IMove);
+            }
         }
 
         /// <summary>
@@ -72,10 +83,10 @@ namespace FrannHammer.WebScraping.Moves
         /// <returns></returns>
         private static bool TranslateYesNoToBool(string yesNoValue)
         {
-            if (yesNoValue.Equals("yes", StringComparison.CurrentCultureIgnoreCase))
+            if (yesNoValue.IndexOf("yes", 0, StringComparison.CurrentCultureIgnoreCase) != -1)
             { return true; }
 
-            if (yesNoValue.Equals("no", StringComparison.CurrentCultureIgnoreCase))
+            if (yesNoValue.IndexOf("no", 0, StringComparison.CurrentCultureIgnoreCase) != -1)
             { return false; }
 
             throw new ArgumentException($"Value '{yesNoValue}' must be either 'yes' or 'no'.");

@@ -17,7 +17,7 @@ namespace FrannHammer.WebApi.Specs.Attributes
             Assert.That(characterAttributeRow, Is.Not.Null, $"{nameof(characterAttributeRow)}");
             Assert.That(characterAttributeRow.Id, Is.Not.Null, $"{nameof(characterAttributeRow.Id)}");
             Assert.That(characterAttributeRow.Name, Is.Not.Null, $"{nameof(characterAttributeRow.Name)}");
-            Assert.That(characterAttributeRow.CharacterName, Is.Not.Null, $"{nameof(characterAttributeRow.CharacterName)}");
+            Assert.That(characterAttributeRow.Owner, Is.Not.Null, $"{nameof(characterAttributeRow.Owner)}");
 
             var attributeValues = characterAttributeRow.Values.ToList();
             attributeValues.ForEach(value =>

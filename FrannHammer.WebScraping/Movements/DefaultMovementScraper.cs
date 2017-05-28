@@ -33,10 +33,10 @@ namespace FrannHammer.WebScraping.Movements
 
             return movementTableRows.SelectMany(
                 row => row.SelectNodes(ScrapingConstants.XPathMovementTableCellKeys),
-                (row, statName) => GetMovement(statName)).Where(stat => stat != null);
+                (row, statName) => GetMovement(statName, character)).Where(stat => stat != null);
         }
 
-        private IMovement GetMovement(HtmlNode nameCell)
+        private IMovement GetMovement(HtmlNode nameCell, WebCharacter character)
         {
             var movement = default(IMovement);
 
@@ -62,6 +62,7 @@ namespace FrannHammer.WebScraping.Movements
                 movement = _scrapingServices.CreateMovement();
                 movement.Name = name;
                 movement.Value = value;
+                movement.Owner = character.Name;
             }
 
             return movement;

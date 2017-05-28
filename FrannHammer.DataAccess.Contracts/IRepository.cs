@@ -10,6 +10,7 @@ namespace FrannHammer.DataAccess.Contracts
         T GetSingleWhere(Func<T, bool> where);
         IEnumerable<T> GetAll();
         IEnumerable<T> GetAllWhere(Func<T, bool> where);
+        IEnumerable<T> GetAllWhere(IDictionary<string, string> queryParameters);
         void Update(T model);
         T Add(T model);
         void AddMany(IEnumerable<T> models);

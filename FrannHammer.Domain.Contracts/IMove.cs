@@ -1,6 +1,6 @@
 ﻿namespace FrannHammer.Domain.Contracts
 {
-    public interface IMove : IModel
+    public interface IMove : IModel, IHaveAnOwner
     {
         string HitboxActive { get; set; }
         string FirstActionableFrame { get; set; }
@@ -11,7 +11,6 @@
         string AutoCancel { get; set; }
         string KnockbackGrowth { get; set; }
         string MoveType { get; set; }
-        string Owner { get; set; }
         bool IsWeightDependent { get; set; }
     }
 }

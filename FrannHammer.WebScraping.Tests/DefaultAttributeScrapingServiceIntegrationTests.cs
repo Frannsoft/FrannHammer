@@ -22,7 +22,7 @@ namespace FrannHammer.WebScraping.Tests
 
             attributeRows.ForEach(row =>
             {
-                Assert.That(row.CharacterName, Is.Not.Empty);
+                Assert.That(row.Owner, Is.Not.Empty);
                 Assert.That(row.Name, Is.EqualTo(attributeScraper.AttributeName));
                 row.Values.ToList().ForEach(attribute =>
                 {

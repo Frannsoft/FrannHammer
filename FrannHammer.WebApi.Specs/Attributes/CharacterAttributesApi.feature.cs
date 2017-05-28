@@ -82,25 +82,6 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
         }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Request one single Character Attribute Row")]
-        [NUnit.Framework.CategoryAttribute("Get")]
-        public virtual void RequestOneSingleCharacterAttributeRow()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Request one single Character Attribute Row", new string[] {
-                        "Get"});
-#line 12
-this.ScenarioSetup(scenarioInfo);
-#line 13
- testRunner.Given("The api route of api/characterattributes/{id}", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 14
- testRunner.When("I request one specific item by id 5913c30e4696591c50f28673", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 15
- testRunner.Then("The result should be just that character attribute row", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            this.ScenarioCleanup();
-        }
     }
 }
 #pragma warning restore

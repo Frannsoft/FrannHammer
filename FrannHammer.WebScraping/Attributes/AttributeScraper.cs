@@ -104,7 +104,7 @@ namespace FrannHammer.WebScraping.Attributes
                     {
                         Values = attributeValues,
                         Name = AttributeName,
-                        CharacterName = character.Name
+                        Owner = character.Name
                     };
                     attributeValueRows.Add(characterAttributeRow);
                 }

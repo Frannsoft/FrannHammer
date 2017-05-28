@@ -25,12 +25,23 @@ namespace FrannHammer.DefaultContainer.Configuration.ContainerModules
             builder.RegisterType<DefaultMoveService>()
                 .As<IMoveService>()
                 .WithParameter((pi, c) => pi.Name == RepositoryParameterName,
-                    (pi, c) => c.Resolve<IRepository<IMove>>());
+                    (pi, c) => c.Resolve<IRepository<IMove>>())
+                .WithParameter((pi, c) => pi.Name == "queryMappingService",
+                 (pi, c) => c.Resolve<IQueryMappingService>());
 
             builder.RegisterType<DefaultCharacterAttributeService>()
                 .As<ICharacterAttributeRowService>()
                 .WithParameter((pi, c) => pi.Name == RepositoryParameterName,
                     (pi, c) => c.Resolve<IRepository<ICharacterAttributeRow>>());
+
+            builder.RegisterType<DefaultAttributeStrategy>().As<IAttributeStrategy>();
+
+            builder.RegisterType<QueryMappingService>()
+                .As<IQueryMappingService>()
+                .WithParameter((pi, c) => pi.Name == "attributeStrategy",
+                (pi, c) => c.Resolve<IAttributeStrategy>());
+
+            builder.RegisterType<DefaultDtoProvider>().As<IDtoProvider>();
         }
     }
 }

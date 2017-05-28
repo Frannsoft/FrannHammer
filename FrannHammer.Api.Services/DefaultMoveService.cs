@@ -13,11 +13,17 @@ using FrannHammer.WebScraping;
 
 namespace FrannHammer.Api.Services
 {
-    public class DefaultMoveService : BaseApiService<IMove>, IMoveService
+    public class DefaultMoveService : OwnerBasedApiService<IMove>, IMoveService
     {
-        public DefaultMoveService(IRepository<IMove> repository)
+        private readonly IQueryMappingService _queryMappingService;
+
+        public DefaultMoveService(IRepository<IMove> repository, IQueryMappingService queryMappingService)
             : base(repository)
-        { }
+        {
+            Guard.VerifyObjectNotNull(queryMappingService, nameof(queryMappingService));
+
+            _queryMappingService = queryMappingService;
+        }
 
         public IEnumerable<IDictionary<string, string>> GetAllPropertyDataWhereName(string name, string property, string fields = "")
         {
@@ -157,6 +163,15 @@ namespace FrannHammer.Api.Services
                                                  move.MoveType == MoveType.Throw.GetEnumDescription());
 
             return throwMoves;
+        }
+
+        public IEnumerable<IMove> GetAllWhere(IMoveFilterResourceQuery query, string fields = "")
+        {
+            Guard.VerifyStringIsNotNullOrEmpty(query.CharacterName, nameof(query.CharacterName));
+
+            var queryFilterParameters = _queryMappingService.MapResourceQueryToDictionary(query);
+
+            return GetAllWhere(queryFilterParameters);
         }
     }
 }

@@ -47,8 +47,11 @@
     <Compile Include="IAttribute.cs" />
     <Compile Include="ICharacterAttributeRow.cs" />
     <Compile Include="ICharacter.cs" />
+    <Compile Include="ICharacterDetailsDto.cs" />
+    <Compile Include="IHaveAnOwner.cs" />
     <Compile Include="IModel.cs" />
     <Compile Include="IMove.cs" />
+    <Compile Include="IMoveFilterResourceQuery.cs" />
     <Compile Include="IMovement.cs" />
     <Compile Include="IUniqueData.cs" />
     <Compile Include="IUniqueDataProvider.cs" />

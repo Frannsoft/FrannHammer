@@ -42,14 +42,14 @@ namespace FrannHammer.Domain.Tests
         private static IEnumerable<Tuple<string, string, Type>> MovementFriendlyNameInfo()
         {
             yield return Tuple.Create("name", nameof(Movement.Name), typeof(Movement));
-            yield return Tuple.Create("ownerId", nameof(Movement.OwnerId), typeof(Movement));
+            yield return Tuple.Create("ownerId", nameof(Movement.Owner), typeof(Movement));
             yield return Tuple.Create("value", nameof(Movement.Value), typeof(Movement));
         }
 
         private static IEnumerable<Tuple<string, string, Type>> CharacterAttributeRowFriendlyNameInfo()
         {
             yield return Tuple.Create("name", nameof(CharacterAttributeRow.Name), typeof(CharacterAttributeRow));
-            yield return Tuple.Create("characterName", nameof(CharacterAttributeRow.CharacterName), typeof(CharacterAttributeRow));
+            yield return Tuple.Create("characterName", nameof(CharacterAttributeRow.Owner), typeof(CharacterAttributeRow));
             yield return Tuple.Create("values", nameof(CharacterAttributeRow.Values), typeof(CharacterAttributeRow));
         }
 

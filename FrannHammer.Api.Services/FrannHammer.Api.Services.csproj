@@ -40,12 +40,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DefaultAttributeStrategy.cs" />
     <Compile Include="BaseApiService.cs" />
     <Compile Include="DefaultCharacterAttributeService.cs" />
     <Compile Include="DefaultCharacterService.cs" />
+    <Compile Include="DefaultDtoProvider.cs" />
     <Compile Include="DefaultMovementService.cs" />
     <Compile Include="DefaultMoveService.cs" />
+    <Compile Include="IAttributeStrategy.cs" />
+    <Compile Include="IQueryMappingService.cs" />
+    <Compile Include="OwnerBasedApiService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryMappingService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FrannHammer.Api.Services.Contracts\FrannHammer.Api.Services.Contracts.csproj">

@@ -9,6 +9,7 @@ using Moq;
 using NUnit.Framework;
 using Ploeh.AutoFixture;
 using static FrannHammer.Domain.PropertyParsers.MoveDataNameConstants;
+using static FrannHammer.Api.Services.Tests.ApiServiceTestSetupUtility;
 
 namespace FrannHammer.Api.Services.Tests
 {
@@ -36,34 +37,8 @@ namespace FrannHammer.Api.Services.Tests
             Assert.Throws<ArgumentNullException>(() =>
             {
                 // ReSharper disable once ObjectCreationAsStatement
-                new DefaultMoveService(null);
+                new DefaultMoveService(null, new Mock<IQueryMappingService>().Object);
             });
-        }
-
-        private void ConfigureGetAllWhereOnMockRepository(Mock<IRepository<IMove>> mockRepository, IEnumerable<IMove> testDataStore)
-        {
-            mockRepository.Setup(r => r.GetAllWhere(It.IsAny<Func<IMove, bool>>()))
-               .Returns((Func<IMove, bool> where) => testDataStore.Where(where));
-        }
-
-        private IRepository<IMove> ConfigureMockRepositoryWithSeedMoves(IEnumerable<Move> matchingMoves)
-        {
-            //add fake moves with all properties filled out.  Some should match the passed in name, others should not
-            var matchingItems = matchingMoves;
-
-            var itemsForMockRepository = _fixture.CreateMany<Move>().ToList();
-            itemsForMockRepository.AddRange(matchingItems);
-
-            //mock repository
-            var mockRepository = new Mock<IRepository<IMove>>();
-
-            ConfigureGetAllWhereOnMockRepository(mockRepository, itemsForMockRepository);
-
-            mockRepository.Setup(r => r.GetSingleWhere(It.IsAny<Func<IMove, bool>>()))
-                .Returns((Func<IMove, bool> where) => itemsForMockRepository.Single(where));
-            mockRepository.Setup(r => r.GetAll()).Returns(() => itemsForMockRepository);
-
-            return mockRepository.Object;
         }
 
         private static IEnumerable<Tuple<string, string[]>> MoveProperties()
@@ -95,9 +70,9 @@ namespace FrannHammer.Api.Services.Tests
             var nonMatchingItems = _fixture.CreateMany<Move>().ToList();
             nonMatchingItems.AddRange(matchingItems);
 
-            var mockRepository = ConfigureMockRepositoryWithSeedMoves(matchingItems);
+            var mockRepository = ConfigureMockRepositoryWithSeedMoves(matchingItems, _fixture);
 
-            var sut = new DefaultMoveService(mockRepository);
+            var sut = new DefaultMoveService(mockRepository, new Mock<IQueryMappingService>().Object);
 
             var response = sut.GetAllPropertyDataWhereName(expectedMoveName, propertyName);
 
@@ -131,9 +106,9 @@ namespace FrannHammer.Api.Services.Tests
             var matchingItem = _fixture.Create<Move>();
             matchingItem.Id = expectedMoveId;
 
-            var mockRepository = ConfigureMockRepositoryWithSeedMoves(new List<Move> { matchingItem });
+            var mockRepository = ConfigureMockRepositoryWithSeedMoves(new List<Move> { matchingItem }, _fixture);
 
-            var sut = new DefaultMoveService(mockRepository);
+            var sut = new DefaultMoveService(mockRepository, new Mock<IQueryMappingService>().Object);
 
             var result = sut.GetPropertyDataWhereId(expectedMoveId, propertyName);
 
@@ -156,7 +131,7 @@ namespace FrannHammer.Api.Services.Tests
             var mockRepository = new Mock<IRepository<IMove>>();
 
             //start with getting all move base damages for jab 1
-            var sut = new DefaultMoveService(mockRepository.Object);
+            var sut = new DefaultMoveService(mockRepository.Object, new Mock<IQueryMappingService>().Object);
 
             Assert.Throws<ArgumentException>(() =>
             {
@@ -182,7 +157,7 @@ namespace FrannHammer.Api.Services.Tests
 
             ConfigureGetAllWhereOnMockRepository(mockRepository, items);
 
-            var sut = new DefaultMoveService(mockRepository.Object);
+            var sut = new DefaultMoveService(mockRepository.Object, new Mock<IQueryMappingService>().Object);
 
             var results = sut.GetAllPropertyDataWhereName(expectedName, movePropertyUnderTest).ToList();
 
@@ -216,7 +191,7 @@ namespace FrannHammer.Api.Services.Tests
             var mockRepository = new Mock<IRepository<IMove>>();
             ConfigureGetAllWhereOnMockRepository(mockRepository, items);
 
-            var sut = new DefaultMoveService(mockRepository.Object);
+            var sut = new DefaultMoveService(mockRepository.Object, new Mock<IQueryMappingService>().Object);
 
             var results = sut.GetAllThrowsWhereCharacterNameIs(expectedCharacterName).ToList();
 
@@ -235,7 +210,7 @@ namespace FrannHammer.Api.Services.Tests
         [Test]
         public void ThrowsArgumentExceptionWhereCharacterNameParameterEmptyForGetAllThrows()
         {
-            var sut = new DefaultMoveService(new Mock<IRepository<IMove>>().Object);
+            var sut = new DefaultMoveService(new Mock<IRepository<IMove>>().Object, new Mock<IQueryMappingService>().Object);
 
             Assert.Throws<ArgumentNullException>(() =>
             {
@@ -246,7 +221,7 @@ namespace FrannHammer.Api.Services.Tests
         [Test]
         public void ThrowsArgumentExceptionWhereCharacterNameParameterNullForGetAllThrows()
         {
-            var sut = new DefaultMoveService(new Mock<IRepository<IMove>>().Object);
+            var sut = new DefaultMoveService(new Mock<IRepository<IMove>>().Object, new Mock<IQueryMappingService>().Object);
 
             Assert.Throws<ArgumentNullException>(() =>
             {
@@ -267,16 +242,19 @@ namespace FrannHammer.Api.Services.Tests
             var mockRepository = new Mock<IRepository<IMove>>();
             ConfigureGetAllWhereOnMockRepository(mockRepository, items);
 
-            var sut = new DefaultMoveService(mockRepository.Object);
+            var sut = new DefaultMoveService(mockRepository.Object, new Mock<IQueryMappingService>().Object);
 
             var results = sut.GetAllThrowsWhereCharacterNameIs(expectedCharacterName);
 
+            // ReSharper disable once PossibleMultipleEnumeration
             Assert.That(results, Is.Not.Null, "should not be null.");
+            // ReSharper disable once PossibleMultipleEnumeration
             Assert.That(results, Is.Empty, "should be empty.");
         }
 
+
         [Test]
-        public void GetAllThrowsForCharacterCallsGetAllWhere()
+        public void VerifyGetAllThrowsForCharacterCallsGetAllWhere()
         {
             var items = new List<Move>
             {
@@ -286,7 +264,7 @@ namespace FrannHammer.Api.Services.Tests
             var mockRepository = new Mock<IRepository<IMove>>();
             ConfigureGetAllWhereOnMockRepository(mockRepository, items);
 
-            var sut = new DefaultMoveService(mockRepository.Object);
+            var sut = new DefaultMoveService(mockRepository.Object, new Mock<IQueryMappingService>().Object);
 
             sut.GetAllThrowsWhereCharacterNameIs("dummyValue");
 
@@ -312,7 +290,7 @@ namespace FrannHammer.Api.Services.Tests
             var mockRepository = new Mock<IRepository<IMove>>();
             ConfigureGetAllWhereOnMockRepository(mockRepository, items);
 
-            var sut = new DefaultMoveService(mockRepository.Object);
+            var sut = new DefaultMoveService(mockRepository.Object, new Mock<IQueryMappingService>().Object);
 
             var results = sut.GetAllPropertyDataWhereName(expectedName, movePropertyUnderTest).ToList();
 

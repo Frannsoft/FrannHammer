@@ -219,6 +219,10 @@
       <Project>{80f48c0d-9731-406f-aae6-baa30b331e48}</Project>
       <Name>FrannHammer.WebApi</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.WebScraping\FrannHammer.WebScraping.csproj">
+      <Project>{B7686798-61B2-4208-86EF-0076BF1301BE}</Project>
+      <Name>FrannHammer.WebScraping</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

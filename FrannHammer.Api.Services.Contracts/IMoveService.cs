@@ -10,5 +10,7 @@ namespace FrannHammer.Api.Services.Contracts
 
         IDictionary<string, string> GetPropertyDataWhereId(string id, string property, string fields = "");
         IEnumerable<IMove> GetAllThrowsWhereCharacterNameIs(string name, string fields = "");
+        IEnumerable<IMove> GetAllWhereCharacterNameIs(string name, string fields = "");
+        IEnumerable<IMove> GetAllWhere(IMoveFilterResourceQuery query, string fields = "");
     }
 }
