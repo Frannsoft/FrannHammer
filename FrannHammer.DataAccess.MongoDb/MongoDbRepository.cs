@@ -101,9 +101,9 @@ namespace FrannHammer.DataAccess.MongoDb
         public void Update(T model)
         {
             Guard.VerifyObjectNotNull(model, nameof(model));
-            Guard.VerifyStringIsNotNullOrEmpty(model.Id, nameof(model.Id));
+            Guard.VerifyStringIsNotNullOrEmpty(model.InstanceId, nameof(model.InstanceId));
 
-            var objectId = new ObjectId(model.Id);
+            var objectId = new ObjectId(model.InstanceId);
 
             var replaceResult = _mongoDatabase.GetCollection<T>(typeof(T).Name).ReplaceOne(Builders<T>.Filter.Eq(KeyId, objectId), model);
         }
@@ -119,7 +119,7 @@ namespace FrannHammer.DataAccess.MongoDb
         public T Add(T model)
         {
             var objectId = ObjectId.GenerateNewId();
-            model.Id = objectId.ToString();
+            model.InstanceId = objectId.ToString();
 
             var collection = _mongoDatabase.GetCollection<T>(typeof(T).Name);
             collection.InsertOne(model);
@@ -134,7 +134,7 @@ namespace FrannHammer.DataAccess.MongoDb
             var modelsList = models.ToList();
             foreach (var model in modelsList)
             {
-                model.Id = ObjectId.GenerateNewId().ToString();
+                model.InstanceId = ObjectId.GenerateNewId().ToString();
             }
 
             _mongoDatabase.GetCollection<T>(typeof(T).Name).InsertMany(modelsList);
@@ -146,7 +146,7 @@ namespace FrannHammer.DataAccess.MongoDb
             { return default(T); }
 
             var model = BsonSerializer.Deserialize<T>(rawDocument);
-            model.Id = rawDocument[KeyId].ToString();
+            model.InstanceId = rawDocument[KeyId].ToString();
             return model;
         }
 

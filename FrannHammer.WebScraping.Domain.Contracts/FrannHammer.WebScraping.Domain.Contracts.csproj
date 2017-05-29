@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CharacterIds.cs" />
     <Compile Include="IAttributeValue.cs" />
     <Compile Include="IAttributeValueRow.cs" />
     <Compile Include="IAttributeValueRowCollection.cs" />
@@ -55,6 +56,10 @@
     <ProjectReference Include="..\FrannHammer.Domain.Contracts\FrannHammer.Domain.Contracts.csproj">
       <Project>{15a2565c-4611-4034-814a-931da70ed8b1}</Project>
       <Name>FrannHammer.Domain.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.WebScraper\FrannHammer.WebScraper.csproj">
+      <Project>{9D3C1343-F4B4-4538-B0E0-590D3B2F5DE3}</Project>
+      <Name>FrannHammer.WebScraper</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

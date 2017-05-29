@@ -19,12 +19,6 @@ namespace FrannHammer.Api.Services
             {
                 returnedAttributeValue = attributeValue;
             }
-            else
-            {
-                throw new InvalidOperationException(
-                    $"Unable to find an instance of {nameof(T)} on property {propertyInfo.Name}");
-            }
-
             return returnedAttributeValue;
         }
     }

@@ -142,6 +142,7 @@
       <DependentUpon>CharacterApi.feature</DependentUpon>
     </Compile>
     <Compile Include="Characters\CharacterApiSteps.cs" />
+    <Compile Include="Characters\CharacterDetailsDtoAssertions.cs" />
     <Compile Include="Movements\MovementsApi.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -218,6 +219,10 @@
     <ProjectReference Include="..\FrannHammer.WebApi\FrannHammer.WebApi.csproj">
       <Project>{80f48c0d-9731-406f-aae6-baa30b331e48}</Project>
       <Name>FrannHammer.WebApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.WebScraping.Domain.Contracts\FrannHammer.WebScraping.Domain.Contracts.csproj">
+      <Project>{40C0A772-8A77-484F-919C-DB55CAEAEAA1}</Project>
+      <Name>FrannHammer.WebScraping.Domain.Contracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\FrannHammer.WebScraping\FrannHammer.WebScraping.csproj">
       <Project>{B7686798-61B2-4208-86EF-0076BF1301BE}</Project>

@@ -21,7 +21,7 @@ namespace FrannHammer.WebScraping.Moves
 
                 //filter out null results.  The below scraping logic returns null for values that do not meet the criteria
                 //for a ground move.
-                return moveTableRows.Select(row => GetMove(GetTableCells(row), character.Name)).Where(move => move != null);
+                return moveTableRows.Select(row => GetMove(GetTableCells(row), character)).Where(move => move != null);
             };
         }
 
@@ -66,7 +66,7 @@ namespace FrannHammer.WebScraping.Moves
             }
         }
 
-        protected override IMove GetMove(HtmlNodeCollection cells, string characterName)
+        protected override IMove GetMove(HtmlNodeCollection cells, WebCharacter character)
         {
             var move = default(IMove);
 
@@ -98,7 +98,8 @@ namespace FrannHammer.WebScraping.Moves
                 move.HitboxActive = hitboxActive;
                 move.KnockbackGrowth = kbg;
                 move.MoveType = MoveType.Ground.GetEnumDescription();
-                move.Owner = characterName;
+                move.Owner = character.Name;
+                move.OwnerId = character.OwnerId;
             }
 
             return move;

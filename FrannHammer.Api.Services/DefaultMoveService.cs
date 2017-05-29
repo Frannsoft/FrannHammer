@@ -167,9 +167,9 @@ namespace FrannHammer.Api.Services
 
         public IEnumerable<IMove> GetAllWhere(IMoveFilterResourceQuery query, string fields = "")
         {
-            Guard.VerifyStringIsNotNullOrEmpty(query.CharacterName, nameof(query.CharacterName));
+            Guard.VerifyStringIsNotNullOrEmpty(query.Name, nameof(query.Name));
 
-            var queryFilterParameters = _queryMappingService.MapResourceQueryToDictionary(query);
+            var queryFilterParameters = _queryMappingService.MapResourceQueryToDictionary(query, BindingFlags.Public | BindingFlags.Instance);
 
             return GetAllWhere(queryFilterParameters);
         }

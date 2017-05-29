@@ -32,10 +32,10 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
             _repository = new MongoDbRepository<ICharacterAttributeRow>(MongoDatabase);
 
             var newlyAddedCharacterAttribute = _repository.Add(Fixture.Create<CharacterAttributeRow>());
-            var characterAttributeRow = _repository.GetSingleWhere(c => c.Id == newlyAddedCharacterAttribute.Id);
+            var characterAttributeRow = _repository.GetSingleWhere(c => c.InstanceId == newlyAddedCharacterAttribute.InstanceId);
 
             Assert.That(characterAttributeRow, Is.Not.Null);
-            Assert.That(characterAttributeRow.Id, Is.Not.Null);
+            Assert.That(characterAttributeRow.InstanceId, Is.Not.Null);
             Assert.That(characterAttributeRow.Name, Is.Not.Null);
 
             foreach (var attribute in characterAttributeRow.Values)
@@ -75,7 +75,7 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
 
             Assert.That(newCount, Is.EqualTo(previousCount + 1));
 
-            _repository.Delete(newCharacterAttribute.Id);
+            _repository.Delete(newCharacterAttribute.InstanceId);
 
             Assert.That(_repository.GetAll().Count(), Is.EqualTo(previousCount));
         }

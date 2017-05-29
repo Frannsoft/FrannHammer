@@ -33,7 +33,7 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
 
             var newlyAddedMovement = _repository.Add(Fixture.Create<IMovement>());
 
-            var movement = _repository.GetSingleWhere(m => m.Id == newlyAddedMovement.Id);
+            var movement = _repository.GetSingleWhere(m => m.InstanceId == newlyAddedMovement.InstanceId);
 
             Assert.That(movement, Is.Not.Null);
             Assert.That(movement.Value, Is.Not.Null);
@@ -71,7 +71,7 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
 
             Assert.That(newCount, Is.EqualTo(previousCount + 1));
 
-            _repository.Delete(newlyAddedMovement.Id);
+            _repository.Delete(newlyAddedMovement.InstanceId);
 
             Assert.That(_repository.GetAll().Count(), Is.EqualTo(previousCount));
         }

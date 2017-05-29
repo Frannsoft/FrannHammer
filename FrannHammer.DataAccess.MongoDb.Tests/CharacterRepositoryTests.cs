@@ -33,7 +33,7 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
 
             var newlyAddedCharacter = _repository.Add(Fixture.Create<ICharacter>());
 
-            var character = _repository.GetSingleWhere(c => c.Id == newlyAddedCharacter.Id);
+            var character = _repository.GetSingleWhere(c => c.InstanceId == newlyAddedCharacter.InstanceId);
             Assert.That(character, Is.Not.Null);
             Assert.That(character.ThumbnailUrl, Is.Not.Empty);
             Assert.That(character.DisplayName, Is.Not.Empty);
@@ -48,7 +48,7 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
 
             var character = _repository.GetSingleWhere(c => c.Name == newlyAddedCharacter.Name);
             Assert.That(character, Is.Not.Null, $"{nameof(character)}");
-            Assert.That(character.Id, Is.EqualTo(newlyAddedCharacter.Id), $"{nameof(character.Id)}");
+            Assert.That(character.InstanceId, Is.EqualTo(newlyAddedCharacter.InstanceId), $"{nameof(character.InstanceId)}");
             Assert.That(character.Name, Is.EqualTo(newlyAddedCharacter.Name), $"{nameof(character.Name)}");
         }
 
@@ -83,7 +83,7 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
 
             Assert.That(newCount, Is.EqualTo(previousCount + 1));
 
-            _repository.Delete(allCharacters.Last().Id);
+            _repository.Delete(allCharacters.Last().InstanceId);
 
             Assert.That(_repository.GetAll().Count(), Is.EqualTo(previousCount));
         }

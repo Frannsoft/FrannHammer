@@ -1,8 +1,7 @@
 ﻿namespace FrannHammer.Domain.Contracts
 {
-    public interface IAttribute : IHaveAName
+    public interface IAttribute : IHaveAName, IHaveAnOwner
     {
-        string Owner { get; set; }
         string Value { get; set; }
     }
 }

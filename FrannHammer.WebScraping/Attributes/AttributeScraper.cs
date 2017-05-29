@@ -97,6 +97,7 @@ namespace FrannHammer.WebScraping.Attributes
                         attributeValue.Name = headerValue;
                         attributeValue.Value = cells[i].InnerText;
                         attributeValue.Owner = character.Name;
+                        attributeValue.OwnerId = character.OwnerId;
                         attributeValues.Add(attributeValue);
                     }
 
@@ -104,7 +105,8 @@ namespace FrannHammer.WebScraping.Attributes
                     {
                         Values = attributeValues,
                         Name = AttributeName,
-                        Owner = character.Name
+                        Owner = character.Name,
+                        OwnerId = character.OwnerId
                     };
                     attributeValueRows.Add(characterAttributeRow);
                 }

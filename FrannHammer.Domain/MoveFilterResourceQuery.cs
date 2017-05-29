@@ -8,9 +8,11 @@ namespace FrannHammer.Domain
         public string MoveType { get; set; }
 
         [FriendlyName(FriendlyNameMoveCommonConstants.OwnerName)]
-        public string CharacterName { get; set; }
+        public string Name { get; set; }
 
         [FriendlyName(FriendlyNameCommonConstants.Name)]
-        public string Name { get; set; }
+        public string MoveName { get; set; }
+
+        public string Fields { get; set; }
     }
 }

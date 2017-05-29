@@ -1,6 +1,6 @@
 ﻿namespace FrannHammer.Domain.Contracts
 {
-    public interface IHaveAnOwner
+    public interface IHaveAnOwner : IHaveAnOwnerId
     {
         string Owner { get; set; }
     }

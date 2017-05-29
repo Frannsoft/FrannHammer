@@ -11,6 +11,7 @@ namespace FrannHammer.WebApi.Controllers
     public class CharacterController : BaseApiController
     {
         private const string CharactersRouteKey = "characters";
+        private const string NameRouteKey = "/name/{name}";
         private readonly ICharacterService _characterService;
         private readonly IMoveService _moveService;
         private readonly IMovementService _movementService;
@@ -34,9 +35,9 @@ namespace FrannHammer.WebApi.Controllers
         }
 
         [Route(CharactersRouteKey + "/{id}")]
-        public override IHttpActionResult GetById(string id, [FromUri]string fields = "")
+        public  IHttpActionResult GetByOwnerId(int id, [FromUri]string fields = "")
         {
-            var character = _characterService.GetSingleById(id, fields);
+            var character = _characterService.GetSingleByOwnerId(id, fields);
             return Result(character);
         }
 
@@ -47,42 +48,42 @@ namespace FrannHammer.WebApi.Controllers
             return Result(characters);
         }
 
-        [Route(CharactersRouteKey + "/name/{name}")]
+        [Route(CharactersRouteKey + NameRouteKey)]
         public override IHttpActionResult GetAllWhereName(string name, [FromUri]string fields = "")
         {
-            var character = _characterService.GetAllWhereName(name, fields);
+            var character = _characterService.GetSingleByName(name, fields);
             return Result(character);
         }
 
-        [Route(CharactersRouteKey + "/name/{name}/throws")]
+        [Route(CharactersRouteKey + NameRouteKey + "/throws")]
         public IHttpActionResult GetAllThrowsForCharacterWhereName(string name, [FromUri]string fields = "")
         {
             var throws = _moveService.GetAllThrowsWhereCharacterNameIs(name, fields);
             return Result(throws);
         }
 
-        [Route(CharactersRouteKey + "/name/{name}/moves")]
+        [Route(CharactersRouteKey + NameRouteKey + "/moves")]
         public IHttpActionResult GetAllMovesForCharacterWhereName([FromUri] MoveFilterResourceQuery query)
         {
             var moves = _moveService.GetAllWhere(query);
             return Result(moves);
         }
 
-        [Route(CharactersRouteKey + "/name/{name}/movements")]
+        [Route(CharactersRouteKey + NameRouteKey + "/movements")]
         public IHttpActionResult GetAllMovementsForCharacterWhereName(string name, [FromUri] string fields = "")
         {
             var movements = _movementService.GetAllWhereCharacterNameIs(name, fields);
             return Result(movements);
         }
 
-        [Route(CharactersRouteKey + "/name/{name}/details")]
+        [Route(CharactersRouteKey + NameRouteKey + "/details")]
         public IHttpActionResult GetDetailsForCharacterByName(string name, [FromUri] string fields = "")
         {
             var character =
                 _characterService.GetSingleWhere(c => c.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase));
 
-            if(character == null)
-            { return NotFound() ;}
+            if (character == null)
+            { return NotFound(); }
 
             //get movement, attributes and put into aggregate dto 
             var dto = _dtoProvider.CreateCharacterDetailsDto();

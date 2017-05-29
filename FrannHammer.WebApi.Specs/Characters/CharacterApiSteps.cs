@@ -4,6 +4,7 @@ using System.Net.Http;
 using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.WebScraping;
+using FrannHammer.WebScraping.Domain.Contracts;
 using NUnit.Framework;
 using TechTalk.SpecFlow;
 
@@ -20,7 +21,7 @@ namespace FrannHammer.WebApi.Specs.Characters
             Assert.That(character.DisplayName, Is.Not.Null, $"{nameof(character.DisplayName)}");
             Assert.That(character.ColorTheme, Is.Not.Null, $"{nameof(character.ColorTheme)}");
             Assert.That(character.FullUrl, Is.Not.Null, $"{nameof(character.FullUrl)}");
-            Assert.That(character.Id, Is.Not.Null, $"{nameof(character.Id)}");
+            Assert.That(character.InstanceId, Is.Not.Null, $"{nameof(character.InstanceId)}");
             Assert.That(character.MainImageUrl, Is.Not.Null, $"{nameof(character.MainImageUrl)}");
             Assert.That(character.Name, Is.Not.Null, $"{nameof(character.Name)}");
         }
@@ -120,6 +121,22 @@ namespace FrannHammer.WebApi.Specs.Characters
             characterMovementData.ForEach(AssertMovementIsValid);
         }
 
+        [Then(@"the result should be a list containing rows of attribute data for that character")]
+        public void ThenTheResultShouldBeAListContainingRowsOfAttributeDataForThatCharacter()
+        {
+            var attributeRows = ApiClient.DeserializeResponse<IEnumerable<ICharacterAttributeRow>>(
+              ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey)).ToList();
+
+            string expectedOwnerName = ScenarioContext.Current.Get<string>(RouteTemplateValueToReplaceKey);
+
+            attributeRows.ForEach(row =>
+            {
+                Assert.That(row.Owner, Is.EqualTo(expectedOwnerName), $"{nameof(row.Owner)}");
+                Assert.That(row.OwnerId, Is.GreaterThan(CharacterIds.FindByName(expectedOwnerName)), $"{nameof(row.OwnerId)}");
+                Assert.That(row.Values, Is.GreaterThan(0), $"{nameof(row.Values)}");
+            });
+        }
+
         [Then(@"the result should be a list containing the metadata, movement data and attribute data for a specific character")]
         public void ThenTheResultShouldBeAListContainingTheMetadataMovementDataAndAttributeDataForASpecificCharacter()
         {
@@ -133,30 +150,6 @@ namespace FrannHammer.WebApi.Specs.Characters
             metadata.AssertIsValid();
             movementData.AssertIsValid();
             attributeData.AssertIsValid();
-        }
-    }
-
-    public static class CharacterDetailsDtoAssertions
-    {
-        public static void AssertIsValid(this ICharacter character)
-        {
-            Assert.That(character.Name, Is.Not.Empty, $"{nameof(character.Name)}");
-        }
-
-        public static void AssertIsValid(this IEnumerable<IMovement> movements)
-        {
-            movements.ToList().ForEach(movement =>
-            {
-                Assert.That(movement.Owner, Is.Not.Empty, $"{nameof(movement.Owner)}");
-            });
-        }
-
-        public static void AssertIsValid(this IEnumerable<ICharacterAttributeRow> attributeRows)
-        {
-            attributeRows.ToList().ForEach(row =>
-            {
-                Assert.That(row.Owner, Is.Not.Empty, $"{nameof(row.Owner)}");
-            });
         }
     }
 }

@@ -7,13 +7,13 @@ namespace FrannHammer.WebScraping.Domain.Contracts
     public class WebCharacter : ICharacter
     {
 #if DEBUG
-        public const string SourceUrlBase = "http://localhost:81/kuroganehammer.com/Smash4/";
+        public const string SourceUrlBase = "http://localhost:81/khmock/kuroganehammer.com/Smash4/";
 #else
         public const string SourceUrlBase = "http://kuroganehammer.com/Smash4/";
 #endif
         public string[] PotentialScrapingNames { get; }
 
-        public string Id { get; set; }
+        public string InstanceId { get; set; }
         public string SourceUrl { get; private set; }
         public string FullUrl { get; set; }
         public string ColorTheme { get; set; }
@@ -26,7 +26,12 @@ namespace FrannHammer.WebScraping.Domain.Contracts
         public IEnumerable<IAttribute> Attributes { get; set; }
         public IEnumerable<ICharacterAttributeRow> AttributeRows { get; set; }
 
-        public WebCharacter(string name, string escapedCharacterName = "", params string[] potentialScrapingNames)
+        /// <summary>
+        /// The non-incrementing Id used to identity this character resource from an api consumer perspective.
+        /// </summary>
+        public int OwnerId { get; set; }
+
+        public WebCharacter(string name, string escapedCharacterName = "",  params string[] potentialScrapingNames)
         {
             Name = name;
 
@@ -35,6 +40,8 @@ namespace FrannHammer.WebScraping.Domain.Contracts
 
             SourceUrl = SourceUrlBase + escapedCharacterName;
             PotentialScrapingNames = potentialScrapingNames;
+
+            OwnerId = CharacterIds.FindByName(name);
         }
 
         public virtual IEnumerable<IUniqueData> GetUniqueData(IUniqueDataProvider uniqueDataProvider)

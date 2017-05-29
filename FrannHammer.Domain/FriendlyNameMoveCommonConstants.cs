@@ -11,7 +11,7 @@ namespace FrannHammer.Domain
         public const string FirstActionableFrameName = "firstActionableFrame";
         public const string LandingLagName = "landingLag";
         public const string MoveTypeName = "moveType";
-        public const string OwnerName = "ownerId";
+        public const string OwnerName = "owner";
         public const string IsWeightDependentName = "weightDependent";
     }
 }

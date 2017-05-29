@@ -120,7 +120,6 @@
     <Compile Include="Controllers\CharacterAttributeControllerTests.cs" />
     <Compile Include="Controllers\CharacterControllerTests.cs" />
     <Compile Include="Controllers\ControllerRoutingTests.cs" />
-    <Compile Include="Controllers\GeneralControllerTests.cs" />
     <Compile Include="Controllers\MoveControllerTests.cs" />
     <Compile Include="Controllers\MovementControllerTests.cs" />
     <Compile Include="MongoDbBsonMapperTests.cs" />

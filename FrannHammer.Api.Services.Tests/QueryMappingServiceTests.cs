@@ -17,7 +17,7 @@ namespace FrannHammer.Api.Services.Tests
             var sut = new QueryMappingService(new Mock<IAttributeStrategy>().Object);
             Assert.Throws<ArgumentNullException>(() =>
             {
-                sut.MapResourceQueryToDictionary(null);
+                sut.MapResourceQueryToDictionary(null, BindingFlags.Public | BindingFlags.Instance);
             });
         }
 
@@ -29,14 +29,13 @@ namespace FrannHammer.Api.Services.Tests
                 m =>
                     m.GetAttributeFromProperty<FriendlyNameAttribute>(It.IsAny<object>(),
                         It.IsAny<PropertyInfo>()))
-                        .Returns(new FriendlyNameAttribute(FriendlyNameMoveCommonConstants.OwnerName));
+                        .Returns(new FriendlyNameAttribute(Guid.NewGuid().ToString()));
 
             var sut = new QueryMappingService(attributeStrategyMock.Object);
 
-            var resourceQueryMock = new Mock<IMoveFilterResourceQuery>();
-            resourceQueryMock.SetupAllProperties();
+            var resourceQueryStub = new TestMoveFilterResourceQuery();
 
-            var results = sut.MapResourceQueryToDictionary(resourceQueryMock.Object);
+            var results = sut.MapResourceQueryToDictionary(resourceQueryStub, BindingFlags.Public | BindingFlags.Instance);
 
             Assert.That(results.Count, Is.EqualTo(0), $"{nameof(results.Count)}");
         }
@@ -50,21 +49,28 @@ namespace FrannHammer.Api.Services.Tests
             attributeStrategyMock.Setup(
                 m =>
                     m.GetAttributeFromProperty<FriendlyNameAttribute>(It.IsAny<object>(),
-                        It.Is<PropertyInfo>(pi => pi.Name == nameof(IMoveFilterResourceQuery.CharacterName))))
+                        It.Is<PropertyInfo>(pi => pi.Name == nameof(IMoveFilterResourceQuery.Name))))
                         .Returns(new FriendlyNameAttribute(FriendlyNameMoveCommonConstants.OwnerName));
 
             var sut = new QueryMappingService(attributeStrategyMock.Object);
 
             var resourceQueryMock = new Mock<IMoveFilterResourceQuery>();
             resourceQueryMock.SetupAllProperties();
-            resourceQueryMock.Object.CharacterName = fixture.Create<string>();
+            resourceQueryMock.Object.Name = fixture.Create<string>();
 
             //act
-            var results = sut.MapResourceQueryToDictionary(resourceQueryMock.Object);
+            var results = sut.MapResourceQueryToDictionary(resourceQueryMock.Object, BindingFlags.Public | BindingFlags.Instance);
 
             //assert
             Assert.That(results.Count, Is.EqualTo(1));
             Assert.That(results.ContainsKey(FriendlyNameMoveCommonConstants.OwnerName));
+        }
+
+        class TestMoveFilterResourceQuery : IMoveFilterResourceQuery
+        {
+            public string Name { get; set; }
+            public string MoveName { get; set; }
+            public string MoveType { get; set; }
         }
     }
 }

@@ -20,12 +20,12 @@ namespace FrannHammer.WebScraping.Moves
                 var moveTableRows = GetTableRows(character.SourceUrl, ScrapingConstants.XPathTableNodeGroundStats);
 
                 //filter out null results since they are not throw data.
-                var throws = moveTableRows.Select(row => GetMove(GetTableCells(row), character.Name)).Where(move => move != null);
+                var throws = moveTableRows.Select(row => GetMove(GetTableCells(row), character)).Where(move => move != null);
                 return throws;
             };
         }
 
-        protected override IMove GetMove(HtmlNodeCollection cells, string characterName)
+        protected override IMove GetMove(HtmlNodeCollection cells, WebCharacter character)
         {
             if (!string.IsNullOrEmpty(cells[0].InnerText) && cells.Count > 1)
             {
@@ -34,7 +34,8 @@ namespace FrannHammer.WebScraping.Moves
                 IMove move = ScrapingServices.CreateMove();
 
                 move.Name = name;
-                move.Owner = characterName;
+                move.Owner = character.Name;
+                move.OwnerId = character.OwnerId;
                 move.MoveType = MoveType.Throw.GetEnumDescription();
 
                 //grab data is different than 'throw' data.  If the cell contains neither of these this scraper

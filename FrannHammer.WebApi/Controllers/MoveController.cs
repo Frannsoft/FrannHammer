@@ -18,7 +18,7 @@ namespace FrannHammer.WebApi.Controllers
         }
 
         [Route(MovesRouteKey + "/{id}")]
-        public override IHttpActionResult GetById(string id, [FromUri]string fields = "")
+        public IHttpActionResult GetById(string id, [FromUri]string fields = "")
         {
             var move = _moveService.GetSingleById(id, fields);
             return Result(move);

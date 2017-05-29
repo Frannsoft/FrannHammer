@@ -1,6 +1,6 @@
 ﻿namespace FrannHammer.Domain.Contracts
 {
-    public interface ICharacter : IModel
+    public interface ICharacter : IModel, IHaveAnOwnerId
     {
         string FullUrl { get; set; }
         string MainImageUrl { get; set; }

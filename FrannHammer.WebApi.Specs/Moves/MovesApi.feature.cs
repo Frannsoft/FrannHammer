@@ -95,7 +95,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 19
  testRunner.Given("The api route of api/moves/name/{name}", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 20
- testRunner.When("I request one specific item by name Jab 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I request one specific item by name Nair", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 21
  testRunner.Then("The result should be all moves that match that name", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden

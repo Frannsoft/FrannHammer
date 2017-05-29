@@ -104,7 +104,7 @@ namespace FrannHammer.Api.Services.Tests
 
             //add fake moves with all properties filled out.  Some should match the passed in name, others should not
             var matchingItem = _fixture.Create<Move>();
-            matchingItem.Id = expectedMoveId;
+            matchingItem.InstanceId = expectedMoveId;
 
             var mockRepository = ConfigureMockRepositoryWithSeedMoves(new List<Move> { matchingItem }, _fixture);
 
@@ -302,7 +302,7 @@ namespace FrannHammer.Api.Services.Tests
 
         private class TestMove : IMove
         {
-            public string Id { get; set; }
+            public string InstanceId { get; set; }
             public string Name { get; set; }
             public string HitboxActive { get; set; }
             public string FirstActionableFrame { get; set; }
@@ -315,6 +315,7 @@ namespace FrannHammer.Api.Services.Tests
             public string MoveType { get; set; }
             public string Owner { get; set; }
             public bool IsWeightDependent { get; set; }
+            public int OwnerId { get; set; }
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FrannHammer.Api.Services.Contracts;
+using FrannHammer.Api.Services.Tests.ApiServiceFactories;
 using FrannHammer.DataAccess.Contracts;
 using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
@@ -12,14 +13,15 @@ using Ploeh.AutoFixture.AutoMoq;
 
 namespace FrannHammer.Api.Services.Tests
 {
-    [TestFixture(typeof(IMove), typeof(Move), typeof(DefaultMoveService))]
-    [TestFixture(typeof(IMovement), typeof(Movement), typeof(DefaultMovementService))]
-    [TestFixture(typeof(ICharacter), typeof(Character), typeof(DefaultCharacterService))]
-    [TestFixture(typeof(ICharacterAttributeRow), typeof(CharacterAttributeRow), typeof(DefaultCharacterAttributeService))]
-    public class GeneralServiceTests<TModelInterface, TModel, TSut>
+    [TestFixture(typeof(IMove), typeof(Move), typeof(DefaultMoveService), typeof(MoveApiServiceFactory))]
+    [TestFixture(typeof(IMovement), typeof(Movement), typeof(DefaultMovementService), typeof(MovementApiServiceFactory))]
+    [TestFixture(typeof(ICharacter), typeof(Character), typeof(DefaultCharacterService), typeof(DefaultCharacterServiceFactory))]
+    [TestFixture(typeof(ICharacterAttributeRow), typeof(CharacterAttributeRow), typeof(DefaultCharacterAttributeService), typeof(DefaultCharacterAttributeServiceFactory))]
+    public class GeneralServiceTests<TModelInterface, TModel, TSut, TSutFactory>
         where TModelInterface : class, IModel
         where TModel : TModelInterface
         where TSut : ICrudService<TModelInterface>
+        where TSutFactory : ApiServiceFactory<TModelInterface>
     {
         private Fixture _fixture;
 
@@ -154,9 +156,17 @@ namespace FrannHammer.Api.Services.Tests
             });
         }
 
+        /// <summary>
+        /// Using the <see cref="ApiServiceFactory{T}"/> classes to generate these allows me to use this generic test fixture
+        /// for cumbersome (but important) tests while offloading all the dependencies to the factories.
+        /// </summary>
+        /// <param name="repository"></param>
+        /// <returns></returns>
         private static ICrudService<TModelInterface> CreateCrudService(IRepository<TModelInterface> repository)
         {
-            return (ICrudService<TModelInterface>)Activator.CreateInstance(typeof(TSut), repository);
+            var serviceFactory = (TSutFactory) Activator.CreateInstance(typeof(TSutFactory));
+
+            return serviceFactory.CreateService(repository);
         }
     }
 }

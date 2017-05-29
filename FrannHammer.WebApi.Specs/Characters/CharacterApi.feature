@@ -16,11 +16,10 @@ Scenario: Request all character metadata
 #	Then the result should be metadata for zero suit samus
 
 
-
 Scenario Outline: Request one single characters metadata
 	Given The api route of <apiRoute> 
 	When I request one specific item by <routeParameter>
-	Then the result should be a list containing just that characters metadata
+	Then the result should be just that characters metadata
 
 Examples: 
 	| apiRoute                   | routeParameter |
@@ -33,8 +32,8 @@ Scenario: I want all of the throw data for a character
 	Then the result should be a list containing just that characters throw data
 	
 Scenario: I want all of the throw data named fthrow for a specific character
-	Given The api route of api/characters/name/{name}/moves?movetype=throw&name=fthrow
-	When I request one specific item by name Captain Falcon
+	Given The api route of api/characters/name/{name}/moves?movetype=throw&movename=fthrow
+	When I request one specific item by name Greninja
 	Then the result should be a list containing just that characters throw data
 
 Scenario: I want all of the move data for a character

@@ -18,11 +18,11 @@ namespace FrannHammer.WebScraping.Moves
             Scrape = character =>
             {
                 var moveTableRows = GetTableRows(character.SourceUrl, ScrapingConstants.XPathTableNodeAerialStats);
-                return moveTableRows.Select(row => GetMove(GetTableCells(row), character.Name));
+                return moveTableRows.Select(row => GetMove(GetTableCells(row), character));
             };
         }
 
-        protected override IMove GetMove(HtmlNodeCollection cells, string characterName)
+        protected override IMove GetMove(HtmlNodeCollection cells, WebCharacter character)
         {
             var move = default(IMove);
 
@@ -52,7 +52,8 @@ namespace FrannHammer.WebScraping.Moves
                 move.LandingLag = landingLag;
                 move.AutoCancel = autocancel;
                 move.MoveType = MoveType.Aerial.GetEnumDescription();
-                move.Owner = characterName;
+                move.Owner = character.Name;
+                move.OwnerId = character.OwnerId;
             }
 
             return move;

@@ -9,5 +9,15 @@ namespace FrannHammer.Api.Services
         public DefaultCharacterService(IRepository<ICharacter> repository)
             : base(repository)
         { }
+
+        public ICharacter GetSingleByOwnerId(int id, string fields = "")
+        {
+            return Repository.GetSingleWhere(c => c.OwnerId == id);
+        }
+
+        public ICharacter GetSingleByName(string name, string fields = "")
+        {
+            return Repository.GetSingleWhere(c => c.Name == name);
+        }
     }
 }
