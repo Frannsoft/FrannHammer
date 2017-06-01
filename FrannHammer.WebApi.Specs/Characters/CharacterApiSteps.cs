@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
+using FrannHammer.Domain.PropertyParsers;
 using FrannHammer.WebScraping;
 using FrannHammer.WebScraping.Domain.Contracts;
 using NUnit.Framework;
@@ -129,11 +131,21 @@ namespace FrannHammer.WebApi.Specs.Characters
 
             string expectedOwnerName = ScenarioContext.Current.Get<string>(RouteTemplateValueToReplaceKey);
 
+            int expectedOwnerId = CharacterIds.FindByName(expectedOwnerName);
+
             attributeRows.ForEach(row =>
             {
                 Assert.That(row.Owner, Is.EqualTo(expectedOwnerName), $"{nameof(row.Owner)}");
-                Assert.That(row.OwnerId, Is.GreaterThan(CharacterIds.FindByName(expectedOwnerName)), $"{nameof(row.OwnerId)}");
-                Assert.That(row.Values, Is.GreaterThan(0), $"{nameof(row.Values)}");
+                Assert.That(row.OwnerId, Is.EqualTo(expectedOwnerId), $"{nameof(row.OwnerId)}");
+                Assert.That(row.Values.Count(), Is.GreaterThan(0), $"{nameof(row.Values)}");
+
+                row.Values.ToList().ForEach(rowValue =>
+                {
+                    Assert.That(rowValue.Name, Is.Not.Null, $"{nameof(rowValue.Name)}");
+                    Assert.That(rowValue.Owner, Is.EqualTo(expectedOwnerName), $"{nameof(rowValue.Owner)}");
+                    Assert.That(rowValue.OwnerId, Is.EqualTo(expectedOwnerId), $"{nameof(rowValue.OwnerId)}");
+                    Assert.That(rowValue.Value, Is.Not.Null, $"{nameof(rowValue.Value)}");
+                });
             });
         }
 
@@ -150,6 +162,40 @@ namespace FrannHammer.WebApi.Specs.Characters
             metadata.AssertIsValid();
             movementData.AssertIsValid();
             attributeData.AssertIsValid();
+        }
+
+        [Then(@"the result should be a list containing the parsed out move data for that character")]
+        public void ThenTheResultShouldBeAListContainingTheParsedOutMoveDataForThatCharacter()
+        {
+            var detailedMoveData = ApiClient
+                .DeserializeResponse<IEnumerable<IDictionary<string, IDictionary<string, string>>>>(
+                    ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey))
+                    .ToList();
+
+            string expectedOwnerName = ScenarioContext.Current.Get<string>(RouteTemplateValueToReplaceKey);
+            int expectedOwnerId = CharacterIds.FindByName(expectedOwnerName);
+
+            Assert.That(detailedMoveData.Count, Is.GreaterThan(0), $"{nameof(detailedMoveData.Count)}");
+
+            var expectedMoveProperties =
+                typeof(MoveDataNameConstants).GetFields(BindingFlags.Public | BindingFlags.Instance);
+
+            detailedMoveData.ForEach(moveData =>
+            {
+                foreach (var moveDataProperties in moveData.Values)
+                {
+                    Assert.That(moveDataProperties[MoveDataNameConstants.OwnerKey], Is.EqualTo(expectedOwnerName),
+                        $"{nameof(MoveDataNameConstants.OwnerKey)}");
+                    Assert.That(moveDataProperties[MoveDataNameConstants.OwnerIdKey], Is.EqualTo(expectedOwnerId.ToString()),
+                        $"{nameof(MoveDataNameConstants.OwnerIdKey)}");
+
+                    foreach (var field in expectedMoveProperties)
+                    {
+                        Assert.That(moveDataProperties.ContainsKey(field.Name),
+                            $"{nameof(moveData)} does not have key {nameof(field.Name)}");
+                    }
+                }
+            });
         }
     }
 }

@@ -47,6 +47,7 @@
     <Compile Include="IDtoProvider.cs" />
     <Compile Include="IMovementService.cs" />
     <Compile Include="IMoveService.cs" />
+    <Compile Include="ParsedMove.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

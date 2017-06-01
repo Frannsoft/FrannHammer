@@ -12,5 +12,8 @@ namespace FrannHammer.Api.Services.Contracts
         IEnumerable<IMove> GetAllThrowsWhereCharacterNameIs(string name, string fields = "");
         IEnumerable<IMove> GetAllWhereCharacterNameIs(string name, string fields = "");
         IEnumerable<IMove> GetAllWhere(IMoveFilterResourceQuery query, string fields = "");
+
+        IEnumerable<ParsedMove> GetAllMovePropertyDataForCharacter(ICharacter character, string fields = "");
+
     }
 }

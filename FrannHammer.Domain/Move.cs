@@ -27,8 +27,8 @@ namespace FrannHammer.Domain
         [FriendlyName(AutoCancelName)]
         public string AutoCancel { get; set; }
 
-        [PropertyParser(typeof(BaseKnockbackParser), "baseKnockback")]
-        [PropertyParser(typeof(SetKnockbackParser), "setKnockback")]
+        [PropertyParser(typeof(BaseKnockbackParser), BaseKnockbackName)]
+        [PropertyParser(typeof(SetKnockbackParser), SetKnockbackName)]
         [FriendlyName(BaseKnockbackSetKnockbackName)]
         public string BaseKnockBackSetKnockback { get; set; }
 

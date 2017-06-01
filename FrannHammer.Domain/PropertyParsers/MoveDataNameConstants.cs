@@ -3,6 +3,8 @@
     public static class MoveDataNameConstants
     {
         public const string RawValueKey = "rawValue";
+        public const string OwnerIdKey = "ownerId";
+        public const string OwnerKey = "owner";
         public const string NotesKey = "notes";
         public const string Hitbox1Key = "hitbox1";
         public const string Hitbox2Key = "hitbox2";

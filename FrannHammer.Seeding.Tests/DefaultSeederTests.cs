@@ -132,10 +132,12 @@ namespace FrannHammer.Seeding.Tests
             characterAttributeRepositoryMock.Setup(c => c.GetAll()).Returns(() => characterAttributes);
 
             //real api services using mocked repos
-            var characterService = new DefaultCharacterService(characterRepositoryMock.Object);
             var movementService = new DefaultMovementService(movementRepositoryMock.Object);
             var moveService = new DefaultMoveService(movesRepositoryMock.Object, new Mock<IQueryMappingService>().Object);
             var characterAttributeService = new DefaultCharacterAttributeService(characterAttributeRepositoryMock.Object);
+            var dtoProvider = new DefaultDtoProvider();
+            var characterService = new DefaultCharacterService(characterRepositoryMock.Object, dtoProvider, movementService, characterAttributeService, moveService);
+
 
             //real scraping from web to get data
             var greninja = Characters.Greninja;

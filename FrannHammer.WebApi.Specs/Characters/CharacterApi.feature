@@ -7,9 +7,6 @@ Scenario: Request all character metadata
 	When I request all data
 	Then the result should be a list of all character metadata
 
-# I can't get away with breaking the id call.  Too many users rely on it.  Need to add a property to character to store a 
-# special 'id' that's used instead of the actual id for this call.
-
 #Scenario: Request one single characters metadata
 #	Given The api route of api/characters/{id}
 #	When I request one specific item by id 58

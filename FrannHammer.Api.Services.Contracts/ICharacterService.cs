@@ -1,4 +1,5 @@
-﻿using FrannHammer.Domain.Contracts;
+﻿using System.Collections.Generic;
+using FrannHammer.Domain.Contracts;
 
 namespace FrannHammer.Api.Services.Contracts
 {
@@ -6,5 +7,9 @@ namespace FrannHammer.Api.Services.Contracts
     {
         ICharacter GetSingleByOwnerId(int id, string fields = "");
         ICharacter GetSingleByName(string name, string fields = "");
+        ICharacterDetailsDto GetCharacterDetails(string name, string fields = "");
+        IEnumerable<IMovement> GetAllMovementsWhereCharacterNameIs(string name, string fields = "");
+        IEnumerable<ICharacterAttributeRow> GetAllAttributesWhereCharacterNameIs(string name, string fields = "");
+        IEnumerable<ParsedMove> GetDetailedMovesWhereCharacterNameIs(string name, string fields = "");
     }
 }

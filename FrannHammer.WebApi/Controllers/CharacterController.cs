@@ -1,5 +1,4 @@
-﻿using System;
-using System.Web.Http;
+﻿using System.Web.Http;
 using FrannHammer.Api.Services.Contracts;
 using FrannHammer.Domain;
 using FrannHammer.Utility;
@@ -14,28 +13,18 @@ namespace FrannHammer.WebApi.Controllers
         private const string NameRouteKey = "/name/{name}";
         private readonly ICharacterService _characterService;
         private readonly IMoveService _moveService;
-        private readonly IMovementService _movementService;
-        private readonly ICharacterAttributeRowService _attributeRowService;
-        private readonly IDtoProvider _dtoProvider;
 
-        public CharacterController(ICharacterService characterService, IMoveService moveService,
-            IMovementService movementService, ICharacterAttributeRowService attributeRowService, IDtoProvider dtoProvider)
+        public CharacterController(ICharacterService characterService, IMoveService moveService)
         {
             Guard.VerifyObjectNotNull(characterService, nameof(characterService));
             Guard.VerifyObjectNotNull(moveService, nameof(moveService));
-            Guard.VerifyObjectNotNull(movementService, nameof(movementService));
-            Guard.VerifyObjectNotNull(attributeRowService, nameof(attributeRowService));
-            Guard.VerifyObjectNotNull(dtoProvider, nameof(dtoProvider));
 
             _characterService = characterService;
             _moveService = moveService;
-            _movementService = movementService;
-            _attributeRowService = attributeRowService;
-            _dtoProvider = dtoProvider;
         }
 
         [Route(CharactersRouteKey + "/{id}")]
-        public  IHttpActionResult GetByOwnerId(int id, [FromUri]string fields = "")
+        public IHttpActionResult GetByOwnerId(int id, [FromUri]string fields = "")
         {
             var character = _characterService.GetSingleByOwnerId(id, fields);
             return Result(character);
@@ -72,30 +61,29 @@ namespace FrannHammer.WebApi.Controllers
         [Route(CharactersRouteKey + NameRouteKey + "/movements")]
         public IHttpActionResult GetAllMovementsForCharacterWhereName(string name, [FromUri] string fields = "")
         {
-            var movements = _movementService.GetAllWhereCharacterNameIs(name, fields);
+            var movements = _characterService.GetAllMovementsWhereCharacterNameIs(name, fields);
             return Result(movements);
         }
 
         [Route(CharactersRouteKey + NameRouteKey + "/details")]
         public IHttpActionResult GetDetailsForCharacterByName(string name, [FromUri] string fields = "")
         {
-            var character =
-                _characterService.GetSingleWhere(c => c.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase));
-
-            if (character == null)
-            { return NotFound(); }
-
-            //get movement, attributes and put into aggregate dto 
-            var dto = _dtoProvider.CreateCharacterDetailsDto();
-
-            var movements = _movementService.GetAllWhereCharacterNameIs(name, fields);
-            var attributeRows = _attributeRowService.GetAllWhereCharacterNameIs(name, fields);
-
-            dto.Metadata = character;
-            dto.Movements = movements;
-            dto.AttributeRows = attributeRows;
-
+            var dto = _characterService.GetCharacterDetails(name, fields);
             return Result(dto);
+        }
+
+        [Route(CharactersRouteKey + NameRouteKey + "/characterattributes")]
+        public IHttpActionResult GetAttributesForCharacterByName(string name, [FromUri] string fields = "")
+        {
+            var attributeRows = _characterService.GetAllAttributesWhereCharacterNameIs(name, fields);
+            return Result(attributeRows);
+        }
+
+        [Route(CharactersRouteKey + NameRouteKey + "/detailedmoves")]
+        public IHttpActionResult GetDetailedMovesForCharacterByName(string name, [FromUri] string fields = "")
+        {
+            var detailedMoves = _characterService.GetDetailedMovesWhereCharacterNameIs(name, fields);
+            return Result(detailedMoves);
         }
     }
 }

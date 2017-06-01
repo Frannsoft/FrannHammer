@@ -40,7 +40,6 @@ namespace FrannHammer.WebApi
 #elif !DEBUG
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Default;
 #endif
-       
 
             //configure container
             var containerBuilder = new ContainerBuilder();

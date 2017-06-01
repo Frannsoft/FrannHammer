@@ -67,7 +67,7 @@
     <Compile Include="ApiServiceFactories\ApiServiceFactory.cs" />
     <Compile Include="ApiServiceTestSetupUtility.cs" />
     <Compile Include="CharacterAttributeRowServiceTests.cs" />
-    <Compile Include="CharacterServiceTests.cs" />
+    <Compile Include="DefaultCharacterServiceTests.cs" />
     <Compile Include="ApiServiceFactories\DefaultCharacterAttributeServiceFactory.cs" />
     <Compile Include="ApiServiceFactories\DefaultCharacterServiceFactory.cs" />
     <Compile Include="GeneralServiceTests.cs" />
