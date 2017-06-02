@@ -63,6 +63,7 @@ namespace FrannHammer.WebScraping.Movements
                 movement.Name = name;
                 movement.Value = value;
                 movement.Owner = character.Name;
+                movement.OwnerId = character.OwnerId;
             }
 
             return movement;

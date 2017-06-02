@@ -55,6 +55,60 @@ namespace FrannHammer.Api.Services.Tests
         }
 
         [Test]
+        public void DetailedMovesContainExpectedProperties()
+        {
+            const int expectedOwnerId = 1;
+            const string expectedCharacterName = "mario";
+
+            //mock move repo
+            //add fake moves with all properties filled out.  Some should match the passed in name, others should not
+            var matchingItems =
+                _fixture.Create<Move>();
+
+            matchingItems.OwnerId = expectedOwnerId;
+            matchingItems.Owner = expectedCharacterName;
+            matchingItems.Name = "test";
+
+            var totalItems = _fixture.CreateMany<Move>().ToList();
+            totalItems.Add(matchingItems);
+
+            var mockRepository = ConfigureMockRepositoryWithSeedMoves(totalItems, _fixture);
+
+            //get all move property data for a move
+            var sut = new DefaultMoveService(mockRepository, new Mock<IQueryMappingService>().Object);
+            var results = sut.GetAllMovePropertyDataForCharacter(new Character { OwnerId = expectedOwnerId })
+                .ToList();
+
+            Assert.That(results.Count, Is.GreaterThan(0), $"{nameof(results.Count)}");
+
+            //assert all expected moves are present
+            var rawMoves = sut.GetAllWhereCharacterNameIs(expectedCharacterName).ToList();
+
+            rawMoves.ForEach(rawMove =>
+            {
+                Assert.That(results.Any(result => result.MoveName.Equals(rawMove.Name)),
+                    $"Results does not have move '{rawMove.Name}'.");
+            });
+
+            var firstMove = results.First();
+
+            Assert.That(firstMove.MoveData.Any(data => data.Data.Any(d => d.Name.Equals(Hitbox1Key))),
+                $"{nameof(firstMove)} does not contain {Hitbox1Key}: {nameof(firstMove)}");
+            Assert.That(firstMove.MoveData.Any(data => data.Data.Any(d => d.Name.Equals(Hitbox2Key))),
+                $"{nameof(firstMove)} does not contain {Hitbox2Key}: {nameof(firstMove)}");
+            Assert.That(firstMove.MoveData.Any(data => data.Data.Any(d => d.Name.Equals(Hitbox3Key))),
+                $"{nameof(firstMove)} does not contain {Hitbox3Key}: {nameof(firstMove)}");
+            Assert.That(firstMove.MoveData.Any(data => data.Data.Any(d => d.Name.Equals(Hitbox4Key))),
+                $"{nameof(firstMove)} does not contain {Hitbox4Key}: {nameof(firstMove)}");
+            Assert.That(firstMove.MoveData.Any(data => data.Data.Any(d => d.Name.Equals(Hitbox5Key))),
+                $"{nameof(firstMove)} does not contain {Hitbox5Key}: {nameof(firstMove)}");
+            Assert.That(firstMove.MoveData.Any(data => data.Data.Any(d => d.Name.Equals(RawValueKey))),
+                $"{nameof(firstMove)} does not contain {RawValueKey}: {nameof(firstMove)}");
+            Assert.That(firstMove.MoveData.Any(data => data.Data.Any(d => d.Name.Equals(NotesKey))),
+                $"{nameof(firstMove)} does not contain {NotesKey}: {nameof(firstMove)}");
+        }
+
+        [Test]
         [TestCaseSource(nameof(MoveProperties))]
         public void GetAllPropertyDataForMoveByName(Tuple<string, string[]> testData)
         {
@@ -104,7 +158,7 @@ namespace FrannHammer.Api.Services.Tests
 
             //add fake moves with all properties filled out.  Some should match the passed in name, others should not
             var matchingItem = _fixture.Create<Move>();
-            matchingItem.Id = expectedMoveId;
+            matchingItem.InstanceId = expectedMoveId;
 
             var mockRepository = ConfigureMockRepositoryWithSeedMoves(new List<Move> { matchingItem }, _fixture);
 
@@ -302,7 +356,7 @@ namespace FrannHammer.Api.Services.Tests
 
         private class TestMove : IMove
         {
-            public string Id { get; set; }
+            public string InstanceId { get; set; }
             public string Name { get; set; }
             public string HitboxActive { get; set; }
             public string FirstActionableFrame { get; set; }
@@ -315,6 +369,7 @@ namespace FrannHammer.Api.Services.Tests
             public string MoveType { get; set; }
             public string Owner { get; set; }
             public bool IsWeightDependent { get; set; }
+            public int OwnerId { get; set; }
         }
     }
 }

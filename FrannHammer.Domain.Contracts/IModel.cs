@@ -2,7 +2,7 @@
 {
     public interface IHaveAnId
     {
-        string Id { get; set; }
+        string InstanceId { get; set; }
     }
 
     public interface IHaveAName

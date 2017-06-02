@@ -117,10 +117,12 @@ namespace FrannHammer.Seeding.Tests
             var characterAttributeRepository = new MongoDbRepository<ICharacterAttributeRow>(MongoDatabase);
 
             //real api services using mocked repos
-            var characterService = new DefaultCharacterService(characterRepository);
+            var dtoProvider = new DefaultDtoProvider();
             var movementService = new DefaultMovementService(movementRepository);
             var moveService = new DefaultMoveService(moveRepository, new Mock<IQueryMappingService>().Object);
             var characterAttributeService = new DefaultCharacterAttributeService(characterAttributeRepository);
+            var characterService = new DefaultCharacterService(characterRepository, dtoProvider, movementService, characterAttributeService, moveService);
+
 
             //real scraping from web to get data
             var greninja = Characters.Greninja;

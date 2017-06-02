@@ -17,7 +17,7 @@ Scenario: Request all move data
 @GetAllWithName
 Scenario: Request all moves by name
 	Given The api route of api/moves/name/{name}
-	When I request one specific item by name Jab 1
+	When I request one specific item by name Nair
 	Then The result should be all moves that match that name
 
 @GetAllNonHitboxDataForMovesByName

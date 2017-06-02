@@ -8,8 +8,8 @@ using System.Linq;
 using System.Reflection;
 using FrannHammer.Domain;
 using FrannHammer.Domain.PropertyParsers;
-using static FrannHammer.Domain.PropertyParsers.MoveDataNameConstants;
 using FrannHammer.WebScraping;
+using static FrannHammer.Domain.PropertyParsers.MoveDataNameConstants;
 
 namespace FrannHammer.Api.Services
 {
@@ -76,6 +76,93 @@ namespace FrannHammer.Api.Services
             return strongTypedPropertyInEachMove;
         }
 
+        public IEnumerable<ParsedMove> GetAllMovePropertyDataForCharacter(ICharacter character, string fields = "")
+        {
+            var allMovesForCharacter = GetAllWhere(move => move.OwnerId == character.OwnerId).ToList();
+
+            var parsedMoves = new List<ParsedMove>();
+
+            foreach (var move in allMovesForCharacter)
+            {
+                var parsedMove = new ParsedMove
+                {
+                    MoveName = move.Name,
+                    Owner = move.Owner,
+                    OwnerId = move.OwnerId
+                };
+
+                var properties = move.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                    .Where(prop => prop.GetCustomAttributes<PropertyParserAttribute>().Any());
+
+                foreach (var property in properties)
+                {
+                    var parsedMoveDataProperty = new ParsedMoveDataProperty
+                    {
+                        Name = property.Name
+                    };
+
+                    var parserType = default(Type);
+                    string rawValue = property.GetValue(move)?.ToString();
+
+                    //in order to properly handle the two properties combined here, special logic is 
+                    //required.  Not ideal, but neither is the way these are listed on the site imho.
+                    //I can't separate them while seeding the db because it would break backwards
+                    //compatibility.
+                    if (property.Name == nameof(IMove.BaseKnockBackSetKnockback))
+                    {
+                        parserType = ExtractParserType(property, FriendlyNameMoveCommonConstants.BaseKnockbackName) ??
+                                     ExtractParserType(property, FriendlyNameMoveCommonConstants.SetKnockbackName);
+
+                        ParseData(parserType, rawValue, parsedMove, parsedMoveDataProperty, move);
+                    }
+                    else
+                    {
+                        parserType = ExtractParserType(property, property.Name);
+                        ParseData(parserType, rawValue, parsedMove, parsedMoveDataProperty, move);
+                    }
+                }
+                parsedMoves.Add(parsedMove);
+            }
+
+            return parsedMoves;
+        }
+
+        private static void ParseData(Type parserType, string rawValue, ParsedMove parsedMove, ParsedMoveDataProperty parsedMoveDataProperty, IMove move)
+        {
+            if (parserType == null)
+            {
+                AddBasicInfoToDataProperty(parsedMoveDataProperty, rawValue, move);
+                parsedMove.MoveData.Add(parsedMoveDataProperty);
+            }
+            else
+            {
+                var parser = (PropertyParser)Activator.CreateInstance(parserType);
+                var parsedData = parser.Parse(rawValue);
+                AddBasicInfoToDataProperty(parsedMoveDataProperty, rawValue, move);
+                foreach (var parsed in parsedData)
+                {
+                    parsedMoveDataProperty.AddParsedMoveAttribute(
+                        new ParsedMoveAttribute
+                        {
+                            Name = parsed.Key,
+                            Value = parsed.Value
+                        });
+                }
+
+                parsedMove.MoveData.Add(parsedMoveDataProperty);
+            }
+        }
+
+        private static void AddBasicInfoToDataProperty(ParsedMoveDataProperty dataProperty, string rawValue, IMove move)
+        {
+            dataProperty.Data.Add(
+                new ParsedMoveAttribute
+                {
+                    Name = RawValueKey,
+                    Value = rawValue
+                });
+        }
+
         public IDictionary<string, string> GetPropertyDataWhereId(string id, string property, string fields = "")
         {
             Guard.VerifyStringIsNotNullOrEmpty(id, nameof(id));
@@ -133,7 +220,7 @@ namespace FrannHammer.Api.Services
             return propertyInfo;
         }
 
-        private Type ExtractParserType(MemberInfo propertyInfo, string property)
+        private static Type ExtractParserType(MemberInfo propertyInfo, string property)
         {
             //Pull back all parser type attributes for the property being parsed.
             //If there are more than one assigned, pick the one that matches the property 
@@ -145,7 +232,7 @@ namespace FrannHammer.Api.Services
             var parserType = default(Type);
             if (propertyParserAttributes.Count > 1)
             {
-                parserType = propertyParserAttributes.First(p => p.MatchingPropertyName == property)?.ParserType;
+                parserType = propertyParserAttributes.FirstOrDefault(p => p.MatchingPropertyName == property)?.ParserType;
             }
             else if (propertyParserAttributes.Count > 0)
             {
@@ -167,9 +254,9 @@ namespace FrannHammer.Api.Services
 
         public IEnumerable<IMove> GetAllWhere(IMoveFilterResourceQuery query, string fields = "")
         {
-            Guard.VerifyStringIsNotNullOrEmpty(query.CharacterName, nameof(query.CharacterName));
+            Guard.VerifyStringIsNotNullOrEmpty(query.Name, nameof(query.Name));
 
-            var queryFilterParameters = _queryMappingService.MapResourceQueryToDictionary(query);
+            var queryFilterParameters = _queryMappingService.MapResourceQueryToDictionary(query, BindingFlags.Public | BindingFlags.Instance);
 
             return GetAllWhere(queryFilterParameters);
         }

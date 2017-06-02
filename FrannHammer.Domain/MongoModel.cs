@@ -8,7 +8,7 @@ namespace FrannHammer.Domain
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        public string InstanceId { get; set; }
 
         [FriendlyName(FriendlyNameCommonConstants.Name)]
         public string Name { get; set; }

@@ -47,12 +47,19 @@
     <Compile Include="IDtoProvider.cs" />
     <Compile Include="IMovementService.cs" />
     <Compile Include="IMoveService.cs" />
+    <Compile Include="ParsedMove.cs" />
+    <Compile Include="ParsedMoveAttribute.cs" />
+    <Compile Include="ParsedMoveDataProperty.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FrannHammer.Domain.Contracts\FrannHammer.Domain.Contracts.csproj">
       <Project>{15a2565c-4611-4034-814a-931da70ed8b1}</Project>
       <Name>FrannHammer.Domain.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.Utility\FrannHammer.Utility.csproj">
+      <Project>{4DB55C69-EAE5-4970-B8B2-A7A84900041A}</Project>
+      <Name>FrannHammer.Utility</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

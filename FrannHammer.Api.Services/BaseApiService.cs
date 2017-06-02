@@ -20,7 +20,7 @@ namespace FrannHammer.Api.Services
 
         public T GetSingleById(string id, string fields = "")
         {
-            return GetSingleWhere(m => m.Id == id, fields);
+            return GetSingleWhere(m => m.InstanceId == id, fields);
         }
 
         public IEnumerable<T> GetAllWhereName(string name, string fields = "")

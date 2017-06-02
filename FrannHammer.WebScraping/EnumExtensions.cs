@@ -10,18 +10,9 @@ namespace FrannHammer.WebScraping
         {
             var fieldInfo = value.GetType().GetField(value.ToString());
 
-            var attributes =
-                (DescriptionAttribute[])fieldInfo.GetCustomAttributes<DescriptionAttribute>(false);
+            var attribute = fieldInfo?.GetCustomAttribute<DescriptionAttribute>(false);
 
-            if (attributes != null &&
-                attributes.Length > 0)
-            {
-                return attributes[0].Description;
-            }
-            else
-            {
-                return value.ToString();
-            }
+            return attribute != null ? attribute.Description : value.ToString();
         }
     }
 }

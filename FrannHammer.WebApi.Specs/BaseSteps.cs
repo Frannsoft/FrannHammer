@@ -74,7 +74,7 @@ namespace FrannHammer.WebApi.Specs
             //Assert.That(move.BaseKnockBackSetKnockback, Is.Not.Null, $"{nameof(move.BaseKnockBackSetKnockback)}");
             //Assert.That(move.FirstActionableFrame, Is.Not.Null, $"{nameof(move.FirstActionableFrame)}");
             //Assert.That(move.HitboxActive, Is.Not.Null, $"{nameof(move.HitboxActive)}");
-            Assert.That(move.Id, Is.Not.Null, $"{nameof(move.Id)}");
+            Assert.That(move.InstanceId, Is.Not.Null, $"{nameof(move.InstanceId)}");
             //Assert.That(move.KnockbackGrowth, Is.Not.Null, $"{nameof(move.KnockbackGrowth)}");
             Assert.That(move.Name, Is.Not.Null, $"{nameof(move.Name)}");
             Assert.That(move.Owner, Is.Not.Null, $"{nameof(move.Owner)}");
@@ -86,7 +86,7 @@ namespace FrannHammer.WebApi.Specs
             Assert.That(movement.Name, Is.Not.Null);
             Assert.That(movement.Owner, Is.Not.Null);
             Assert.That(movement.Value, Is.Not.Null);
-            Assert.That(movement.Id, Is.Not.Null);
+            Assert.That(movement.InstanceId, Is.Not.Null);
         }
     }
 }

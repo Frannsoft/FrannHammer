@@ -15,7 +15,7 @@ namespace FrannHammer.WebApi.Specs.Attributes
         private static void AssertCharacterAttributeRowIsValid(ICharacterAttributeRow characterAttributeRow)
         {
             Assert.That(characterAttributeRow, Is.Not.Null, $"{nameof(characterAttributeRow)}");
-            Assert.That(characterAttributeRow.Id, Is.Not.Null, $"{nameof(characterAttributeRow.Id)}");
+            Assert.That(characterAttributeRow.InstanceId, Is.Not.Null, $"{nameof(characterAttributeRow.InstanceId)}");
             Assert.That(characterAttributeRow.Name, Is.Not.Null, $"{nameof(characterAttributeRow.Name)}");
             Assert.That(characterAttributeRow.Owner, Is.Not.Null, $"{nameof(characterAttributeRow.Owner)}");
 

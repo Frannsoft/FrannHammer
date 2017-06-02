@@ -37,7 +37,7 @@ namespace FrannHammer.WebApi.Controllers
         /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
         /// E.g., id,name to get back just the id and name.</para></param>
         [Route(MovementsRouteKey + "/{id}")]
-        public override IHttpActionResult GetById(string id, [FromUri] string fields = "")
+        public IHttpActionResult GetById(string id, [FromUri] string fields = "")
         {
             var content = _movementService.GetSingleById(id, fields);
             return Result(content);

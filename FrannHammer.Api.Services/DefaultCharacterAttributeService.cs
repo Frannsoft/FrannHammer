@@ -15,7 +15,7 @@ namespace FrannHammer.Api.Services
         public override IEnumerable<ICharacterAttributeRow> GetAllWhereCharacterNameIs(string name, string fields = "")
         {
             Guard.VerifyStringIsNotNullOrEmpty(name, nameof(name));
-            return GetAllWhere(item => EqualityComparer<string>.Default.Equals(item.CharacterName, name));
+            return GetAllWhere(item => EqualityComparer<string>.Default.Equals(item.Owner, name));
         }
     }
 }

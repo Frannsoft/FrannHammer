@@ -10,7 +10,7 @@ namespace FrannHammer.Domain.PropertyParsers
         protected IDictionary<string, string> AddBaseSetKnockbackCore(string rawKbk, string regexPattern, char[] trimValues,
             char primaryKnockbackValueChar, Func<string, bool> doesRawContainKnockBackValue)
         {
-            if (rawKbk.Contains(primaryKnockbackValueChar))
+            if (!string.IsNullOrEmpty(rawKbk) && rawKbk.Contains(primaryKnockbackValueChar))
             {
                 var baseKbksRegexMatch = Regex.Match(rawKbk, regexPattern).Value;
                 var trimmed = baseKbksRegexMatch.Trim(trimValues);

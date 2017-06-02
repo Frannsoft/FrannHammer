@@ -1,6 +1,7 @@
 ﻿using FrannHammer.Domain.Contracts;
 using FrannHammer.Domain.PropertyParsers;
 using static FrannHammer.Domain.FriendlyNameMoveCommonConstants;
+using static FrannHammer.Domain.FriendlyNameCommonConstants;
 
 namespace FrannHammer.Domain
 {
@@ -26,8 +27,8 @@ namespace FrannHammer.Domain
         [FriendlyName(AutoCancelName)]
         public string AutoCancel { get; set; }
 
-        [PropertyParser(typeof(BaseKnockbackParser), "baseKnockback")]
-        [PropertyParser(typeof(SetKnockbackParser), "setKnockback")]
+        [PropertyParser(typeof(BaseKnockbackParser), BaseKnockbackName)]
+        [PropertyParser(typeof(SetKnockbackParser), SetKnockbackName)]
         [FriendlyName(BaseKnockbackSetKnockbackName)]
         public string BaseKnockBackSetKnockback { get; set; }
 
@@ -47,5 +48,8 @@ namespace FrannHammer.Domain
 
         [FriendlyName(IsWeightDependentName)]
         public bool IsWeightDependent { get; set; }
+
+        [FriendlyName(OwnerIdName)]
+        public int OwnerId { get; set; }
     }
 }

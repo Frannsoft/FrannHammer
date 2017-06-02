@@ -2,6 +2,8 @@ namespace FrannHammer.Domain
 {
     public class FriendlyNameMoveCommonConstants
     {
+        public const string BaseKnockbackName = "baseKnockback";
+        public const string SetKnockbackName = "setKnockback";
         public const string HitboxActiveName = "hitboxActive";
         public const string BaseDamageName = "baseDamage";
         public const string AngleName = "angle";
@@ -11,7 +13,7 @@ namespace FrannHammer.Domain
         public const string FirstActionableFrameName = "firstActionableFrame";
         public const string LandingLagName = "landingLag";
         public const string MoveTypeName = "moveType";
-        public const string OwnerName = "ownerId";
+        public const string OwnerName = "owner";
         public const string IsWeightDependentName = "weightDependent";
     }
 }

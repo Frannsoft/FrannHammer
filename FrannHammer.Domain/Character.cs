@@ -1,4 +1,5 @@
 ﻿using FrannHammer.Domain.Contracts;
+using static FrannHammer.Domain.FriendlyNameCommonConstants;
 
 namespace FrannHammer.Domain
 {
@@ -18,5 +19,8 @@ namespace FrannHammer.Domain
 
         [FriendlyName("displayName")]
         public string DisplayName { get; set; }
+
+        [FriendlyName(OwnerIdName)]
+        public int OwnerId { get; set; }
     }
 }

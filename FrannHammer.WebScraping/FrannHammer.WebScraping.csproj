@@ -83,7 +83,6 @@
     <Compile Include="HtmlParsing\HtmlParser.cs" />
     <Compile Include="Images\DefaultImageScrapingProvider.cs" />
     <Compile Include="Images\DefaultImageScrapingService.cs" />
-    <Compile Include="Movements\MovementProvider.cs" />
     <Compile Include="Movements\DefaultMovementScraper.cs" />
     <Compile Include="Moves\GroundMoveScraper.cs" />
     <Compile Include="Moves\ThrowMoveScraper.cs" />
