@@ -113,62 +113,44 @@ namespace FrannHammer.Api.Services
                         parserType = ExtractParserType(property, FriendlyNameMoveCommonConstants.BaseKnockbackName) ??
                                      ExtractParserType(property, FriendlyNameMoveCommonConstants.SetKnockbackName);
 
-                        string knockbackRawValue = property.GetValue(move)?.ToString();
-
-                        if (parserType == null)
-                        {
-                            AddBasicInfoToDataProperty(parsedMoveDataProperty, rawValue, move);
-                            parsedMove.MoveData.Add(parsedMoveDataProperty);
-                        }
-                        else
-                        {
-                            var parser = (PropertyParser)Activator.CreateInstance(parserType);
-                            var parsedData = parser.Parse(knockbackRawValue);
-                            AddBasicInfoToDataProperty(parsedMoveDataProperty, rawValue, move);
-                            foreach (var parsed in parsedData)
-                            {
-                                parsedMoveDataProperty.Data.Add(
-                                    new ParsedMoveAttribute
-                                    {
-                                        Name = parsed.Key,
-                                        Value = parsed.Value
-                                    });
-                            }
-
-                            parsedMove.MoveData.Add(parsedMoveDataProperty);
-                        }
+                        ParseData(parserType, rawValue, parsedMove, parsedMoveDataProperty, move);
                     }
                     else
                     {
                         parserType = ExtractParserType(property, property.Name);
-
-                        if (parserType == null)
-                        {
-                            AddBasicInfoToDataProperty(parsedMoveDataProperty, rawValue, move);
-                            parsedMove.MoveData.Add(parsedMoveDataProperty);
-                        }
-                        else
-                        {
-                            var parser = (PropertyParser)Activator.CreateInstance(parserType);
-                            var parsedData = parser.Parse(rawValue);
-                            AddBasicInfoToDataProperty(parsedMoveDataProperty, rawValue, move);
-                            foreach (var parsed in parsedData)
-                            {
-                                parsedMoveDataProperty.Data.Add(
-                                    new ParsedMoveAttribute
-                                    {
-                                        Name = parsed.Key,
-                                        Value = parsed.Value
-                                    });
-                            }
-                            parsedMove.MoveData.Add(parsedMoveDataProperty);
-                        }
+                        ParseData(parserType, rawValue, parsedMove, parsedMoveDataProperty, move);
                     }
                 }
                 parsedMoves.Add(parsedMove);
             }
 
             return parsedMoves;
+        }
+
+        private static void ParseData(Type parserType, string rawValue, ParsedMove parsedMove, ParsedMoveDataProperty parsedMoveDataProperty, IMove move)
+        {
+            if (parserType == null)
+            {
+                AddBasicInfoToDataProperty(parsedMoveDataProperty, rawValue, move);
+                parsedMove.MoveData.Add(parsedMoveDataProperty);
+            }
+            else
+            {
+                var parser = (PropertyParser)Activator.CreateInstance(parserType);
+                var parsedData = parser.Parse(rawValue);
+                AddBasicInfoToDataProperty(parsedMoveDataProperty, rawValue, move);
+                foreach (var parsed in parsedData)
+                {
+                    parsedMoveDataProperty.AddParsedMoveAttribute(
+                        new ParsedMoveAttribute
+                        {
+                            Name = parsed.Key,
+                            Value = parsed.Value
+                        });
+                }
+
+                parsedMove.MoveData.Add(parsedMoveDataProperty);
+            }
         }
 
         private static void AddBasicInfoToDataProperty(ParsedMoveDataProperty dataProperty, string rawValue, IMove move)
@@ -278,7 +260,5 @@ namespace FrannHammer.Api.Services
 
             return GetAllWhere(queryFilterParameters);
         }
-
-
     }
 }

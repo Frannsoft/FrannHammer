@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using FrannHammer.Utility;
+using System.Linq;
 
 namespace FrannHammer.Api.Services.Contracts
 {
@@ -10,35 +13,28 @@ namespace FrannHammer.Api.Services.Contracts
         public string MoveName { get; set; }
         public string Owner { get; set; }
         public int OwnerId { get; set; }
-
         public IList<ParsedMoveDataProperty> MoveData { get; }
+
+        public ParsedMoveDataProperty this[string propertyName]
+        {
+            get
+            {
+                return
+                    MoveData.FirstOrDefault(
+                        moveProperty =>
+                            moveProperty.Name.Equals(propertyName, StringComparison.CurrentCultureIgnoreCase));
+            }
+        }
 
         public ParsedMove()
         {
             MoveData = new List<ParsedMoveDataProperty>();
         }
-    }
 
-    /// <summary>
-    /// A single column of move data.  E.g., HitboxActive
-    /// </summary>
-    public class ParsedMoveDataProperty
-    {
-        public string Name { get; set; }
-        public IList<ParsedMoveAttribute> Data { get; }
-
-        public ParsedMoveDataProperty()
+        public void AddParsedMoveDataProperty(ParsedMoveDataProperty parsedMoveDataProperty)
         {
-            Data = new List<ParsedMoveAttribute>();
+            Guard.VerifyObjectNotNull(parsedMoveDataProperty, nameof(parsedMoveDataProperty));
+            MoveData.Add(parsedMoveDataProperty);
         }
-    }
-
-    /// <summary>
-    /// A single field for a parsed move data column. E.g., Hitbox1, Hitbox2, Notes, RawValue, etc.
-    /// </summary>
-    public class ParsedMoveAttribute
-    {
-        public string Name { get; set; }
-        public object Value { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using FrannHammer.Api.Services.Contracts;
 using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.Domain.PropertyParsers;
@@ -168,7 +169,7 @@ namespace FrannHammer.WebApi.Specs.Characters
         public void ThenTheResultShouldBeAListContainingTheParsedOutMoveDataForThatCharacter()
         {
             var detailedMoveData = ApiClient
-                .DeserializeResponse<IEnumerable<IDictionary<string, IDictionary<string, string>>>>(
+                .DeserializeResponse<IEnumerable<ParsedMove>>(
                     ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey))
                     .ToList();
 
@@ -182,17 +183,17 @@ namespace FrannHammer.WebApi.Specs.Characters
 
             detailedMoveData.ForEach(moveData =>
             {
-                foreach (var moveDataProperties in moveData.Values)
-                {
-                    Assert.That(moveDataProperties[MoveDataNameConstants.OwnerKey], Is.EqualTo(expectedOwnerName),
-                        $"{nameof(MoveDataNameConstants.OwnerKey)}");
-                    Assert.That(moveDataProperties[MoveDataNameConstants.OwnerIdKey], Is.EqualTo(expectedOwnerId.ToString()),
-                        $"{nameof(MoveDataNameConstants.OwnerIdKey)}");
+                Assert.That(moveData.Owner, Is.EqualTo(expectedOwnerName),
+                       $"{nameof(moveData.Owner)}");
+                Assert.That(moveData.OwnerId, Is.EqualTo(expectedOwnerId),
+                    $"{nameof(moveData.OwnerId)}");
 
+                foreach (var moveDataProperties in moveData.MoveData)
+                {
                     foreach (var field in expectedMoveProperties)
                     {
-                        Assert.That(moveDataProperties.ContainsKey(field.Name),
-                            $"{nameof(moveData)} does not have key {nameof(field.Name)}");
+                        Assert.That(moveDataProperties[field.Name] != null,
+                            $"{nameof(moveData)} does not have property of name {nameof(field.Name)}");
                     }
                 }
             });

@@ -22,7 +22,5 @@ namespace FrannHammer.Api.Services.Tests
                     new DefaultMoveService(new Mock<IRepository<IMove>>().Object, new QueryMappingService(new Mock<IAttributeStrategy>().Object)));
             });
         }
-
-        
     }
 }
