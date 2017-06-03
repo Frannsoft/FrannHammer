@@ -62,7 +62,7 @@ namespace FrannHammer.DataAccess.MongoDb
             return rawCollection;
         }
 
-        public IEnumerable<T> GetAllWhere(IDictionary<string, string> queryParameters)
+        public IEnumerable<T> GetAllWhere(IDictionary<string, object> queryParameters)
         {
             Guard.VerifyObjectNotNull(queryParameters, nameof(queryParameters));
 
@@ -80,7 +80,16 @@ namespace FrannHammer.DataAccess.MongoDb
                     filterDefinition = Builders<BsonDocument>.Filter.Eq(kvp.Key, kvp.Value);
                     continue;
                 }
-                filterDefinition = filterDefinition & Builders<BsonDocument>.Filter.Regex(kvp.Key, new BsonRegularExpression($"^{kvp.Value}$", "i"));
+                if (kvp.Value is string)
+                {
+                    filterDefinition = filterDefinition &
+                                       Builders<BsonDocument>.Filter.Regex(kvp.Key,
+                                           new BsonRegularExpression($"^{kvp.Value}$", "i"));
+                }
+                else
+                {
+                    filterDefinition = filterDefinition & Builders<BsonDocument>.Filter.Eq(kvp.Key, kvp.Value);
+                }
             }
 
             var rawCollection =

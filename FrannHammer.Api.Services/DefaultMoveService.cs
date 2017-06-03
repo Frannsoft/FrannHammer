@@ -252,10 +252,16 @@ namespace FrannHammer.Api.Services
             return throwMoves;
         }
 
+        public IEnumerable<IMove> GetAllThrowsWhereCharacterOwnerIdIs(int ownerId, string fields = "")
+        {
+            var throwMoves = GetAllWhere(move => move.OwnerId == ownerId &&
+                                                 move.MoveType == MoveType.Throw.GetEnumDescription());
+
+            return throwMoves;
+        }
+
         public IEnumerable<IMove> GetAllWhere(IMoveFilterResourceQuery query, string fields = "")
         {
-            Guard.VerifyStringIsNotNullOrEmpty(query.Name, nameof(query.Name));
-
             var queryFilterParameters = _queryMappingService.MapResourceQueryToDictionary(query, BindingFlags.Public | BindingFlags.Instance);
 
             return GetAllWhere(queryFilterParameters);

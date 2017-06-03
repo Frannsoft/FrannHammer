@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
@@ -16,11 +17,11 @@ namespace FrannHammer.Api.Services
             _attributeStrategy = attributeStrategy;
         }
 
-        public IDictionary<string, string> MapResourceQueryToDictionary(IMoveFilterResourceQuery query, BindingFlags flagsToLocateProperties)
+        public IDictionary<string, object> MapResourceQueryToDictionary(IMoveFilterResourceQuery query, BindingFlags flagsToLocateProperties)
         {
             Guard.VerifyObjectNotNull(query, nameof(query));
 
-            var returnedDictionary = new Dictionary<string, string>();
+            var returnedDictionary = new Dictionary<string, object>();
 
             foreach (var property in query.GetType().GetProperties(flagsToLocateProperties))
             {
@@ -28,10 +29,21 @@ namespace FrannHammer.Api.Services
 
                 if (propertyValue != null)
                 {
-                    var friendlyNameAttribute = _attributeStrategy.GetAttributeFromProperty<FriendlyNameAttribute>(query, property);
-                    if (friendlyNameAttribute != null)
+                    bool includeInReturnedDictionary = true;
+
+                    if (property.PropertyType.IsValueType)
                     {
-                        returnedDictionary.Add(friendlyNameAttribute.Name, propertyValue.ToString());
+                        //is the property value type the default value for its type?  
+                        //If so, don't include it in the returned dictionary because
+                        //it mess up the query by using an unexpected value.
+                        if (Activator.CreateInstance(property.PropertyType).Equals(propertyValue))
+                        { includeInReturnedDictionary = false; }
+                    }
+
+                    var friendlyNameAttribute = _attributeStrategy.GetAttributeFromProperty<FriendlyNameAttribute>(query, property);
+                    if (friendlyNameAttribute != null && includeInReturnedDictionary)
+                    {
+                        returnedDictionary.Add(friendlyNameAttribute.Name, propertyValue);
                     }
                 }
             }

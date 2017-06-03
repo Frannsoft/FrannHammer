@@ -6,6 +6,6 @@ namespace FrannHammer.Api.Services
 {
     public interface IQueryMappingService
     {
-        IDictionary<string, string> MapResourceQueryToDictionary(IMoveFilterResourceQuery query, BindingFlags flagsToLocateProperties);
+        IDictionary<string, object> MapResourceQueryToDictionary(IMoveFilterResourceQuery query, BindingFlags flagsToLocateProperties);
     }
 }
