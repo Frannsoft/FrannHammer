@@ -41,16 +41,30 @@ namespace FrannHammer.Api.Services
 
         public ICharacterDetailsDto GetCharacterDetails(string name, string fields = "")
         {
-            var dto = default(ICharacterDetailsDto);
-
             var character =
                 GetSingleWhere(c => c.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase));
 
             //get movement, attributes and put into aggregate dto 
-            dto = _dtoProvider.CreateCharacterDetailsDto();
+            var dto = _dtoProvider.CreateCharacterDetailsDto();
 
             var movements = _movementService.GetAllWhereCharacterNameIs(name, fields);
             var attributeRows = _attributeRowService.GetAllWhereCharacterNameIs(name, fields);
+
+            dto.Metadata = character;
+            dto.Movements = movements;
+            dto.AttributeRows = attributeRows;
+
+            return dto;
+        }
+
+        public ICharacterDetailsDto GetCharacterDetailsWhereCharacterOwnerIdIs(int id, string fields)
+        {
+            var character = GetSingleWhere(c => c.OwnerId == id);
+
+            var dto = _dtoProvider.CreateCharacterDetailsDto();
+
+            var movements = _movementService.GetAllWhereCharacterOwnerIdIs(id, fields);
+            var attributeRows = _attributeRowService.GetAllWhereCharacterOwnerIdIs(id, fields);
 
             dto.Metadata = character;
             dto.Movements = movements;
@@ -72,6 +86,22 @@ namespace FrannHammer.Api.Services
         public IEnumerable<ParsedMove> GetDetailedMovesWhereCharacterNameIs(string name, string fields = "")
         {
             var foundCharacter = GetSingleByName(name, fields);
+            return _moveService.GetAllMovePropertyDataForCharacter(foundCharacter);
+        }
+
+        public IEnumerable<IMovement> GetAllMovementsWhereCharacterOwnerIdIs(int id, string fields = "")
+        {
+            return _movementService.GetAllWhere(movement => movement.OwnerId == id);
+        }
+
+        public IEnumerable<ICharacterAttributeRow> GetAllAttributesWhereCharacterOwnerIdIs(int id, string fields = "")
+        {
+            return _attributeRowService.GetAllWhereCharacterOwnerIdIs(id, fields);
+        }
+
+        public IEnumerable<ParsedMove> GetDetailedMovesWhereCharacterOwnerIdIs(int id, string fields = "")
+        {
+            var foundCharacter = GetSingleByOwnerId(id, fields);
             return _moveService.GetAllMovePropertyDataForCharacter(foundCharacter);
         }
     }

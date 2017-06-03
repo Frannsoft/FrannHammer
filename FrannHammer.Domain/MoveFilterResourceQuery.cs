@@ -13,6 +13,9 @@ namespace FrannHammer.Domain
         [FriendlyName(FriendlyNameCommonConstants.Name)]
         public string MoveName { get; set; }
 
+        [FriendlyName(FriendlyNameCommonConstants.OwnerIdName)]
+        public int Id { get; set; }
+
         public string Fields { get; set; }
     }
 }

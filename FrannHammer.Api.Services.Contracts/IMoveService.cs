@@ -15,5 +15,7 @@ namespace FrannHammer.Api.Services.Contracts
 
         IEnumerable<ParsedMove> GetAllMovePropertyDataForCharacter(ICharacter character, string fields = "");
 
+        IEnumerable<IMove> GetAllThrowsWhereCharacterOwnerIdIs(int ownerId, string fields = "");
+        IEnumerable<IMove> GetAllWhereCharacterOwnerIdIs(int id, string fields = "");
     }
 }

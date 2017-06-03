@@ -7,7 +7,6 @@ using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.Domain.PropertyParsers;
 using FrannHammer.WebScraping;
-using FrannHammer.WebScraping.Domain.Contracts;
 using NUnit.Framework;
 using TechTalk.SpecFlow;
 
@@ -87,7 +86,8 @@ namespace FrannHammer.WebApi.Specs.Characters
             Assert.That(characterThrowData.Count, Is.GreaterThan(0), $"{nameof(characterThrowData.Count)}");
             characterThrowData.ForEach(charThrow =>
             {
-                Assert.That(charThrow.Owner, Is.EqualTo(expectedOwnerName), $"{nameof(charThrow.Owner)}");
+                Assert.That(charThrow.OwnerId.ToString() == expectedOwnerName ||
+                           charThrow.Owner == expectedOwnerName, $"{nameof(charThrow.OwnerId)}");
                 Assert.That(charThrow.MoveType, Is.EqualTo(MoveType.Throw.GetEnumDescription()), $"{nameof(charThrow.MoveType)}");
             });
         }
@@ -103,7 +103,8 @@ namespace FrannHammer.WebApi.Specs.Characters
 
             characterMoveData.ForEach(character =>
             {
-                Assert.That(character.Owner, Is.EqualTo(expectedOwnerName), $"{nameof(character.Owner)}");
+                Assert.That(character.OwnerId.ToString() == expectedOwnerName ||
+                            character.Owner == expectedOwnerName, $"{nameof(character.OwnerId)}");
             });
             characterMoveData.ForEach(AssertMoveIsValid);
         }
@@ -119,7 +120,8 @@ namespace FrannHammer.WebApi.Specs.Characters
 
             characterMovementData.ForEach(character =>
             {
-                Assert.That(character.Owner, Is.EqualTo(expectedOwnerName), $"{nameof(character.Owner)}");
+                Assert.That(character.OwnerId.ToString() == expectedOwnerName ||
+                           character.Owner == expectedOwnerName, $"{nameof(character.OwnerId)}");
             });
             characterMovementData.ForEach(AssertMovementIsValid);
         }
@@ -132,19 +134,17 @@ namespace FrannHammer.WebApi.Specs.Characters
 
             string expectedOwnerName = ScenarioContext.Current.Get<string>(RouteTemplateValueToReplaceKey);
 
-            int expectedOwnerId = CharacterIds.FindByName(expectedOwnerName);
-
             attributeRows.ForEach(row =>
             {
-                Assert.That(row.Owner, Is.EqualTo(expectedOwnerName), $"{nameof(row.Owner)}");
-                Assert.That(row.OwnerId, Is.EqualTo(expectedOwnerId), $"{nameof(row.OwnerId)}");
+                Assert.That(row.OwnerId.ToString() == expectedOwnerName ||
+                          row.Owner == expectedOwnerName, $"{nameof(row.OwnerId)}");
                 Assert.That(row.Values.Count(), Is.GreaterThan(0), $"{nameof(row.Values)}");
 
                 row.Values.ToList().ForEach(rowValue =>
                 {
                     Assert.That(rowValue.Name, Is.Not.Null, $"{nameof(rowValue.Name)}");
-                    Assert.That(rowValue.Owner, Is.EqualTo(expectedOwnerName), $"{nameof(rowValue.Owner)}");
-                    Assert.That(rowValue.OwnerId, Is.EqualTo(expectedOwnerId), $"{nameof(rowValue.OwnerId)}");
+                    Assert.That(row.OwnerId.ToString() == expectedOwnerName ||
+                          row.Owner == expectedOwnerName, $"{nameof(row.OwnerId)}");
                     Assert.That(rowValue.Value, Is.Not.Null, $"{nameof(rowValue.Value)}");
                 });
             });
@@ -174,7 +174,7 @@ namespace FrannHammer.WebApi.Specs.Characters
                     .ToList();
 
             string expectedOwnerName = ScenarioContext.Current.Get<string>(RouteTemplateValueToReplaceKey);
-            int expectedOwnerId = CharacterIds.FindByName(expectedOwnerName);
+
 
             Assert.That(detailedMoveData.Count, Is.GreaterThan(0), $"{nameof(detailedMoveData.Count)}");
 
@@ -183,10 +183,8 @@ namespace FrannHammer.WebApi.Specs.Characters
 
             detailedMoveData.ForEach(moveData =>
             {
-                Assert.That(moveData.Owner, Is.EqualTo(expectedOwnerName),
-                       $"{nameof(moveData.Owner)}");
-                Assert.That(moveData.OwnerId, Is.EqualTo(expectedOwnerId),
-                    $"{nameof(moveData.OwnerId)}");
+                Assert.That(moveData.OwnerId.ToString() == expectedOwnerName ||
+                         moveData.Owner == expectedOwnerName, $"{nameof(moveData.OwnerId)}");
 
                 foreach (var moveDataProperties in moveData.MoveData)
                 {
