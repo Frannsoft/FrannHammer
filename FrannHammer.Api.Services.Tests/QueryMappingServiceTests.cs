@@ -71,6 +71,7 @@ namespace FrannHammer.Api.Services.Tests
             public string Name { get; set; }
             public string MoveName { get; set; }
             public string MoveType { get; set; }
+            public int Id { get; set; }
         }
     }
 }
