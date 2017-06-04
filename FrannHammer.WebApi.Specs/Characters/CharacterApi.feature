@@ -34,7 +34,7 @@ Scenario Outline: I want all of the throw data named fthrow for a specific chara
 	Then the result should be a list containing just that characters throw data
 
 Examples: 
-	| apiRoute														  | routeParameter |
+	| apiRoute														         | routeParameter |
 	| api/characters/name/{name}/moves/search?movetype=throw&movename=fthrow | name Bowser    |
 	| api/characters/{id}/moves/search?movetype=throw&movename=fthrow        | id 58          |
 

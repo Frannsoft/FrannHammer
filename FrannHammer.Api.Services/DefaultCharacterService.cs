@@ -134,12 +134,12 @@ namespace FrannHammer.Api.Services
             return _moveService.GetAllMovesForCharacter(foundCharacter, fields);
         }
 
-        public IEnumerable<IMove> GetAllMovesForCharacterByNameWhereFilter(IMoveFilterResourceQuery query)
+        public IEnumerable<IMove> GetAllMovesForCharacterByNameFilteredBy(IMoveFilterResourceQuery query)
         {
             return _moveService.GetAllWhere(query);
         }
 
-        public IEnumerable<IMove> GetAllMovesForCharacterByOwnerIdWhereFilter(IMoveFilterResourceQuery query)
+        public IEnumerable<IMove> GetAllMovesForCharacterByOwnerIdFilteredBy(IMoveFilterResourceQuery query)
         {
             return _moveService.GetAllWhere(query);
         }

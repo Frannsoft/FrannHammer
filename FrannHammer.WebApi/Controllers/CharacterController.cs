@@ -65,14 +65,14 @@ namespace FrannHammer.WebApi.Controllers
         [Route(CharactersRouteKey + NameRouteKey + MovesRouteKey + SearchRouteKey)]
         public IHttpActionResult GetAllMovesForCharacterByNameWhereFilter([FromUri] MoveFilterResourceQuery query)
         {
-            var moves = _characterService.GetAllMovesForCharacterByOwnerIdWhereFilter(query);
+            var moves = _characterService.GetAllMovesForCharacterByOwnerIdFilteredBy(query);
             return Result(moves);
         }
 
         [Route(CharactersRouteKey + IdRouteKey + MovesRouteKey + SearchRouteKey)]
         public IHttpActionResult GetAllMovesForCharacterByIdWhereFilter([FromUri] MoveFilterResourceQuery query)
         {
-            var moves = _characterService.GetAllMovesForCharacterByNameWhereFilter(query);
+            var moves = _characterService.GetAllMovesForCharacterByNameFilteredBy(query);
             return Result(moves);
         }
 

@@ -23,7 +23,7 @@ namespace FrannHammer.Api.Services.Contracts
         IEnumerable<IMove> GetAllMovesWhereCharacterOwnerIdIs(int id, string fields = "");
         IEnumerable<IMove> GetAllMovesWhereCharacterNameIs(string name, string fields = "");
 
-        IEnumerable<IMove> GetAllMovesForCharacterByNameWhereFilter(IMoveFilterResourceQuery query);
-        IEnumerable<IMove> GetAllMovesForCharacterByOwnerIdWhereFilter(IMoveFilterResourceQuery query);
+        IEnumerable<IMove> GetAllMovesForCharacterByNameFilteredBy(IMoveFilterResourceQuery query);
+        IEnumerable<IMove> GetAllMovesForCharacterByOwnerIdFilteredBy(IMoveFilterResourceQuery query);
     }
 }
