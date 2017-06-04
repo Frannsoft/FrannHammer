@@ -39,12 +39,12 @@ namespace FrannHammer.WebApi.Controllers
         [Route(MovementsRouteKey + "/{id}")]
         public IHttpActionResult GetById(string id, [FromUri] string fields = "")
         {
-            var content = _movementService.GetSingleById(id, fields);
+            var content = _movementService.GetSingleByInstanceId(id, fields);
             return Result(content);
         }
 
         [Route(MovementsRouteKey + "/name/{name}")]
-        public override IHttpActionResult GetAllWhereName(string name, string fields = "")
+        public override IHttpActionResult GetSingleByName(string name, string fields = "")
         {
             var content = _movementService.GetAllWhereName(name, fields);
             return Result(content);

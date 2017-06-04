@@ -7,7 +7,7 @@ namespace FrannHammer.Api.Services.Contracts
     {
         ICharacter GetSingleByOwnerId(int id, string fields = "");
         ICharacter GetSingleByName(string name, string fields = "");
-        ICharacterDetailsDto GetCharacterDetails(string name, string fields = "");
+        ICharacterDetailsDto GetCharacterDetailsWhereCharacterOwnerIs(string name, string fields = "");
         IEnumerable<IMovement> GetAllMovementsWhereCharacterNameIs(string name, string fields = "");
         IEnumerable<ICharacterAttributeRow> GetAllAttributesWhereCharacterNameIs(string name, string fields = "");
         IEnumerable<ParsedMove> GetDetailedMovesWhereCharacterNameIs(string name, string fields = "");
@@ -15,5 +15,15 @@ namespace FrannHammer.Api.Services.Contracts
         ICharacterDetailsDto GetCharacterDetailsWhereCharacterOwnerIdIs(int id, string fields);
         IEnumerable<ICharacterAttributeRow> GetAllAttributesWhereCharacterOwnerIdIs(int id, string fields = "");
         IEnumerable<ParsedMove> GetDetailedMovesWhereCharacterOwnerIdIs(int id, string fields = "");
+
+        //new
+        IEnumerable<IMove> GetAllThrowsWhereCharacterOwnerIdIs(int id, string fields = "");
+        IEnumerable<IMove> GetAllThrowsWhereCharacterNameIs(string name, string fields = "");
+
+        IEnumerable<IMove> GetAllMovesWhereCharacterOwnerIdIs(int id, string fields = "");
+        IEnumerable<IMove> GetAllMovesWhereCharacterNameIs(string name, string fields = "");
+
+        IEnumerable<IMove> GetAllMovesForCharacterByNameFilteredBy(IMoveFilterResourceQuery query);
+        IEnumerable<IMove> GetAllMovesForCharacterByOwnerIdFilteredBy(IMoveFilterResourceQuery query);
     }
 }

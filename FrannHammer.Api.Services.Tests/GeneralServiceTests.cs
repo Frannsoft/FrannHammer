@@ -124,7 +124,7 @@ namespace FrannHammer.Api.Services.Tests
 
             var sut = CreateCrudService(repositoryMock.Object);
 
-            var result = sut.GetSingleById("0");
+            var result = sut.GetSingleByInstanceId("0");
 
             Assert.That(result, Is.Null);
         }

@@ -35,7 +35,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
         private static IEnumerable<Tuple<string, Type, string>> MoveControllerRouteInfo()
         {
             yield return Tuple.Create("moves/name/{name}/{property}", typeof(MoveController), nameof(MoveController.GetAllPropertyDataForMoveByName));
-            yield return Tuple.Create("moves/name/{name}", typeof(MoveController), nameof(MoveController.GetAllWhereName));
+            yield return Tuple.Create("moves/name/{name}", typeof(MoveController), nameof(MoveController.GetSingleByName));
             //yield return Tuple.Create("moves/{id}", typeof(MoveController), nameof(MoveController.GetById));
             yield return Tuple.Create("moves", typeof(MoveController), nameof(MoveController.GetAll));
         }
@@ -44,19 +44,19 @@ namespace FrannHammer.WebApi.Tests.Controllers
         {
             yield return Tuple.Create("movements", typeof(MovementController), nameof(MovementController.GetAll));
             //yield return Tuple.Create("movements/{id}", typeof(MovementController), nameof(MovementController.GetById));
-            yield return Tuple.Create("movements/name/{name}", typeof(MovementController), nameof(MovementController.GetAllWhereName));
+            yield return Tuple.Create("movements/name/{name}", typeof(MovementController), nameof(MovementController.GetSingleByName));
         }
 
         private static IEnumerable<Tuple<string, Type, string>> CharacterControllerRouteInfo()
         {
-            yield return Tuple.Create("characters/name/{name}", typeof(CharacterController), nameof(CharacterController.GetAllWhereName));
+            yield return Tuple.Create("characters/name/{name}", typeof(CharacterController), nameof(CharacterController.GetSingleByName));
             //yield return Tuple.Create("characters/{id}", typeof(CharacterController), nameof(CharacterController.GetById));
             yield return Tuple.Create("characters", typeof(CharacterController), nameof(CharacterController.GetAll));
         }
 
         private static IEnumerable<Tuple<string, Type, string>> CharacterAttributeControllerRouteInfo()
         {
-            yield return Tuple.Create("characterattributes/name/{name}", typeof(CharacterAttributeController), nameof(CharacterAttributeController.GetAllWhereName));
+            yield return Tuple.Create("characterattributes/name/{name}", typeof(CharacterAttributeController), nameof(CharacterAttributeController.GetSingleByName));
             //yield return Tuple.Create("characterattributes/{id}", typeof(CharacterAttributeController), nameof(CharacterAttributeController.GetById));
             yield return Tuple.Create("characterattributes", typeof(CharacterAttributeController), nameof(CharacterAttributeController.GetAll));
         }

@@ -6,7 +6,7 @@ using FrannHammer.Utility;
 namespace FrannHammer.Api.Services
 {
     public class OwnerBasedApiService<T> : BaseApiService<T>
-        where T : IHaveAnOwner, IModel
+        where T : IHaveAnOwner, IHaveAnOwnerId, IModel
     {
         public OwnerBasedApiService(IRepository<T> repository) 
             : base(repository)
