@@ -177,7 +177,7 @@ namespace FrannHammer.Api.Services
             //TODO - if not, parse the data and cache it then return 
             //it from this method (after handling 'fields' parameter data if not empty)'
             //parse into strongly typed result...
-            var move = GetSingleById(id);
+            var move = GetSingleByInstanceId(id);
 
 
             if (move == null)
@@ -265,6 +265,22 @@ namespace FrannHammer.Api.Services
             var queryFilterParameters = _queryMappingService.MapResourceQueryToDictionary(query, BindingFlags.Public | BindingFlags.Instance);
 
             return GetAllWhere(queryFilterParameters);
+        }
+
+        public IEnumerable<IMove> GetAllThrowsForCharacter(ICharacter character, string fields = "")
+        {
+            Guard.VerifyObjectNotNull(character, nameof(character));
+
+            var throwMoves = GetAllWhere(move => EqualityComparer<string>.Default.Equals(move.Owner, character.Name) &&
+                                                 move.MoveType == MoveType.Throw.GetEnumDescription());
+
+            return throwMoves;
+        }
+
+        public IEnumerable<IMove> GetAllMovesForCharacter(ICharacter character, string fields = "")
+        {
+            var moves = GetAllWhere(move => move.OwnerId == character.OwnerId);
+            return moves;
         }
     }
 }

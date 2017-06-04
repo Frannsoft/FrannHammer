@@ -121,8 +121,8 @@ this.ScenarioSetup(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("I want all of the throw data named fthrow for a specific character")]
-        [NUnit.Framework.TestCaseAttribute("api/characters/name/{name}/moves?movetype=throw&movename=fthrow", "name Bowser", new string[0])]
-        [NUnit.Framework.TestCaseAttribute("api/characters/{id}/moves?movetype=throw&movename=fthrow", "id 58", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("api/characters/name/{name}/moves/search?movetype=throw&movename=fthrow", "name Bowser", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("api/characters/{id}/moves/search?movetype=throw&movename=fthrow", "id 58", new string[0])]
         public virtual void IWantAllOfTheThrowDataNamedFthrowForASpecificCharacter(string apiRoute, string routeParameter, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I want all of the throw data named fthrow for a specific character", exampleTags);

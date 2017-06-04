@@ -35,8 +35,8 @@ Scenario Outline: I want all of the throw data named fthrow for a specific chara
 
 Examples: 
 	| apiRoute														  | routeParameter |
-	| api/characters/name/{name}/moves?movetype=throw&movename=fthrow | name Bowser    |
-	| api/characters/{id}/moves?movetype=throw&movename=fthrow        | id 58          |
+	| api/characters/name/{name}/moves/search?movetype=throw&movename=fthrow | name Bowser    |
+	| api/characters/{id}/moves/search?movetype=throw&movename=fthrow        | id 58          |
 
 Scenario Outline: I want all of the move data for a character
 	Given The api route of <apiRoute>
@@ -46,7 +46,7 @@ Scenario Outline: I want all of the move data for a character
 Examples: 
 	| apiRoute                          | routeParameter |
 	| api/characters/name/{name}/moves  | name Bowser    |
-	|  api/characters/{id}/moves        | id 58          |
+	| api/characters/{id}/moves         | id 58          |
 
 Scenario Outline: I want all of the movement data for a character
 	Given The api route of <apiRoute>

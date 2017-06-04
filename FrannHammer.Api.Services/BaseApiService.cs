@@ -18,7 +18,7 @@ namespace FrannHammer.Api.Services
             Repository = repository;
         }
 
-        public T GetSingleById(string id, string fields = "")
+        public T GetSingleByInstanceId(string id, string fields = "")
         {
             return GetSingleWhere(m => m.InstanceId == id, fields);
         }

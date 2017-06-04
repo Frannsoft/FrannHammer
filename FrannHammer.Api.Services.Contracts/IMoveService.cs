@@ -17,5 +17,11 @@ namespace FrannHammer.Api.Services.Contracts
 
         IEnumerable<IMove> GetAllThrowsWhereCharacterOwnerIdIs(int ownerId, string fields = "");
         IEnumerable<IMove> GetAllWhereCharacterOwnerIdIs(int id, string fields = "");
+
+
+        //new
+        IEnumerable<IMove> GetAllThrowsForCharacter(ICharacter character, string fields = "");
+        IEnumerable<IMove> GetAllMovesForCharacter(ICharacter character, string fields = "");
+
     }
 }

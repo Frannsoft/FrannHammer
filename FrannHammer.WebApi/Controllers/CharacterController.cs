@@ -18,6 +18,7 @@ namespace FrannHammer.WebApi.Controllers
         private const string DetailsRouteKey = "/details";
         private const string CharacterAttributesRouteKey = "/characterattributes";
         private const string DetailedMovesRouteKey = "/detailedmoves";
+        private const string SearchRouteKey = "/search";
         private readonly ICharacterService _characterService;
         private readonly IMoveService _moveService;
 
@@ -45,7 +46,7 @@ namespace FrannHammer.WebApi.Controllers
         }
 
         [Route(CharactersRouteKey + NameRouteKey)]
-        public override IHttpActionResult GetAllWhereName(string name, [FromUri]string fields = "")
+        public override IHttpActionResult GetSingleByName(string name, [FromUri]string fields = "")
         {
             var character = _characterService.GetSingleByName(name, fields);
             return Result(character);
@@ -54,28 +55,48 @@ namespace FrannHammer.WebApi.Controllers
         [Route(CharactersRouteKey + NameRouteKey + ThrowsRouteKey)]
         public IHttpActionResult GetAllThrowsForCharacterWhereName(string name, [FromUri]string fields = "")
         {
-            var throws = _moveService.GetAllThrowsWhereCharacterNameIs(name, fields);
+            //var throws = _moveService.GetAllThrowsWhereCharacterNameIs(name, fields);
+            var throws = _characterService.GetAllThrowsWhereCharacterNameIs(name, fields);
             return Result(throws);
         }
 
         [Route(CharactersRouteKey + IdRouteKey + ThrowsRouteKey)]
         public IHttpActionResult GetAllThrowsForCharacterWhereOwnerId(int id, [FromUri] string fields = "")
         {
-            var throws = _moveService.GetAllThrowsWhereCharacterOwnerIdIs(id, fields);
+            //var throws = _moveService.GetAllThrowsWhereCharacterOwnerIdIs(id, fields);
+            var throws = _characterService.GetAllThrowsWhereCharacterOwnerIdIs(id, fields);
             return Result(throws);
         }
 
-        [Route(CharactersRouteKey + NameRouteKey + MovesRouteKey)]
-        public IHttpActionResult GetAllMovesForCharacterWhereName([FromUri] MoveFilterResourceQuery query)
+        [Route(CharactersRouteKey + NameRouteKey + MovesRouteKey + SearchRouteKey)]
+        public IHttpActionResult GetAllMovesForCharacterByNameWhereFilter([FromUri] MoveFilterResourceQuery query)
         {
-            var moves = _moveService.GetAllWhere(query);
+            //var moves = _moveService.GetAllWhere(query);
+            var moves = _characterService.GetAllMovesForCharacterByOwnerIdWhereFilter(query);
+            return Result(moves);
+        }
+
+        [Route(CharactersRouteKey + IdRouteKey + MovesRouteKey + SearchRouteKey)]
+        public IHttpActionResult GetAllMovesForCharacterByIdWhereFilter([FromUri] MoveFilterResourceQuery query)
+        {
+            //var moves = _moveService.GetAllWhere(query);
+            var moves = _characterService.GetAllMovesForCharacterByNameWhereFilter(query);
+            return Result(moves);
+        }
+
+        [Route(CharactersRouteKey + NameRouteKey + MovesRouteKey)]
+        public IHttpActionResult GetAllMovesForCharacterWhereName(string name, [FromUri] string fields = "")
+        {
+            //var moves = _moveService.GetAllThrowsWhereCharacterNameIs(name, fields);
+            var moves = _characterService.GetAllMovesWhereCharacterNameIs(name, fields);
             return Result(moves);
         }
 
         [Route(CharactersRouteKey + IdRouteKey + MovesRouteKey)]
-        public IHttpActionResult GetAllMovesForCharacterWhereOwnerId([FromUri] MoveFilterResourceQuery query)
+        public IHttpActionResult GetAllMovesForCharacterWhereOwnerId(int id, [FromUri] string fields = "")
         {
-            var moves = _moveService.GetAllWhere(query);
+            //var moves = _moveService.GetAllThrowsWhereCharacterOwnerIdIs(id, fields);
+            var moves = _characterService.GetAllMovesWhereCharacterOwnerIdIs(id, fields);
             return Result(moves);
         }
 
@@ -96,7 +117,7 @@ namespace FrannHammer.WebApi.Controllers
         [Route(CharactersRouteKey + NameRouteKey + DetailsRouteKey)]
         public IHttpActionResult GetDetailsForCharacterByName(string name, [FromUri] string fields = "")
         {
-            var dto = _characterService.GetCharacterDetails(name, fields);
+            var dto = _characterService.GetCharacterDetailsWhereCharacterOwnerIs(name, fields);
             return Result(dto);
         }
 
