@@ -9,7 +9,8 @@ namespace FrannHammer.Api.Services.Tests.ApiServiceFactories
     {
         public override ICrudService<ICharacter> CreateService(IRepository<ICharacter> repository)
         {
-            return new DefaultCharacterService(repository, new DefaultDtoProvider(), new DefaultMovementService(new Mock<IRepository<IMovement>>().Object),
+            return new DefaultCharacterService(repository, new DefaultDtoProvider(), 
+                new DefaultMovementService(new Mock<IRepository<IMovement>>().Object, new Mock<IQueryMappingService>().Object),
                 new DefaultCharacterAttributeService(new Mock<IRepository<ICharacterAttributeRow>>().Object),
                 new DefaultMoveService(new Mock<IRepository<IMove>>().Object, new QueryMappingService(new Mock<IAttributeStrategy>().Object)));
         }

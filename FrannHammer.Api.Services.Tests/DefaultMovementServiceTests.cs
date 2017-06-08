@@ -1,4 +1,5 @@
 ﻿using System;
+using Moq;
 using NUnit.Framework;
 
 namespace FrannHammer.Api.Services.Tests
@@ -12,10 +13,8 @@ namespace FrannHammer.Api.Services.Tests
             Assert.Throws<ArgumentNullException>(() =>
             {
                 // ReSharper disable once ObjectCreationAsStatement
-                new DefaultMovementService(null);
+                new DefaultMovementService(null, new Mock<IQueryMappingService>().Object);
             });
         }
-
-
     }
 }

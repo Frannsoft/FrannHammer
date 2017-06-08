@@ -7,5 +7,6 @@ namespace FrannHammer.Api.Services.Contracts
     {
         IEnumerable<IMovement> GetAllWhereCharacterNameIs(string name, string fields = "");
         IEnumerable<IMovement> GetAllWhereCharacterOwnerIdIs(int id, string fields = "");
+        IEnumerable<IMovement> GetAllWhere(IFilterResourceQuery query, string fields = "");
     }
 }

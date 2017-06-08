@@ -55,6 +55,7 @@
     <Compile Include="MoveFilterResourceQuery.cs" />
     <Compile Include="FriendlyNameMoveCommonConstants.cs" />
     <Compile Include="Movement.cs" />
+    <Compile Include="MovementFilterResourceQuery.cs" />
     <Compile Include="MoveParseClassMap.cs" />
     <Compile Include="PropertyParsers\AutocancelParser.cs" />
     <Compile Include="PropertyParsers\BaseKnockbackParser.cs" />

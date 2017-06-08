@@ -16,7 +16,6 @@ namespace FrannHammer.Api.Services.Contracts
         IEnumerable<ICharacterAttributeRow> GetAllAttributesWhereCharacterOwnerIdIs(int id, string fields = "");
         IEnumerable<ParsedMove> GetDetailedMovesWhereCharacterOwnerIdIs(int id, string fields = "");
 
-        //new
         IEnumerable<IMove> GetAllThrowsWhereCharacterOwnerIdIs(int id, string fields = "");
         IEnumerable<IMove> GetAllThrowsWhereCharacterNameIs(string name, string fields = "");
 
@@ -25,5 +24,8 @@ namespace FrannHammer.Api.Services.Contracts
 
         IEnumerable<IMove> GetAllMovesForCharacterByNameFilteredBy(IMoveFilterResourceQuery query);
         IEnumerable<IMove> GetAllMovesForCharacterByOwnerIdFilteredBy(IMoveFilterResourceQuery query);
+
+        IEnumerable<IMovement> GetAllMovementsWhereCharacterOwnerIdIsFilteredBy(IMovementFilterResourceQuery query);
+        IEnumerable<IMovement> GetAllMovementsWhereCharacterNameIsFilteredBy(IMovementFilterResourceQuery query);
     }
 }

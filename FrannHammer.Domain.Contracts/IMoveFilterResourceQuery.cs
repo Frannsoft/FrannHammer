@@ -1,6 +1,6 @@
 ﻿namespace FrannHammer.Domain.Contracts
 {
-    public interface IMoveFilterResourceQuery
+    public interface IMoveFilterResourceQuery : IFilterResourceQuery
     {
         string Name { get; set; }
         string MoveName { get; set; }
