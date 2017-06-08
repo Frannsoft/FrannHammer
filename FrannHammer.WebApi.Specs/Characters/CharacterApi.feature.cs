@@ -177,6 +177,26 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("I want all of the gravity movement data for a character")]
+        [NUnit.Framework.TestCaseAttribute("api/characters/name/{name}/movements/search?movementname=gravity", "name Bowser", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("api/characters/{id}/movements/search?movementame=gravity", "id 58", new string[0])]
+        public virtual void IWantAllOfTheGravityMovementDataForACharacter(string apiRoute, string routeParameter, string[] exampleTags)
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I want all of the gravity movement data for a character", exampleTags);
+#line 61
+this.ScenarioSetup(scenarioInfo);
+#line 62
+ testRunner.Given(string.Format("The api route of {0}", apiRoute), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 63
+ testRunner.When(string.Format("I request one specific item by {0}", routeParameter), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 64
+ testRunner.Then("the result should be a list containing just that characters gravity movement data" +
+                    "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("I want all the metadata, movement data and attribute data for a specific characte" +
             "r in one request")]
         [NUnit.Framework.TestCaseAttribute("api/characters/name/{name}/details", "name Bowser", new string[0])]
@@ -185,13 +205,13 @@ this.ScenarioSetup(scenarioInfo);
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I want all the metadata, movement data and attribute data for a specific characte" +
                     "r in one request", exampleTags);
-#line 61
+#line 71
 this.ScenarioSetup(scenarioInfo);
-#line 62
+#line 72
  testRunner.Given(string.Format("The api route of {0}", apiRoute), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 63
+#line 73
  testRunner.When(string.Format("I request one specific item by {0}", routeParameter), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 64
+#line 74
  testRunner.Then("the result should be a list containing the metadata, movement data and attribute " +
                     "data for a specific character", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -205,13 +225,13 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void IWantToGetACharactersParsedMoveData(string apiRoute, string routeParameter, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I want to get a characters parsed move data", exampleTags);
-#line 71
+#line 81
 this.ScenarioSetup(scenarioInfo);
-#line 72
+#line 82
  testRunner.Given(string.Format("The api route of {0}", apiRoute), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 73
+#line 83
  testRunner.When(string.Format("I request one specific item by {0}", routeParameter), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 74
+#line 84
  testRunner.Then("the result should be a list containing the parsed out move data for that characte" +
                     "r", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -225,13 +245,13 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void IWantToGetACharactersAttributeData(string apiRoute, string routeParameter, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I want to get a characters attribute data", exampleTags);
-#line 81
+#line 91
 this.ScenarioSetup(scenarioInfo);
-#line 82
+#line 92
  testRunner.Given(string.Format("The api route of {0}", apiRoute), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 83
+#line 93
  testRunner.When(string.Format("I request one specific item by {0}", routeParameter), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 84
+#line 94
  testRunner.Then("the result should be a list containing rows of attribute data for that character", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

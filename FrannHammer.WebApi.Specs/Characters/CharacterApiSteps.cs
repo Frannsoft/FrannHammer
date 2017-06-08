@@ -118,10 +118,10 @@ namespace FrannHammer.WebApi.Specs.Characters
 
             string expectedOwnerName = ScenarioContext.Current.Get<string>(RouteTemplateValueToReplaceKey);
 
-            characterMovementData.ForEach(character =>
+            characterMovementData.ForEach(movement =>
             {
-                Assert.That(character.OwnerId.ToString() == expectedOwnerName ||
-                           character.Owner == expectedOwnerName, $"{nameof(character.OwnerId)}");
+                Assert.That(movement.OwnerId.ToString() == expectedOwnerName ||
+                           movement.Owner == expectedOwnerName, $"{nameof(movement.OwnerId)}");
             });
             characterMovementData.ForEach(AssertMovementIsValid);
         }
@@ -194,6 +194,25 @@ namespace FrannHammer.WebApi.Specs.Characters
                             $"{nameof(moveData)} does not have property of name {nameof(field.Name)}");
                     }
                 }
+            });
+        }
+
+        [Then(@"the result should be a list containing just that characters gravity movement data")]
+        public void ThenTheResultShouldBeAListContainingJustThatCharactersGravityMovementData()
+        {
+            var characterMovementData = ApiClient
+               .DeserializeResponse<IEnumerable<Movement>>(
+                   ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey)).ToList();
+
+            string expectedOwnerName = ScenarioContext.Current.Get<string>(RouteTemplateValueToReplaceKey);
+
+            characterMovementData.ForEach(movement =>
+            {
+                Assert.That(movement.Name.ToLower(), Is.EqualTo("gravity"), $"{nameof(movement.Name)}");
+                Assert.That(movement.OwnerId.ToString() == expectedOwnerName ||
+                           movement.Owner == expectedOwnerName, $"{nameof(movement.OwnerId)}");
+
+                AssertMovementIsValid(movement);
             });
         }
     }
