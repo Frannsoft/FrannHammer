@@ -17,7 +17,7 @@ namespace FrannHammer.Api.Services
             _attributeStrategy = attributeStrategy;
         }
 
-        public IDictionary<string, object> MapResourceQueryToDictionary(IMoveFilterResourceQuery query, BindingFlags flagsToLocateProperties)
+        public IDictionary<string, object> MapResourceQueryToDictionary(IFilterResourceQuery query, BindingFlags flagsToLocateProperties)
         {
             Guard.VerifyObjectNotNull(query, nameof(query));
 

@@ -143,5 +143,15 @@ namespace FrannHammer.Api.Services
         {
             return _moveService.GetAllWhere(query);
         }
+
+        public IEnumerable<IMovement> GetAllMovementsWhereCharacterOwnerIdIsFilteredBy(IMovementFilterResourceQuery query)
+        {
+            return _movementService.GetAllWhere(query);
+        }
+
+        public IEnumerable<IMovement> GetAllMovementsWhereCharacterNameIsFilteredBy(IMovementFilterResourceQuery query)
+        {
+            return _movementService.GetAllWhere(query);
+        }
     }
 }

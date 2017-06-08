@@ -132,7 +132,7 @@ namespace FrannHammer.Seeding.Tests
             characterAttributeRepositoryMock.Setup(c => c.GetAll()).Returns(() => characterAttributes);
 
             //real api services using mocked repos
-            var movementService = new DefaultMovementService(movementRepositoryMock.Object);
+            var movementService = new DefaultMovementService(movementRepositoryMock.Object, new Mock<IQueryMappingService>().Object);
             var moveService = new DefaultMoveService(movesRepositoryMock.Object, new Mock<IQueryMappingService>().Object);
             var characterAttributeService = new DefaultCharacterAttributeService(characterAttributeRepositoryMock.Object);
             var dtoProvider = new DefaultDtoProvider();

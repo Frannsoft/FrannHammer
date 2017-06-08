@@ -8,7 +8,7 @@ namespace FrannHammer.Api.Services.Tests.ApiServiceFactories
     {
         public override ICrudService<IMovement> CreateService(IRepository<IMovement> repository)
         {
-            return new DefaultMovementService(repository);
+            return new DefaultMovementService(repository, new QueryMappingService(new DefaultAttributeStrategy()));
         }
     }
 }

@@ -97,6 +97,20 @@ namespace FrannHammer.WebApi.Controllers
             return Result(movements);
         }
 
+        [Route(CharactersRouteKey + NameRouteKey + MovementsRouteKey + SearchRouteKey)]
+        public IHttpActionResult GetAllMovementsForCharacterByNameWhereFilter([FromUri] MovementFilterResourceQuery query)
+        {
+            var movements = _characterService.GetAllMovementsWhereCharacterNameIsFilteredBy(query);
+            return Result(movements);
+        }
+
+        [Route(CharactersRouteKey + IdRouteKey + MovementsRouteKey + SearchRouteKey)]
+        public IHttpActionResult GetAllMovementsForCharacterByOwnerIdWhereFilter([FromUri] MovementFilterResourceQuery query)
+        {
+            var movements = _characterService.GetAllMovementsWhereCharacterOwnerIdIsFilteredBy(query);
+            return Result(movements);
+        }
+
         [Route(CharactersRouteKey + IdRouteKey + MovementsRouteKey)]
         public IHttpActionResult GetAllMovementsForCharacterWhereOwnerId(int id, [FromUri] string fields = "")
         {

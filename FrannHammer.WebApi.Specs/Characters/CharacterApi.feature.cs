@@ -179,7 +179,7 @@ this.ScenarioSetup(scenarioInfo);
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("I want all of the gravity movement data for a character")]
         [NUnit.Framework.TestCaseAttribute("api/characters/name/{name}/movements/search?movementname=gravity", "name Bowser", new string[0])]
-        [NUnit.Framework.TestCaseAttribute("api/characters/{id}/movements/search?movementame=gravity", "id 58", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("api/characters/{id}/movements/search?movementname=gravity", "id 58", new string[0])]
         public virtual void IWantAllOfTheGravityMovementDataForACharacter(string apiRoute, string routeParameter, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I want all of the gravity movement data for a character", exampleTags);
