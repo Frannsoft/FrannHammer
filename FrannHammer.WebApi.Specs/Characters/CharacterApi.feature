@@ -58,6 +58,16 @@ Examples:
 	| api/characters/name/{name}/movements | name Bowser    |
 	| api/characters/{id}/movements        | id 58          |
 
+Scenario Outline: I want all of the gravity movement data for a character
+	Given The api route of <apiRoute>
+	When I request one specific item by <routeParameter>
+	Then the result should be a list containing just that characters gravity movement data
+
+Examples: 
+	| apiRoute                                                         | routeParameter |
+	| api/characters/name/{name}/movements/search?movementname=gravity | name Bowser    |
+	| api/characters/{id}/movements/search?movementame=gravity         | id 58          |
+
 Scenario Outline: I want all the metadata, movement data and attribute data for a specific character in one request
 	Given The api route of <apiRoute>
 	When I request one specific item by <routeParameter>

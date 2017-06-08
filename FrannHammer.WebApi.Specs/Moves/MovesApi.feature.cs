@@ -90,13 +90,13 @@ this.ScenarioSetup(scenarioInfo);
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Request all moves by name", new string[] {
                         "GetAllWithName"});
-#line 18
+#line 12
 this.ScenarioSetup(scenarioInfo);
-#line 19
+#line 13
  testRunner.Given("The api route of api/moves/name/{name}", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 20
+#line 14
  testRunner.When("I request one specific item by name Nair", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 21
+#line 15
  testRunner.Then("The result should be all moves that match that name", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -119,13 +119,13 @@ this.ScenarioSetup(scenarioInfo);
             }
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Requesting specific property of moves matching the given name returns parsed data" +
                     " for that property of those moves", @__tags);
-#line 24
+#line 18
 this.ScenarioSetup(scenarioInfo);
-#line 25
+#line 19
  testRunner.Given("The api route of api/moves/name/{name}/{property}", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 26
+#line 20
  testRunner.When(string.Format("I request all of the {0} property data for a move by Nair", property), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 27
+#line 21
  testRunner.Then(string.Format("The result should be a list of {0} for the specific property in the moves that ma" +
                         "tch that name", moveproperties), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -143,13 +143,13 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void RequestHitbox_BasedPropertyOfMovesByName(string property, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Request hitbox-based property of moves by name", exampleTags);
-#line 35
+#line 29
 this.ScenarioSetup(scenarioInfo);
-#line 36
+#line 30
  testRunner.Given("The api route of api/moves/name/{name}/{property}", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 37
+#line 31
  testRunner.When(string.Format("I request all of the {0} property data for a move by Jab 1", property), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 38
+#line 32
  testRunner.Then("The result should be a list of hitbox1;hitbox2;hitbox3;hitbox4;hitbox4;rawvalue;m" +
                     "ovename for the specific property in the moves that match that name", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
