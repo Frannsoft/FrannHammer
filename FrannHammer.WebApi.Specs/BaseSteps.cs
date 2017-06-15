@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using FrannHammer.Domain.Contracts;
+using FrannHammer.WebApi.Models;
 using Microsoft.Owin.Testing;
 using NUnit.Framework;
 using TechTalk.SpecFlow;
@@ -87,6 +88,13 @@ namespace FrannHammer.WebApi.Specs
             Assert.That(movement.Owner, Is.Not.Null);
             Assert.That(movement.Value, Is.Not.Null);
             Assert.That(movement.InstanceId, Is.Not.Null);
+        }
+
+        protected static void AssertHalLinksArePresent(Resource resource)
+        {
+            var moveLink = resource.Links.FirstOrDefault(l => l.Rel.Equals("moves"));
+
+            Assert.That(moveLink, Is.Not.Null, "Unable to find 'moves' link.");
         }
     }
 }

@@ -2,6 +2,7 @@
 using FrannHammer.Api.Services.Contracts;
 using FrannHammer.Domain;
 using FrannHammer.Utility;
+using FrannHammer.WebApi.ActionFilterAttributes;
 using static FrannHammer.WebApi.Controllers.ApiControllerBaseRoutingConstants;
 
 namespace FrannHammer.WebApi.Controllers
@@ -34,18 +35,19 @@ namespace FrannHammer.WebApi.Controllers
             return Result(character);
         }
 
-        [Route(CharactersRouteKey)]
-        public override IHttpActionResult GetAll([FromUri]string fields = "")
-        {
-            var characters = _characterService.GetAll(fields);
-            return Result(characters);
-        }
-
+        [SingleCharacterResourceHalSupport]
         [Route(CharactersRouteKey + NameRouteKey)]
         public override IHttpActionResult GetSingleByName(string name, [FromUri]string fields = "")
         {
             var character = _characterService.GetSingleByName(name, fields);
             return Result(character);
+        }
+
+        [Route(CharactersRouteKey)]
+        public override IHttpActionResult GetAll([FromUri]string fields = "")
+        {
+            var characters = _characterService.GetAll(fields);
+            return Result(characters);
         }
 
         [Route(CharactersRouteKey + NameRouteKey + ThrowsRouteKey)]
@@ -76,7 +78,7 @@ namespace FrannHammer.WebApi.Controllers
             return Result(moves);
         }
 
-        [Route(CharactersRouteKey + NameRouteKey + MovesRouteKey)]
+        [Route(CharactersRouteKey + NameRouteKey + MovesRouteKey, Name = nameof(GetAllMovesForCharacterWhereName))]
         public IHttpActionResult GetAllMovesForCharacterWhereName(string name, [FromUri] string fields = "")
         {
             var moves = _characterService.GetAllMovesWhereCharacterNameIs(name, fields);

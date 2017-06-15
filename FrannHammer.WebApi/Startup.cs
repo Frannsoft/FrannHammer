@@ -12,7 +12,11 @@ using Owin;
 using System.Linq;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
+using AutoMapper;
 using FrannHammer.Domain.Contracts;
+using FrannHammer.WebApi.ActionFilterAttributes;
+using FrannHammer.WebApi.HypermediaServices;
+using FrannHammer.WebApi.Models;
 using FrannHammer.WebApi.SwaggerExtensions;
 using Swashbuckle.Application;
 
@@ -55,6 +59,19 @@ namespace FrannHammer.WebApi
                 .WithParameter((pi, c) => pi.Name == "container",
                     (pi, c) => Container);
 
+            //automapper config - must be called prior to registering it in autofac
+            //this way the static Mapper is initialized.
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Character, CharacterResource>();
+            });
+
+            containerBuilder.RegisterType<EntityToBusinessTranslationService>().As<IEntityToBusinessTranslationService>();
+            containerBuilder.RegisterInstance(Mapper.Instance).ExternallyOwned();
+            containerBuilder.RegisterWebApiFilterProvider(config);
+            containerBuilder.RegisterType<LinkProvider>().As<ILinkProvider>();
+            containerBuilder.RegisterType<SingleCharacterResourceHalSupportAttribute>().PropertiesAutowired();
+
             Container = containerBuilder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(Container);
 
@@ -76,6 +93,7 @@ namespace FrannHammer.WebApi
             //Register IMove implementation to move implementation map
             MoveParseClassMap.RegisterType<IMove, Move>();
 
+
             config.EnableSwagger(c =>
             {
                 c.SingleApiVersion("v0.5.0", "FrannHammer Api")
@@ -92,7 +110,6 @@ namespace FrannHammer.WebApi
                    c.InjectStylesheet(Assembly.GetExecutingAssembly(),
                        "FrannHammer.WebApi.SwaggerExtensions.swagger.styles.css");
                });
-
 
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();

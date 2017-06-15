@@ -6,6 +6,7 @@ using FrannHammer.Api.Services.Contracts;
 using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.Domain.PropertyParsers;
+using FrannHammer.WebApi.Models;
 using FrannHammer.WebScraping;
 using NUnit.Framework;
 using TechTalk.SpecFlow;
@@ -68,10 +69,11 @@ namespace FrannHammer.WebApi.Specs.Characters
         public void ThenTheResultShouldBeJustThatCharactersMetadata()
         {
             var characterMetadata = ApiClient
-               .DeserializeResponse<Character>(
+               .DeserializeResponse<CharacterResource>(
                    ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey));
 
             AssertCharacterIsValid(characterMetadata);
+            AssertHalLinksArePresent(characterMetadata);
         }
 
         [Then(@"the result should be a list containing just that characters throw data")]
