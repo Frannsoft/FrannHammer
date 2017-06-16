@@ -92,9 +92,17 @@ namespace FrannHammer.WebApi.Specs
 
         protected static void AssertHalLinksArePresent(Resource resource)
         {
-            var moveLink = resource.Links.FirstOrDefault(l => l.Rel.Equals("moves"));
+            const string movesName = "moves";
+            const string characterAttributesName = "characterattributes";
+            const string movementsName = "movements";
 
-            Assert.That(moveLink, Is.Not.Null, "Unable to find 'moves' link.");
+            var moveLink = resource.Links.FirstOrDefault(l => l.Rel.Equals(movesName));
+            var characterAttributesLink = resource.Links.FirstOrDefault(l => l.Rel.Equals(characterAttributesName));
+            var movementsLink = resource.Links.FirstOrDefault(l => l.Rel.Equals("movements"));
+
+            Assert.That(moveLink, Is.Not.Null, $"Unable to find '{movesName}' link.");
+            Assert.That(characterAttributesLink, Is.Not.Null, $"Unable to find '{characterAttributesName}' link.");
+            Assert.That(movementsLink, Is.Not.Null, $"Unable to find '{movementsName}' link.");
         }
     }
 }

@@ -21,7 +21,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
             Assert.Throws<ArgumentNullException>(() =>
             {
                 // ReSharper disable once ObjectCreationAsStatement
-                new CharacterController(null, new Mock<IMapper>().Object);
+                new CharacterController(null);
             });
         }
 
@@ -49,7 +49,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
             mockUrlHelper.Setup(u => u.Link(It.IsAny<string>(), It.IsAny<object>()))
                 .Returns("/api/characters/name/mario/moves");
 
-            var sut = new CharacterController(mockCharacterService.Object, new Mock<IMapper>().Object)
+            var sut = new CharacterController(mockCharacterService.Object)
             {
                 Url = mockUrlHelper.Object
             };

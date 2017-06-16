@@ -17,16 +17,17 @@ namespace FrannHammer.WebApi.Specs.Characters
     [Scope(Feature = "CharactersApi")]
     public class CharacterApiSteps : BaseSteps
     {
-        private static void AssertCharacterIsValid(ICharacter character)
+        private static void AssertCharacterIsValid(CharacterResource characterResource)
         {
-            Assert.That(character, Is.Not.Null, $"{nameof(character)}");
-            Assert.That(character.ThumbnailUrl, Is.Not.Null, $"{nameof(character.ThumbnailUrl)}");
-            Assert.That(character.DisplayName, Is.Not.Null, $"{nameof(character.DisplayName)}");
-            Assert.That(character.ColorTheme, Is.Not.Null, $"{nameof(character.ColorTheme)}");
-            Assert.That(character.FullUrl, Is.Not.Null, $"{nameof(character.FullUrl)}");
-            Assert.That(character.InstanceId, Is.Not.Null, $"{nameof(character.InstanceId)}");
-            Assert.That(character.MainImageUrl, Is.Not.Null, $"{nameof(character.MainImageUrl)}");
-            Assert.That(character.Name, Is.Not.Null, $"{nameof(character.Name)}");
+            Assert.That(characterResource, Is.Not.Null, $"{nameof(characterResource)}");
+            Assert.That(characterResource.ThumbnailUrl, Is.Not.Null, $"{nameof(characterResource.ThumbnailUrl)}");
+            Assert.That(characterResource.DisplayName, Is.Not.Null, $"{nameof(characterResource.DisplayName)}");
+            Assert.That(characterResource.ColorTheme, Is.Not.Null, $"{nameof(characterResource.ColorTheme)}");
+            Assert.That(characterResource.FullUrl, Is.Not.Null, $"{nameof(characterResource.FullUrl)}");
+            Assert.That(characterResource.InstanceId, Is.Not.Null, $"{nameof(characterResource.InstanceId)}");
+            Assert.That(characterResource.MainImageUrl, Is.Not.Null, $"{nameof(characterResource.MainImageUrl)}");
+            Assert.That(characterResource.Name, Is.Not.Null, $"{nameof(characterResource.Name)}");
+            AssertHalLinksArePresent(characterResource);
         }
 
         [BeforeFeature]
@@ -45,7 +46,7 @@ namespace FrannHammer.WebApi.Specs.Characters
         public void ThenTheResultShouldBeAListOfAllCharacterMetadata()
         {
             var characterMetadata = ApiClient
-                .DeserializeResponse<IEnumerable<Character>>(ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey))
+                .DeserializeResponse<IEnumerable<CharacterResource>>(ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey))
                 .ToList();
 
             CollectionAssert.AllItemsAreNotNull(characterMetadata);
@@ -58,7 +59,7 @@ namespace FrannHammer.WebApi.Specs.Characters
         public void ThenTheResultShouldBeAListContainingJustThatCharactersMetadata()
         {
             var characterMetadata = ApiClient
-                .DeserializeResponse<IEnumerable<Character>>(
+                .DeserializeResponse<IEnumerable<CharacterResource>>(
                     ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey)).ToList();
 
             Assert.That(characterMetadata.Count, Is.EqualTo(1));
@@ -73,7 +74,6 @@ namespace FrannHammer.WebApi.Specs.Characters
                    ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey));
 
             AssertCharacterIsValid(characterMetadata);
-            AssertHalLinksArePresent(characterMetadata);
         }
 
         [Then(@"the result should be a list containing just that characters throw data")]

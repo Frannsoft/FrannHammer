@@ -204,6 +204,7 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionFilterAttributes\ManyCharacterResourceHalSupportAttribute.cs" />
     <Compile Include="ActionFilterAttributes\SingleCharacterResourceHalSupportAttribute.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -247,8 +248,10 @@
     <Compile Include="HypermediaServices\EntityToBusinessTranslationService.cs" />
     <Compile Include="HypermediaServices\IEntityToBusinessTranslationService.cs" />
     <Compile Include="HypermediaServices\ILinkProvider.cs" />
+    <Compile Include="Models\CharacterAttributesLink.cs" />
     <Compile Include="Models\CharacterResource.cs" />
     <Compile Include="Models\Link.cs" />
+    <Compile Include="Models\MovementsLink.cs" />
     <Compile Include="Models\MovesLink.cs" />
     <Compile Include="Models\Resource.cs" />
     <Compile Include="MongoDbBsonMapper.cs" />
