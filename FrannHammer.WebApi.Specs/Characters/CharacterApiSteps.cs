@@ -80,7 +80,7 @@ namespace FrannHammer.WebApi.Specs.Characters
         public void ThenTheResultShouldBeJustThatCharactersThrowData()
         {
             var characterThrowData = ApiClient
-                .DeserializeResponse<IEnumerable<Move>>(
+                .DeserializeResponse<IEnumerable<MoveResource>>(
                     ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey)).ToList();
 
             string expectedOwnerName = ScenarioContext.Current.Get<string>(RouteTemplateValueToReplaceKey);
@@ -98,7 +98,7 @@ namespace FrannHammer.WebApi.Specs.Characters
         public void ThenTheResultShouldBeAListContainingJustThatCharactersMoveData()
         {
             var characterMoveData = ApiClient
-                .DeserializeResponse<IEnumerable<Move>>(
+                .DeserializeResponse<IEnumerable<MoveResource>>(
                      ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey)).ToList();
 
             string expectedOwnerName = ScenarioContext.Current.Get<string>(RouteTemplateValueToReplaceKey);

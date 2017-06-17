@@ -35,4 +35,33 @@ namespace FrannHammer.WebApi.ActionFilterAttributes
             }
         }
     }
+
+    public class ManyMoveResourceHalSupportAttribute : ActionFilterAttribute
+    {
+        public IEntityToBusinessTranslationService EntityToBusinessTranslationService { get; set; }
+
+        public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
+        {
+            base.OnActionExecuted(actionExecutedContext);
+            var responseContent = actionExecutedContext.Response.Content as ObjectContent;
+
+            var moves = responseContent?.Value as IEnumerable<IMove>;
+
+            var moveResources = new List<MoveResource>();
+
+            if (moves != null)
+            {
+                foreach (var move in moves)
+                {
+                    var moveResource =
+                        EntityToBusinessTranslationService.ConvertToMoveResourceWithHalSupport(move,
+                            actionExecutedContext.Response.RequestMessage.GetUrlHelper());
+
+                    moveResources.Add(moveResource);
+                }
+
+                responseContent.Value = moveResources;
+            }
+        }
+    }
 }

@@ -39,7 +39,21 @@ namespace FrannHammer.WebApi.HypermediaServices
             return resource;
         }
 
-        private T CreateLink<T>(CharacterResource resource, UrlHelper urlHelper, string routeName)
+        public MoveResource ConvertToMoveResourceWithHalSupport(IMove entity, UrlHelper urlHelper)
+        {
+            Guard.VerifyObjectNotNull(entity, nameof(entity));
+            Guard.VerifyObjectNotNull(urlHelper, nameof(urlHelper));
+
+            var resource = _entityToDtoMapper.Map<MoveResource>(entity);
+
+            var characterLink = CreateLink<CharacterLink>(resource, urlHelper, nameof(CharacterController.GetSingleByName));
+
+            resource.AddLink(characterLink);
+
+            return resource;
+        }
+
+        private T CreateLink<T>(IHaveAName resource, UrlHelper urlHelper, string routeName)
             where T : Link
         {
             string hypermediaLink = urlHelper.Link(routeName, new { name = resource.Name });
@@ -48,5 +62,7 @@ namespace FrannHammer.WebApi.HypermediaServices
 
             return link;
         }
+
+
     }
 }

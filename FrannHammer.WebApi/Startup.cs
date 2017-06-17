@@ -63,10 +63,15 @@ namespace FrannHammer.WebApi
             //this way the static Mapper is initialized.
             Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<Character, CharacterResource>();
+                cfg.CreateMap<ICharacter, CharacterResource>();
+                cfg.CreateMap<IMove, MoveResource>();
             });
 
             containerBuilder.RegisterType<EntityToBusinessTranslationService>().As<IEntityToBusinessTranslationService>();
+            containerBuilder.RegisterType<CharacterResourceEnricher>().AsSelf();
+            containerBuilder.RegisterType<ManyMoveResourceEnricher>().AsSelf();
+
+
             containerBuilder.RegisterInstance(Mapper.Instance).ExternallyOwned();
             containerBuilder.RegisterWebApiFilterProvider(config);
             containerBuilder.RegisterType<LinkProvider>().As<ILinkProvider>();
@@ -74,6 +79,11 @@ namespace FrannHammer.WebApi
 
             Container = containerBuilder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(Container);
+
+            config.MessageHandlers.Add(new EnrichingHandler());
+            config.AddResponseEnrichers(
+                Container.Resolve<CharacterResourceEnricher>(),
+                Container.Resolve<ManyMoveResourceEnricher>());
 
             //configure mongo db model mapping
             var mongoDbBsonMapper = new MongoDbBsonMapper();
@@ -92,7 +102,6 @@ namespace FrannHammer.WebApi
 
             //Register IMove implementation to move implementation map
             MoveParseClassMap.RegisterType<IMove, Move>();
-
 
             config.EnableSwagger(c =>
             {

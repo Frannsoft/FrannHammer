@@ -67,7 +67,7 @@ namespace FrannHammer.WebApi.Specs
             ScenarioContext.Current.Set(requestResult, RequestResultKey);
         }
 
-        protected static void AssertMoveIsValid(IMove move)
+        protected static void AssertMoveIsValid(MoveResource move)
         {
             Assert.That(move, Is.Not.Null, $"{nameof(move)}");
             //Assert.That(move.Angle, Is.Not.Null, $"{nameof(move.Angle)}");
@@ -79,6 +79,8 @@ namespace FrannHammer.WebApi.Specs
             //Assert.That(move.KnockbackGrowth, Is.Not.Null, $"{nameof(move.KnockbackGrowth)}");
             Assert.That(move.Name, Is.Not.Null, $"{nameof(move.Name)}");
             Assert.That(move.Owner, Is.Not.Null, $"{nameof(move.Owner)}");
+            //AssertHalLinksArePresent(move);
+            Assert.That(move.Links.Any(l => l.Rel.Equals("character")), $"Unable to find 'character' link.");
         }
 
         protected static void AssertMovementIsValid(IMovement movement)
@@ -88,6 +90,7 @@ namespace FrannHammer.WebApi.Specs
             Assert.That(movement.Owner, Is.Not.Null);
             Assert.That(movement.Value, Is.Not.Null);
             Assert.That(movement.InstanceId, Is.Not.Null);
+
         }
 
         protected static void AssertHalLinksArePresent(Resource resource)
