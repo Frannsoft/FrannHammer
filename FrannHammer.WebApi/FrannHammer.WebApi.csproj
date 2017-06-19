@@ -204,8 +204,6 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActionFilterAttributes\ManyCharacterResourceHalSupportAttribute.cs" />
-    <Compile Include="ActionFilterAttributes\SingleCharacterResourceHalSupportAttribute.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -247,7 +245,9 @@
     <Compile Include="Controllers\MovementController.cs" />
     <Compile Include="EnrichingHandler.cs" />
     <Compile Include="HypermediaServices\CharacterResourceEnricher.cs" />
+    <Compile Include="HypermediaServices\ManyCharacterResourceEnricher.cs" />
     <Compile Include="HypermediaServices\ManyMoveResourceEnricher.cs" />
+    <Compile Include="HypermediaServices\MoveResourceEnricher.cs" />
     <Compile Include="HypermediaServices\ObjectContentResponseEnricher.cs" />
     <Compile Include="ResponseEnricherConfigurationExtensions.cs" />
     <Compile Include="HypermediaServices\EntityToBusinessTranslationService.cs" />

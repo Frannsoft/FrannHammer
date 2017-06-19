@@ -14,7 +14,6 @@ using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using AutoMapper;
 using FrannHammer.Domain.Contracts;
-using FrannHammer.WebApi.ActionFilterAttributes;
 using FrannHammer.WebApi.HypermediaServices;
 using FrannHammer.WebApi.Models;
 using FrannHammer.WebApi.SwaggerExtensions;
@@ -69,13 +68,13 @@ namespace FrannHammer.WebApi
 
             containerBuilder.RegisterType<EntityToBusinessTranslationService>().As<IEntityToBusinessTranslationService>();
             containerBuilder.RegisterType<CharacterResourceEnricher>().AsSelf();
+            containerBuilder.RegisterType<ManyCharacterResourceEnricher>().AsSelf();
+            containerBuilder.RegisterType<MoveResourceEnricher>().AsSelf();
             containerBuilder.RegisterType<ManyMoveResourceEnricher>().AsSelf();
-
 
             containerBuilder.RegisterInstance(Mapper.Instance).ExternallyOwned();
             containerBuilder.RegisterWebApiFilterProvider(config);
             containerBuilder.RegisterType<LinkProvider>().As<ILinkProvider>();
-            containerBuilder.RegisterType<SingleCharacterResourceHalSupportAttribute>().PropertiesAutowired();
 
             Container = containerBuilder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(Container);
@@ -83,6 +82,7 @@ namespace FrannHammer.WebApi
             config.MessageHandlers.Add(new EnrichingHandler());
             config.AddResponseEnrichers(
                 Container.Resolve<CharacterResourceEnricher>(),
+                Container.Resolve<ManyCharacterResourceEnricher>(),
                 Container.Resolve<ManyMoveResourceEnricher>());
 
             //configure mongo db model mapping

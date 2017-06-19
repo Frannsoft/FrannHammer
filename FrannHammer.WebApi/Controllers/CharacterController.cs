@@ -2,15 +2,13 @@
 using FrannHammer.Api.Services.Contracts;
 using FrannHammer.Domain;
 using FrannHammer.Utility;
-using FrannHammer.WebApi.ActionFilterAttributes;
 using static FrannHammer.WebApi.Controllers.ApiControllerBaseRoutingConstants;
 
 namespace FrannHammer.WebApi.Controllers
 {
     //TODO - support hypermedia links for the rest of these routes
-    //add a moves hal action filter
-    //add a movements hal action filter
-    //add a characterattributes hal action filter
+    //add a movements hal response enricher
+    //add a characterattributes hal response enricher
 
     [RoutePrefix(DefaultRoutePrefix)]
     public class CharacterController : BaseApiController
@@ -33,7 +31,6 @@ namespace FrannHammer.WebApi.Controllers
             _characterService = characterService;
         }
 
-        //[SingleCharacterResourceHalSupport]
         [Route(CharactersRouteKey + IdRouteKey, Name = nameof(GetByOwnerId))]
         public IHttpActionResult GetByOwnerId(int id, [FromUri]string fields = "")
         {
@@ -41,7 +38,6 @@ namespace FrannHammer.WebApi.Controllers
             return Result(character);
         }
 
-        //[SingleCharacterResourceHalSupport]
         [Route(CharactersRouteKey + NameRouteKey, Name = nameof(GetSingleByName))]
         public override IHttpActionResult GetSingleByName(string name, [FromUri]string fields = "")
         {
@@ -49,7 +45,6 @@ namespace FrannHammer.WebApi.Controllers
             return Result(character);
         }
 
-        //[ManyCharacterResourceHalSupport]
         [Route(CharactersRouteKey, Name = nameof(GetAll))]
         public override IHttpActionResult GetAll([FromUri]string fields = "")
         {
@@ -127,7 +122,6 @@ namespace FrannHammer.WebApi.Controllers
             return Result(movements);
         }
 
-        //[SingleCharacterResourceHalSupport]
         [Route(CharactersRouteKey + NameRouteKey + DetailsRouteKey, Name = nameof(GetDetailsForCharacterByName))]
         public IHttpActionResult GetDetailsForCharacterByName(string name, [FromUri] string fields = "")
         {
@@ -135,7 +129,6 @@ namespace FrannHammer.WebApi.Controllers
             return Result(dto);
         }
 
-        //[SingleCharacterResourceHalSupport]
         [Route(CharactersRouteKey + IdRouteKey + DetailsRouteKey, Name = nameof(GetDetailsForCharacterByOwnerId))]
         public IHttpActionResult GetDetailsForCharacterByOwnerId(int id, [FromUri] string fields = "")
         {

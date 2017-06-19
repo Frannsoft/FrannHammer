@@ -10,8 +10,8 @@ namespace FrannHammer.WebApi.HypermediaServices
 {
     public abstract class ObjectContentResponseEnricher<TModel, TResource> : IResponseEnricher
     {
-        protected ILinkProvider LinkProvider { get; }
-        protected IMapper EntityToDtoMapper { get; }
+        protected internal ILinkProvider LinkProvider { get; }
+        protected internal IMapper EntityToDtoMapper { get; }
 
         protected ObjectContentResponseEnricher(ILinkProvider linkProvider, IMapper entityToDtoMapper)
         {
