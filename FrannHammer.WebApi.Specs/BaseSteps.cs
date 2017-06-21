@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using FrannHammer.Domain.Contracts;
 using FrannHammer.WebApi.Models;
 using Microsoft.Owin.Testing;
 using NUnit.Framework;
@@ -80,17 +79,24 @@ namespace FrannHammer.WebApi.Specs
             Assert.That(move.Name, Is.Not.Null, $"{nameof(move.Name)}");
             Assert.That(move.Owner, Is.Not.Null, $"{nameof(move.Owner)}");
             //AssertHalLinksArePresent(move);
-            Assert.That(move.Links.Any(l => l.Rel.Equals("character")), $"Unable to find 'character' link.");
+            AssertResourceContainsCorrectOwnerLink(move.Links.FirstOrDefault(l => l.Rel.Equals("character")), move.Owner);
         }
 
-        protected static void AssertMovementIsValid(IMovement movement)
+        private static void AssertResourceContainsCorrectOwnerLink(Link link, string owner)
+        {
+            Assert.That(link, Is.Not.Null);
+            Assert.That(link.Rel, Is.EqualTo("character"));
+            StringAssert.Contains(owner, link.Href.Replace("%20", " "));
+        }
+
+        protected static void AssertMovementIsValid(MovementResource movement)
         {
             Assert.That(movement, Is.Not.Null);
             Assert.That(movement.Name, Is.Not.Null);
             Assert.That(movement.Owner, Is.Not.Null);
             Assert.That(movement.Value, Is.Not.Null);
             Assert.That(movement.InstanceId, Is.Not.Null);
-
+            Assert.That(movement.Links.Any(l => l.Rel.Equals("character")), $"Unable to find 'character' link.");
         }
 
         protected static void AssertHalLinksArePresent(Resource resource)

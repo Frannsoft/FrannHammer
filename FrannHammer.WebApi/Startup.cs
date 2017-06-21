@@ -64,6 +64,8 @@ namespace FrannHammer.WebApi
             {
                 cfg.CreateMap<ICharacter, CharacterResource>();
                 cfg.CreateMap<IMove, MoveResource>();
+                cfg.CreateMap<IMovement, MovementResource>();
+                cfg.CreateMap<ICharacterAttributeRow, CharacterAttributeRowResource>();
             });
 
             containerBuilder.RegisterType<EntityToBusinessTranslationService>().As<IEntityToBusinessTranslationService>();
@@ -71,6 +73,10 @@ namespace FrannHammer.WebApi
             containerBuilder.RegisterType<ManyCharacterResourceEnricher>().AsSelf();
             containerBuilder.RegisterType<MoveResourceEnricher>().AsSelf();
             containerBuilder.RegisterType<ManyMoveResourceEnricher>().AsSelf();
+            containerBuilder.RegisterType<MovementResourceEnricher>().AsSelf();
+            containerBuilder.RegisterType<ManyMovementResourceEnricher>().AsSelf();
+            containerBuilder.RegisterType<CharacterAttributeRowResourceEnricher>().AsSelf();
+            containerBuilder.RegisterType<ManyCharacterAttributeRowResourceEnricher>().AsSelf();
 
             containerBuilder.RegisterInstance(Mapper.Instance).ExternallyOwned();
             containerBuilder.RegisterWebApiFilterProvider(config);
@@ -83,7 +89,12 @@ namespace FrannHammer.WebApi
             config.AddResponseEnrichers(
                 Container.Resolve<CharacterResourceEnricher>(),
                 Container.Resolve<ManyCharacterResourceEnricher>(),
-                Container.Resolve<ManyMoveResourceEnricher>());
+                Container.Resolve<MoveResourceEnricher>(),
+                Container.Resolve<ManyMoveResourceEnricher>(),
+                Container.Resolve<MovementResourceEnricher>(),
+                Container.Resolve<ManyMovementResourceEnricher>(),
+                Container.Resolve<CharacterAttributeRowResourceEnricher>(),
+                Container.Resolve<ManyCharacterAttributeRowResourceEnricher>());
 
             //configure mongo db model mapping
             var mongoDbBsonMapper = new MongoDbBsonMapper();

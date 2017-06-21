@@ -54,10 +54,10 @@ namespace FrannHammer.WebApi.HypermediaServices
             return response;
         }
 
-        protected TLink CreateLink<TLink>(IHaveAName resource, UrlHelper urlHelper, string routeName)
+        protected TLink CreateNameBasedLink<TLink>(string nameValue, UrlHelper urlHelper, string routeName)
             where TLink : Link
         {
-            string hypermediaLink = urlHelper.Link(routeName, new { name = resource.Name });
+            string hypermediaLink = urlHelper.Link(routeName, new { name = nameValue });
 
             var link = LinkProvider.CreateLink<TLink>(hypermediaLink);
 

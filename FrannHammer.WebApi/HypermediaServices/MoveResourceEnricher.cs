@@ -15,10 +15,8 @@ namespace FrannHammer.WebApi.HypermediaServices
         public override MoveResource Enrich(IMove content, UrlHelper urlHelper)
         {
             var resource = EntityToDtoMapper.Map<MoveResource>(content);
-            string hypermediaLink = urlHelper.Link(nameof(CharacterController.GetSingleByName),
-                new { name = resource.Name });
 
-            var characterLink = LinkProvider.CreateLink<CharacterLink>(hypermediaLink);
+            var characterLink = CreateNameBasedLink<CharacterLink>(content.Owner, urlHelper, nameof(CharacterController.GetSingleByName));
             resource.AddLink(characterLink);
 
             return resource;

@@ -6,10 +6,6 @@ using static FrannHammer.WebApi.Controllers.ApiControllerBaseRoutingConstants;
 
 namespace FrannHammer.WebApi.Controllers
 {
-    //TODO - support hypermedia links for the rest of these routes
-    //add a movements hal response enricher
-    //add a characterattributes hal response enricher
-
     [RoutePrefix(DefaultRoutePrefix)]
     public class CharacterController : BaseApiController
     {

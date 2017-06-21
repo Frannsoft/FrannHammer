@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
+using FrannHammer.WebApi.Models;
 using NUnit.Framework;
 using TechTalk.SpecFlow;
 
@@ -12,12 +13,13 @@ namespace FrannHammer.WebApi.Specs.Attributes
     [Scope(Feature = "CharacterAttributesApi")]
     public class CharacterAttributesApiSteps : BaseSteps
     {
-        private static void AssertCharacterAttributeRowIsValid(ICharacterAttributeRow characterAttributeRow)
+        private static void AssertCharacterAttributeRowIsValid(CharacterAttributeRowResource characterAttributeRow)
         {
             Assert.That(characterAttributeRow, Is.Not.Null, $"{nameof(characterAttributeRow)}");
             Assert.That(characterAttributeRow.InstanceId, Is.Not.Null, $"{nameof(characterAttributeRow.InstanceId)}");
             Assert.That(characterAttributeRow.Name, Is.Not.Null, $"{nameof(characterAttributeRow.Name)}");
             Assert.That(characterAttributeRow.Owner, Is.Not.Null, $"{nameof(characterAttributeRow.Owner)}");
+            Assert.That(characterAttributeRow.Links.Any(l => l.Rel.Equals("character", StringComparison.OrdinalIgnoreCase)), $"Unable to find 'character' link.");
 
             var attributeValues = characterAttributeRow.Values.ToList();
             attributeValues.ForEach(value =>
@@ -44,7 +46,7 @@ namespace FrannHammer.WebApi.Specs.Attributes
         public void ThenTheResultShouldBeAListOfAllCharacterAttributeRowEntries()
         {
             var characterAttributeRows = ApiClient
-                .DeserializeResponse<IEnumerable<CharacterAttributeRow>>(ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey))
+                .DeserializeResponse<IEnumerable<CharacterAttributeRowResource>>(ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey))
                 .ToList();
 
             CollectionAssert.AllItemsAreNotNull(characterAttributeRows);
@@ -56,7 +58,7 @@ namespace FrannHammer.WebApi.Specs.Attributes
         public void ThenTheResultShouldBeJustThatCharacterAttributeRow()
         {
             var characterMetadata = ApiClient
-                .DeserializeResponse<CharacterAttributeRow>(
+                .DeserializeResponse<CharacterAttributeRowResource>(
                     ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey));
 
             AssertCharacterAttributeRowIsValid(characterMetadata);
