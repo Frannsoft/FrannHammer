@@ -43,7 +43,7 @@ namespace FrannHammer.Seeding.Tests
             BsonMapper.RegisterClassMaps(typeof(Character), typeof(Movement), typeof(Move), typeof(CharacterAttribute),
                 typeof(CharacterAttributeRow));
 
-            MongoDatabase = MongoDbConnectionFactory.GetDatabaseFromAppConfig();// .GetDatabase("mongodb://testuser:password@ds119151.mlab.com:19151/playgroundfranndotexe");
+            MongoDatabase = MongoDbConnectionFactory.GetDatabaseFromAppConfig();
         }
 
         private IMovementScrapingServices _movementScrapingServices;

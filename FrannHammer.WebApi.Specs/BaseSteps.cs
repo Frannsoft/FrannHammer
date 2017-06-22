@@ -1,7 +1,5 @@
 ﻿using System.Linq;
-using FrannHammer.Domain.Contracts;
 using Microsoft.Owin.Testing;
-using NUnit.Framework;
 using TechTalk.SpecFlow;
 
 namespace FrannHammer.WebApi.Specs
@@ -47,15 +45,6 @@ namespace FrannHammer.WebApi.Specs
             ScenarioContext.Current.Set(routeUrl, RouteUrlKey);
         }
 
-        //[When(@"I request one specific item by id (.*)")]
-        //public void WhenIRequestOneSpecificItemById(string id)
-        //{
-        //    string requestUrl = InjectRouteParameterIntoRequestUrl(ScenarioContext.Current.Get<string>(RouteUrlKey), id, "id");
-
-        //    var requestResult = ApiClient.GetResult(requestUrl);
-        //    ScenarioContext.Current.Set(requestResult, RequestResultKey);
-        //}
-
         [When(@"I request one specific item by (.*) (.*)")]
         public void WhenIRequestOneSpecificItemByName(string routeTemplateValueToReplace, string name)
         {
@@ -64,29 +53,6 @@ namespace FrannHammer.WebApi.Specs
 
             var requestResult = ApiClient.GetResult(requestUrl);
             ScenarioContext.Current.Set(requestResult, RequestResultKey);
-        }
-
-        protected static void AssertMoveIsValid(IMove move)
-        {
-            Assert.That(move, Is.Not.Null, $"{nameof(move)}");
-            //Assert.That(move.Angle, Is.Not.Null, $"{nameof(move.Angle)}");
-            //Assert.That(move.BaseDamage, Is.Not.Null, $"{nameof(move.BaseDamage)}");
-            //Assert.That(move.BaseKnockBackSetKnockback, Is.Not.Null, $"{nameof(move.BaseKnockBackSetKnockback)}");
-            //Assert.That(move.FirstActionableFrame, Is.Not.Null, $"{nameof(move.FirstActionableFrame)}");
-            //Assert.That(move.HitboxActive, Is.Not.Null, $"{nameof(move.HitboxActive)}");
-            Assert.That(move.InstanceId, Is.Not.Null, $"{nameof(move.InstanceId)}");
-            //Assert.That(move.KnockbackGrowth, Is.Not.Null, $"{nameof(move.KnockbackGrowth)}");
-            Assert.That(move.Name, Is.Not.Null, $"{nameof(move.Name)}");
-            Assert.That(move.Owner, Is.Not.Null, $"{nameof(move.Owner)}");
-        }
-
-        protected static void AssertMovementIsValid(IMovement movement)
-        {
-            Assert.That(movement, Is.Not.Null);
-            Assert.That(movement.Name, Is.Not.Null);
-            Assert.That(movement.Owner, Is.Not.Null);
-            Assert.That(movement.Value, Is.Not.Null);
-            Assert.That(movement.InstanceId, Is.Not.Null);
         }
     }
 }

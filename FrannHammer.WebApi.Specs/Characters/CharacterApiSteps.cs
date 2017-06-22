@@ -1,14 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using FrannHammer.Api.Services.Contracts;
-using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.Domain.PropertyParsers;
+using FrannHammer.WebApi.Models;
 using FrannHammer.WebScraping;
 using NUnit.Framework;
 using TechTalk.SpecFlow;
+using static FrannHammer.WebApi.Specs.ResourceAsserts;
 
 namespace FrannHammer.WebApi.Specs.Characters
 {
@@ -16,18 +18,6 @@ namespace FrannHammer.WebApi.Specs.Characters
     [Scope(Feature = "CharactersApi")]
     public class CharacterApiSteps : BaseSteps
     {
-        private static void AssertCharacterIsValid(ICharacter character)
-        {
-            Assert.That(character, Is.Not.Null, $"{nameof(character)}");
-            Assert.That(character.ThumbnailUrl, Is.Not.Null, $"{nameof(character.ThumbnailUrl)}");
-            Assert.That(character.DisplayName, Is.Not.Null, $"{nameof(character.DisplayName)}");
-            Assert.That(character.ColorTheme, Is.Not.Null, $"{nameof(character.ColorTheme)}");
-            Assert.That(character.FullUrl, Is.Not.Null, $"{nameof(character.FullUrl)}");
-            Assert.That(character.InstanceId, Is.Not.Null, $"{nameof(character.InstanceId)}");
-            Assert.That(character.MainImageUrl, Is.Not.Null, $"{nameof(character.MainImageUrl)}");
-            Assert.That(character.Name, Is.Not.Null, $"{nameof(character.Name)}");
-        }
-
         [BeforeFeature]
         public static void BeforeFeature()
         {
@@ -44,7 +34,7 @@ namespace FrannHammer.WebApi.Specs.Characters
         public void ThenTheResultShouldBeAListOfAllCharacterMetadata()
         {
             var characterMetadata = ApiClient
-                .DeserializeResponse<IEnumerable<Character>>(ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey))
+                .DeserializeResponse<IEnumerable<CharacterResource>>(ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey))
                 .ToList();
 
             CollectionAssert.AllItemsAreNotNull(characterMetadata);
@@ -57,7 +47,7 @@ namespace FrannHammer.WebApi.Specs.Characters
         public void ThenTheResultShouldBeAListContainingJustThatCharactersMetadata()
         {
             var characterMetadata = ApiClient
-                .DeserializeResponse<IEnumerable<Character>>(
+                .DeserializeResponse<IEnumerable<CharacterResource>>(
                     ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey)).ToList();
 
             Assert.That(characterMetadata.Count, Is.EqualTo(1));
@@ -68,7 +58,7 @@ namespace FrannHammer.WebApi.Specs.Characters
         public void ThenTheResultShouldBeJustThatCharactersMetadata()
         {
             var characterMetadata = ApiClient
-               .DeserializeResponse<Character>(
+               .DeserializeResponse<CharacterResource>(
                    ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey));
 
             AssertCharacterIsValid(characterMetadata);
@@ -78,25 +68,38 @@ namespace FrannHammer.WebApi.Specs.Characters
         public void ThenTheResultShouldBeJustThatCharactersThrowData()
         {
             var characterThrowData = ApiClient
-                .DeserializeResponse<IEnumerable<Move>>(
+                .DeserializeResponse<IEnumerable<MoveResource>>(
                     ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey)).ToList();
 
             string expectedOwnerName = ScenarioContext.Current.Get<string>(RouteTemplateValueToReplaceKey);
 
             Assert.That(characterThrowData.Count, Is.GreaterThan(0), $"{nameof(characterThrowData.Count)}");
-            characterThrowData.ForEach(charThrow =>
+            characterThrowData.Where(t => t.Name.EndsWith(MoveType.Throw.GetEnumDescription(), StringComparison.OrdinalIgnoreCase)).ToList()
+               .ForEach(charThrow =>
             {
                 Assert.That(charThrow.OwnerId.ToString() == expectedOwnerName ||
                            charThrow.Owner == expectedOwnerName, $"{nameof(charThrow.OwnerId)}");
                 Assert.That(charThrow.MoveType, Is.EqualTo(MoveType.Throw.GetEnumDescription()), $"{nameof(charThrow.MoveType)}");
+
+                AssertThrowMoveIsValid(charThrow);
             });
+
+            characterThrowData.Where(t => t.Name.EndsWith("grab", StringComparison.OrdinalIgnoreCase)).ToList()
+             .ForEach(charThrow =>
+             {
+                 Assert.That(charThrow.OwnerId.ToString() == expectedOwnerName ||
+                              charThrow.Owner == expectedOwnerName, $"{nameof(charThrow.OwnerId)}");
+                 Assert.That(charThrow.MoveType, Is.EqualTo(MoveType.Throw.GetEnumDescription()), $"{nameof(charThrow.MoveType)}");
+
+                 AssertGrabMoveIsValid(charThrow);
+             });
         }
 
         [Then(@"the result should be a list containing just that characters move data")]
         public void ThenTheResultShouldBeAListContainingJustThatCharactersMoveData()
         {
             var characterMoveData = ApiClient
-                .DeserializeResponse<IEnumerable<Move>>(
+                .DeserializeResponse<IEnumerable<MoveResource>>(
                      ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey)).ToList();
 
             string expectedOwnerName = ScenarioContext.Current.Get<string>(RouteTemplateValueToReplaceKey);
@@ -106,14 +109,16 @@ namespace FrannHammer.WebApi.Specs.Characters
                 Assert.That(character.OwnerId.ToString() == expectedOwnerName ||
                             character.Owner == expectedOwnerName, $"{nameof(character.OwnerId)}");
             });
-            characterMoveData.ForEach(AssertMoveIsValid);
+            characterMoveData.Where(m => m.MoveType == MoveType.Ground.ToString()).ToList().ForEach(AssertGroundMoveIsValid);
+            characterMoveData.Where(m => m.MoveType == MoveType.Aerial.ToString()).ToList().ForEach(AssertAerialMoveIsValid);
+            characterMoveData.Where(m => m.MoveType == MoveType.Special.ToString()).ToList().ForEach(AssertSpecialMoveIsValid);
         }
 
         [Then(@"the result should be a list containing just that characters movement data")]
         public void ThenTheResultShouldBeAListContainingJustThatCharactersMovementData()
         {
             var characterMovementData = ApiClient
-                .DeserializeResponse<IEnumerable<Movement>>(
+                .DeserializeResponse<IEnumerable<MovementResource>>(
                     ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey)).ToList();
 
             string expectedOwnerName = ScenarioContext.Current.Get<string>(RouteTemplateValueToReplaceKey);
@@ -201,7 +206,7 @@ namespace FrannHammer.WebApi.Specs.Characters
         public void ThenTheResultShouldBeAListContainingJustThatCharactersGravityMovementData()
         {
             var characterMovementData = ApiClient
-               .DeserializeResponse<IEnumerable<Movement>>(
+               .DeserializeResponse<IEnumerable<MovementResource>>(
                    ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey)).ToList();
 
             string expectedOwnerName = ScenarioContext.Current.Get<string>(RouteTemplateValueToReplaceKey);

@@ -155,7 +155,7 @@ namespace FrannHammer.DataAccess.MongoDb
             { return default(T); }
 
             var model = BsonSerializer.Deserialize<T>(rawDocument);
-            model.InstanceId = rawDocument[KeyId].ToString();
+            //model.InstanceId = rawDocument[KeyId].ToString();
             return model;
         }
 

@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using FrannHammer.Domain;
+using FrannHammer.WebApi.Models;
 using NUnit.Framework;
 using TechTalk.SpecFlow;
+using static FrannHammer.WebApi.Specs.ResourceAsserts;
 
 namespace FrannHammer.WebApi.Specs.Movements
 {
@@ -27,7 +28,7 @@ namespace FrannHammer.WebApi.Specs.Movements
         public void ThenTheResultShouldBeAListOfAllCharacterMovementData()
         {
             var movements = ApiClient
-                .DeserializeResponse<IEnumerable<Movement>>(ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey))
+                .DeserializeResponse<IEnumerable<MovementResource>>(ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey))
                 .ToList();
 
             CollectionAssert.AllItemsAreNotNull(movements);
@@ -39,7 +40,7 @@ namespace FrannHammer.WebApi.Specs.Movements
         public void ThenTheResultShouldBeJustThatMovementData()
         {
             var movement = ApiClient
-                .DeserializeResponse<Movement>(
+                .DeserializeResponse<MovementResource>(
                     ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey));
             AssertMovementIsValid(movement);
         }

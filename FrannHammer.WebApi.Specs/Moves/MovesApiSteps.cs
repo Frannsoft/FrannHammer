@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using FrannHammer.Domain;
-using FrannHammer.Domain.Contracts;
+using FrannHammer.WebApi.Models;
 using NUnit.Framework;
 using TechTalk.SpecFlow;
 using static FrannHammer.Domain.PropertyParsers.MoveDataNameConstants;
-
+using static FrannHammer.WebApi.Specs.ResourceAsserts;
 
 namespace FrannHammer.WebApi.Specs.Moves
 {
@@ -31,19 +30,19 @@ namespace FrannHammer.WebApi.Specs.Moves
         public void ThenTheResultShouldBeAListOfAllMoveData()
         {
             var moveMetadata = ApiClient
-                .DeserializeResponse<IEnumerable<Move>>(ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey))
+                .DeserializeResponse<IEnumerable<MoveResource>>(ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey))
                 .ToList();
 
             CollectionAssert.AllItemsAreNotNull(moveMetadata);
             CollectionAssert.AllItemsAreUnique(moveMetadata);
-            moveMetadata.ForEach(AssertMoveIsValid);
+            AssertAllMovesAreValid(moveMetadata);
         }
 
         [Then(@"The result should be just that moves data")]
         public void ThenTheResultShouldBeJustThatMovesData()
         {
             var move = ApiClient
-                .DeserializeResponse<Move>(
+                .DeserializeResponse<MoveResource>(
                     ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey));
             AssertMoveIsValid(move);
         }
@@ -52,13 +51,13 @@ namespace FrannHammer.WebApi.Specs.Moves
         public void ThenTheResultShouldBeAllMovesThatMatchThatName()
         {
             var moves =
-                ApiClient.DeserializeResponse<IEnumerable<Move>>(
+                ApiClient.DeserializeResponse<IEnumerable<MoveResource>>(
                         ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey))
                     .ToList();
 
             CollectionAssert.AllItemsAreNotNull(moves);
             CollectionAssert.AllItemsAreUnique(moves);
-            moves.ForEach(AssertMoveIsValid);
+            AssertAllMovesAreValid(moves);
 
             string routeParameter = ScenarioContext.Current.Get<string>(RouteParameter);
 
