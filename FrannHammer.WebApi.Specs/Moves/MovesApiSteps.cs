@@ -6,7 +6,7 @@ using FrannHammer.WebApi.Models;
 using NUnit.Framework;
 using TechTalk.SpecFlow;
 using static FrannHammer.Domain.PropertyParsers.MoveDataNameConstants;
-
+using static FrannHammer.WebApi.Specs.ResourceAsserts;
 
 namespace FrannHammer.WebApi.Specs.Moves
 {
@@ -35,7 +35,7 @@ namespace FrannHammer.WebApi.Specs.Moves
 
             CollectionAssert.AllItemsAreNotNull(moveMetadata);
             CollectionAssert.AllItemsAreUnique(moveMetadata);
-            moveMetadata.ForEach(AssertMoveIsValid);
+            AssertAllMovesAreValid(moveMetadata);
         }
 
         [Then(@"The result should be just that moves data")]
@@ -57,7 +57,7 @@ namespace FrannHammer.WebApi.Specs.Moves
 
             CollectionAssert.AllItemsAreNotNull(moves);
             CollectionAssert.AllItemsAreUnique(moves);
-            moves.ForEach(AssertMoveIsValid);
+            AssertAllMovesAreValid(moves);
 
             string routeParameter = ScenarioContext.Current.Get<string>(RouteParameter);
 

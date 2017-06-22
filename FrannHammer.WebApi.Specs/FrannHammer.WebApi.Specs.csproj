@@ -143,6 +143,7 @@
     </Compile>
     <Compile Include="Characters\CharacterApiSteps.cs" />
     <Compile Include="Characters\CharacterDetailsDtoAssertions.cs" />
+    <Compile Include="ExpectedLinkRelConstants.cs" />
     <Compile Include="Movements\MovementsApi.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -156,6 +157,7 @@
     </Compile>
     <Compile Include="Moves\MovesApiSteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResourceAsserts.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

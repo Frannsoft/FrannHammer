@@ -1,15 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using FrannHammer.Api.Services.Contracts;
-using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.Domain.PropertyParsers;
 using FrannHammer.WebApi.Models;
 using FrannHammer.WebScraping;
 using NUnit.Framework;
 using TechTalk.SpecFlow;
+using static FrannHammer.WebApi.Specs.ResourceAsserts;
 
 namespace FrannHammer.WebApi.Specs.Characters
 {
@@ -17,19 +18,6 @@ namespace FrannHammer.WebApi.Specs.Characters
     [Scope(Feature = "CharactersApi")]
     public class CharacterApiSteps : BaseSteps
     {
-        private static void AssertCharacterIsValid(CharacterResource characterResource)
-        {
-            Assert.That(characterResource, Is.Not.Null, $"{nameof(characterResource)}");
-            Assert.That(characterResource.ThumbnailUrl, Is.Not.Null, $"{nameof(characterResource.ThumbnailUrl)}");
-            Assert.That(characterResource.DisplayName, Is.Not.Null, $"{nameof(characterResource.DisplayName)}");
-            Assert.That(characterResource.ColorTheme, Is.Not.Null, $"{nameof(characterResource.ColorTheme)}");
-            Assert.That(characterResource.FullUrl, Is.Not.Null, $"{nameof(characterResource.FullUrl)}");
-            Assert.That(characterResource.InstanceId, Is.Not.Null, $"{nameof(characterResource.InstanceId)}");
-            Assert.That(characterResource.MainImageUrl, Is.Not.Null, $"{nameof(characterResource.MainImageUrl)}");
-            Assert.That(characterResource.Name, Is.Not.Null, $"{nameof(characterResource.Name)}");
-            AssertHalLinksArePresent(characterResource);
-        }
-
         [BeforeFeature]
         public static void BeforeFeature()
         {
@@ -86,12 +74,25 @@ namespace FrannHammer.WebApi.Specs.Characters
             string expectedOwnerName = ScenarioContext.Current.Get<string>(RouteTemplateValueToReplaceKey);
 
             Assert.That(characterThrowData.Count, Is.GreaterThan(0), $"{nameof(characterThrowData.Count)}");
-            characterThrowData.ForEach(charThrow =>
+            characterThrowData.Where(t => t.Name.EndsWith(MoveType.Throw.GetEnumDescription(), StringComparison.OrdinalIgnoreCase)).ToList()
+               .ForEach(charThrow =>
             {
                 Assert.That(charThrow.OwnerId.ToString() == expectedOwnerName ||
                            charThrow.Owner == expectedOwnerName, $"{nameof(charThrow.OwnerId)}");
                 Assert.That(charThrow.MoveType, Is.EqualTo(MoveType.Throw.GetEnumDescription()), $"{nameof(charThrow.MoveType)}");
+
+                AssertThrowMoveIsValid(charThrow);
             });
+
+            characterThrowData.Where(t => t.Name.EndsWith("grab", StringComparison.OrdinalIgnoreCase)).ToList()
+             .ForEach(charThrow =>
+             {
+                 Assert.That(charThrow.OwnerId.ToString() == expectedOwnerName ||
+                              charThrow.Owner == expectedOwnerName, $"{nameof(charThrow.OwnerId)}");
+                 Assert.That(charThrow.MoveType, Is.EqualTo(MoveType.Throw.GetEnumDescription()), $"{nameof(charThrow.MoveType)}");
+
+                 AssertGrabMoveIsValid(charThrow);
+             });
         }
 
         [Then(@"the result should be a list containing just that characters move data")]
@@ -108,7 +109,9 @@ namespace FrannHammer.WebApi.Specs.Characters
                 Assert.That(character.OwnerId.ToString() == expectedOwnerName ||
                             character.Owner == expectedOwnerName, $"{nameof(character.OwnerId)}");
             });
-            characterMoveData.ForEach(AssertMoveIsValid);
+            characterMoveData.Where(m => m.MoveType == MoveType.Ground.ToString()).ToList().ForEach(AssertGroundMoveIsValid);
+            characterMoveData.Where(m => m.MoveType == MoveType.Aerial.ToString()).ToList().ForEach(AssertAerialMoveIsValid);
+            characterMoveData.Where(m => m.MoveType == MoveType.Special.ToString()).ToList().ForEach(AssertSpecialMoveIsValid);
         }
 
         [Then(@"the result should be a list containing just that characters movement data")]

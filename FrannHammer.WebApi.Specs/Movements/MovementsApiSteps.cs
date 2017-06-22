@@ -4,6 +4,7 @@ using System.Net.Http;
 using FrannHammer.WebApi.Models;
 using NUnit.Framework;
 using TechTalk.SpecFlow;
+using static FrannHammer.WebApi.Specs.ResourceAsserts;
 
 namespace FrannHammer.WebApi.Specs.Movements
 {

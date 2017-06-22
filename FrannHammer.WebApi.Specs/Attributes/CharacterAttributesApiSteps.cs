@@ -6,6 +6,7 @@ using FrannHammer.Domain.Contracts;
 using FrannHammer.WebApi.Models;
 using NUnit.Framework;
 using TechTalk.SpecFlow;
+using static FrannHammer.WebApi.Specs.ExpectedLinkRelConstants;
 
 namespace FrannHammer.WebApi.Specs.Attributes
 {
@@ -19,7 +20,8 @@ namespace FrannHammer.WebApi.Specs.Attributes
             Assert.That(characterAttributeRow.InstanceId, Is.Not.Null, $"{nameof(characterAttributeRow.InstanceId)}");
             Assert.That(characterAttributeRow.Name, Is.Not.Null, $"{nameof(characterAttributeRow.Name)}");
             Assert.That(characterAttributeRow.Owner, Is.Not.Null, $"{nameof(characterAttributeRow.Owner)}");
-            Assert.That(characterAttributeRow.Links.Any(l => l.Rel.Equals("character", StringComparison.OrdinalIgnoreCase)), $"Unable to find 'character' link.");
+            Assert.That(characterAttributeRow.Links.Any(l => l.Rel.Equals(CharacterLinkName, StringComparison.OrdinalIgnoreCase)), 
+                $"Unable to find '{CharacterLinkName}' link.");
 
             var attributeValues = characterAttributeRow.Values.ToList();
             attributeValues.ForEach(value =>
