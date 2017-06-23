@@ -12,6 +12,7 @@ namespace FrannHammer.WebApi
         {
             //// Web API configuration and services
 
+
             //// Web API routes
             //config.MapHttpAttributeRoutes();
 
@@ -21,10 +22,10 @@ namespace FrannHammer.WebApi
             //    defaults: new { id = RouteParameter.Optional }
             //);
 
-            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
-            var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
-            jsonFormatter.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
-            jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            //config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+            //var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
+            //jsonFormatter.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+            //jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
     }
 

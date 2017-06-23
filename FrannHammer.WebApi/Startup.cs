@@ -10,8 +10,10 @@ using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Owin;
 using System.Linq;
+using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
+using System.Web;
 using AutoMapper;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.WebApi.HypermediaServices;
@@ -136,7 +138,8 @@ namespace FrannHammer.WebApi
         {
             config.EnableSwagger(c =>
             {
-                c.SingleApiVersion("v0.5.0", "FrannHammer Api")
+                c.RootUrl(req => req.RequestUri.GetLeftPart(UriPartial.Authority) + VirtualPathUtility.ToAbsolute("~/").TrimEnd('/'));
+                c.SingleApiVersion("v060", "FrannHammer Api")
                         .Contact(cc => cc.Email("FrannSoftDev@outlook.com")
                                     .Name("@FrannDotExe")
                                     .Url("https://github.com/Frannsoft/FrannHammer/wiki"))
