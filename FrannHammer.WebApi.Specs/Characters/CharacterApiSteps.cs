@@ -139,6 +139,7 @@ namespace FrannHammer.WebApi.Specs.Characters
 
             string expectedOwnerName = ScenarioContext.Current.Get<string>(RouteTemplateValueToReplaceKey);
 
+            Assert.That(attributeRows.Count, Is.GreaterThan(0), $"{nameof(attributeRows)}");
             attributeRows.ForEach(row =>
             {
                 Assert.That(row.OwnerId.ToString() == expectedOwnerName ||

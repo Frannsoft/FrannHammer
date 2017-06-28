@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FrannHammer.Api.Services.Contracts;
 using FrannHammer.DataAccess.Contracts;
 using FrannHammer.Domain.Contracts;
@@ -15,7 +16,7 @@ namespace FrannHammer.Api.Services
         public override IEnumerable<ICharacterAttributeRow> GetAllWhereCharacterNameIs(string name, string fields = "")
         {
             Guard.VerifyStringIsNotNullOrEmpty(name, nameof(name));
-            return GetAllWhere(item => EqualityComparer<string>.Default.Equals(item.Owner, name));
+            return GetAllWhere(item => item.Owner.Equals(name, StringComparison.OrdinalIgnoreCase));
         }
     }
 }

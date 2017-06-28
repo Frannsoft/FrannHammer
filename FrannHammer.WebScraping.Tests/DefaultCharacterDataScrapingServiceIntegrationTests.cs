@@ -99,7 +99,8 @@ namespace FrannHammer.WebScraping.Tests
             Assert.That(character.MainImageUrl, Is.Not.Empty);
 
             Uri testUri;
-            Assert.That(Uri.TryCreate(character.MainImageUrl, UriKind.RelativeOrAbsolute, out testUri), $"Malformed main image url: '{character.MainImageUrl}'");
+            Assert.That(Uri.TryCreate(character.MainImageUrl, UriKind.Absolute, out testUri), $"Malformed main image url: '{character.MainImageUrl}'");
+            Assert.That(Uri.TryCreate(character.ThumbnailUrl, UriKind.Absolute, out testUri), $"Malformed thumbnail image url: '{character.ThumbnailUrl}'");
 
             CollectionAssert.IsNotEmpty(character.Movements, $"Movements for character '{character.Name}' are empty.");
             CollectionAssert.IsNotEmpty(character.Moves, $"Moves for character '{character.Name}' are empty.");

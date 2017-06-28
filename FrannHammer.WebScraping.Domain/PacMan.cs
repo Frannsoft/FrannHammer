@@ -5,7 +5,7 @@ namespace FrannHammer.WebScraping.Domain
     public class PacMan : WebCharacter
     {
         public PacMan()
-            : base("PAC-MAN")
+            : base("PAC-MAN", potentialScrapingNames: "Pac-Man")
         { }
     }
 }

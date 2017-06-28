@@ -44,7 +44,7 @@ namespace FrannHammer.WebApi.Specs.Moves
             var move = ApiClient
                 .DeserializeResponse<MoveResource>(
                     ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey));
-            AssertMoveIsValid(move);
+            AssertAllMovesAreValid(new List<MoveResource> { move });
         }
 
         [Then(@"The result should be all moves that match that name")]

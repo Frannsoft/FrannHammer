@@ -25,7 +25,7 @@ namespace FrannHammer.Api.Services
 
         public IEnumerable<T> GetAllWhereName(string name, string fields = "")
         {
-            return GetAllWhere(m => m.Name == name, fields);
+            return GetAllWhere(m => m.Name.Equals(name, StringComparison.OrdinalIgnoreCase), fields);
         }
 
         public IEnumerable<T> GetAll(string fields = "")

@@ -246,7 +246,7 @@ namespace FrannHammer.Api.Services
         {
             Guard.VerifyStringIsNotNullOrEmpty(name, nameof(name));
 
-            var throwMoves = GetAllWhere(move => EqualityComparer<string>.Default.Equals(move.Owner, name) &&
+            var throwMoves = GetAllWhere(move => move.Owner.Equals(name, StringComparison.OrdinalIgnoreCase) &&
                                                  move.MoveType == MoveType.Throw.GetEnumDescription());
 
             return throwMoves;
@@ -270,8 +270,9 @@ namespace FrannHammer.Api.Services
         public IEnumerable<IMove> GetAllThrowsForCharacter(ICharacter character, string fields = "")
         {
             Guard.VerifyObjectNotNull(character, nameof(character));
+            Guard.VerifyStringIsNotNullOrEmpty(character.Name, nameof(character.Name));
 
-            var throwMoves = GetAllWhere(move => EqualityComparer<string>.Default.Equals(move.Owner, character.Name) &&
+            var throwMoves = GetAllWhere(move => move.Owner.Equals(character.Name) &&
                                                  move.MoveType == MoveType.Throw.GetEnumDescription());
 
             return throwMoves;
