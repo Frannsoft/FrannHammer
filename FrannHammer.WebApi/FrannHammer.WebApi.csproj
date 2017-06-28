@@ -233,6 +233,8 @@
     <Compile Include="HypermediaServices\ObjectContentResponseEnricher.cs" />
     <Compile Include="Models\CharacterAttributeRowResource.cs" />
     <Compile Include="Models\MovementResource.cs" />
+    <Compile Include="CustomExceptionFilterAttribute.cs" />
+    <Compile Include="Models\SelfLink.cs" />
     <Compile Include="ResourceEnrichmentModule.cs" />
     <Compile Include="ResponseEnricherConfigurationExtensions.cs" />
     <Compile Include="HypermediaServices\EntityToBusinessTranslationService.cs" />

@@ -9,6 +9,26 @@ namespace FrannHammer.WebApi.Specs
 {
     public static class ResourceAsserts
     {
+        public static void AssertCharacterAttributeRowIsValid(CharacterAttributeRowResource characterAttributeRow)
+        {
+            Assert.That(characterAttributeRow, Is.Not.Null, $"{nameof(characterAttributeRow)}");
+            Assert.That(characterAttributeRow.InstanceId, Is.Not.Null, $"{nameof(characterAttributeRow.InstanceId)}");
+            Assert.That(characterAttributeRow.Name, Is.Not.Null, $"{nameof(characterAttributeRow.Name)}");
+            Assert.That(characterAttributeRow.Owner, Is.Not.Null, $"{nameof(characterAttributeRow.Owner)}");
+
+            var characterLink = characterAttributeRow.Links.FirstOrDefault(l => l.Rel.Equals(CharacterLinkName));
+            AssertSelfLinkIsPresent(characterAttributeRow);
+            Assert.That(characterLink, Is.Not.Null, $"Unable to find '{CharacterLinkName}' link.");
+
+            var attributeValues = characterAttributeRow.Values.ToList();
+            attributeValues.ForEach(value =>
+            {
+                Assert.That(value.Name, Is.Not.Null, $"{nameof(IAttribute.Name)}");
+                Assert.That(value.Owner, Is.Not.Null, $"{nameof(IAttribute.Owner)}");
+                Assert.That(value.Value, Is.Not.Null, $"{nameof(IAttribute.Value)}");
+            });
+        }
+
         public static void AssertCharacterIsValid(CharacterResource characterResource)
         {
             Assert.That(characterResource, Is.Not.Null, $"{nameof(characterResource)}");
@@ -27,22 +47,10 @@ namespace FrannHammer.WebApi.Specs
             var moveLink = resource.Links.FirstOrDefault(l => l.Rel.Equals(MoveLinkName));
             var characterAttributesLink = resource.Links.FirstOrDefault(l => l.Rel.Equals(CharacterAttributeLinkName));
             var movementsLink = resource.Links.FirstOrDefault(l => l.Rel.Equals(MovementLinkName));
-
+            AssertSelfLinkIsPresent(resource);
             Assert.That(moveLink, Is.Not.Null, $"Unable to find '{MoveLinkName}' link.");
             Assert.That(characterAttributesLink, Is.Not.Null, $"Unable to find '{CharacterAttributeLinkName}' link.");
             Assert.That(movementsLink, Is.Not.Null, $"Unable to find '{MovementLinkName}' link.");
-        }
-
-        public static void AssertMoveIsValid(MoveResource move)
-        {
-            //switch (move.MoveType)
-            //{
-            //    case MoveType.Ground.ToString():
-            //    {
-            //        AssertGroundMoveIsValid(move);
-            //            break;
-            //    }
-            //}
         }
 
         public static void AssertAllMovesAreValid(IList<MoveResource> moves)
@@ -64,6 +72,7 @@ namespace FrannHammer.WebApi.Specs
             Assert.That(move.KnockbackGrowth, Is.Not.Null, $"{nameof(move.KnockbackGrowth)}");
             Assert.That(move.Name, Is.Not.Null, $"{nameof(move.Name)}");
             Assert.That(move.Owner, Is.Not.Null, $"{nameof(move.Owner)}");
+            AssertSelfLinkIsPresent(move);
             AssertResourceContainsCorrectOwnerLink(move.Links.FirstOrDefault(l => l.Rel.Equals(CharacterLinkName)), move.Owner);
         }
 
@@ -81,6 +90,7 @@ namespace FrannHammer.WebApi.Specs
             Assert.That(move.Owner, Is.Not.Null, $"{nameof(move.Owner)}");
             Assert.That(move.LandingLag, Is.Not.Null, $"{nameof(move.LandingLag)}");
             Assert.That(move.AutoCancel, Is.Not.Null, $"{nameof(move.AutoCancel)}");
+            AssertSelfLinkIsPresent(move);
             AssertResourceContainsCorrectOwnerLink(move.Links.FirstOrDefault(l => l.Rel.Equals(CharacterLinkName)), move.Owner);
         }
 
@@ -96,6 +106,7 @@ namespace FrannHammer.WebApi.Specs
             Assert.That(move.KnockbackGrowth, Is.Not.Null, $"{nameof(move.KnockbackGrowth)}");
             Assert.That(move.Name, Is.Not.Null, $"{nameof(move.Name)}");
             Assert.That(move.Owner, Is.Not.Null, $"{nameof(move.Owner)}");
+            AssertSelfLinkIsPresent(move);
             AssertResourceContainsCorrectOwnerLink(move.Links.FirstOrDefault(l => l.Rel.Equals(CharacterLinkName)), move.Owner);
         }
 
@@ -109,6 +120,7 @@ namespace FrannHammer.WebApi.Specs
             Assert.That(move.KnockbackGrowth, Is.Not.Null, $"{nameof(move.KnockbackGrowth)}");
             Assert.That(move.Name, Is.Not.Null, $"{nameof(move.Name)}");
             Assert.That(move.Owner, Is.Not.Null, $"{nameof(move.Owner)}");
+            AssertSelfLinkIsPresent(move);
             AssertResourceContainsCorrectOwnerLink(move.Links.FirstOrDefault(l => l.Rel.Equals(CharacterLinkName)), move.Owner);
         }
 
@@ -119,11 +131,21 @@ namespace FrannHammer.WebApi.Specs
             Assert.That(move.Name, Is.Not.Null, $"{nameof(move.Name)}");
             Assert.That(move.InstanceId, Is.Not.Null, $"{nameof(move.InstanceId)}");
             Assert.That(move.FirstActionableFrame, Is.Not.Null, $"{nameof(move.FirstActionableFrame)}");
+            AssertSelfLinkIsPresent(move);
             AssertResourceContainsCorrectOwnerLink(move.Links.FirstOrDefault(l => l.Rel.Equals(CharacterLinkName)), move.Owner);
+        }
+
+        private static void AssertSelfLinkIsPresent(Resource resource)
+        {
+            var selfLink = resource.Links.FirstOrDefault(l => l.Rel.Equals(SelfLinkName));
+
+            Assert.That(selfLink, Is.Not.Null, $"Unable to find '{SelfLinkName}' link.");
         }
 
         private static void AssertResourceContainsCorrectOwnerLink(Link link, string owner)
         {
+
+
             Assert.That(link, Is.Not.Null);
             Assert.That(link.Rel, Is.EqualTo(CharacterLinkName));
             StringAssert.Contains(owner, link.Href.Replace("%20", " "));

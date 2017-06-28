@@ -15,7 +15,7 @@ namespace FrannHammer.Api.Services
         public virtual IEnumerable<T> GetAllWhereCharacterNameIs(string name, string fields = "")
         {
             Guard.VerifyStringIsNotNullOrEmpty(name, nameof(name));
-            return GetAllWhere(item => EqualityComparer<string>.Default.Equals(item.Owner, name));
+            return GetAllWhere(item => item.Owner.Equals(name));
         }
 
         public virtual IEnumerable<T> GetAllWhereCharacterOwnerIdIs(int id, string fields = "")

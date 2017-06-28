@@ -5,7 +5,7 @@ namespace FrannHammer.WebScraping.Domain
     public class LittleMac : WebCharacter
     {
         public LittleMac()
-            : base("LittleMac", "Little%20Mac")
+            : base("LittleMac", "Little%20Mac", "Little Mac")
         { }
     }
 }

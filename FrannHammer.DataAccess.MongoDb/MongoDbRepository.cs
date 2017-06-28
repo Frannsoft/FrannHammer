@@ -10,10 +10,6 @@ using MongoDB.Bson.Serialization;
 
 namespace FrannHammer.DataAccess.MongoDb
 {
-    public interface IModelProvider
-    {
-        T Create<T>() where T : IModel;
-    }
     public class MongoDbRepository<T> : IRepository<T>
           where T : class, IModel
     {
@@ -33,9 +29,12 @@ namespace FrannHammer.DataAccess.MongoDb
             var objectId = new ObjectId(id);
 
             var filter = Builders<BsonDocument>.Filter.Eq(KeyId, objectId);
-            var raw = _mongoDatabase.GetCollection<BsonDocument>(typeof(T).Name).Find(filter).SingleOrDefault();
-
-            return DeserializeWithId(raw);
+            var result = _mongoDatabase.GetCollection<BsonDocument>(typeof(T).Name).Find(filter).SingleOrDefault();
+            if (result == null)
+            {
+                throw new ResourceNotFoundException($"Resource of type '{typeof(T).Name}' with id '{id}' not found.");
+            }
+            return DeserializeWithId(result);
         }
 
         public T GetByName(string name)
@@ -43,22 +42,28 @@ namespace FrannHammer.DataAccess.MongoDb
             Guard.VerifyStringIsNotNullOrEmpty(name, nameof(name));
 
             var filter = Builders<BsonDocument>.Filter.Eq(KeyName, name);
-            var raw = _mongoDatabase.GetCollection<BsonDocument>(typeof(T).Name).Find(filter).SingleOrDefault();
+            var result = _mongoDatabase.GetCollection<BsonDocument>(typeof(T).Name).Find(filter).SingleOrDefault();
 
-            return DeserializeWithId(raw);
+            if (result == null)
+            {
+                throw new ResourceNotFoundException($"Resource of type '{typeof(T).Name}' with name '{name}' not found.");
+            }
+            return DeserializeWithId(result);
         }
 
         public T GetSingleWhere(Func<T, bool> where)
         {
             var result = _mongoDatabase.GetCollection<T>(typeof(T).Name).AsQueryable().SingleOrDefault(where);
+            if (result == null)
+            {
+                throw new ResourceNotFoundException($"Resource of type '{typeof(T).Name}' not found.");
+            }
             return result;
         }
 
         public IEnumerable<T> GetAllWhere(Func<T, bool> where)
         {
-            var rawCollection =
-                _mongoDatabase.GetCollection<T>(typeof(T).Name).AsQueryable().Where(where).ToList();
-
+            var rawCollection = _mongoDatabase.GetCollection<T>(typeof(T).Name).AsQueryable().Where(where).ToList();
             return rawCollection;
         }
 

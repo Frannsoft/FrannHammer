@@ -17,35 +17,35 @@ namespace FrannHammer.WebApi.Controllers
             _moveService = moveService;
         }
 
-        [Route(MovesRouteKey + "/{id}")]
-        public IHttpActionResult GetById(string id, [FromUri]string fields = "")
+        [Route(MovesRouteKey + "/{id}", Name = nameof(GetMoveById))]
+        public IHttpActionResult GetMoveById(string id, [FromUri]string fields = "")
         {
             var move = _moveService.GetSingleByInstanceId(id, fields);
             return Result(move);
         }
 
-        [Route(MovesRouteKey)]
-        public override IHttpActionResult GetAll([FromUri]string fields = "")
+        [Route(MovesRouteKey, Name = nameof(GetAllMoves))]
+        public IHttpActionResult GetAllMoves([FromUri]string fields = "")
         {
             var moves = _moveService.GetAll(fields);
             return Result(moves);
         }
 
-        [Route(MovesRouteKey + "/name/{name}")]
-        public override IHttpActionResult GetSingleByName(string name, string fields = "")
+        [Route(MovesRouteKey + "/name/{name}", Name = nameof(GetSingleMoveByName))]
+        public IHttpActionResult GetSingleMoveByName(string name, string fields = "")
         {
             var content = _moveService.GetAllWhereName(name, fields);
             return Result(content);
         }
 
-        [Route(MovesRouteKey + "/name/{name}/{property}")]
+        [Route(MovesRouteKey + "/name/{name}/{property}", Name = nameof(GetAllPropertyDataForMoveByName))]
         public IHttpActionResult GetAllPropertyDataForMoveByName(string name, string property, string fields = "")
         {
             var content = _moveService.GetAllPropertyDataWhereName(name, property, fields);
             return Result(content);
         }
 
-        [Route(MovesRouteKey + "/{id}/{property}")]
+        [Route(MovesRouteKey + "/{id}/{property}", Name = nameof(GetAllPropertyDataForMoveById))]
         public IHttpActionResult GetAllPropertyDataForMoveById(string id, string property, string fields = "")
         {
             var content = _moveService.GetPropertyDataWhereId(id, property, fields);

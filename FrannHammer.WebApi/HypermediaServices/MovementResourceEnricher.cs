@@ -16,7 +16,10 @@ namespace FrannHammer.WebApi.HypermediaServices
         {
             var resource = EntityToDtoMapper.Map<MovementResource>(content);
 
-            var characterlink = CreateNameBasedLink<CharacterLink>(content.Owner, urlHelper, nameof(CharacterController.GetSingleByName));
+            var characterlink = CreateNameBasedLink<CharacterLink>(content.Owner, urlHelper, nameof(CharacterController.GetSingleCharacterByName));
+            var selfLink = CreateIdBasedLink<SelfLink>(content.InstanceId, urlHelper, nameof(MovementController.GetMovementById));
+
+            resource.AddLink(selfLink);
             resource.AddLink(characterlink);
 
             return resource;

@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using AutoMapper;
 using FrannHammer.WebApi.HypermediaServices;
 
 namespace FrannHammer.WebApi

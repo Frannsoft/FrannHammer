@@ -55,14 +55,14 @@ namespace FrannHammer.WebScraping.Character
 
                     if (!string.IsNullOrEmpty(thumbnailHtml))
                     {
-                        thumbnailUrl = GetThumbnailUrl(srcAttributeKey, thumbnailHtml);
+                        thumbnailUrl = GetThumbnailUrl(srcAttributeKey, thumbnailHtml, WebCharacter.SourceUrlBase);
                         break;
                     }
                 }
             }
             else
             {
-                thumbnailUrl = GetThumbnailUrl(srcAttributeKey, thumbnailHtml);
+                thumbnailUrl = GetThumbnailUrl(srcAttributeKey, thumbnailHtml, WebCharacter.SourceUrlBase);
             }
 
             //character details
@@ -99,9 +99,9 @@ namespace FrannHammer.WebScraping.Character
             character.AttributeRows = attributeRows;
         }
 
-        private static string GetThumbnailUrl(string attributeKey, string thumbnailHtml)
+        private static string GetThumbnailUrl(string attributeKey, string thumbnailHtml, string urlRoot)
         {
-            return HtmlNode.CreateNode(thumbnailHtml).GetAttributeValue(attributeKey, string.Empty);
+            return urlRoot + HtmlNode.CreateNode(thumbnailHtml).GetAttributeValue(attributeKey, string.Empty);
         }
 
         private static string GetCharacterDisplayName(string rawDisplayNameHtml)

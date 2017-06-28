@@ -10,7 +10,6 @@ using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Owin;
 using System.Linq;
-using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Web;
@@ -52,6 +51,7 @@ namespace FrannHammer.WebApi
             //configure container
             BuildContainer(config);
 
+            config.Filters.Add(new CustomExceptionFilterAttribute());
             config.DependencyResolver = new AutofacWebApiDependencyResolver(Container);
 
             ConfigureCustomMessageHandlers(config);

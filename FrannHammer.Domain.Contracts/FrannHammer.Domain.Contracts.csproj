@@ -60,6 +60,7 @@
     <Compile Include="IUniqueDataProvider.cs" />
     <Compile Include="MoveType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResourceNotFoundException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

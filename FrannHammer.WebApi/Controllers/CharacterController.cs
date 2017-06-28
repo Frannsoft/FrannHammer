@@ -27,22 +27,22 @@ namespace FrannHammer.WebApi.Controllers
             _characterService = characterService;
         }
 
-        [Route(CharactersRouteKey + IdRouteKey, Name = nameof(GetByOwnerId))]
-        public IHttpActionResult GetByOwnerId(int id, [FromUri]string fields = "")
+        [Route(CharactersRouteKey + IdRouteKey, Name = nameof(GetCharacterByOwnerId))]
+        public IHttpActionResult GetCharacterByOwnerId(int id, [FromUri]string fields = "")
         {
             var character = _characterService.GetSingleByOwnerId(id, fields);
             return Result(character);
         }
 
-        [Route(CharactersRouteKey + NameRouteKey, Name = nameof(GetSingleByName))]
-        public override IHttpActionResult GetSingleByName(string name, [FromUri]string fields = "")
+        [Route(CharactersRouteKey + NameRouteKey, Name = nameof(GetSingleCharacterByName))]
+        public IHttpActionResult GetSingleCharacterByName(string name, [FromUri]string fields = "")
         {
             var character = _characterService.GetSingleByName(name, fields);
             return Result(character);
         }
 
-        [Route(CharactersRouteKey, Name = nameof(GetAll))]
-        public override IHttpActionResult GetAll([FromUri]string fields = "")
+        [Route(CharactersRouteKey, Name = nameof(GetAllCharacters))]
+        public IHttpActionResult GetAllCharacters([FromUri]string fields = "")
         {
             var characters = _characterService.GetAll(fields);
             return Result(characters);

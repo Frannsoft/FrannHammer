@@ -37,7 +37,12 @@ namespace FrannHammer.Api.Services
 
         public ICharacter GetSingleByName(string name, string fields = "")
         {
-            return Repository.GetSingleWhere(c => c.Name == name);
+            var character = Repository.GetSingleWhere(c => c.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase));
+            if (character == null)
+            {
+                throw new ResourceNotFoundException($"No character with name '{name}' found.");
+            }
+            return character;
         }
 
         public ICharacterDetailsDto GetCharacterDetailsWhereCharacterOwnerIs(string name, string fields = "")

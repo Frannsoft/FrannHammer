@@ -2,7 +2,6 @@
 using System.Net.Http;
 using System.Web.Http.Routing;
 using AutoMapper;
-using FrannHammer.Domain.Contracts;
 using FrannHammer.Utility;
 using FrannHammer.WebApi.Models;
 
@@ -58,10 +57,20 @@ namespace FrannHammer.WebApi.HypermediaServices
             where TLink : Link
         {
             string hypermediaLink = urlHelper.Link(routeName, new { name = nameValue });
+            return CreateLinkCore<TLink>(hypermediaLink);
+        }
 
-            var link = LinkProvider.CreateLink<TLink>(hypermediaLink);
+        protected TLink CreateIdBasedLink<TLink>(string idValue, UrlHelper urlHelper, string routeName)
+            where TLink : Link
+        {
+            string hypermediaLink = urlHelper.Link(routeName, new { id = idValue });
+            return CreateLinkCore<TLink>(hypermediaLink);
+        }
 
-            return link;
+        private TLink CreateLinkCore<TLink>(string rawHypermediaLink)
+            where TLink : Link
+        {
+            return LinkProvider.CreateLink<TLink>(rawHypermediaLink);
         }
     }
 }

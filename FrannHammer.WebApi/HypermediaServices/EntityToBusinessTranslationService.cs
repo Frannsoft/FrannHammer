@@ -46,7 +46,7 @@ namespace FrannHammer.WebApi.HypermediaServices
 
             var resource = _entityToDtoMapper.Map<MoveResource>(entity);
 
-            var characterLink = CreateLink<CharacterLink>(resource, urlHelper, nameof(CharacterController.GetSingleByName));
+            var characterLink = CreateLink<CharacterLink>(resource, urlHelper, nameof(CharacterController.GetSingleCharacterByName));
 
             resource.AddLink(characterLink);
 
