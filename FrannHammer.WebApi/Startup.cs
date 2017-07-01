@@ -146,7 +146,7 @@ namespace FrannHammer.WebApi
                     .Description("Restful api for Sm4sh frame data as told by @KuroganeHammer.")
                     .License(lc => lc.Name("License: MIT").Url("https://github.com/Frannsoft/FrannHammer/blob/develop/License.md"));
                 c.DocumentFilter(() => new SwaggerAccessDocumentFilter());
-                c.IncludeXmlComments($@"{AppDomain.CurrentDomain.BaseDirectory}\App_Data\XmlDocument.XML");
+                //c.IncludeXmlComments($@"{AppDomain.CurrentDomain.BaseDirectory}\App_Data\XmlDocument.XML");
             })
               .EnableSwaggerUi(c =>
               {

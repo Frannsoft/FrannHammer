@@ -131,14 +131,12 @@ namespace FrannHammer.Api.Services
         {
             if (parserType == null)
             {
-                AddBasicInfoToDataProperty(parsedMoveDataProperty, rawValue, move);
-                parsedMove.MoveData.Add(parsedMoveDataProperty);
+                parsedMove.MoveProperties.Add(parsedMoveDataProperty);
             }
             else
             {
                 var parser = (PropertyParser)Activator.CreateInstance(parserType);
                 var parsedData = parser.Parse(rawValue);
-                AddBasicInfoToDataProperty(parsedMoveDataProperty, rawValue, move);
                 foreach (var parsed in parsedData)
                 {
                     parsedMoveDataProperty.AddParsedMoveAttribute(
@@ -149,18 +147,8 @@ namespace FrannHammer.Api.Services
                         });
                 }
 
-                parsedMove.MoveData.Add(parsedMoveDataProperty);
+                parsedMove.MoveProperties.Add(parsedMoveDataProperty);
             }
-        }
-
-        private static void AddBasicInfoToDataProperty(ParsedMoveDataProperty dataProperty, string rawValue, IMove move)
-        {
-            dataProperty.Data.Add(
-                new ParsedMoveAttribute
-                {
-                    Name = RawValueKey,
-                    Value = rawValue
-                });
         }
 
         public IDictionary<string, string> GetPropertyDataWhereId(string id, string property, string fields = "")

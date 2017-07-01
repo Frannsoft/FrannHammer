@@ -13,7 +13,7 @@
 .swagger-section .swagger-ui-wrap p {
     line-height: 1.4em;
     padding: 0 0 10px;
-    color: black;
+    color: black; 
 }
 
 .swagger-section .swagger-ui-wrap ul#resources li.resource div.heading h2 a:hover {

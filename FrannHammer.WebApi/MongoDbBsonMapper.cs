@@ -21,7 +21,7 @@ namespace FrannHammer.WebApi
             foreach (var assembly in assembliesToReflectOver)
             {
                 MapAllLoadedTypesDerivingFromCore<T>(assembly);
-            }
+            } 
         }
 
         private static void MapAllLoadedTypesDerivingFromCore<T>(Assembly assemblyToReflectOver)
