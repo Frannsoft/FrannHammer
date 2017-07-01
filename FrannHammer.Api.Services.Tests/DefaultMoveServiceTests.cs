@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FrannHammer.Api.Services.Contracts;
 using FrannHammer.DataAccess.Contracts;
 using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
@@ -43,69 +44,143 @@ namespace FrannHammer.Api.Services.Tests
 
         private static IEnumerable<Tuple<string, string[]>> MoveProperties()
         {
-            yield return Tuple.Create("baseDamage", new[] { Hitbox1Key, Hitbox2Key, Hitbox3Key, Hitbox4Key, Hitbox5Key, MoveNameKey, RawValueKey });
-            yield return Tuple.Create("hitboxActive", new[] { Hitbox1Key, Hitbox2Key, Hitbox3Key, Hitbox4Key, Hitbox5Key, MoveNameKey, RawValueKey });
-            yield return Tuple.Create("angle", new[] { Hitbox1Key, Hitbox2Key, Hitbox3Key, Hitbox4Key, Hitbox5Key, MoveNameKey, RawValueKey });
-            yield return Tuple.Create("knockbackGrowth", new[] { Hitbox1Key, Hitbox2Key, Hitbox3Key, Hitbox4Key, Hitbox5Key, MoveNameKey, RawValueKey });
-            yield return Tuple.Create("autoCancel", new[] { Cancel1Key, Cancel2Key, MoveNameKey, RawValueKey });
-            yield return Tuple.Create("firstActionableFrame", new[] { FrameKey, MoveNameKey, RawValueKey });
-            yield return Tuple.Create("landingLag", new[] { FramesKey, MoveNameKey, RawValueKey });
-            yield return Tuple.Create("baseKnockback", new[] { Hitbox1Key, Hitbox2Key, Hitbox3Key, Hitbox4Key, Hitbox5Key, MoveNameKey, RawValueKey });
-            yield return Tuple.Create("setKnockback", new[] { Hitbox1Key, Hitbox2Key, Hitbox3Key, Hitbox4Key, Hitbox5Key, MoveNameKey, RawValueKey });
+            yield return Tuple.Create("baseDamage", new[] { Hitbox1Key, Hitbox2Key, Hitbox3Key, Hitbox4Key, Hitbox5Key, MoveNameKey, RawValueKey, NotesKey });
+            yield return Tuple.Create("hitboxActive", new[] { Hitbox1Key, Hitbox2Key, Hitbox3Key, Hitbox4Key, Hitbox5Key, MoveNameKey, RawValueKey, NotesKey });
+            yield return Tuple.Create("angle", new[] { Hitbox1Key, Hitbox2Key, Hitbox3Key, Hitbox4Key, Hitbox5Key, MoveNameKey, RawValueKey, NotesKey });
+            yield return Tuple.Create("knockbackGrowth", new[] { Hitbox1Key, Hitbox2Key, Hitbox3Key, Hitbox4Key, Hitbox5Key, MoveNameKey, RawValueKey, NotesKey });
+            yield return Tuple.Create("autoCancel", new[] { Cancel1Key, Cancel2Key, MoveNameKey, RawValueKey, NotesKey });
+            yield return Tuple.Create("firstActionableFrame", new[] { FrameKey, MoveNameKey, RawValueKey, NotesKey });
+            yield return Tuple.Create("landingLag", new[] { FramesKey, MoveNameKey, RawValueKey, NotesKey });
+            yield return Tuple.Create("baseKnockback", new[] { Hitbox1Key, Hitbox2Key, Hitbox3Key, Hitbox4Key, Hitbox5Key, MoveNameKey, RawValueKey, NotesKey });
+            yield return Tuple.Create("setKnockback", new[] { Hitbox1Key, Hitbox2Key, Hitbox3Key, Hitbox4Key, Hitbox5Key, MoveNameKey, RawValueKey, NotesKey });
         }
 
-        [Test]
-        public void DetailedMovesContainExpectedProperties()
+        private IRepository<IMove> MakeRepository()
         {
             const int expectedOwnerId = 1;
             const string expectedCharacterName = "mario";
 
             //mock move repo
             //add fake moves with all properties filled out.  Some should match the passed in name, others should not
-            var matchingItems =
-                _fixture.Create<Move>();
+            var matchingItem = _fixture.Create<Move>();
 
-            matchingItems.OwnerId = expectedOwnerId;
-            matchingItems.Owner = expectedCharacterName;
-            matchingItems.Name = "test";
+            //TODO - just make a manual real life one.  The fixture created one has too much junk data.
+            matchingItem.Angle = "50";
+            matchingItem.AutoCancel = "20";
+            matchingItem.BaseDamage = "40/30";
+            matchingItem.BaseKnockBackSetKnockback = "W: 15/10/15";
+            matchingItem.FirstActionableFrame = "25";
+            matchingItem.HitboxActive = "3-6";
+            matchingItem.KnockbackGrowth = "20";
+            matchingItem.LandingLag = "20";
+            matchingItem.OwnerId = expectedOwnerId;
+            matchingItem.Owner = expectedCharacterName;
+            matchingItem.MoveType = MoveType.Ground.GetEnumDescription();
+            matchingItem.Name = "test";
 
-            var totalItems = _fixture.CreateMany<Move>().ToList();
-            totalItems.Add(matchingItems);
+            var totalItems = new List<Move>
+            {
+                matchingItem
+            };
+            totalItems.AddRange(_fixture.CreateMany<Move>().ToList());
 
             var mockRepository = ConfigureMockRepositoryWithSeedMoves(totalItems, _fixture);
 
+            return mockRepository;
+        }
+
+        [Test]
+        public void GetAllMovePropertyDataForCharacter_ReturnsAllMovesForCharacter()
+        {
+            var mockRepository = MakeRepository();
+            var anonymousMove = mockRepository.GetAll().First();
+
             //get all move property data for a move
             var sut = new DefaultMoveService(mockRepository, new Mock<IQueryMappingService>().Object);
-            var results = sut.GetAllMovePropertyDataForCharacter(new Character { OwnerId = expectedOwnerId })
+            var results = sut.GetAllMovePropertyDataForCharacter(new Character { OwnerId = anonymousMove.OwnerId })
                 .ToList();
 
             Assert.That(results.Count, Is.GreaterThan(0), $"{nameof(results.Count)}");
 
-            //assert all expected moves are present
-            var rawMoves = sut.GetAllWhereCharacterNameIs(expectedCharacterName).ToList();
+            var storedMoves = mockRepository.GetAllWhere(move => move.Owner == anonymousMove.Owner).ToList();
 
-            rawMoves.ForEach(rawMove =>
+            storedMoves.ForEach(rawMove =>
             {
                 Assert.That(results.Any(result => result.MoveName.Equals(rawMove.Name)),
                     $"Results does not have move '{rawMove.Name}'.");
             });
+        }
 
-            var firstMove = results.First();
+        [Test]
+        public void GetAllMovePropertyDataForCharacter_EachMoveDataPropertyHasExpectedHitboxProperties()
+        {
+            var mockRepository = MakeRepository();
+            var anonymousMove = mockRepository.GetAll().First(move => move.Name == "test");
 
-            Assert.That(firstMove.MoveData.Any(data => data.Data.Any(d => d.Name.Equals(Hitbox1Key))),
-                $"{nameof(firstMove)} does not contain {Hitbox1Key}: {nameof(firstMove)}");
-            Assert.That(firstMove.MoveData.Any(data => data.Data.Any(d => d.Name.Equals(Hitbox2Key))),
-                $"{nameof(firstMove)} does not contain {Hitbox2Key}: {nameof(firstMove)}");
-            Assert.That(firstMove.MoveData.Any(data => data.Data.Any(d => d.Name.Equals(Hitbox3Key))),
-                $"{nameof(firstMove)} does not contain {Hitbox3Key}: {nameof(firstMove)}");
-            Assert.That(firstMove.MoveData.Any(data => data.Data.Any(d => d.Name.Equals(Hitbox4Key))),
-                $"{nameof(firstMove)} does not contain {Hitbox4Key}: {nameof(firstMove)}");
-            Assert.That(firstMove.MoveData.Any(data => data.Data.Any(d => d.Name.Equals(Hitbox5Key))),
-                $"{nameof(firstMove)} does not contain {Hitbox5Key}: {nameof(firstMove)}");
-            Assert.That(firstMove.MoveData.Any(data => data.Data.Any(d => d.Name.Equals(RawValueKey))),
-                $"{nameof(firstMove)} does not contain {RawValueKey}: {nameof(firstMove)}");
-            Assert.That(firstMove.MoveData.Any(data => data.Data.Any(d => d.Name.Equals(NotesKey))),
-                $"{nameof(firstMove)} does not contain {NotesKey}: {nameof(firstMove)}");
+            //get all move property data for a move
+            var sut = new DefaultMoveService(mockRepository, new Mock<IQueryMappingService>().Object);
+            var results = sut.GetAllMovePropertyDataForCharacter(new Character { OwnerId = anonymousMove.OwnerId })
+                .ToList();
+
+            var firstMove = results.First(move => move.MoveName == "test");
+
+            var hitboxProperty = firstMove.MoveProperties.FirstOrDefault(property => property.Name.Equals("HitboxActive"));
+            AssertHitboxBasedPropertyIsValid(hitboxProperty);
+
+            var baseDamageProperty = firstMove.MoveProperties.FirstOrDefault(property => property.Name.Equals("BaseDamage"));
+            AssertHitboxBasedPropertyIsValid(baseDamageProperty);
+
+            var angleProperty = firstMove.MoveProperties.FirstOrDefault(property => property.Name.Equals("Angle"));
+            AssertHitboxBasedPropertyIsValid(angleProperty);
+
+            var knockbackGrowthProperty = firstMove.MoveProperties.FirstOrDefault(property => property.Name.Equals("KnockbackGrowth"));
+            AssertHitboxBasedPropertyIsValid(knockbackGrowthProperty);
+
+            var baseKnockbackSetKnockback = firstMove.MoveProperties.FirstOrDefault(property => property.Name.Equals("BaseKnockBackSetKnockback"));
+            AssertHitboxBasedPropertyIsValid(baseKnockbackSetKnockback);
+
+            var autoCancelProperty = firstMove.MoveProperties.FirstOrDefault(property => property.Name.Equals("AutoCancel"));
+            AssertAutoCancelPropertyIsValid(autoCancelProperty);
+
+            var firstActionableFrameProperty = firstMove.MoveProperties.FirstOrDefault(property => property.Name.Equals("FirstActionableFrame"));
+            AssertFirstActionableFramePropertyIsValid(firstActionableFrameProperty);
+
+            var landingLagProperty = firstMove.MoveProperties.FirstOrDefault(property => property.Name.Equals("LandingLag"));
+            AssertLandingLagPropertyIsValid(landingLagProperty);
+        }
+
+        private void AssertLandingLagPropertyIsValid(ParsedMoveDataProperty landingLagProperty)
+        {
+            Assert.That(landingLagProperty, Is.Not.Null, $"{nameof(landingLagProperty)}");
+            Assert.That(landingLagProperty.MoveAttributes.Count(attribute => attribute.Name.Equals(FramesKey)), Is.EqualTo(1), $"{nameof(FramesKey)}:{landingLagProperty.Name}");
+            Assert.That(landingLagProperty.MoveAttributes.Count(attribute => attribute.Name.Equals(RawValueKey)), Is.EqualTo(1), $"{nameof(RawValueKey)}:{landingLagProperty.Name}");
+        }
+
+        private void AssertFirstActionableFramePropertyIsValid(ParsedMoveDataProperty firstActionableFrameProperty)
+        {
+            Assert.That(firstActionableFrameProperty, Is.Not.Null, $"{nameof(firstActionableFrameProperty)}");
+            Assert.That(firstActionableFrameProperty.MoveAttributes.Count(attribute => attribute.Name.Equals(FrameKey)), Is.EqualTo(1), $"{nameof(FrameKey)}:{firstActionableFrameProperty.Name}");
+            Assert.That(firstActionableFrameProperty.MoveAttributes.Count(attribute => attribute.Name.Equals(RawValueKey)), Is.EqualTo(1), $"{nameof(RawValueKey)}:{firstActionableFrameProperty.Name}");
+        }
+
+        private void AssertHitboxBasedPropertyIsValid(ParsedMoveDataProperty hitboxBasedProperty)
+        {
+            Assert.That(hitboxBasedProperty, Is.Not.Null, $"{nameof(hitboxBasedProperty)}");
+            Assert.That(hitboxBasedProperty.MoveAttributes.Count(attribute => attribute.Name.Equals(Hitbox1Key)), Is.EqualTo(1), $"{nameof(Hitbox1Key)}:{hitboxBasedProperty.Name}");
+            Assert.That(hitboxBasedProperty.MoveAttributes.Count(attribute => attribute.Name.Equals(Hitbox2Key)), Is.EqualTo(1), $"{nameof(Hitbox2Key)}:{hitboxBasedProperty.Name}");
+            Assert.That(hitboxBasedProperty.MoveAttributes.Count(attribute => attribute.Name.Equals(Hitbox3Key)), Is.EqualTo(1), $"{nameof(Hitbox3Key)}:{hitboxBasedProperty.Name}");
+            Assert.That(hitboxBasedProperty.MoveAttributes.Count(attribute => attribute.Name.Equals(Hitbox4Key)), Is.EqualTo(1), $"{nameof(Hitbox4Key)}:{hitboxBasedProperty.Name}");
+            Assert.That(hitboxBasedProperty.MoveAttributes.Count(attribute => attribute.Name.Equals(Hitbox5Key)), Is.EqualTo(1), $"{nameof(Hitbox5Key)}:{hitboxBasedProperty.Name}");
+            Assert.That(hitboxBasedProperty.MoveAttributes.Count(attribute => attribute.Name.Equals(RawValueKey)), Is.EqualTo(1), $"{nameof(RawValueKey)}:{hitboxBasedProperty.Name}");
+            Assert.That(hitboxBasedProperty.MoveAttributes.Count(attribute => attribute.Name.Equals(NotesKey)), Is.EqualTo(1), $"{nameof(NotesKey)}:{hitboxBasedProperty.Name}");
+        }
+
+        private void AssertAutoCancelPropertyIsValid(ParsedMoveDataProperty autoCancelProperty)
+        {
+            Assert.That(autoCancelProperty, Is.Not.Null, $"{nameof(autoCancelProperty)}");
+            Assert.That(autoCancelProperty.MoveAttributes.Count(attribute => attribute.Name.Equals(Cancel1Key)), Is.EqualTo(1), $"{nameof(Cancel1Key)}:{autoCancelProperty.Name}");
+            Assert.That(autoCancelProperty.MoveAttributes.Count(attribute => attribute.Name.Equals(Cancel2Key)), Is.EqualTo(1), $"{nameof(Cancel2Key)}:{autoCancelProperty.Name}");
+            Assert.That(autoCancelProperty.MoveAttributes.Count(attribute => attribute.Name.Equals(RawValueKey)), Is.EqualTo(1), $"{nameof(RawValueKey)}:{autoCancelProperty.Name}");
         }
 
         [Test]
@@ -120,6 +195,20 @@ namespace FrannHammer.Api.Services.Tests
             //add fake moves with all properties filled out.  Some should match the passed in name, others should not
             var matchingItems = _fixture.CreateMany<Move>().ToList();
             matchingItems.ForEach(move => { move.Name = expectedMoveName; });
+
+            var matchingItem = _fixture.Create<Move>();
+
+            //TODO - just make a manual real life one.  The fixture created one has too much junk data.
+            matchingItem.Angle = "50";
+            matchingItem.AutoCancel = "20";
+            matchingItem.BaseDamage = "40/30";
+            matchingItem.BaseKnockBackSetKnockback = "W: 15/10/15";
+            matchingItem.FirstActionableFrame = "25";
+            matchingItem.HitboxActive = "3-6";
+            matchingItem.KnockbackGrowth = "20";
+            matchingItem.LandingLag = "20";
+            matchingItem.MoveType = MoveType.Ground.GetEnumDescription();
+            matchingItem.Name = "test";
 
             var nonMatchingItems = _fixture.CreateMany<Move>().ToList();
             nonMatchingItems.AddRange(matchingItems);

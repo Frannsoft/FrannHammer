@@ -17,22 +17,22 @@ namespace FrannHammer.Api.Services.Tests
                .Returns((Func<IMove, bool> where) => testDataStore.Where(where));
         }
 
-        public static IRepository<IMove> ConfigureMockRepositoryWithSeedMoves(IEnumerable<Move> matchingMoves, Fixture fixture)
+        public static IRepository<IMove> ConfigureMockRepositoryWithSeedMoves(IEnumerable<Move> seedMoves, Fixture fixture)
         {
             //add fake moves with all properties filled out.  Some should match the passed in name, others should not
-            var matchingItems = matchingMoves;
+            //var matchingItems = seedMoves;
 
-            var itemsForMockRepository = fixture.CreateMany<Move>().ToList();
-            itemsForMockRepository.AddRange(matchingItems);
+            //var itemsForMockRepository = fixture.CreateMany<Move>().ToList();
+            //itemsForMockRepository.AddRange(matchingItems);
 
             //mock repository
             var mockRepository = new Mock<IRepository<IMove>>();
 
-            ConfigureGetAllWhereOnMockRepository(mockRepository, itemsForMockRepository);
+            ConfigureGetAllWhereOnMockRepository(mockRepository, seedMoves);
 
             mockRepository.Setup(r => r.GetSingleWhere(It.IsAny<Func<IMove, bool>>()))
-                .Returns((Func<IMove, bool> where) => itemsForMockRepository.Single(where));
-            mockRepository.Setup(r => r.GetAll()).Returns(() => itemsForMockRepository);
+                .Returns((Func<IMove, bool> where) => seedMoves.Single(where));
+            mockRepository.Setup(r => r.GetAll()).Returns(() => seedMoves);
 
             return mockRepository.Object;
         }

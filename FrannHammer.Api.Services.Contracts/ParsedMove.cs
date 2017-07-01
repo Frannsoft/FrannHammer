@@ -13,14 +13,14 @@ namespace FrannHammer.Api.Services.Contracts
         public string MoveName { get; set; }
         public string Owner { get; set; }
         public int OwnerId { get; set; }
-        public IList<ParsedMoveDataProperty> MoveData { get; }
+        public IList<ParsedMoveDataProperty> MoveProperties { get; }
 
         public ParsedMoveDataProperty this[string propertyName]
         {
             get
             {
                 return
-                    MoveData.FirstOrDefault(
+                    MoveProperties.FirstOrDefault(
                         moveProperty =>
                             moveProperty.Name.Equals(propertyName, StringComparison.CurrentCultureIgnoreCase));
             }
@@ -28,13 +28,13 @@ namespace FrannHammer.Api.Services.Contracts
 
         public ParsedMove()
         {
-            MoveData = new List<ParsedMoveDataProperty>();
+            MoveProperties = new List<ParsedMoveDataProperty>();
         }
 
         public void AddParsedMoveDataProperty(ParsedMoveDataProperty parsedMoveDataProperty)
         {
             Guard.VerifyObjectNotNull(parsedMoveDataProperty, nameof(parsedMoveDataProperty));
-            MoveData.Add(parsedMoveDataProperty);
+            MoveProperties.Add(parsedMoveDataProperty);
         }
     }
 }

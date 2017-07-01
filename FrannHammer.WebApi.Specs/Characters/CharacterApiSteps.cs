@@ -192,7 +192,7 @@ namespace FrannHammer.WebApi.Specs.Characters
                 Assert.That(moveData.OwnerId.ToString() == expectedOwnerName ||
                          moveData.Owner == expectedOwnerName, $"{nameof(moveData.OwnerId)}");
 
-                foreach (var moveDataProperties in moveData.MoveData)
+                foreach (var moveDataProperties in moveData.MoveProperties)
                 {
                     foreach (var field in expectedMoveProperties)
                     {

@@ -15,7 +15,7 @@ namespace FrannHammer.WebApi.SwaggerExtensions
                 pathItem.options = null;
                 pathItem.patch = null;
                 pathItem.post = null;
-                pathItem.put = null;
+                pathItem.put = null; 
             }
         }
     }
