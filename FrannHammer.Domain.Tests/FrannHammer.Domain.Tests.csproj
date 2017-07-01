@@ -56,7 +56,6 @@
     <Compile Include="PropertyParserTests\AutoCancelParserTests.cs" />
     <Compile Include="PropertyParserTests\BaseKnockbackParserTests.cs" />
     <Compile Include="PropertyParserTests\FirstActionableFrameParserTests.cs" />
-    <Compile Include="PropertyParserTests\GeneralParserTests.cs" />
     <Compile Include="PropertyParserTests\HitboxParserTests.cs" />
     <Compile Include="PropertyParserTests\LandingLagParserTests.cs" />
     <Compile Include="PropertyParserTests\SetKnockbackParserTests.cs" />

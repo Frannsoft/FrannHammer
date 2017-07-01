@@ -10,7 +10,7 @@ namespace FrannHammer.Domain.PropertyParsers
             return Parse(rawData, results =>
             {
                 //I don't want to ref System.Web (for httputility) just for this call.
-                string replacedRawData = rawData.Replace("&gt;", ">");
+                string replacedRawData = rawData.Replace("&gt;", ">").Replace(" ", string.Empty);
 
                 var splitData = replacedRawData.Split(',');
 
