@@ -10,15 +10,16 @@ namespace FrannHammer.Domain.PropertyParsers
             return Parse(rawData, results =>
             {
                 int frames;
+                string notesDataStrippedFromFrameValue = SeparateNotesDataFromHitbox(results, rawData);
 
-                if (!int.TryParse(rawData, out frames))
+                if (!int.TryParse(notesDataStrippedFromFrameValue, out frames))
                 {
                     frames = 0;
                 }
 
                 results[FramesKey] = frames.ToString();
                 return results;
-            }, FramesKey);
+            }, FramesKey, NotesKey);
         }
     }
 }

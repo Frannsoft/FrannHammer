@@ -1,11 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using static FrannHammer.Domain.PropertyParsers.MoveDataNameConstants;
 
 namespace FrannHammer.Domain.PropertyParsers
 {
-    //TODO - ADD BASIC TESTS AT CONTROLLER LEVEL
-
     public class HitboxParser : PropertyParser
     {
         public override IDictionary<string, string> Parse(string rawData)
@@ -24,28 +21,6 @@ namespace FrannHammer.Domain.PropertyParsers
 
                  return results;
              }, Hitbox1Key, Hitbox2Key, Hitbox3Key, Hitbox4Key, Hitbox5Key);
-        }
-
-        private static string GetNoteDataFromHitboxActiveData(string rawHitboxData)
-        {
-            var match = Regex.Match(rawHitboxData, @"\(([^\)]+)\)");
-            return match.Value;
-        }
-
-        private static string SeparateNotesDataFromHitbox(IDictionary<string, string> model, string rawData)
-        {
-            string noteData = GetNoteDataFromHitboxActiveData(rawData);
-
-            if (!model.ContainsKey(NotesKey))
-            {
-                model[NotesKey] = noteData;
-            }
-            else
-            {
-                model[NotesKey] += noteData;
-            }
-
-            return !string.IsNullOrEmpty(noteData) ? rawData.Replace(noteData, string.Empty).Trim() : rawData;
         }
 
         protected static void SetHitboxesData(IDictionary<string, string> model, string[] rawData)

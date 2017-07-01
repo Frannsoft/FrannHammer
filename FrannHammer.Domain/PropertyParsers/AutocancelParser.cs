@@ -16,15 +16,15 @@ namespace FrannHammer.Domain.PropertyParsers
 
                 if (splitData.Length > 0)
                 {
-                    results[Cancel1Key] = splitData[0].Trim();
+                    results[Cancel1Key] = SeparateNotesDataFromHitbox(results, splitData[0]);
                 }
                 if (splitData.Length > 1)
                 {
-                    results[Cancel2Key] = splitData[1].Trim();
+                    results[Cancel2Key] = SeparateNotesDataFromHitbox(results, splitData[1]);
                 }
 
                 return results;
-            }, Cancel1Key, Cancel2Key);
+            }, Cancel1Key, Cancel2Key, NotesKey);
         }
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using static FrannHammer.Domain.PropertyParsers.MoveDataNameConstants;
 
 namespace FrannHammer.Domain.PropertyParsers
@@ -9,9 +10,9 @@ namespace FrannHammer.Domain.PropertyParsers
         {
             return Parse(rawData, results =>
             {
-                results[FrameKey] = rawData;
+                results[FrameKey] = SeparateNotesDataFromHitbox(results, rawData);
                 return results;
-            }, FrameKey);
+            }, FrameKey, NotesKey);
         }
     }
 }

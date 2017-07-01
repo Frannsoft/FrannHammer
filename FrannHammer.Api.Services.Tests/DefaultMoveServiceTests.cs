@@ -42,6 +42,16 @@ namespace FrannHammer.Api.Services.Tests
             });
         }
 
+        [Test]
+        public void Ctor_ThrowsArgumentNullExceptionForNullQueryMappingService()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                // ReSharper disable once ObjectCreationAsStatement
+                new DefaultMoveService(new Mock<IRepository<IMove>>().Object, null);
+            });
+        }
+
         private static IEnumerable<Tuple<string, string[]>> MoveProperties()
         {
             yield return Tuple.Create("baseDamage", new[] { Hitbox1Key, Hitbox2Key, Hitbox3Key, Hitbox4Key, Hitbox5Key, MoveNameKey, RawValueKey, NotesKey });
@@ -57,14 +67,10 @@ namespace FrannHammer.Api.Services.Tests
 
         private IRepository<IMove> MakeRepository()
         {
-            const int expectedOwnerId = 1;
-            const string expectedCharacterName = "mario";
-
             //mock move repo
             //add fake moves with all properties filled out.  Some should match the passed in name, others should not
             var matchingItem = _fixture.Create<Move>();
 
-            //TODO - just make a manual real life one.  The fixture created one has too much junk data.
             matchingItem.Angle = "50";
             matchingItem.AutoCancel = "20";
             matchingItem.BaseDamage = "40/30";
@@ -73,8 +79,8 @@ namespace FrannHammer.Api.Services.Tests
             matchingItem.HitboxActive = "3-6";
             matchingItem.KnockbackGrowth = "20";
             matchingItem.LandingLag = "20";
-            matchingItem.OwnerId = expectedOwnerId;
-            matchingItem.Owner = expectedCharacterName;
+            matchingItem.OwnerId = _fixture.Create<int>();
+            matchingItem.Owner = _fixture.Create<string>();
             matchingItem.MoveType = MoveType.Ground.GetEnumDescription();
             matchingItem.Name = "test";
 
@@ -82,7 +88,6 @@ namespace FrannHammer.Api.Services.Tests
             {
                 matchingItem
             };
-            totalItems.AddRange(_fixture.CreateMany<Move>().ToList());
 
             var mockRepository = ConfigureMockRepositoryWithSeedMoves(totalItems, _fixture);
 
@@ -92,38 +97,133 @@ namespace FrannHammer.Api.Services.Tests
         [Test]
         public void GetAllMovePropertyDataForCharacter_ReturnsAllMovesForCharacter()
         {
+            //arrange 
             var mockRepository = MakeRepository();
             var anonymousMove = mockRepository.GetAll().First();
 
-            //get all move property data for a move
+            //act
             var sut = new DefaultMoveService(mockRepository, new Mock<IQueryMappingService>().Object);
             var results = sut.GetAllMovePropertyDataForCharacter(new Character { OwnerId = anonymousMove.OwnerId })
                 .ToList();
 
+            var allMovesInRepoForThisCharacter = mockRepository.GetAllWhere(move => move.Owner == anonymousMove.Owner).ToList();
+
+            //assert
             Assert.That(results.Count, Is.GreaterThan(0), $"{nameof(results.Count)}");
 
-            var storedMoves = mockRepository.GetAllWhere(move => move.Owner == anonymousMove.Owner).ToList();
-
-            storedMoves.ForEach(rawMove =>
+            allMovesInRepoForThisCharacter.ForEach(repoMove =>
             {
-                Assert.That(results.Any(result => result.MoveName.Equals(rawMove.Name)),
-                    $"Results does not have move '{rawMove.Name}'.");
+                Assert.That(results.Any(result => result.MoveName.Equals(repoMove.Name)),
+                    $"{nameof(results)} does not have move '{repoMove.Name}'.");
             });
         }
 
         [Test]
-        public void GetAllMovePropertyDataForCharacter_EachMoveDataPropertyHasExpectedHitboxProperties()
+        [TestCaseSource(nameof(MoveProperties))]
+        public void GetAllPropertyDataForMoveByName_EachMovePropertyReturnedContainsExpectedAttributes(Tuple<string, string[]> testData)
         {
-            var mockRepository = MakeRepository();
-            var anonymousMove = mockRepository.GetAll().First(move => move.Name == "test");
+            //arrange
+            string propertyName = testData.Item1;
+            var propertyKeysToAssertOn = testData.Item2;
 
-            //get all move property data for a move
+            //arrange
+            var mockRepository = MakeRepository();
+            var anonymousMove = mockRepository.GetAll().First();
+
+            var sut = new DefaultMoveService(mockRepository, new Mock<IQueryMappingService>().Object);
+
+            //act
+            var results = sut.GetAllPropertyDataWhereName(anonymousMove.Name, propertyName).ToList();
+
+            //assert
+            Assert.That(results.Count, Is.EqualTo(mockRepository.GetAll().Count()));
+
+            results.ForEach(result =>
+            {
+                Assert.That(result[MoveNameKey], Is.EqualTo(anonymousMove.Name), $"{nameof(result)}.{MoveNameKey}");
+
+                foreach (string propertyKey in propertyKeysToAssertOn)
+                {
+                    Assert.That(result.Keys.Any(key => key.Equals(propertyKey, StringComparison.CurrentCultureIgnoreCase)), $"{nameof(result)}.{propertyKey}");
+                }
+            });
+        }
+
+        [Test]
+        [TestCaseSource(nameof(MoveProperties))]
+        public void GetAllPropertyDataForMoveById(Tuple<string, string[]> testData)
+        {
+            string propertyName = testData.Item1;
+            var propertyKeysToAssertOn = testData.Item2;
+
+            //arrange
+            var mockRepository = MakeRepository();
+            var anonymousMove = mockRepository.GetAll().First();
+
+            var sut = new DefaultMoveService(mockRepository, new Mock<IQueryMappingService>().Object);
+
+            //act
+            var result = sut.GetPropertyDataWhereId(anonymousMove.InstanceId, propertyName);
+
+            //assert
+            Assert.That(result, Is.Not.Null, $"{nameof(result)}");
+            Assert.That(result[MoveNameKey], Is.Not.Empty, $"{nameof(result)}.{MoveNameKey}");
+
+            foreach (string propertyKey in propertyKeysToAssertOn)
+            {
+                Assert.That(result.Keys.Any(key => key.Equals(propertyKey, StringComparison.CurrentCultureIgnoreCase)), $"{nameof(result)}.{propertyKey}");
+            }
+        }
+
+
+        [Test]
+        public void GetAllPropertyDataWhereName_AutoCancelDataIsNull_ReturnsEmptyListForAutoCancelProperty()
+        {
+            //arrange
+            const string expectedName = "testName";
+            const string movePropertyUnderTest = "autoCancel";
+
+            var items = new List<Move>
+            {
+                new Move {Name = expectedName, AutoCancel = null}
+            };
+
+            var mockRepository = new Mock<IRepository<IMove>>();
+
+            ConfigureGetAllWhereOnMockRepository(mockRepository, items);
+
+            //act
+            var sut = new DefaultMoveService(mockRepository.Object, new Mock<IQueryMappingService>().Object);
+            var results = sut.GetAllPropertyDataWhereName(expectedName, movePropertyUnderTest).ToList();
+
+            var resultUnderTest = results[0];
+
+            //assert
+            Assert.That(results.Count, Is.EqualTo(items.Count), $"{nameof(results.Count)}");
+            Assert.That(resultUnderTest, Is.Not.Null, $"{nameof(resultUnderTest)}");
+            // ReSharper disable once PossibleNullReferenceException
+            Assert.That(resultUnderTest[MoveNameKey], Is.EqualTo(expectedName), $"{nameof(results)}[0]{MoveNameKey} actual move name expected.");
+            Assert.That(resultUnderTest[RawValueKey], Is.EqualTo(string.Empty), $"{nameof(results)}[0]{RawValueKey}");
+            Assert.That(resultUnderTest[Cancel1Key], Is.EqualTo(string.Empty), $"{nameof(results)}[0]{Cancel1Key}");
+            Assert.That(resultUnderTest[Cancel2Key], Is.EqualTo(string.Empty), $"{nameof(results)}[0]{Cancel2Key}");
+            Assert.That(resultUnderTest[NotesKey], Is.EqualTo(string.Empty), $"{nameof(results)}[0][{NotesKey}]");
+        }
+
+        [Test]
+        public void GetAllMovePropertyDataForCharacter_EachMovePropertyHasExpectedProperties()
+        {
+            //arrange
+            var mockRepository = MakeRepository();
+            var anonymousMove = mockRepository.GetAll().First();
+
+            //act
             var sut = new DefaultMoveService(mockRepository, new Mock<IQueryMappingService>().Object);
             var results = sut.GetAllMovePropertyDataForCharacter(new Character { OwnerId = anonymousMove.OwnerId })
                 .ToList();
 
-            var firstMove = results.First(move => move.MoveName == "test");
+            var firstMove = results.First();
 
+            //assert
             var hitboxProperty = firstMove.MoveProperties.FirstOrDefault(property => property.Name.Equals("HitboxActive"));
             AssertHitboxBasedPropertyIsValid(hitboxProperty);
 
@@ -184,88 +284,6 @@ namespace FrannHammer.Api.Services.Tests
         }
 
         [Test]
-        [TestCaseSource(nameof(MoveProperties))]
-        public void GetAllPropertyDataForMoveByName(Tuple<string, string[]> testData)
-        {
-            string propertyName = testData.Item1;
-            var propertyKeysToAssertOn = testData.Item2;
-
-            const string expectedMoveName = "Jab 1";
-
-            //add fake moves with all properties filled out.  Some should match the passed in name, others should not
-            var matchingItems = _fixture.CreateMany<Move>().ToList();
-            matchingItems.ForEach(move => { move.Name = expectedMoveName; });
-
-            var matchingItem = _fixture.Create<Move>();
-
-            //TODO - just make a manual real life one.  The fixture created one has too much junk data.
-            matchingItem.Angle = "50";
-            matchingItem.AutoCancel = "20";
-            matchingItem.BaseDamage = "40/30";
-            matchingItem.BaseKnockBackSetKnockback = "W: 15/10/15";
-            matchingItem.FirstActionableFrame = "25";
-            matchingItem.HitboxActive = "3-6";
-            matchingItem.KnockbackGrowth = "20";
-            matchingItem.LandingLag = "20";
-            matchingItem.MoveType = MoveType.Ground.GetEnumDescription();
-            matchingItem.Name = "test";
-
-            var nonMatchingItems = _fixture.CreateMany<Move>().ToList();
-            nonMatchingItems.AddRange(matchingItems);
-
-            var mockRepository = ConfigureMockRepositoryWithSeedMoves(matchingItems, _fixture);
-
-            var sut = new DefaultMoveService(mockRepository, new Mock<IQueryMappingService>().Object);
-
-            var response = sut.GetAllPropertyDataWhereName(expectedMoveName, propertyName);
-
-            // ReSharper disable once PossibleNullReferenceException
-            var results = response.ToList();
-
-            //assert results are expected (all move results are named jab 1 and contain the expected property info and the amount of results equals the above matching items)
-            Assert.That(results.Count, Is.EqualTo(matchingItems.Count));
-
-            results.ForEach(result =>
-            {
-                Assert.That(result[MoveNameKey], Is.EqualTo(expectedMoveName), $"{nameof(result)}.{MoveNameKey}");
-
-                foreach (string propertyKey in propertyKeysToAssertOn)
-                {
-                    Assert.That(result.Keys.Any(key => key.Equals(propertyKey, StringComparison.CurrentCultureIgnoreCase)), $"{nameof(result)}.{propertyKey}");
-                }
-            });
-        }
-
-        [Test]
-        [TestCaseSource(nameof(MoveProperties))]
-        public void GetAllPropertyDataForMoveById(Tuple<string, string[]> testData)
-        {
-            string propertyName = testData.Item1;
-            var propertyKeysToAssertOn = testData.Item2;
-
-            const string expectedMoveId = "111";
-
-            //add fake moves with all properties filled out.  Some should match the passed in name, others should not
-            var matchingItem = _fixture.Create<Move>();
-            matchingItem.InstanceId = expectedMoveId;
-
-            var mockRepository = ConfigureMockRepositoryWithSeedMoves(new List<Move> { matchingItem }, _fixture);
-
-            var sut = new DefaultMoveService(mockRepository, new Mock<IQueryMappingService>().Object);
-
-            var result = sut.GetPropertyDataWhereId(expectedMoveId, propertyName);
-
-            Assert.That(result, Is.Not.Null, $"{nameof(result)}");
-
-            Assert.That(result[MoveNameKey], Is.Not.Empty, $"{nameof(result)}.{MoveNameKey}");
-
-            foreach (string propertyKey in propertyKeysToAssertOn)
-            {
-                Assert.That(result.Keys.Any(key => key.Equals(propertyKey, StringComparison.CurrentCultureIgnoreCase)), $"{nameof(result)}.{propertyKey}");
-            }
-        }
-
-        [Test]
         public void ThrowsArgumentExceptionForPassedInMovePropertyThatDoesNotExistOnMove()
         {
             const string expectedMoveName = "Jab 1";
@@ -282,41 +300,6 @@ namespace FrannHammer.Api.Services.Tests
             });
         }
 
-        [Test]
-        public void NullValueForSpecificPropertyReturnsNullValueWhenRetrievingSpecificPropertyOfMoves()
-        {
-            const string expectedName = "testName";
-            const string movePropertyValueUnderTest = "28&gt;";
-            const string movePropertyUnderTest = "autoCancel";
-            const int expectedNumberOfKeysForEachResult = 4;
-
-            var items = new List<Move>
-            {
-                new Move {Name = expectedName, AutoCancel = movePropertyValueUnderTest},
-                new Move {Name = expectedName, AutoCancel = null}
-            };
-
-            var mockRepository = new Mock<IRepository<IMove>>();
-
-            ConfigureGetAllWhereOnMockRepository(mockRepository, items);
-
-            var sut = new DefaultMoveService(mockRepository.Object, new Mock<IQueryMappingService>().Object);
-
-            var results = sut.GetAllPropertyDataWhereName(expectedName, movePropertyUnderTest).ToList();
-
-            Assert.That(results.Count, Is.EqualTo(2), $"{nameof(results.Count)}");
-
-            Assert.That(results[0][MoveNameKey], Is.EqualTo(expectedName), $"{nameof(results)}[0]{MoveNameKey} actual move name expected.");
-            Assert.That(results[0][RawValueKey], Is.EqualTo(movePropertyValueUnderTest), $"{nameof(results)}[0][{RawValueKey}]");
-            Assert.That(results[0][Cancel1Key], Is.EqualTo("28>"), $"{nameof(results)}[0][{Cancel1Key}]");
-            Assert.That(results[0].Count, Is.EqualTo(expectedNumberOfKeysForEachResult), $"{nameof(results)}[0] Keys");
-
-            Assert.That(results[1][MoveNameKey], Is.EqualTo(expectedName), $"{nameof(results)}[1]{MoveNameKey} actual move name expected.");
-            Assert.That(results[1][RawValueKey], Is.EqualTo(string.Empty), $"{nameof(results)}[1]{RawValueKey}");
-            Assert.That(results[1][Cancel1Key], Is.EqualTo(string.Empty), $"{nameof(results)}[1]{Cancel1Key}");
-            Assert.That(results[1][Cancel2Key], Is.EqualTo(string.Empty), $"{nameof(results)}[1]{Cancel2Key}");
-            Assert.That(results[1].Keys.Count, Is.EqualTo(expectedNumberOfKeysForEachResult), $"{nameof(results)}[1] Keys");
-        }
 
         [Test]
         public void GetThrowsForCharacterGetsOnlyThrowMovesForThatCharacter()
