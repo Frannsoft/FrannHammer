@@ -18,7 +18,7 @@ namespace FrannHammer.Api.Services
             _queryMappingService = queryMappingService;
         }
 
-        public IEnumerable<IMovement> GetAllWhere(IFilterResourceQuery query, string fields = "")
+        public IEnumerable<IMovement> GetAllWhere(IFilterResourceQuery query)
         {
             var queryFilterParameters = _queryMappingService.MapResourceQueryToDictionary(query,
                 BindingFlags.Public | BindingFlags.Instance);

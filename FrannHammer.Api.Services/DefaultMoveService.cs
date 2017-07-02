@@ -25,7 +25,7 @@ namespace FrannHammer.Api.Services
             _queryMappingService = queryMappingService;
         }
 
-        public IEnumerable<IDictionary<string, string>> GetAllPropertyDataWhereName(string name, string property, string fields = "")
+        public IEnumerable<IDictionary<string, string>> GetAllPropertyDataWhereName(string name, string property)
         {
             Guard.VerifyStringIsNotNullOrEmpty(name, nameof(name));
             Guard.VerifyStringIsNotNullOrEmpty(property, nameof(property));
@@ -76,7 +76,7 @@ namespace FrannHammer.Api.Services
             return strongTypedPropertyInEachMove;
         }
 
-        public IEnumerable<ParsedMove> GetAllMovePropertyDataForCharacter(ICharacter character, string fields = "")
+        public IEnumerable<ParsedMove> GetAllMovePropertyDataForCharacter(ICharacter character)
         {
             var allMovesForCharacter = GetAllWhere(move => move.OwnerId == character.OwnerId).ToList();
 
@@ -151,7 +151,7 @@ namespace FrannHammer.Api.Services
             }
         }
 
-        public IDictionary<string, string> GetPropertyDataWhereId(string id, string property, string fields = "")
+        public IDictionary<string, string> GetPropertyDataWhereId(string id, string property)
         {
             Guard.VerifyStringIsNotNullOrEmpty(id, nameof(id));
             Guard.VerifyStringIsNotNullOrEmpty(property, nameof(property));
@@ -230,7 +230,7 @@ namespace FrannHammer.Api.Services
             return parserType;
         }
 
-        public IEnumerable<IMove> GetAllThrowsWhereCharacterNameIs(string name, string fields = "")
+        public IEnumerable<IMove> GetAllThrowsWhereCharacterNameIs(string name)
         {
             Guard.VerifyStringIsNotNullOrEmpty(name, nameof(name));
 
@@ -240,7 +240,7 @@ namespace FrannHammer.Api.Services
             return throwMoves;
         }
 
-        public IEnumerable<IMove> GetAllThrowsWhereCharacterOwnerIdIs(int ownerId, string fields = "")
+        public IEnumerable<IMove> GetAllThrowsWhereCharacterOwnerIdIs(int ownerId)
         {
             var throwMoves = GetAllWhere(move => move.OwnerId == ownerId &&
                                                  move.MoveType == MoveType.Throw.GetEnumDescription());
@@ -248,14 +248,14 @@ namespace FrannHammer.Api.Services
             return throwMoves;
         }
 
-        public IEnumerable<IMove> GetAllWhere(IMoveFilterResourceQuery query, string fields = "")
+        public IEnumerable<IMove> GetAllWhere(IMoveFilterResourceQuery query)
         {
             var queryFilterParameters = _queryMappingService.MapResourceQueryToDictionary(query, BindingFlags.Public | BindingFlags.Instance);
 
             return GetAllWhere(queryFilterParameters);
         }
 
-        public IEnumerable<IMove> GetAllThrowsForCharacter(ICharacter character, string fields = "")
+        public IEnumerable<IMove> GetAllThrowsForCharacter(ICharacter character)
         {
             Guard.VerifyObjectNotNull(character, nameof(character));
             Guard.VerifyStringIsNotNullOrEmpty(character.Name, nameof(character.Name));
@@ -266,7 +266,7 @@ namespace FrannHammer.Api.Services
             return throwMoves;
         }
 
-        public IEnumerable<IMove> GetAllMovesForCharacter(ICharacter character, string fields = "")
+        public IEnumerable<IMove> GetAllMovesForCharacter(ICharacter character)
         {
             var moves = GetAllWhere(move => move.OwnerId == character.OwnerId);
             return moves;

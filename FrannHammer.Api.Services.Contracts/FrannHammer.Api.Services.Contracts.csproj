@@ -47,6 +47,8 @@
     <Compile Include="IDtoProvider.cs" />
     <Compile Include="IMovementService.cs" />
     <Compile Include="IMoveService.cs" />
+    <Compile Include="IReaderService.cs" />
+    <Compile Include="IWriterService.cs" />
     <Compile Include="ParsedMove.cs" />
     <Compile Include="ParsedMoveAttribute.cs" />
     <Compile Include="ParsedMoveDataProperty.cs" />

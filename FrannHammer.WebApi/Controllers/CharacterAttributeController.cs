@@ -18,23 +18,23 @@ namespace FrannHammer.WebApi.Controllers
         }
 
         [Route(CharacterAttributesRouteKey, Name = nameof(GetAllCharacterAttributes))]
-        public IHttpActionResult GetAllCharacterAttributes([FromUri] string fields = "")
+        public IHttpActionResult GetAllCharacterAttributes()
         {
-            var content = _characterAttributeRowService.GetAll(fields);
+            var content = _characterAttributeRowService.GetAll();
             return Result(content);
         }
 
         [Route(CharacterAttributesRouteKey + "/{id}", Name = nameof(GetCharacterAttributeById))]
-        public IHttpActionResult GetCharacterAttributeById(string id, [FromUri] string fields = "")
+        public IHttpActionResult GetCharacterAttributeById(string id)
         {
-            var content = _characterAttributeRowService.GetSingleByInstanceId(id, fields);
+            var content = _characterAttributeRowService.GetSingleByInstanceId(id);
             return Result(content);
         }
 
         [Route(CharacterAttributesRouteKey + "/name/{name}", Name = nameof(GetSingleCharacterAttributeByName))]
-        public IHttpActionResult GetSingleCharacterAttributeByName(string name, string fields = "")
+        public IHttpActionResult GetSingleCharacterAttributeByName(string name)
         {
-            var content = _characterAttributeRowService.GetAllWhereName(name, fields);
+            var content = _characterAttributeRowService.GetAllWhereName(name);
             return Result(content);
         }
     }

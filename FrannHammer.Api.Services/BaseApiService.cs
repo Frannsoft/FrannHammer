@@ -18,17 +18,17 @@ namespace FrannHammer.Api.Services
             Repository = repository;
         }
 
-        public T GetSingleByInstanceId(string id, string fields = "")
+        public T GetSingleByInstanceId(string id)
         {
-            return GetSingleWhere(m => m.InstanceId == id, fields);
+            return GetSingleWhere(m => m.InstanceId == id);
         }
 
-        public IEnumerable<T> GetAllWhereName(string name, string fields = "")
+        public IEnumerable<T> GetAllWhereName(string name)
         {
-            return GetAllWhere(m => m.Name.Equals(name, StringComparison.OrdinalIgnoreCase), fields);
+            return GetAllWhere(m => m.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
         }
 
-        public IEnumerable<T> GetAll(string fields = "")
+        public IEnumerable<T> GetAll()
         {
             return Repository.GetAll();
         }
@@ -45,13 +45,13 @@ namespace FrannHammer.Api.Services
             Repository.AddMany(moves);
         }
 
-        public T GetSingleWhere(Func<T, bool> @where, string fields = "")
+        public T GetSingleWhere(Func<T, bool> @where)
         {
             var move = Repository.GetSingleWhere(where);
             return move;
         }
 
-        public IEnumerable<T> GetAllWhere(Func<T, bool> @where, string fields = "")
+        public IEnumerable<T> GetAllWhere(Func<T, bool> @where)
         {
             var moves = Repository.GetAllWhere(where);
             return moves;
