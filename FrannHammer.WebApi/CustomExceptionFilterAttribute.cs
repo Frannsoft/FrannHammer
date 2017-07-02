@@ -2,7 +2,6 @@
 using System.Net;
 using System.Net.Http;
 using System.Web.Http.Filters;
-using FrannHammer.Api.Services.Contracts;
 using FrannHammer.Domain.Contracts;
 
 namespace FrannHammer.WebApi

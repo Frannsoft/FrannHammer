@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
     <Compile Include="Attributes\IAttributeProvider.cs" />
     <Compile Include="Attributes\IAttributeScraper.cs" />
     <Compile Include="Attributes\IAttributeScrapingServices.cs" />

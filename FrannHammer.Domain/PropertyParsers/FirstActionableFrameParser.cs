@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using static FrannHammer.Domain.PropertyParsers.MoveDataNameConstants;
 
 namespace FrannHammer.Domain.PropertyParsers
