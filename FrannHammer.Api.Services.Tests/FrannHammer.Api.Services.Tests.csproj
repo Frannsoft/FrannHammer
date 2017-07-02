@@ -64,6 +64,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
     <Compile Include="ApiServiceFactories\ApiServiceFactory.cs" />
     <Compile Include="ApiServiceTestSetupUtility.cs" />
     <Compile Include="CharacterAttributeRowServiceTests.cs" />

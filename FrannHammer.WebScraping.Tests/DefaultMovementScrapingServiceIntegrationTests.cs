@@ -2,7 +2,6 @@
 using FrannHammer.Domain.Contracts;
 using FrannHammer.WebScraping.Contracts.Movements;
 using FrannHammer.WebScraping.Domain;
-using FrannHammer.WebScraping.Domain.Contracts;
 using FrannHammer.WebScraping.HtmlParsing;
 using FrannHammer.WebScraping.Movements;
 using FrannHammer.WebScraping.PageDownloading;
