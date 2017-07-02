@@ -1,3 +1,0 @@
-Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName
-"d13b9a60-5e98-4e04-bca4-df27d7d70d74","adminuser@myemail.com",True,"AAOLzUCmJECpJD5pFGkwPQwjfOz706PnRN1wFTc7S/5UB/7TeZG4qOggETjTHjpHHQ==","0bf34f6a-84a3-4bca-9fd2-2f97e36da060",,False,False,,False,0,"KuroUser"
-"f3fd6962-bf6c-42db-9af7-85b08be30036","getuser@mymail.com",True,"AFrQ5gmpUkp3wqYwJTvqaKy+tROeNIeNANa+JeGR6PikDWJ/l1hI4ot8L/dCALY6YQ==","ae6580ef-7ac5-4b7e-88ec-d776f06116f7",,False,False,,False,0,"GETuser"
