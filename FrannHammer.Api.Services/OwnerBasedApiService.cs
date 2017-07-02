@@ -12,13 +12,13 @@ namespace FrannHammer.Api.Services
             : base(repository)
         { }
 
-        public virtual IEnumerable<T> GetAllWhereCharacterNameIs(string name, string fields = "")
+        public virtual IEnumerable<T> GetAllWhereCharacterNameIs(string name)
         {
             Guard.VerifyStringIsNotNullOrEmpty(name, nameof(name));
             return GetAllWhere(item => item.Owner.Equals(name));
         }
 
-        public virtual IEnumerable<T> GetAllWhereCharacterOwnerIdIs(int id, string fields = "")
+        public virtual IEnumerable<T> GetAllWhereCharacterOwnerIdIs(int id)
         {
             return GetAllWhere(item => item.OwnerId == id);
         }

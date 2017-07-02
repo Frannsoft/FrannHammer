@@ -21,12 +21,10 @@ namespace FrannHammer.WebApi.Controllers
         /// <summary>
         /// Get all movement data.
         /// </summary>
-        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
-        /// E.g., id,name to get back just the id and name.</para></param>
         [Route(MovementsRouteKey, Name = nameof(GetAllMovements))]
-        public IHttpActionResult GetAllMovements([FromUri] string fields = "")
+        public IHttpActionResult GetAllMovements()
         {
-            var content = _movementService.GetAll(fields);
+            var content = _movementService.GetAll();
             return Result(content);
         }
 
@@ -34,19 +32,17 @@ namespace FrannHammer.WebApi.Controllers
         /// Get a specific <see cref="IMovement"/>.
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
-        /// E.g., id,name to get back just the id and name.</para></param>
         [Route(MovementsRouteKey + "/{id}", Name = nameof(GetMovementById))]
-        public IHttpActionResult GetMovementById(string id, [FromUri] string fields = "")
+        public IHttpActionResult GetMovementById(string id)
         {
-            var content = _movementService.GetSingleByInstanceId(id, fields);
+            var content = _movementService.GetSingleByInstanceId(id);
             return Result(content);
         }
 
         [Route(MovementsRouteKey + "/name/{name}", Name = nameof(GetSingleMovementByName))]
-        public IHttpActionResult GetSingleMovementByName(string name, string fields = "")
+        public IHttpActionResult GetSingleMovementByName(string name)
         {
-            var content = _movementService.GetAllWhereName(name, fields);
+            var content = _movementService.GetAllWhereName(name);
             return Result(content);
         }
     }

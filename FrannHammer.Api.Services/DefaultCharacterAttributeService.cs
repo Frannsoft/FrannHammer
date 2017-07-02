@@ -13,7 +13,7 @@ namespace FrannHammer.Api.Services
             : base(characterAttributeRowRepository)
         { }
 
-        public override IEnumerable<ICharacterAttributeRow> GetAllWhereCharacterNameIs(string name, string fields = "")
+        public override IEnumerable<ICharacterAttributeRow> GetAllWhereCharacterNameIs(string name)
         {
             Guard.VerifyStringIsNotNullOrEmpty(name, nameof(name));
             return GetAllWhere(item => item.Owner.Equals(name, StringComparison.OrdinalIgnoreCase));

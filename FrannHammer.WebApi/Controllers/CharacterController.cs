@@ -28,37 +28,37 @@ namespace FrannHammer.WebApi.Controllers
         }
 
         [Route(CharactersRouteKey + IdRouteKey, Name = nameof(GetCharacterByOwnerId))]
-        public IHttpActionResult GetCharacterByOwnerId(int id, [FromUri]string fields = "")
+        public IHttpActionResult GetCharacterByOwnerId(int id)
         {
-            var character = _characterService.GetSingleByOwnerId(id, fields);
+            var character = _characterService.GetSingleByOwnerId(id);
             return Result(character);
         }
 
         [Route(CharactersRouteKey + NameRouteKey, Name = nameof(GetSingleCharacterByName))]
-        public IHttpActionResult GetSingleCharacterByName(string name, [FromUri]string fields = "")
+        public IHttpActionResult GetSingleCharacterByName(string name)
         {
-            var character = _characterService.GetSingleByName(name, fields);
+            var character = _characterService.GetSingleByName(name);
             return Result(character);
         }
 
         [Route(CharactersRouteKey, Name = nameof(GetAllCharacters))]
-        public IHttpActionResult GetAllCharacters([FromUri]string fields = "")
+        public IHttpActionResult GetAllCharacters()
         {
-            var characters = _characterService.GetAll(fields);
+            var characters = _characterService.GetAll();
             return Result(characters);
         }
 
         [Route(CharactersRouteKey + NameRouteKey + ThrowsRouteKey, Name = nameof(GetAllThrowsForCharacterWhereName))]
-        public IHttpActionResult GetAllThrowsForCharacterWhereName(string name, [FromUri]string fields = "")
+        public IHttpActionResult GetAllThrowsForCharacterWhereName(string name)
         {
-            var throws = _characterService.GetAllThrowsWhereCharacterNameIs(name, fields);
+            var throws = _characterService.GetAllThrowsWhereCharacterNameIs(name);
             return Result(throws);
         }
 
         [Route(CharactersRouteKey + IdRouteKey + ThrowsRouteKey, Name = nameof(GetAllThrowsForCharacterWhereOwnerId))]
-        public IHttpActionResult GetAllThrowsForCharacterWhereOwnerId(int id, [FromUri] string fields = "")
+        public IHttpActionResult GetAllThrowsForCharacterWhereOwnerId(int id)
         {
-            var throws = _characterService.GetAllThrowsWhereCharacterOwnerIdIs(id, fields);
+            var throws = _characterService.GetAllThrowsWhereCharacterOwnerIdIs(id);
             return Result(throws);
         }
 
@@ -77,23 +77,23 @@ namespace FrannHammer.WebApi.Controllers
         }
 
         [Route(CharactersRouteKey + NameRouteKey + MovesRouteKey, Name = nameof(GetAllMovesForCharacterWhereName))]
-        public IHttpActionResult GetAllMovesForCharacterWhereName(string name, [FromUri] string fields = "")
+        public IHttpActionResult GetAllMovesForCharacterWhereName(string name)
         {
-            var moves = _characterService.GetAllMovesWhereCharacterNameIs(name, fields);
+            var moves = _characterService.GetAllMovesWhereCharacterNameIs(name);
             return Result(moves);
         }
 
         [Route(CharactersRouteKey + IdRouteKey + MovesRouteKey, Name = nameof(GetAllMovesForCharacterWhereOwnerId))]
-        public IHttpActionResult GetAllMovesForCharacterWhereOwnerId(int id, [FromUri] string fields = "")
+        public IHttpActionResult GetAllMovesForCharacterWhereOwnerId(int id)
         {
-            var moves = _characterService.GetAllMovesWhereCharacterOwnerIdIs(id, fields);
+            var moves = _characterService.GetAllMovesWhereCharacterOwnerIdIs(id);
             return Result(moves);
         }
 
         [Route(CharactersRouteKey + NameRouteKey + MovementsRouteKey, Name = nameof(GetAllMovementsForCharacterWhereName))]
-        public IHttpActionResult GetAllMovementsForCharacterWhereName(string name, [FromUri] string fields = "")
+        public IHttpActionResult GetAllMovementsForCharacterWhereName(string name)
         {
-            var movements = _characterService.GetAllMovementsWhereCharacterNameIs(name, fields);
+            var movements = _characterService.GetAllMovementsWhereCharacterNameIs(name);
             return Result(movements);
         }
 
@@ -112,51 +112,51 @@ namespace FrannHammer.WebApi.Controllers
         }
 
         [Route(CharactersRouteKey + IdRouteKey + MovementsRouteKey, Name = nameof(GetAllMovementsForCharacterWhereOwnerId))]
-        public IHttpActionResult GetAllMovementsForCharacterWhereOwnerId(int id, [FromUri] string fields = "")
+        public IHttpActionResult GetAllMovementsForCharacterWhereOwnerId(int id)
         {
-            var movements = _characterService.GetAllMovementsWhereCharacterOwnerIdIs(id, fields);
+            var movements = _characterService.GetAllMovementsWhereCharacterOwnerIdIs(id);
             return Result(movements);
         }
 
         [Route(CharactersRouteKey + NameRouteKey + DetailsRouteKey, Name = nameof(GetDetailsForCharacterByName))]
-        public IHttpActionResult GetDetailsForCharacterByName(string name, [FromUri] string fields = "")
+        public IHttpActionResult GetDetailsForCharacterByName(string name)
         {
-            var dto = _characterService.GetCharacterDetailsWhereCharacterOwnerIs(name, fields);
+            var dto = _characterService.GetCharacterDetailsWhereCharacterOwnerIs(name);
             return Result(dto);
         }
 
         [Route(CharactersRouteKey + IdRouteKey + DetailsRouteKey, Name = nameof(GetDetailsForCharacterByOwnerId))]
-        public IHttpActionResult GetDetailsForCharacterByOwnerId(int id, [FromUri] string fields = "")
+        public IHttpActionResult GetDetailsForCharacterByOwnerId(int id)
         {
-            var dto = _characterService.GetCharacterDetailsWhereCharacterOwnerIdIs(id, fields);
+            var dto = _characterService.GetCharacterDetailsWhereCharacterOwnerIdIs(id);
             return Result(dto);
         }
 
         [Route(CharactersRouteKey + NameRouteKey + CharacterAttributesRouteKey, Name = nameof(GetAttributesForCharacterByName))]
-        public IHttpActionResult GetAttributesForCharacterByName(string name, [FromUri] string fields = "")
+        public IHttpActionResult GetAttributesForCharacterByName(string name)
         {
-            var attributeRows = _characterService.GetAllAttributesWhereCharacterNameIs(name, fields);
+            var attributeRows = _characterService.GetAllAttributesWhereCharacterNameIs(name);
             return Result(attributeRows);
         }
 
         [Route(CharactersRouteKey + IdRouteKey + CharacterAttributesRouteKey, Name = nameof(GetAttributesForCharacterByOwnerId))]
-        public IHttpActionResult GetAttributesForCharacterByOwnerId(int id, [FromUri] string fields = "")
+        public IHttpActionResult GetAttributesForCharacterByOwnerId(int id)
         {
-            var attributeRows = _characterService.GetAllAttributesWhereCharacterOwnerIdIs(id, fields);
+            var attributeRows = _characterService.GetAllAttributesWhereCharacterOwnerIdIs(id);
             return Result(attributeRows);
         }
 
         [Route(CharactersRouteKey + NameRouteKey + DetailedMovesRouteKey, Name = nameof(GetDetailedMovesForCharacterByName))]
-        public IHttpActionResult GetDetailedMovesForCharacterByName(string name, [FromUri] string fields = "")
+        public IHttpActionResult GetDetailedMovesForCharacterByName(string name)
         {
-            var detailedMoves = _characterService.GetDetailedMovesWhereCharacterNameIs(name, fields);
+            var detailedMoves = _characterService.GetDetailedMovesWhereCharacterNameIs(name);
             return Result(detailedMoves);
         }
 
         [Route(CharactersRouteKey + IdRouteKey + DetailedMovesRouteKey, Name = nameof(GetDetailedMovesForCharacterByOwnerId))]
-        public IHttpActionResult GetDetailedMovesForCharacterByOwnerId(int id, [FromUri] string fields = "")
+        public IHttpActionResult GetDetailedMovesForCharacterByOwnerId(int id)
         {
-            var detailedMoves = _characterService.GetDetailedMovesWhereCharacterOwnerIdIs(id, fields);
+            var detailedMoves = _characterService.GetDetailedMovesWhereCharacterOwnerIdIs(id);
             return Result(detailedMoves);
         }
     }
