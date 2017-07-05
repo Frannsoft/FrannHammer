@@ -51,6 +51,15 @@ namespace FrannHammer.DefaultContainer.Configuration.ContainerModules
                         var mongoClient = c.Resolve<MongoClient>();
                         return mongoClient.GetDatabase(databaseName);
                     });
+
+            builder.RegisterType<MongoDbRepository<IUniqueData>>()
+              .As<IRepository<IUniqueData>>()
+              .WithParameter((pi, c) => pi.Name == MongoDatabaseKey,
+                  (pi, c) =>
+                  {
+                      var mongoClient = c.Resolve<MongoClient>();
+                      return mongoClient.GetDatabase(databaseName);
+                  });
         }
     }
 }

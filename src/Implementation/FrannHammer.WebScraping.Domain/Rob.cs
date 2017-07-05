@@ -5,7 +5,7 @@ namespace FrannHammer.WebScraping.Domain
     public class Rob : WebCharacter
     {
         public Rob()
-            : base("Rob", "R.O.B", "R.O.B.")
+            : base("Rob", "R.O.B", null, "R.O.B.")
         { }
     }
 }

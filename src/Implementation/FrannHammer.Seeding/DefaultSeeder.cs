@@ -16,7 +16,7 @@ namespace FrannHammer.Seeding
         {
             Guard.VerifyObjectNotNull(characterDataScraper, nameof(characterDataScraper));
             _characterDataScraper = characterDataScraper;
-            Mapper.Initialize((config) =>
+            Mapper.Initialize(config =>
             {
                 config.CreateMap<WebCharacter, Character>();
             });
@@ -26,13 +26,15 @@ namespace FrannHammer.Seeding
             ICharacterService characterService,
             IMovementService movementService,
             IMoveService moveService,
-            ICharacterAttributeRowService characterAttributeRowService)
+            ICharacterAttributeRowService characterAttributeRowService,
+            IUniqueDataService uniqueDataService)
         {
             Guard.VerifyObjectNotNull(character, nameof(character));
             Guard.VerifyObjectNotNull(characterService, nameof(characterService));
             Guard.VerifyObjectNotNull(movementService, nameof(movementService));
             Guard.VerifyObjectNotNull(moveService, nameof(moveService));
             Guard.VerifyObjectNotNull(characterAttributeRowService, nameof(characterAttributeRowService));
+            Guard.VerifyObjectNotNull(uniqueDataService, nameof(uniqueDataService));
 
             _characterDataScraper.PopulateCharacterFromWeb(character);
 
@@ -41,6 +43,7 @@ namespace FrannHammer.Seeding
             movementService.AddMany(character.Movements);
             moveService.AddMany(character.Moves);
             characterAttributeRowService.AddMany(character.AttributeRows);
+            uniqueDataService.AddMany(character.UniqueProperties);
         }
     }
 }

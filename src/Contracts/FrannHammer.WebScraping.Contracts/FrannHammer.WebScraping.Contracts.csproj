@@ -64,7 +64,9 @@
     <Compile Include="Movements\IMovementScraper.cs" />
     <Compile Include="Moves\IMoveProvider.cs" />
     <Compile Include="PageDownloading\IPageDownloader.cs" />
-    <Compile Include="UniqueData\IUniqueDataScrapingService.cs" />
+    <Compile Include="UniqueData\IUniqueDataScraper.cs" />
+    <Compile Include="UniqueData\IUniqueDataScrapingServices.cs" />
+    <Compile Include="UniqueData\IUniqueDataProvider.cs" />
     <Compile Include="WebClients\IWebClientProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

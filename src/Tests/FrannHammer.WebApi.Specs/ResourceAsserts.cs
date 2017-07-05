@@ -160,5 +160,16 @@ namespace FrannHammer.WebApi.Specs
             Assert.That(movement.InstanceId, Is.Not.Null, $"{nameof(movement.InstanceId)}");
             Assert.That(movement.Links.Any(l => l.Rel.Equals(CharacterLinkName)), $"Unable to find '{CharacterLinkName}' link.");
         }
+
+        public static void AssertUniqueDataIsValid(UniqueDataResource uniqueData)
+        {
+            Assert.That(uniqueData, Is.Not.Null, $"{nameof(uniqueData)}");
+            Assert.That(uniqueData.Name, Is.Not.Null, $"{nameof(uniqueData.Name)}");
+            Assert.That(uniqueData.Owner, Is.Not.Null, $"{nameof(uniqueData.Owner)}");
+            Assert.That(uniqueData.Value, Is.Not.Null, $"{nameof(uniqueData.Value)}");
+            Assert.That(uniqueData.InstanceId, Is.Not.Null, $"{nameof(uniqueData.InstanceId)}");
+            Assert.That(uniqueData.Links.Any(l => l.Rel.Equals(CharacterLinkName)), $"Unable to find '{CharacterLinkName}' link.");
+            Assert.That(uniqueData.Links.Any(l => l.Rel.Equals(SelfLinkName)), $"Unable to find '{SelfLinkName}' link.");
+        }
     }
 }

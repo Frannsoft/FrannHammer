@@ -5,7 +5,7 @@ namespace FrannHammer.WebScraping.Domain
     public class MetaKnight : WebCharacter
     {
         public MetaKnight()
-            : base("MetaKnight", "Meta%20Knight", "Meta Knight")
+            : base("MetaKnight", "Meta%20Knight", null, "Meta Knight")
         { }
     }
 }

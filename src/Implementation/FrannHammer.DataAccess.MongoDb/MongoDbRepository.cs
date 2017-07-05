@@ -146,12 +146,16 @@ namespace FrannHammer.DataAccess.MongoDb
             Guard.VerifyObjectNotNull(models, nameof(models));
 
             var modelsList = models.ToList();
-            foreach (var model in modelsList)
-            {
-                model.InstanceId = ObjectId.GenerateNewId().ToString();
-            }
 
-            _mongoDatabase.GetCollection<T>(typeof(T).Name).InsertMany(modelsList);
+            if (modelsList.Count > 0)
+            {
+                foreach (var model in modelsList)
+                {
+                    model.InstanceId = ObjectId.GenerateNewId().ToString();
+                }
+
+                _mongoDatabase.GetCollection<T>(typeof(T).Name).InsertMany(modelsList);
+            }
         }
 
         private static T DeserializeWithId(BsonDocument rawDocument)

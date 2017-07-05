@@ -221,5 +221,25 @@ namespace FrannHammer.WebApi.Specs.Characters
                 AssertMovementIsValid(movement);
             });
         }
+
+        [Then(@"the result should be a dictionary containing unique data for that character")]
+        public void ThenTheResultShouldBeADictionaryContainingUniqueDataForThatCharacter()
+        {
+            var characterUniqueData = ApiClient
+                .DeserializeResponse<IEnumerable<UniqueDataResource>>(
+                    ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey)).ToList();
+
+            string expectedOwner = ScenarioContext.Current.Get<string>(RouteTemplateValueToReplaceKey);
+
+            Assert.That(characterUniqueData.Count, Is.GreaterThan(0), $"{nameof(characterUniqueData.Count)}");
+
+            characterUniqueData.ForEach(data =>
+            {
+                Assert.That(data.OwnerId.ToString() == expectedOwner ||
+                          data.Owner == expectedOwner, $"{nameof(IUniqueData.OwnerId)}");
+                Assert.That(data.Value, Is.Not.Empty, $"{data.Name}");
+                AssertUniqueDataIsValid(data);
+            });
+        }
     }
 }

@@ -8,7 +8,7 @@ namespace FrannHammer.WebScraping.Movements
 {
     public class DefaultMovementScrapingServices : IMovementScrapingServices
     {
-        public IMovementProvider MovementProvider { get; }
+        private readonly IMovementProvider _movementProvider;
 
         private readonly IWebServices _webServices;
 
@@ -16,11 +16,11 @@ namespace FrannHammer.WebScraping.Movements
         {
             Guard.VerifyObjectNotNull(movementProvider, nameof(movementProvider));
 
-            MovementProvider = movementProvider;
+            _movementProvider = movementProvider;
             _webServices = webServices;
         }
 
-        public IMovement CreateMovement() => MovementProvider.Create();
+        public IMovement CreateMovement() => _movementProvider.Create();
         public IHtmlParser CreateParserFromSourceUrl(string url)
         {
             return _webServices.CreateParserFromSourceUrl(url);

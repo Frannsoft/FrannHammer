@@ -161,6 +161,12 @@
     <Compile Include="Moves\MovesApiSteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceAsserts.cs" />
+    <Compile Include="Unique\UniqueApi.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UniqueApi.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Unique\UniqueApiSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -190,6 +196,10 @@
     </None>
     <None Include="SpecRunTestProfile_2011_09.xsd">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Unique\UniqueApi.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>UniqueApi.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

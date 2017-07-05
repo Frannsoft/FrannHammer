@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using FrannHammer.Api.Services.Contracts;
 using FrannHammer.DataAccess.Contracts;
 using FrannHammer.Domain.Contracts;
@@ -12,22 +13,25 @@ namespace FrannHammer.Api.Services
         private readonly ICharacterAttributeRowService _attributeRowService;
         private readonly IMoveService _moveService;
         private readonly IMovementService _movementService;
+        private readonly IUniqueDataService _uniqueDataService;
         private readonly IDtoProvider _dtoProvider;
 
         public DefaultCharacterService(IRepository<ICharacter> repository, IDtoProvider dtoProvider,
                                 IMovementService movementService, ICharacterAttributeRowService attributeRowService,
-                                IMoveService moveService)
+                                IMoveService moveService, IUniqueDataService uniqueDataService)
             : base(repository)
         {
             Guard.VerifyObjectNotNull(dtoProvider, nameof(dtoProvider));
             Guard.VerifyObjectNotNull(attributeRowService, nameof(attributeRowService));
             Guard.VerifyObjectNotNull(moveService, nameof(moveService));
             Guard.VerifyObjectNotNull(movementService, nameof(movementService));
+            Guard.VerifyObjectNotNull(uniqueDataService, nameof(uniqueDataService));
 
             _dtoProvider = dtoProvider;
             _attributeRowService = attributeRowService;
             _moveService = moveService;
             _movementService = movementService;
+            _uniqueDataService = uniqueDataService;
         }
 
         public ICharacter GetSingleByOwnerId(int id)
@@ -157,6 +161,18 @@ namespace FrannHammer.Api.Services
         public IEnumerable<IMovement> GetAllMovementsWhereCharacterNameIsFilteredBy(IMovementFilterResourceQuery query)
         {
             return _movementService.GetAllWhere(query);
+        }
+
+        public IEnumerable<IUniqueData> GetUniquePropertiesWhereCharacterOwnerIdIs(int id)
+        {
+            var uniqueProperties = _uniqueDataService.GetAllWhere(u => u.OwnerId == id);
+            return uniqueProperties;
+        }
+
+        public IEnumerable<IUniqueData> GetUniquePropertiesWhereCharacterNameIs(string name)
+        {
+            var uniqueProperties = _uniqueDataService.GetAllWhere(u => u.Owner.Equals(name, StringComparison.OrdinalIgnoreCase));
+            return uniqueProperties;
         }
     }
 }

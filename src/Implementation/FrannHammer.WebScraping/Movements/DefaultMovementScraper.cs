@@ -43,7 +43,7 @@ namespace FrannHammer.WebScraping.Movements
             var rawNameCellText = nameCell.InnerText;
             if (!string.IsNullOrEmpty(rawNameCellText))
             {
-                var name = GetStatName(nameCell);
+                string name = GetStatName(nameCell);
                 var valueCell = nameCell.SelectSingleNode(ScrapingConstants.XPathTableCellValues);
 
                 var rawValueText = valueCell.InnerText;

@@ -14,6 +14,7 @@ namespace FrannHammer.DefaultContainer.Configuration.ContainerModules
             builder.RegisterType<Move>().As<IMove>();
             builder.RegisterType<Movement>().As<IMovement>();
             builder.RegisterType<CharacterDetailsDto>().As<ICharacterDetailsDto>();
+            builder.RegisterType<UniqueData>().As<IUniqueData>();
         }
     }
 }

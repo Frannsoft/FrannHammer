@@ -9,6 +9,7 @@ namespace FrannHammer.Seeding.Contracts
             ICharacterService characterService,
             IMovementService movementService,
             IMoveService moveService,
-            ICharacterAttributeRowService characterAttributeService);
+            ICharacterAttributeRowService characterAttributeService,
+            IUniqueDataService uniqueDataService);
     }
 }

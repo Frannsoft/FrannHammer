@@ -8,7 +8,7 @@ namespace FrannHammer.Seeder
         {
             BsonMapper.RegisterTypeWithAutoMap<MongoModel>();
             BsonMapper.RegisterClassMaps(typeof(Character), typeof(Movement), typeof(Move),
-                typeof(CharacterAttributeRow), typeof(CharacterAttribute));
+                typeof(CharacterAttributeRow), typeof(CharacterAttribute), typeof(UniqueData));
         }
     }
 }

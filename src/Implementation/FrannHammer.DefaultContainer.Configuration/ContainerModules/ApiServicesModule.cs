@@ -9,6 +9,7 @@ namespace FrannHammer.DefaultContainer.Configuration.ContainerModules
     public class ApiServicesModule : Module
     {
         private const string RepositoryParameterName = "repository";
+        private const string QueryMappingParameterName = "queryMappingService";
 
         protected override void Load(ContainerBuilder builder)
         {
@@ -32,7 +33,14 @@ namespace FrannHammer.DefaultContainer.Configuration.ContainerModules
                 .As<IMoveService>()
                 .WithParameter((pi, c) => pi.Name == RepositoryParameterName,
                     (pi, c) => c.Resolve<IRepository<IMove>>())
-                .WithParameter((pi, c) => pi.Name == "queryMappingService",
+                .WithParameter((pi, c) => pi.Name == QueryMappingParameterName,
+                 (pi, c) => c.Resolve<IQueryMappingService>());
+
+            builder.RegisterType<DefaultUniqueDataService>()
+                .As<IUniqueDataService>()
+                .WithParameter((pi, c) => pi.Name == RepositoryParameterName,
+                    (pi, c) => c.Resolve<IRepository<IUniqueData>>())
+                .WithParameter((pi, c) => pi.Name == QueryMappingParameterName,
                  (pi, c) => c.Resolve<IQueryMappingService>());
 
             builder.RegisterType<DefaultCharacterAttributeService>()

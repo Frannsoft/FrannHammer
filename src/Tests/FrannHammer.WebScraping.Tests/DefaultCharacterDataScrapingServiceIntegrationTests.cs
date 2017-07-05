@@ -10,6 +10,7 @@ using FrannHammer.WebScraping.Contracts.Images;
 using FrannHammer.WebScraping.Contracts.Movements;
 using FrannHammer.WebScraping.Contracts.Moves;
 using FrannHammer.WebScraping.Contracts.PageDownloading;
+using FrannHammer.WebScraping.Contracts.UniqueData;
 using FrannHammer.WebScraping.Contracts.WebClients;
 using FrannHammer.WebScraping.Domain.Contracts;
 using FrannHammer.WebScraping.HtmlParsing;
@@ -17,6 +18,7 @@ using FrannHammer.WebScraping.Images;
 using FrannHammer.WebScraping.Movements;
 using FrannHammer.WebScraping.Moves;
 using FrannHammer.WebScraping.PageDownloading;
+using FrannHammer.WebScraping.Unique;
 using FrannHammer.WebScraping.WebClients;
 using NUnit.Framework;
 
@@ -45,6 +47,8 @@ namespace FrannHammer.WebScraping.Tests
         private ICharacterMoveScraper _characterMoveScraper;
         private IWebServices _webServices;
         private DefaultCharacterDataScraper _characterDataScraper;
+        private IUniqueDataScrapingServices _uniqueDataScrapingServices;
+        private IUniqueDataProvider _uniqueDataProvider;
 
         [SetUp]
         public void SetUp()
@@ -57,12 +61,13 @@ namespace FrannHammer.WebScraping.Tests
             _attributeProvider = new DefaultAttributeProvider();
             _imageScrapingProvider = new DefaultImageScrapingProvider();
             _imageScrapingService = new DefaultImageScrapingService(_imageScrapingProvider);
-
+            _uniqueDataProvider = new DefaultUniqueDataProvider();
             _webServices = new DefaultWebServices(_htmlParserProvider, _webClientProvider, _pageDownloader);
 
             _attributeScrapingServices = new DefaultAttributeScrapingServices(_attributeProvider, _webServices);
             _moveScrapingServices = new DefaultMoveScrapingServices(_moveProvider, _webServices);
             _movementScrapingServices = new DefaultMovementScrapingServices(_movementProvider, _webServices);
+            _uniqueDataScrapingServices = new DefaultUniqueDataScrapingServices(_uniqueDataProvider, _webServices);
 
             _groundMoveScraper = new GroundMoveScraper(_moveScrapingServices);
             _aerialMoveScraper = new AerialMoveScraper(_moveScrapingServices);
@@ -76,7 +81,7 @@ namespace FrannHammer.WebScraping.Tests
             _movementScraper = new DefaultMovementScraper(_movementScrapingServices);
 
             _characterDataScrapingServices = new DefaultCharacterDataScrapingServices(_imageScrapingService, _movementScraper,
-                attributeScrapers, _characterMoveScraper, _webServices);
+                attributeScrapers, _characterMoveScraper, _uniqueDataScrapingServices, _webServices);
 
             _characterDataScraper = new DefaultCharacterDataScraper(_characterDataScrapingServices);
         }
