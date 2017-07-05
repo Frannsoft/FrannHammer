@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using FrannHammer.Domain.Contracts;
 using FrannHammer.WebScraping.Domain.Contracts;
 
 namespace FrannHammer.WebScraping.Contracts.UniqueData
 {
-    public interface IUniqueDataScrapingService
+    public interface IUniqueDataScraper
     {
-        IEnumerable<T> ScrapeUniqueData<T>(IUniqueDataProvider uniqueDataProvider, string xpath, Uri sourceUri);
+        Func<WebCharacter, IEnumerable<IUniqueData>> Scrape { get; }
     }
 }

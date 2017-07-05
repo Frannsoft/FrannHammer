@@ -39,10 +39,10 @@ namespace FrannHammer.Api.Services
             Repository.Add(model);
         }
 
-        public void AddMany(IEnumerable<T> moves)
+        public void AddMany(IEnumerable<T> items)
         {
-            Guard.VerifyObjectNotNull(moves, nameof(moves));
-            Repository.AddMany(moves);
+            Guard.VerifyObjectNotNull(items, nameof(items));
+            Repository.AddMany(items);
         }
 
         public T GetSingleWhere(Func<T, bool> @where)

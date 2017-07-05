@@ -230,6 +230,7 @@
     <Compile Include="Controllers\CharacterController.cs" />
     <Compile Include="Controllers\MoveController.cs" />
     <Compile Include="Controllers\MovementController.cs" />
+    <Compile Include="Controllers\UniqueDataController.cs" />
     <Compile Include="EnrichingHandler.cs" />
     <Compile Include="HypermediaServices\CharacterAttributeRowResourceEnricher.cs" />
     <Compile Include="HypermediaServices\CharacterResourceEnricher.cs" />
@@ -237,13 +238,16 @@
     <Compile Include="HypermediaServices\ManyCharacterResourceEnricher.cs" />
     <Compile Include="HypermediaServices\ManyMovementResourceEnricher.cs" />
     <Compile Include="HypermediaServices\ManyMoveResourceEnricher.cs" />
+    <Compile Include="HypermediaServices\ManyUniqueDataResourceEnricher.cs" />
     <Compile Include="HypermediaServices\MovementResourceEnricher.cs" />
     <Compile Include="HypermediaServices\MoveResourceEnricher.cs" />
     <Compile Include="HypermediaServices\ObjectContentResponseEnricher.cs" />
+    <Compile Include="HypermediaServices\UniqueDataResourceEnricher.cs" />
     <Compile Include="Models\CharacterAttributeRowResource.cs" />
     <Compile Include="Models\MovementResource.cs" />
     <Compile Include="CustomExceptionFilterAttribute.cs" />
     <Compile Include="Models\SelfLink.cs" />
+    <Compile Include="Models\UniqueDataResource.cs" />
     <Compile Include="ResourceEnrichmentModule.cs" />
     <Compile Include="ResponseEnricherConfigurationExtensions.cs" />
     <Compile Include="HypermediaServices\EntityToBusinessTranslationService.cs" />

@@ -5,7 +5,7 @@ namespace FrannHammer.WebScraping.Domain
     public class DiddyKong : WebCharacter
     {
         public DiddyKong()
-            : base("Diddy Kong", "Diddy%20Kong", "Diddy")
+            : base("Diddy Kong", "Diddy%20Kong", null, "Diddy")
         { }
     }
 }

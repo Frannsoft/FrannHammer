@@ -97,3 +97,13 @@ Examples:
 	| apiRoute                                         | routeParameter |
 	| api/characters/name/{name}/characterattributes   | name Bowser    |
 	| api/characters/{id}/characterattributes          | id 58          |
+
+Scenario Outline: I want to get a characters unique properties
+	Given The api route of <apiRoute>
+	When I request one specific item by <routeParameter>
+	Then the result should be a dictionary containing unique data for that character
+
+Examples:
+	| apiRoute                                    | routeParameter |
+	| api/characters/name/{name}/uniqueproperties | name Cloud     |
+	| api/characters/{id}/uniqueproperties        | id 6           |

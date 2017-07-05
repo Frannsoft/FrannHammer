@@ -16,6 +16,7 @@ using FrannHammer.WebScraping.Contracts.Images;
 using FrannHammer.WebScraping.Contracts.Movements;
 using FrannHammer.WebScraping.Contracts.Moves;
 using FrannHammer.WebScraping.Contracts.PageDownloading;
+using FrannHammer.WebScraping.Contracts.UniqueData;
 using FrannHammer.WebScraping.Contracts.WebClients;
 using FrannHammer.WebScraping.Domain;
 using FrannHammer.WebScraping.HtmlParsing;
@@ -23,6 +24,7 @@ using FrannHammer.WebScraping.Images;
 using FrannHammer.WebScraping.Movements;
 using FrannHammer.WebScraping.Moves;
 using FrannHammer.WebScraping.PageDownloading;
+using FrannHammer.WebScraping.Unique;
 using FrannHammer.WebScraping.WebClients;
 using MongoDB.Driver;
 using Moq;
@@ -66,6 +68,8 @@ namespace FrannHammer.Seeding.Tests
         private ICharacterMoveScraper _characterMoveScraper;
         private IWebServices _webServices;
         private DefaultCharacterDataScraper _characterDataScraper;
+        private IUniqueDataScrapingServices _uniqueDataScrapingServices;
+        private IUniqueDataProvider _uniqueDataProvider;
 
         [SetUp]
         public void SetUp()
@@ -78,12 +82,13 @@ namespace FrannHammer.Seeding.Tests
             _attributeProvider = new DefaultAttributeProvider();
             _imageScrapingProvider = new DefaultImageScrapingProvider();
             _imageScrapingService = new DefaultImageScrapingService(_imageScrapingProvider);
-
+            _uniqueDataProvider = new DefaultUniqueDataProvider();
             _webServices = new DefaultWebServices(_htmlParserProvider, _webClientProvider, _pageDownloader);
 
             _attributeScrapingServices = new DefaultAttributeScrapingServices(_attributeProvider, _webServices);
             _moveScrapingServices = new DefaultMoveScrapingServices(_moveProvider, _webServices);
             _movementScrapingServices = new DefaultMovementScrapingServices(_movementProvider, _webServices);
+            _uniqueDataScrapingServices = new DefaultUniqueDataScrapingServices(_uniqueDataProvider, _webServices);
 
             _groundMoveScraper = new GroundMoveScraper(_moveScrapingServices);
             _aerialMoveScraper = new AerialMoveScraper(_moveScrapingServices);
@@ -102,7 +107,7 @@ namespace FrannHammer.Seeding.Tests
             _movementScraper = new DefaultMovementScraper(_movementScrapingServices);
 
             _characterDataScrapingServices = new DefaultCharacterDataScrapingServices(_imageScrapingService, _movementScraper,
-                attributeScrapers, _characterMoveScraper, _webServices);
+                attributeScrapers, _characterMoveScraper, _uniqueDataScrapingServices, _webServices);
 
             _characterDataScraper = new DefaultCharacterDataScraper(_characterDataScrapingServices);
         }
@@ -115,6 +120,7 @@ namespace FrannHammer.Seeding.Tests
             var movementRepository = new MongoDbRepository<IMovement>(MongoDatabase);
             var moveRepository = new MongoDbRepository<IMove>(MongoDatabase);
             var characterAttributeRepository = new MongoDbRepository<ICharacterAttributeRow>(MongoDatabase);
+            var uniqueDataRepository = new MongoDbRepository<IUniqueData>(MongoDatabase);
 
             //real api services using mocked repos
             var mockQueryMappingService = new Mock<IQueryMappingService>().Object;
@@ -122,25 +128,28 @@ namespace FrannHammer.Seeding.Tests
             var movementService = new DefaultMovementService(movementRepository, mockQueryMappingService);
             var moveService = new DefaultMoveService(moveRepository, mockQueryMappingService);
             var characterAttributeService = new DefaultCharacterAttributeService(characterAttributeRepository);
-            var characterService = new DefaultCharacterService(characterRepository, dtoProvider, movementService, characterAttributeService, moveService);
+            var uniqueDataService = new DefaultUniqueDataService(uniqueDataRepository, mockQueryMappingService);
+            var characterService = new DefaultCharacterService(characterRepository, dtoProvider,
+                movementService, characterAttributeService, moveService, uniqueDataService);
 
 
             //real scraping from web to get data
-            var greninja = Characters.Greninja;
-            _characterDataScraper.PopulateCharacterFromWeb(greninja);
+            var cloud = Characters.Cloud;
+            _characterDataScraper.PopulateCharacterFromWeb(cloud);
 
             int previousCount = characterRepository.GetAll().Count();
 
             //insert data into mock repos using api services
             var seeder = new DefaultSeeder(_characterDataScraper);
-            seeder.SeedCharacterData(greninja, characterService, movementService,
-                moveService, characterAttributeService);
+            seeder.SeedCharacterData(cloud, characterService, movementService,
+                moveService, characterAttributeService, uniqueDataService);
 
             //assert data can be retrieved
             Assert.That(characterRepository.GetAll().Count(), Is.EqualTo(previousCount + 1));
             Assert.That(moveRepository.GetAll().Count(), Is.GreaterThan(0));
             Assert.That(movementRepository.GetAll().Count(), Is.GreaterThan(0));
             Assert.That(characterAttributeRepository.GetAll().Count(), Is.GreaterThan(0));
+            Assert.That(uniqueDataRepository.GetAll().Count(), Is.GreaterThan(0));
         }
     }
 }

@@ -16,10 +16,16 @@ namespace FrannHammer.WebScraping.Attributes
         public abstract string AttributeName { get; }
         public virtual Func<WebCharacter, IEnumerable<ICharacterAttributeRow>> Scrape { get; }
 
+        protected IAttributeScrapingServices ScrapingServices { get; }
+        protected string SourceUrl { get; }
+
         protected AttributeScraper(string sourceUrl, IAttributeScrapingServices scrapingServices)
         {
             Guard.VerifyStringIsNotNullOrEmpty(sourceUrl, nameof(sourceUrl));
             Guard.VerifyObjectNotNull(scrapingServices, nameof(scrapingServices));
+
+            ScrapingServices = scrapingServices;
+            SourceUrl = sourceUrl;
 
             Scrape = character =>
             {
@@ -27,7 +33,7 @@ namespace FrannHammer.WebScraping.Attributes
                 Guard.VerifyStringIsNotNullOrEmpty(character.Name, nameof(character.Name));
 
                 var attributeValueRows = new List<ICharacterAttributeRow>();
-                var htmlParser = scrapingServices.CreateParserFromSourceUrl(sourceUrl);
+                var htmlParser = ScrapingServices.CreateParserFromSourceUrl(SourceUrl);
 
                 string attributeTableHtml =
                     htmlParser.GetSingle(ScrapingConstants.XPathTableNodeAttributesWithDescription) ??
@@ -93,7 +99,7 @@ namespace FrannHammer.WebScraping.Attributes
                             headerValue.Equals("rank", StringComparison.OrdinalIgnoreCase))
                         { continue; }
 
-                        var attributeValue = scrapingServices.CreateAttribute();
+                        var attributeValue = ScrapingServices.CreateAttribute();
                         attributeValue.Name = headerValue;
                         attributeValue.Value = cells[i].InnerText;
                         attributeValue.Owner = character.Name;

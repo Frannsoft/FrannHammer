@@ -11,12 +11,14 @@ using FrannHammer.WebScraping.Contracts.Images;
 using FrannHammer.WebScraping.Contracts.Movements;
 using FrannHammer.WebScraping.Contracts.Moves;
 using FrannHammer.WebScraping.Contracts.PageDownloading;
+using FrannHammer.WebScraping.Contracts.UniqueData;
 using FrannHammer.WebScraping.Contracts.WebClients;
 using FrannHammer.WebScraping.HtmlParsing;
 using FrannHammer.WebScraping.Images;
 using FrannHammer.WebScraping.Movements;
 using FrannHammer.WebScraping.Moves;
 using FrannHammer.WebScraping.PageDownloading;
+using FrannHammer.WebScraping.Unique;
 using FrannHammer.WebScraping.WebClients;
 
 namespace FrannHammer.DefaultContainer.Configuration.ContainerModules
@@ -37,6 +39,7 @@ namespace FrannHammer.DefaultContainer.Configuration.ContainerModules
             builder.RegisterType<DefaultAttributeScrapingServices>().As<IAttributeScrapingServices>();
             builder.RegisterType<DefaultMoveScrapingServices>().As<IMoveScrapingServices>();
             builder.RegisterType<DefaultMovementScrapingServices>().As<IMovementScrapingServices>();
+            builder.RegisterType<DefaultUniqueDataProvider>().As<IUniqueDataProvider>();
 
             builder.RegisterType<GroundMoveScraper>().AsSelf();
             builder.RegisterType<AerialMoveScraper>().AsSelf();
@@ -66,6 +69,8 @@ namespace FrannHammer.DefaultContainer.Configuration.ContainerModules
                     });
 
             builder.RegisterType<DefaultCharacterDataScraper>().As<ICharacterDataScraper>();
+            builder.RegisterType<DefaultUniqueDataScrapingServices>().As<IUniqueDataScrapingServices>();
+
         }
     }
 }

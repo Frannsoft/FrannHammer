@@ -27,7 +27,6 @@ namespace FrannHammer.WebApi
         private static void MapAllLoadedTypesDerivingFromCore<T>(Assembly assemblyToReflectOver)
         {
             Guard.VerifyObjectNotNull(assemblyToReflectOver, nameof(assemblyToReflectOver));
-
             BsonMapper.RegisterClassMaps(GetModelTypes<T>().ToArray());
         }
 

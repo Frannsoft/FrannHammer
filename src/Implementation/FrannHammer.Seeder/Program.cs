@@ -37,7 +37,8 @@ namespace FrannHammer.Seeder
                     container.Resolve<ICharacterService>(),
                     container.Resolve<IMovementService>(),
                     container.Resolve<IMoveService>(),
-                    container.Resolve<ICharacterAttributeRowService>());
+                    container.Resolve<ICharacterAttributeRowService>(),
+                    container.Resolve<IUniqueDataService>());
             }
 
             Console.WriteLine("Seeding completed.  Press any key to close.");

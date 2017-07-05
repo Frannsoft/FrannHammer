@@ -14,12 +14,14 @@ using FrannHammer.WebScraping.Contracts.Images;
 using FrannHammer.WebScraping.Contracts.Movements;
 using FrannHammer.WebScraping.Contracts.Moves;
 using FrannHammer.WebScraping.Contracts.PageDownloading;
+using FrannHammer.WebScraping.Contracts.UniqueData;
 using FrannHammer.WebScraping.Contracts.WebClients;
 using FrannHammer.WebScraping.HtmlParsing;
 using FrannHammer.WebScraping.Images;
 using FrannHammer.WebScraping.Movements;
 using FrannHammer.WebScraping.Moves;
 using FrannHammer.WebScraping.PageDownloading;
+using FrannHammer.WebScraping.Unique;
 using FrannHammer.WebScraping.WebClients;
 using Moq;
 using NUnit.Framework;
@@ -50,6 +52,8 @@ namespace FrannHammer.Seeding.Tests
         private ICharacterMoveScraper _characterMoveScraper;
         private IWebServices _webServices;
         private DefaultCharacterDataScraper _characterDataScraper;
+        private IUniqueDataProvider _uniqueDataProvider;
+        private IUniqueDataScrapingServices _uniqueScrapingServices;
 
         [SetUp]
         public void SetUp()
@@ -62,12 +66,13 @@ namespace FrannHammer.Seeding.Tests
             _attributeProvider = new DefaultAttributeProvider();
             _imageScrapingProvider = new DefaultImageScrapingProvider();
             _imageScrapingService = new DefaultImageScrapingService(_imageScrapingProvider);
-
+            _uniqueDataProvider = new DefaultUniqueDataProvider();
             _webServices = new DefaultWebServices(_htmlParserProvider, _webClientProvider, _pageDownloader);
 
             _attributeScrapingServices = new DefaultAttributeScrapingServices(_attributeProvider, _webServices);
             _moveScrapingServices = new DefaultMoveScrapingServices(_moveProvider, _webServices);
             _movementScrapingServices = new DefaultMovementScrapingServices(_movementProvider, _webServices);
+            _uniqueScrapingServices = new DefaultUniqueDataScrapingServices(_uniqueDataProvider, _webServices);
 
             _groundMoveScraper = new GroundMoveScraper(_moveScrapingServices);
             _aerialMoveScraper = new AerialMoveScraper(_moveScrapingServices);
@@ -82,10 +87,11 @@ namespace FrannHammer.Seeding.Tests
                 new AirSpeedScraper(_attributeScrapingServices),
                 new AirDodgeScraper(_attributeScrapingServices)
             };
+
             _movementScraper = new DefaultMovementScraper(_movementScrapingServices);
 
             _characterDataScrapingServices = new DefaultCharacterDataScrapingServices(_imageScrapingService, _movementScraper,
-                attributeScrapers, _characterMoveScraper, _webServices);
+                attributeScrapers, _characterMoveScraper, _uniqueScrapingServices, _webServices);
 
             _characterDataScraper = new DefaultCharacterDataScraper(_characterDataScrapingServices);
         }
@@ -98,6 +104,7 @@ namespace FrannHammer.Seeding.Tests
             var movements = new List<IMovement>();
             var moves = new List<IMove>();
             var characterAttributes = new List<ICharacterAttributeRow>();
+            var uniqueDataProperties = new List<IUniqueData>();
 
             //mock repos
             var characterRepositoryMock = new Mock<IRepository<ICharacter>>();
@@ -131,28 +138,38 @@ namespace FrannHammer.Seeding.Tests
             });
             characterAttributeRepositoryMock.Setup(c => c.GetAll()).Returns(() => characterAttributes);
 
+            var uniqueDataRepositoryMock = new Mock<IRepository<IUniqueData>>();
+            uniqueDataRepositoryMock.Setup(u => u.AddMany(It.IsAny<IEnumerable<IUniqueData>>()))
+                .Callback<IEnumerable<IUniqueData>>(u =>
+               {
+                   uniqueDataProperties.AddRange(u);
+               });
+            uniqueDataRepositoryMock.Setup(u => u.GetAll()).Returns(() => uniqueDataProperties);
+
             //real api services using mocked repos
             var movementService = new DefaultMovementService(movementRepositoryMock.Object, new Mock<IQueryMappingService>().Object);
             var moveService = new DefaultMoveService(movesRepositoryMock.Object, new Mock<IQueryMappingService>().Object);
             var characterAttributeService = new DefaultCharacterAttributeService(characterAttributeRepositoryMock.Object);
+            var uniqueDataService = new DefaultUniqueDataService(uniqueDataRepositoryMock.Object, new Mock<IQueryMappingService>().Object);
             var dtoProvider = new DefaultDtoProvider();
-            var characterService = new DefaultCharacterService(characterRepositoryMock.Object, dtoProvider, movementService, characterAttributeService, moveService);
-
+            var characterService = new DefaultCharacterService(characterRepositoryMock.Object, dtoProvider,
+                movementService, characterAttributeService, moveService, uniqueDataService);
 
             //real scraping from web to get data
-            var greninja = Characters.Greninja;
-            _characterDataScraper.PopulateCharacterFromWeb(greninja);
+            var cloud = Characters.Cloud;
+            _characterDataScraper.PopulateCharacterFromWeb(cloud);
 
             //insert data into mock repos using api services
             var seeder = new DefaultSeeder(_characterDataScraper);
-            seeder.SeedCharacterData(greninja, characterService, movementService,
-                moveService, characterAttributeService);
+            seeder.SeedCharacterData(cloud, characterService, movementService,
+                moveService, characterAttributeService, uniqueDataService);
 
             //assert data can be retrieved
             Assert.That(characterRepositoryMock.Object.GetAll().Count(), Is.EqualTo(1));
             Assert.That(movesRepositoryMock.Object.GetAll().Count(), Is.GreaterThan(0));
             Assert.That(movementRepositoryMock.Object.GetAll().Count(), Is.GreaterThan(0));
             Assert.That(characterAttributeRepositoryMock.Object.GetAll().Count(), Is.GreaterThan(0));
+            Assert.That(uniqueDataRepositoryMock.Object.GetAll().Count(), Is.GreaterThan(0));
         }
     }
 }

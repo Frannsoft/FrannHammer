@@ -7,5 +7,6 @@
         string ThumbnailUrl { get; set; }
         string ColorTheme { get; set; }
         string DisplayName { get; set; }
+
     }
 }

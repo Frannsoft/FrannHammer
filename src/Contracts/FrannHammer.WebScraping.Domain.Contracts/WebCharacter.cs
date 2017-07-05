@@ -25,13 +25,17 @@ namespace FrannHammer.WebScraping.Domain.Contracts
         public IEnumerable<IMovement> Movements { get; set; }
         public IEnumerable<IAttribute> Attributes { get; set; }
         public IEnumerable<ICharacterAttributeRow> AttributeRows { get; set; }
+        public IEnumerable<IUniqueData> UniqueProperties { get; set; }
 
         /// <summary>
         /// The non-incrementing Id used to identity this character resource from an api consumer perspective.
         /// </summary>
         public int OwnerId { get; set; }
 
-        public WebCharacter(string name, string escapedCharacterName = "",  params string[] potentialScrapingNames)
+        public IEnumerable<Type> UniqueScraperTypes { get; }
+
+        public WebCharacter(string name, string escapedCharacterName = "",
+            IEnumerable<Type> uniqueScraperTypes = null, params string[] potentialScrapingNames)
         {
             Name = name;
 
@@ -40,13 +44,9 @@ namespace FrannHammer.WebScraping.Domain.Contracts
 
             SourceUrl = SourceUrlBase + escapedCharacterName;
             PotentialScrapingNames = potentialScrapingNames;
+            UniqueScraperTypes = uniqueScraperTypes ?? new List<Type>();
 
             OwnerId = CharacterIds.FindByName(name);
-        }
-
-        public virtual IEnumerable<IUniqueData> GetUniqueData(IUniqueDataProvider uniqueDataProvider)
-        {
-            throw new NotImplementedException();
         }
 
         public override string ToString()

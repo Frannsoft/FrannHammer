@@ -50,6 +50,7 @@
     <Compile Include="DefaultDtoProvider.cs" />
     <Compile Include="DefaultMovementService.cs" />
     <Compile Include="DefaultMoveService.cs" />
+    <Compile Include="DefaultUniqueDataService.cs" />
     <Compile Include="IAttributeStrategy.cs" />
     <Compile Include="IQueryMappingService.cs" />
     <Compile Include="OwnerBasedApiService.cs" />

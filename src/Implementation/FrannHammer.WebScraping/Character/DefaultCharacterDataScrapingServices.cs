@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.Utility;
 using FrannHammer.WebScraping.Contracts;
@@ -7,6 +8,7 @@ using FrannHammer.WebScraping.Contracts.Attributes;
 using FrannHammer.WebScraping.Contracts.Character;
 using FrannHammer.WebScraping.Contracts.Images;
 using FrannHammer.WebScraping.Contracts.Movements;
+using FrannHammer.WebScraping.Contracts.UniqueData;
 using FrannHammer.WebScraping.Domain.Contracts;
 using HtmlAgilityPack;
 
@@ -19,16 +21,27 @@ namespace FrannHammer.WebScraping.Character
         private readonly IEnumerable<IAttributeScraper> _attributeScrapers;
         private readonly ICharacterMoveScraper _characterMoveScraper;
         private readonly IWebServices _webServices;
+        private readonly IUniqueDataScrapingServices _uniqueDataScrapingService;
 
         public DefaultCharacterDataScrapingServices(IImageScrapingService imageScrapingService, IMovementScraper movementScraper,
-            IEnumerable<IAttributeScraper> attributeScrapers, ICharacterMoveScraper characterMoveScraper, IWebServices webServices)
+            IEnumerable<IAttributeScraper> attributeScrapers,
+            ICharacterMoveScraper characterMoveScraper,
+            IUniqueDataScrapingServices uniqueDataScrapingServices,
+            IWebServices webServices)
         {
             Guard.VerifyObjectNotNull(imageScrapingService, nameof(imageScrapingService));
+            Guard.VerifyObjectNotNull(movementScraper, nameof(movementScraper));
+            Guard.VerifyObjectNotNull(attributeScrapers, nameof(attributeScrapers));
+            Guard.VerifyObjectNotNull(characterMoveScraper, nameof(characterMoveScraper));
+            Guard.VerifyObjectNotNull(uniqueDataScrapingServices, nameof(uniqueDataScrapingServices));
+            Guard.VerifyObjectNotNull(webServices, nameof(webServices));
+
 
             _imageScrapingService = imageScrapingService;
             _movementScraper = movementScraper;
             _attributeScrapers = attributeScrapers;
             _characterMoveScraper = characterMoveScraper;
+            _uniqueDataScrapingService = uniqueDataScrapingServices;
             _webServices = webServices;
         }
 
@@ -89,6 +102,14 @@ namespace FrannHammer.WebScraping.Character
                 attributeRows.AddRange(attributeScraper.Scrape(character));
             }
 
+            //unique data
+            var uniqueData = new List<IUniqueData>();
+            var uniqueDataScrapersForThisCharacter = GetUniqueDataScrapersForCharacter(character);
+            foreach (var uniqueDataScraper in uniqueDataScrapersForThisCharacter)
+            {
+                uniqueData.AddRange(uniqueDataScraper.Scrape(character));
+            }
+
             character.FullUrl = character.SourceUrl;
             character.DisplayName = displayName;
             character.ThumbnailUrl = thumbnailUrl;
@@ -97,6 +118,14 @@ namespace FrannHammer.WebScraping.Character
             character.Movements = movements;
             character.Moves = moves;
             character.AttributeRows = attributeRows;
+            character.UniqueProperties = uniqueData;
+        }
+
+        private IEnumerable<IUniqueDataScraper> GetUniqueDataScrapersForCharacter(WebCharacter character)
+        {
+            var scraperTypes = character.UniqueScraperTypes;
+
+            return scraperTypes.Select(sc => (IUniqueDataScraper) Activator.CreateInstance(sc, _uniqueDataScrapingService));
         }
 
         private static string GetThumbnailUrl(string attributeKey, string thumbnailHtml, string urlRoot)
