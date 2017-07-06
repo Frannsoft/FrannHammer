@@ -155,13 +155,13 @@
       <Project>{4DB6C856-581A-4B69-BB6A-4AEBF3929C5E}</Project>
       <Name>FrannHammer.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Implementation\FrannHammer.WebApi\FrannHammer.WebApi.csproj">
-      <Project>{80f48c0d-9731-406f-aae6-baa30b331e48}</Project>
-      <Name>FrannHammer.WebApi</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Contracts\FrannHammer.WebScraping.Domain.Contracts\FrannHammer.WebScraping.Domain.Contracts.csproj">
       <Project>{40C0A772-8A77-484F-919C-DB55CAEAEAA1}</Project>
       <Name>FrannHammer.WebScraping.Domain.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Implementation\FrannHammer.WebApi\FrannHammer.WebApi.csproj">
+      <Project>{80f48c0d-9731-406f-aae6-baa30b331e48}</Project>
+      <Name>FrannHammer.WebApi</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Implementation\FrannHammer.WebScraping.Domain\FrannHammer.WebScraping.Domain.csproj">
       <Project>{D7A6E280-119B-4D41-B512-8D016A3BED5C}</Project>

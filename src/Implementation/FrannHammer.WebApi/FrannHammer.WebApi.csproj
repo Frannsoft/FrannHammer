@@ -278,8 +278,8 @@
     <Content Include="appsettings.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Properties\PublishProfiles\khapiv06testing - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\khapiv06testing - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\beta-api-kuroganehammer - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\beta-api-kuroganehammer - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
