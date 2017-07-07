@@ -30,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FrannHammer.WebScraping">
-      <HintPath>..\FrannHammer.DefaultContainer.Configuration\bin\Debug\FrannHammer.WebScraping.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -122,6 +119,10 @@
     <ProjectReference Include="..\..\Contracts\FrannHammer.WebScraping.Domain.Contracts\FrannHammer.WebScraping.Domain.Contracts.csproj">
       <Project>{40c0a772-8a77-484f-919c-db55caeaeaa1}</Project>
       <Name>FrannHammer.WebScraping.Domain.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.WebScraping\FrannHammer.WebScraping.csproj">
+      <Project>{b7686798-61b2-4208-86ef-0076bf1301be}</Project>
+      <Name>FrannHammer.WebScraping</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

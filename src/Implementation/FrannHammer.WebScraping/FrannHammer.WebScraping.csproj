@@ -119,10 +119,6 @@
       <Project>{40c0a772-8a77-484f-919c-db55caeaeaa1}</Project>
       <Name>FrannHammer.WebScraping.Domain.Contracts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FrannHammer.WebScraping.Domain\FrannHammer.WebScraping.Domain.csproj">
-      <Project>{D7A6E280-119B-4D41-B512-8D016A3BED5C}</Project>
-      <Name>FrannHammer.WebScraping.Domain</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
