@@ -130,7 +130,14 @@ namespace FrannHammer.WebScraping.Character
 
         private static string GetThumbnailUrl(string attributeKey, string thumbnailHtml, string urlRoot)
         {
-            return urlRoot + HtmlNode.CreateNode(thumbnailHtml).GetAttributeValue(attributeKey, string.Empty);
+            string thumbnailUriFromSource = HtmlNode.CreateNode(thumbnailHtml).GetAttributeValue(attributeKey, string.Empty);
+
+            //dump the '/smash4' at the start of these if it exists.  This helps ensure scraped urls are sanitized and valid.
+            if (thumbnailUriFromSource.StartsWith("/Smash4/"))
+            {
+                thumbnailUriFromSource = thumbnailUriFromSource.Remove(0, 8);
+            }
+            return urlRoot + thumbnailUriFromSource;
         }
 
         private static string GetCharacterDisplayName(string rawDisplayNameHtml)
