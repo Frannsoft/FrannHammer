@@ -92,6 +92,7 @@ namespace FrannHammer.WebScraping.Tests
         }
 
         [Test]
+        [Category("LongRunning")]
         [TestCaseSource(nameof(Characters))]
         public void ExpectedCharacterDataCanBeScraped(WebCharacter character)
         {
