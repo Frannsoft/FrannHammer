@@ -114,6 +114,7 @@ namespace FrannHammer.Seeding.Tests
 
 
         [Test]
+        [Category("LongRunning")]
         public void CanPushDataToActualMongoDb()
         {
             var characterRepository = new MongoDbRepository<ICharacter>(MongoDatabase);
