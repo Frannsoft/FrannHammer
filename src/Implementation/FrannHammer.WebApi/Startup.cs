@@ -64,7 +64,8 @@ namespace FrannHammer.WebApi
             app.UseAutofacMiddleware(Container);
             app.UseAutofacWebApi(config);
             app.UseWebApi(config);
-            app.UseCors(CorsOptions.AllowAll);
+            //app.UseCors(CorsOptions.AllowAll);
+            //config.EnableCors();
         }
 
         private static void BuildContainer(HttpConfiguration config)

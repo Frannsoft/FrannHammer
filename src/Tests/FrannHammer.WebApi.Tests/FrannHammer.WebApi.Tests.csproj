@@ -129,6 +129,7 @@
     <Compile Include="Controllers\MoveControllerTests.cs" />
     <Compile Include="Controllers\MovementControllerTests.cs" />
     <Compile Include="MongoDbBsonMapperTests.cs" />
+    <Compile Include="ProductionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
