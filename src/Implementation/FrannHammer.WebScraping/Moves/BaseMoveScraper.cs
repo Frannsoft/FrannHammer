@@ -24,7 +24,7 @@ namespace FrannHammer.WebScraping.Moves
 
         protected static HtmlNodeCollection GetTableCells(HtmlNode row) => row.SelectNodes(ScrapingConstants.XPathTableCells);
 
-        protected virtual HtmlNodeCollection GetTableRows(string sourceUrl, string xpath)
+        protected virtual IEnumerable<HtmlNode> GetTableRows(string sourceUrl, string xpath)
         {
             var htmlParser = ScrapingServices.CreateParserFromSourceUrl(sourceUrl);
 

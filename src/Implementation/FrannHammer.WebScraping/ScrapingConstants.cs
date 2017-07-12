@@ -20,5 +20,12 @@
         public const string XPathTableNodeAttributesWithNoDescription = @"(//*/table[@id='AutoNumber1'])[1]";
         public const string XPathTableNodeAttributeHeaders = @"//*[@id='AutoNumber1'][2]/thead/tr";
         public const string XPathTableNodeAttributeHeadersWithNoDescription = @"//*[@id='AutoNumber1'][1]/thead/tr";
+
+        public class ExcludedRowHeaders
+        {
+            public const string Grabs = "Grabs";
+            public const string Throws = "Throws";
+            public const string Miscellaneous = "Miscellaneous";
+        }
     }
 }

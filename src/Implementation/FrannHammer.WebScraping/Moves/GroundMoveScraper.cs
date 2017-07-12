@@ -25,7 +25,7 @@ namespace FrannHammer.WebScraping.Moves
             };
         }
 
-        protected override HtmlNodeCollection GetTableRows(string sourceUrl, string xpath)
+        protected override IEnumerable<HtmlNode> GetTableRows(string sourceUrl, string xpath)
         {
             const string exceptionMessageBase = "Error getting move table data after attempting to scrape full table using xpath: ";
             var htmlParser = ScrapingServices.CreateParserFromSourceUrl(sourceUrl);
@@ -39,6 +39,7 @@ namespace FrannHammer.WebScraping.Moves
 
                 //get row data
                 var tableRows = movesTableHtmlNode.SelectNodes(ScrapingConstants.XPathTableRows);
+                        
 
                 if (tableRows == null)
                 {
@@ -46,7 +47,18 @@ namespace FrannHammer.WebScraping.Moves
                         $"{exceptionMessageBase}'{ScrapingConstants.XPathTableRows};");
                 }
 
-                return tableRows;
+                return tableRows.Where(node =>
+                {
+                    var firstHeaderNode = node.SelectSingleNode("th");
+
+                    return
+                        !firstHeaderNode.InnerText.Equals(ScrapingConstants.ExcludedRowHeaders.Grabs,
+                            StringComparison.OrdinalIgnoreCase) &&
+                        !firstHeaderNode.InnerText.Equals(ScrapingConstants.ExcludedRowHeaders.Throws,
+                            StringComparison.OrdinalIgnoreCase) &&
+                        !firstHeaderNode.InnerText.Equals(ScrapingConstants.ExcludedRowHeaders.Miscellaneous,
+                            StringComparison.OrdinalIgnoreCase);
+                });
             }
             else
             {
