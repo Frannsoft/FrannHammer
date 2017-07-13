@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.WebScraping.Contracts.Moves;
 using FrannHammer.WebScraping.Domain;
@@ -39,6 +40,32 @@ namespace FrannHammer.WebScraping.Tests
             Assert.That(move.HitboxActive, Is.Not.Null);
             Assert.That(move.KnockbackGrowth, Is.Not.Null);
             Assert.That(move.Owner, Is.EqualTo(character.Name), $"{nameof(move.Owner)}");
+        }
+
+        [Test]
+        public void ScrapeGroundMoves_HeaderRowsAreExcludeFromScrapedValues()
+        {
+            var groundMoveScrapingService = new GroundMoveScraper(_scrapingServices);
+
+            var groundMoves = groundMoveScrapingService.Scrape(Characters.Greninja).ToList();
+
+            CollectionAssert.AllItemsAreNotNull(groundMoves);
+            CollectionAssert.AllItemsAreUnique(groundMoves);
+            CollectionAssert.IsNotEmpty(groundMoves);
+
+            groundMoves.ForEach(move =>
+            {
+                AssertMoveIsValid(move, Characters.Greninja);
+            });
+
+            Assert.That(!groundMoves.Any(move => move.Name.Equals(ScrapingConstants.ExcludedRowHeaders.Grabs, StringComparison.OrdinalIgnoreCase)),
+                $"Should not contain '{ScrapingConstants.ExcludedRowHeaders.Grabs}'");
+
+            Assert.That(!groundMoves.Any(move => move.Name.Equals(ScrapingConstants.ExcludedRowHeaders.Throws, StringComparison.OrdinalIgnoreCase)),
+                $"Should not contain '{ScrapingConstants.ExcludedRowHeaders.Throws}'");
+
+            Assert.That(!groundMoves.Any(move => move.Name.Equals(ScrapingConstants.ExcludedRowHeaders.Miscellaneous, StringComparison.OrdinalIgnoreCase)),
+                $"Should not contain '{ScrapingConstants.ExcludedRowHeaders.Miscellaneous}'");
         }
 
         [Test]

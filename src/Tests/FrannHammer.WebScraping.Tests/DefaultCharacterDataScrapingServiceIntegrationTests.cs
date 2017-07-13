@@ -88,7 +88,7 @@ namespace FrannHammer.WebScraping.Tests
 
         private static IEnumerable<WebCharacter> Characters()
         {
-            return Domain.Characters.All;
+            return new List<WebCharacter> {Domain.Characters.Cloud, Domain.Characters.Greninja};
         }
 
         [Test]
