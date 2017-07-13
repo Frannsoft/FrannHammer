@@ -5,7 +5,7 @@ namespace FrannHammer.WebScraping.Domain
     public class CaptainFalcon : WebCharacter
     {
         public CaptainFalcon()
-            : base("Captain Falcon", "Captain%20Falcon")
+            : base("CaptainFalcon", "Captain%20Falcon")
         { }
     }
 }

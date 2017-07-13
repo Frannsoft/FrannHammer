@@ -5,7 +5,7 @@ namespace FrannHammer.WebScraping.Domain
     public class MiiGunner : WebCharacter
     {
         public MiiGunner()
-            : base("Mii Gunner", "Mii%20Gunner", null, "Mii Fighters")
+            : base("MiiGunner", "Mii%20Gunner", null, "Mii Fighters")
         { }
     }
 }

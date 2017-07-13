@@ -35,6 +35,8 @@ namespace FrannHammer.WebApi.Tests
                     .Where(type => type.IsSubclassOf(baseType))
                     .ToList();
 
+            BsonClassMapHelper.Clear();
+
             //assert that types are not registered
             var preRegistrationClassMaps = BsonClassMap.GetRegisteredClassMaps();
 
@@ -48,6 +50,36 @@ namespace FrannHammer.WebApi.Tests
 
             Assert.That(actualRegisteredClassMapTypes.Count, Is.EqualTo(expectedRegisteredTypes.Count));
             Assert.That(actualRegisteredClassMapTypes.OrderBy(type => type.Name), Is.EqualTo(expectedRegisteredTypes.OrderBy(type => type.Name)));
+        }
+    }
+
+    public static class BsonClassMapHelper
+    {
+        public static void Unregister<T>()
+        {
+            var classType = typeof(T);
+            GetClassMap().Remove(classType);
+        }
+
+        static Dictionary<Type, BsonClassMap> GetClassMap()
+        {
+            var cm = BsonClassMap.GetRegisteredClassMaps().FirstOrDefault();
+            if (cm != null)
+            {
+                var fi = typeof(BsonClassMap).GetField("__classMaps", BindingFlags.Static | BindingFlags.NonPublic);
+                var classMaps = (Dictionary<Type, BsonClassMap>)fi.GetValue(cm);
+
+                return classMaps;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public static void Clear()
+        {
+            GetClassMap()?.Clear();
         }
     }
 }

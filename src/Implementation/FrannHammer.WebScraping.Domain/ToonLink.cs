@@ -5,7 +5,7 @@ namespace FrannHammer.WebScraping.Domain
     public class ToonLink : WebCharacter
     {
         public ToonLink()
-            : base("Toon Link", "Toon%20Link")
+            : base("ToonLink", "Toon%20Link")
         { }
     }
 }

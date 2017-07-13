@@ -40,7 +40,7 @@ namespace FrannHammer.WebScraping.Domain.Contracts
         public const int MiiBrawler = 32;
         public const int MiiGunner = 33;
         public const int MiiSwordfighter = 34;
-        public const int GameWatch = 35;
+        public const int MrGameWatch = 35;
         public const int Ness = 36;
         public const int Olimar = 37;
         public const int Pacman = 38;

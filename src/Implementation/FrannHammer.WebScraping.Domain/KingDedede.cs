@@ -5,7 +5,7 @@ namespace FrannHammer.WebScraping.Domain
     public class KingDedede : WebCharacter
     {
         public KingDedede()
-            : base("King Dedede", "King%20Dedede", null, "Dedede")
+            : base("KingDedede", "King%20Dedede", null, "Dedede")
         { }
     }
 }

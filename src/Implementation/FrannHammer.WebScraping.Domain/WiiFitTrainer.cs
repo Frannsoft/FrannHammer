@@ -5,7 +5,7 @@ namespace FrannHammer.WebScraping.Domain
     public class WiiFitTrainer : WebCharacter
     {
         public WiiFitTrainer()
-            : base("Wii Fit Trainer", "Wii%20Fit%20Trainer")
+            : base("WiiFitTrainer", "Wii%20Fit%20Trainer")
         { }
     }
 }

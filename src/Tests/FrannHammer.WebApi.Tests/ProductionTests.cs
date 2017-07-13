@@ -2,11 +2,12 @@
 using System.Net;
 using System.Net.Http;
 using NUnit.Framework;
+using static FrannHammer.Tests.Utility.Categories;
 
 namespace FrannHammer.WebApi.Tests
 {
     [TestFixture]
-    [Category("Production")]
+    [Category(Production)]
     public class ProductionTests
     {
         [Test]
