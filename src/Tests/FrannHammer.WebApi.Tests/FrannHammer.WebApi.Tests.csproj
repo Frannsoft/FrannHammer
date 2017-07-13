@@ -42,6 +42,18 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Owin.3.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Hosting, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Owin.Hosting.3.1.0\lib\net45\Microsoft.Owin.Hosting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Testing, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Owin.Testing.3.1.0\lib\net45\Microsoft.Owin.Testing.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="MongoDB.Bson, Version=2.4.3.23, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MongoDB.Bson.2.4.3\lib\net45\MongoDB.Bson.dll</HintPath>
@@ -57,6 +69,10 @@
     </Reference>
     <Reference Include="nunit.framework, Version=3.6.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NUnit.3.6.1\lib\net45\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Ploeh.AutoFixture, Version=3.50.2.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
@@ -152,6 +168,10 @@
       <Project>{15A2565C-4611-4034-814A-931DA70ED8B1}</Project>
       <Name>FrannHammer.Domain.Contracts</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Implementation\FrannHammer.DataAccess.MongoDb\FrannHammer.DataAccess.MongoDb.csproj">
+      <Project>{3E7D28F0-731C-4AA7-8C5A-4C9AE810651A}</Project>
+      <Name>FrannHammer.DataAccess.MongoDb</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Implementation\FrannHammer.Domain\FrannHammer.Domain.csproj">
       <Project>{4DB6C856-581A-4B69-BB6A-4AEBF3929C5E}</Project>
       <Name>FrannHammer.Domain</Name>
@@ -168,12 +188,20 @@
       <Project>{D7A6E280-119B-4D41-B512-8D016A3BED5C}</Project>
       <Name>FrannHammer.WebScraping.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FrannHammer.Tests.Utility\FrannHammer.Tests.Utility.csproj">
+      <Project>{86AD0285-BE01-4C99-9D3C-84D26A0989F3}</Project>
+      <Name>FrannHammer.Tests.Utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy $(SolutionDir)\Tests\tests.connectionstrings.config $(TargetDir) /I /Y
+xcopy $(SolutionDir)\Tests\tests.appsettings.config $(TargetDir) /I /Y</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

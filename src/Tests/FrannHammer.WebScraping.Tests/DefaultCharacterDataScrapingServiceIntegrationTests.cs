@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FrannHammer.Tests.Utility;
 using FrannHammer.WebScraping.Attributes;
 using FrannHammer.WebScraping.Character;
 using FrannHammer.WebScraping.Contracts;
@@ -21,6 +22,8 @@ using FrannHammer.WebScraping.PageDownloading;
 using FrannHammer.WebScraping.Unique;
 using FrannHammer.WebScraping.WebClients;
 using NUnit.Framework;
+using static FrannHammer.Tests.Utility.Categories;
+
 
 namespace FrannHammer.WebScraping.Tests
 {
@@ -92,7 +95,7 @@ namespace FrannHammer.WebScraping.Tests
         }
 
         [Test]
-        [Category("LongRunning")]
+        [Category(LongRunning)]
         [TestCaseSource(nameof(Characters))]
         public void ExpectedCharacterDataCanBeScraped(WebCharacter character)
         {

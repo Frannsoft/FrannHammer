@@ -5,7 +5,7 @@ namespace FrannHammer.WebScraping.Domain
     public class DarkPit : WebCharacter
     {
         public DarkPit()
-            : base("Dark Pit", "Dark%20Pit")
+            : base("DarkPit", "Dark%20Pit")
         { }
     }
 }
