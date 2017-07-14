@@ -47,18 +47,7 @@ namespace FrannHammer.WebScraping.Moves
                         $"{exceptionMessageBase}'{ScrapingConstants.XPathTableRows};");
                 }
 
-                return tableRows.Where(node =>
-                {
-                    var firstHeaderNode = node.SelectSingleNode("th");
-
-                    return
-                        !firstHeaderNode.InnerText.Equals(ScrapingConstants.ExcludedRowHeaders.Grabs,
-                            StringComparison.OrdinalIgnoreCase) &&
-                        !firstHeaderNode.InnerText.Equals(ScrapingConstants.ExcludedRowHeaders.Throws,
-                            StringComparison.OrdinalIgnoreCase) &&
-                        !firstHeaderNode.InnerText.Equals(ScrapingConstants.ExcludedRowHeaders.Miscellaneous,
-                            StringComparison.OrdinalIgnoreCase);
-                });
+                return FilterHeadersFromFoundTableRows(tableRows);
             }
             else
             {
@@ -74,8 +63,24 @@ namespace FrannHammer.WebScraping.Moves
                         $"{exceptionMessageBase}'{ScrapingConstants.XPathTableRows};");
                 }
 
-                return tableRows;
+                return FilterHeadersFromFoundTableRows(tableRows);
             }
+        }
+
+        private static IEnumerable<HtmlNode> FilterHeadersFromFoundTableRows(IEnumerable<HtmlNode> tableRows)
+        {
+            return tableRows.Where(node =>
+            {
+                var firstHeaderNode = node.SelectSingleNode("th");
+
+                return
+                    !firstHeaderNode.InnerText.Equals(ScrapingConstants.ExcludedRowHeaders.Grabs,
+                        StringComparison.OrdinalIgnoreCase) &&
+                    !firstHeaderNode.InnerText.Equals(ScrapingConstants.ExcludedRowHeaders.Throws,
+                        StringComparison.OrdinalIgnoreCase) &&
+                    !firstHeaderNode.InnerText.Equals(ScrapingConstants.ExcludedRowHeaders.Miscellaneous,
+                        StringComparison.OrdinalIgnoreCase);
+            });
         }
 
         protected override IMove GetMove(HtmlNodeCollection cells, WebCharacter character)
@@ -85,8 +90,7 @@ namespace FrannHammer.WebScraping.Moves
             string name = GetStatName(cells[0]);
 
             //a throw move is not a ground move
-            if (name.EndsWith("grab", StringComparison.CurrentCultureIgnoreCase) ||
-                name.EndsWith("throw", StringComparison.CurrentCultureIgnoreCase))
+            if (name.EndsWith(ScrapingConstants.CommonMoveNames.Throw, StringComparison.OrdinalIgnoreCase))
             {
                 return default(IMove);
             }

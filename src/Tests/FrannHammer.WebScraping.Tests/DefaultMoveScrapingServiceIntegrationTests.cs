@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.WebScraping.Contracts.Moves;
@@ -40,6 +41,13 @@ namespace FrannHammer.WebScraping.Tests
             Assert.That(move.HitboxActive, Is.Not.Null);
             Assert.That(move.KnockbackGrowth, Is.Not.Null);
             Assert.That(move.Owner, Is.EqualTo(character.Name), $"{nameof(move.Owner)}");
+        }
+
+        private static IEnumerable<WebCharacter> TestCharacters()
+        {
+            yield return Characters.Cloud;
+            yield return Characters.Yoshi;
+            yield return Characters.Greninja;
         }
 
         [Test]
@@ -86,11 +94,11 @@ namespace FrannHammer.WebScraping.Tests
         }
 
         [Test]
-        public void GroundMoveScraperShouldExcludeThrowMoves()
+        [TestCaseSource(nameof(TestCharacters))]
+        public void GroundMoveScraperShouldExcludeThrowMoves(WebCharacter character)
         {
             var groundMoveScrapingService = new GroundMoveScraper(_scrapingServices);
-
-            var groundMoves = groundMoveScrapingService.Scrape(Characters.Greninja).ToList();
+            var groundMoves = groundMoveScrapingService.Scrape(character).ToList();
 
             CollectionAssert.AllItemsAreNotNull(groundMoves);
             CollectionAssert.AllItemsAreUnique(groundMoves);
@@ -98,39 +106,65 @@ namespace FrannHammer.WebScraping.Tests
 
             groundMoves.ForEach(move =>
             {
-                AssertMoveIsValid(move, Characters.Greninja);
-            });
-
-            groundMoves.ForEach(move =>
-            {
-                Assert.That(!move.Name.Contains(MoveType.Throw.GetEnumDescription()),
-                    $"{nameof(IMove.Name)} should not contain {MoveType.Throw.GetEnumDescription()}.  This means the scraper might be pulling in throw moves.");
+                Assert.That(!move.Name.Contains(ScrapingConstants.CommonMoveNames.Throw),
+                    $"{nameof(IMove.Name)} should not contain {ScrapingConstants.CommonMoveNames.Throw}.  This means the scraper might be pulling in throw moves.");
             });
         }
 
         [Test]
-        public void ScrapeThrowMovesForCharacter()
+        [TestCaseSource(nameof(TestCharacters))]
+        public void GroundMoveScraperShouldIncludeGrabs(WebCharacter character)
+        {
+            const int expectedGrabCount = 3;
+
+            var groundMoveScrapingService = new GroundMoveScraper(_scrapingServices);
+            var groundMoves = groundMoveScrapingService.Scrape(character).ToList();
+
+            int actualNumberOfGrabMoves = groundMoves.Count(move => move.Name.EndsWith(ScrapingConstants.CommonMoveNames.Grab, StringComparison.OrdinalIgnoreCase));
+
+            Assert.That(actualNumberOfGrabMoves, Is.EqualTo(expectedGrabCount), $"{character.Name}");
+        }
+
+        [Test]
+        [TestCaseSource(nameof(TestCharacters))]
+        public void GroundMoveScraperShouldExcludeRowHeaders(WebCharacter character)
+        {
+            var groundMoveScrapingService = new GroundMoveScraper(_scrapingServices);
+            var groundMoves = groundMoveScrapingService.Scrape(character).ToList();
+
+            groundMoves.ForEach(move =>
+            {
+                Assert.That(move.Name, Is.Not.EqualTo(ScrapingConstants.ExcludedRowHeaders.Grabs), $"{nameof(character.Name)}");
+                Assert.That(move.Name, Is.Not.EqualTo(ScrapingConstants.ExcludedRowHeaders.Throws), $"{nameof(character.Name)}");
+                Assert.That(move.Name, Is.Not.EqualTo(ScrapingConstants.ExcludedRowHeaders.Miscellaneous), $"{nameof(character.Name)}");
+                AssertMoveIsValid(move, character);
+            });
+        }
+
+        [Test]
+        [TestCaseSource(nameof(TestCharacters))]
+        public void ScrapeThrowMovesForCharacter(WebCharacter character)
         {
             var throwMoveScraper = new ThrowMoveScraper(_scrapingServices);
-
-            var throwMoves = throwMoveScraper.Scrape(Characters.Greninja).ToList();
+            var throwMoves = throwMoveScraper.Scrape(character).ToList();
 
             CollectionAssert.IsNotEmpty(throwMoves);
 
             throwMoves.ForEach(move =>
             {
                 Assert.That(move, Is.Not.Null, "move should not be null.");
-                Assert.That(move.Name.Contains(MoveType.Throw.GetEnumDescription()) || move.Name.ToLower().Contains("grab"),
-                    $"{move.Name} should contain {MoveType.Throw.GetEnumDescription()} or 'grab'.  This means the scraper might NOT be pulling in throw moves.");
+                Assert.That(move.Name.Contains(MoveType.Throw.GetEnumDescription()), $"{move.Name}");
+                Assert.That(move.MoveType, Is.EqualTo(MoveType.Throw.ToString().ToLower()), $"{move.Name}");
             });
         }
 
         [Test]
-        public void ScrapeAerialMovesForCharacter()
+        [TestCaseSource(nameof(TestCharacters))]
+        public void ScrapeAerialMovesForCharacter(WebCharacter character)
         {
             var aerialMoveScrapingService = new AerialMoveScraper(_scrapingServices);
 
-            var aerialMoves = aerialMoveScrapingService.Scrape(Characters.Greninja).ToList();
+            var aerialMoves = aerialMoveScrapingService.Scrape(character).ToList();
 
             CollectionAssert.AllItemsAreNotNull(aerialMoves);
             CollectionAssert.AllItemsAreUnique(aerialMoves);
@@ -138,18 +172,19 @@ namespace FrannHammer.WebScraping.Tests
 
             aerialMoves.ForEach(move =>
             {
-                AssertMoveIsValid(move, Characters.Greninja);
+                AssertMoveIsValid(move, character);
                 Assert.That(move.LandingLag, Is.Not.Null);
                 Assert.That(move.AutoCancel, Is.Not.Null);
             });
         }
 
         [Test]
-        public void ScrapeSpecialMovesForCharacter()
+        [TestCaseSource(nameof(TestCharacters))]
+        public void ScrapeSpecialMovesForCharacter(WebCharacter character)
         {
             var specialMoveScrapingService = new SpecialMoveScraper(_scrapingServices);
 
-            var specialMoves = specialMoveScrapingService.Scrape(Characters.Greninja).ToList();
+            var specialMoves = specialMoveScrapingService.Scrape(character).ToList();
 
             CollectionAssert.AllItemsAreNotNull(specialMoves);
             CollectionAssert.AllItemsAreUnique(specialMoves);
@@ -157,7 +192,7 @@ namespace FrannHammer.WebScraping.Tests
 
             specialMoves.ForEach(move =>
             {
-                AssertMoveIsValid(move, Characters.Greninja);
+                AssertMoveIsValid(move, character);
             });
         }
     }

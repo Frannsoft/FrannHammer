@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.WebScraping.Contracts.Moves;
@@ -8,10 +7,8 @@ using HtmlAgilityPack;
 
 namespace FrannHammer.WebScraping.Moves
 {
-    public class ThrowMoveScraper : BaseMoveScraper
+    public class ThrowMoveScraper : GroundMoveScraper
     {
-        public sealed override Func<WebCharacter, IEnumerable<IMove>> Scrape { get; protected set; }
-
         public ThrowMoveScraper(IMoveScrapingServices scrapingServices)
             : base(scrapingServices)
         {
@@ -38,18 +35,7 @@ namespace FrannHammer.WebScraping.Moves
                 move.OwnerId = character.OwnerId;
                 move.MoveType = MoveType.Throw.GetEnumDescription();
 
-                //grab data is different than 'throw' data.  If the cell contains neither of these this scraper
-                //will ignore it
-                if (name.EndsWith("grab", StringComparison.CurrentCultureIgnoreCase))
-                {
-                    string hitboxActive = cells[1].InnerText;
-                    string faf = cells[2].InnerText;
-
-                    move.HitboxActive = hitboxActive;
-                    move.FirstActionableFrame = faf;
-                    return move;
-                }
-                else if (name.EndsWith("throw", StringComparison.CurrentCultureIgnoreCase))
+                if (name.EndsWith("throw", StringComparison.CurrentCultureIgnoreCase))
                 {
                     bool isWeightDependent = TranslateYesNoToBool(cells[1].InnerText);
 
