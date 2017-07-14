@@ -27,5 +27,11 @@
             public const string Throws = "Throws";
             public const string Miscellaneous = "Miscellaneous";
         }
+
+        public class CommonMoveNames
+        {
+            public const string Grab = "Grab";
+            public const string Throw = "Throw";
+        }
     }
 }

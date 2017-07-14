@@ -7,6 +7,7 @@ namespace FrannHammer.WebScraping.Domain
     {
         public static WebCharacter Greninja => new Greninja();
         public static WebCharacter Cloud => new Cloud();
+        public static WebCharacter Yoshi => new Yoshi();
 
         public static IEnumerable<WebCharacter> All => new List<WebCharacter>
         {
