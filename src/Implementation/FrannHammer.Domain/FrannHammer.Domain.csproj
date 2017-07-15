@@ -49,6 +49,7 @@
     <Compile Include="BsonMapper.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="CharacterAttribute.cs" />
+    <Compile Include="CharacterAttributeName.cs" />
     <Compile Include="CharacterAttributeRow.cs" />
     <Compile Include="CharacterDetailsDto.cs" />
     <Compile Include="FriendlyNameAttribute.cs" />

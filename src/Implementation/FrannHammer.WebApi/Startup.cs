@@ -7,7 +7,6 @@ using FrannHammer.DefaultContainer.Configuration.ContainerModules;
 using FrannHammer.Domain;
 using FrannHammer.WebApi;
 using Microsoft.Owin;
-using Microsoft.Owin.Cors;
 using Owin;
 using System.Linq;
 using System.Net.Http.Formatting;
@@ -64,8 +63,6 @@ namespace FrannHammer.WebApi
             app.UseAutofacMiddleware(Container);
             app.UseAutofacWebApi(config);
             app.UseWebApi(config);
-            //app.UseCors(CorsOptions.AllowAll);
-            //config.EnableCors();
         }
 
         private static void BuildContainer(HttpConfiguration config)
@@ -97,6 +94,7 @@ namespace FrannHammer.WebApi
                 cfg.CreateMap<IMove, MoveResource>();
                 cfg.CreateMap<IMovement, MovementResource>();
                 cfg.CreateMap<ICharacterAttributeRow, CharacterAttributeRowResource>();
+                cfg.CreateMap<ICharacterAttributeName, CharacterAttributeNameResource>();
                 cfg.CreateMap<IUniqueData, UniqueDataResource>();
             });
         }
@@ -135,7 +133,9 @@ namespace FrannHammer.WebApi
                 Container.Resolve<CharacterAttributeRowResourceEnricher>(),
                 Container.Resolve<ManyCharacterAttributeRowResourceEnricher>(),
                 Container.Resolve<UniqueDataResourceEnricher>(),
-                Container.Resolve<ManyUniqueDataResourceEnricher>());
+                Container.Resolve<ManyUniqueDataResourceEnricher>(),
+                Container.Resolve<CharacterAttributeNameResourceEnricher>(),
+                Container.Resolve<ManyCharacterAttributeNameResourceEnricher>());
         }
 
         private static void ConfigureSwagger(HttpConfiguration config)

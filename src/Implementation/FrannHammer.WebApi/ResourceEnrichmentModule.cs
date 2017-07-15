@@ -16,6 +16,8 @@ namespace FrannHammer.WebApi
             builder.RegisterType<ManyMovementResourceEnricher>().AsSelf();
             builder.RegisterType<CharacterAttributeRowResourceEnricher>().AsSelf();
             builder.RegisterType<ManyCharacterAttributeRowResourceEnricher>().AsSelf();
+            builder.RegisterType<CharacterAttributeNameResourceEnricher>().AsSelf();
+            builder.RegisterType<ManyCharacterAttributeNameResourceEnricher>().AsSelf();
             builder.RegisterType<UniqueDataResourceEnricher>().AsSelf();
             builder.RegisterType<ManyUniqueDataResourceEnricher>().AsSelf();
             builder.RegisterType<LinkProvider>().As<ILinkProvider>();

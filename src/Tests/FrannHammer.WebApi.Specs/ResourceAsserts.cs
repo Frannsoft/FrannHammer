@@ -29,6 +29,17 @@ namespace FrannHammer.WebApi.Specs
             });
         }
 
+        public static void AssertCharacterAttributeIsValid(CharacterAttributeNameResource characterAttributeName)
+        {
+            Assert.That(characterAttributeName.Name, Is.Not.Null, $"{nameof(characterAttributeName.Name)}");
+
+            var allAttributesByNameLink = characterAttributeName.Links.FirstOrDefault(l => l.Rel.Equals(CharacterAttributeLinkName));
+            Assert.That(allAttributesByNameLink, Is.Not.Null, $"Unable to find '{CharacterAttributeLinkName}' link.");
+
+            // ReSharper disable once PossibleNullReferenceException
+            Assert.That(allAttributesByNameLink.Href, Contains.Substring(characterAttributeName.Name));
+        }
+
         public static void AssertCharacterIsValid(CharacterResource characterResource)
         {
             Assert.That(characterResource, Is.Not.Null, $"{nameof(characterResource)}");

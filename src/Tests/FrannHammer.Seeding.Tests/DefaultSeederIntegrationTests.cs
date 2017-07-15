@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FrannHammer.Api.Services;
+using FrannHammer.Api.Services.Contracts;
 using FrannHammer.DataAccess.MongoDb;
 using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
@@ -128,7 +129,7 @@ namespace FrannHammer.Seeding.Tests
             var dtoProvider = new DefaultDtoProvider();
             var movementService = new DefaultMovementService(movementRepository, mockQueryMappingService);
             var moveService = new DefaultMoveService(moveRepository, mockQueryMappingService);
-            var characterAttributeService = new DefaultCharacterAttributeService(characterAttributeRepository);
+            var characterAttributeService = new DefaultCharacterAttributeService(characterAttributeRepository, new Mock<ICharacterAttributeNameProvider>().Object);
             var uniqueDataService = new DefaultUniqueDataService(uniqueDataRepository, mockQueryMappingService);
             var characterService = new DefaultCharacterService(characterRepository, dtoProvider,
                 movementService, characterAttributeService, moveService, uniqueDataService);

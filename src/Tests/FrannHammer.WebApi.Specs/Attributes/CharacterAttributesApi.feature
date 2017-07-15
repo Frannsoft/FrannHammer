@@ -8,8 +8,7 @@ Scenario: Request All Character Attribute Rows
 	When I request all data
 	Then The result should be a list of all character attribute row entries
 
-#@Get
-#Scenario: Request one single Character Attribute Row
-#	Given The api route of api/characterattributes/{id}
-#	When I request one specific item by id 5913c30e4696591c50f28673
-#	Then The result should be just that character attribute row
+Scenario: I want to get back the names of all available character attributes
+	Given The api route of api/characterattributes/types
+	When I request all data
+	Then The result should be a list of all character attribute types

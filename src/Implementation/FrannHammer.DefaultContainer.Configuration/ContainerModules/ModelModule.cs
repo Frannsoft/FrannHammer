@@ -9,6 +9,7 @@ namespace FrannHammer.DefaultContainer.Configuration.ContainerModules
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<CharacterAttribute>().As<IAttribute>();
+            builder.RegisterType<CharacterAttributeName>().As<ICharacterAttributeName>();
             builder.RegisterType<CharacterAttributeRow>().As<ICharacterAttributeRow>();
             builder.RegisterType<Character>().As<ICharacter>();
             builder.RegisterType<Move>().As<IMove>();
