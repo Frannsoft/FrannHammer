@@ -4,8 +4,8 @@ namespace FrannHammer.WebApi.Models
     {
         public const string Relation = "moves";
 
-        public MovesLink(string href, string title = null)
-            : base(Relation, href, title)
+        public MovesLink(string href)
+            : base(Relation, href)
         { }
     }
 }
