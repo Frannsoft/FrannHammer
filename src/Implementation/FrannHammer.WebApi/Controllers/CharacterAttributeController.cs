@@ -39,7 +39,6 @@ namespace FrannHammer.WebApi.Controllers
         }
 
         [Route(CharacterAttributesRouteKey + "/types", Name = nameof(GetAllCharacterAttributeTypes))]
-
         public IHttpActionResult GetAllCharacterAttributeTypes()
         {
             var content = _characterAttributeRowService.GetAllTypes();
