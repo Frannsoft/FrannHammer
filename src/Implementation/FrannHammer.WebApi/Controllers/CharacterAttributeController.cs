@@ -31,10 +31,18 @@ namespace FrannHammer.WebApi.Controllers
             return Result(content);
         }
 
-        [Route(CharacterAttributesRouteKey + "/name/{name}", Name = nameof(GetSingleCharacterAttributeByName))]
-        public IHttpActionResult GetSingleCharacterAttributeByName(string name)
+        [Route(CharacterAttributesRouteKey + "/name/{name}", Name = nameof(GetAllCharacterAttributesWithName))]
+        public IHttpActionResult GetAllCharacterAttributesWithName(string name)
         {
             var content = _characterAttributeRowService.GetAllWhereName(name);
+            return Result(content);
+        }
+
+        [Route(CharacterAttributesRouteKey + "/types", Name = nameof(GetAllCharacterAttributeTypes))]
+
+        public IHttpActionResult GetAllCharacterAttributeTypes()
+        {
+            var content = _characterAttributeRowService.GetAllTypes();
             return Result(content);
         }
     }

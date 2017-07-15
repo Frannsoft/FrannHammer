@@ -45,5 +45,15 @@ namespace FrannHammer.WebApi.Specs.Attributes
 
             AssertCharacterAttributeRowIsValid(characterMetadata);
         }
+
+        [Then(@"The result should be a list of all character attribute types")]
+        public void ThenTheResultShouldBeAListOfAllCharacterAttributeTypes()
+        {
+            var typesCollection = ApiClient
+                .DeserializeResponse<IEnumerable<CharacterAttributeNameResource>>(
+                    ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey)).ToList();
+
+            typesCollection.ForEach(AssertCharacterAttributeIsValid);
+        }
     }
 }

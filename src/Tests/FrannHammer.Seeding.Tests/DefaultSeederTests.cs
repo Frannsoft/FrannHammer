@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FrannHammer.Api.Services;
+using FrannHammer.Api.Services.Contracts;
 using FrannHammer.DataAccess.Contracts;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.WebScraping;
@@ -149,7 +150,7 @@ namespace FrannHammer.Seeding.Tests
             //real api services using mocked repos
             var movementService = new DefaultMovementService(movementRepositoryMock.Object, new Mock<IQueryMappingService>().Object);
             var moveService = new DefaultMoveService(movesRepositoryMock.Object, new Mock<IQueryMappingService>().Object);
-            var characterAttributeService = new DefaultCharacterAttributeService(characterAttributeRepositoryMock.Object);
+            var characterAttributeService = new DefaultCharacterAttributeService(characterAttributeRepositoryMock.Object, new Mock<ICharacterAttributeNameProvider>().Object);
             var uniqueDataService = new DefaultUniqueDataService(uniqueDataRepositoryMock.Object, new Mock<IQueryMappingService>().Object);
             var dtoProvider = new DefaultDtoProvider();
             var characterService = new DefaultCharacterService(characterRepositoryMock.Object, dtoProvider,

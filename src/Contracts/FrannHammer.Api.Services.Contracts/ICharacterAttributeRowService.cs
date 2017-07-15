@@ -7,5 +7,6 @@ namespace FrannHammer.Api.Services.Contracts
     {
         IEnumerable<ICharacterAttributeRow> GetAllWhereCharacterNameIs(string name);
         IEnumerable<ICharacterAttributeRow> GetAllWhereCharacterOwnerIdIs(int id);
+        IEnumerable<ICharacterAttributeName> GetAllTypes();
     }
 }

@@ -44,6 +44,7 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="ContentResponseBuilder.cs" />
+    <Compile Include="ICharacterAttributeNameProvider.cs" />
     <Compile Include="ICharacterAttributeRowService.cs" />
     <Compile Include="ICharacterService.cs" />
     <Compile Include="ICrudService.cs" />

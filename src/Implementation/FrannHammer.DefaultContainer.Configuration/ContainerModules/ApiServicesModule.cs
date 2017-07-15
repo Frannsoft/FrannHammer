@@ -43,10 +43,14 @@ namespace FrannHammer.DefaultContainer.Configuration.ContainerModules
                 .WithParameter((pi, c) => pi.Name == QueryMappingParameterName,
                  (pi, c) => c.Resolve<IQueryMappingService>());
 
+            builder.RegisterType<DefaultCharacterAttributeNameProvider>().As<ICharacterAttributeNameProvider>();
+
             builder.RegisterType<DefaultCharacterAttributeService>()
                 .As<ICharacterAttributeRowService>()
                 .WithParameter((pi, c) => pi.Name == RepositoryParameterName,
-                    (pi, c) => c.Resolve<IRepository<ICharacterAttributeRow>>());
+                    (pi, c) => c.Resolve<IRepository<ICharacterAttributeRow>>())
+                    .WithParameter((pi, c) => pi.Name == "characterAttributeNameProvider",
+                    (pi, c) => c.Resolve<ICharacterAttributeNameProvider>());
 
             builder.RegisterType<DefaultAttributeStrategy>().As<IAttributeStrategy>();
 
