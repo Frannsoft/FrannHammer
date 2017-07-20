@@ -24,9 +24,13 @@ namespace FrannHammer.WebScraping.Domain.Contracts
         private string _displayName;
         public string DisplayName
         {
-            get => string.IsNullOrEmpty(_displayName) ? Name : _displayName;
-            set => _displayName = value;
+            //appveyor doesn't support c# 7 yet?
+            // ReSharper disable once ArrangeAccessorOwnerBody
+            get { return string.IsNullOrEmpty(_displayName) ? Name : _displayName; }
+            // ReSharper disable once ArrangeAccessorOwnerBody
+            set { _displayName = value; }
         }
+
         public IEnumerable<IMove> Moves { get; set; }
         public IEnumerable<IMovement> Movements { get; set; }
         public IEnumerable<IAttribute> Attributes { get; set; }
