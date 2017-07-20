@@ -29,7 +29,7 @@ namespace FrannHammer.WebScraping.Tests
 
         private static void AssertAttributeCollectionIsValid(IAttributeScraper attributeScraper, List<ICharacterAttributeRow> attributeRows)
         {
-            CollectionAssert.IsNotEmpty(attributeRows);
+            Assert.That(attributeRows.Count, Is.GreaterThan(0), $"{nameof(attributeRows.Count)}");
             CollectionAssert.AllItemsAreNotNull(attributeRows);
             CollectionAssert.AllItemsAreUnique(attributeRows);
 
@@ -50,7 +50,6 @@ namespace FrannHammer.WebScraping.Tests
 
         private static IEnumerable<AttributeScraper> Scrapers()
         {
-
             var scrapingServices = MakeAttributeScrapingServices();
             yield return new AirSpeedScraper(scrapingServices);
             yield return new AerialJumpScraper(scrapingServices);
@@ -90,8 +89,16 @@ namespace FrannHammer.WebScraping.Tests
             AssertAttributeCollectionIsValid(scraper, attributeRows);
         }
 
+        private static IEnumerable<WebCharacter> TestCharacters()
+        {
+            foreach (var character in Characters.All)
+            {
+                yield return character;
+            }
+        }
+
         [Test]
-        [TestCaseSource(nameof(Characters.All))]
+        [TestCaseSource(nameof(TestCharacters))]
         public void ScrapeAttributeRowData_AllCharacters_ReturnsValidData(WebCharacter character)
         {
             var scrapingServices = MakeAttributeScrapingServices();
