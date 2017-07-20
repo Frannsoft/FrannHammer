@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public DrMario()
             : base("DrMario", "Dr.%20Mario", null, "PhDMario", "Ph.D. Mario")
-        { }
+        {
+            DisplayName = "Dr. Mario";
+        }
     }
 }

@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public MetaKnight()
             : base("MetaKnight", "Meta%20Knight", null, "Meta Knight")
-        { }
+        {
+            DisplayName = "Meta Knight";
+        }
     }
 }

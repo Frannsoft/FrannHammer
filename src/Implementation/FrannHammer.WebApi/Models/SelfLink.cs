@@ -4,8 +4,8 @@ namespace FrannHammer.WebApi.Models
     {
         public const string Relation = "self";
 
-        public SelfLink(string href, string title = null)
-            : base(Relation, href, title)
+        public SelfLink(string href)
+            : base(Relation, href)
         { }
     }
 }

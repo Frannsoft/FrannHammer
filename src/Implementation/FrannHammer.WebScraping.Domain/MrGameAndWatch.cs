@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public MrGameAndWatch()
             : base("MrGameWatch", "Game%20And%20Watch", null, "MrGameWatch", "GameWatch", "Mr. Game & Watch")
-        { }
+        {
+            DisplayName = "Game & Watch";
+        }
     }
 }

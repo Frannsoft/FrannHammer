@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public DarkPit()
             : base("DarkPit", "Dark%20Pit")
-        { }
+        {
+            DisplayName = "Dark Pit";
+        }
     }
 }

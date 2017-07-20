@@ -14,13 +14,19 @@ namespace FrannHammer.WebScraping.Domain.Contracts
         public string[] PotentialScrapingNames { get; }
 
         public string InstanceId { get; set; }
-        public string SourceUrl { get; private set; }
+        public string SourceUrl { get; }
         public string FullUrl { get; set; }
         public string ColorTheme { get; set; }
         public string Name { get; set; }
         public string MainImageUrl { get; set; }
         public string ThumbnailUrl { get; set; }
-        public string DisplayName { get; set; }
+
+        private string _displayName;
+        public string DisplayName
+        {
+            get => string.IsNullOrEmpty(_displayName) ? Name : _displayName;
+            set => _displayName = value;
+        }
         public IEnumerable<IMove> Moves { get; set; }
         public IEnumerable<IMovement> Movements { get; set; }
         public IEnumerable<IAttribute> Attributes { get; set; }

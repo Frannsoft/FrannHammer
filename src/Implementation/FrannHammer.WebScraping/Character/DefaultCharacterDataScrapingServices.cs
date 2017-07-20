@@ -36,7 +36,6 @@ namespace FrannHammer.WebScraping.Character
             Guard.VerifyObjectNotNull(uniqueDataScrapingServices, nameof(uniqueDataScrapingServices));
             Guard.VerifyObjectNotNull(webServices, nameof(webServices));
 
-
             _imageScrapingService = imageScrapingService;
             _movementScraper = movementScraper;
             _attributeScrapers = attributeScrapers;

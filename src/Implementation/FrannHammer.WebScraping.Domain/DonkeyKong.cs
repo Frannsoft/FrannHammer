@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public DonkeyKong()
             : base("DonkeyKong", "Donkey%20Kong")
-        { }
+        {
+            DisplayName = "Donkey Kong";
+        }
     }
 }

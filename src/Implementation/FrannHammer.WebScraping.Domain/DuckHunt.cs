@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public DuckHunt()
             : base("DuckHunt", "Duck%20Hunt", null, "DuckHuntDog", "DuckHuntDuo", "Duck Hunt Dog", "Duck Hunt Duo")
-        { }
+        {
+            DisplayName = "Duck Hunt";
+        }
     }
 }
