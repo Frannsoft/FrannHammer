@@ -11,6 +11,7 @@ namespace FrannHammer.WebScraping.Domain
             {
                 typeof(LimitBreakScraper)
             })
-        { }
+        {
+        }
     }
 }

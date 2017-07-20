@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public DiddyKong()
             : base("DiddyKong", "Diddy%20Kong", null, "Diddy")
-        { }
+        {
+            DisplayName = "Diddy Kong";
+        }
     }
 }

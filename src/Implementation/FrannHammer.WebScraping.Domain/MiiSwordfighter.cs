@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public MiiSwordfighter()
             : base("MiiSwordfighter", "Mii%20Swordfighter", null, "MiiSwordspider", "Mii Fighters")
-        { }
+        {
+            DisplayName = "Mii Swordfighter";
+        }
     }
 }

@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public WiiFitTrainer()
             : base("WiiFitTrainer", "Wii%20Fit%20Trainer")
-        { }
+        {
+            DisplayName = "Wii Fit Trainer";
+        }
     }
 }

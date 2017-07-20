@@ -4,6 +4,7 @@ using FrannHammer.Domain.Contracts;
 using FrannHammer.WebScraping.Attributes;
 using FrannHammer.WebScraping.Contracts.Attributes;
 using FrannHammer.WebScraping.Domain;
+using FrannHammer.WebScraping.Domain.Contracts;
 using FrannHammer.WebScraping.HtmlParsing;
 using FrannHammer.WebScraping.PageDownloading;
 using FrannHammer.WebScraping.WebClients;
@@ -14,6 +15,18 @@ namespace FrannHammer.WebScraping.Tests
     [TestFixture]
     public class DefaultAttributeScrapingServiceIntegrationTests
     {
+        private static DefaultAttributeScrapingServices MakeAttributeScrapingServices()
+        {
+            var htmlParserProvider = new DefaultHtmlParserProvider();
+            var attributeProvider = new DefaultAttributeProvider();
+            var pageDownloader = new DefaultPageDownloader();
+            var webClientProvider = new DefaultWebClientProvider();
+            var webServices = new DefaultWebServices(htmlParserProvider, webClientProvider, pageDownloader);
+            var scrapingServices = new DefaultAttributeScrapingServices(attributeProvider, webServices);
+
+            return scrapingServices;
+        }
+
         private static void AssertAttributeCollectionIsValid(IAttributeScraper attributeScraper, List<ICharacterAttributeRow> attributeRows)
         {
             CollectionAssert.IsNotEmpty(attributeRows);
@@ -37,13 +50,8 @@ namespace FrannHammer.WebScraping.Tests
 
         private static IEnumerable<AttributeScraper> Scrapers()
         {
-            var htmlParserProvider = new DefaultHtmlParserProvider();
-            var attributeProvider = new DefaultAttributeProvider();
-            var pageDownloader = new DefaultPageDownloader();
-            var webClientProvider = new DefaultWebClientProvider();
-            var webServices = new DefaultWebServices(htmlParserProvider, webClientProvider, pageDownloader);
-            var scrapingServices = new DefaultAttributeScrapingServices(attributeProvider, webServices);
 
+            var scrapingServices = MakeAttributeScrapingServices();
             yield return new AirSpeedScraper(scrapingServices);
             yield return new AerialJumpScraper(scrapingServices);
             yield return new AirAccelerationScraper(scrapingServices);
@@ -70,6 +78,28 @@ namespace FrannHammer.WebScraping.Tests
             var attributeRows = scraper.Scrape(Characters.Greninja).ToList();
 
             AssertAttributeCollectionIsValid(scraper, attributeRows);
+        }
+
+        [Test]
+        [TestCaseSource(nameof(Scrapers))]
+        public void ScrapeAttributeRowData_CharacterHasSpaceInName(AttributeScraper scraper)
+        {
+            var littleMac = new LittleMac();
+            var attributeRows = scraper.Scrape(littleMac).ToList();
+
+            AssertAttributeCollectionIsValid(scraper, attributeRows);
+        }
+
+        [Test]
+        [TestCaseSource(nameof(Characters.All))]
+        public void ScrapeAttributeRowData_AllCharacters_ReturnsValidData(WebCharacter character)
+        {
+            var scrapingServices = MakeAttributeScrapingServices();
+            var sut = new AirSpeedScraper(scrapingServices);
+
+            var attributeRows = sut.Scrape(character).ToList();
+
+            AssertAttributeCollectionIsValid(sut, attributeRows);
         }
     }
 }

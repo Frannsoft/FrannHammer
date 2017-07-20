@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public ToonLink()
             : base("ToonLink", "Toon%20Link")
-        { }
+        {
+            DisplayName = "Toon Link";
+        }
     }
 }

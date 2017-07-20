@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public MegaMan()
             : base("MegaMan", "Mega%20Man")
-        { }
+        {
+            DisplayName = "Mega Man";
+        }
     }
 }

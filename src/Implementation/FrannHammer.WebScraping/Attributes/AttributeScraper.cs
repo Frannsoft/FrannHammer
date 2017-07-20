@@ -39,7 +39,7 @@ namespace FrannHammer.WebScraping.Attributes
                     htmlParser.GetSingle(ScrapingConstants.XPathTableNodeAttributesWithDescription) ??
                     htmlParser.GetSingle(ScrapingConstants.XPathTableNodeAttributesWithNoDescription);
 
-                string xpath = ScrapingConstants.XPathEveryoneElseTableRow.Replace(ScrapingConstants.EveryoneOneElseAttributeKey, character.Name);
+                string xpath = ScrapingConstants.XPathEveryoneElseTableRow.Replace(ScrapingConstants.EveryoneOneElseAttributeKey, character.DisplayName);
                 var tableHtmlNode = HtmlNode.CreateNode(attributeTableHtml);
 
                 //scrape using default character name
