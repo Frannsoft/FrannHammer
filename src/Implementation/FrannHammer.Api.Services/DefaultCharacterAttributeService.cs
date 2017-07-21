@@ -28,7 +28,7 @@ namespace FrannHammer.Api.Services
 
         public IEnumerable<ICharacterAttributeName> GetAllTypes()
         {
-            return GetAll().Select(attr => _characterAttributeNameProvider.Create(attr.Name));
+            return GetAll().Select(attr => attr.Name).Distinct().Select(name => _characterAttributeNameProvider.Create(name));
         } 
     }
 }

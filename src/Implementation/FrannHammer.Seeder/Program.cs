@@ -14,6 +14,9 @@ namespace FrannHammer.Seeder
         {
             Startup.InitializeMapping();
 
+            Console.WriteLine("Start? Press a key.");
+            Console.ReadLine();
+
             //configure container
             var builder = new ContainerBuilder();
 
