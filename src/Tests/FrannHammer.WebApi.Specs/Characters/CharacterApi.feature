@@ -107,3 +107,13 @@ Examples:
 	| apiRoute                                    | routeParameter |
 	| api/characters/name/{name}/uniqueproperties | name Cloud     |
 	| api/characters/{id}/uniqueproperties        | id 6           |
+
+Scenario Outline: I want to get character attributes of a specific name for a specific character
+	Given The api route of <apiRoute>
+	When I request one specific item by <routeParameter>
+	Then the result should be just that characters attributes of that type
+
+Examples:
+	| apiRoute                                                           | routeParameter |
+	| api/characters/name/mario/characterattributes/name/{attributename} | attributename spotdodge |
+	| api/characters/2/characterattributes/name/{attributename}          | attributename airdodge  |

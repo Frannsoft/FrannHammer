@@ -36,7 +36,6 @@ namespace FrannHammer.WebApi.Tests.Controllers
             yield return "drmario";
         }
 
-
         [Test]
         public void ThrowsArgumentNullExceptionForNullCharacterServiceInCtor()
         {

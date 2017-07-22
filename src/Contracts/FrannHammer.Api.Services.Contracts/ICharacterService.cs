@@ -25,5 +25,7 @@ namespace FrannHammer.Api.Services.Contracts
         IEnumerable<IMovement> GetAllMovementsWhereCharacterNameIsFilteredBy(IMovementFilterResourceQuery query);
         IEnumerable<IUniqueData> GetUniquePropertiesWhereCharacterOwnerIdIs(int id);
         IEnumerable<IUniqueData> GetUniquePropertiesWhereCharacterNameIs(string name);
+        ICharacterAttributeRow GetAttributesOfNameWhereCharacterOwnerIdIs(string name, int id);
+        ICharacterAttributeRow GetAttributesOfNameWhereCharacterNameIs(string name, string attributeName);
     }
 }
