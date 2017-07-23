@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{69FBD121-A16B-4A89-941F-54FD77745E60}"
 	ProjectSection(SolutionItems) = preProject
@@ -61,6 +61,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.WebScraping.Tests", "Tests\FrannHammer.WebScraping.Tests\FrannHammer.WebScraping.Tests.csproj", "{5C2C5435-FA81-4EBC-A8F4-EA97AE5BFC04}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.WebApi", "Implementation\FrannHammer.WebApi\FrannHammer.WebApi.csproj", "{80F48C0D-9731-406F-AAE6-BAA30B331E48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrannHammer.Api.Services.Tests", "Tests\FrannHammer.Api.Services.Tests\FrannHammer.Api.Services.Tests.csproj", "{39022F7D-6DCC-40AF-AD45-9C3F701646CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -164,6 +166,10 @@ Global
 		{80F48C0D-9731-406F-AAE6-BAA30B331E48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80F48C0D-9731-406F-AAE6-BAA30B331E48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80F48C0D-9731-406F-AAE6-BAA30B331E48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39022F7D-6DCC-40AF-AD45-9C3F701646CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39022F7D-6DCC-40AF-AD45-9C3F701646CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39022F7D-6DCC-40AF-AD45-9C3F701646CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39022F7D-6DCC-40AF-AD45-9C3F701646CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -193,5 +199,6 @@ Global
 		{93C3B7D8-C832-46DC-96F9-B69800744A61} = {AABA4930-73AB-4520-B1B8-F0384D1A1E10}
 		{5C2C5435-FA81-4EBC-A8F4-EA97AE5BFC04} = {AABA4930-73AB-4520-B1B8-F0384D1A1E10}
 		{80F48C0D-9731-406F-AAE6-BAA30B331E48} = {E9F69086-F07B-4093-ACEE-9A87FB656CEE}
+		{39022F7D-6DCC-40AF-AD45-9C3F701646CB} = {AABA4930-73AB-4520-B1B8-F0384D1A1E10}
 	EndGlobalSection
 EndGlobal

@@ -27,7 +27,8 @@ namespace FrannHammer.WebScraping.Attributes
                 new TractionScraper(scrapingServices),
                 new WalkSpeedScraper(scrapingServices),
                 new AirSpeedScraper(scrapingServices),
-                new AirDodgeScraper(scrapingServices)
+                new AirDodgeScraper(scrapingServices),
+                new RollScraper(scrapingServices)
             };
         }
     }

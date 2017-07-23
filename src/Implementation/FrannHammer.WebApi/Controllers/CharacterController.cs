@@ -20,6 +20,7 @@ namespace FrannHammer.WebApi.Controllers
         private const string UniquePropertiesRouteKey = "/uniqueproperties";
         private const string DetailedMovesRouteKey = "/detailedmoves";
         private const string SearchRouteKey = "/search";
+        private const string AttributeNameKey = "/name/{attributename}";
         private readonly ICharacterService _characterService;
 
         public CharacterController(ICharacterService characterService)
@@ -173,6 +174,20 @@ namespace FrannHammer.WebApi.Controllers
         {
             var uniqueProperties = _characterService.GetUniquePropertiesWhereCharacterNameIs(name);
             return Result(uniqueProperties);
+        }
+
+        [Route(CharactersRouteKey + IdRouteKey + CharacterAttributesRouteKey + AttributeNameKey, Name = nameof(GetCharacterAttributeWithNameForCharacterByOwnerId))]
+        public IHttpActionResult GetCharacterAttributeWithNameForCharacterByOwnerId(int id, string attributename)
+        {
+            var attributeRow = _characterService.GetAttributesOfNameWhereCharacterOwnerIdIs(attributename, id);
+            return Result(attributeRow);
+        }
+
+        [Route(CharactersRouteKey + NameRouteKey + CharacterAttributesRouteKey + AttributeNameKey, Name = nameof(GetCharacterAttributeWithNameForCharacterByName))]
+        public IHttpActionResult GetCharacterAttributeWithNameForCharacterByName(string name, string attributename)
+        {
+            var attributeRow = _characterService.GetAttributesOfNameWhereCharacterNameIs(name, attributename);
+            return Result(attributeRow);
         }
     }
 }

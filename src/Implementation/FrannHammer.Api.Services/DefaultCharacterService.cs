@@ -102,6 +102,16 @@ namespace FrannHammer.Api.Services
             return _attributeRowService.GetAllWhereCharacterOwnerIdIs(id);
         }
 
+        public ICharacterAttributeRow GetAttributesOfNameWhereCharacterOwnerIdIs(string name, int id)
+        {
+            return _attributeRowService.GetSingleWithNameAndMatchingCharacterOwnerId(name, id);
+        }
+
+        public ICharacterAttributeRow GetAttributesOfNameWhereCharacterNameIs(string name, string attributeName)
+        {
+            return _attributeRowService.GetSingleWithNameAndMatchingCharacterOwner(attributeName, name);
+        }
+
         public IEnumerable<ParsedMove> GetDetailedMovesWhereCharacterNameIs(string name)
         {
             var foundCharacter = GetSingleByName(name);
@@ -174,5 +184,7 @@ namespace FrannHammer.Api.Services
             var uniqueProperties = _uniqueDataService.GetAllWhere(u => u.Owner.Equals(name, StringComparison.OrdinalIgnoreCase));
             return uniqueProperties;
         }
+
+       
     }
 }

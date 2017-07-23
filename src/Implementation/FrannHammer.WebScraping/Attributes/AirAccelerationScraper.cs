@@ -9,6 +9,5 @@ namespace FrannHammer.WebScraping.Attributes
         public AirAccelerationScraper(IAttributeScrapingServices scrapingServices)
             : base("http://kuroganehammer.com/Smash4/AirAcceleration", scrapingServices)
         { }
-
     }
 }
