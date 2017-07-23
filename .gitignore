@@ -79,3 +79,4 @@ ConnectionStringsTest.config
 /FakeKhSite
 /TestResults
 /FrannHammer.WebApi/appsettings.config.enc
+/.vs
