@@ -5,7 +5,7 @@ namespace FrannHammer.WebScraping.Domain
     public class Ness : WebCharacter
     {
         public Ness()
-            : base("Ness", potentialScrapingNames: "EbolaBackThrow")
+            : base("Ness", potentialScrapingNames: new []{"EbolaBackThrow", "	Ebola Back Throw"})
         { }
     }
 }

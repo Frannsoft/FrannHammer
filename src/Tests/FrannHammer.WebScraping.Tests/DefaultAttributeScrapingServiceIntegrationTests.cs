@@ -69,6 +69,8 @@ namespace FrannHammer.WebScraping.Tests
             yield return new TractionScraper(scrapingServices);
             yield return new WalkSpeedScraper(scrapingServices);
             yield return new RollScraper(scrapingServices);
+            yield return new RunSpeedScraper(scrapingServices);
+            yield return new ShieldSizeScraper(scrapingServices);
         }
 
         [Test]
