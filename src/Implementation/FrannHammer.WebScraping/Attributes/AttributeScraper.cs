@@ -44,19 +44,26 @@ namespace FrannHammer.WebScraping.Attributes
 
                 //scrape using default character name
                 var attributeTableRows = tableHtmlNode?.SelectNodes(xpath);
+                var rows = new List<HtmlNode>();
 
                 if (attributeTableRows == null)
                 {
                     //try all configured potential names for the character
                     foreach (string name in character.PotentialScrapingNames)
                     {
-                        string altCharacterNameXPath = ScrapingConstants.XPathEveryoneElseTableRow.Replace(ScrapingConstants.EveryoneOneElseAttributeKey, name);
+                        string altCharacterNameXPath =
+                            ScrapingConstants.XPathEveryoneElseTableRow.Replace(
+                                ScrapingConstants.EveryoneOneElseAttributeKey, name);
                         attributeTableRows = tableHtmlNode?.SelectNodes(altCharacterNameXPath);
 
                         if (attributeTableRows != null)
                         {
-                            break;
+                            rows.AddRange(attributeTableRows.ToList());
                         }
+                        //if (attributeTableRows != null)
+                        //{
+                        //    break;
+                        //}
                     }
 
                     //assume it's lumped in with everyone else value
@@ -65,6 +72,11 @@ namespace FrannHammer.WebScraping.Attributes
                         attributeTableRows =
                             tableHtmlNode?
                                 .SelectNodes(ScrapingConstants.XPathEveryoneElseTableRow);
+
+                        if (attributeTableRows != null)
+                        {
+                            rows.AddRange(attributeTableRows.ToList());
+                        }
                     }
 
                     //try with modified 'everyone else' casing
@@ -72,21 +84,35 @@ namespace FrannHammer.WebScraping.Attributes
                     {
                         //GRRR CASING...'Everyone Else' vs 'Everyone else'.  I hate xpath.
                         attributeTableRows =
-                       tableHtmlNode?.SelectNodes(ScrapingConstants.XPathEveryoneElseTableRow.Replace(ScrapingConstants.EveryoneOneElseAttributeKey, "Everyone else"));
+                            tableHtmlNode?.SelectNodes(
+                                ScrapingConstants.XPathEveryoneElseTableRow.Replace(
+                                    ScrapingConstants.EveryoneOneElseAttributeKey, "Everyone else"));
 
                         if (attributeTableRows == null)
                         {
                             //There is no data here.  Just return empty.  Sometimes that might be expected (like in Counters) so we shouldn't throw.
                             //throw new Exception(
                             //    $"Error getting attribute table data after attempting to scrape full table for character '{character.Name}' at url '{sourceUrl}'");
-                            return attributeValueRows;
+                            if (rows.Count == 0)
+                            {
+                                return attributeValueRows;
+                            }
+                        }
+                        if (attributeTableRows != null)
+                        {
+                            rows.AddRange(attributeTableRows.ToList());
                         }
                     }
+                }
+                else
+                {
+                    rows.AddRange(attributeTableRows.ToList());
                 }
 
                 var headers = GetHeaders(htmlParser);
 
-                foreach (var row in attributeTableRows)
+                //foreach (var row in attributeTableRows)
+                foreach(var row in rows)
                 {
                     var attributeValues = new List<IAttribute>();
 

@@ -111,5 +111,17 @@ namespace FrannHammer.WebScraping.Tests
 
             AssertAttributeCollectionIsValid(sut, attributeRows);
         }
+
+        [Test]
+        public void ScrapeRollsData_ForGreninja_ReturnsBothEntriesSinceForwardAndBackRollAreDifferent()
+        {
+            var scrapingServices = MakeAttributeScrapingServices();
+            var sut = new RollScraper(scrapingServices);
+
+            var attributeRows = sut.Scrape(Characters.Greninja).ToList();
+
+            AssertAttributeCollectionIsValid(sut, attributeRows);
+            Assert.That(attributeRows.Count, Is.EqualTo(2), $"{nameof(attributeRows.Count)}");
+        }
     }
 }
