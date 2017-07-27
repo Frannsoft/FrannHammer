@@ -68,18 +68,21 @@ namespace FrannHammer.Api.Services.Tests
             var repository = MakeCharacterAttributesRepository();
             var sut = new DefaultCharacterAttributeService(repository, new DefaultCharacterAttributeNameProvider());
 
-            var result = sut.GetSingleWithNameAndMatchingCharacterOwnerId(expectedCharacterAttributeName, expectedOwnerId);
+            var results = sut.GetSingleWithNameAndMatchingCharacterOwnerId(expectedCharacterAttributeName, expectedOwnerId).ToList();
 
-            Assert.That(result.Name, Is.EqualTo(expectedCharacterAttributeName));
-            Assert.That(result.Owner, Is.EqualTo(expectedOwner));
-            Assert.That(result.OwnerId, Is.EqualTo(expectedOwnerId));
-
-            result.Values.ToList().ForEach(value =>
+            results.ForEach(result =>
             {
-                Assert.That(value.Name, Is.Not.Null, $"{nameof(value.Name)}");
-                Assert.That(value.Owner, Is.EqualTo(expectedOwner));
-                Assert.That(value.OwnerId, Is.EqualTo(expectedOwnerId));
-                Assert.That(value.Value, Is.EqualTo(expectedAttributeValue));
+                Assert.That(result.Name, Is.EqualTo(expectedCharacterAttributeName));
+                Assert.That(result.Owner, Is.EqualTo(expectedOwner));
+                Assert.That(result.OwnerId, Is.EqualTo(expectedOwnerId));
+
+                result.Values.ToList().ForEach(value =>
+                {
+                    Assert.That(value.Name, Is.Not.Null, $"{nameof(value.Name)}");
+                    Assert.That(value.Owner, Is.EqualTo(expectedOwner));
+                    Assert.That(value.OwnerId, Is.EqualTo(expectedOwnerId));
+                    Assert.That(value.Value, Is.EqualTo(expectedAttributeValue));
+                });
             });
         }
 
@@ -94,18 +97,21 @@ namespace FrannHammer.Api.Services.Tests
             var repository = MakeCharacterAttributesRepository();
             var sut = new DefaultCharacterAttributeService(repository, new DefaultCharacterAttributeNameProvider());
 
-            var result = sut.GetSingleWithNameAndMatchingCharacterOwner(expectedCharacterAttributeName, expectedOwner);
+            var results = sut.GetAllWithNameAndMatchingCharacterOwner(expectedCharacterAttributeName, expectedOwner).ToList();
 
-            Assert.That(result.Name, Is.EqualTo(expectedCharacterAttributeName));
-            Assert.That(result.Owner, Is.EqualTo(expectedOwner));
-            Assert.That(result.OwnerId, Is.EqualTo(expectedOwnerId));
-
-            result.Values.ToList().ForEach(value =>
+            results.ForEach(result =>
             {
-                Assert.That(value.Name, Is.Not.Null, $"{nameof(value.Name)}");
-                Assert.That(value.Owner, Is.EqualTo(expectedOwner));
-                Assert.That(value.OwnerId, Is.EqualTo(expectedOwnerId));
-                Assert.That(value.Value, Is.EqualTo(expectedAttributeValue));
+                Assert.That(result.Name, Is.EqualTo(expectedCharacterAttributeName));
+                Assert.That(result.Owner, Is.EqualTo(expectedOwner));
+                Assert.That(result.OwnerId, Is.EqualTo(expectedOwnerId));
+
+                result.Values.ToList().ForEach(value =>
+                {
+                    Assert.That(value.Name, Is.Not.Null, $"{nameof(value.Name)}");
+                    Assert.That(value.Owner, Is.EqualTo(expectedOwner));
+                    Assert.That(value.OwnerId, Is.EqualTo(expectedOwnerId));
+                    Assert.That(value.Value, Is.EqualTo(expectedAttributeValue));
+                });
             });
         }
     }

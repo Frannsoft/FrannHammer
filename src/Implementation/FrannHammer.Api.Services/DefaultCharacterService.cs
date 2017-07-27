@@ -102,14 +102,14 @@ namespace FrannHammer.Api.Services
             return _attributeRowService.GetAllWhereCharacterOwnerIdIs(id);
         }
 
-        public ICharacterAttributeRow GetAttributesOfNameWhereCharacterOwnerIdIs(string name, int id)
+        public IEnumerable<ICharacterAttributeRow> GetAttributesOfNameWhereCharacterOwnerIdIs(string name, int id)
         {
             return _attributeRowService.GetSingleWithNameAndMatchingCharacterOwnerId(name, id);
         }
 
-        public ICharacterAttributeRow GetAttributesOfNameWhereCharacterNameIs(string name, string attributeName)
+        public IEnumerable<ICharacterAttributeRow> GetAttributesOfNameWhereCharacterNameIs(string name, string attributeName)
         {
-            return _attributeRowService.GetSingleWithNameAndMatchingCharacterOwner(attributeName, name);
+            return _attributeRowService.GetAllWithNameAndMatchingCharacterOwner(attributeName, name);
         }
 
         public IEnumerable<ParsedMove> GetDetailedMovesWhereCharacterNameIs(string name)

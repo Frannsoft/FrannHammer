@@ -31,15 +31,15 @@ namespace FrannHammer.Api.Services
             return GetAll().Select(attr => attr.Name).Distinct().Select(name => _characterAttributeNameProvider.Create(name));
         }
 
-        public ICharacterAttributeRow GetSingleWithNameAndMatchingCharacterOwnerId(string name, int id)
+        public IEnumerable<ICharacterAttributeRow> GetSingleWithNameAndMatchingCharacterOwnerId(string name, int id)
         {
-            return GetSingleWhere(attrRow =>
+            return GetAllWhere(attrRow =>
                 attrRow.OwnerId == id && attrRow.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
         }
 
-        public ICharacterAttributeRow GetSingleWithNameAndMatchingCharacterOwner(string attributeName, string name)
+        public IEnumerable<ICharacterAttributeRow> GetAllWithNameAndMatchingCharacterOwner(string attributeName, string name)
         {
-            return GetSingleWhere(attrRow =>
+            return GetAllWhere(attrRow =>
                 attrRow.Owner.Equals(name, StringComparison.OrdinalIgnoreCase) &&
                 attrRow.Name.Equals(attributeName, StringComparison.OrdinalIgnoreCase));
         }

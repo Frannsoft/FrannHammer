@@ -159,19 +159,23 @@ namespace FrannHammer.WebApi.Specs.Characters
         [Then(@"the result should be just that characters attributes of that type")]
         public void ThenTheResultShouldBeJustThatCharactersAttributesOfThatType()
         {
-            var attributeRow = ApiClient.DeserializeResponse<ICharacterAttributeRow>(
-                ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey));
+            var attributeRows = ApiClient.DeserializeResponse<IEnumerable<ICharacterAttributeRow>>(
+                ScenarioContext.Current.Get<HttpResponseMessage>(RequestResultKey))
+                .ToList();
 
             string expectedAttributeName = ScenarioContext.Current.Get<string>(RouteTemplateValueToReplaceKey);
 
-            Assert.That(attributeRow, Is.Not.Null, $"{nameof(attributeRow)}");
-            Assert.That(attributeRow.Name.ToLower(), Is.EqualTo(expectedAttributeName));
-            Assert.That(attributeRow.Values.Count(), Is.GreaterThan(0), $"{nameof(attributeRow.Values)}");
-
-            attributeRow.Values.ToList().ForEach(rowValue =>
+            attributeRows.ForEach(attributeRow =>
             {
-                Assert.That(rowValue.Name, Is.Not.Null, $"{nameof(rowValue.Name)}");
-                Assert.That(rowValue.Value, Is.Not.Null, $"{nameof(rowValue.Value)}");
+                Assert.That(attributeRow, Is.Not.Null, $"{nameof(attributeRow)}");
+                Assert.That(attributeRow.Name.ToLower(), Is.EqualTo(expectedAttributeName));
+                Assert.That(attributeRow.Values.Count(), Is.GreaterThan(0), $"{nameof(attributeRow.Values)}");
+
+                attributeRow.Values.ToList().ForEach(rowValue =>
+                {
+                    Assert.That(rowValue.Name, Is.Not.Null, $"{nameof(rowValue.Name)}");
+                    Assert.That(rowValue.Value, Is.Not.Null, $"{nameof(rowValue.Value)}");
+                });
             });
         }
 
