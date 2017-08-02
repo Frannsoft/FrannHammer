@@ -9,6 +9,8 @@ namespace FrannHammer.WebScraping.Domain
         public static WebCharacter Cloud => new Cloud();
         public static WebCharacter Yoshi => new Yoshi();
         public static WebCharacter DarkPit => new DarkPit();
+        public static WebCharacter Bowser => new Bowser();
+        public static WebCharacter DonkeyKong => new DonkeyKong();
 
         public static IEnumerable<WebCharacter> All => new List<WebCharacter>
         {

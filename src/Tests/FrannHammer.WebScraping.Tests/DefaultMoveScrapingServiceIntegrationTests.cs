@@ -48,6 +48,7 @@ namespace FrannHammer.WebScraping.Tests
             yield return Characters.Cloud;
             yield return Characters.Yoshi;
             yield return Characters.Greninja;
+            yield return Characters.Bowser;
         }
 
         [Test]
@@ -150,6 +151,24 @@ namespace FrannHammer.WebScraping.Tests
 
             CollectionAssert.IsNotEmpty(throwMoves);
 
+            Assert.That(throwMoves.Count, Is.EqualTo(4)); //all chars have 4 throws.
+            throwMoves.ForEach(move =>
+            {
+                Assert.That(move, Is.Not.Null, "move should not be null.");
+                Assert.That(move.Name.Contains(MoveType.Throw.GetEnumDescription()), $"{move.Name}");
+                Assert.That(move.MoveType, Is.EqualTo(MoveType.Throw.ToString().ToLower()), $"{move.Name}");
+            });
+        }
+
+        [Test]
+        public void ScrapeThrowMovesForCharacter_DonkeyKongHasEightThrows()
+        {
+            var throwMoveScraper = new ThrowMoveScraper(_scrapingServices);
+            var throwMoves = throwMoveScraper.Scrape(Characters.DonkeyKong).ToList();
+
+            CollectionAssert.IsNotEmpty(throwMoves);
+
+            Assert.That(throwMoves.Count, Is.EqualTo(8)); //DK's cargo throw variants make his throw totals 8.
             throwMoves.ForEach(move =>
             {
                 Assert.That(move, Is.Not.Null, "move should not be null.");
