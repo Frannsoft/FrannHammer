@@ -56,6 +56,7 @@ Scenario Outline: I want all of the movement data for a character
 Examples: 
 	| apiRoute                             | routeParameter |
 	| api/characters/name/{name}/movements | name Bowser    |
+	| api/characters/name/{name}/movements | name bowser    |
 	| api/characters/{id}/movements        | id 58          |
 
 Scenario Outline: I want all of the gravity movement data for a character

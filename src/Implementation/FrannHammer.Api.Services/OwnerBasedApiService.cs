@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FrannHammer.DataAccess.Contracts;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.Utility;
@@ -15,7 +16,7 @@ namespace FrannHammer.Api.Services
         public virtual IEnumerable<T> GetAllWhereCharacterNameIs(string name)
         {
             Guard.VerifyStringIsNotNullOrEmpty(name, nameof(name));
-            return GetAllWhere(item => item.Owner.Equals(name));
+            return GetAllWhere(item => item.Owner.Equals(name, StringComparison.OrdinalIgnoreCase));
         }
 
         public virtual IEnumerable<T> GetAllWhereCharacterOwnerIdIs(int id)

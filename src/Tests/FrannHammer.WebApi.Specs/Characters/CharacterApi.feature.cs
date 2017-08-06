@@ -160,6 +160,7 @@ this.ScenarioSetup(scenarioInfo);
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("I want all of the movement data for a character")]
         [NUnit.Framework.TestCaseAttribute("api/characters/name/{name}/movements", "name Bowser", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("api/characters/name/{name}/movements", "name bowser", new string[0])]
         [NUnit.Framework.TestCaseAttribute("api/characters/{id}/movements", "id 58", new string[0])]
         public virtual void IWantAllOfTheMovementDataForACharacter(string apiRoute, string routeParameter, string[] exampleTags)
         {
@@ -183,13 +184,13 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void IWantAllOfTheGravityMovementDataForACharacter(string apiRoute, string routeParameter, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I want all of the gravity movement data for a character", exampleTags);
-#line 61
-this.ScenarioSetup(scenarioInfo);
 #line 62
- testRunner.Given(string.Format("The api route of {0}", apiRoute), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+this.ScenarioSetup(scenarioInfo);
 #line 63
- testRunner.When(string.Format("I request one specific item by {0}", routeParameter), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Given(string.Format("The api route of {0}", apiRoute), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 64
+ testRunner.When(string.Format("I request one specific item by {0}", routeParameter), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 65
  testRunner.Then("the result should be a list containing just that characters gravity movement data" +
                     "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -205,13 +206,13 @@ this.ScenarioSetup(scenarioInfo);
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I want all the metadata, movement data and attribute data for a specific characte" +
                     "r in one request", exampleTags);
-#line 71
-this.ScenarioSetup(scenarioInfo);
 #line 72
- testRunner.Given(string.Format("The api route of {0}", apiRoute), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+this.ScenarioSetup(scenarioInfo);
 #line 73
- testRunner.When(string.Format("I request one specific item by {0}", routeParameter), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Given(string.Format("The api route of {0}", apiRoute), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 74
+ testRunner.When(string.Format("I request one specific item by {0}", routeParameter), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 75
  testRunner.Then("the result should be a list containing the metadata, movement data and attribute " +
                     "data for a specific character", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -225,13 +226,13 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void IWantToGetACharactersParsedMoveData(string apiRoute, string routeParameter, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I want to get a characters parsed move data", exampleTags);
-#line 81
-this.ScenarioSetup(scenarioInfo);
 #line 82
- testRunner.Given(string.Format("The api route of {0}", apiRoute), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+this.ScenarioSetup(scenarioInfo);
 #line 83
- testRunner.When(string.Format("I request one specific item by {0}", routeParameter), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Given(string.Format("The api route of {0}", apiRoute), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 84
+ testRunner.When(string.Format("I request one specific item by {0}", routeParameter), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 85
  testRunner.Then("the result should be a list containing the parsed out move data for that characte" +
                     "r", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -245,13 +246,13 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void IWantToGetACharactersAttributeData(string apiRoute, string routeParameter, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I want to get a characters attribute data", exampleTags);
-#line 91
-this.ScenarioSetup(scenarioInfo);
 #line 92
- testRunner.Given(string.Format("The api route of {0}", apiRoute), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+this.ScenarioSetup(scenarioInfo);
 #line 93
- testRunner.When(string.Format("I request one specific item by {0}", routeParameter), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Given(string.Format("The api route of {0}", apiRoute), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 94
+ testRunner.When(string.Format("I request one specific item by {0}", routeParameter), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 95
  testRunner.Then("the result should be a list containing rows of attribute data for that character", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -264,13 +265,13 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void IWantToGetACharactersUniqueProperties(string apiRoute, string routeParameter, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I want to get a characters unique properties", exampleTags);
-#line 101
-this.ScenarioSetup(scenarioInfo);
 #line 102
- testRunner.Given(string.Format("The api route of {0}", apiRoute), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+this.ScenarioSetup(scenarioInfo);
 #line 103
- testRunner.When(string.Format("I request one specific item by {0}", routeParameter), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Given(string.Format("The api route of {0}", apiRoute), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 104
+ testRunner.When(string.Format("I request one specific item by {0}", routeParameter), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 105
  testRunner.Then("the result should be a dictionary containing unique data for that character", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -283,13 +284,13 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void IWantToGetCharacterAttributesOfASpecificNameForASpecificCharacter(string apiRoute, string routeParameter, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I want to get character attributes of a specific name for a specific character", exampleTags);
-#line 111
-this.ScenarioSetup(scenarioInfo);
 #line 112
- testRunner.Given(string.Format("The api route of {0}", apiRoute), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+this.ScenarioSetup(scenarioInfo);
 #line 113
- testRunner.When(string.Format("I request one specific item by {0}", routeParameter), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Given(string.Format("The api route of {0}", apiRoute), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 114
+ testRunner.When(string.Format("I request one specific item by {0}", routeParameter), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 115
  testRunner.Then("the result should be just that characters attributes of that type", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

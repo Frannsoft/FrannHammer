@@ -104,6 +104,8 @@ namespace FrannHammer.WebApi.Specs.Characters
 
             string expectedOwnerName = ScenarioContext.Current.Get<string>(RouteTemplateValueToReplaceKey);
 
+            Assert.That(characterMoveData.Count, Is.GreaterThan(0), $"{nameof(characterMoveData.Count)}");
+
             characterMoveData.ForEach(character =>
             {
                 Assert.That(character.OwnerId.ToString() == expectedOwnerName ||
@@ -123,10 +125,11 @@ namespace FrannHammer.WebApi.Specs.Characters
 
             string expectedOwnerName = ScenarioContext.Current.Get<string>(RouteTemplateValueToReplaceKey);
 
+            Assert.That(characterMovementData.Count, Is.GreaterThan(0), $"{nameof(characterMovementData.Count)}");
             characterMovementData.ForEach(movement =>
             {
                 Assert.That(movement.OwnerId.ToString() == expectedOwnerName ||
-                           movement.Owner == expectedOwnerName, $"{nameof(movement.OwnerId)}");
+                           movement.Owner.Equals(expectedOwnerName, StringComparison.OrdinalIgnoreCase), "No owner equality found.");
             });
             characterMovementData.ForEach(AssertMovementIsValid);
         }
