@@ -64,6 +64,10 @@ namespace FrannHammer.DataAccess.MongoDb
         public IEnumerable<T> GetAllWhere(Func<T, bool> where)
         {
             var rawCollection = _mongoDatabase.GetCollection<T>(typeof(T).Name).AsQueryable().Where(where).ToList();
+
+            if (!rawCollection.Any())
+            { throw new ResourceNotFoundException("Found no resources."); }
+
             return rawCollection;
         }
 

@@ -32,6 +32,10 @@ namespace FrannHammer.Api.Services.Tests
 
             mockRepository.Setup(r => r.GetSingleWhere(It.IsAny<Func<IMove, bool>>()))
                 .Returns((Func<IMove, bool> where) => itemsForMockRepository.Single(where));
+
+            mockRepository.Setup(r => r.GetAllWhere(It.IsAny<Func<IMove, bool>>()))
+                .Returns((Func<IMove, bool> where) => itemsForMockRepository.Where(where));
+
             mockRepository.Setup(r => r.GetAll()).Returns(() => itemsForMockRepository);
 
             return mockRepository.Object;

@@ -54,6 +54,7 @@ namespace FrannHammer.Api.Services
         public IEnumerable<T> GetAllWhere(Func<T, bool> @where)
         {
             var moves = Repository.GetAllWhere(where);
+
             return moves;
         }
 

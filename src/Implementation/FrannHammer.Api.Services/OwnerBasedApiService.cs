@@ -9,7 +9,7 @@ namespace FrannHammer.Api.Services
     public class OwnerBasedApiService<T> : BaseApiService<T>
         where T : IHaveAnOwner, IHaveAnOwnerId, IModel
     {
-        public OwnerBasedApiService(IRepository<T> repository) 
+        public OwnerBasedApiService(IRepository<T> repository)
             : base(repository)
         { }
 

@@ -40,6 +40,17 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
         }
 
         [Test]
+        public void GetAllWhere_MovementDoesNotExist_ThrowsException()
+        {
+            _repository = new MongoDbRepository<IMovement>(MongoDatabase);
+
+            Assert.Throws<ResourceNotFoundException>(() =>
+            {
+                _repository.GetAllWhere(m => m.Owner == "doesnotexist");
+            });
+        }
+
+        [Test]
         public void GetAllMovements()
         {
             _repository = new MongoDbRepository<IMovement>(MongoDatabase);
