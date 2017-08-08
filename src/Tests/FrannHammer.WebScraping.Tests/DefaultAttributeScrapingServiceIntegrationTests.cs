@@ -57,7 +57,6 @@ namespace FrannHammer.WebScraping.Tests
             yield return new AirDecelerationScraper(scrapingServices);
             yield return new AirDodgeScraper(scrapingServices);
             yield return new AirFrictionScraper(scrapingServices);
-            yield return new CounterScraper(scrapingServices);
             yield return new DashLengthScraper(scrapingServices);
             yield return new FallSpeedScraper(scrapingServices);
             yield return new FullHopScraper(scrapingServices);
@@ -77,9 +76,31 @@ namespace FrannHammer.WebScraping.Tests
         [TestCaseSource(nameof(Scrapers))]
         public void ScrapeAttributeRowData(AttributeScraper scraper)
         {
-            var attributeRows = scraper.Scrape(Characters.Greninja).ToList();
+            var attributeRows = scraper.Scrape(Characters.DarkPit).ToList();
 
             AssertAttributeCollectionIsValid(scraper, attributeRows);
+        }
+
+        [Test]
+        public void ScraperAttributeRowData_Counters()
+        {
+            var scrapingServices = MakeAttributeScrapingServices();
+
+            var sut = new CounterScraper(scrapingServices);
+            var results = sut.Scrape(Characters.Greninja).ToList();
+
+            AssertAttributeCollectionIsValid(sut, results);
+        }
+
+        [Test]
+        public void ScrapeAttributeRowData_Reflectors()
+        {
+            var scrapingServices = MakeAttributeScrapingServices();
+
+            var sut = new ReflectorScraper(scrapingServices);
+            var results = sut.Scrape(Characters.DarkPit).ToList();
+
+            AssertAttributeCollectionIsValid(sut, results);
         }
 
         [Test]

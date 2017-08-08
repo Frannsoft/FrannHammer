@@ -127,7 +127,7 @@ namespace FrannHammer.WebScraping.Attributes
 
                         var attributeValue = ScrapingServices.CreateAttribute();
                         attributeValue.Name = headerValue;
-                        attributeValue.Value = cells[i].InnerText.Replace("&#215;", "x");
+                        attributeValue.Value = cells[i].InnerText.Replace("&#215;", "x").Replace("&#37;", "%");
                         attributeValue.Owner = character.Name;
                         attributeValue.OwnerId = character.OwnerId;
                         attributeValues.Add(attributeValue);

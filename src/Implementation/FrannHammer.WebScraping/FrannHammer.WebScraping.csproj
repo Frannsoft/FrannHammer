@@ -61,6 +61,7 @@
     <Compile Include="Attributes\GravityScraper.cs" />
     <Compile Include="Attributes\JumpSquatScraper.cs" />
     <Compile Include="Attributes\LedgeHopScraper.cs" />
+    <Compile Include="Attributes\ReflectorScraper.cs" />
     <Compile Include="Attributes\RollScraper.cs" />
     <Compile Include="Attributes\RunSpeedScraper.cs" />
     <Compile Include="Attributes\ShieldSizeScraper.cs" />
