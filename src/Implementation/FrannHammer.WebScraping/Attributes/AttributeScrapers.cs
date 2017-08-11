@@ -14,7 +14,6 @@ namespace FrannHammer.WebScraping.Attributes
                 new AerialJumpScraper(scrapingServices),
                 new CounterScraper(scrapingServices),
                 new AirAccelerationScraper(scrapingServices),
-                new AirDecelerationScraper(scrapingServices),
                 new AirFrictionScraper(scrapingServices),
                 new DashLengthScraper(scrapingServices),
                 new FallSpeedScraper(scrapingServices),

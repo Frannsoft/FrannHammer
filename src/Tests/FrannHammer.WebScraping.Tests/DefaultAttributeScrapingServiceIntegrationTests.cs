@@ -54,7 +54,6 @@ namespace FrannHammer.WebScraping.Tests
             yield return new AirSpeedScraper(scrapingServices);
             yield return new AerialJumpScraper(scrapingServices);
             yield return new AirAccelerationScraper(scrapingServices);
-            yield return new AirDecelerationScraper(scrapingServices);
             yield return new AirDodgeScraper(scrapingServices);
             yield return new AirFrictionScraper(scrapingServices);
             yield return new DashLengthScraper(scrapingServices);
