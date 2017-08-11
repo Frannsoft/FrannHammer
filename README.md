@@ -47,12 +47,6 @@ To see more details on these features, check out these wiki pages:
 - [Base/Set Knockback Data](https://github.com/Frannsoft/FrannHammer/wiki/Base-and-Set-Knockback-Data)
 - [Throw Data](https://github.com/Frannsoft/FrannHammer/wiki/Throw-Data)
 
-#### Documentation
-
-[Web API docs here](https://github.com/Frannsoft/FrannHammer/wiki/Web-API-Documentation) - These are different from the Swagger docs above.  Rather than demoing calls and results, this is the server-side code documentation.
-
-[Data.Core docs can be found here](https://github.com/Frannsoft/FrannHammer/wiki/Core-API-Documentation).  This is the guts of the project.  You can use these locally, not everything has web api calls however so you might be responsible for some making any necessary calls yourself right now.  Currently, you need to build these in order to use them.  Depending on demand nuget packages might be made available.  These libs are all created using C# 6.
-
 The live docs (above) are a great place to see the full capability and how one can use it.
 
 ##### NOTE: The API is in beta and is subject to rapid change.
