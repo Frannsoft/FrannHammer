@@ -107,7 +107,7 @@ namespace FrannHammer.WebScraping.Tests
 
             groundMoves.ForEach(move =>
             {
-                Assert.That(!move.Name.Contains(ScrapingConstants.CommonMoveNames.Throw),
+                Assert.That(move.Name.IndexOf(ScrapingConstants.CommonMoveNames.Throw, StringComparison.OrdinalIgnoreCase) == -1,
                     $"{nameof(IMove.Name)} should not contain {ScrapingConstants.CommonMoveNames.Throw}.  This means the scraper might be pulling in throw moves.");
             });
         }

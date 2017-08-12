@@ -35,7 +35,7 @@ namespace FrannHammer.WebScraping.Moves
                 move.OwnerId = character.OwnerId;
                 move.MoveType = MoveType.Throw.GetEnumDescription();
 
-                if (name.Contains("throw"))
+                if (name.IndexOf(ScrapingConstants.CommonMoveNames.Throw, StringComparison.OrdinalIgnoreCase) >= 0)
                 {
                     bool isWeightDependent = TranslateYesNoToBool(cells[1].InnerText);
 

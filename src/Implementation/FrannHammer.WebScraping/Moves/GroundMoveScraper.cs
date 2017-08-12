@@ -90,7 +90,7 @@ namespace FrannHammer.WebScraping.Moves
             string name = GetStatName(cells[0]);
 
             //a throw move is not a ground move
-            if (name.EndsWith(ScrapingConstants.CommonMoveNames.Throw, StringComparison.OrdinalIgnoreCase))
+            if (name.IndexOf(ScrapingConstants.CommonMoveNames.Throw, StringComparison.OrdinalIgnoreCase) >= 0)
             {
                 return default(IMove);
             }
