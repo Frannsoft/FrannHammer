@@ -1,6 +1,6 @@
 # FrannHammer - The KuroganeHammer.com API
 
-**Interested in trying out the beta? [Go here!](https://github.com/Frannsoft/FrannHammer/wiki/Version-0.6.0---Details)**
+**Interested in news about the latest version? [Go here](https://github.com/Frannsoft/FrannHammer/wiki/Version-0.6.0---Details)**
 
 Beta: [![Build status](https://ci.appveyor.com/api/projects/status/ruxmxhiutxe9q8v9/branch/develop?svg=true)](https://ci.appveyor.com/project/Frannsoft/frannhammer-0uqqq/branch/develop)
 Master: [![Build status](https://ci.appveyor.com/api/projects/status/y2hs2u8ux4ceaq2k/branch/master?svg=true)](https://ci.appveyor.com/project/Frannsoft/frannhammer/branch/master)
