@@ -80,3 +80,4 @@ ConnectionStringsTest.config
 /TestResults
 /FrannHammer.WebApi/appsettings.config.enc
 /.vs
+/src/TestResults
