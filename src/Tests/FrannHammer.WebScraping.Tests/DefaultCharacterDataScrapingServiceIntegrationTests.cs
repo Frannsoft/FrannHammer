@@ -91,7 +91,7 @@ namespace FrannHammer.WebScraping.Tests
 
         private static IEnumerable<WebCharacter> Characters()
         {
-            return new List<WebCharacter> {Domain.Characters.Cloud, Domain.Characters.Greninja};
+            return new List<WebCharacter> {Domain.Characters.Cloud, Domain.Characters.Greninja, Domain.Characters.CaptainFalcon, Domain.Characters.DrMario};
         }
 
         [Test]

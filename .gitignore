@@ -81,3 +81,4 @@ ConnectionStringsTest.config
 /FrannHammer.WebApi/appsettings.config.enc
 /.vs
 /src/TestResults
+/src/.vs/FrannHammer.Master/v15/Server/sqlite3

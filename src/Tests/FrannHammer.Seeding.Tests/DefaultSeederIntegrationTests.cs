@@ -134,16 +134,15 @@ namespace FrannHammer.Seeding.Tests
             var characterService = new DefaultCharacterService(characterRepository, dtoProvider,
                 movementService, characterAttributeService, moveService, uniqueDataService);
 
-
             //real scraping from web to get data
-            var cloud = Characters.Cloud;
-            _characterDataScraper.PopulateCharacterFromWeb(cloud);
+            var captainFalcon = Characters.CaptainFalcon;
+            _characterDataScraper.PopulateCharacterFromWeb(captainFalcon);
 
             int previousCount = characterRepository.GetAll().Count();
 
             //insert data into mock repos using api services
             var seeder = new DefaultSeeder(_characterDataScraper);
-            seeder.SeedCharacterData(cloud, characterService, movementService,
+            seeder.SeedCharacterData(captainFalcon, characterService, movementService,
                 moveService, characterAttributeService, uniqueDataService);
 
             //assert data can be retrieved
@@ -151,7 +150,7 @@ namespace FrannHammer.Seeding.Tests
             Assert.That(moveRepository.GetAll().Count(), Is.GreaterThan(0));
             Assert.That(movementRepository.GetAll().Count(), Is.GreaterThan(0));
             Assert.That(characterAttributeRepository.GetAll().Count(), Is.GreaterThan(0));
-            Assert.That(uniqueDataRepository.GetAll().Count(), Is.GreaterThan(0));
+            //Assert.That(uniqueDataRepository.GetAll().Count(), Is.GreaterThan(0)); //no unique data for this character
         }
     }
 }

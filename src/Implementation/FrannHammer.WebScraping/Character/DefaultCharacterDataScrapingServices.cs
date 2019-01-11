@@ -11,6 +11,7 @@ using FrannHammer.WebScraping.Contracts.Movements;
 using FrannHammer.WebScraping.Contracts.UniqueData;
 using FrannHammer.WebScraping.Domain.Contracts;
 using HtmlAgilityPack;
+using System.Diagnostics;
 
 namespace FrannHammer.WebScraping.Character
 {
@@ -54,7 +55,7 @@ namespace FrannHammer.WebScraping.Character
             string displayName = GetCharacterDisplayName(displayNameHtml);
 
             var thumbnailHtmlParser = _webServices.CreateParserFromSourceUrl(WebCharacter.SourceUrlBase);
-            string thumbnailHtml = thumbnailHtmlParser.GetSingle(ScrapingConstants.XPathThumbnailUrl.Replace(characterNameKey, character.Name));
+            string thumbnailHtml = thumbnailHtmlParser.GetSingle(ScrapingConstants.XPathThumbnailUrl.Replace(characterNameKey, character.DisplayName));
 
             string thumbnailUrl = string.Empty;
 

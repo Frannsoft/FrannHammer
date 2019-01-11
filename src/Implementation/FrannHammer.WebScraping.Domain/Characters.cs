@@ -11,6 +11,8 @@ namespace FrannHammer.WebScraping.Domain
         public static WebCharacter DarkPit => new DarkPit();
         public static WebCharacter Bowser => new Bowser();
         public static WebCharacter DonkeyKong => new DonkeyKong();
+        public static WebCharacter CaptainFalcon => new CaptainFalcon();
+        public static WebCharacter DrMario => new DrMario();
 
         public static IEnumerable<WebCharacter> All => new List<WebCharacter>
         {
