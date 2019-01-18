@@ -1,10 +1,11 @@
-﻿using System;
-using FrannHammer.Domain;
+﻿using FrannHammer.Domain;
+using FrannHammer.NetCore.WebApi;
 using MongoDB.Bson.Serialization;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Linq;
+using System.Reflection;
 
 namespace FrannHammer.WebApi.Tests
 {

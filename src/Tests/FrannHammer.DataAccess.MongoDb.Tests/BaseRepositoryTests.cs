@@ -1,8 +1,10 @@
-﻿using System;
+﻿using AutoFixture;
 using FrannHammer.Domain;
 using FrannHammer.Tests.Utility;
+using FrannHammer.Utility;
+using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
-using Ploeh.AutoFixture;
+using System;
 
 namespace FrannHammer.DataAccess.MongoDb.Tests
 {
@@ -18,7 +20,17 @@ namespace FrannHammer.DataAccess.MongoDb.Tests
             BsonMapper.RegisterTypeWithAutoMap<MongoModel>();
             BsonMapper.RegisterClassMaps(modelTypes);
 
-            MongoDatabase = MongoDbConnectionFactory.GetDatabaseFromAppConfig();
+
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("appSettings.json", true, true)
+                .Build();
+
+            string username = configuration[ConfigurationKeys.Username];
+            string password = configuration[ConfigurationKeys.Password];
+            string databaseName = configuration[ConfigurationKeys.DatabaseName];
+            string connectionString = configuration[ConfigurationKeys.DefaultConnection];
+
+            MongoDatabase = MongoDbConnectionFactory.GetDatabaseFromAppConfig(username, password, databaseName, connectionString);
         }
     }
 }

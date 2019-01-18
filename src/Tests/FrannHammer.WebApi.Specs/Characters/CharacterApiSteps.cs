@@ -1,21 +1,22 @@
-﻿using System;
+﻿using FrannHammer.Api.Services.Contracts;
+using FrannHammer.Domain.Contracts;
+using FrannHammer.Domain.PropertyParsers;
+using FrannHammer.NetCore.WebApi.Models;
+using FrannHammer.WebApi.Specs.Characters;
+using FrannHammer.WebScraping;
+using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
-using FrannHammer.Api.Services.Contracts;
-using FrannHammer.Domain.Contracts;
-using FrannHammer.Domain.PropertyParsers;
-using FrannHammer.WebApi.Models;
-using FrannHammer.WebScraping;
-using NUnit.Framework;
 using TechTalk.SpecFlow;
-using static FrannHammer.WebApi.Specs.ResourceAsserts;
+using static FrannHammer.NetCore.WebApi.Specs.ResourceAsserts;
 
-namespace FrannHammer.WebApi.Specs.Characters
+namespace FrannHammer.NetCore.WebApi.Specs.Characters
 {
     [Binding]
-    [Scope(Feature = "CharactersApi")]
+    //[Scope(Feature = "CharactersApi")]
     public class CharacterApiSteps : BaseSteps
     {
         [BeforeFeature]
@@ -268,6 +269,6 @@ namespace FrannHammer.WebApi.Specs.Characters
             });
         }
 
-        
+
     }
 }

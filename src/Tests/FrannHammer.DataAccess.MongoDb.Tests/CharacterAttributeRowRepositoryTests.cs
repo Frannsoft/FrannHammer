@@ -1,10 +1,10 @@
-﻿using System.Linq;
+﻿using AutoFixture;
+using AutoFixture.Kernel;
 using FrannHammer.DataAccess.Contracts;
 using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
 using NUnit.Framework;
-using Ploeh.AutoFixture;
-using Ploeh.AutoFixture.Kernel;
+using System.Linq;
 
 namespace FrannHammer.DataAccess.MongoDb.Tests
 {

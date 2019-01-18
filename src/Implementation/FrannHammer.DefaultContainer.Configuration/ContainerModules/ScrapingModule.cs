@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Autofac;
+﻿using Autofac;
 using FrannHammer.WebScraping;
 using FrannHammer.WebScraping.Attributes;
 using FrannHammer.WebScraping.Character;
@@ -20,6 +19,7 @@ using FrannHammer.WebScraping.Moves;
 using FrannHammer.WebScraping.PageDownloading;
 using FrannHammer.WebScraping.Unique;
 using FrannHammer.WebScraping.WebClients;
+using System.Collections.Generic;
 
 namespace FrannHammer.DefaultContainer.Configuration.ContainerModules
 {
@@ -27,6 +27,7 @@ namespace FrannHammer.DefaultContainer.Configuration.ContainerModules
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<InstanceIdGenerator>().As<IInstanceIdGenerator>();
             builder.RegisterType<DefaultHtmlParserProvider>().As<IHtmlParserProvider>();
             builder.RegisterType<DefaultMovementProvider>().As<IMovementProvider>();
             builder.RegisterType<DefaultMoveProvider>().As<IMoveProvider>();

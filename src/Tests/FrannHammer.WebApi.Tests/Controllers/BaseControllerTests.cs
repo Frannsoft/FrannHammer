@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+﻿using AutoFixture;
+using NUnit.Framework;
 
-namespace FrannHammer.WebApi.Tests.Controllers
+namespace FrannHammer.NetCore.WebApi.Tests.Controllers
 {
     public abstract class BaseControllerTests
     {

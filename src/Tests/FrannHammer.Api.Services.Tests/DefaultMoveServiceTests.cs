@@ -7,9 +7,9 @@ using FrannHammer.Domain.Contracts;
 using FrannHammer.WebScraping;
 using Moq;
 using NUnit.Framework;
-using Ploeh.AutoFixture;
 using static FrannHammer.Domain.PropertyParsers.MoveDataNameConstants;
 using static FrannHammer.Api.Services.Tests.ApiServiceTestSetupUtility;
+using AutoFixture;
 
 namespace FrannHammer.Api.Services.Tests
 {

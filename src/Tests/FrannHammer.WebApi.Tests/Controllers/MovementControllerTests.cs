@@ -1,8 +1,8 @@
-﻿using System;
-using FrannHammer.WebApi.Controllers;
+﻿using FrannHammer.NetCore.WebApi.Controllers;
 using NUnit.Framework;
+using System;
 
-namespace FrannHammer.WebApi.Tests.Controllers
+namespace FrannHammer.NetCore.WebApi.Tests.Controllers
 {
     [TestFixture]
     public class MovementControllerTests : BaseControllerTests
@@ -13,7 +13,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
             Assert.Throws<ArgumentNullException>(() =>
             {
                 // ReSharper disable once ObjectCreationAsStatement
-                new MovementController(null);
+                new MovementController(null, null);
             });
         }
     }

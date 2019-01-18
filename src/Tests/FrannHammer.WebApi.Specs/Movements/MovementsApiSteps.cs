@@ -1,15 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using FrannHammer.NetCore.WebApi.Models;
+using NUnit.Framework;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using FrannHammer.WebApi.Models;
-using NUnit.Framework;
 using TechTalk.SpecFlow;
-using static FrannHammer.WebApi.Specs.ResourceAsserts;
+using static FrannHammer.NetCore.WebApi.Specs.ResourceAsserts;
 
-namespace FrannHammer.WebApi.Specs.Movements
+namespace FrannHammer.NetCore.WebApi.Specs.Movements
 {
     [Binding]
-    [Scope(Feature = "MovementsApi")]
+    //[Scope(Feature = "MovementsApi")]
     public class MovementsApiSteps : BaseSteps
     {
         [BeforeFeature]

@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using FrannHammer.Domain.Contracts;
+﻿using FrannHammer.Domain.Contracts;
 using FrannHammer.Utility;
 using FrannHammer.WebScraping.Contracts.Movements;
 using FrannHammer.WebScraping.Domain.Contracts;
 using HtmlAgilityPack;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FrannHammer.WebScraping.Movements
 {

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Configuration;
+﻿using MongoDB.Driver;
+using System;
 using System.Linq;
-using FrannHammer.Utility;
-using MongoDB.Driver;
 
 namespace FrannHammer.Tests.Utility
 {
@@ -19,12 +17,12 @@ namespace FrannHammer.Tests.Utility
             return mongoClient.GetDatabase(databaseName);
         }
 
-        public static IMongoDatabase GetDatabaseFromAppConfig()
+        public static IMongoDatabase GetDatabaseFromAppConfig(string username, string password, string databaseName, string connectionString)
         {
-            string username = ConfigurationManager.AppSettings[ConfigurationKeys.Username];
-            string password = ConfigurationManager.AppSettings[ConfigurationKeys.Password];
-            string databaseName = ConfigurationManager.AppSettings[ConfigurationKeys.DatabaseName];
-            string connectionString = ConfigurationManager.ConnectionStrings[ConfigurationKeys.DefaultConnection].ConnectionString;
+            //string username = //ConfigurationManager.AppSettings[ConfigurationKeys.Username];
+            //string password = //ConfigurationManager.AppSettings[ConfigurationKeys.Password];
+            //string databaseName = //ConfigurationManager.AppSettings[ConfigurationKeys.DatabaseName];
+            //string connectionString = //ConfigurationManager.ConnectionStrings[ConfigurationKeys.DefaultConnection].ConnectionString;
 
             string mongoUrlRaw = $"mongodb://{username}:{password}@{connectionString}{databaseName}";
             return GetDatabase(mongoUrlRaw);

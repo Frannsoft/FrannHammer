@@ -19,6 +19,7 @@ namespace FrannHammer.WebScraping.Attributes
         }
 
         public IAttribute CreateAttribute() => _attributeProvider.CreateAttribute();
+        public ICharacterAttributeRow CreateCharacterAttributeRow() => _attributeProvider.CreateCharacterAttributeRow();
         public IHtmlParser CreateParserFromSourceUrl(string url)
         {
             return _webServices.CreateParserFromSourceUrl(url);

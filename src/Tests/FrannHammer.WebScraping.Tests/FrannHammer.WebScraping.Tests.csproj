@@ -1,108 +1,44 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5C2C5435-FA81-4EBC-A8F4-EA97AE5BFC04}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FrannHammer.WebScraping.Tests</RootNamespace>
-    <AssemblyName>FrannHammer.WebScraping.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyTitle>FrannHammer.WebScraping.Tests</AssemblyTitle>
+    <GenerateAssemblyCompanyAttribute>False</GenerateAssemblyCompanyAttribute>
+    <Product>FrannHammer.WebScraping.Tests</Product>
+    <Copyright>Copyright ©  2017</Copyright>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Moq, Version=4.5.21.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Moq.4.5.21\lib\net45\Moq.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="nunit.framework, Version=3.6.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NUnit.3.6.1\lib\net45\nunit.framework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
+    <PackageReference Include="Castle.Core" Version="4.3.1" />
+    <PackageReference Include="Moq" Version="4.10.1" />
+    <PackageReference Include="NUnit" Version="3.11.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+    <PackageReference Include="Microsoft.TestPlatform" Version="15.9.0" />
+    <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="15.9.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.12.0" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\SolutionInfo.cs">
-      <Link>Properties\SolutionInfo.cs</Link>
-    </Compile>
-    <Compile Include="AttributeScrapersTests.cs" />
-    <Compile Include="DefaultAttributeScrapingServiceIntegrationTests.cs" />
-    <Compile Include="DefaultCharacterDataScrapingServiceIntegrationTests.cs" />
-    <Compile Include="DefaultMovementScrapingServiceIntegrationTests.cs" />
-    <Compile Include="DefaultMoveScrapingServiceIntegrationTests.cs" />
-    <Compile Include="DefaultWebServicesTests.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UniqueDataScrapersTests.cs" />
+    <Compile Include="..\..\SolutionInfo.cs" Link="Properties\SolutionInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Contracts\FrannHammer.Domain.Contracts\FrannHammer.Domain.Contracts.csproj">
-      <Project>{15a2565c-4611-4034-814a-931da70ed8b1}</Project>
-      <Name>FrannHammer.Domain.Contracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Contracts\FrannHammer.WebScraping.Contracts\FrannHammer.WebScraping.Contracts.csproj">
-      <Project>{c6f2a84f-6b78-494f-9293-0bb666a64ab9}</Project>
-      <Name>FrannHammer.WebScraping.Contracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Contracts\FrannHammer.WebScraping.Domain.Contracts\FrannHammer.WebScraping.Domain.Contracts.csproj">
-      <Project>{40C0A772-8A77-484F-919C-DB55CAEAEAA1}</Project>
-      <Name>FrannHammer.WebScraping.Domain.Contracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Implementation\FrannHammer.WebScraping.Domain\FrannHammer.WebScraping.Domain.csproj">
-      <Project>{D7A6E280-119B-4D41-B512-8D016A3BED5C}</Project>
-      <Name>FrannHammer.WebScraping.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Implementation\FrannHammer.WebScraping\FrannHammer.WebScraping.csproj">
-      <Project>{B7686798-61B2-4208-86EF-0076BF1301BE}</Project>
-      <Name>FrannHammer.WebScraping</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FrannHammer.Tests.Utility\FrannHammer.Tests.Utility.csproj">
-      <Project>{86AD0285-BE01-4C99-9D3C-84D26A0989F3}</Project>
-      <Name>FrannHammer.Tests.Utility</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
+    <ProjectReference Include="..\..\Contracts\FrannHammer.Domain.Contracts\FrannHammer.Domain.Contracts.csproj" />
+    <ProjectReference Include="..\..\Contracts\FrannHammer.WebScraping.Contracts\FrannHammer.WebScraping.Contracts.csproj" />
+    <ProjectReference Include="..\..\Contracts\FrannHammer.WebScraping.Domain.Contracts\FrannHammer.WebScraping.Domain.Contracts.csproj" />
+    <ProjectReference Include="..\..\Implementation\FrannHammer.WebScraping.Domain\FrannHammer.WebScraping.Domain.csproj" />
+    <ProjectReference Include="..\..\Implementation\FrannHammer.WebScraping\FrannHammer.WebScraping.csproj" />
+    <ProjectReference Include="..\FrannHammer.Tests.Utility\FrannHammer.Tests.Utility.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

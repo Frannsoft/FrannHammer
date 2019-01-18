@@ -3,6 +3,7 @@ using FrannHammer.Api.Services;
 using FrannHammer.Api.Services.Contracts;
 using FrannHammer.DataAccess.Contracts;
 using FrannHammer.Domain.Contracts;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace FrannHammer.DefaultContainer.Configuration.ContainerModules
 {
@@ -13,16 +14,18 @@ namespace FrannHammer.DefaultContainer.Configuration.ContainerModules
 
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<DefaultCharacterService>()
-                .As<ICharacterService>()
-                .WithParameter((pi, c) => pi.Name == RepositoryParameterName,
-                    (pi, c) => c.Resolve<IRepository<ICharacter>>())
-                    .WithParameter((pi, c) => pi.Name == "dtoProvider",
-                        (pi, c) => c.Resolve<IDtoProvider>())
-                    .WithParameter((pi, c) => pi.Name == "movementService",
-                        (pi, c) => c.Resolve<IMovementService>())
-                    .WithParameter((pi, c) => pi.Name == "attributeRowService",
-                        (pi, c) => c.Resolve<ICharacterAttributeRowService>());
+            //builder.RegisterType<DefaultCharacterService>()
+            //    .As<ICharacterService>()
+            //    .WithParameter((pi, c) => pi.Name == RepositoryParameterName,
+            //        (pi, c) => c.Resolve<IRepository<ICharacter>>())
+            //        .WithParameter((pi, c) => pi.Name == "dtoProvider",
+            //            (pi, c) => c.Resolve<IDtoProvider>())
+            //        .WithParameter((pi, c) => pi.Name == "movementService",
+            //            (pi, c) => c.Resolve<IMovementService>())
+            //        .WithParameter((pi, c) => pi.Name == "attributeRowService",
+            //            (pi, c) => c.Resolve<ICharacterAttributeRowService>())
+            //        .WithParameter((pi, c) => pi.Name == "game",
+            //            (pi, c) => c.Resolve<IActionContextAccessor>().ActionContext;
 
             builder.RegisterType<DefaultMovementService>()
                 .As<IMovementService>()

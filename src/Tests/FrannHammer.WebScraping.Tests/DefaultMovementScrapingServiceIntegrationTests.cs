@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using FrannHammer.Domain.Contracts;
+﻿using FrannHammer.Domain.Contracts;
 using FrannHammer.WebScraping.Contracts.Movements;
 using FrannHammer.WebScraping.Domain;
 using FrannHammer.WebScraping.HtmlParsing;
@@ -7,6 +6,7 @@ using FrannHammer.WebScraping.Movements;
 using FrannHammer.WebScraping.PageDownloading;
 using FrannHammer.WebScraping.WebClients;
 using NUnit.Framework;
+using System.Linq;
 
 namespace FrannHammer.WebScraping.Tests
 {
@@ -18,8 +18,9 @@ namespace FrannHammer.WebScraping.Tests
         [SetUp]
         public void SetUp()
         {
+            var instanceIdGenerator = new InstanceIdGenerator();
             var htmlParserProvider = new DefaultHtmlParserProvider();
-            var movementProvider = new DefaultMovementProvider();
+            var movementProvider = new DefaultMovementProvider(instanceIdGenerator);
             var pageDownloader = new DefaultPageDownloader();
             var webClientProvider = new DefaultWebClientProvider();
             var webServices = new DefaultWebServices(htmlParserProvider, webClientProvider, pageDownloader);

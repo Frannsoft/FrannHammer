@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using FrannHammer.Api.Services;
+﻿using FrannHammer.Api.Services;
 using FrannHammer.Api.Services.Contracts;
 using FrannHammer.DataAccess.MongoDb;
 using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.Tests.Utility;
+using FrannHammer.Utility;
 using FrannHammer.WebScraping;
 using FrannHammer.WebScraping.Attributes;
 using FrannHammer.WebScraping.Character;
@@ -27,9 +26,12 @@ using FrannHammer.WebScraping.Moves;
 using FrannHammer.WebScraping.PageDownloading;
 using FrannHammer.WebScraping.Unique;
 using FrannHammer.WebScraping.WebClients;
+using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 using Moq;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FrannHammer.Seeding.Tests
 {
@@ -46,7 +48,16 @@ namespace FrannHammer.Seeding.Tests
             BsonMapper.RegisterClassMaps(typeof(Character), typeof(Movement), typeof(Move), typeof(CharacterAttribute),
                 typeof(CharacterAttributeRow));
 
-            MongoDatabase = MongoDbConnectionFactory.GetDatabaseFromAppConfig();
+            var configuration = new ConfigurationBuilder()
+             .AddJsonFile("appSettings.json", true, true)
+             .Build();
+
+            string username = configuration[ConfigurationKeys.Username];
+            string password = configuration[ConfigurationKeys.Password];
+            string databaseName = configuration[ConfigurationKeys.DatabaseName];
+            string connectionString = configuration[ConfigurationKeys.DefaultConnection];
+
+            MongoDatabase = MongoDbConnectionFactory.GetDatabaseFromAppConfig(username, password, databaseName, connectionString);
         }
 
         private IMovementScrapingServices _movementScrapingServices;
@@ -75,15 +86,17 @@ namespace FrannHammer.Seeding.Tests
         [SetUp]
         public void SetUp()
         {
+            var instanceIdGenerator = new InstanceIdGenerator();
+
             _htmlParserProvider = new DefaultHtmlParserProvider();
-            _movementProvider = new DefaultMovementProvider();
-            _moveProvider = new DefaultMoveProvider();
+            _movementProvider = new DefaultMovementProvider(instanceIdGenerator);
+            _moveProvider = new DefaultMoveProvider(instanceIdGenerator);
             _pageDownloader = new DefaultPageDownloader();
             _webClientProvider = new DefaultWebClientProvider();
-            _attributeProvider = new DefaultAttributeProvider();
+            _attributeProvider = new DefaultAttributeProvider(instanceIdGenerator);
             _imageScrapingProvider = new DefaultImageScrapingProvider();
             _imageScrapingService = new DefaultImageScrapingService(_imageScrapingProvider);
-            _uniqueDataProvider = new DefaultUniqueDataProvider();
+            _uniqueDataProvider = new DefaultUniqueDataProvider(instanceIdGenerator);
             _webServices = new DefaultWebServices(_htmlParserProvider, _webClientProvider, _pageDownloader);
 
             _attributeScrapingServices = new DefaultAttributeScrapingServices(_attributeProvider, _webServices);
@@ -108,7 +121,7 @@ namespace FrannHammer.Seeding.Tests
             _movementScraper = new DefaultMovementScraper(_movementScrapingServices);
 
             _characterDataScrapingServices = new DefaultCharacterDataScrapingServices(_imageScrapingService, _movementScraper,
-                attributeScrapers, _characterMoveScraper, _uniqueDataScrapingServices, _webServices);
+                attributeScrapers, _characterMoveScraper, _uniqueDataScrapingServices, _webServices, instanceIdGenerator);
 
             _characterDataScraper = new DefaultCharacterDataScraper(_characterDataScrapingServices);
         }
@@ -132,7 +145,7 @@ namespace FrannHammer.Seeding.Tests
             var characterAttributeService = new DefaultCharacterAttributeService(characterAttributeRepository, new Mock<ICharacterAttributeNameProvider>().Object);
             var uniqueDataService = new DefaultUniqueDataService(uniqueDataRepository, mockQueryMappingService);
             var characterService = new DefaultCharacterService(characterRepository, dtoProvider,
-                movementService, characterAttributeService, moveService, uniqueDataService);
+                movementService, characterAttributeService, moveService, uniqueDataService, string.Empty);
 
             //real scraping from web to get data
             var captainFalcon = Characters.CaptainFalcon;

@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using AutoFixture;
 using FrannHammer.DataAccess.Contracts;
 using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
 using Moq;
-using Ploeh.AutoFixture;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FrannHammer.Api.Services.Tests
 {

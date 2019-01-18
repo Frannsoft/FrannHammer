@@ -1,17 +1,18 @@
-﻿using System;
+﻿using FrannHammer.NetCore.WebApi.Models;
+using FrannHammer.WebApi.Specs;
+using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using FrannHammer.WebApi.Models;
-using NUnit.Framework;
 using TechTalk.SpecFlow;
 using static FrannHammer.Domain.PropertyParsers.MoveDataNameConstants;
-using static FrannHammer.WebApi.Specs.ResourceAsserts;
+using static FrannHammer.NetCore.WebApi.Specs.ResourceAsserts;
 
-namespace FrannHammer.WebApi.Specs.Moves
+namespace FrannHammer.NetCore.WebApi.Specs.Moves
 {
     [Binding]
-    [Scope(Feature = "MovesApi")]
+    //[Scope(Feature = "MovesApi")]
     public class MovesApiSteps : BaseSteps
     {
         [BeforeFeature]

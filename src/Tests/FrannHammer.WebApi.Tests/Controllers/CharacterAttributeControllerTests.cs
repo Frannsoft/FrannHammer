@@ -1,8 +1,8 @@
 ﻿using System;
-using FrannHammer.WebApi.Controllers;
+using FrannHammer.NetCore.WebApi.Controllers;
 using NUnit.Framework;
 
-namespace FrannHammer.WebApi.Tests.Controllers
+namespace FrannHammer.NetCore.WebApi.Tests.Controllers
 {
     [TestFixture]
     public class CharacterAttributeControllerTests : BaseControllerTests
@@ -13,7 +13,7 @@ namespace FrannHammer.WebApi.Tests.Controllers
             Assert.Throws<ArgumentNullException>(() =>
             {
                 // ReSharper disable once ObjectCreationAsStatement
-                new CharacterAttributeController(null);
+                new CharacterAttributeController(null, null);
             });
         }
     }

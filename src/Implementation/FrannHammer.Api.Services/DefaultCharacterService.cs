@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using FrannHammer.Api.Services.Contracts;
+﻿using FrannHammer.Api.Services.Contracts;
 using FrannHammer.DataAccess.Contracts;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.Utility;
+using System;
+using System.Collections.Generic;
 
 namespace FrannHammer.Api.Services
 {
@@ -18,7 +17,7 @@ namespace FrannHammer.Api.Services
 
         public DefaultCharacterService(IRepository<ICharacter> repository, IDtoProvider dtoProvider,
                                 IMovementService movementService, ICharacterAttributeRowService attributeRowService,
-                                IMoveService moveService, IUniqueDataService uniqueDataService)
+                                IMoveService moveService, IUniqueDataService uniqueDataService, string game)
             : base(repository)
         {
             Guard.VerifyObjectNotNull(dtoProvider, nameof(dtoProvider));
@@ -185,6 +184,6 @@ namespace FrannHammer.Api.Services
             return uniqueProperties;
         }
 
-       
+
     }
 }

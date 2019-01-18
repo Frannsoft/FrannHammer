@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using FrannHammer.Domain.Contracts;
-using FrannHammer.WebApi.Models;
+﻿using FrannHammer.Domain.Contracts;
+using FrannHammer.NetCore.WebApi.Models;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.Linq;
 using static FrannHammer.WebApi.Specs.ExpectedLinkRelConstants;
 
-namespace FrannHammer.WebApi.Specs
+namespace FrannHammer.NetCore.WebApi.Specs
 {
     public static class ResourceAsserts
     {

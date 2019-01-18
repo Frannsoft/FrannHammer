@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using FrannHammer.Tests.Utility;
-using FrannHammer.WebScraping.Attributes;
+﻿using FrannHammer.WebScraping.Attributes;
 using FrannHammer.WebScraping.Character;
 using FrannHammer.WebScraping.Contracts;
 using FrannHammer.WebScraping.Contracts.Attributes;
@@ -22,6 +19,8 @@ using FrannHammer.WebScraping.PageDownloading;
 using FrannHammer.WebScraping.Unique;
 using FrannHammer.WebScraping.WebClients;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 using static FrannHammer.Tests.Utility.Categories;
 
 
@@ -56,15 +55,16 @@ namespace FrannHammer.WebScraping.Tests
         [SetUp]
         public void SetUp()
         {
+            var instanceIdGenerator = new InstanceIdGenerator();
             _htmlParserProvider = new DefaultHtmlParserProvider();
-            _movementProvider = new DefaultMovementProvider();
-            _moveProvider = new DefaultMoveProvider();
+            _movementProvider = new DefaultMovementProvider(instanceIdGenerator);
+            _moveProvider = new DefaultMoveProvider(instanceIdGenerator);
             _pageDownloader = new DefaultPageDownloader();
             _webClientProvider = new DefaultWebClientProvider();
-            _attributeProvider = new DefaultAttributeProvider();
+            _attributeProvider = new DefaultAttributeProvider(instanceIdGenerator);
             _imageScrapingProvider = new DefaultImageScrapingProvider();
             _imageScrapingService = new DefaultImageScrapingService(_imageScrapingProvider);
-            _uniqueDataProvider = new DefaultUniqueDataProvider();
+            _uniqueDataProvider = new DefaultUniqueDataProvider(instanceIdGenerator);
             _webServices = new DefaultWebServices(_htmlParserProvider, _webClientProvider, _pageDownloader);
 
             _attributeScrapingServices = new DefaultAttributeScrapingServices(_attributeProvider, _webServices);
@@ -84,14 +84,14 @@ namespace FrannHammer.WebScraping.Tests
             _movementScraper = new DefaultMovementScraper(_movementScrapingServices);
 
             _characterDataScrapingServices = new DefaultCharacterDataScrapingServices(_imageScrapingService, _movementScraper,
-                attributeScrapers, _characterMoveScraper, _uniqueDataScrapingServices, _webServices);
+                attributeScrapers, _characterMoveScraper, _uniqueDataScrapingServices, _webServices, instanceIdGenerator);
 
             _characterDataScraper = new DefaultCharacterDataScraper(_characterDataScrapingServices);
         }
 
         private static IEnumerable<WebCharacter> Characters()
         {
-            return new List<WebCharacter> {Domain.Characters.Cloud, Domain.Characters.Greninja, Domain.Characters.CaptainFalcon, Domain.Characters.DrMario};
+            return new List<WebCharacter> { Domain.Characters.Cloud, Domain.Characters.Greninja, Domain.Characters.CaptainFalcon, Domain.Characters.DrMario };
         }
 
         [Test]

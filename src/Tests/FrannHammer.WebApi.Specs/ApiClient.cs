@@ -1,10 +1,9 @@
-﻿using System;
-using System.Net.Http;
-using Autofac;
-using FrannHammer.Utility;
+﻿using FrannHammer.Utility;
 using Newtonsoft.Json;
+using System;
+using System.Net.Http;
 
-namespace FrannHammer.WebApi.Specs
+namespace FrannHammer.NetCore.WebApi.Specs
 {
     public class ApiClient
     {
@@ -33,11 +32,11 @@ namespace FrannHammer.WebApi.Specs
                                                $"Content: {content}" +
                                                $"Raw exception: {e}");
             }
-            return JsonConvert.DeserializeObject<T>(content,
-                new JsonSerializerSettings
-                {
-                    ContractResolver = Startup.Container.Resolve<AutofacContractResolver>()
-                });
+            return JsonConvert.DeserializeObject<T>(content);
+            //new JsonSerializerSettings
+            //{
+            //    ContractResolver = Startup.Container.Resolve<AutofacContractResolver>()
+            //});
         }
     }
 }

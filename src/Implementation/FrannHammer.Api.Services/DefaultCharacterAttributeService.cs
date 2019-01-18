@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using FrannHammer.Api.Services.Contracts;
+﻿using FrannHammer.Api.Services.Contracts;
 using FrannHammer.DataAccess.Contracts;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.Utility;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace FrannHammer.Api.Services

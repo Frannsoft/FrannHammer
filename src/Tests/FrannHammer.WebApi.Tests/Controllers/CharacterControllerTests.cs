@@ -1,18 +1,23 @@
-﻿using System;
+﻿using FrannHammer.Domain;
+using FrannHammer.NetCore.WebApi.Controllers;
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using FrannHammer.Domain;
-using FrannHammer.WebApi.Controllers;
-using Microsoft.Owin.Testing;
-using NUnit.Framework;
 using static FrannHammer.Tests.Utility.Categories;
 
-namespace FrannHammer.WebApi.Tests.Controllers
+namespace FrannHammer.NetCore.WebApi.Tests.Controllers
 {
     [TestFixture]
     public class CharacterControllerTests : BaseControllerTests
     {
+        private HttpClient _httpClient;
+        private TestServer _testServer;
+
         private static IEnumerable<string> CharacterNamesWithSpacesRemoved()
         {
             yield return "rosalinaluma";
@@ -36,13 +41,27 @@ namespace FrannHammer.WebApi.Tests.Controllers
             yield return "drmario";
         }
 
+        [OneTimeSetUp]
+        public void OneTimeSetUp()
+        {
+            var _testServer = new TestServer(WebHost.CreateDefaultBuilder().UseStartup<Startup>().UseEnvironment("development"));
+            _httpClient = _testServer.CreateClient();
+        }
+
+        [OneTimeTearDown]
+        public void OneTimeTearDown()
+        {
+            _httpClient.Dispose();
+            _testServer.Dispose();
+        }
+
         [Test]
         public void ThrowsArgumentNullExceptionForNullCharacterServiceInCtor()
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
                 // ReSharper disable once ObjectCreationAsStatement
-                new CharacterController(null);
+                new CharacterController(null, null);
             });
         }
 
@@ -51,12 +70,9 @@ namespace FrannHammer.WebApi.Tests.Controllers
         [TestCaseSource(nameof(CharacterNamesWithSpacesRemoved))]
         public void CharacterByName_CharacterWithSpacesRemovedInRouteValue_ReturnsCharacterData(string characterNameUnderTest)
         {
-            using (var testServer = TestServer.Create<Startup>())
-            {
-                var response = testServer.HttpClient.GetAsync($"api/characters/name/{characterNameUnderTest}").Result;
+            var response = _httpClient.GetAsync($"api/characters/name/{characterNameUnderTest}").Result;
 
-                Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK), $"character: {characterNameUnderTest}");
-            }
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK), $"character: {characterNameUnderTest}");
         }
 
         [Test]
@@ -64,25 +80,22 @@ namespace FrannHammer.WebApi.Tests.Controllers
         [TestCaseSource(nameof(CharacterNamesWithSpacesRemoved))]
         public void CharacterByName_IsBackwardsCompatibleWithProduction_WhenCharacterWithSpacesIsCalled_ReturnsExpectedCharacterData(string characterNameUnderTest)
         {
-            using (var betaServer = TestServer.Create<Startup>())
+            var betaResponse = _httpClient.GetAsync($"api/characters/name/{characterNameUnderTest}").Result;
+
+            Assert.That(betaResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+
+            Character betaCharacter = betaResponse.Content.ReadAsAsync<Character>().Result;
+
+            using (var productionClient = new HttpClient())
             {
-                var betaResponse = betaServer.HttpClient.GetAsync($"api/characters/name/{characterNameUnderTest}").Result;
+                var prodResponse =
+                    productionClient.GetAsync($"http://beta-api-kuroganehammer.azurewebsites.net/api/characters/name/{characterNameUnderTest}")
+                        .Result;
 
-                Assert.That(betaResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+                var kvpResponse = prodResponse.Content.ReadAsAsync<dynamic>().Result;
 
-                Character betaCharacter = betaResponse.Content.ReadAsAsync<Character>().Result;
-
-                using (var productionClient = new HttpClient())
-                {
-                    var prodResponse =
-                        productionClient.GetAsync($"http://api.kuroganehammer.com/api/characters/name/{characterNameUnderTest}")
-                            .Result;
-
-                    var kvpResponse = prodResponse.Content.ReadAsAsync<dynamic>().Result;
-
-                    Assert.That(betaCharacter.DisplayName.ToLower(), Is.EqualTo(kvpResponse.displayName.ToString().ToLower()));
-                    Assert.That(betaCharacter.Name.ToLower(), Is.EqualTo(kvpResponse.name.ToString().ToLower()));
-                }
+                Assert.That(betaCharacter.DisplayName.ToLower(), Is.EqualTo(kvpResponse.DisplayName.ToString().ToLower()));
+                Assert.That(betaCharacter.Name.ToLower(), Is.EqualTo(kvpResponse.Name.ToString().ToLower()));
             }
         }
     }

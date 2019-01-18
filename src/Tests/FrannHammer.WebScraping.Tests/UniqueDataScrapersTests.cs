@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using FrannHammer.Domain.Contracts;
+﻿using FrannHammer.Domain.Contracts;
 using FrannHammer.WebScraping.Domain;
 using FrannHammer.WebScraping.HtmlParsing;
 using FrannHammer.WebScraping.PageDownloading;
 using FrannHammer.WebScraping.Unique;
 using FrannHammer.WebScraping.WebClients;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FrannHammer.WebScraping.Tests
 {
@@ -17,11 +17,12 @@ namespace FrannHammer.WebScraping.Tests
         [Test]
         public void ScrapeUniqueData_CloudLimitBreak_ReturnsLimitBreakTableData()
         {
+            var instanceIdGenerator = new InstanceIdGenerator();
             var htmlParserProvider = new DefaultHtmlParserProvider();
             var pageDownloader = new DefaultPageDownloader();
             var webClientProvider = new DefaultWebClientProvider();
             var webServices = new DefaultWebServices(htmlParserProvider, webClientProvider, pageDownloader);
-            var uniqueDataProvider = new DefaultUniqueDataProvider();
+            var uniqueDataProvider = new DefaultUniqueDataProvider(instanceIdGenerator);
             var scrapingServices = new DefaultUniqueDataScrapingServices(uniqueDataProvider, webServices);
 
             var limitBreakScraper = new LimitBreakScraper(scrapingServices);

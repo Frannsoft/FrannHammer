@@ -6,5 +6,3 @@
 using System.Reflection;
 
 [assembly: AssemblyCompany("FrannDotExe")]
-[assembly: AssemblyVersion("0.6.*")]
-

@@ -1,20 +1,33 @@
-﻿using System.Configuration;
-using Autofac;
+﻿using Autofac;
 using FrannHammer.DataAccess.Contracts;
 using FrannHammer.DataAccess.MongoDb;
 using FrannHammer.Domain.Contracts;
-using FrannHammer.Utility;
 using MongoDB.Driver;
 
 namespace FrannHammer.DefaultContainer.Configuration.ContainerModules
 {
+    public class InMemoryRepositoryModule : Module
+    {
+        protected override void Load(ContainerBuilder builder)
+        {
+           
+        }
+    }
+
     public class RepositoryModule : Module
     {
         private const string MongoDatabaseKey = "mongoDatabase";
 
+        private readonly string _databaseName;
+
+        public RepositoryModule(string databaseName)
+        {
+            _databaseName = databaseName;
+        }
+
         protected override void Load(ContainerBuilder builder)
         {
-            string databaseName = ConfigurationManager.AppSettings[ConfigurationKeys.DatabaseName];
+            string databaseName = _databaseName;//ConfigurationManager.AppSettings[ConfigurationKeys.DatabaseName];
 
             builder.RegisterType<MongoDbRepository<ICharacter>>()
                  .As<IRepository<ICharacter>>()

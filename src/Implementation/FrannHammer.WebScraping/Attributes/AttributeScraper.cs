@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using FrannHammer.Domain;
-using FrannHammer.Domain.Contracts;
+﻿using FrannHammer.Domain.Contracts;
 using FrannHammer.Utility;
 using FrannHammer.WebScraping.Contracts.Attributes;
 using FrannHammer.WebScraping.Contracts.HtmlParsing;
 using FrannHammer.WebScraping.Domain.Contracts;
 using HtmlAgilityPack;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FrannHammer.WebScraping.Attributes
 {
@@ -112,7 +111,7 @@ namespace FrannHammer.WebScraping.Attributes
                 var headers = GetHeaders(htmlParser);
 
                 //foreach (var row in attributeTableRows)
-                foreach(var row in rows)
+                foreach (var row in rows)
                 {
                     var attributeValues = new List<IAttribute>();
 
@@ -133,13 +132,11 @@ namespace FrannHammer.WebScraping.Attributes
                         attributeValues.Add(attributeValue);
                     }
 
-                    var characterAttributeRow = new CharacterAttributeRow
-                    {
-                        Values = attributeValues,
-                        Name = AttributeName,
-                        Owner = character.Name,
-                        OwnerId = character.OwnerId
-                    };
+                    var characterAttributeRow = ScrapingServices.CreateCharacterAttributeRow();
+                    characterAttributeRow.Values = attributeValues;
+                    characterAttributeRow.Name = AttributeName;
+                    characterAttributeRow.Owner = character.Name;
+                    characterAttributeRow.OwnerId = character.OwnerId;
                     attributeValueRows.Add(characterAttributeRow);
                 }
 

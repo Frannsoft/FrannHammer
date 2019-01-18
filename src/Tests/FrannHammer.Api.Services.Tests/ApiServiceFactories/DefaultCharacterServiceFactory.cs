@@ -15,7 +15,8 @@ namespace FrannHammer.Api.Services.Tests.ApiServiceFactories
                 new DefaultMovementService(new Mock<IRepository<IMovement>>().Object, queryMappingService),
                 new DefaultCharacterAttributeService(new Mock<IRepository<ICharacterAttributeRow>>().Object, new DefaultCharacterAttributeNameProvider()),
                 new DefaultMoveService(new Mock<IRepository<IMove>>().Object, queryMappingService),
-                new DefaultUniqueDataService(new Mock<IRepository<IUniqueData>>().Object, queryMappingService));
+                new DefaultUniqueDataService(new Mock<IRepository<IUniqueData>>().Object, queryMappingService),
+                string.Empty);
         }
     }
 }

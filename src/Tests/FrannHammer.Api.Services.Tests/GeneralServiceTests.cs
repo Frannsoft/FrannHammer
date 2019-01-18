@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoFixture;
+using AutoFixture.AutoMoq;
 using FrannHammer.Api.Services.Contracts;
 using FrannHammer.Api.Services.Tests.ApiServiceFactories;
 using FrannHammer.DataAccess.Contracts;
@@ -8,8 +10,6 @@ using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
 using Moq;
 using NUnit.Framework;
-using Ploeh.AutoFixture;
-using Ploeh.AutoFixture.AutoMoq;
 
 namespace FrannHammer.Api.Services.Tests
 {

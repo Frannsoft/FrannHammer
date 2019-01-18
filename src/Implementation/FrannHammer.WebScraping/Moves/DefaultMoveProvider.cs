@@ -6,6 +6,13 @@ namespace FrannHammer.WebScraping.Moves
 {
     public class DefaultMoveProvider : IMoveProvider
     {
-        public IMove Create() => new Move();
+        private readonly IInstanceIdGenerator _instanceIdGenerator;
+
+        public DefaultMoveProvider(IInstanceIdGenerator instanceIdGenerator)
+        {
+            _instanceIdGenerator = instanceIdGenerator;
+        }
+
+        public IMove Create() => new Move() { InstanceId = _instanceIdGenerator.GenerateId() };
     }
 }

@@ -6,6 +6,7 @@ namespace FrannHammer.WebScraping.Contracts.Attributes
     public interface IAttributeProvider
     {
         IAttribute CreateAttribute();
+        ICharacterAttributeRow CreateCharacterAttributeRow();
         IAttributeValueRowCollection CreateAttributeValueRowCollection();
         IAttributeValueRow CreateAttributeValueRow();
         IAttributeValue CreateAttributeValue();

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using FrannHammer.Domain.Contracts;
+﻿using FrannHammer.Domain.Contracts;
 using FrannHammer.Utility;
 using FrannHammer.WebScraping.Contracts;
 using FrannHammer.WebScraping.Contracts.Attributes;
@@ -11,12 +8,15 @@ using FrannHammer.WebScraping.Contracts.Movements;
 using FrannHammer.WebScraping.Contracts.UniqueData;
 using FrannHammer.WebScraping.Domain.Contracts;
 using HtmlAgilityPack;
-using System.Diagnostics;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FrannHammer.WebScraping.Character
 {
     public class DefaultCharacterDataScrapingServices : ICharacterDataScrapingServices
     {
+        private readonly IInstanceIdGenerator _instanceIdGenerator;
         private readonly IImageScrapingService _imageScrapingService;
         private readonly IMovementScraper _movementScraper;
         private readonly IEnumerable<IAttributeScraper> _attributeScrapers;
@@ -28,7 +28,8 @@ namespace FrannHammer.WebScraping.Character
             IEnumerable<IAttributeScraper> attributeScrapers,
             ICharacterMoveScraper characterMoveScraper,
             IUniqueDataScrapingServices uniqueDataScrapingServices,
-            IWebServices webServices)
+            IWebServices webServices,
+            IInstanceIdGenerator instanceIdGenerator)
         {
             Guard.VerifyObjectNotNull(imageScrapingService, nameof(imageScrapingService));
             Guard.VerifyObjectNotNull(movementScraper, nameof(movementScraper));
@@ -43,6 +44,7 @@ namespace FrannHammer.WebScraping.Character
             _characterMoveScraper = characterMoveScraper;
             _uniqueDataScrapingService = uniqueDataScrapingServices;
             _webServices = webServices;
+            _instanceIdGenerator = instanceIdGenerator;
         }
 
         public void PopulateCharacter(WebCharacter character)
@@ -110,6 +112,7 @@ namespace FrannHammer.WebScraping.Character
                 uniqueData.AddRange(uniqueDataScraper.Scrape(character));
             }
 
+            character.InstanceId = _instanceIdGenerator.GenerateId();
             character.FullUrl = character.SourceUrl;
             character.DisplayName = displayName;
             character.ThumbnailUrl = thumbnailUrl;
@@ -125,7 +128,7 @@ namespace FrannHammer.WebScraping.Character
         {
             var scraperTypes = character.UniqueScraperTypes;
 
-            return scraperTypes.Select(sc => (IUniqueDataScraper) Activator.CreateInstance(sc, _uniqueDataScrapingService));
+            return scraperTypes.Select(sc => (IUniqueDataScraper)Activator.CreateInstance(sc, _uniqueDataScrapingService));
         }
 
         private static string GetThumbnailUrl(string attributeKey, string thumbnailHtml, string urlRoot)

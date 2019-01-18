@@ -17,8 +17,9 @@ namespace FrannHammer.WebScraping.Tests
     {
         private static DefaultAttributeScrapingServices MakeAttributeScrapingServices()
         {
+            var instanceIdGenerator = new InstanceIdGenerator();
             var htmlParserProvider = new DefaultHtmlParserProvider();
-            var attributeProvider = new DefaultAttributeProvider();
+            var attributeProvider = new DefaultAttributeProvider(instanceIdGenerator);
             var pageDownloader = new DefaultPageDownloader();
             var webClientProvider = new DefaultWebClientProvider();
             var webServices = new DefaultWebServices(htmlParserProvider, webClientProvider, pageDownloader);

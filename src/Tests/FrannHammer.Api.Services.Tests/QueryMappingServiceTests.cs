@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Reflection;
+using AutoFixture;
 using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
 using Moq;
 using NUnit.Framework;
-using Ploeh.AutoFixture;
 
 namespace FrannHammer.Api.Services.Tests
 {

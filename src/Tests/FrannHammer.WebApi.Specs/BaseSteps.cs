@@ -1,8 +1,10 @@
-﻿using System.Linq;
-using Microsoft.Owin.Testing;
+﻿using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using System.Linq;
 using TechTalk.SpecFlow;
 
-namespace FrannHammer.WebApi.Specs
+namespace FrannHammer.NetCore.WebApi.Specs
 {
     public abstract class BaseSteps
     {
@@ -15,8 +17,9 @@ namespace FrannHammer.WebApi.Specs
 
         public static void CreateTestServer()
         {
-            TestServer = TestServer.Create<Startup>();
-            ApiClient = new ApiClient(TestServer.HttpClient);
+            TestServer = new TestServer(WebHost.CreateDefaultBuilder().UseStartup<Startup>());
+            //TestServer = TestServer. .Create<Startup>();
+            ApiClient = new ApiClient(TestServer.CreateClient());
         }
 
         public static void DisposeOfTestServer()

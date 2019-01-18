@@ -21,8 +21,9 @@ namespace FrannHammer.WebScraping.Tests
         [SetUp]
         public void SetUp()
         {
+            var instanceIdGenerator = new InstanceIdGenerator();
             var htmlParserProvider = new DefaultHtmlParserProvider();
-            var moveProvider = new DefaultMoveProvider();
+            var moveProvider = new DefaultMoveProvider(instanceIdGenerator);
             var pageDownloader = new DefaultPageDownloader();
             var webClientProvider = new DefaultWebClientProvider();
             var webServices = new DefaultWebServices(htmlParserProvider, webClientProvider, pageDownloader);

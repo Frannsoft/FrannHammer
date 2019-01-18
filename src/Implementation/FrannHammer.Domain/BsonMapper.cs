@@ -1,7 +1,7 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization;
+using System;
 using System.Linq;
 using System.Reflection;
-using MongoDB.Bson.Serialization;
 
 namespace FrannHammer.Domain
 {
@@ -12,7 +12,7 @@ namespace FrannHammer.Domain
             foreach (var type in types)
             {
                 if (BsonClassMap.IsClassMapRegistered(type))
-                { continue;}
+                { continue; }
 
                 var classMap = new BsonClassMap(type);
                 MapProperties(type, classMap);
