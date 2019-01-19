@@ -3,7 +3,6 @@ using FrannHammer.Api.Services;
 using FrannHammer.Api.Services.Contracts;
 using FrannHammer.DataAccess.Contracts;
 using FrannHammer.Domain.Contracts;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace FrannHammer.DefaultContainer.Configuration.ContainerModules
 {
