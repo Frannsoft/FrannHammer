@@ -1,7 +1,6 @@
-﻿using System.Drawing;
-using System.Threading.Tasks;
-using FrannHammer.Utility;
+﻿using FrannHammer.Utility;
 using FrannHammer.WebScraping.Contracts.Images;
+using System.Threading.Tasks;
 
 namespace FrannHammer.WebScraping.Images
 {
@@ -18,8 +17,7 @@ namespace FrannHammer.WebScraping.Images
 
         public async Task<string> GetColorHexValue(string imageSourceUrl)
         {
-            Bitmap bitmapResult;
-
+            string colorHexValue = string.Empty;
             using (var client = _imageScrapingProvider.CreateHttpClient())
             {
                 using (var response = await client.GetAsync(imageSourceUrl))
@@ -29,13 +27,16 @@ namespace FrannHammer.WebScraping.Images
                     using (var inputStream = _imageScrapingProvider.CreateMemoryStream())
                     {
                         await response.Content.ReadAsStreamAsync().Result.CopyToAsync(inputStream);
-                        bitmapResult = _imageScrapingProvider.CreateBitmap(inputStream);
+                        using (var bitmapResult = _imageScrapingProvider.CreateBitmap(inputStream))
+                        {
+                            var color = bitmapResult.GetPixel(110, 90); //corner bounds
+                            colorHexValue = $"#{color.R:X2}{color.G:X2}{color.B:X2}";
+                        }
                     }
                 }
             }
 
-            var color = bitmapResult.GetPixel(110, 90); //corner bounds
-            return $"#{color.R:X2}{color.G:X2}{color.B:X2}";
+            return colorHexValue;
         }
     }
 }

@@ -117,7 +117,7 @@ namespace FrannHammer.NetCore.WebApi
             var characterDataScraper = container.Resolve<ICharacterDataScraper>();
             var seeder = container.Resolve<DefaultSeeder>();
 
-            var charactersToSeed = Characters.All;
+            var charactersToSeed = Characters.All.Take(4);
 
             var bagCharacterData = new ConcurrentBag<ICharacter>();
             var bagMoveData = new ConcurrentBag<IMove>();
