@@ -26,33 +26,33 @@ namespace FrannHammer.DefaultContainer.Configuration.ContainerModules
             //        .WithParameter((pi, c) => pi.Name == "game",
             //            (pi, c) => c.Resolve<IActionContextAccessor>().ActionContext;
 
-            builder.RegisterType<DefaultMovementService>()
-                .As<IMovementService>()
-                .WithParameter((pi, c) => pi.Name == RepositoryParameterName,
-                    (pi, c) => c.Resolve<IRepository<IMovement>>());
+            //builder.RegisterType<DefaultMovementService>()
+            //    .As<IMovementService>()
+            //    .WithParameter((pi, c) => pi.Name == RepositoryParameterName,
+            //        (pi, c) => c.Resolve<IRepository<IMovement>>());
 
-            builder.RegisterType<DefaultMoveService>()
-                .As<IMoveService>()
-                .WithParameter((pi, c) => pi.Name == RepositoryParameterName,
-                    (pi, c) => c.Resolve<IRepository<IMove>>())
-                .WithParameter((pi, c) => pi.Name == QueryMappingParameterName,
-                 (pi, c) => c.Resolve<IQueryMappingService>());
+            //builder.RegisterType<DefaultMoveService>()
+            //    .As<IMoveService>()
+            //    .WithParameter((pi, c) => pi.Name == RepositoryParameterName,
+            //        (pi, c) => c.Resolve<IRepository<IMove>>())
+            //    .WithParameter((pi, c) => pi.Name == QueryMappingParameterName,
+            //     (pi, c) => c.Resolve<IQueryMappingService>());
 
-            builder.RegisterType<DefaultUniqueDataService>()
-                .As<IUniqueDataService>()
-                .WithParameter((pi, c) => pi.Name == RepositoryParameterName,
-                    (pi, c) => c.Resolve<IRepository<IUniqueData>>())
-                .WithParameter((pi, c) => pi.Name == QueryMappingParameterName,
-                 (pi, c) => c.Resolve<IQueryMappingService>());
+            //builder.RegisterType<DefaultUniqueDataService>()
+            //    .As<IUniqueDataService>()
+            //    .WithParameter((pi, c) => pi.Name == RepositoryParameterName,
+            //        (pi, c) => c.Resolve<IRepository<IUniqueData>>())
+            //    .WithParameter((pi, c) => pi.Name == QueryMappingParameterName,
+            //     (pi, c) => c.Resolve<IQueryMappingService>());
 
             builder.RegisterType<DefaultCharacterAttributeNameProvider>().As<ICharacterAttributeNameProvider>();
 
-            builder.RegisterType<DefaultCharacterAttributeService>()
-                .As<ICharacterAttributeRowService>()
-                .WithParameter((pi, c) => pi.Name == RepositoryParameterName,
-                    (pi, c) => c.Resolve<IRepository<ICharacterAttributeRow>>())
-                    .WithParameter((pi, c) => pi.Name == "characterAttributeNameProvider",
-                    (pi, c) => c.Resolve<ICharacterAttributeNameProvider>());
+            //builder.RegisterType<DefaultCharacterAttributeService>()
+            //    .As<ICharacterAttributeRowService>()
+            //    .WithParameter((pi, c) => pi.Name == RepositoryParameterName,
+            //        (pi, c) => c.Resolve<IRepository<ICharacterAttributeRow>>())
+            //        .WithParameter((pi, c) => pi.Name == "characterAttributeNameProvider",
+            //        (pi, c) => c.Resolve<ICharacterAttributeNameProvider>());
 
             builder.RegisterType<DefaultAttributeStrategy>().As<IAttributeStrategy>();
 

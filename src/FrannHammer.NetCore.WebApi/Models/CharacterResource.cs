@@ -12,5 +12,6 @@ namespace FrannHammer.NetCore.WebApi.Models
         public string ThumbnailUrl { get; set; }
         public string ColorTheme { get; set; }
         public string DisplayName { get; set; }
+        public Games Game { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using FrannHammer.Domain.Contracts;
 using FrannHammer.Domain.PropertyParsers;
-using static FrannHammer.Domain.FriendlyNameMoveCommonConstants;
 using static FrannHammer.Domain.FriendlyNameCommonConstants;
+using static FrannHammer.Domain.FriendlyNameMoveCommonConstants;
 
 namespace FrannHammer.Domain
 {
@@ -51,5 +51,7 @@ namespace FrannHammer.Domain
 
         [FriendlyName(OwnerIdName)]
         public int OwnerId { get; set; }
+
+        public string Game { get; set; } = "Smash4";
     }
 }

@@ -11,5 +11,7 @@
     }
 
     public interface IModel : IHaveAnId, IHaveAName
-    { }
+    {
+        Games Game { get; set; }
+    }
 }

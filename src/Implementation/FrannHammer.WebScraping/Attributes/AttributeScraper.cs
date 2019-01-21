@@ -137,6 +137,7 @@ namespace FrannHammer.WebScraping.Attributes
                     characterAttributeRow.Name = AttributeName;
                     characterAttributeRow.Owner = character.Name;
                     characterAttributeRow.OwnerId = character.OwnerId;
+                    characterAttributeRow.Game = character.SourceUrl.Contains("Ultimate") ? Games.Ultimate : Games.Smash4;
                     attributeValueRows.Add(characterAttributeRow);
                 }
 

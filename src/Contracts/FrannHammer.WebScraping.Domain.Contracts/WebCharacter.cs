@@ -1,6 +1,7 @@
-﻿using System;
+﻿using FrannHammer.Domain.Contracts;
+using System;
 using System.Collections.Generic;
-using FrannHammer.Domain.Contracts;
+using System.Linq;
 
 namespace FrannHammer.WebScraping.Domain.Contracts
 {
@@ -8,19 +9,24 @@ namespace FrannHammer.WebScraping.Domain.Contracts
     {
 #if DEBUG
         //public const string SourceUrlBase = "http://localhost:81/khmock/kuroganehammer.com/Smash4/";
-        public const string SourceUrlBase = "http://kuroganehammer.com/Smash4/";
+        public const string SourceSmash4UrlBase = "http://kuroganehammer.com/Smash4/";
+        public const string SourceUltimateUrlBase = "http://kuroganehammer.com/Ultimate/";
 #else
-        public const string SourceUrlBase = "http://kuroganehammer.com/Smash4/";
+        public const string SourceSmash4UrlBase = "http://kuroganehammer.com/Smash4/";
+        public const string SourceUltimateUrlBase = "http://kuroganehammer.com/Ultimate/";
 #endif
         public string[] PotentialScrapingNames { get; }
 
         public string InstanceId { get; set; }
-        public string SourceUrl { get; }
+        public string SourceUrl { get; set; }
+        public IReadOnlyCollection<string> SourceUrls { get; }
         public string FullUrl { get; set; }
         public string ColorTheme { get; set; }
         public string Name { get; set; }
         public string MainImageUrl { get; set; }
         public string ThumbnailUrl { get; set; }
+        public Games Game { get; set; }
+        public string EscapedCharacterName { get; set; }
 
         private string _displayName;
         public string DisplayName
@@ -50,10 +56,13 @@ namespace FrannHammer.WebScraping.Domain.Contracts
         {
             Name = name;
 
+
             if (string.IsNullOrEmpty(escapedCharacterName))
             { escapedCharacterName = name; }
 
-            SourceUrl = SourceUrlBase + escapedCharacterName;
+            EscapedCharacterName = escapedCharacterName;
+            SourceUrls = new List<string> { SourceSmash4UrlBase, SourceUltimateUrlBase }.Select(url => url + escapedCharacterName).ToList();
+            //SourceUrl = sourceBaseUrl + escapedCharacterName;//SourceSmash4UrlBase + escapedCharacterName;
             PotentialScrapingNames = potentialScrapingNames;
             UniqueScraperTypes = uniqueScraperTypes ?? new List<Type>();
 

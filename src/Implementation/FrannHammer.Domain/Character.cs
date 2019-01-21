@@ -22,5 +22,8 @@ namespace FrannHammer.Domain
 
         [FriendlyName(OwnerIdName)]
         public int OwnerId { get; set; }
+
+
+        public Games Game { get; set; }
     }
 }

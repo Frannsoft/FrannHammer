@@ -4,6 +4,6 @@ namespace FrannHammer.WebScraping.Contracts.Character
 {
     public interface ICharacterDataScraper
     {
-        void PopulateCharacterFromWeb(WebCharacter character);
+        WebCharacter PopulateCharacterFromWeb(WebCharacter character, string sourceBaseUrl);
     }
 }

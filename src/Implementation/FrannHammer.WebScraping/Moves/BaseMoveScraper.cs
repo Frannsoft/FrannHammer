@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using FrannHammer.Domain.Contracts;
+﻿using FrannHammer.Domain.Contracts;
 using FrannHammer.Utility;
 using FrannHammer.WebScraping.Contracts.Moves;
 using FrannHammer.WebScraping.Domain.Contracts;
 using HtmlAgilityPack;
+using System;
+using System.Collections.Generic;
 
 namespace FrannHammer.WebScraping.Moves
 {
@@ -20,7 +20,7 @@ namespace FrannHammer.WebScraping.Moves
             ScrapingServices = scrapingServices;
         }
 
-        protected abstract IMove GetMove(HtmlNodeCollection cells, WebCharacter character);
+        protected abstract IMove GetMove(HtmlNodeCollection cells, WebCharacter character, string sourceUrl = "");
 
         protected static HtmlNodeCollection GetTableCells(HtmlNode row) => row.SelectNodes(ScrapingConstants.XPathTableCells);
 

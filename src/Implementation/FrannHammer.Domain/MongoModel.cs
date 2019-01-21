@@ -12,5 +12,8 @@ namespace FrannHammer.Domain
 
         [FriendlyName(FriendlyNameCommonConstants.Name)]
         public string Name { get; set; }
+
+        [FriendlyName("game")]
+        public Games Game { get; set; }
     }
 }

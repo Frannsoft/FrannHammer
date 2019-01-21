@@ -14,9 +14,9 @@ namespace FrannHammer.WebScraping.Character
             _characterDataScrapingServices = characterDataScrapingServices;
         }
 
-        public void PopulateCharacterFromWeb(WebCharacter character)
+        public WebCharacter PopulateCharacterFromWeb(WebCharacter character, string sourceBaseUrl)
         {
-            _characterDataScrapingServices.PopulateCharacter(character);
+            return _characterDataScrapingServices.PopulateCharacter(character, sourceBaseUrl);
         }
     }
 }

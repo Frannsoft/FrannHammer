@@ -1,9 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using FrannHammer.Api.Services.Contracts;
+﻿using FrannHammer.Api.Services.Contracts;
 using FrannHammer.DataAccess.Contracts;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.Utility;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace FrannHammer.Api.Services
 {
@@ -12,11 +14,17 @@ namespace FrannHammer.Api.Services
     {
         protected IRepository<T> Repository { get; }
 
-        protected BaseApiService(IRepository<T> repository)
+        private readonly Games _game;
+
+        protected BaseApiService(IRepository<T> repository, string game)
         {
             Guard.VerifyObjectNotNull(repository, nameof(repository));
             Repository = repository;
+            string adjustedCasingGame = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(game);
+            _game = (Games)Enum.Parse(typeof(Games), adjustedCasingGame);
         }
+
+        protected Func<T, bool> WhereGameIs() => g => g.Game == _game;
 
         public T GetSingleByInstanceId(string id)
         {
@@ -25,12 +33,12 @@ namespace FrannHammer.Api.Services
 
         public IEnumerable<T> GetAllWhereName(string name)
         {
-            return GetAllWhere(m => m.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            return GetAllWhere(m => m.Name.Equals(name, StringComparison.OrdinalIgnoreCase) && m.Game == _game);
         }
 
         public IEnumerable<T> GetAll()
         {
-            return Repository.GetAll();
+            return Repository.GetAll().Where(item => item.Game == _game);
         }
 
         public void Add(T model)
@@ -53,7 +61,7 @@ namespace FrannHammer.Api.Services
 
         public IEnumerable<T> GetAllWhere(Func<T, bool> @where)
         {
-            var moves = Repository.GetAllWhere(where);
+            var moves = Repository.GetAllWhere(where).Where(i => i.Game == _game);
 
             return moves;
         }

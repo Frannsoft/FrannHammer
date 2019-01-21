@@ -93,7 +93,27 @@ namespace FrannHammer.NetCore.WebApi.HypermediaServices
         {
             string baseUrl = Context.Request.IsHttps ? "https://" : "http://";
             baseUrl += Context.Request.Host.Value;
-            return LinkProvider.CreateLink<TLink>(baseUrl + rawHypermediaLink);
+
+            string queryParameterName = "game";
+
+            string gameQueryParameter = $"?{queryParameterName}=";
+
+            if (Context.Request.Query.ContainsKey(queryParameterName))
+            {
+                if (Context.Request.Query[queryParameterName].ToString().Equals("ultimate", StringComparison.OrdinalIgnoreCase))
+                {
+                    gameQueryParameter += "ultimate";
+                }
+                else
+                {
+                    gameQueryParameter += "smash4";
+                }
+            }
+            else
+            {
+                gameQueryParameter += "smash4";
+            }
+            return LinkProvider.CreateLink<TLink>(baseUrl + rawHypermediaLink + gameQueryParameter);
         }
     }
 }

@@ -1,10 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.WebScraping.Contracts.Moves;
 using FrannHammer.WebScraping.Domain.Contracts;
 using HtmlAgilityPack;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FrannHammer.WebScraping.Moves
 {
@@ -18,11 +18,11 @@ namespace FrannHammer.WebScraping.Moves
             Scrape = character =>
             {
                 var moveTableRows = GetTableRows(character.SourceUrl, ScrapingConstants.XPathTableNodeAerialStats);
-                return moveTableRows.Select(row => GetMove(GetTableCells(row), character));
+                return moveTableRows.Select(row => GetMove(GetTableCells(row), character, character.SourceUrl));
             };
         }
 
-        protected override IMove GetMove(HtmlNodeCollection cells, WebCharacter character)
+        protected override IMove GetMove(HtmlNodeCollection cells, WebCharacter character, string sourceUrl)
         {
             var move = default(IMove);
 
@@ -54,6 +54,7 @@ namespace FrannHammer.WebScraping.Moves
                 move.MoveType = MoveType.Aerial.GetEnumDescription();
                 move.Owner = character.Name;
                 move.OwnerId = character.OwnerId;
+                move.Game = character.SourceUrl.Contains("Ultimate") ? Games.Ultimate : Games.Smash4;
             }
 
             return move;

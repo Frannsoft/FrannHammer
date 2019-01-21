@@ -36,7 +36,7 @@ namespace FrannHammer.NetCore.WebApi
             Guard.VerifyObjectNotNull(characterAttributeRowService, nameof(characterAttributeRowService));
             Guard.VerifyObjectNotNull(uniqueDataService, nameof(uniqueDataService));
 
-            _characterDataScraper.PopulateCharacterFromWeb(character);
+            //_characterDataScraper.PopulateCharacterFromWeb(character);
 
             var entityCharacter = Mapper.Map<Character>(character);
             characterService.Add(entityCharacter);

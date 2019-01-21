@@ -36,7 +36,7 @@ namespace FrannHammer.DefaultContainer.Configuration.ContainerModules
             builder.RegisterType<DefaultAttributeProvider>().As<IAttributeProvider>();
             builder.RegisterType<DefaultImageScrapingProvider>().As<IImageScrapingProvider>();
             builder.RegisterType<DefaultImageScrapingService>().As<IImageScrapingService>();
-            builder.RegisterType<DefaultWebServices>().As<IWebServices>();
+            builder.RegisterType<DefaultWebServices>().As<IWebServices>().SingleInstance();
             builder.RegisterType<DefaultAttributeScrapingServices>().As<IAttributeScrapingServices>();
             builder.RegisterType<DefaultMoveScrapingServices>().As<IMoveScrapingServices>();
             builder.RegisterType<DefaultMovementScrapingServices>().As<IMovementScrapingServices>();

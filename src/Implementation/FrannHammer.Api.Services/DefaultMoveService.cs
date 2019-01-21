@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FrannHammer.Api.Services.Contracts;
 using FrannHammer.DataAccess.Contracts;
+using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
-using FrannHammer.Api.Services.Contracts;
+using FrannHammer.Domain.PropertyParsers;
 using FrannHammer.Utility;
+using FrannHammer.WebScraping;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using FrannHammer.Domain;
-using FrannHammer.Domain.PropertyParsers;
-using FrannHammer.WebScraping;
 using static FrannHammer.Domain.PropertyParsers.MoveDataNameConstants;
 
 namespace FrannHammer.Api.Services
@@ -17,11 +17,10 @@ namespace FrannHammer.Api.Services
     {
         private readonly IQueryMappingService _queryMappingService;
 
-        public DefaultMoveService(IRepository<IMove> repository, IQueryMappingService queryMappingService)
-            : base(repository)
+        public DefaultMoveService(IRepository<IMove> repository, IQueryMappingService queryMappingService, string game)
+            : base(repository, game)
         {
             Guard.VerifyObjectNotNull(queryMappingService, nameof(queryMappingService));
-
             _queryMappingService = queryMappingService;
         }
 

@@ -64,6 +64,7 @@ namespace FrannHammer.WebScraping.Movements
                 movement.Value = value;
                 movement.Owner = character.Name;
                 movement.OwnerId = character.OwnerId;
+                movement.Game = character.SourceUrl.Contains("Ultimate") ? Games.Ultimate : Games.Smash4;
             }
 
             return movement;

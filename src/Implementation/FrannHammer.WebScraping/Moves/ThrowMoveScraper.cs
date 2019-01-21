@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
-using FrannHammer.Domain.Contracts;
+﻿using FrannHammer.Domain.Contracts;
 using FrannHammer.WebScraping.Contracts.Moves;
 using FrannHammer.WebScraping.Domain.Contracts;
 using HtmlAgilityPack;
+using System;
+using System.Linq;
 
 namespace FrannHammer.WebScraping.Moves
 {
@@ -22,7 +22,7 @@ namespace FrannHammer.WebScraping.Moves
             };
         }
 
-        protected override IMove GetMove(HtmlNodeCollection cells, WebCharacter character)
+        protected override IMove GetMove(HtmlNodeCollection cells, WebCharacter character, string sourceUrl = "")
         {
             if (!string.IsNullOrEmpty(cells[0].InnerText) && cells.Count > 1)
             {
@@ -37,18 +37,24 @@ namespace FrannHammer.WebScraping.Moves
 
                 if (name.IndexOf(ScrapingConstants.CommonMoveNames.Throw, StringComparison.OrdinalIgnoreCase) >= 0)
                 {
-                    bool isWeightDependent = TranslateYesNoToBool(cells[1].InnerText);
+                    if (!character.SourceUrl.Contains("Ultimate")) //this value isn't present in Ultimate values on kh site yet.
+                    {
+                        bool isWeightDependent = TranslateYesNoToBool(cells[1].InnerText);
+                        move.IsWeightDependent = isWeightDependent;
+                    }
 
                     string baseDamage = cells[2].InnerText;
                     string angle = cells[3].InnerText;
                     string baseKnockbackSetKnockback = cells[4].InnerText;
                     string knockbackGrowth = cells[5].InnerText;
 
-                    move.IsWeightDependent = isWeightDependent;
                     move.BaseDamage = baseDamage;
                     move.Angle = angle;
                     move.BaseKnockBackSetKnockback = baseKnockbackSetKnockback;
                     move.KnockbackGrowth = knockbackGrowth;
+
+                    move.Game = character.SourceUrl.Contains("Ultimate") ? Games.Ultimate : Games.Smash4;
+
                     return move;
                 }
                 else

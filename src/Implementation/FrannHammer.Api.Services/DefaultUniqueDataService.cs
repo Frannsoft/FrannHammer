@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using FrannHammer.Api.Services.Contracts;
+﻿using FrannHammer.Api.Services.Contracts;
 using FrannHammer.DataAccess.Contracts;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.Utility;
+using System.Collections.Generic;
 
 namespace FrannHammer.Api.Services
 {
@@ -10,8 +10,8 @@ namespace FrannHammer.Api.Services
     {
         private readonly IQueryMappingService _queryMappingService;
 
-        public DefaultUniqueDataService(IRepository<IUniqueData> repository, IQueryMappingService queryMappingService)
-            : base(repository)
+        public DefaultUniqueDataService(IRepository<IUniqueData> repository, IQueryMappingService queryMappingService, string game)
+            : base(repository, game)
         {
             Guard.VerifyObjectNotNull(queryMappingService, nameof(queryMappingService));
             _queryMappingService = queryMappingService;

@@ -73,7 +73,8 @@ namespace FrannHammer.WebScraping.Domain
             new WiiFitTrainer(),
             new Yoshi(),
             new Zelda(),
-            new ZeroSuitSamus()
+            new ZeroSuitSamus(),
+            new Incineroar()
         };
     }
 }

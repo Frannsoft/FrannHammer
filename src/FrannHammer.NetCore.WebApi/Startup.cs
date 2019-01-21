@@ -25,6 +25,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
@@ -63,6 +64,7 @@ namespace FrannHammer.NetCore.WebApi
                 .AddJsonOptions(options =>
                 {
                     options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                    options.SerializerSettings.Converters.Add(new StringEnumConverter());
                 })
                 .AddControllersAsServices();
 
@@ -100,7 +102,6 @@ namespace FrannHammer.NetCore.WebApi
 
             var containerBuilder = new ContainerBuilder();
 
-
             //seed data
             var builder = new ContainerBuilder();
 
@@ -117,7 +118,6 @@ namespace FrannHammer.NetCore.WebApi
             var characterDataScraper = container.Resolve<ICharacterDataScraper>();
             var seeder = container.Resolve<DefaultSeeder>();
 
-            var charactersToSeed = Characters.All.Take(4);
 
             var bagCharacterData = new ConcurrentBag<ICharacter>();
             var bagMoveData = new ConcurrentBag<IMove>();
@@ -125,35 +125,47 @@ namespace FrannHammer.NetCore.WebApi
             var bagAttributeData = new ConcurrentBag<ICharacterAttributeRow>();
             var bagUniqueData = new ConcurrentBag<IUniqueData>();
 
+            var charactersToSeed = Characters.All.Where(c => c.DisplayName == "Ganondorf" || c.DisplayName == "Incineroar");
+
             Parallel.ForEach(charactersToSeed, character =>
             {
                 Console.WriteLine($"Scraping data for '{character.Name}'...");
-                characterDataScraper.PopulateCharacterFromWeb(character);
+                List<string> sourceUrls = new List<string> { "http://kuroganehammer.com/Smash4/", "http://kuroganehammer.com/Ultimate/" };
 
-                bagCharacterData.Add(character);
-                //_moveData.AddRange(character.Moves);
-                character.Moves.ToList().ForEach(item =>
+                if (character.OwnerId > 58)
                 {
-                    bagMoveData.Add(item);
-                });
+                    sourceUrls.RemoveAt(0); //remove the smash 4 url if it's an Ultimate-only character
+                }
 
-                //_movementData.AddRange(character.Movements);
-                character.Movements.ToList().ForEach(item =>
+                foreach (var sourceUrl in sourceUrls)
                 {
-                    bagMovementData.Add(item);
-                });
+                    var populatedCharacter = characterDataScraper.PopulateCharacterFromWeb(character, sourceUrl);
 
-                //_characterAttributeRowData.AddRange(character.AttributeRows);
-                character.AttributeRows.ToList().ForEach(item =>
-                {
-                    bagAttributeData.Add(item);
-                });
+                    bagCharacterData.Add(populatedCharacter);
+                    //_moveData.AddRange(character.Moves);
+                    populatedCharacter.Moves.ToList().ForEach(item =>
+                    {
+                        bagMoveData.Add(item);
+                    });
 
-                //_uniqueData.AddRange(character.UniqueProperties);
-                character.UniqueProperties.ToList().ForEach(item =>
-                {
-                    bagUniqueData.Add(item);
-                });
+                    //_movementData.AddRange(character.Movements);
+                    populatedCharacter.Movements.ToList().ForEach(item =>
+                    {
+                        bagMovementData.Add(item);
+                    });
+
+                    //_characterAttributeRowData.AddRange(character.AttributeRows);
+                    populatedCharacter.AttributeRows.ToList().ForEach(item =>
+                    {
+                        bagAttributeData.Add(item);
+                    });
+
+                    //_uniqueData.AddRange(character.UniqueProperties);
+                    populatedCharacter.UniqueProperties.ToList().ForEach(item =>
+                    {
+                        bagUniqueData.Add(item);
+                    });
+                }
             });
 
             _characterData = bagCharacterData.ToList();
@@ -238,11 +250,14 @@ namespace FrannHammer.NetCore.WebApi
                     return c.Resolve<List<IUniqueData>>();
                 });
 
+            const string RepositoryParameterName = "repository";
+            const string QueryMappingParameterName = "queryMappingService";
+
             containerBuilder.RegisterModule<ApiServicesModule>();
 
             containerBuilder.RegisterType<DefaultCharacterService>()
                .As<ICharacterService>()
-               .WithParameter((pi, c) => pi.Name == "repository",
+               .WithParameter((pi, c) => pi.Name == RepositoryParameterName,
                    (pi, c) => c.Resolve<IRepository<ICharacter>>())
                    .WithParameter((pi, c) => pi.Name == "dtoProvider",
                        (pi, c) => c.Resolve<IDtoProvider>())
@@ -254,8 +269,61 @@ namespace FrannHammer.NetCore.WebApi
                        (pi, c) =>
                        {
                            c.Resolve<IActionContextAccessor>().ActionContext.HttpContext.Request.Query.TryGetValue("game", out StringValues game);
-                           return game.ToString();
+                           return string.IsNullOrEmpty(game) ? "Smash4" : game.ToString();
                        });
+
+            containerBuilder.RegisterType<DefaultMoveService>()
+              .As<IMoveService>()
+              .WithParameter((pi, c) => pi.Name == RepositoryParameterName,
+                  (pi, c) => c.Resolve<IRepository<IMove>>())
+              .WithParameter((pi, c) => pi.Name == QueryMappingParameterName,
+               (pi, c) => c.Resolve<IQueryMappingService>())
+                .WithParameter((pi, c) => pi.Name == "game",
+                       (pi, c) =>
+                       {
+                           c.Resolve<IActionContextAccessor>().ActionContext.HttpContext.Request.Query.TryGetValue("game", out StringValues game);
+                           return string.IsNullOrEmpty(game) ? "Smash4" : game.ToString();
+                       });
+
+
+            containerBuilder.RegisterType<DefaultMovementService>()
+                .As<IMovementService>()
+                .WithParameter((pi, c) => pi.Name == RepositoryParameterName,
+                    (pi, c) => c.Resolve<IRepository<IMovement>>())
+                    .WithParameter((pi, c) => pi.Name == "game",
+                       (pi, c) =>
+                       {
+                           c.Resolve<IActionContextAccessor>().ActionContext.HttpContext.Request.Query.TryGetValue("game", out StringValues game);
+                           return string.IsNullOrEmpty(game) ? "Smash4" : game.ToString();
+                       });
+
+
+            containerBuilder.RegisterType<DefaultUniqueDataService>()
+                .As<IUniqueDataService>()
+                .WithParameter((pi, c) => pi.Name == RepositoryParameterName,
+                    (pi, c) => c.Resolve<IRepository<IUniqueData>>())
+                .WithParameter((pi, c) => pi.Name == QueryMappingParameterName,
+                 (pi, c) => c.Resolve<IQueryMappingService>())
+                  .WithParameter((pi, c) => pi.Name == "game",
+                       (pi, c) =>
+                       {
+                           c.Resolve<IActionContextAccessor>().ActionContext.HttpContext.Request.Query.TryGetValue("game", out StringValues game);
+                           return string.IsNullOrEmpty(game) ? "Smash4" : game.ToString();
+                       });
+
+            containerBuilder.RegisterType<DefaultCharacterAttributeService>()
+              .As<ICharacterAttributeRowService>()
+              .WithParameter((pi, c) => pi.Name == RepositoryParameterName,
+                  (pi, c) => c.Resolve<IRepository<ICharacterAttributeRow>>())
+                  .WithParameter((pi, c) => pi.Name == "characterAttributeNameProvider",
+                  (pi, c) => c.Resolve<ICharacterAttributeNameProvider>())
+                   .WithParameter((pi, c) => pi.Name == "game",
+                       (pi, c) =>
+                       {
+                           c.Resolve<IActionContextAccessor>().ActionContext.HttpContext.Request.Query.TryGetValue("game", out StringValues game);
+                           return string.IsNullOrEmpty(game) ? "Smash4" : game.ToString();
+                       });
+
 
             containerBuilder.RegisterModule<ModelModule>();
             //containerBuilder.RegisterModule<ResourceEnrichmentModule>();

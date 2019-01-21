@@ -1,5 +1,6 @@
 ﻿using FrannHammer.Utility;
 using FrannHammer.WebScraping.Contracts.Images;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace FrannHammer.WebScraping.Images
@@ -22,6 +23,11 @@ namespace FrannHammer.WebScraping.Images
             {
                 using (var response = await client.GetAsync(imageSourceUrl))
                 {
+                    if (response.StatusCode == HttpStatusCode.NotFound) //ultimate logos not ready yet on kh site.
+                    {
+                        return colorHexValue;
+                    }
+
                     response.EnsureSuccessStatusCode();
 
                     using (var inputStream = _imageScrapingProvider.CreateMemoryStream())

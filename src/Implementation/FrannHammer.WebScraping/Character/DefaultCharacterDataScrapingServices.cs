@@ -47,16 +47,19 @@ namespace FrannHammer.WebScraping.Character
             _instanceIdGenerator = instanceIdGenerator;
         }
 
-        public void PopulateCharacter(WebCharacter character)
+        public WebCharacter PopulateCharacter(WebCharacter character, string sourceBaseUrl)
         {
+            var populatedCharacter = new WebCharacter(character.Name, character.EscapedCharacterName, character.UniqueScraperTypes, character.PotentialScrapingNames);
+            populatedCharacter.SourceUrl = sourceBaseUrl + populatedCharacter.EscapedCharacterName;
+
             const string srcAttributeKey = "src";
             const string characterNameKey = "[charactername]";
-            var htmlParser = _webServices.CreateParserFromSourceUrl(character.SourceUrl);
+            var htmlParser = _webServices.CreateParserFromSourceUrl(populatedCharacter.SourceUrl);//(character.SourceUrl);
             string displayNameHtml = htmlParser.GetSingle(ScrapingConstants.XPathFrameDataVersion);
 
             string displayName = GetCharacterDisplayName(displayNameHtml);
 
-            var thumbnailHtmlParser = _webServices.CreateParserFromSourceUrl(WebCharacter.SourceUrlBase);
+            var thumbnailHtmlParser = _webServices.CreateParserFromSourceUrl(populatedCharacter.SourceUrl.Replace($"/{populatedCharacter.Name}", string.Empty));//(WebCharacter.SourceSmash4UrlBase);
             string thumbnailHtml = thumbnailHtmlParser.GetSingle(ScrapingConstants.XPathThumbnailUrl.Replace(characterNameKey, character.DisplayName));
 
             string thumbnailUrl = string.Empty;
@@ -70,14 +73,14 @@ namespace FrannHammer.WebScraping.Character
 
                     if (!string.IsNullOrEmpty(thumbnailHtml))
                     {
-                        thumbnailUrl = GetThumbnailUrl(srcAttributeKey, thumbnailHtml, WebCharacter.SourceUrlBase);
+                        thumbnailUrl = GetThumbnailUrl(srcAttributeKey, thumbnailHtml, populatedCharacter.SourceUrl);//WebCharacter.SourceSmash4UrlBase);
                         break;
                     }
                 }
             }
             else
             {
-                thumbnailUrl = GetThumbnailUrl(srcAttributeKey, thumbnailHtml, WebCharacter.SourceUrlBase);
+                thumbnailUrl = GetThumbnailUrl(srcAttributeKey, thumbnailHtml, populatedCharacter.SourceUrl);// WebCharacter.SourceSmash4UrlBase);
             }
 
             //character details
@@ -85,43 +88,55 @@ namespace FrannHammer.WebScraping.Character
             Uri mainImageUri;
             if (!Uri.TryCreate(mainImageUrl, UriKind.Absolute, out mainImageUri)) //add base address if it doesn't exist
             {
-                mainImageUrl = WebCharacter.SourceUrlBase + mainImageUrl;
+                mainImageUrl = populatedCharacter.SourceUrl/*WebCharacter.SourceSmash4UrlBase*/ + mainImageUrl;
             }
 
             //color hex
             string colorTheme = _imageScrapingService.GetColorHexValue(mainImageUrl).Result;
 
             //movements
-            var movements = _movementScraper.GetMovementsForCharacter(character);
+            var movements = _movementScraper.GetMovementsForCharacter(populatedCharacter);
 
             //moves
-            var moves = _characterMoveScraper.ScrapeMoves(character);
+            var moves = _characterMoveScraper.ScrapeMoves(populatedCharacter);
 
             //attributes
             var attributeRows = new List<ICharacterAttributeRow>();
             foreach (var attributeScraper in _attributeScrapers)
             {
-                attributeRows.AddRange(attributeScraper.Scrape(character));
+                attributeRows.AddRange(attributeScraper.Scrape(populatedCharacter));
             }
 
             //unique data
             var uniqueData = new List<IUniqueData>();
-            var uniqueDataScrapersForThisCharacter = GetUniqueDataScrapersForCharacter(character);
+            var uniqueDataScrapersForThisCharacter = GetUniqueDataScrapersForCharacter(populatedCharacter);
             foreach (var uniqueDataScraper in uniqueDataScrapersForThisCharacter)
             {
-                uniqueData.AddRange(uniqueDataScraper.Scrape(character));
+                uniqueData.AddRange(uniqueDataScraper.Scrape(populatedCharacter));
             }
 
-            character.InstanceId = _instanceIdGenerator.GenerateId();
-            character.FullUrl = character.SourceUrl;
-            character.DisplayName = displayName;
-            character.ThumbnailUrl = thumbnailUrl;
-            character.MainImageUrl = mainImageUrl;
-            character.ColorTheme = colorTheme;
-            character.Movements = movements;
-            character.Moves = moves;
-            character.AttributeRows = attributeRows;
-            character.UniqueProperties = uniqueData;
+            //character.InstanceId = _instanceIdGenerator.GenerateId();
+            //character.FullUrl = character.SourceUrl;
+            //character.DisplayName = displayName;
+            //character.ThumbnailUrl = thumbnailUrl;
+            //character.MainImageUrl = mainImageUrl;
+            //character.ColorTheme = colorTheme;
+            //character.Movements = movements;
+            //character.Moves = moves;
+            //character.AttributeRows = attributeRows;
+            //character.UniqueProperties = uniqueData;
+            populatedCharacter.InstanceId = _instanceIdGenerator.GenerateId();
+            populatedCharacter.FullUrl = populatedCharacter.SourceUrl;
+            populatedCharacter.DisplayName = displayName;
+            populatedCharacter.ThumbnailUrl = thumbnailUrl;
+            populatedCharacter.MainImageUrl = mainImageUrl;
+            populatedCharacter.ColorTheme = colorTheme;
+            populatedCharacter.Movements = movements;
+            populatedCharacter.Moves = moves;
+            populatedCharacter.AttributeRows = attributeRows;
+            populatedCharacter.UniqueProperties = uniqueData;
+            populatedCharacter.Game = populatedCharacter.SourceUrl.Contains("Ultimate") ? Games.Ultimate : Games.Smash4;
+            return populatedCharacter;
         }
 
         private IEnumerable<IUniqueDataScraper> GetUniqueDataScrapersForCharacter(WebCharacter character)
@@ -136,11 +151,15 @@ namespace FrannHammer.WebScraping.Character
             string thumbnailUriFromSource = HtmlNode.CreateNode(thumbnailHtml).GetAttributeValue(attributeKey, string.Empty);
 
             //dump the '/smash4' at the start of these if it exists.  This helps ensure scraped urls are sanitized and valid.
-            if (thumbnailUriFromSource.StartsWith("/Smash4/"))
-            {
-                thumbnailUriFromSource = thumbnailUriFromSource.Remove(0, 8);
-            }
-            return urlRoot + thumbnailUriFromSource;
+            //if (thumbnailUriFromSource.StartsWith("/Smash4/"))
+            //{
+            //    thumbnailUriFromSource = thumbnailUriFromSource.Remove(0, 8);
+            //}
+            //if (thumbnailUriFromSource.StartsWith("/Ultimate/"))
+            //{
+            //    thumbnailUriFromSource = thumbnailUriFromSource.Remove(0, 10);
+            //}
+            return "http://kuroganehammer.com/" + thumbnailUriFromSource;//urlRoot + thumbnailUriFromSource;
         }
 
         private static string GetCharacterDisplayName(string rawDisplayNameHtml)

@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using FrannHammer.Utility;
+﻿using FrannHammer.Utility;
 using FrannHammer.WebScraping.Contracts.HtmlDocs;
 using HtmlAgilityPack;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FrannHammer.WebScraping.HtmlDocs
 {

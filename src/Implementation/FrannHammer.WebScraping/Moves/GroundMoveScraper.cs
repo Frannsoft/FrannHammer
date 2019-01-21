@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using FrannHammer.Domain.Contracts;
+﻿using FrannHammer.Domain.Contracts;
 using FrannHammer.WebScraping.Contracts.Moves;
 using FrannHammer.WebScraping.Domain.Contracts;
 using HtmlAgilityPack;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FrannHammer.WebScraping.Moves
 {
@@ -21,7 +21,7 @@ namespace FrannHammer.WebScraping.Moves
 
                 //filter out null results.  The below scraping logic returns null for values that do not meet the criteria
                 //for a ground move.
-                return moveTableRows.Select(row => GetMove(GetTableCells(row), character)).Where(move => move != null);
+                return moveTableRows.Select(row => GetMove(GetTableCells(row), character, character.SourceUrl)).Where(move => move != null);
             };
         }
 
@@ -39,7 +39,7 @@ namespace FrannHammer.WebScraping.Moves
 
                 //get row data
                 var tableRows = movesTableHtmlNode.SelectNodes(ScrapingConstants.XPathTableRows);
-                        
+
 
                 if (tableRows == null)
                 {
@@ -83,7 +83,7 @@ namespace FrannHammer.WebScraping.Moves
             });
         }
 
-        protected override IMove GetMove(HtmlNodeCollection cells, WebCharacter character)
+        protected override IMove GetMove(HtmlNodeCollection cells, WebCharacter character, string sourceUrl)
         {
             var move = default(IMove);
 
@@ -97,18 +97,43 @@ namespace FrannHammer.WebScraping.Moves
 
             if (!string.IsNullOrEmpty(cells[0].InnerText) && cells.Count > 1)
             {
+                move = ScrapingServices.CreateMove();
+
                 string hitboxActive = cells[1].InnerText;
                 string faf = cells[2].InnerText;
-                string basedmg = cells[3].InnerText;
+
+                if (sourceUrl.Contains("Smash4"))
+                {
+                    string basedmg = cells[3].InnerText;
+                    move.BaseDamage = basedmg;
+                }
+                else if (sourceUrl.Contains("Ultimate"))
+                {
+                    string basedmg = string.Empty;
+                    var baseDmgCell = cells[3];//<div class="tooltip">11<span class="tooltiptext">1v1: 13.2</span></div>
+                    var normalBaseDamageNode = baseDmgCell.SelectSingleNode("./div[@class = 'tooltip']");
+                    if (normalBaseDamageNode != null)
+                    {
+                        string normalBaseDamage = normalBaseDamageNode.FirstChild.InnerText;
+
+                        string oneVoneBaseDamage = normalBaseDamageNode.LastChild.InnerText;
+                        basedmg = normalBaseDamage + oneVoneBaseDamage;
+                    }
+                    else
+                    {
+                        basedmg = cells[3].InnerText;
+                    }
+                    move.Game = Games.Ultimate;
+                    move.BaseDamage = basedmg;
+                }
+
                 string angle = cells[4].InnerText;
                 string bkbwbkb = cells[5].InnerText;
                 string kbg = cells[6].InnerText;
 
-                move = ScrapingServices.CreateMove();
-
                 move.Name = name;
+
                 move.Angle = angle;
-                move.BaseDamage = basedmg;
                 move.BaseKnockBackSetKnockback = bkbwbkb;
                 move.FirstActionableFrame = faf;
                 move.HitboxActive = hitboxActive;

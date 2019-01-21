@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using FrannHammer.DataAccess.Contracts;
+﻿using FrannHammer.DataAccess.Contracts;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.Utility;
+using System;
+using System.Collections.Generic;
 
 namespace FrannHammer.Api.Services
 {
     public class OwnerBasedApiService<T> : BaseApiService<T>
         where T : IHaveAnOwner, IHaveAnOwnerId, IModel
     {
-        public OwnerBasedApiService(IRepository<T> repository)
-            : base(repository)
+        public OwnerBasedApiService(IRepository<T> repository, string game)
+            : base(repository, game)
         { }
 
         public virtual IEnumerable<T> GetAllWhereCharacterNameIs(string name)

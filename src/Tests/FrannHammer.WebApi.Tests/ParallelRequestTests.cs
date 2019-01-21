@@ -87,12 +87,12 @@ namespace FrannHammer.WebApi.Tests
         }
 
         [Test]
-        public async Task ExecuteGETsInParallelOnTestEnvironment()
+        public async Task ExecuteGETsInParallelOnDropletEnvironment()
         {
             using (var httpClient = new HttpClient())
             {
                 var semaphoreSlim = new SemaphoreSlim(4);
-                var times = Enumerable.Range(0, 50);
+                var times = Enumerable.Range(0, 100);
 
                 var trackedTasks = new List<Task>();
 
@@ -103,7 +103,7 @@ namespace FrannHammer.WebApi.Tests
                     {
                         var sw = new Stopwatch();
                         sw.Start();
-                        var response = await httpClient.GetAsync("https://core-test-khapi.azurewebsites.net/api/characters/1/moves");
+                        var response = await httpClient.GetAsync("https://api.redbrickroadstudio.com/api/characters/1/moves");
                         response.EnsureSuccessStatusCode();
 
                         string content = await response.Content.ReadAsStringAsync();

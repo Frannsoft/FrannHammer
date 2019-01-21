@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using FrannHammer.Domain.Contracts;
+﻿using FrannHammer.Domain.Contracts;
 using FrannHammer.WebScraping.Domain.Contracts;
+using System;
+using System.Collections.Generic;
 
 namespace FrannHammer.WebScraping.Contracts.Moves
 {

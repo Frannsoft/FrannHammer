@@ -11,8 +11,8 @@ namespace FrannHammer.Api.Services
     {
         private readonly IQueryMappingService _queryMappingService;
 
-        public DefaultMovementService(IRepository<IMovement> repository, IQueryMappingService queryMappingService)
-            : base(repository)
+        public DefaultMovementService(IRepository<IMovement> repository, IQueryMappingService queryMappingService, string game)
+            : base(repository, game)
         {
             Guard.VerifyObjectNotNull(queryMappingService, nameof(queryMappingService));
             _queryMappingService = queryMappingService;
