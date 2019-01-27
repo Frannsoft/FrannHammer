@@ -22,7 +22,7 @@ namespace FrannHammer.WebScraping.Moves
             };
         }
 
-        protected override IMove GetMove(HtmlNodeCollection cells, WebCharacter character, string sourceUrl = "")
+        protected override IMove GetMove(HtmlNodeCollection cells, WebCharacter character)
         {
             if (!string.IsNullOrEmpty(cells[0].InnerText) && cells.Count > 1)
             {
@@ -37,23 +37,32 @@ namespace FrannHammer.WebScraping.Moves
 
                 if (name.IndexOf(ScrapingConstants.CommonMoveNames.Throw, StringComparison.OrdinalIgnoreCase) >= 0)
                 {
-                    if (!character.SourceUrl.Contains("Ultimate")) //this value isn't present in Ultimate values on kh site yet.
+                    if (character.SourceUrl.Contains("Smash4")) //this value isn't present in Ultimate values on kh site yet.
                     {
                         bool isWeightDependent = TranslateYesNoToBool(cells[1].InnerText);
                         move.IsWeightDependent = isWeightDependent;
                     }
+                    else if (character.SourceUrl.Contains("Ultimate"))
+                    {
+                        string baseDamage = new UltimateBaseDamageResolver().GetRawValue(cells[1]);
+                        move.BaseDamage = baseDamage;
+                        move.Game = character.Game;
+                    }
+                    else
+                    {
+                        string baseDamage = new Smash4BaseDamageResolver().GetRawValue(cells[2]);
+                        move.BaseDamage = baseDamage;
+                    }
 
-                    string baseDamage = cells[2].InnerText;
                     string angle = cells[3].InnerText;
                     string baseKnockbackSetKnockback = cells[4].InnerText;
                     string knockbackGrowth = cells[5].InnerText;
 
-                    move.BaseDamage = baseDamage;
                     move.Angle = angle;
                     move.BaseKnockBackSetKnockback = baseKnockbackSetKnockback;
                     move.KnockbackGrowth = knockbackGrowth;
 
-                    move.Game = character.SourceUrl.Contains("Ultimate") ? Games.Ultimate : Games.Smash4;
+                    //move.Game = character.SourceUrl.Contains("Ultimate") ? Games.Ultimate : Games.Smash4;
 
                     return move;
                 }

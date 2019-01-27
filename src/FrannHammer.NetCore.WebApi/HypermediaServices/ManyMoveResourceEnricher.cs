@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace FrannHammer.NetCore.WebApi.HypermediaServices
 {
-    public class ManyMoveResourceEnricher : ObjectContentResponseEnricher<IEnumerable<IMove>, IEnumerable<MoveResource>>
+    public class ManyMoveResourceEnricher : ObjectContentResponseEnricher<IEnumerable<IMove>, IEnumerable<IMoveResource>>
     {
         private readonly MoveResourceEnricher _singleResourceEnricher;
 
@@ -15,7 +15,7 @@ namespace FrannHammer.NetCore.WebApi.HypermediaServices
             _singleResourceEnricher = singleResourceEnricher;
         }
 
-        public override IEnumerable<MoveResource> Enrich(IEnumerable<IMove> content)
+        public override IEnumerable<IMoveResource> Enrich(IEnumerable<IMove> content)
         {
             return content.Select(move => _singleResourceEnricher.Enrich(move));
         }

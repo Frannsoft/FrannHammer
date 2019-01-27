@@ -1,4 +1,5 @@
-﻿using FrannHammer.Domain.Contracts;
+﻿using FrannHammer.Domain;
+using FrannHammer.Domain.Contracts;
 using FrannHammer.WebScraping.Contracts.Movements;
 using FrannHammer.WebScraping.Domain;
 using FrannHammer.WebScraping.HtmlParsing;
@@ -39,9 +40,11 @@ namespace FrannHammer.WebScraping.Tests
         [Test]
         public void ScrapeMovementsForCharacter()
         {
-            var characterBeingDataScraped = Characters.Greninja;
+            var character = Characters.Greninja;
+
+            character.SourceUrl = $"{Keys.KHSiteBaseUrl}Smash4/{character.EscapedCharacterName}";
             var movementScrapingService = new DefaultMovementScraper(_scrapingServices);
-            var movements = movementScrapingService.GetMovementsForCharacter(characterBeingDataScraped).ToList();
+            var movements = movementScrapingService.GetMovementsForCharacter(character).ToList();
 
             CollectionAssert.AllItemsAreNotNull(movements);
             CollectionAssert.AllItemsAreUnique(movements);
@@ -49,7 +52,7 @@ namespace FrannHammer.WebScraping.Tests
 
             movements.ForEach(movement =>
             {
-                AssertMovementIsValid(movement, characterBeingDataScraped);
+                AssertMovementIsValid(movement, character);
             });
         }
     }

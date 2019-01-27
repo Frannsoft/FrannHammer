@@ -1,4 +1,5 @@
-﻿using FrannHammer.WebScraping.Attributes;
+﻿using FrannHammer.Domain;
+using FrannHammer.WebScraping.Attributes;
 using FrannHammer.WebScraping.Character;
 using FrannHammer.WebScraping.Contracts;
 using FrannHammer.WebScraping.Contracts.Attributes;
@@ -27,33 +28,48 @@ using static FrannHammer.Tests.Utility.Categories;
 namespace FrannHammer.WebScraping.Tests
 {
     [TestFixture]
+    [TestFixtureSource(nameof(FixtureArgs))]
     public class DefaultCharacterDataScrapingServiceIntegrationTests
     {
-        private IMovementScrapingServices _movementScrapingServices;
-        private IMoveScrapingServices _moveScrapingServices;
-        private IAttributeScrapingServices _attributeScrapingServices;
-        private IHtmlParserProvider _htmlParserProvider;
-        private IMovementProvider _movementProvider;
-        private IPageDownloader _pageDownloader;
-        private IWebClientProvider _webClientProvider;
-        private IAttributeProvider _attributeProvider;
-        private IMoveProvider _moveProvider;
-        private IImageScrapingService _imageScrapingService;
-        private IImageScrapingProvider _imageScrapingProvider;
-        private IMovementScraper _movementScraper;
-        private ICharacterDataScrapingServices _characterDataScrapingServices;
-        private GroundMoveScraper _groundMoveScraper;
-        private AerialMoveScraper _aerialMoveScraper;
-        private SpecialMoveScraper _specialMoveScraper;
-        private ThrowMoveScraper _throwMoveScraper;
-        private ICharacterMoveScraper _characterMoveScraper;
-        private IWebServices _webServices;
-        private DefaultCharacterDataScraper _characterDataScraper;
-        private IUniqueDataScrapingServices _uniqueDataScrapingServices;
-        private IUniqueDataProvider _uniqueDataProvider;
+        private static IMovementScrapingServices _movementScrapingServices;
+        private static IMoveScrapingServices _moveScrapingServices;
+        private static IAttributeScrapingServices _attributeScrapingServices;
+        private static IHtmlParserProvider _htmlParserProvider;
+        private static IMovementProvider _movementProvider;
+        private static IPageDownloader _pageDownloader;
+        private static IWebClientProvider _webClientProvider;
+        private static IAttributeProvider _attributeProvider;
+        private static IMoveProvider _moveProvider;
+        private static IImageScrapingService _imageScrapingService;
+        private static IImageScrapingProvider _imageScrapingProvider;
+        private static IMovementScraper _movementScraper;
+        private static ICharacterDataScrapingServices _characterDataScrapingServices;
+        private static GroundMoveScraper _groundMoveScraper;
+        private static AerialMoveScraper _aerialMoveScraper;
+        private static SpecialMoveScraper _specialMoveScraper;
+        private static ThrowMoveScraper _throwMoveScraper;
+        private static ICharacterMoveScraper _characterMoveScraper;
+        private static IWebServices _webServices;
+        private static DefaultCharacterDataScraper _characterDataScraper;
+        private static IUniqueDataScrapingServices _uniqueDataScrapingServices;
+        private static IUniqueDataProvider _uniqueDataProvider;
 
-        [SetUp]
-        public void SetUp()
+        private readonly string _game;
+        private string _urlUnderTest;
+
+        public DefaultCharacterDataScrapingServiceIntegrationTests(string game)
+        {
+            _game = game;
+            _characterDataScraper = MakeCharacterDataScraper();
+        }
+
+        private static object[] FixtureArgs =
+        {
+            new object[]{"Smash4"},
+            new object[]{"Ultimate"}
+        };
+
+        public DefaultCharacterDataScraper MakeCharacterDataScraper()
         {
             var instanceIdGenerator = new InstanceIdGenerator();
             _htmlParserProvider = new DefaultHtmlParserProvider();
@@ -79,19 +95,19 @@ namespace FrannHammer.WebScraping.Tests
             _characterMoveScraper = new DefaultCharacterMoveScraper(new List<IMoveScraper> {
                 _groundMoveScraper, _aerialMoveScraper, _specialMoveScraper, _throwMoveScraper});
 
-            var attributeScrapers = AttributeScrapers.AllWithScrapingServices(_attributeScrapingServices);
+            var attributeScrapers = AttributeScrapers.AllWithScrapingServices(_attributeScrapingServices, _urlUnderTest);
 
             _movementScraper = new DefaultMovementScraper(_movementScrapingServices);
 
             _characterDataScrapingServices = new DefaultCharacterDataScrapingServices(_imageScrapingService, _movementScraper,
                 attributeScrapers, _characterMoveScraper, _uniqueDataScrapingServices, _webServices, instanceIdGenerator);
 
-            _characterDataScraper = new DefaultCharacterDataScraper(_characterDataScrapingServices);
+            return new DefaultCharacterDataScraper(_characterDataScrapingServices);
         }
 
         private static IEnumerable<WebCharacter> Characters()
         {
-            return new List<WebCharacter> { Domain.Characters.Cloud, Domain.Characters.Greninja, Domain.Characters.CaptainFalcon, Domain.Characters.DrMario };
+            return new List<WebCharacter> { Domain.Characters.DarkPit, Domain.Characters.Bowser, Domain.Characters.DrMario };
         }
 
         [Test]
@@ -99,7 +115,9 @@ namespace FrannHammer.WebScraping.Tests
         [TestCaseSource(nameof(Characters))]
         public void ExpectedCharacterDataCanBeScraped(WebCharacter character)
         {
-            _characterDataScraper.PopulateCharacterFromWeb(character);
+            _urlUnderTest = $"{Keys.KHSiteBaseUrl}{_game}/";
+            _characterDataScraper = MakeCharacterDataScraper();
+            character = _characterDataScraper.PopulateCharacterFromWeb(character, _urlUnderTest);
 
             Assert.That(character.FullUrl, Is.Not.Empty);
             Assert.That(character.ColorTheme, Is.Not.Empty);

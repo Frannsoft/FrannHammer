@@ -1,7 +1,8 @@
-﻿using System;
-using FrannHammer.Utility;
+﻿using FrannHammer.Utility;
 using FrannHammer.WebScraping.Contracts.PageDownloading;
 using FrannHammer.WebScraping.Contracts.WebClients;
+using System;
+using System.Net;
 
 namespace FrannHammer.WebScraping.PageDownloading
 {
@@ -16,9 +17,16 @@ namespace FrannHammer.WebScraping.PageDownloading
 
             string pageSource;
 
-            using (var client = webClientProvider.Create())
+            try
             {
-                pageSource = client.DownloadString(requestedPageSourceUri);
+                using (var client = webClientProvider.Create())
+                {
+                    pageSource = client.DownloadString(requestedPageSourceUri);
+                }
+            }
+            catch (WebException ex) when (((HttpWebResponse)ex.Response).StatusCode == HttpStatusCode.NotFound)
+            {
+                throw new PageNotFoundException(ex.Message, ex);
             }
 
             return pageSource;

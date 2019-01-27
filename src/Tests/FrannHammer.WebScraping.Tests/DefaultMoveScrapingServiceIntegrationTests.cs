@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.WebScraping.Contracts.Moves;
 using FrannHammer.WebScraping.Domain;
@@ -10,16 +8,32 @@ using FrannHammer.WebScraping.Moves;
 using FrannHammer.WebScraping.PageDownloading;
 using FrannHammer.WebScraping.WebClients;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FrannHammer.WebScraping.Tests
 {
     [TestFixture]
+    [TestFixtureSource(nameof(FixtureArgs))]
     public class DefaultMoveScrapingServiceIntegrationTests
     {
-        private IMoveScrapingServices _scrapingServices;
+        private static IMoveScrapingServices _scrapingServices = MakeDefaultMoveScrapingServices();
 
-        [SetUp]
-        public void SetUp()
+        private readonly string _game;
+
+        public DefaultMoveScrapingServiceIntegrationTests(string game)
+        {
+            _game = $"{game}/";
+        }
+
+        private static object[] FixtureArgs =
+        {
+            new object[]{"Smash4"},
+            new object[]{"Ultimate"}
+        };
+
+        public static DefaultMoveScrapingServices MakeDefaultMoveScrapingServices()
         {
             var instanceIdGenerator = new InstanceIdGenerator();
             var htmlParserProvider = new DefaultHtmlParserProvider();
@@ -28,7 +42,7 @@ namespace FrannHammer.WebScraping.Tests
             var webClientProvider = new DefaultWebClientProvider();
             var webServices = new DefaultWebServices(htmlParserProvider, webClientProvider, pageDownloader);
 
-            _scrapingServices = new DefaultMoveScrapingServices(moveProvider, webServices);
+            return new DefaultMoveScrapingServices(moveProvider, webServices);
         }
 
         private static void AssertMoveIsValid(IMove move, WebCharacter character)
@@ -57,7 +71,9 @@ namespace FrannHammer.WebScraping.Tests
         {
             var groundMoveScrapingService = new GroundMoveScraper(_scrapingServices);
 
-            var groundMoves = groundMoveScrapingService.Scrape(Characters.Greninja).ToList();
+            var character = Characters.Greninja;
+            character.SourceUrl = $"{Keys.KHSiteBaseUrl}{_game}{character.EscapedCharacterName}";
+            var groundMoves = groundMoveScrapingService.Scrape(character).ToList();
 
             CollectionAssert.AllItemsAreNotNull(groundMoves);
             CollectionAssert.AllItemsAreUnique(groundMoves);
@@ -65,7 +81,7 @@ namespace FrannHammer.WebScraping.Tests
 
             groundMoves.ForEach(move =>
             {
-                AssertMoveIsValid(move, Characters.Greninja);
+                AssertMoveIsValid(move, character);
             });
 
             Assert.That(!groundMoves.Any(move => move.Name.Equals(ScrapingConstants.ExcludedRowHeaders.Grabs, StringComparison.OrdinalIgnoreCase)),
@@ -83,7 +99,9 @@ namespace FrannHammer.WebScraping.Tests
         {
             var groundMoveScrapingService = new GroundMoveScraper(_scrapingServices);
 
-            var groundMoves = groundMoveScrapingService.Scrape(Characters.Greninja).ToList();
+            var character = Characters.Greninja;
+            character.SourceUrl = $"{Keys.KHSiteBaseUrl}{_game}{character.EscapedCharacterName}";
+            var groundMoves = groundMoveScrapingService.Scrape(character).ToList();
 
             CollectionAssert.AllItemsAreNotNull(groundMoves);
             CollectionAssert.AllItemsAreUnique(groundMoves);
@@ -91,7 +109,7 @@ namespace FrannHammer.WebScraping.Tests
 
             groundMoves.ForEach(move =>
             {
-                AssertMoveIsValid(move, Characters.Greninja);
+                AssertMoveIsValid(move, character);
             });
         }
 
@@ -99,6 +117,7 @@ namespace FrannHammer.WebScraping.Tests
         [TestCaseSource(nameof(TestCharacters))]
         public void GroundMoveScraperShouldExcludeThrowMoves(WebCharacter character)
         {
+            character.SourceUrl = $"{Keys.KHSiteBaseUrl}{_game}{character.EscapedCharacterName}";
             var groundMoveScrapingService = new GroundMoveScraper(_scrapingServices);
             var groundMoves = groundMoveScrapingService.Scrape(character).ToList();
 
@@ -118,7 +137,7 @@ namespace FrannHammer.WebScraping.Tests
         public void GroundMoveScraperShouldIncludeGrabs(WebCharacter character)
         {
             const int expectedGrabCount = 3;
-
+            character.SourceUrl = $"{Keys.KHSiteBaseUrl}{_game}{character.EscapedCharacterName}";
             var groundMoveScrapingService = new GroundMoveScraper(_scrapingServices);
             var groundMoves = groundMoveScrapingService.Scrape(character).ToList();
 
@@ -132,6 +151,8 @@ namespace FrannHammer.WebScraping.Tests
         public void GroundMoveScraperShouldExcludeRowHeaders(WebCharacter character)
         {
             var groundMoveScrapingService = new GroundMoveScraper(_scrapingServices);
+
+            character.SourceUrl = $"{Keys.KHSiteBaseUrl}{_game}{character.EscapedCharacterName}";
             var groundMoves = groundMoveScrapingService.Scrape(character).ToList();
 
             groundMoves.ForEach(move =>
@@ -148,6 +169,8 @@ namespace FrannHammer.WebScraping.Tests
         public void ScrapeThrowMovesForCharacter(WebCharacter character)
         {
             var throwMoveScraper = new ThrowMoveScraper(_scrapingServices);
+
+            character.SourceUrl = $"{Keys.KHSiteBaseUrl}{_game}{character.EscapedCharacterName}";
             var throwMoves = throwMoveScraper.Scrape(character).ToList();
 
             CollectionAssert.IsNotEmpty(throwMoves);
@@ -165,7 +188,10 @@ namespace FrannHammer.WebScraping.Tests
         public void ScrapeThrowMovesForCharacter_DonkeyKongHasEightThrows()
         {
             var throwMoveScraper = new ThrowMoveScraper(_scrapingServices);
-            var throwMoves = throwMoveScraper.Scrape(Characters.DonkeyKong).ToList();
+
+            var character = Characters.DonkeyKong;
+            character.SourceUrl = $"{Keys.KHSiteBaseUrl}{_game}{character.EscapedCharacterName}";
+            var throwMoves = throwMoveScraper.Scrape(character).ToList();
 
             CollectionAssert.IsNotEmpty(throwMoves);
 
@@ -183,7 +209,7 @@ namespace FrannHammer.WebScraping.Tests
         public void ScrapeAerialMovesForCharacter(WebCharacter character)
         {
             var aerialMoveScrapingService = new AerialMoveScraper(_scrapingServices);
-
+            character.SourceUrl = $"{Keys.KHSiteBaseUrl}{_game}{character.EscapedCharacterName}";
             var aerialMoves = aerialMoveScrapingService.Scrape(character).ToList();
 
             CollectionAssert.AllItemsAreNotNull(aerialMoves);
@@ -203,7 +229,7 @@ namespace FrannHammer.WebScraping.Tests
         public void ScrapeSpecialMovesForCharacter(WebCharacter character)
         {
             var specialMoveScrapingService = new SpecialMoveScraper(_scrapingServices);
-
+            character.SourceUrl = $"{Keys.KHSiteBaseUrl}{_game}{character.EscapedCharacterName}";
             var specialMoves = specialMoveScrapingService.Scrape(character).ToList();
 
             CollectionAssert.AllItemsAreNotNull(specialMoves);

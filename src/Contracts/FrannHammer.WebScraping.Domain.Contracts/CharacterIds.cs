@@ -65,6 +65,7 @@ namespace FrannHammer.WebScraping.Domain.Contracts
         public const int Zelda = 57;
         public const int ZeroSuitSamus = 58;
         public const int Incineroar = 59;
+        public const int Daisy = 60;
 
         public static int FindByName(string characterName)
         {

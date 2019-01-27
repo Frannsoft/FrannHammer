@@ -20,7 +20,7 @@ namespace FrannHammer.WebScraping.Moves
             ScrapingServices = scrapingServices;
         }
 
-        protected abstract IMove GetMove(HtmlNodeCollection cells, WebCharacter character, string sourceUrl = "");
+        protected abstract IMove GetMove(HtmlNodeCollection cells, WebCharacter character);
 
         protected static HtmlNodeCollection GetTableCells(HtmlNode row) => row.SelectNodes(ScrapingConstants.XPathTableCells);
 

@@ -21,7 +21,7 @@ namespace FrannHammer.Api.Services
             Guard.VerifyObjectNotNull(repository, nameof(repository));
             Repository = repository;
             string adjustedCasingGame = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(game);
-            _game = (Games)Enum.Parse(typeof(Games), adjustedCasingGame);
+            Enum.TryParse(adjustedCasingGame, out _game);
         }
 
         protected Func<T, bool> WhereGameIs() => g => g.Game == _game;

@@ -6,8 +6,8 @@ namespace FrannHammer.WebScraping.Attributes
     {
         public override string AttributeName => "FullHop";
 
-        public FullHopScraper(IAttributeScrapingServices scrapingServices)
-            : base("http://kuroganehammer.com/Smash4/FullHop", scrapingServices)
+        public FullHopScraper(IAttributeScrapingServices scrapingServices, string baseUrl)
+            : base(baseUrl, scrapingServices)
         { }
     }
 }

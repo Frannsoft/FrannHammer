@@ -6,8 +6,8 @@ namespace FrannHammer.WebScraping.Attributes
     {
         public override string AttributeName => "WalkSpeed";
 
-        public WalkSpeedScraper(IAttributeScrapingServices scrapingServices)
-            : base("http://kuroganehammer.com/Smash4/WalkSpeed", scrapingServices)
+        public WalkSpeedScraper(IAttributeScrapingServices scrapingServices, string baseUrl)
+            : base(baseUrl, scrapingServices)
         { }
     }
 }

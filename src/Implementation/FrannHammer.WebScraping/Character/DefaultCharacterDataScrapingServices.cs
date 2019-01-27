@@ -7,6 +7,7 @@ using FrannHammer.WebScraping.Contracts.Images;
 using FrannHammer.WebScraping.Contracts.Movements;
 using FrannHammer.WebScraping.Contracts.UniqueData;
 using FrannHammer.WebScraping.Domain.Contracts;
+using FrannHammer.WebScraping.PageDownloading;
 using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
@@ -104,7 +105,27 @@ namespace FrannHammer.WebScraping.Character
             var attributeRows = new List<ICharacterAttributeRow>();
             foreach (var attributeScraper in _attributeScrapers)
             {
-                attributeRows.AddRange(attributeScraper.Scrape(populatedCharacter));
+                string attributeName = string.Empty;
+                if (attributeScraper.AttributeName == "RunSpeed")
+                {
+                    attributeName = "DashSpeed"; //grrr..
+                }
+                else
+                {
+                    attributeName = attributeScraper.AttributeName;
+                }
+
+                attributeScraper.SourceUrl = $"{sourceBaseUrl}{attributeName}";
+
+                try
+                {
+                    var newAttributes = attributeScraper.Scrape(populatedCharacter);
+                    attributeRows.AddRange(newAttributes);
+                }
+                catch (PageNotFoundException ex)
+                {
+                    Console.WriteLine($"Exception while running scraper: {attributeScraper.AttributeName} for '{character.Name}'{Environment.NewLine}{ex.Message}");
+                }
             }
 
             //unique data
@@ -115,16 +136,6 @@ namespace FrannHammer.WebScraping.Character
                 uniqueData.AddRange(uniqueDataScraper.Scrape(populatedCharacter));
             }
 
-            //character.InstanceId = _instanceIdGenerator.GenerateId();
-            //character.FullUrl = character.SourceUrl;
-            //character.DisplayName = displayName;
-            //character.ThumbnailUrl = thumbnailUrl;
-            //character.MainImageUrl = mainImageUrl;
-            //character.ColorTheme = colorTheme;
-            //character.Movements = movements;
-            //character.Moves = moves;
-            //character.AttributeRows = attributeRows;
-            //character.UniqueProperties = uniqueData;
             populatedCharacter.InstanceId = _instanceIdGenerator.GenerateId();
             populatedCharacter.FullUrl = populatedCharacter.SourceUrl;
             populatedCharacter.DisplayName = displayName;
@@ -150,16 +161,11 @@ namespace FrannHammer.WebScraping.Character
         {
             string thumbnailUriFromSource = HtmlNode.CreateNode(thumbnailHtml).GetAttributeValue(attributeKey, string.Empty);
 
-            //dump the '/smash4' at the start of these if it exists.  This helps ensure scraped urls are sanitized and valid.
-            //if (thumbnailUriFromSource.StartsWith("/Smash4/"))
-            //{
-            //    thumbnailUriFromSource = thumbnailUriFromSource.Remove(0, 8);
-            //}
-            //if (thumbnailUriFromSource.StartsWith("/Ultimate/"))
-            //{
-            //    thumbnailUriFromSource = thumbnailUriFromSource.Remove(0, 10);
-            //}
-            return "http://kuroganehammer.com/" + thumbnailUriFromSource;//urlRoot + thumbnailUriFromSource;
+            if (thumbnailUriFromSource.StartsWith("/Smash4/"))
+            {
+                thumbnailUriFromSource = "http://kuroganehammer.com" + thumbnailUriFromSource;
+            }
+            return thumbnailUriFromSource;//urlRoot + thumbnailUriFromSource;
         }
 
         private static string GetCharacterDisplayName(string rawDisplayNameHtml)

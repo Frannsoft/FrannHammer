@@ -9,5 +9,6 @@ namespace FrannHammer.WebScraping.Contracts.Attributes
     {
         string AttributeName { get; }
         Func<WebCharacter, IEnumerable<ICharacterAttributeRow>> Scrape { get; }
+        string SourceUrl { get; set; }
     }
 }

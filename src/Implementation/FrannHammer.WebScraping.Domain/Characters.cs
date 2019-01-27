@@ -13,6 +13,8 @@ namespace FrannHammer.WebScraping.Domain
         public static WebCharacter DonkeyKong => new DonkeyKong();
         public static WebCharacter CaptainFalcon => new CaptainFalcon();
         public static WebCharacter DrMario => new DrMario();
+        public static WebCharacter Fox => new Fox();
+        public static WebCharacter Ganondorf => new Ganondorf();
 
         public static IEnumerable<WebCharacter> All => new List<WebCharacter>
         {
@@ -74,7 +76,8 @@ namespace FrannHammer.WebScraping.Domain
             new Yoshi(),
             new Zelda(),
             new ZeroSuitSamus(),
-            new Incineroar()
+            new Incineroar(),
+            new Daisy()
         };
     }
 }

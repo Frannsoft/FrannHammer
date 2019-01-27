@@ -56,13 +56,13 @@ namespace FrannHammer.NetCore.WebApi.HypermediaServices
             return characterAttributeRows.Select(EnrichCharacterAttributeRow);
         }
 
-        public MoveResource EnrichMove(IMove move)
+        public IMoveResource EnrichMove(IMove move)
         {
             var enricher = new MoveResourceEnricher(_linkProvider, _mapper, _linkGenerator, _httpContext);
             return enricher.Enrich(move);
         }
 
-        public IEnumerable<IMove> EnrichManyMoves(IEnumerable<IMove> moves)
+        public IEnumerable<IMoveResource> EnrichManyMoves(IEnumerable<IMove> moves)
         {
             return moves.Select(EnrichMove);
         }

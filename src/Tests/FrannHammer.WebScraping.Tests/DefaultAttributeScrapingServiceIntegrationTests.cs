@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.WebScraping.Attributes;
 using FrannHammer.WebScraping.Contracts.Attributes;
@@ -9,12 +8,16 @@ using FrannHammer.WebScraping.HtmlParsing;
 using FrannHammer.WebScraping.PageDownloading;
 using FrannHammer.WebScraping.WebClients;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FrannHammer.WebScraping.Tests
 {
     [TestFixture]
     public class DefaultAttributeScrapingServiceIntegrationTests
     {
+        private static DefaultAttributeScrapingServices _scrapingServices = MakeAttributeScrapingServices();
+
         private static DefaultAttributeScrapingServices MakeAttributeScrapingServices()
         {
             var instanceIdGenerator = new InstanceIdGenerator();
@@ -49,71 +52,87 @@ namespace FrannHammer.WebScraping.Tests
             });
         }
 
-        private static IEnumerable<AttributeScraper> Scrapers()
+        private static IEnumerable<AttributeScraper> ScrapersSmash4()
         {
-            var scrapingServices = MakeAttributeScrapingServices();
-            yield return new AirSpeedScraper(scrapingServices);
-            yield return new AerialJumpScraper(scrapingServices);
-            yield return new AirAccelerationScraper(scrapingServices);
-            yield return new AirDodgeScraper(scrapingServices);
-            yield return new AirFrictionScraper(scrapingServices);
-            yield return new DashLengthScraper(scrapingServices);
-            yield return new FallSpeedScraper(scrapingServices);
-            yield return new FullHopScraper(scrapingServices);
-            yield return new GravityScraper(scrapingServices);
-            yield return new JumpSquatScraper(scrapingServices);
-            yield return new LedgeHopScraper(scrapingServices);
-            yield return new ShortHopScraper(scrapingServices);
-            yield return new SpotdodgeScraper(scrapingServices);
-            yield return new TractionScraper(scrapingServices);
-            yield return new WalkSpeedScraper(scrapingServices);
-            yield return new RollScraper(scrapingServices);
-            yield return new RunSpeedScraper(scrapingServices);
-            yield return new ShieldSizeScraper(scrapingServices);
+            var smash4Scrapers = AttributeScrapers.AllWithScrapingServices(_scrapingServices, $"{Keys.KHSiteBaseUrl}{Keys.Smash4Url}").ToList();
+            foreach (var scraper in smash4Scrapers)
+            {
+                yield return scraper;
+            }
+        }
+
+        private static IEnumerable<AttributeScraper> ScrapersUltimate()
+        {
+            var ultimateScrapers = AttributeScrapers.AllWithScrapingServices(_scrapingServices, $"{Keys.KHSiteBaseUrl}{Keys.UltimateUrl}").ToList();
+
+            foreach (var scraper in ultimateScrapers)
+            {
+                yield return scraper;
+            }
         }
 
         [Test]
-        [TestCaseSource(nameof(Scrapers))]
+        [TestCaseSource(nameof(ScrapersSmash4))]
+        [TestCaseSource(nameof(ScrapersUltimate))]
         public void ScrapeAttributeRowData(AttributeScraper scraper)
         {
             var attributeRows = scraper.Scrape(Characters.DarkPit).ToList();
-
             AssertAttributeCollectionIsValid(scraper, attributeRows);
         }
 
         [Test]
-        public void ScraperAttributeRowData_Counters()
+        [TestCase(Keys.KHSiteBaseUrl + Keys.Smash4Url)]
+        [TestCase(Keys.KHSiteBaseUrl + Keys.UltimateUrl)]
+        public void ScraperAttributeRowData_Counters(string urlUnderTest)
         {
-            var scrapingServices = MakeAttributeScrapingServices();
-
-            var sut = new CounterScraper(scrapingServices);
+            var sut = new CounterScraper(_scrapingServices, urlUnderTest);
             var results = sut.Scrape(Characters.Greninja).ToList();
 
             AssertAttributeCollectionIsValid(sut, results);
         }
 
         [Test]
-        public void ScrapeAttributeRowData_Reflectors()
+        [TestCase(Keys.KHSiteBaseUrl + Keys.Smash4Url)]
+        [TestCase(Keys.KHSiteBaseUrl + Keys.UltimateUrl)]
+        public void ScrapeAttributeRowData_Reflectors(string urlUnderTest)
         {
-            var scrapingServices = MakeAttributeScrapingServices();
-
-            var sut = new ReflectorScraper(scrapingServices);
+            var sut = new ReflectorScraper(_scrapingServices, urlUnderTest);
             var results = sut.Scrape(Characters.DarkPit).ToList();
 
             AssertAttributeCollectionIsValid(sut, results);
         }
 
         [Test]
-        [TestCaseSource(nameof(Scrapers))]
-        public void ScrapeAttributeRowData_CharacterHasSpaceInName(AttributeScraper scraper)
+        [TestCaseSource(nameof(ScrapersSmash4))]
+        public void ScrapeAttributeRowData_CharacterHasSpaceInName_Smash4(AttributeScraper scraper)
+        {
+            var drMario = new DrMario();
+            drMario.SourceUrl = $"{Keys.KHSiteBaseUrl}{Keys.Smash4Url}{drMario.EscapedCharacterName}";
+            var attributeRows = scraper.Scrape(drMario).ToList();
+
+            AssertAttributeCollectionIsValid(scraper, attributeRows);
+        }
+
+        [Test]
+        [TestCaseSource(nameof(ScrapersUltimate))]
+        public void ScrapeAttributeRowData_CharacterHasSpaceInName_Ultimate(AttributeScraper scraper)
         {
             var littleMac = new LittleMac();
+            littleMac.SourceUrl = $"{Keys.KHSiteBaseUrl}{Keys.UltimateUrl}{littleMac.EscapedCharacterName}";
             var attributeRows = scraper.Scrape(littleMac).ToList();
 
             AssertAttributeCollectionIsValid(scraper, attributeRows);
         }
 
-        private static IEnumerable<WebCharacter> TestCharacters()
+        private static IEnumerable<WebCharacter> TestCharactersSmash4()
+        {
+            foreach (var character in Characters.All.Where(c => c.OwnerId <= 58))
+            {
+                yield return character;
+            }
+        }
+
+        private static IEnumerable<WebCharacter> TestCharactersUltimate()
         {
             foreach (var character in Characters.All)
             {
@@ -122,11 +141,21 @@ namespace FrannHammer.WebScraping.Tests
         }
 
         [Test]
-        [TestCaseSource(nameof(TestCharacters))]
-        public void ScrapeAttributeRowData_AllCharacters_ReturnsValidData(WebCharacter character)
+        [TestCaseSource(nameof(TestCharactersSmash4))]
+        public void ScrapeAttributeRowData_AllCharacters_ReturnsValidData_Smash4(WebCharacter character)
         {
-            var scrapingServices = MakeAttributeScrapingServices();
-            var sut = new AirSpeedScraper(scrapingServices);
+            var sut = new AirSpeedScraper(_scrapingServices, $"{Keys.KHSiteBaseUrl}{Keys.Smash4Url}");
+
+            var attributeRows = sut.Scrape(character).ToList();
+
+            AssertAttributeCollectionIsValid(sut, attributeRows);
+        }
+
+        [Test]
+        [TestCaseSource(nameof(TestCharactersUltimate))]
+        public void ScrapeAttributeRowData_AllCharacters_ReturnsValidData_Ultimate(WebCharacter character)
+        {
+            var sut = new AirSpeedScraper(_scrapingServices, $"{Keys.KHSiteBaseUrl}{Keys.UltimateUrl}");
 
             var attributeRows = sut.Scrape(character).ToList();
 
@@ -136,8 +165,7 @@ namespace FrannHammer.WebScraping.Tests
         [Test]
         public void ScrapeRollsData_ForGreninja_ReturnsBothEntriesSinceForwardAndBackRollAreDifferent()
         {
-            var scrapingServices = MakeAttributeScrapingServices();
-            var sut = new RollScraper(scrapingServices);
+            var sut = new RollScraper(_scrapingServices, $"{Keys.KHSiteBaseUrl}{Keys.Smash4Url}");
 
             var attributeRows = sut.Scrape(Characters.Greninja).ToList();
 

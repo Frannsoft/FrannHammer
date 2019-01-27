@@ -1,10 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
-using FrannHammer.WebScraping.Attributes;
+﻿using FrannHammer.WebScraping.Attributes;
 using FrannHammer.WebScraping.Contracts.Attributes;
 using Moq;
 using NUnit.Framework;
+using System;
+using System.Linq;
+using System.Reflection;
 
 namespace FrannHammer.WebScraping.Tests
 {
@@ -16,7 +16,7 @@ namespace FrannHammer.WebScraping.Tests
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                AttributeScrapers.AllWithScrapingServices(null);
+                AttributeScrapers.AllWithScrapingServices(null, string.Empty);
             });
         }
 
@@ -31,7 +31,7 @@ namespace FrannHammer.WebScraping.Tests
                 .OrderBy(scraper => scraper.Name);
 
             var attributeScrapingServiceMock = new Mock<IAttributeScrapingServices>();
-            var actualAttributeScrapers = AttributeScrapers.AllWithScrapingServices(attributeScrapingServiceMock.Object)
+            var actualAttributeScrapers = AttributeScrapers.AllWithScrapingServices(attributeScrapingServiceMock.Object, string.Empty)
                 .Select(scraper => scraper.GetType())
                 .OrderBy(type => type.Name);
 
@@ -43,7 +43,7 @@ namespace FrannHammer.WebScraping.Tests
         {
             var attributeScrapingServiceMock = new Mock<IAttributeScrapingServices>();
 
-            var actual = AttributeScrapers.AllWithScrapingServices(attributeScrapingServiceMock.Object).ToList();
+            var actual = AttributeScrapers.AllWithScrapingServices(attributeScrapingServiceMock.Object, string.Empty).ToList();
 
             Assert.That(actual.Count, Is.EqualTo(actual.Distinct().Count()), "There are duplicate scrapers in the returned enumerable.");
         }

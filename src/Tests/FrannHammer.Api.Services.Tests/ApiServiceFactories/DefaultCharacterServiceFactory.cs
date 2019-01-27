@@ -12,10 +12,10 @@ namespace FrannHammer.Api.Services.Tests.ApiServiceFactories
             var queryMappingService = new QueryMappingService(new Mock<IAttributeStrategy>().Object);
             return new DefaultCharacterService(repository,
                 new DefaultDtoProvider(),
-                new DefaultMovementService(new Mock<IRepository<IMovement>>().Object, queryMappingService),
-                new DefaultCharacterAttributeService(new Mock<IRepository<ICharacterAttributeRow>>().Object, new DefaultCharacterAttributeNameProvider()),
-                new DefaultMoveService(new Mock<IRepository<IMove>>().Object, queryMappingService),
-                new DefaultUniqueDataService(new Mock<IRepository<IUniqueData>>().Object, queryMappingService),
+                new DefaultMovementService(new Mock<IRepository<IMovement>>().Object, queryMappingService, string.Empty),
+                new DefaultCharacterAttributeService(new Mock<IRepository<ICharacterAttributeRow>>().Object, new DefaultCharacterAttributeNameProvider(), string.Empty),
+                new DefaultMoveService(new Mock<IRepository<IMove>>().Object, queryMappingService, string.Empty),
+                new DefaultUniqueDataService(new Mock<IRepository<IUniqueData>>().Object, queryMappingService, string.Empty),
                 string.Empty);
         }
     }

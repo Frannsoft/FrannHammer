@@ -6,8 +6,8 @@ namespace FrannHammer.WebScraping.Attributes
     {
         public override string AttributeName => "Spotdodge";
 
-        public SpotdodgeScraper(IAttributeScrapingServices scrapingServices)
-            : base("http://kuroganehammer.com/Smash4/Spotdodge", scrapingServices)
+        public SpotdodgeScraper(IAttributeScrapingServices scrapingServices, string baseUrl)
+            : base(baseUrl, scrapingServices)
         { }
     }
 }

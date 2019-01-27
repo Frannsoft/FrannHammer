@@ -9,6 +9,7 @@ using FrannHammer.Domain;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.NetCore.WebApi.DataAccess;
 using FrannHammer.NetCore.WebApi.HypermediaServices;
+using FrannHammer.NetCore.WebApi.HypermediaServices.MapServices;
 using FrannHammer.NetCore.WebApi.Models;
 using FrannHammer.Utility;
 using FrannHammer.WebScraping.Contracts.Character;
@@ -92,6 +93,14 @@ namespace FrannHammer.NetCore.WebApi
                 cfg.CreateMap<WebCharacter, Character>();
                 cfg.CreateMap<ICharacter, CharacterResource>();
                 cfg.CreateMap<IMove, MoveResource>();
+                cfg.CreateMap<IMove, UltimateMoveResource>()
+                .ForMember(
+                    dest => dest.BaseDamage,
+                    opt => opt.MapFrom(src => new UltimateBaseDamageResourceMapService().MapFrom(src)))
+                .ForMember(
+                    dest => dest.HitboxActive,
+                    opt => opt.MapFrom(src => new UltimateHitboxResourceMapService().MapFrom(src)));
+
                 cfg.CreateMap<IMovement, MovementResource>();
                 cfg.CreateMap<ICharacterAttributeRow, CharacterAttributeRowResource>();
                 cfg.CreateMap<ICharacterAttributeName, CharacterAttributeNameResource>();
@@ -106,11 +115,6 @@ namespace FrannHammer.NetCore.WebApi
             var builder = new ContainerBuilder();
 
             builder.RegisterModule<ScrapingModule>();
-            //builder.RegisterModule(new DatabaseModule(ConfigurationManager.AppSettings[ConfigurationKeys.Username], ConfigurationManager.AppSettings[ConfigurationKeys.Password], ConfigurationManager.AppSettings[ConfigurationKeys.DatabaseName]
-            //    , ConfigurationManager.ConnectionStrings[ConfigurationKeys.DefaultConnection].ConnectionString));
-
-            //builder.RegisterModule(new RepositoryModule(ConfigurationManager.AppSettings[ConfigurationKeys.DatabaseName]));
-            //builder.RegisterModule<ApiServicesModule>();
             builder.RegisterType<DefaultSeeder>()
                 .AsSelf();
 
@@ -118,14 +122,13 @@ namespace FrannHammer.NetCore.WebApi
             var characterDataScraper = container.Resolve<ICharacterDataScraper>();
             var seeder = container.Resolve<DefaultSeeder>();
 
-
             var bagCharacterData = new ConcurrentBag<ICharacter>();
             var bagMoveData = new ConcurrentBag<IMove>();
             var bagMovementData = new ConcurrentBag<IMovement>();
             var bagAttributeData = new ConcurrentBag<ICharacterAttributeRow>();
             var bagUniqueData = new ConcurrentBag<IUniqueData>();
 
-            var charactersToSeed = Characters.All.Where(c => c.DisplayName == "Ganondorf" || c.DisplayName == "Incineroar");
+            var charactersToSeed = Characters.All.Where(c => c.DisplayName == "Ganondorf");
 
             Parallel.ForEach(charactersToSeed, character =>
             {
@@ -142,25 +145,21 @@ namespace FrannHammer.NetCore.WebApi
                     var populatedCharacter = characterDataScraper.PopulateCharacterFromWeb(character, sourceUrl);
 
                     bagCharacterData.Add(populatedCharacter);
-                    //_moveData.AddRange(character.Moves);
                     populatedCharacter.Moves.ToList().ForEach(item =>
                     {
                         bagMoveData.Add(item);
                     });
 
-                    //_movementData.AddRange(character.Movements);
                     populatedCharacter.Movements.ToList().ForEach(item =>
                     {
                         bagMovementData.Add(item);
                     });
 
-                    //_characterAttributeRowData.AddRange(character.AttributeRows);
                     populatedCharacter.AttributeRows.ToList().ForEach(item =>
                     {
                         bagAttributeData.Add(item);
                     });
 
-                    //_uniqueData.AddRange(character.UniqueProperties);
                     populatedCharacter.UniqueProperties.ToList().ForEach(item =>
                     {
                         bagUniqueData.Add(item);
@@ -173,42 +172,15 @@ namespace FrannHammer.NetCore.WebApi
             _movementData = bagMovementData.ToList();
             _characterAttributeRowData = bagAttributeData.ToList();
             _uniqueData = bagUniqueData.ToList();
-            //foreach (var character in Characters.All.Take(4))
-            //{
-            //    Console.WriteLine($"Scraping data for '{character.Name}'...");
-            //    characterDataScraper.PopulateCharacterFromWeb(character);
-            //    //seeder.SeedCharacterData(character,
-            //    //    container.Resolve<ICharacterService>(),
-            //    //    container.Resolve<IMovementService>(),
-            //    //    container.Resolve<IMoveService>(),
-            //    //    container.Resolve<ICharacterAttributeRowService>(),
-            //    //    container.Resolve<IUniqueDataService>());
-            //    _characterData.Add(character);
-            //    _moveData.AddRange(character.Moves);
-            //    _movementData.AddRange(character.Movements);
-            //    _characterAttributeRowData.AddRange(character.AttributeRows);
-            //    _uniqueData.AddRange(character.UniqueProperties);
-            //}
+
             services.AddSingleton(_characterData);
             services.AddSingleton(_moveData);
             services.AddSingleton(_movementData);
             services.AddSingleton(_characterAttributeRowData);
             services.AddSingleton(_uniqueData);
 
-
             //done seeding data
             containerBuilder.Populate(services);
-
-            //containerBuilder.RegisterModule(new DatabaseModule(
-            //    Configuration["dbusername"],
-            //    Configuration[ConfigurationKeys.Password],
-            //    Configuration[ConfigurationKeys.DatabaseName],
-            //    Configuration[ConfigurationKeys.DefaultConnection]
-            //    ));
-
-            //containerBuilder.RegisterModule(new RepositoryModule(
-            //        Configuration[ConfigurationKeys.DatabaseName]
-            //    ));
 
             containerBuilder.RegisterType<InMemoryRepository<ICharacter>>()
                 .As<IRepository<ICharacter>>()
@@ -326,10 +298,9 @@ namespace FrannHammer.NetCore.WebApi
 
 
             containerBuilder.RegisterModule<ModelModule>();
-            //containerBuilder.RegisterModule<ResourceEnrichmentModule>();
 
             ApplicationContainer = containerBuilder.Build();
-            return new AutofacServiceProvider(this.ApplicationContainer);
+            return new AutofacServiceProvider(ApplicationContainer);
         }
 
 

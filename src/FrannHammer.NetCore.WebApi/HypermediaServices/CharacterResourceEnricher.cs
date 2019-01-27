@@ -28,23 +28,23 @@ namespace FrannHammer.NetCore.WebApi.HypermediaServices
             resource.AddLink(characterAttributesLink);
             resource.AddLink(movementsLink);
 
-
+            //new hateoas stuff
             var relatedLinks = new RelatedLinks();
 
             if (content.OwnerId <= 58)
             {
                 relatedLinks.Smash4 = new ExpandoObject();
-                relatedLinks.Smash4.Self = selfLink.Href.Replace("ultimate", "smash4");
-                relatedLinks.Smash4.Moves = movesLink.Href.Replace("ultimate", "smash4");
-                relatedLinks.Smash4.Movements = movementsLink.Href.Replace("ultimate", "smash4");
-                relatedLinks.Smash4.Attributes = characterAttributesLink.Href.Replace("ultimate", "smash4");
+                relatedLinks.Smash4.Self = selfLink.Href.ReplaceUltimateWithSmash4();
+                relatedLinks.Smash4.Moves = movesLink.Href.ReplaceUltimateWithSmash4();
+                relatedLinks.Smash4.Movements = movementsLink.Href.ReplaceUltimateWithSmash4();
+                relatedLinks.Smash4.Attributes = characterAttributesLink.Href.ReplaceUltimateWithSmash4();
             }
 
             relatedLinks.Ultimate = new ExpandoObject();
-            relatedLinks.Ultimate.Self = selfLink.Href.Replace("smash4", "ultimate");
-            relatedLinks.Ultimate.Moves = movesLink.Href.Replace("smash4", "ultimate");
-            relatedLinks.Ultimate.Movements = movementsLink.Href.Replace("smash4", "ultimate");
-            relatedLinks.Ultimate.Attributes = characterAttributesLink.Href.Replace("smash4", "ultimate");
+            relatedLinks.Ultimate.Self = selfLink.Href.ReplaceSmash4WithUltimate();
+            relatedLinks.Ultimate.Moves = movesLink.Href.ReplaceSmash4WithUltimate();
+            relatedLinks.Ultimate.Movements = movementsLink.Href.ReplaceSmash4WithUltimate();
+            relatedLinks.Ultimate.Attributes = characterAttributesLink.Href.ReplaceSmash4WithUltimate();
 
             resource.AddRelated(relatedLinks);
 

@@ -8,7 +8,7 @@ namespace FrannHammer.Api.Services.Tests.ApiServiceFactories
     {
         public override ICrudService<ICharacterAttributeRow> CreateService(IRepository<ICharacterAttributeRow> repository)
         {
-            return new DefaultCharacterAttributeService(repository, new DefaultCharacterAttributeNameProvider());
+            return new DefaultCharacterAttributeService(repository, new DefaultCharacterAttributeNameProvider(), string.Empty);
         }
     }
 }

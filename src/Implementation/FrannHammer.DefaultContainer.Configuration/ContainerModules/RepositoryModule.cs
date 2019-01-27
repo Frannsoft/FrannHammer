@@ -1,19 +1,7 @@
 ﻿using Autofac;
-using FrannHammer.DataAccess.Contracts;
-using FrannHammer.DataAccess.MongoDb;
-using FrannHammer.Domain.Contracts;
-using MongoDB.Driver;
 
 namespace FrannHammer.DefaultContainer.Configuration.ContainerModules
 {
-    public class InMemoryRepositoryModule : Module
-    {
-        protected override void Load(ContainerBuilder builder)
-        {
-           
-        }
-    }
-
     public class RepositoryModule : Module
     {
         private const string MongoDatabaseKey = "mongoDatabase";
@@ -27,52 +15,52 @@ namespace FrannHammer.DefaultContainer.Configuration.ContainerModules
 
         protected override void Load(ContainerBuilder builder)
         {
-            string databaseName = _databaseName;//ConfigurationManager.AppSettings[ConfigurationKeys.DatabaseName];
+            //string databaseName = _databaseName;//ConfigurationManager.AppSettings[ConfigurationKeys.DatabaseName];
 
-            builder.RegisterType<MongoDbRepository<ICharacter>>()
-                 .As<IRepository<ICharacter>>()
-                 .WithParameter((pi, c) => pi.Name == MongoDatabaseKey,
-                     (pi, c) =>
-                     {
-                         var mongoClient = c.Resolve<MongoClient>();
-                         return mongoClient.GetDatabase(databaseName);
-                     });
+            //builder.RegisterType<MongoDbRepository<ICharacter>>()
+            //     .As<IRepository<ICharacter>>()
+            //     .WithParameter((pi, c) => pi.Name == MongoDatabaseKey,
+            //         (pi, c) =>
+            //         {
+            //             var mongoClient = c.Resolve<MongoClient>();
+            //             return mongoClient.GetDatabase(databaseName);
+            //         });
 
-            builder.RegisterType<MongoDbRepository<IMovement>>()
-                .As<IRepository<IMovement>>()
-                .WithParameter((pi, c) => pi.Name == MongoDatabaseKey,
-                    (pi, c) =>
-                    {
-                        var mongoClient = c.Resolve<MongoClient>();
-                        return mongoClient.GetDatabase(databaseName);
-                    });
+            //builder.RegisterType<MongoDbRepository<IMovement>>()
+            //    .As<IRepository<IMovement>>()
+            //    .WithParameter((pi, c) => pi.Name == MongoDatabaseKey,
+            //        (pi, c) =>
+            //        {
+            //            var mongoClient = c.Resolve<MongoClient>();
+            //            return mongoClient.GetDatabase(databaseName);
+            //        });
 
-            builder.RegisterType<MongoDbRepository<IMove>>()
-                .As<IRepository<IMove>>()
-                .WithParameter((pi, c) => pi.Name == MongoDatabaseKey,
-                    (pi, c) =>
-                    {
-                        var mongoClient = c.Resolve<MongoClient>();
-                        return mongoClient.GetDatabase(databaseName);
-                    });
+            //builder.RegisterType<MongoDbRepository<IMove>>()
+            //    .As<IRepository<IMove>>()
+            //    .WithParameter((pi, c) => pi.Name == MongoDatabaseKey,
+            //        (pi, c) =>
+            //        {
+            //            var mongoClient = c.Resolve<MongoClient>();
+            //            return mongoClient.GetDatabase(databaseName);
+            //        });
 
-            builder.RegisterType<MongoDbRepository<ICharacterAttributeRow>>()
-                .As<IRepository<ICharacterAttributeRow>>()
-                .WithParameter((pi, c) => pi.Name == MongoDatabaseKey,
-                    (pi, c) =>
-                    {
-                        var mongoClient = c.Resolve<MongoClient>();
-                        return mongoClient.GetDatabase(databaseName);
-                    });
+            //builder.RegisterType<MongoDbRepository<ICharacterAttributeRow>>()
+            //    .As<IRepository<ICharacterAttributeRow>>()
+            //    .WithParameter((pi, c) => pi.Name == MongoDatabaseKey,
+            //        (pi, c) =>
+            //        {
+            //            var mongoClient = c.Resolve<MongoClient>();
+            //            return mongoClient.GetDatabase(databaseName);
+            //        });
 
-            builder.RegisterType<MongoDbRepository<IUniqueData>>()
-              .As<IRepository<IUniqueData>>()
-              .WithParameter((pi, c) => pi.Name == MongoDatabaseKey,
-                  (pi, c) =>
-                  {
-                      var mongoClient = c.Resolve<MongoClient>();
-                      return mongoClient.GetDatabase(databaseName);
-                  });
+            //builder.RegisterType<MongoDbRepository<IUniqueData>>()
+            //  .As<IRepository<IUniqueData>>()
+            //  .WithParameter((pi, c) => pi.Name == MongoDatabaseKey,
+            //      (pi, c) =>
+            //      {
+            //          var mongoClient = c.Resolve<MongoClient>();
+            //          return mongoClient.GetDatabase(databaseName);
+            //      });
         }
     }
 }

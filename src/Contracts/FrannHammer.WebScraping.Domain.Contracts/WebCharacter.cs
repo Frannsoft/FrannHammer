@@ -1,22 +1,12 @@
 ﻿using FrannHammer.Domain.Contracts;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace FrannHammer.WebScraping.Domain.Contracts
 {
     public class WebCharacter : ICharacter
     {
-#if DEBUG
-        //public const string SourceUrlBase = "http://localhost:81/khmock/kuroganehammer.com/Smash4/";
-        public const string SourceSmash4UrlBase = "http://kuroganehammer.com/Smash4/";
-        public const string SourceUltimateUrlBase = "http://kuroganehammer.com/Ultimate/";
-#else
-        public const string SourceSmash4UrlBase = "http://kuroganehammer.com/Smash4/";
-        public const string SourceUltimateUrlBase = "http://kuroganehammer.com/Ultimate/";
-#endif
         public string[] PotentialScrapingNames { get; }
-
         public string InstanceId { get; set; }
         public string SourceUrl { get; set; }
         public IReadOnlyCollection<string> SourceUrls { get; }
@@ -31,10 +21,7 @@ namespace FrannHammer.WebScraping.Domain.Contracts
         private string _displayName;
         public string DisplayName
         {
-            //appveyor doesn't support c# 7 yet?
-            // ReSharper disable once ArrangeAccessorOwnerBody
             get { return string.IsNullOrEmpty(_displayName) ? Name : _displayName; }
-            // ReSharper disable once ArrangeAccessorOwnerBody
             set { _displayName = value; }
         }
 
@@ -56,13 +43,10 @@ namespace FrannHammer.WebScraping.Domain.Contracts
         {
             Name = name;
 
-
             if (string.IsNullOrEmpty(escapedCharacterName))
             { escapedCharacterName = name; }
 
             EscapedCharacterName = escapedCharacterName;
-            SourceUrls = new List<string> { SourceSmash4UrlBase, SourceUltimateUrlBase }.Select(url => url + escapedCharacterName).ToList();
-            //SourceUrl = sourceBaseUrl + escapedCharacterName;//SourceSmash4UrlBase + escapedCharacterName;
             PotentialScrapingNames = potentialScrapingNames;
             UniqueScraperTypes = uniqueScraperTypes ?? new List<Type>();
 

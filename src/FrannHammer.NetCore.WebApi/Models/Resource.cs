@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace FrannHammer.NetCore.WebApi.Models
 {
-    public abstract class Resource
+    public abstract class Resource : IResource
     {
         private readonly List<Link> _links = new List<Link>();
 

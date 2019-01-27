@@ -63,7 +63,6 @@ xcopy $(SolutionDir)\Tests\tests.appsettings.config $(TargetDir) /I /Y</PostBuil
     <ProjectReference Include="..\..\Implementation\FrannHammer.Api.Services\FrannHammer.Api.Services.csproj" />
     <ProjectReference Include="..\..\Contracts\FrannHammer.DataAccess.Contracts\FrannHammer.DataAccess.Contracts.csproj" />
     <ProjectReference Include="..\..\Contracts\FrannHammer.Domain.Contracts\FrannHammer.Domain.Contracts.csproj" />
-    <ProjectReference Include="..\..\Implementation\FrannHammer.DataAccess.MongoDb\FrannHammer.DataAccess.MongoDb.csproj" />
     <ProjectReference Include="..\..\Implementation\FrannHammer.Domain\FrannHammer.Domain.csproj" />
     <ProjectReference Include="..\..\Contracts\FrannHammer.WebScraping.Domain.Contracts\FrannHammer.WebScraping.Domain.Contracts.csproj" />
     <ProjectReference Include="..\..\Implementation\FrannHammer.WebScraping.Domain\FrannHammer.WebScraping.Domain.csproj" />

@@ -1,4 +1,5 @@
-﻿using FrannHammer.Domain.Contracts;
+﻿using FrannHammer.Domain;
+using FrannHammer.Domain.Contracts;
 using FrannHammer.WebScraping.Domain;
 using FrannHammer.WebScraping.HtmlParsing;
 using FrannHammer.WebScraping.PageDownloading;
@@ -27,7 +28,10 @@ namespace FrannHammer.WebScraping.Tests
 
             var limitBreakScraper = new LimitBreakScraper(scrapingServices);
 
-            var limitBreakResultData = limitBreakScraper.Scrape(Characters.Cloud).ToList();
+            var character = Characters.Cloud;
+            character.SourceUrl = $"{Keys.KHSiteBaseUrl}Smash4/{character.EscapedCharacterName}";
+
+            var limitBreakResultData = limitBreakScraper.Scrape(character).ToList();
 
             AssertThatUniqueDataDictionaryHasKeyWithNonEmptyValue(limitBreakResultData, "Frames to Charge");
             AssertThatUniqueDataDictionaryHasKeyWithNonEmptyValue(limitBreakResultData, "% Dealt to Charge");

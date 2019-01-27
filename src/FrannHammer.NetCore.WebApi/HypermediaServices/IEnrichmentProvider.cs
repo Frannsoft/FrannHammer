@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using FrannHammer.Domain.Contracts;
+﻿using FrannHammer.Domain.Contracts;
 using FrannHammer.NetCore.WebApi.Models;
+using System.Collections.Generic;
 
 namespace FrannHammer.NetCore.WebApi.HypermediaServices
 {
@@ -13,9 +13,9 @@ namespace FrannHammer.NetCore.WebApi.HypermediaServices
         IEnumerable<CharacterAttributeRowResource> EnrichManyCharacterAttributeRowResources(IEnumerable<ICharacterAttributeRow> characterAttributeRows);
         IEnumerable<CharacterResource> EnrichManyCharacters(IEnumerable<ICharacter> characters);
         IEnumerable<MovementResource> EnrichManyMovements(IEnumerable<IMovement> movements);
-        IEnumerable<IMove> EnrichManyMoves(IEnumerable<IMove> moves);
+        IEnumerable<IMoveResource> EnrichManyMoves(IEnumerable<IMove> moves);
         IEnumerable<UniqueDataResource> EnrichManyUniqueDatas(IEnumerable<IUniqueData> uniqueDatas);
-        MoveResource EnrichMove(IMove move);
+        IMoveResource EnrichMove(IMove move);
         MovementResource EnrichMovement(IMovement movement);
         UniqueDataResource EnrichUniqueData(IUniqueData uniqueData);
     }

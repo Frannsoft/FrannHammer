@@ -28,7 +28,7 @@ namespace FrannHammer.Api.Services.Tests
             var mockRepository = new Mock<IRepository<IMove>>();
             ConfigureGetAllWhereOnMockRepository(mockRepository, items);
 
-            var sut = new OwnerBasedApiService<IMove>(mockRepository.Object);
+            var sut = new OwnerBasedApiService<IMove>(mockRepository.Object, string.Empty);
 
             var results = sut.GetAllWhereCharacterNameIs(expectedCharacterName).ToList();
 
@@ -51,7 +51,7 @@ namespace FrannHammer.Api.Services.Tests
             var mockRepository = new Mock<IRepository<IMove>>();
             ConfigureGetAllWhereOnMockRepository(mockRepository, items);
 
-            var sut = new OwnerBasedApiService<IMove>(mockRepository.Object);
+            var sut = new OwnerBasedApiService<IMove>(mockRepository.Object, string.Empty);
 
             sut.GetAllWhereCharacterNameIs("dummyValue");
 

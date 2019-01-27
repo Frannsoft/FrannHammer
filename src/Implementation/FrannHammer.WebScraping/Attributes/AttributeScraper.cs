@@ -16,15 +16,25 @@ namespace FrannHammer.WebScraping.Attributes
         public virtual Func<WebCharacter, IEnumerable<ICharacterAttributeRow>> Scrape { get; }
 
         protected IAttributeScrapingServices ScrapingServices { get; }
-        protected string SourceUrl { get; }
+        public string SourceUrl { get; set; }
 
-        protected AttributeScraper(string sourceUrl, IAttributeScrapingServices scrapingServices)
+        protected AttributeScraper(string baseUrl, IAttributeScrapingServices scrapingServices)
         {
-            Guard.VerifyStringIsNotNullOrEmpty(sourceUrl, nameof(sourceUrl));
+            //Guard.VerifyStringIsNotNullOrEmpty(baseUrl, nameof(baseUrl));
             Guard.VerifyObjectNotNull(scrapingServices, nameof(scrapingServices));
 
             ScrapingServices = scrapingServices;
-            SourceUrl = sourceUrl;
+
+            string attributeName = string.Empty;
+            if (AttributeName == "RunSpeed")
+            {
+                attributeName = "DashSpeed"; //grrr..
+            }
+            else
+            {
+                attributeName = AttributeName;
+            }
+            SourceUrl = $"{baseUrl}{attributeName}";
 
             Scrape = character =>
             {
@@ -32,6 +42,7 @@ namespace FrannHammer.WebScraping.Attributes
                 Guard.VerifyStringIsNotNullOrEmpty(character.Name, nameof(character.Name));
 
                 var attributeValueRows = new List<ICharacterAttributeRow>();
+
                 var htmlParser = ScrapingServices.CreateParserFromSourceUrl(SourceUrl);
 
                 string attributeTableHtml =
@@ -137,7 +148,7 @@ namespace FrannHammer.WebScraping.Attributes
                     characterAttributeRow.Name = AttributeName;
                     characterAttributeRow.Owner = character.Name;
                     characterAttributeRow.OwnerId = character.OwnerId;
-                    characterAttributeRow.Game = character.SourceUrl.Contains("Ultimate") ? Games.Ultimate : Games.Smash4;
+                    characterAttributeRow.Game = SourceUrl.Contains("Ultimate") ? Games.Ultimate : Games.Smash4;
                     attributeValueRows.Add(characterAttributeRow);
                 }
 

@@ -38,7 +38,6 @@
     <ProjectReference Include="..\..\Contracts\FrannHammer.Api.Services.Contracts\FrannHammer.Api.Services.Contracts.csproj" />
     <ProjectReference Include="..\FrannHammer.Api.Services\FrannHammer.Api.Services.csproj" />
     <ProjectReference Include="..\..\Contracts\FrannHammer.DataAccess.Contracts\FrannHammer.DataAccess.Contracts.csproj" />
-    <ProjectReference Include="..\FrannHammer.DataAccess.MongoDb\FrannHammer.DataAccess.MongoDb.csproj" />
     <ProjectReference Include="..\..\Contracts\FrannHammer.Domain.Contracts\FrannHammer.Domain.Contracts.csproj" />
     <ProjectReference Include="..\FrannHammer.Domain\FrannHammer.Domain.csproj" />
     <ProjectReference Include="..\FrannHammer.Utility\FrannHammer.Utility.csproj" />
