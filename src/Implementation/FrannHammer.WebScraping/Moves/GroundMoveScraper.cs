@@ -76,6 +76,8 @@ namespace FrannHammer.WebScraping.Moves
                 return
                     !firstHeaderNode.InnerText.Equals(ScrapingConstants.ExcludedRowHeaders.Grabs,
                         StringComparison.OrdinalIgnoreCase) &&
+                        !firstHeaderNode.InnerText.Equals(ScrapingConstants.ExcludedRowHeaders.TractorBeams,
+                        StringComparison.OrdinalIgnoreCase) &&
                     !firstHeaderNode.InnerText.Equals(ScrapingConstants.ExcludedRowHeaders.Throws,
                         StringComparison.OrdinalIgnoreCase) &&
                     !firstHeaderNode.InnerText.Equals(ScrapingConstants.ExcludedRowHeaders.Miscellaneous,

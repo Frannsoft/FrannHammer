@@ -24,6 +24,7 @@
         public class ExcludedRowHeaders
         {
             public const string Grabs = "Grabs";
+            public const string TractorBeams = "Useless Tractor Beams"; //pac-man 
             public const string Throws = "Throws";
             public const string Miscellaneous = "Miscellaneous";
         }

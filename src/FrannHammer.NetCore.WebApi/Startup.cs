@@ -15,6 +15,7 @@ using FrannHammer.Utility;
 using FrannHammer.WebScraping.Contracts.Character;
 using FrannHammer.WebScraping.Domain;
 using FrannHammer.WebScraping.Domain.Contracts;
+using FrannHammer.WebScraping.PageDownloading;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
@@ -128,7 +129,7 @@ namespace FrannHammer.NetCore.WebApi
             var bagAttributeData = new ConcurrentBag<ICharacterAttributeRow>();
             var bagUniqueData = new ConcurrentBag<IUniqueData>();
 
-            var charactersToSeed = Characters.All.Where(c => c.DisplayName == "Ganondorf");
+            var charactersToSeed = Characters.All.Where(c => c.DisplayName == "PAC-MAN");
 
             Parallel.ForEach(charactersToSeed, character =>
             {
@@ -142,28 +143,35 @@ namespace FrannHammer.NetCore.WebApi
 
                 foreach (var sourceUrl in sourceUrls)
                 {
-                    var populatedCharacter = characterDataScraper.PopulateCharacterFromWeb(character, sourceUrl);
-
-                    bagCharacterData.Add(populatedCharacter);
-                    populatedCharacter.Moves.ToList().ForEach(item =>
+                    try
                     {
-                        bagMoveData.Add(item);
-                    });
+                        var populatedCharacter = characterDataScraper.PopulateCharacterFromWeb(character, sourceUrl);
 
-                    populatedCharacter.Movements.ToList().ForEach(item =>
-                    {
-                        bagMovementData.Add(item);
-                    });
+                        bagCharacterData.Add(populatedCharacter);
+                        populatedCharacter.Moves.ToList().ForEach(item =>
+                        {
+                            bagMoveData.Add(item);
+                        });
 
-                    populatedCharacter.AttributeRows.ToList().ForEach(item =>
-                    {
-                        bagAttributeData.Add(item);
-                    });
+                        populatedCharacter.Movements.ToList().ForEach(item =>
+                        {
+                            bagMovementData.Add(item);
+                        });
 
-                    populatedCharacter.UniqueProperties.ToList().ForEach(item =>
+                        populatedCharacter.AttributeRows.ToList().ForEach(item =>
+                        {
+                            bagAttributeData.Add(item);
+                        });
+
+                        populatedCharacter.UniqueProperties.ToList().ForEach(item =>
+                        {
+                            bagUniqueData.Add(item);
+                        });
+                    }
+                    catch (PageNotFoundException ex)
                     {
-                        bagUniqueData.Add(item);
-                    });
+                        Console.WriteLine($"Error for '{sourceUrl}' => {ex.Message}");
+                    }
                 }
             });
 

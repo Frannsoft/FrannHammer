@@ -62,8 +62,6 @@ namespace FrannHammer.WebScraping.Moves
                     move.BaseKnockBackSetKnockback = baseKnockbackSetKnockback;
                     move.KnockbackGrowth = knockbackGrowth;
 
-                    //move.Game = character.SourceUrl.Contains("Ultimate") ? Games.Ultimate : Games.Smash4;
-
                     return move;
                 }
                 else
