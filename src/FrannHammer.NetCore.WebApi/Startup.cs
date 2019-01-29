@@ -43,7 +43,6 @@ namespace FrannHammer.NetCore.WebApi
 {
     public class Startup
     {
-
         private List<ICharacter> _characterData = new List<ICharacter>();
         private List<IMove> _moveData = new List<IMove>();
         private List<IMovement> _movementData = new List<IMovement>();
@@ -74,7 +73,15 @@ namespace FrannHammer.NetCore.WebApi
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "KH Api", Version = "v1", Description = "Add 'game=smash4' to the end of your url to specify the game." });
+                c.SwaggerDoc("v1", new Info
+                {
+                    Title = "KH Api",
+                    Version = "v1",
+                    Description = "Restful api for Smash4 and Ultimate frame data as told by @KuroganeHammer. To specify a game, " +
+                    "add a query parameter of game=ultimate or game=smash4 to the end of your request. The default (adding no 'game'" +
+                    "query parameter) will return smash4 data where applicable. If the data isn't present in smash4, Ultimate data" +
+                    "will be returned."
+                });
                 var apiXmlCommentsFilePath = Path.Combine(AppContext.BaseDirectory, "FrannHammer.NetCore.WebApi.xml");
                 c.IncludeXmlComments(apiXmlCommentsFilePath);
             });
