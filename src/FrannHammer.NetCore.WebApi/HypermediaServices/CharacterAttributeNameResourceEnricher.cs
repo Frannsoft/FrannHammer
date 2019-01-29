@@ -23,6 +23,8 @@ namespace FrannHammer.NetCore.WebApi.HypermediaServices
 
             resource.AddLink(allAttributesForNameLink);
 
+            var relatedLinks = new RelatedLinks();
+
             return resource;
         }
     }
