@@ -172,5 +172,16 @@ namespace FrannHammer.WebScraping.Tests
             AssertAttributeCollectionIsValid(sut, attributeRows);
             Assert.That(attributeRows.Count, Is.EqualTo(2), $"{nameof(attributeRows.Count)}");
         }
+
+        [Test]
+        public void ScrapeRunSpeed_ForNess_ReturnsRunSpeedEvenWithAltName()
+        {
+            var sut = new RunSpeedScraper(_scrapingServices, $"{Keys.KHSiteBaseUrl}{Keys.Smash4Url}");
+
+            var attributeRows = sut.Scrape(Characters.Ness).ToList();
+
+            AssertAttributeCollectionIsValid(sut, attributeRows);
+            Assert.That(attributeRows.Count, Is.EqualTo(1), $"{nameof(attributeRows.Count)}");
+        }
     }
 }

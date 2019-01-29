@@ -136,7 +136,7 @@ namespace FrannHammer.NetCore.WebApi
             var bagAttributeData = new ConcurrentBag<ICharacterAttributeRow>();
             var bagUniqueData = new ConcurrentBag<IUniqueData>();
 
-            var charactersToSeed = Characters.All.Where(c => c.DisplayName == "PAC-MAN");
+            var charactersToSeed = Characters.All.Where(c => c.DisplayName == "Ness");
 
             Parallel.ForEach(charactersToSeed, character =>
             {
