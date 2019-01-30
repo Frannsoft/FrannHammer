@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using FrannHammer.WebScraping.Domain.Contracts;
+﻿using FrannHammer.WebScraping.Domain.Contracts;
+using System.Collections.Generic;
 
 namespace FrannHammer.WebScraping.Domain
 {
@@ -78,7 +78,15 @@ namespace FrannHammer.WebScraping.Domain
             new Zelda(),
             new ZeroSuitSamus(),
             new Incineroar(),
-            new Daisy()
+            new Chrom(),
+            new Daisy(),
+            new Inkling(),
+            new Richter(),
+            new Pichu(),
+            new Snake(),
+            new Simon(),
+            new Squirtle(),
+            new Wolf()
         };
     }
 }

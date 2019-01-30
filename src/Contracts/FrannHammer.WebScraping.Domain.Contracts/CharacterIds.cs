@@ -66,6 +66,14 @@ namespace FrannHammer.WebScraping.Domain.Contracts
         public const int ZeroSuitSamus = 58;
         public const int Incineroar = 59;
         public const int Daisy = 60;
+        public const int Chrom = 61;
+        public const int Inkling = 62;
+        public const int Richter = 63;
+        public const int Pichu = 64;
+        public const int Snake = 65;
+        public const int Simon = 66;
+        public const int Squirtle = 67;
+        public const int Wolf = 68;
 
         public static int FindByName(string characterName)
         {
