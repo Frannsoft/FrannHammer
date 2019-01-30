@@ -182,11 +182,11 @@ namespace FrannHammer.NetCore.WebApi
                 }
             });
 
-            _characterData = bagCharacterData.ToList();
-            _moveData = bagMoveData.ToList();
-            _movementData = bagMovementData.ToList();
-            _characterAttributeRowData = bagAttributeData.ToList();
-            _uniqueData = bagUniqueData.ToList();
+            _characterData = bagCharacterData.OrderBy(c => c.OwnerId).ToList();
+            _moveData = bagMoveData.OrderBy(m => m.Name).ToList();
+            _movementData = bagMovementData.OrderBy(m => m.Name).ToList();
+            _characterAttributeRowData = bagAttributeData.OrderBy(m => m.Name).ToList();
+            _uniqueData = bagUniqueData.OrderBy(u => u.Name).ToList();
 
             services.AddSingleton(_characterData);
             services.AddSingleton(_moveData);
