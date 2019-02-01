@@ -1,6 +1,6 @@
 # FrannHammer - The KuroganeHammer.com API
 
-### The legacy version of the API has been turned off now. This means requests `api.kuroganehammer.com` will no longer work.
+### The legacy version of the API has been turned off now. This means requests `api.kuroganehammer.com` will not work.
 
 **Interested in news about the latest version? [Go here](https://github.com/Frannsoft/FrannHammer/wiki/Version-0.6.0---Details)**
 
