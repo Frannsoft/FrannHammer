@@ -19,6 +19,7 @@ using FrannHammer.WebScraping.PageDownloading;
 using FrannHammer.WebScraping.Unique;
 using FrannHammer.WebScraping.WebClients;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
 
 namespace FrannHammer.NetCore.WebApi.ServiceCollectionExtensions
 {
@@ -44,9 +45,32 @@ namespace FrannHammer.NetCore.WebApi.ServiceCollectionExtensions
             services.AddTransient<SpecialMoveScraper>();
             services.AddTransient<ThrowMoveScraper>();
 
-            services.AddTransient<ICharacterMoveScraper, DefaultCharacterMoveScraper>();
+            services.AddTransient<ICharacterMoveScraper, DefaultCharacterMoveScraper>(sp =>
+            {
+                var scrapers = new List<IMoveScraper>
+                {
+                    sp.GetService<GroundMoveScraper>(),
+                    sp.GetService<AerialMoveScraper>(),
+                    sp.GetService<SpecialMoveScraper>(),
+                    sp.GetService<ThrowMoveScraper>()
+                };
+
+                return new DefaultCharacterMoveScraper(scrapers);
+            });
+
             services.AddTransient<IMovementScraper, DefaultMovementScraper>();
-            services.AddTransient<ICharacterDataScrapingServices, DefaultCharacterDataScrapingServices>();
+            services.AddTransient<ICharacterDataScrapingServices, DefaultCharacterDataScrapingServices>(sp =>
+            {
+                var scrapers = AttributeScrapers.AllWithScrapingServices(sp.GetService<IAttributeScrapingServices>());
+                return new DefaultCharacterDataScrapingServices(
+                    sp.GetService<IImageScrapingService>(),
+                    sp.GetService<IMovementScraper>(),
+                    scrapers,
+                    sp.GetService<ICharacterMoveScraper>(),
+                    sp.GetService<IUniqueDataScrapingServices>(),
+                    sp.GetService<IWebServices>(),
+                    sp.GetService<IInstanceIdGenerator>());
+            });
             services.AddTransient<ICharacterDataScraper, DefaultCharacterDataScraper>();
             services.AddTransient<IUniqueDataScrapingServices, DefaultUniqueDataScrapingServices>();
 

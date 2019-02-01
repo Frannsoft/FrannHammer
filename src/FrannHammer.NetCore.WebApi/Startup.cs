@@ -134,38 +134,23 @@ namespace FrannHammer.NetCore.WebApi
                         var populatedCharacter = characterDataScraper.PopulateCharacterFromWeb(character, sourceUrl);
 
                         _characterData.Add(populatedCharacter);
-                        populatedCharacter.Moves.ToList().ForEach(item =>
-                        {
-                            _moveData.Add(item);
-                        });
-
-                        populatedCharacter.Movements.ToList().ForEach(item =>
-                        {
-                            _movementData.Add(item);
-                        });
-
-                        populatedCharacter.AttributeRows.ToList().ForEach(item =>
-                        {
-                            _characterAttributeRowData.Add(item);
-                        });
-
-                        populatedCharacter.UniqueProperties.ToList().ForEach(item =>
-                        {
-                            _uniqueData.Add(item);
-                        });
+                        _moveData.AddRange(populatedCharacter.Moves);
+                        _movementData.AddRange(populatedCharacter.Movements);
+                        _characterAttributeRowData.AddRange(populatedCharacter.AttributeRows);
+                        _uniqueData.AddRange(populatedCharacter.UniqueProperties);
                     }
                     catch (PageNotFoundException ex)
                     {
-                        Console.WriteLine($"Error for '{sourceUrl}' => {ex.Message}");
+                        Console.WriteLine($"Error for '{character.Name}' at '{sourceUrl}' => {ex.Message}");
                     }
                 }
             }
 
-            _characterData = _characterData.OrderBy(c => c.OwnerId).ToList();
-            _moveData = _moveData.OrderBy(m => m.Name).ToList();
-            _movementData = _movementData.OrderBy(m => m.Name).ToList();
-            _characterAttributeRowData = _characterAttributeRowData.OrderBy(m => m.Name).ToList();
-            _uniqueData = _uniqueData.OrderBy(u => u.Name).ToList();
+            _characterData.Sort((c1, c2) => c1.OwnerId.CompareTo(c2.OwnerId));
+            _moveData.Sort((m1, m2) => m1.Name.CompareTo(m2.Name));
+            _movementData.Sort((m1, m2) => m1.Name.CompareTo(m2.Name));
+            _characterAttributeRowData.Sort((c1, c2) => c1.Name.CompareTo(c2.Name));
+            _uniqueData.Sort((u1, u2) => u1.Name.CompareTo(u2.Name));
         }
     }
 }
