@@ -1,5 +1,7 @@
 # FrannHammer - The KuroganeHammer.com API
 
+### The legacy version of the API has been turned off now. This means requests `api.kuroganehammer.com` will no longer work.
+
 **Interested in news about the latest version? [Go here](https://github.com/Frannsoft/FrannHammer/wiki/Version-0.6.0---Details)**
 
 Beta: [![Build status](https://ci.appveyor.com/api/projects/status/ruxmxhiutxe9q8v9/branch/develop?svg=true)](https://ci.appveyor.com/project/Frannsoft/frannhammer-0uqqq/branch/develop)
