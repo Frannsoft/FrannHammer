@@ -1,5 +1,4 @@
-﻿using Autofac;
-using FrannHammer.Domain.Contracts;
+﻿using FrannHammer.Domain.Contracts;
 using FrannHammer.NetCore.WebApi.ServiceCollectionExtensions;
 using FrannHammer.WebScraping.Contracts.Character;
 using FrannHammer.WebScraping.Domain;

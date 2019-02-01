@@ -15,7 +15,7 @@ namespace FrannHammer.NetCore.WebApi.ServiceCollectionExtensions
             services.AddTransient<IRepository<ICharacterAttributeRow>, InMemoryRepository<ICharacterAttributeRow>>();
             services.AddTransient<IRepository<IUniqueData>, InMemoryRepository<IUniqueData>>();
 
-            return services
+            return services;
         }
     }
 }
