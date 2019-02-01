@@ -29,16 +29,14 @@ namespace FrannHammer.WebScraping.Moves
             if (!string.IsNullOrEmpty(cells[0].InnerText) && cells.Count > 1)
             {
                 string name = GetStatName(cells[0]);
-                //string hitboxActive = cells[1].InnerText;
                 string faf = cells[2].InnerText;
-                //string basedmg = cells[3].InnerText;
                 string angle = cells[4].InnerText;
                 string bkbwbkb = cells[5].InnerText;
                 string kbg = cells[6].InnerText;
 
                 string landingLag = cells[7].InnerText;
 
-                var autocancel = cells[8].InnerText;
+                var autocancel = new CommonAutocancelParameterResolver().Resolve(cells[8]);
 
                 move = ScrapingServices.CreateMove();
 
@@ -46,17 +44,14 @@ namespace FrannHammer.WebScraping.Moves
 
                 move.Name = name;
                 move.Angle = angle;
-                //move.BaseDamage = basedmg;
                 move.BaseKnockBackSetKnockback = bkbwbkb;
                 move.FirstActionableFrame = faf;
-                //move.HitboxActive = hitboxActive;
                 move.KnockbackGrowth = kbg;
                 move.LandingLag = landingLag;
                 move.AutoCancel = autocancel;
                 move.MoveType = MoveType.Aerial.GetEnumDescription();
                 move.Owner = character.Name;
                 move.OwnerId = character.OwnerId;
-                //move.Game = character.SourceUrl.Contains("Ultimate") ? Games.Ultimate : Games.Smash4;
             }
 
             return move;

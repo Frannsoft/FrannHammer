@@ -4,7 +4,7 @@ using static FrannHammer.Domain.FriendlyNameCommonConstants;
 
 namespace FrannHammer.Domain
 {
-    public class Movement : MongoModel, IMovement
+    public class Movement : BaseModel, IMovement
     {
         [FriendlyName(OwnerIdName)]
         public int OwnerId { get; set; }

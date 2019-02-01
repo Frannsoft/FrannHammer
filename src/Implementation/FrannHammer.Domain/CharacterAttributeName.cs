@@ -2,7 +2,7 @@
 
 namespace FrannHammer.Domain
 {
-    public class CharacterAttributeName : MongoModel, ICharacterAttributeName
+    public class CharacterAttributeName : BaseModel, ICharacterAttributeName
     {
     }
 }

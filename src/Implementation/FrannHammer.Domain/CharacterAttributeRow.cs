@@ -5,7 +5,7 @@ using static FrannHammer.Domain.FriendlyNameCommonConstants;
 
 namespace FrannHammer.Domain
 {
-    public class CharacterAttributeRow : MongoModel, ICharacterAttributeRow
+    public class CharacterAttributeRow : BaseModel, ICharacterAttributeRow
     {
         [FriendlyName(OwnerName)]
         public string Owner { get; set; }

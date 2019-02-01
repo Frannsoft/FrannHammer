@@ -13,7 +13,6 @@ namespace FrannHammer.WebScraping.Moves
         public string GetRawValue(HtmlNode node)
         {
             string basedmg = string.Empty;
-            // var baseDmgCell = node;//<div class="tooltip">11<span class="tooltiptext">1v1: 13.2</span></div>
             var normalBaseDamageNode = node.SelectSingleNode("./div[@class = 'tooltip']");
             if (normalBaseDamageNode != null)
             {
@@ -30,35 +29,6 @@ namespace FrannHammer.WebScraping.Moves
             return basedmg;
         }
     }
-
-    //public class BaseDamageResolver
-    //{
-    //    private readonly Games _game;
-
-    //    public BaseDamageResolver(Games game)
-    //    {
-    //        _game = game;
-    //    }
-
-    //    public string Resolve(HtmlNode node)
-    //    {
-    //        switch (_game)
-    //        {
-    //            case Games.Smash4:
-    //                {
-    //                    return new Smash4BaseDamageResolver().GetRawValue(node);
-    //                }
-    //            case Games.Ultimate:
-    //                {
-    //                    return new UltimateBaseDamageResolver().GetRawValue(node);
-    //                }
-    //            default:
-    //                {
-    //                    return new Smash4BaseDamageResolver().GetRawValue(node);
-    //                }
-    //        }
-    //    }
-    //}
 
     public class Smash4HitboxResolver
     {
@@ -83,6 +53,15 @@ namespace FrannHammer.WebScraping.Moves
             }
 
             return hitbox;
+        }
+    }
+
+    public class CommonAutocancelParameterResolver
+    {
+        public string Resolve(HtmlNode node)
+        {
+            string autoCancel = node.InnerText.Replace("&gt;", ">").Replace("&lt;", "<");
+            return autoCancel;
         }
     }
 
@@ -131,5 +110,6 @@ namespace FrannHammer.WebScraping.Moves
             move.Game = Games.Smash4;
             return move;
         }
+
     }
 }

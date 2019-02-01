@@ -24,6 +24,13 @@ namespace FrannHammer.Api.Services
             Enum.TryParse(adjustedCasingGame, out _game);
         }
 
+        protected BaseApiService(IRepository<T> repository, IGameParameterParserService gameParameterParserService)
+        {
+            Guard.VerifyObjectNotNull(repository, nameof(repository));
+            Repository = repository;
+            _game = gameParameterParserService.ParseGame();
+        }
+
         protected Func<T, bool> WhereGameIs() => g => g.Game == _game;
 
         public T GetSingleByInstanceId(string id)

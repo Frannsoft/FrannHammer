@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
-using FrannHammer.Api.Services.Contracts;
+﻿using FrannHammer.Api.Services.Contracts;
 using FrannHammer.DataAccess.Contracts;
 using FrannHammer.Domain.Contracts;
 using FrannHammer.Utility;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace FrannHammer.Api.Services
 {
@@ -11,8 +11,8 @@ namespace FrannHammer.Api.Services
     {
         private readonly IQueryMappingService _queryMappingService;
 
-        public DefaultMovementService(IRepository<IMovement> repository, IQueryMappingService queryMappingService, string game)
-            : base(repository, game)
+        public DefaultMovementService(IRepository<IMovement> repository, IQueryMappingService queryMappingService, IGameParameterParserService gameParameterParserService)
+            : base(repository, gameParameterParserService)
         {
             Guard.VerifyObjectNotNull(queryMappingService, nameof(queryMappingService));
             _queryMappingService = queryMappingService;

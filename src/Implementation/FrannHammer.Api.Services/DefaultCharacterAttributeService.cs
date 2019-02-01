@@ -13,8 +13,8 @@ namespace FrannHammer.Api.Services
         private readonly ICharacterAttributeNameProvider _characterAttributeNameProvider;
 
         public DefaultCharacterAttributeService(IRepository<ICharacterAttributeRow> characterAttributeRowRepository,
-            ICharacterAttributeNameProvider characterAttributeNameProvider, string game)
-            : base(characterAttributeRowRepository, game)
+            ICharacterAttributeNameProvider characterAttributeNameProvider, IGameParameterParserService gameParameterParserService)
+            : base(characterAttributeRowRepository, gameParameterParserService)
         {
             Guard.VerifyObjectNotNull(characterAttributeNameProvider, nameof(characterAttributeNameProvider));
             _characterAttributeNameProvider = characterAttributeNameProvider;

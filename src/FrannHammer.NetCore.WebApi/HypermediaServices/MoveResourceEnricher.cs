@@ -42,13 +42,10 @@ namespace FrannHammer.NetCore.WebApi.HypermediaServices
                 relatedLinks.Smash4.Self = selfLink.Href.ReplaceUltimateWithSmash4();
                 relatedLinks.Smash4.Character = characterLink.Href.ReplaceUltimateWithSmash4();
             }
-            else
-            {
-                relatedLinks.Ultimate = new ExpandoObject();
-                relatedLinks.Ultimate.Self = selfLink.Href.ReplaceSmash4WithUltimate();
-                relatedLinks.Ultimate.Character = characterLink.Href.ReplaceSmash4WithUltimate();
-            }
 
+            relatedLinks.Ultimate = new ExpandoObject();
+            relatedLinks.Ultimate.Self = selfLink.Href.ReplaceSmash4WithUltimate();
+            relatedLinks.Ultimate.Character = characterLink.Href.ReplaceSmash4WithUltimate();
 
             resource.AddRelated(relatedLinks);
 

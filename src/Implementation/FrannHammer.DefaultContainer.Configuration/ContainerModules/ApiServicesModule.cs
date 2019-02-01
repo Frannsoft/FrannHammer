@@ -1,8 +1,4 @@
 ﻿using Autofac;
-using FrannHammer.Api.Services;
-using FrannHammer.Api.Services.Contracts;
-using FrannHammer.DataAccess.Contracts;
-using FrannHammer.Domain.Contracts;
 
 namespace FrannHammer.DefaultContainer.Configuration.ContainerModules
 {
@@ -45,7 +41,7 @@ namespace FrannHammer.DefaultContainer.Configuration.ContainerModules
             //    .WithParameter((pi, c) => pi.Name == QueryMappingParameterName,
             //     (pi, c) => c.Resolve<IQueryMappingService>());
 
-            builder.RegisterType<DefaultCharacterAttributeNameProvider>().As<ICharacterAttributeNameProvider>();
+            //builder.RegisterType<DefaultCharacterAttributeNameProvider>().As<ICharacterAttributeNameProvider>();
 
             //builder.RegisterType<DefaultCharacterAttributeService>()
             //    .As<ICharacterAttributeRowService>()
@@ -54,14 +50,14 @@ namespace FrannHammer.DefaultContainer.Configuration.ContainerModules
             //        .WithParameter((pi, c) => pi.Name == "characterAttributeNameProvider",
             //        (pi, c) => c.Resolve<ICharacterAttributeNameProvider>());
 
-            builder.RegisterType<DefaultAttributeStrategy>().As<IAttributeStrategy>();
+            //builder.RegisterType<DefaultAttributeStrategy>().As<IAttributeStrategy>();
 
-            builder.RegisterType<QueryMappingService>()
-                .As<IQueryMappingService>()
-                .WithParameter((pi, c) => pi.Name == "attributeStrategy",
-                (pi, c) => c.Resolve<IAttributeStrategy>());
+            //builder.RegisterType<QueryMappingService>()
+            //    .As<IQueryMappingService>()
+            //    .WithParameter((pi, c) => pi.Name == "attributeStrategy",
+            //    (pi, c) => c.Resolve<IAttributeStrategy>());
 
-            builder.RegisterType<DefaultDtoProvider>().As<IDtoProvider>();
+            //builder.RegisterType<DefaultDtoProvider>().As<IDtoProvider>();
         }
     }
 }

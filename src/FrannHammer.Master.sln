@@ -3,11 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{69FBD121-A16B-4A89-941F-54FD77745E60}"
-	ProjectSection(SolutionItems) = preProject
-		SolutionInfo.cs = SolutionInfo.cs
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contracts", "Contracts", "{2CAD34F4-EF52-4926-92F0-E054D425F1DE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Implementation", "Implementation", "{E9F69086-F07B-4093-ACEE-9A87FB656CEE}"
@@ -27,8 +22,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrannHammer.WebScraping.Domain.Contracts", "Contracts\FrannHammer.WebScraping.Domain.Contracts\FrannHammer.WebScraping.Domain.Contracts.csproj", "{40C0A772-8A77-484F-919C-DB55CAEAEAA1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrannHammer.Api.Services", "Implementation\FrannHammer.Api.Services\FrannHammer.Api.Services.csproj", "{70F9ADDE-E6A1-43AD-A458-061E86F8832C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrannHammer.DefaultContainer.Configuration", "Implementation\FrannHammer.DefaultContainer.Configuration\FrannHammer.DefaultContainer.Configuration.csproj", "{D0A0B3FE-CFB3-4759-AD3C-D3FC20FAE191}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrannHammer.Domain", "Implementation\FrannHammer.Domain\FrannHammer.Domain.csproj", "{4DB6C856-581A-4B69-BB6A-4AEBF3929C5E}"
 EndProject
@@ -84,10 +77,6 @@ Global
 		{70F9ADDE-E6A1-43AD-A458-061E86F8832C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70F9ADDE-E6A1-43AD-A458-061E86F8832C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70F9ADDE-E6A1-43AD-A458-061E86F8832C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D0A0B3FE-CFB3-4759-AD3C-D3FC20FAE191}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D0A0B3FE-CFB3-4759-AD3C-D3FC20FAE191}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D0A0B3FE-CFB3-4759-AD3C-D3FC20FAE191}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D0A0B3FE-CFB3-4759-AD3C-D3FC20FAE191}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4DB6C856-581A-4B69-BB6A-4AEBF3929C5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4DB6C856-581A-4B69-BB6A-4AEBF3929C5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DB6C856-581A-4B69-BB6A-4AEBF3929C5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -140,7 +129,6 @@ Global
 		{C6F2A84F-6B78-494F-9293-0BB666A64AB9} = {2CAD34F4-EF52-4926-92F0-E054D425F1DE}
 		{40C0A772-8A77-484F-919C-DB55CAEAEAA1} = {2CAD34F4-EF52-4926-92F0-E054D425F1DE}
 		{70F9ADDE-E6A1-43AD-A458-061E86F8832C} = {E9F69086-F07B-4093-ACEE-9A87FB656CEE}
-		{D0A0B3FE-CFB3-4759-AD3C-D3FC20FAE191} = {E9F69086-F07B-4093-ACEE-9A87FB656CEE}
 		{4DB6C856-581A-4B69-BB6A-4AEBF3929C5E} = {E9F69086-F07B-4093-ACEE-9A87FB656CEE}
 		{4DB55C69-EAE5-4970-B8B2-A7A84900041A} = {E9F69086-F07B-4093-ACEE-9A87FB656CEE}
 		{B7686798-61B2-4208-86EF-0076BF1301BE} = {E9F69086-F07B-4093-ACEE-9A87FB656CEE}

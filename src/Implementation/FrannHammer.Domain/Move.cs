@@ -5,7 +5,7 @@ using static FrannHammer.Domain.FriendlyNameMoveCommonConstants;
 
 namespace FrannHammer.Domain
 {
-    public class Move : MongoModel, IMove
+    public class Move : BaseModel, IMove
     {
         [PropertyParser(typeof(HitboxParser))]
         [FriendlyName(HitboxActiveName)]

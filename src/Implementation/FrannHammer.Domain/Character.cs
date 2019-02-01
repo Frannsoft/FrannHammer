@@ -3,7 +3,7 @@ using static FrannHammer.Domain.FriendlyNameCommonConstants;
 
 namespace FrannHammer.Domain
 {
-    public class Character : MongoModel, ICharacter
+    public class Character : BaseModel, ICharacter
     {
         [FriendlyName("fullUrl")]
         public string FullUrl { get; set; }

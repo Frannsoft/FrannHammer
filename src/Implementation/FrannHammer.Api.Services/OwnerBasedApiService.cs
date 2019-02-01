@@ -9,8 +9,8 @@ namespace FrannHammer.Api.Services
     public class OwnerBasedApiService<T> : BaseApiService<T>
         where T : IHaveAnOwner, IHaveAnOwnerId, IModel
     {
-        public OwnerBasedApiService(IRepository<T> repository, string game)
-            : base(repository, game)
+        public OwnerBasedApiService(IRepository<T> repository, IGameParameterParserService gameParameterParserService)
+            : base(repository, gameParameterParserService)
         { }
 
         public virtual IEnumerable<T> GetAllWhereCharacterNameIs(string name)

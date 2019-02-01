@@ -10,8 +10,9 @@ namespace FrannHammer.Api.Services
     {
         private readonly IQueryMappingService _queryMappingService;
 
-        public DefaultUniqueDataService(IRepository<IUniqueData> repository, IQueryMappingService queryMappingService, string game)
-            : base(repository, game)
+        public DefaultUniqueDataService(IRepository<IUniqueData> repository, IQueryMappingService queryMappingService,
+            IGameParameterParserService gameParameterParserService)
+            : base(repository, gameParameterParserService)
         {
             Guard.VerifyObjectNotNull(queryMappingService, nameof(queryMappingService));
             _queryMappingService = queryMappingService;

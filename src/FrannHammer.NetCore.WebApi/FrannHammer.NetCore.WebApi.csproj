@@ -30,7 +30,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Contracts\FrannHammer.Seeding.Contracts\FrannHammer.Seeding.Contracts.csproj" />
     <ProjectReference Include="..\Implementation\FrannHammer.Api.Services\FrannHammer.Api.Services.csproj" />
-    <ProjectReference Include="..\Implementation\FrannHammer.DefaultContainer.Configuration\FrannHammer.DefaultContainer.Configuration.csproj" />
     <ProjectReference Include="..\Implementation\FrannHammer.Domain\FrannHammer.Domain.csproj" />
     <ProjectReference Include="..\Implementation\FrannHammer.WebScraping.Domain\FrannHammer.WebScraping.Domain.csproj" />
   </ItemGroup>

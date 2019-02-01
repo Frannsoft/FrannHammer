@@ -4,7 +4,7 @@ using static FrannHammer.Domain.FriendlyNameMoveCommonConstants;
 
 namespace FrannHammer.Domain
 {
-    public class UniqueData : MongoModel, IUniqueData
+    public class UniqueData : BaseModel, IUniqueData
     {
         [FriendlyName(OwnerIdName)]
         public int OwnerId { get; set; }

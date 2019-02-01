@@ -18,14 +18,14 @@ namespace FrannHammer.WebApi.Tests
             Assert.Throws<ArgumentNullException>(() =>
             {
                 // ReSharper disable once ObjectCreationAsStatement
-                new MongoDbBsonMapper().MapAllLoadedTypesDerivingFrom<MongoModel>(new List<Assembly> { null });
+                new MongoDbBsonMapper().MapAllLoadedTypesDerivingFrom<BaseModel>(new List<Assembly> { null });
             });
         }
 
         [Test]
         public void RegistersTypesThatDeriveFromBaseType()
         {
-            Type baseType = typeof(MongoModel);
+            Type baseType = typeof(BaseModel);
 
             var sut = new MongoDbBsonMapper();
 
@@ -44,7 +44,7 @@ namespace FrannHammer.WebApi.Tests
             Assert.That(preRegistrationClassMaps.Count(), Is.EqualTo(0));
 
             //register types
-            sut.MapAllLoadedTypesDerivingFrom<MongoModel>(assemblyWithModelTypes);
+            sut.MapAllLoadedTypesDerivingFrom<BaseModel>(assemblyWithModelTypes);
 
             //assert that types are registered now
             var actualRegisteredClassMapTypes = BsonClassMap.GetRegisteredClassMaps().Select(map => map.ClassType).ToList();

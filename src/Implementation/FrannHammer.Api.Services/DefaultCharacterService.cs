@@ -17,8 +17,8 @@ namespace FrannHammer.Api.Services
 
         public DefaultCharacterService(IRepository<ICharacter> repository, IDtoProvider dtoProvider,
                                 IMovementService movementService, ICharacterAttributeRowService attributeRowService,
-                                IMoveService moveService, IUniqueDataService uniqueDataService, string game)
-            : base(repository, game)
+                                IMoveService moveService, IUniqueDataService uniqueDataService, IGameParameterParserService gameParameterParserService)
+            : base(repository, gameParameterParserService)
         {
             Guard.VerifyObjectNotNull(dtoProvider, nameof(dtoProvider));
             Guard.VerifyObjectNotNull(attributeRowService, nameof(attributeRowService));
