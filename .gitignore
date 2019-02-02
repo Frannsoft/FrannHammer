@@ -89,3 +89,4 @@ ConnectionStringsTest.config
 /src/FrannHammer.NetCore.WebApi/move.json
 /src/FrannHammer.NetCore.WebApi/character.json
 /src/FrannHammer.NetCore.WebApi/attribute.json
+/src/localstorage

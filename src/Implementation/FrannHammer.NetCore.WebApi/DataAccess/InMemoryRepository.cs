@@ -3,7 +3,6 @@ using FrannHammer.Domain.Contracts;
 using FrannHammer.Utility;
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 
 namespace FrannHammer.NetCore.WebApi.DataAccess
@@ -53,7 +52,12 @@ namespace FrannHammer.NetCore.WebApi.DataAccess
 
         public T GetSingleWhere(Func<T, bool> where)
         {
-            return _data.SingleOrDefault(where);
+            var foundData = _data.SingleOrDefault(where);
+            if (foundData == null)
+            {
+                throw new ResourceNotFoundException($"Resource of type '{typeof(T).Name}' not found.");
+            }
+            return foundData;
         }
 
         public void Update(T model)

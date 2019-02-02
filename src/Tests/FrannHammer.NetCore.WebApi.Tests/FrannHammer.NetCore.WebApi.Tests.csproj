@@ -3,13 +3,11 @@
     <ProductVersion />
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <AssemblyTitle>FrannHammer.WebApi.Tests</AssemblyTitle>
+    <AssemblyTitle>FrannHammer.NetCore.WebApi.Tests</AssemblyTitle>
     <GenerateAssemblyCompanyAttribute>False</GenerateAssemblyCompanyAttribute>
-    <Product>FrannHammer.WebApi.Tests</Product>
+    <Product>FrannHammer.NetCore.WebApi.Tests</Product>
     <Copyright>Copyright ©  2017</Copyright>
     <OutputPath>bin\$(Configuration)\</OutputPath>
-    <PostBuildEvent>xcopy $(SolutionDir)\Tests\tests.connectionstrings.config $(TargetDir) /I /Y
-xcopy $(SolutionDir)\Tests\tests.appsettings.config $(TargetDir) /I /Y</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -18,15 +16,12 @@ xcopy $(SolutionDir)\Tests\tests.appsettings.config $(TargetDir) /I /Y</PostBuil
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>xcopy $(SolutionDir)\Tests\tests.connectionstrings.config $(TargetDir) /I /Y
-xcopy $(SolutionDir)\Tests\tests.appsettings.config $(TargetDir) /I /Y</PostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AutoFixture" Version="4.6.0" />
     <PackageReference Include="AutoFixture.AutoMoq" Version="4.6.0" />
     <PackageReference Include="AutoMapper" Version="8.0.0" />
     <PackageReference Include="Castle.Core" Version="4.3.1" />
-    <PackageReference Include="MongoDB.Bson" Version="2.7.2" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="2.2.0" />
     <PackageReference Include="Moq" Version="4.10.1" />
@@ -59,12 +54,12 @@ xcopy $(SolutionDir)\Tests\tests.appsettings.config $(TargetDir) /I /Y</PostBuil
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Contracts\FrannHammer.Api.Services.Contracts\FrannHammer.Api.Services.Contracts.csproj" />
-    <ProjectReference Include="..\..\FrannHammer.NetCore.WebApi\FrannHammer.NetCore.WebApi.csproj" />
     <ProjectReference Include="..\..\Implementation\FrannHammer.Api.Services\FrannHammer.Api.Services.csproj" />
     <ProjectReference Include="..\..\Contracts\FrannHammer.DataAccess.Contracts\FrannHammer.DataAccess.Contracts.csproj" />
     <ProjectReference Include="..\..\Contracts\FrannHammer.Domain.Contracts\FrannHammer.Domain.Contracts.csproj" />
     <ProjectReference Include="..\..\Implementation\FrannHammer.Domain\FrannHammer.Domain.csproj" />
     <ProjectReference Include="..\..\Contracts\FrannHammer.WebScraping.Domain.Contracts\FrannHammer.WebScraping.Domain.Contracts.csproj" />
+    <ProjectReference Include="..\..\Implementation\FrannHammer.NetCore.WebApi\FrannHammer.NetCore.WebApi.csproj" />
     <ProjectReference Include="..\..\Implementation\FrannHammer.WebScraping.Domain\FrannHammer.WebScraping.Domain.csproj" />
     <ProjectReference Include="..\FrannHammer.Tests.Utility\FrannHammer.Tests.Utility.csproj" />
   </ItemGroup>

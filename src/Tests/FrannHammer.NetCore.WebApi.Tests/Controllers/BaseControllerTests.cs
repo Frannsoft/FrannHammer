@@ -6,6 +6,7 @@ namespace FrannHammer.NetCore.WebApi.Tests.Controllers
     public abstract class BaseControllerTests
     {
         protected Fixture Fixture { get; }
+        protected static IntegrationTestServer TestServer { get; } = new IntegrationTestServer();
 
         protected BaseControllerTests()
         {

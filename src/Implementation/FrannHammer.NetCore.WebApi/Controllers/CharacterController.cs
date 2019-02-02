@@ -3,7 +3,6 @@ using FrannHammer.NetCore.WebApi.HypermediaServices;
 using FrannHammer.Utility;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.Primitives;
 using System.Linq;
 using static FrannHammer.NetCore.WebApi.Controllers.ApiControllerBaseRoutingConstants;
 
@@ -31,16 +30,11 @@ namespace FrannHammer.NetCore.WebApi.Controllers
             _enrichmentProvider = enrichmentProvider;
         }
 
-        private string ReturnGameFromQueryString()
-        {
-            HttpContext.Request.Query.TryGetValue("game", out StringValues game);
-            return game.ToString();
-        }
-
         [HttpGet(CharactersRouteKey + IdRouteKey)]
         public IActionResult GetCharacterByOwnerId(int id)
         {
             var character = _characterService.GetSingleByOwnerId(id);
+
             var resource = _enrichmentProvider.EnrichCharacter(character);
             return Result(resource);
         }
@@ -57,10 +51,7 @@ namespace FrannHammer.NetCore.WebApi.Controllers
         [HttpGet(CharactersRouteKey)]
         public IActionResult GetAllCharacters()
         {
-            string game = ReturnGameFromQueryString();
-
             var characters = _characterService.GetAll().ToList();
-
             var resources = _enrichmentProvider.EnrichManyCharacters(characters);
             return Result(resources);
         }
