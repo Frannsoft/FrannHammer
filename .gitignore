@@ -84,3 +84,8 @@ ConnectionStringsTest.config
 /src/.vs/FrannHammer.Master/v15/Server/sqlite3
 /src/.vs
 /src/FrannHammer.NetCore.WebApi/Properties/PublishProfiles
+/src/FrannHammer.NetCore.WebApi/unique.json
+/src/FrannHammer.NetCore.WebApi/movement.json
+/src/FrannHammer.NetCore.WebApi/move.json
+/src/FrannHammer.NetCore.WebApi/character.json
+/src/FrannHammer.NetCore.WebApi/attribute.json

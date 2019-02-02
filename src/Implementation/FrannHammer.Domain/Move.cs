@@ -51,7 +51,5 @@ namespace FrannHammer.Domain
 
         [FriendlyName(OwnerIdName)]
         public int OwnerId { get; set; }
-
-        public string Game { get; set; } = "Smash4";
     }
 }

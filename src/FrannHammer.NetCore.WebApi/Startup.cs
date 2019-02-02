@@ -1,8 +1,7 @@
-﻿using FrannHammer.Domain.Contracts;
+﻿using FrannHammer.Domain;
+using FrannHammer.Domain.Contracts;
 using FrannHammer.NetCore.WebApi.ServiceCollectionExtensions;
 using FrannHammer.WebScraping.Contracts.Character;
-using FrannHammer.WebScraping.Domain;
-using FrannHammer.WebScraping.PageDownloading;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
@@ -14,7 +13,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -115,7 +113,8 @@ namespace FrannHammer.NetCore.WebApi
 
         private void SeedData(ICharacterDataScraper characterDataScraper)
         {
-            var charactersToSeed = Characters.All.Where(c => c.DisplayName == "Ryu");
+#if !DEBUG
+            var charactersToSeed = Characters.All;
             foreach (var character in charactersToSeed)
             {
                 Console.WriteLine($"Scraping data for '{character.Name}'...");
@@ -144,12 +143,39 @@ namespace FrannHammer.NetCore.WebApi
                     }
                 }
             }
+#endif
+#if DEBUG
+            _characterData.AddRange(JsonConvert.DeserializeObject<List<Character>>(File.ReadAllText("character.json")));
+            _moveData.AddRange(JsonConvert.DeserializeObject<List<Move>>(File.ReadAllText("move.json")));
+            _movementData.AddRange(JsonConvert.DeserializeObject<List<Movement>>(File.ReadAllText("movement.json")));
+            _characterAttributeRowData.AddRange(JsonConvert.DeserializeObject<List<dynamic>>(File.ReadAllText("attribute.json")).Select(attr =>
+            {
+                return new CharacterAttributeRow
+                {
+                    Game = attr["Game"],
+                    InstanceId = attr["InstanceId"],
+                    Name = attr["Name"],
+                    Owner = attr["Owner"],
+                    OwnerId = attr["OwnerId"],
+                    Values = attr["Values"] as List<IAttribute>
+                };
+            }));
+            _uniqueData.AddRange(JsonConvert.DeserializeObject<List<UniqueData>>(File.ReadAllText("unique.json")));
+#endif
 
             _characterData.Sort((c1, c2) => c1.OwnerId.CompareTo(c2.OwnerId));
             _moveData.Sort((m1, m2) => m1.Name.CompareTo(m2.Name));
             _movementData.Sort((m1, m2) => m1.Name.CompareTo(m2.Name));
             _characterAttributeRowData.Sort((c1, c2) => c1.Name.CompareTo(c2.Name));
             _uniqueData.Sort((u1, u2) => u1.Name.CompareTo(u2.Name));
+
+            //write pulled data to local
+            //File.WriteAllText("character.json", JsonConvert.SerializeObject(_characterData));
+            //File.WriteAllText("move.json", JsonConvert.SerializeObject(_moveData));
+            //File.WriteAllText("movement.json", JsonConvert.SerializeObject(_movementData));
+            //File.WriteAllText("attribute.json", JsonConvert.SerializeObject(_characterAttributeRowData));
+            //File.WriteAllText("unique.json", JsonConvert.SerializeObject(_uniqueData));
+            //done writing to local
         }
     }
 }
