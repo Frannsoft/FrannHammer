@@ -20,7 +20,6 @@ namespace FrannHammer.WebScraping.Attributes
 
         protected AttributeScraper(string baseUrl, IAttributeScrapingServices scrapingServices)
         {
-            //Guard.VerifyStringIsNotNullOrEmpty(baseUrl, nameof(baseUrl));
             Guard.VerifyObjectNotNull(scrapingServices, nameof(scrapingServices));
 
             ScrapingServices = scrapingServices;
@@ -70,10 +69,6 @@ namespace FrannHammer.WebScraping.Attributes
                         {
                             rows.AddRange(attributeTableRows.ToList());
                         }
-                        //if (attributeTableRows != null)
-                        //{
-                        //    break;
-                        //}
                     }
 
                     //assume it's lumped in with everyone else value
@@ -121,7 +116,6 @@ namespace FrannHammer.WebScraping.Attributes
 
                 var headers = GetHeaders(htmlParser);
 
-                //foreach (var row in attributeTableRows)
                 foreach (var row in rows)
                 {
                     var attributeValues = new List<IAttribute>();

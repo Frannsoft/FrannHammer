@@ -76,7 +76,7 @@ namespace FrannHammer.WebScraping.Tests
         [TestCaseSource(nameof(ScrapersUltimate))]
         public void ScrapeAttributeRowData(AttributeScraper scraper)
         {
-            var attributeRows = scraper.Scrape(Characters.DarkPit).ToList();
+            var attributeRows = scraper.Scrape(Characters.Ryu).ToList();
             AssertAttributeCollectionIsValid(scraper, attributeRows);
         }
 
@@ -87,6 +87,17 @@ namespace FrannHammer.WebScraping.Tests
         {
             var sut = new CounterScraper(_scrapingServices, urlUnderTest);
             var results = sut.Scrape(Characters.Greninja).ToList();
+
+            AssertAttributeCollectionIsValid(sut, results);
+        }
+
+        [Test]
+        [TestCase(Keys.KHSiteBaseUrl + Keys.Smash4Url)]
+        [TestCase(Keys.KHSiteBaseUrl + Keys.UltimateUrl)]
+        public void ScraperAttributeRowData_Weight(string urlUnderTest)
+        {
+            var sut = new WeightScraper(_scrapingServices, urlUnderTest);
+            var results = sut.Scrape(Characters.Ryu).ToList();
 
             AssertAttributeCollectionIsValid(sut, results);
         }
