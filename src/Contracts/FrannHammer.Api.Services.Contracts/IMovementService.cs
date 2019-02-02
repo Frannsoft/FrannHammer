@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using FrannHammer.Domain.Contracts;
+﻿using FrannHammer.Domain.Contracts;
+using System.Collections.Generic;
 
 namespace FrannHammer.Api.Services.Contracts
 {
@@ -7,6 +7,5 @@ namespace FrannHammer.Api.Services.Contracts
     {
         IEnumerable<IMovement> GetAllWhereCharacterNameIs(string name);
         IEnumerable<IMovement> GetAllWhereCharacterOwnerIdIs(int id);
-        IEnumerable<IMovement> GetAllWhere(IFilterResourceQuery query);
     }
 }

@@ -12,9 +12,6 @@ namespace FrannHammer.NetCore.WebApi.ServiceCollectionExtensions
         {
             services.AddTransient<ICharacterAttributeNameProvider, DefaultCharacterAttributeNameProvider>();
             services.AddTransient<IAttributeStrategy, DefaultAttributeStrategy>();
-            services.AddTransient<IQueryMappingService, QueryMappingService>();
-            services.AddTransient<IDtoProvider, DefaultDtoProvider>();
-
             services.AddTransient<IGameParameterParserService, GameParameterParserService>(sp =>
             {
                 sp.GetService<IActionContextAccessor>().ActionContext.HttpContext.Request.Query.TryGetValue("game", out StringValues game);

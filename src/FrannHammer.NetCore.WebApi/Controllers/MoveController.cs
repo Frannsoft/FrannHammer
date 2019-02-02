@@ -44,19 +44,5 @@ namespace FrannHammer.NetCore.WebApi.Controllers
             var resources = _enrichmentProvider.EnrichManyMoves(content, expand);
             return Result(resources);
         }
-
-        [HttpGet(MovesRouteKey + "/name/{name}/{property}", Name = nameof(GetAllPropertyDataForMoveByName))]
-        public IActionResult GetAllPropertyDataForMoveByName(string name, string property)
-        {
-            var content = _moveService.GetAllPropertyDataWhereName(name, property);
-            return Result(content);
-        }
-
-        [HttpGet(MovesRouteKey + "/{id}/{property}", Name = nameof(GetAllPropertyDataForMoveById))]
-        public IActionResult GetAllPropertyDataForMoveById(string id, string property)
-        {
-            var content = _moveService.GetPropertyDataWhereId(id, property);
-            return Result(content);
-        }
     }
 }

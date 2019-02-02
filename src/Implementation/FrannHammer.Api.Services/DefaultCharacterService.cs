@@ -13,20 +13,17 @@ namespace FrannHammer.Api.Services
         private readonly IMoveService _moveService;
         private readonly IMovementService _movementService;
         private readonly IUniqueDataService _uniqueDataService;
-        private readonly IDtoProvider _dtoProvider;
 
-        public DefaultCharacterService(IRepository<ICharacter> repository, IDtoProvider dtoProvider,
+        public DefaultCharacterService(IRepository<ICharacter> repository,
                                 IMovementService movementService, ICharacterAttributeRowService attributeRowService,
                                 IMoveService moveService, IUniqueDataService uniqueDataService, IGameParameterParserService gameParameterParserService)
             : base(repository, gameParameterParserService)
         {
-            Guard.VerifyObjectNotNull(dtoProvider, nameof(dtoProvider));
             Guard.VerifyObjectNotNull(attributeRowService, nameof(attributeRowService));
             Guard.VerifyObjectNotNull(moveService, nameof(moveService));
             Guard.VerifyObjectNotNull(movementService, nameof(movementService));
             Guard.VerifyObjectNotNull(uniqueDataService, nameof(uniqueDataService));
 
-            _dtoProvider = dtoProvider;
             _attributeRowService = attributeRowService;
             _moveService = moveService;
             _movementService = movementService;
@@ -47,39 +44,6 @@ namespace FrannHammer.Api.Services
                 throw new ResourceNotFoundException($"No character with name '{name}' found.");
             }
             return character;
-        }
-
-        public ICharacterDetailsDto GetCharacterDetailsWhereCharacterOwnerIs(string name)
-        {
-            var character = GetSingleWhere(c => c.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase));
-
-            //get movement, attributes and put into aggregate dto 
-            var dto = _dtoProvider.CreateCharacterDetailsDto();
-
-            var movements = _movementService.GetAllWhereCharacterNameIs(name);
-            var attributeRows = _attributeRowService.GetAllWhereCharacterNameIs(name);
-
-            dto.Metadata = character;
-            dto.Movements = movements;
-            dto.AttributeRows = attributeRows;
-
-            return dto;
-        }
-
-        public ICharacterDetailsDto GetCharacterDetailsWhereCharacterOwnerIdIs(int id)
-        {
-            var character = GetSingleWhere(c => c.OwnerId == id);
-
-            var dto = _dtoProvider.CreateCharacterDetailsDto();
-
-            var movements = _movementService.GetAllWhereCharacterOwnerIdIs(id);
-            var attributeRows = _attributeRowService.GetAllWhereCharacterOwnerIdIs(id);
-
-            dto.Metadata = character;
-            dto.Movements = movements;
-            dto.AttributeRows = attributeRows;
-
-            return dto;
         }
 
         public IEnumerable<IMovement> GetAllMovementsWhereCharacterNameIs(string name)
@@ -112,23 +76,6 @@ namespace FrannHammer.Api.Services
             return _attributeRowService.GetAllWithNameAndMatchingCharacterOwner(attributeName, name);
         }
 
-        public IEnumerable<ParsedMove> GetDetailedMovesWhereCharacterNameIs(string name)
-        {
-            var foundCharacter = GetSingleByName(name);
-            return GetDetailedMovesCore(foundCharacter);
-        }
-
-        public IEnumerable<ParsedMove> GetDetailedMovesWhereCharacterOwnerIdIs(int id)
-        {
-            var foundCharacter = GetSingleByOwnerId(id);
-            return GetDetailedMovesCore(foundCharacter);
-        }
-
-        private IEnumerable<ParsedMove> GetDetailedMovesCore(ICharacter character)
-        {
-            return _moveService.GetAllMovePropertyDataForCharacter(character);
-        }
-
         public IEnumerable<IMove> GetAllThrowsWhereCharacterNameIs(string name)
         {
             var foundCharacter = GetSingleByName(name);
@@ -153,26 +100,6 @@ namespace FrannHammer.Api.Services
             return _moveService.GetAllMovesForCharacter(foundCharacter);
         }
 
-        public IEnumerable<IMove> GetAllMovesForCharacterByNameFilteredBy(IMoveFilterResourceQuery query)
-        {
-            return _moveService.GetAllWhere(query);
-        }
-
-        public IEnumerable<IMove> GetAllMovesForCharacterByOwnerIdFilteredBy(IMoveFilterResourceQuery query)
-        {
-            return _moveService.GetAllWhere(query);
-        }
-
-        public IEnumerable<IMovement> GetAllMovementsWhereCharacterOwnerIdIsFilteredBy(IMovementFilterResourceQuery query)
-        {
-            return _movementService.GetAllWhere(query);
-        }
-
-        public IEnumerable<IMovement> GetAllMovementsWhereCharacterNameIsFilteredBy(IMovementFilterResourceQuery query)
-        {
-            return _movementService.GetAllWhere(query);
-        }
-
         public IEnumerable<IUniqueData> GetUniquePropertiesWhereCharacterOwnerIdIs(int id)
         {
             var uniqueProperties = _uniqueDataService.GetAllWhere(u => u.OwnerId == id);
@@ -184,7 +111,5 @@ namespace FrannHammer.Api.Services
             var uniqueProperties = _uniqueDataService.GetAllWhere(u => u.Owner.Equals(name, StringComparison.OrdinalIgnoreCase));
             return uniqueProperties;
         }
-
-
     }
 }
