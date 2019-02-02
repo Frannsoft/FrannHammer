@@ -86,8 +86,7 @@ namespace FrannHammer.NetCore.WebApi
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "KH Api");
-
+                c.SwaggerEndpoint("/swagger/v7/swagger.json", "KH Api");
                 c.EnableDeepLinking();
             });
 
@@ -116,7 +115,7 @@ namespace FrannHammer.NetCore.WebApi
 
         private void SeedData(ICharacterDataScraper characterDataScraper)
         {
-            var charactersToSeed = Characters.All.Where(c => c.DisplayName == "Ness");
+            var charactersToSeed = Characters.All.Where(c => c.DisplayName == "Ryu");
             foreach (var character in charactersToSeed)
             {
                 Console.WriteLine($"Scraping data for '{character.Name}'...");

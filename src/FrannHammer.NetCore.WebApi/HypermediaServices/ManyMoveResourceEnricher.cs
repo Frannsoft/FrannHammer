@@ -15,7 +15,7 @@ namespace FrannHammer.NetCore.WebApi.HypermediaServices
             _singleResourceEnricher = singleResourceEnricher;
         }
 
-        public override IEnumerable<IMoveResource> Enrich(IEnumerable<IMove> content)
+        public override IEnumerable<IMoveResource> Enrich(IEnumerable<IMove> content, bool expand = false)
         {
             return content.Select(move => _singleResourceEnricher.Enrich(move));
         }

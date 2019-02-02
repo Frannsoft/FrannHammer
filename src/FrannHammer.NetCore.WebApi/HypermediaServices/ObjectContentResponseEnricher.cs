@@ -27,7 +27,7 @@ namespace FrannHammer.NetCore.WebApi.HypermediaServices
             Context = context;
         }
 
-        public abstract TResource Enrich(TModel content);
+        public abstract TResource Enrich(TModel content, bool expand = false);
 
         bool IResponseEnricher.CanEnrich(object content)
         {

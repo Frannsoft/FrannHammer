@@ -14,7 +14,7 @@ namespace FrannHammer.NetCore.WebApi.HypermediaServices
             : base(linkProvider, entityToDtoMapper, linkGenerator, context)
         { }
 
-        public override UniqueDataResource Enrich(IUniqueData content)
+        public override UniqueDataResource Enrich(IUniqueData content, bool expand = false)
         {
             var resource = EntityToDtoMapper.Map<UniqueDataResource>(content);
 

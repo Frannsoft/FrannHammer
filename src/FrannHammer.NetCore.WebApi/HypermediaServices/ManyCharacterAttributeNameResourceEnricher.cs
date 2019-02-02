@@ -18,7 +18,7 @@ namespace FrannHammer.NetCore.WebApi.HypermediaServices
             _singleResourceEnricher = singleResourceEnricher;
         }
 
-        public override IEnumerable<CharacterAttributeNameResource> Enrich(IEnumerable<ICharacterAttributeName> content)
+        public override IEnumerable<CharacterAttributeNameResource> Enrich(IEnumerable<ICharacterAttributeName> content, bool expand = false)
         {
             return content.Select(characterAttributeRowName => _singleResourceEnricher.Enrich(characterAttributeRowName));
         }

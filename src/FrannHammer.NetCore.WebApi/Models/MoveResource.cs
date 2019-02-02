@@ -25,13 +25,13 @@ namespace FrannHammer.NetCore.WebApi.Models
         public string Game { get; set; }
     }
 
-    public class UltimateMoveResource : MoveResource
+    public class ExpandedMoveResource : MoveResource
     {
-        public new HitboxResource HitboxActive { get; set; }
-        public new BaseDamageResource BaseDamage { get; set; }
+        public new ExpandedHitboxResource HitboxActive { get; set; }
+        public new ExpandedBaseDamageResource BaseDamage { get; set; }
     }
 
-    public class BaseDamageResource
+    public class ExpandedBaseDamageResource
     {
         public string Normal { get; set; }
 
@@ -39,7 +39,7 @@ namespace FrannHammer.NetCore.WebApi.Models
         public string Vs1 { get; set; }
     }
 
-    public class HitboxResource
+    public class ExpandedHitboxResource
     {
         public string Frames { get; set; }
 

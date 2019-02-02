@@ -55,7 +55,7 @@ namespace FrannHammer.WebScraping.Character
 
             const string srcAttributeKey = "src";
             const string characterNameKey = "[charactername]";
-            var htmlParser = _webServices.CreateParserFromSourceUrl(populatedCharacter.SourceUrl);//(character.SourceUrl);
+            var htmlParser = _webServices.CreateParserFromSourceUrl(populatedCharacter.SourceUrl);
             string displayNameHtml = htmlParser.GetSingle(ScrapingConstants.XPathFrameDataVersion);
 
             string displayName = GetCharacterDisplayName(displayNameHtml);
@@ -74,14 +74,14 @@ namespace FrannHammer.WebScraping.Character
 
                     if (!string.IsNullOrEmpty(thumbnailHtml))
                     {
-                        thumbnailUrl = GetThumbnailUrl(srcAttributeKey, thumbnailHtml, populatedCharacter.SourceUrl);//WebCharacter.SourceSmash4UrlBase);
+                        thumbnailUrl = GetThumbnailUrl(srcAttributeKey, thumbnailHtml, populatedCharacter.SourceUrl);
                         break;
                     }
                 }
             }
             else
             {
-                thumbnailUrl = GetThumbnailUrl(srcAttributeKey, thumbnailHtml, populatedCharacter.SourceUrl);// WebCharacter.SourceSmash4UrlBase);
+                thumbnailUrl = GetThumbnailUrl(srcAttributeKey, thumbnailHtml, populatedCharacter.SourceUrl);
             }
 
             //character details
@@ -89,7 +89,7 @@ namespace FrannHammer.WebScraping.Character
             Uri mainImageUri;
             if (!Uri.TryCreate(mainImageUrl, UriKind.Absolute, out mainImageUri)) //add base address if it doesn't exist
             {
-                mainImageUrl = populatedCharacter.SourceUrl/*WebCharacter.SourceSmash4UrlBase*/ + mainImageUrl;
+                mainImageUrl = populatedCharacter.SourceUrl + mainImageUrl;
             }
 
             //color hex
@@ -161,11 +161,8 @@ namespace FrannHammer.WebScraping.Character
         {
             string thumbnailUriFromSource = HtmlNode.CreateNode(thumbnailHtml).GetAttributeValue(attributeKey, string.Empty);
 
-            if (thumbnailUriFromSource.StartsWith("/Smash4/"))
-            {
-                thumbnailUriFromSource = "http://kuroganehammer.com" + thumbnailUriFromSource;
-            }
-            return thumbnailUriFromSource;//urlRoot + thumbnailUriFromSource;
+            thumbnailUriFromSource = "http://kuroganehammer.com" + thumbnailUriFromSource;
+            return thumbnailUriFromSource;
         }
 
         private static string GetCharacterDisplayName(string rawDisplayNameHtml)

@@ -17,7 +17,7 @@ namespace FrannHammer.NetCore.WebApi.ServiceCollectionExtensions
                 cfg.CreateMap<WebCharacter, Character>();
                 cfg.CreateMap<ICharacter, CharacterResource>();
                 cfg.CreateMap<IMove, MoveResource>();
-                cfg.CreateMap<IMove, UltimateMoveResource>()
+                cfg.CreateMap<IMove, ExpandedMoveResource>()
                 .ForMember(
                     dest => dest.BaseDamage,
                     opt => opt.MapFrom(src => new UltimateBaseDamageResourceMapService().MapFrom(src)))

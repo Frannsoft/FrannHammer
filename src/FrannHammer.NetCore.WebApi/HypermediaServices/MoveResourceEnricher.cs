@@ -14,13 +14,13 @@ namespace FrannHammer.NetCore.WebApi.HypermediaServices
             : base(linkProvider, entityToDtoMapper, linkGenerator, context)
         { }
 
-        public override IMoveResource Enrich(IMove content)
+        public override IMoveResource Enrich(IMove content, bool expand = false)
         {
             var resource = default(IMoveResource);
 
-            if (content.Game == Games.Ultimate)
+            if (expand)
             {
-                resource = EntityToDtoMapper.Map<UltimateMoveResource>(content);
+                resource = EntityToDtoMapper.Map<ExpandedMoveResource>(content);
             }
             else
             {

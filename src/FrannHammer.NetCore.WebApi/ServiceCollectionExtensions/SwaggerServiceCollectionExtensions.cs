@@ -13,15 +13,16 @@ namespace FrannHammer.NetCore.WebApi.ServiceCollectionExtensions
             {
                 c.SwaggerDoc("v7", new Info
                 {
-                    Title = "KuroganeHammer Api",
+                    Title = "The KuroganeHammer API",
                     Version = "v7",
                     Contact = new Contact
                     {
+                        Name = "@FrannDotExe",
                         Url = "https://twitter.com/@franndotexe"
                     },
                     License = new License
                     {
-                        Name = "MIT",
+                        Name = "License: MIT",
                         Url = "https://github.com/Frannsoft/FrannHammer/blob/develop/License.md"
                     },
                     Description = "Restful api for Smash4 and Ultimate frame data as told by @KuroganeHammer. To specify a game, " +

@@ -22,26 +22,26 @@ namespace FrannHammer.NetCore.WebApi.Controllers
         }
 
         [HttpGet(MovesRouteKey + "/{id}", Name = nameof(GetMoveById))]
-        public IActionResult GetMoveById(string id)
+        public IActionResult GetMoveById(string id, bool expand = false)
         {
             var move = _moveService.GetSingleByInstanceId(id);
-            var resource = _enrichmentProvider.EnrichMove(move);
+            var resource = _enrichmentProvider.EnrichMove(move, expand);
             return Result(resource);
         }
 
         [HttpGet(MovesRouteKey, Name = nameof(GetAllMoves))]
-        public IActionResult GetAllMoves()
+        public IActionResult GetAllMoves(bool expand = false)
         {
             var moves = _moveService.GetAll();
-            var resources = _enrichmentProvider.EnrichManyMoves(moves);
+            var resources = _enrichmentProvider.EnrichManyMoves(moves, expand);
             return Result(resources);
         }
 
         [HttpGet(MovesRouteKey + "/name/{name}", Name = nameof(GetSingleMoveByName))]
-        public IActionResult GetSingleMoveByName(string name)
+        public IActionResult GetSingleMoveByName(string name, bool expand = false)
         {
             var content = _moveService.GetAllWhereName(name);
-            var resources = _enrichmentProvider.EnrichManyMoves(content);
+            var resources = _enrichmentProvider.EnrichManyMoves(content, expand);
             return Result(resources);
         }
 

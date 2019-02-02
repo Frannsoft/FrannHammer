@@ -14,7 +14,7 @@ namespace FrannHammer.NetCore.WebApi.HypermediaServices
             : base(linkProvider, entityToDtoMapper, linkGenerator, context)
         { }
 
-        public override CharacterResource Enrich(ICharacter content)
+        public override CharacterResource Enrich(ICharacter content, bool expand = false)
         {
             var resource = EntityToDtoMapper.Map<CharacterResource>(content);
 

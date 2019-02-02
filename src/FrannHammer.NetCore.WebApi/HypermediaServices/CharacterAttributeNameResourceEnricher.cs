@@ -15,7 +15,7 @@ namespace FrannHammer.NetCore.WebApi.HypermediaServices
         {
         }
 
-        public override CharacterAttributeNameResource Enrich(ICharacterAttributeName content)
+        public override CharacterAttributeNameResource Enrich(ICharacterAttributeName content, bool expand = false)
         {
             var resource = EntityToDtoMapper.Map<CharacterAttributeNameResource>(content);
 

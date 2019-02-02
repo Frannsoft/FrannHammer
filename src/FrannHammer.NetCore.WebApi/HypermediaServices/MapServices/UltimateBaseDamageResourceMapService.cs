@@ -7,9 +7,9 @@ namespace FrannHammer.NetCore.WebApi.HypermediaServices.MapServices
 {
     public class UltimateBaseDamageResourceMapService
     {
-        public BaseDamageResource MapFrom(IMove move)
+        public ExpandedBaseDamageResource MapFrom(IMove move)
         {
-            var baseDamageResource = new BaseDamageResource();
+            var baseDamageResource = new ExpandedBaseDamageResource();
 
             var parts = move.BaseDamage.Split(new[] { "1v1:" }, StringSplitOptions.None);
 
@@ -20,24 +20,6 @@ namespace FrannHammer.NetCore.WebApi.HypermediaServices.MapServices
             }
 
             return baseDamageResource;
-        }
-    }
-
-    public class UltimateHitboxResourceMapService
-    {
-        public HitboxResource MapFrom(IMove move)
-        {
-            var hitboxResource = new HitboxResource();
-
-            var parts = move.HitboxActive.Split(new[] { "Adv:" }, StringSplitOptions.None);
-
-            hitboxResource.Frames = parts[0];
-            if (parts.Count() > 1)
-            {
-                hitboxResource.Adv = parts[1].Trim();
-            }
-
-            return hitboxResource;
         }
     }
 }

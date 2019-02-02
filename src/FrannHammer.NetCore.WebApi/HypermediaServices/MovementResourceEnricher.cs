@@ -14,7 +14,7 @@ namespace FrannHammer.NetCore.WebApi.HypermediaServices
             : base(linkProvider, entityToDtoMapper, linkGenerator, context)
         { }
 
-        public override MovementResource Enrich(IMovement content)
+        public override MovementResource Enrich(IMovement content, bool expand = false)
         {
             var resource = EntityToDtoMapper.Map<MovementResource>(content);
 

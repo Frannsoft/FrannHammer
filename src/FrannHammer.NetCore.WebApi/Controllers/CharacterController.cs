@@ -72,7 +72,7 @@ namespace FrannHammer.NetCore.WebApi.Controllers
         }
 
         [HttpGet(CharactersRouteKey + NameRouteKey + ThrowsRouteKey)]
-        public IActionResult GetAllThrowsForCharacterWhereName(string name)
+        public IActionResult GetAllThrowsForCharacterWhereName(string name, bool expand = false)
         {
             var throws = _characterService.GetAllThrowsWhereCharacterNameIs(name);
             var resources = _enrichmentProvider.EnrichManyMoves(throws);
@@ -80,7 +80,7 @@ namespace FrannHammer.NetCore.WebApi.Controllers
         }
 
         [HttpGet(CharactersRouteKey + IdRouteKey + ThrowsRouteKey)]
-        public IActionResult GetAllThrowsForCharacterWhereOwnerId(int id)
+        public IActionResult GetAllThrowsForCharacterWhereOwnerId(int id, bool expand = false)
         {
             var throws = _characterService.GetAllThrowsWhereCharacterOwnerIdIs(id);
             var resources = _enrichmentProvider.EnrichManyMoves(throws);
@@ -102,18 +102,18 @@ namespace FrannHammer.NetCore.WebApi.Controllers
         //}
 
         [HttpGet(CharactersRouteKey + NameRouteKey + MovesRouteKey, Name = nameof(GetAllMovesForCharacterWhereName))]
-        public IActionResult GetAllMovesForCharacterWhereName(string name)
+        public IActionResult GetAllMovesForCharacterWhereName(string name, bool expand = false)
         {
             var moves = _characterService.GetAllMovesWhereCharacterNameIs(name);
-            var resources = _enrichmentProvider.EnrichManyMoves(moves);
+            var resources = _enrichmentProvider.EnrichManyMoves(moves, expand);
             return Result(resources);
         }
 
         [HttpGet(CharactersRouteKey + IdRouteKey + MovesRouteKey)]
-        public IActionResult GetAllMovesForCharacterWhereOwnerId(int id)
+        public IActionResult GetAllMovesForCharacterWhereOwnerId(int id, bool expand = false)
         {
             var moves = _characterService.GetAllMovesWhereCharacterOwnerIdIs(id);
-            var resources = _enrichmentProvider.EnrichManyMoves(moves);
+            var resources = _enrichmentProvider.EnrichManyMoves(moves, expand);
             return Result(resources);
         }
 
