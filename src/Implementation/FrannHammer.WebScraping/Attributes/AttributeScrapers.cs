@@ -32,6 +32,23 @@ namespace FrannHammer.WebScraping.Attributes
         public const string GetUpStand = "GetUpStand";
         public const string GetUpStandOnBack = "GetUp On Back";
         public const string GetUpStandOnFront = "GetUp On Front";
+        public const string GetUpBackRoll = "GetUpBackRoll";
+        public const string GetUpBackRollBack = "GetUp Back Roll Back";
+        public const string GetUpBackRollFront = "GetUp Back Roll Front";
+        public const string GetUpForwardRoll = "GetUpForwardRoll";
+        public const string GetUpForwardRollBack = "GetUp Forward Roll Back";
+        public const string GetUpForwardRollFront = "GetUp Forward Roll Front";
+        public const string Tech = "Tech";
+        public const string TechFrameData = "Tech Frame Data";
+        public const string TechRollForward = "Tech Roll Forward";
+        public const string TechRollBackward = "Tech Roll Backward";
+        public const string LedgeAttack = "LedgeAttack";
+        public const string LedgeGetUp = "LedgeGetUp";
+        public const string LedgeRoll = "LedgeRoll";
+        public const string LedgeJump = "LedgeJump";
+        public const string JabLock = "JabLock";
+        public const string JabLockFront = "Jab Lock Front";
+        public const string JabLockBack = "Jab Lock Back";
 
         public static IEnumerable<AttributeScraper> AllWithScrapingServices(IAttributeScrapingServices scrapingServices, string baseUrl = "")
         {
@@ -53,38 +70,14 @@ namespace FrannHammer.WebScraping.Attributes
                 new AttributeScraper(baseUrl, scrapingServices, Reflector),
                 new AttributeScraper(baseUrl, scrapingServices, Rolls),
                 new AttributeScraper(baseUrl, scrapingServices, RunSpeed),
-                new AttributeScraper(baseUrl, scrapingServices, Trip, HardTrip, ScrapingConstants.XPathTableNodeAttributesWithNoDescription),
-                new AttributeScraper(baseUrl, scrapingServices, Trip, SoftTrip, ScrapingConstants.XPathTableNodeAttributesWithDescription),
-                new AttributeScraper(baseUrl, scrapingServices, GetUpStand, GetUpStandOnBack, ScrapingConstants.XPathTableNodeAttributesWithNoDescription),
-                new AttributeScraper(baseUrl, scrapingServices, GetUpStand, GetUpStandOnFront, ScrapingConstants.XPathTableNodeAttributesWithDescription),
+                new AttributeScraper(baseUrl, scrapingServices, Trip, HardTrip, ScrapingConstants.XPathTableNodeAttributesFirstTable),
+                new AttributeScraper(baseUrl, scrapingServices, Trip, SoftTrip, ScrapingConstants.XPathTableNodeAttributesSecondTable),
+                new AttributeScraper(baseUrl, scrapingServices, GetUpStand, GetUpStandOnBack, ScrapingConstants.XPathTableNodeAttributesFirstTable),
+                new AttributeScraper(baseUrl, scrapingServices, GetUpStand, GetUpStandOnFront, ScrapingConstants.XPathTableNodeAttributesSecondTable),
                 new AttributeScraper(baseUrl, scrapingServices, Traction),
                 new AttributeScraper(baseUrl, scrapingServices, WalkSpeed),
                 new AttributeScraper(baseUrl, scrapingServices, Weight),
                 new AttributeScraper(baseUrl, scrapingServices, AerialJump)
-
-
-                //old
-                //new AerialJumpScraper(scrapingServices, baseUrl),
-                //new CounterScraper(scrapingServices, baseUrl),
-                //new AirAccelerationScraper(scrapingServices, baseUrl),
-                //new AirFrictionScraper(scrapingServices, baseUrl),
-                //new DashLengthScraper(scrapingServices, baseUrl),
-                //new FallSpeedScraper(scrapingServices, baseUrl),
-                //new FullHopScraper(scrapingServices, baseUrl),
-                //new GravityScraper(scrapingServices, baseUrl),
-                //new JumpSquatScraper(scrapingServices, baseUrl),
-                //new LedgeHopScraper(scrapingServices, baseUrl),
-                //new ShortHopScraper(scrapingServices, baseUrl),
-                //new SpotdodgeScraper(scrapingServices, baseUrl),
-                //new TractionScraper(scrapingServices, baseUrl),
-                //new WalkSpeedScraper(scrapingServices, baseUrl),
-                //new AirSpeedScraper(scrapingServices, baseUrl),
-                //new AirDodgeScraper(scrapingServices, baseUrl),
-                //new RollScraper(scrapingServices, baseUrl),
-                //new RunSpeedScraper(scrapingServices, baseUrl),
-                //new ShieldSizeScraper(scrapingServices, baseUrl),
-                //new ReflectorScraper(scrapingServices, baseUrl),
-                //new WeightScraper(scrapingServices, baseUrl)
             };
         }
     }

@@ -61,8 +61,8 @@ namespace FrannHammer.WebScraping.Attributes
                 if (string.IsNullOrEmpty(xpathToTable))
                 {
                     attributeTableHtml =
-                        htmlParser.GetSingle(ScrapingConstants.XPathTableNodeAttributesWithDescription) ??
-                        htmlParser.GetSingle(ScrapingConstants.XPathTableNodeAttributesWithNoDescription);
+                        htmlParser.GetSingle(ScrapingConstants.XPathTableNodeAttributesSecondTable) ??
+                        htmlParser.GetSingle(ScrapingConstants.XPathTableNodeAttributesFirstTable);
                 }
                 else
                 {

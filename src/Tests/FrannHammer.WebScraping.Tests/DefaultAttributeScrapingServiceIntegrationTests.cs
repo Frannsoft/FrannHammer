@@ -99,6 +99,7 @@ namespace FrannHammer.WebScraping.Tests
             var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.Weight);
             var results = sut.Scrape(Characters.Ryu).ToList();
 
+            Assert.That(results.First().Values.First().Value, Is.EqualTo("103"));
             AssertAttributeCollectionIsValid(sut, results);
         }
 
@@ -106,40 +107,271 @@ namespace FrannHammer.WebScraping.Tests
         [TestCase(Keys.KHSiteBaseUrl + Keys.Smash4Url)]
         public void ScraperAttributeRowData_HardTrip(string urlUnderTest)
         {
-            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.Trip, AttributeScrapers.HardTrip, ScrapingConstants.XPathTableNodeAttributesWithNoDescription);
+            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.Trip,
+                AttributeScrapers.HardTrip, ScrapingConstants.XPathTableNodeAttributesFirstTable);
             var results = sut.Scrape(Characters.Roy).ToList();
 
-            AssertAttributeCollectionIsValid(sut, results, "HardTrip");
+            Assert.That(results.First().Values.First().Value, Is.EqualTo("41"));
+            Assert.That(results.First().Values.Last().Value, Is.EqualTo("1-5"));
+            AssertAttributeCollectionIsValid(sut, results, AttributeScrapers.HardTrip);
         }
 
         [Test]
         [TestCase(Keys.KHSiteBaseUrl + Keys.Smash4Url)]
         public void ScraperAttributeRowData_SoftTrip(string urlUnderTest)
         {
-            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.Trip, AttributeScrapers.SoftTrip, ScrapingConstants.XPathTableNodeAttributesWithDescription);
+            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.Trip,
+                AttributeScrapers.SoftTrip, ScrapingConstants.XPathTableNodeAttributesSecondTable);
             var results = sut.Scrape(Characters.Charizard).ToList();
 
-            AssertAttributeCollectionIsValid(sut, results, "SoftTrip");
+            Assert.That(results.First().Values.First().Value, Is.EqualTo("34"));
+            Assert.That(results.First().Values.Last().Value, Is.EqualTo("1-5"));
+            AssertAttributeCollectionIsValid(sut, results, AttributeScrapers.SoftTrip);
         }
 
         [Test]
         [TestCase(Keys.KHSiteBaseUrl + Keys.Smash4Url)]
         public void ScraperAttributeRowData_GetUpOnBack(string urlUnderTest)
         {
-            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.GetUpStand, AttributeScrapers.GetUpStandOnBack, ScrapingConstants.XPathTableNodeAttributesWithNoDescription);
+            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.GetUpStand,
+                AttributeScrapers.GetUpStandOnBack, ScrapingConstants.XPathTableNodeAttributesFirstTable);
             var results = sut.Scrape(new WiiFitTrainer()).ToList();
 
-            AssertAttributeCollectionIsValid(sut, results, "GetUp On Back");
+            Assert.That(results.First().Values.First().Value, Is.EqualTo("29"));
+            Assert.That(results.First().Values.Last().Value, Is.EqualTo("1-22"));
+            AssertAttributeCollectionIsValid(sut, results, AttributeScrapers.GetUpStandOnBack);
         }
 
         [Test]
         [TestCase(Keys.KHSiteBaseUrl + Keys.Smash4Url)]
         public void ScraperAttributeRowData_GetUpOnFront(string urlUnderTest)
         {
-            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.GetUpStand, AttributeScrapers.GetUpStandOnFront, ScrapingConstants.XPathTableNodeAttributesWithDescription);
+            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.GetUpStand,
+                AttributeScrapers.GetUpStandOnFront, ScrapingConstants.XPathTableNodeAttributesSecondTable);
             var results = sut.Scrape(new WiiFitTrainer()).ToList();
 
-            AssertAttributeCollectionIsValid(sut, results, "GetUp On Front");
+            Assert.That(results.First().Values.First().Value, Is.EqualTo("30"));
+            Assert.That(results.First().Values.Last().Value, Is.EqualTo("1-22"));
+            AssertAttributeCollectionIsValid(sut, results, AttributeScrapers.GetUpStandOnFront);
+        }
+
+        [Test]
+        [TestCase(Keys.KHSiteBaseUrl + Keys.Smash4Url)]
+        public void ScraperAttributeRowData_GetUpBackRollBack(string urlUnderTest)
+        {
+            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.GetUpBackRoll,
+                AttributeScrapers.GetUpBackRollBack, ScrapingConstants.XPathTableNodeAttributesFirstTable);
+            var results = sut.Scrape(new WiiFitTrainer()).ToList();
+
+            Assert.That(results.First().Values.First().Value, Is.EqualTo("1-20"));
+            Assert.That(results.First().Values.Last().Value, Is.EqualTo("36"));
+            AssertAttributeCollectionIsValid(sut, results, AttributeScrapers.GetUpBackRollBack);
+        }
+
+
+        [Test]
+        [TestCase(Keys.KHSiteBaseUrl + Keys.Smash4Url)]
+        public void ScraperAttributeRowData_GetUpBackRollFront(string urlUnderTest)
+        {
+            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.GetUpBackRoll,
+                AttributeScrapers.GetUpBackRollFront, ScrapingConstants.XPathTableNodeAttributesSecondTable);
+            var results = sut.Scrape(new WiiFitTrainer()).ToList();
+
+            Assert.That(results.First().Values.First().Value, Is.EqualTo("1-20"));
+            Assert.That(results.First().Values.Last().Value, Is.EqualTo("36"));
+            AssertAttributeCollectionIsValid(sut, results, AttributeScrapers.GetUpBackRollFront);
+        }
+
+
+        [Test]
+        [TestCase(Keys.KHSiteBaseUrl + Keys.Smash4Url)]
+        public void ScraperAttributeRowData_GetUpForwardRollBack(string urlUnderTest)
+        {
+            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.GetUpForwardRoll,
+                AttributeScrapers.GetUpForwardRollBack, ScrapingConstants.XPathTableNodeAttributesFirstTable);
+            var results = sut.Scrape(new WiiFitTrainer()).ToList();
+
+            Assert.That(results.First().Values.First().Value, Is.EqualTo("1-20"));
+            Assert.That(results.First().Values.Last().Value, Is.EqualTo("36"));
+            AssertAttributeCollectionIsValid(sut, results, AttributeScrapers.GetUpForwardRollBack);
+        }
+
+
+        [Test]
+        [TestCase(Keys.KHSiteBaseUrl + Keys.Smash4Url)]
+        public void ScraperAttributeRowData_GetUpForwardRollFront(string urlUnderTest)
+        {
+            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.GetUpForwardRoll,
+                AttributeScrapers.GetUpForwardRollFront, ScrapingConstants.XPathTableNodeAttributesSecondTable);
+            var results = sut.Scrape(new WiiFitTrainer()).ToList();
+
+            Assert.That(results.First().Values.First().Value, Is.EqualTo("1-20"));
+            Assert.That(results.First().Values.Last().Value, Is.EqualTo("36"));
+            AssertAttributeCollectionIsValid(sut, results, AttributeScrapers.GetUpForwardRollFront);
+        }
+
+        [Test]
+        [TestCase(Keys.KHSiteBaseUrl + Keys.Smash4Url)]
+        public void ScraperAttributeRowData_TechFrameData(string urlUnderTest)
+        {
+            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.Tech,
+                AttributeScrapers.TechFrameData, ScrapingConstants.XPathTableNodeAttributesFirstTable);
+            var results = sut.Scrape(new WiiFitTrainer()).ToList();
+
+            Assert.That(results.First().Values.First().Value, Is.EqualTo("27"));
+            Assert.That(results.First().Values.Last().Value, Is.EqualTo("1-20"));
+            AssertAttributeCollectionIsValid(sut, results, AttributeScrapers.TechFrameData);
+        }
+
+        [Test]
+        [TestCase(Keys.KHSiteBaseUrl + Keys.Smash4Url)]
+        public void ScraperAttributeRowData_TechRollForward(string urlUnderTest)
+        {
+            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.Tech,
+                AttributeScrapers.TechRollForward, ScrapingConstants.XPathTableNodeAttributesSecondTable);
+            var results = sut.Scrape(new WiiFitTrainer()).ToList();
+
+            Assert.That(results.First().Values.First().Value, Is.EqualTo("41"));
+            Assert.That(results.First().Values.Last().Value, Is.EqualTo("1-20"));
+            AssertAttributeCollectionIsValid(sut, results, AttributeScrapers.TechRollForward);
+        }
+
+        [Test]
+        [TestCase(Keys.KHSiteBaseUrl + Keys.Smash4Url)]
+        public void ScraperAttributeRowData_TechRollBack(string urlUnderTest)
+        {
+            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.Tech,
+                AttributeScrapers.TechRollBackward, ScrapingConstants.XPathTableNodeAttributesThirdTable);
+            var results = sut.Scrape(new WiiFitTrainer()).ToList();
+
+            Assert.That(results.First().Values.First().Value, Is.EqualTo("41"));
+            Assert.That(results.First().Values.Last().Value, Is.EqualTo("1-20"));
+            AssertAttributeCollectionIsValid(sut, results, AttributeScrapers.TechRollBackward);
+        }
+
+        [Test]
+        [TestCase(Keys.KHSiteBaseUrl + Keys.Smash4Url)]
+        public void ScraperAttributeRowData_LedgeAttack(string urlUnderTest)
+        {
+            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.LedgeAttack,
+               xpathToTable: ScrapingConstants.XPathTableNodeAttributesFirstTable);
+            var results = sut.Scrape(new WiiFitTrainer()).ToList();
+
+            Assert.That(results.First().Values.First().Value, Is.EqualTo("19-21 (Intangible: 1-16)"));
+            Assert.That(results.First().Values.Last().Value, Is.EqualTo("7"));
+            AssertAttributeCollectionIsValid(sut, results);
+        }
+
+        [Test]
+        [TestCase(Keys.KHSiteBaseUrl + Keys.Smash4Url)]
+        public void ScraperAttributeRowData_LedgeGetUp(string urlUnderTest)
+        {
+            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.LedgeGetUp,
+               xpathToTable: ScrapingConstants.XPathTableNodeAttributesFirstTable);
+            var results = sut.Scrape(new WiiFitTrainer()).ToList();
+
+            Assert.That(results.First().Values.First().Value, Is.EqualTo("1-32"));
+            Assert.That(results.First().Values.Last().Value, Is.EqualTo("34"));
+            AssertAttributeCollectionIsValid(sut, results);
+        }
+
+        [Test]
+        [TestCase(Keys.KHSiteBaseUrl + Keys.Smash4Url)]
+        public void ScraperAttributeRowData_LedgeJump(string urlUnderTest)
+        {
+            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.LedgeJump,
+               xpathToTable: ScrapingConstants.XPathTableNodeAttributesFirstTable);
+            var results = sut.Scrape(new WiiFitTrainer()).ToList();
+
+            Assert.That(results.First().Values.First().Value, Is.EqualTo("1-12"));
+            Assert.That(results.First().Values.Last().Value, Is.EqualTo("13"));
+            AssertAttributeCollectionIsValid(sut, results);
+        }
+
+        [Test]
+        [TestCase(Keys.KHSiteBaseUrl + Keys.Smash4Url)]
+        public void ScraperAttributeRowData_LedgeRoll(string urlUnderTest)
+        {
+            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.LedgeRoll,
+                xpathToTable: ScrapingConstants.XPathTableNodeAttributesFirstTable);
+            var results = sut.Scrape(new WiiFitTrainer()).ToList();
+
+            Assert.That(results.First().Values.First().Value, Is.EqualTo("1-26"));
+            Assert.That(results.First().Values.Last().Value, Is.EqualTo("50"));
+
+            AssertAttributeCollectionIsValid(sut, results);
+        }
+
+        [Test]
+        [TestCase(Keys.KHSiteBaseUrl + Keys.Smash4Url)]
+        public void ScraperAttributeRowData_JabLockFront(string urlUnderTest)
+        {
+            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.JabLock,
+                AttributeScrapers.JabLockFront, ScrapingConstants.XPathTableNodeAttributesFirstTable);
+            var results = sut.Scrape(new WiiFitTrainer()).ToList();
+
+            Assert.That(results.First().Values.First().Value, Is.EqualTo("26"));
+            AssertAttributeCollectionIsValid(sut, results, AttributeScrapers.JabLockFront);
+        }
+
+        [Test]
+        [TestCase(Keys.KHSiteBaseUrl + Keys.Smash4Url)]
+        public void ScraperAttributeRowData_JabLockBack(string urlUnderTest)
+        {
+            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.JabLock,
+                AttributeScrapers.JabLockBack, ScrapingConstants.XPathTableNodeAttributesSecondTable);
+            var results = sut.Scrape(new WiiFitTrainer()).ToList();
+
+            Assert.That(results.First().Values.First().Value, Is.EqualTo("24"));
+            AssertAttributeCollectionIsValid(sut, results, AttributeScrapers.JabLockBack);
+        }
+
+        [Test]
+        [TestCase(Keys.KHSiteBaseUrl + Keys.Smash4Url)]
+        public void ScraperAttributeRowData_ShortHop(string urlUnderTest)
+        {
+            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.ShortHop,
+                xpathToTable: ScrapingConstants.XPathTableNodeAttributesFirstTable);
+            var results = sut.Scrape(new WiiFitTrainer()).ToList();
+
+            Assert.That(results.First().Values.First().Value, Is.EqualTo("17.179214"));
+            AssertAttributeCollectionIsValid(sut, results);
+        }
+
+        [Test]
+        [TestCase(Keys.KHSiteBaseUrl + Keys.Smash4Url)]
+        public void ScraperAttributeRowData_FullHop(string urlUnderTest)
+        {
+            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.FullHop,
+                xpathToTable: ScrapingConstants.XPathTableNodeAttributesFirstTable);
+            var results = sut.Scrape(new WiiFitTrainer()).ToList();
+
+            Assert.That(results.First().Values.First().Value, Is.EqualTo("35.599998"));
+            AssertAttributeCollectionIsValid(sut, results);
+        }
+
+        [Test]
+        [TestCase(Keys.KHSiteBaseUrl + Keys.Smash4Url)]
+        public void ScraperAttributeRowData_AerialJump(string urlUnderTest)
+        {
+            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.AerialJump,
+                xpathToTable: ScrapingConstants.XPathTableNodeAttributesFirstTable);
+            var results = sut.Scrape(new WiiFitTrainer()).ToList();
+
+            Assert.That(results.First().Values.First().Value, Is.EqualTo("35.599998"));
+            AssertAttributeCollectionIsValid(sut, results);
+        }
+
+        [Test]
+        [TestCase(Keys.KHSiteBaseUrl + Keys.Smash4Url)]
+        public void ScraperAttributeRowData_LedgeHop(string urlUnderTest)
+        {
+            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.LedgeHop,
+                xpathToTable: ScrapingConstants.XPathTableNodeAttributesFirstTable);
+            var results = sut.Scrape(new WiiFitTrainer()).ToList();
+
+            Assert.That(results.First().Values.First().Value, Is.EqualTo("37.799999"));
+            AssertAttributeCollectionIsValid(sut, results);
         }
 
         [Test]
