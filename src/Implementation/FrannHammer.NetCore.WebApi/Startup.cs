@@ -2,6 +2,8 @@
 using FrannHammer.Domain.Contracts;
 using FrannHammer.NetCore.WebApi.ServiceCollectionExtensions;
 using FrannHammer.WebScraping.Contracts.Character;
+using FrannHammer.WebScraping.Domain;
+using FrannHammer.WebScraping.PageDownloading;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
@@ -13,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -114,7 +117,7 @@ namespace FrannHammer.NetCore.WebApi
         private void SeedData(ICharacterDataScraper characterDataScraper)
         {
 #if !DEBUG
-            var charactersToSeed = Characters.All;
+            var charactersToSeed = Characters.All.Where(c => c.DisplayName == "Ryu");
             foreach (var character in charactersToSeed)
             {
                 Console.WriteLine($"Scraping data for '{character.Name}'...");
