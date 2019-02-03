@@ -14,7 +14,10 @@
         public const string XPathTableCells = "th|td";
         public const string XPathThumbnailUrl = "//img[@alt='[charactername]']";
         public const string EveryoneOneElseAttributeKey = "Everyone Else";
-        public const string XPathEveryoneElseTableRow = "//table/tbody/tr/td[.=\"" + EveryoneOneElseAttributeKey + "\"]/parent::tr";
+        public const string EveryoneKey = "contains(.,'Everyone') or contains(.,'everyone')";
+        //public const string XPathEveryoneElseTableRow = "//table/tbody/tr/td[.\"" + EveryoneOneElseAttributeKey + "\"]/parent::tr";
+        public const string XPathEveryoneElseTableRow = @"//table/tbody/tr/td[" + EveryoneKey + "]/parent::tr";//\"" + EveryoneOneElseAttributeKey + "\"]/parent::tr";
+
         public const string XPathTableNodeSpecialStats = @"(//*/table[@id='AutoNumber3'])[1]";
         public const string XPathTableNodeAttributesWithDescription = @"(//*/table[@id='AutoNumber1'])[2]";
         public const string XPathTableNodeAttributesWithNoDescription = @"(//*/table[@id='AutoNumber1'])[1]";

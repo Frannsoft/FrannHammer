@@ -10,30 +10,42 @@ using System.Linq;
 
 namespace FrannHammer.WebScraping.Attributes
 {
-    public abstract class AttributeScraper : IAttributeScraper
+    public class AttributeScraper : IAttributeScraper
     {
-        public abstract string AttributeName { get; }
+        public virtual string AttributeName { get; }
+        public string AttributeDisplayName { get; }
         public virtual Func<WebCharacter, IEnumerable<ICharacterAttributeRow>> Scrape { get; }
 
         protected IAttributeScrapingServices ScrapingServices { get; }
         public string SourceUrl { get; set; }
 
-        protected AttributeScraper(string baseUrl, IAttributeScrapingServices scrapingServices)
+        public AttributeScraper(string baseUrl, IAttributeScrapingServices scrapingServices, string attributeName,
+                string attributeDisplayName = "", string xpathToTable = "")
         {
             Guard.VerifyObjectNotNull(scrapingServices, nameof(scrapingServices));
 
             ScrapingServices = scrapingServices;
 
-            string attributeName = string.Empty;
-            if (AttributeName == "RunSpeed")
+            //these are only switched for smash4 data. Ultimate has both dashspeed and runspeed...
+            if (attributeName == "RunSpeed" && baseUrl.Contains("Smash4"))
             {
-                attributeName = "DashSpeed"; //grrr..
+                AttributeName = "DashSpeed"; //grrr..
             }
             else
             {
-                attributeName = AttributeName;
+                AttributeName = attributeName;
             }
-            SourceUrl = $"{baseUrl}{attributeName}";
+
+            if (string.IsNullOrEmpty(attributeDisplayName))
+            {
+                AttributeDisplayName = AttributeName;
+            }
+            else
+            {
+                AttributeDisplayName = attributeDisplayName;
+            }
+
+            SourceUrl = $"{baseUrl}{AttributeName}";
 
             Scrape = character =>
             {
@@ -44,11 +56,20 @@ namespace FrannHammer.WebScraping.Attributes
 
                 var htmlParser = ScrapingServices.CreateParserFromSourceUrl(SourceUrl);
 
-                string attributeTableHtml =
-                    htmlParser.GetSingle(ScrapingConstants.XPathTableNodeAttributesWithDescription) ??
-                    htmlParser.GetSingle(ScrapingConstants.XPathTableNodeAttributesWithNoDescription);
+                string attributeTableHtml = string.Empty;
 
-                string xpath = ScrapingConstants.XPathEveryoneElseTableRow.Replace(ScrapingConstants.EveryoneOneElseAttributeKey, character.DisplayName);
+                if (string.IsNullOrEmpty(xpathToTable))
+                {
+                    attributeTableHtml =
+                        htmlParser.GetSingle(ScrapingConstants.XPathTableNodeAttributesWithDescription) ??
+                        htmlParser.GetSingle(ScrapingConstants.XPathTableNodeAttributesWithNoDescription);
+                }
+                else
+                {
+                    attributeTableHtml = htmlParser.GetSingle(xpathToTable);
+                }
+
+                string xpath = ScrapingConstants.XPathEveryoneElseTableRow.Replace(ScrapingConstants.EveryoneKey, $"contains(., '{character.DisplayName}')");
                 var tableHtmlNode = HtmlNode.CreateNode(attributeTableHtml);
 
                 //scrape using default character name
@@ -62,7 +83,7 @@ namespace FrannHammer.WebScraping.Attributes
                     {
                         string altCharacterNameXPath =
                             ScrapingConstants.XPathEveryoneElseTableRow.Replace(
-                                ScrapingConstants.EveryoneOneElseAttributeKey, name);
+                                ScrapingConstants.EveryoneKey, $"contains(., '{name}')");
                         attributeTableRows = tableHtmlNode?.SelectNodes(altCharacterNameXPath);
 
                         if (attributeTableRows != null)
@@ -78,31 +99,6 @@ namespace FrannHammer.WebScraping.Attributes
                             tableHtmlNode?
                                 .SelectNodes(ScrapingConstants.XPathEveryoneElseTableRow);
 
-                        if (attributeTableRows != null)
-                        {
-                            rows.AddRange(attributeTableRows.ToList());
-                        }
-                    }
-
-                    //try with modified 'everyone else' casing
-                    if (attributeTableRows == null)
-                    {
-                        //GRRR CASING...'Everyone Else' vs 'Everyone else'.  I hate xpath.
-                        attributeTableRows =
-                            tableHtmlNode?.SelectNodes(
-                                ScrapingConstants.XPathEveryoneElseTableRow.Replace(
-                                    ScrapingConstants.EveryoneOneElseAttributeKey, "Everyone else"));
-
-                        if (attributeTableRows == null)
-                        {
-                            //There is no data here.  Just return empty.  Sometimes that might be expected (like in Counters) so we shouldn't throw.
-                            //throw new Exception(
-                            //    $"Error getting attribute table data after attempting to scrape full table for character '{character.Name}' at url '{sourceUrl}'");
-                            if (rows.Count == 0)
-                            {
-                                return attributeValueRows;
-                            }
-                        }
                         if (attributeTableRows != null)
                         {
                             rows.AddRange(attributeTableRows.ToList());
@@ -139,7 +135,7 @@ namespace FrannHammer.WebScraping.Attributes
 
                     var characterAttributeRow = ScrapingServices.CreateCharacterAttributeRow();
                     characterAttributeRow.Values = attributeValues;
-                    characterAttributeRow.Name = AttributeName;
+                    characterAttributeRow.Name = string.IsNullOrEmpty(attributeDisplayName) ? AttributeName : attributeDisplayName;
                     characterAttributeRow.Owner = character.Name;
                     characterAttributeRow.OwnerId = character.OwnerId;
                     characterAttributeRow.Game = SourceUrl.Contains("Ultimate") ? Games.Ultimate : Games.Smash4;

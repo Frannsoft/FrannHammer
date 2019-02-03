@@ -31,7 +31,7 @@ namespace FrannHammer.WebScraping.Tests
             return scrapingServices;
         }
 
-        private static void AssertAttributeCollectionIsValid(IAttributeScraper attributeScraper, List<ICharacterAttributeRow> attributeRows)
+        private static void AssertAttributeCollectionIsValid(IAttributeScraper attributeScraper, List<ICharacterAttributeRow> attributeRows, string attributeDisplayName = "")
         {
             Assert.That(attributeRows.Count, Is.GreaterThan(0), $"{nameof(attributeRows.Count)}");
             CollectionAssert.AllItemsAreNotNull(attributeRows);
@@ -40,7 +40,7 @@ namespace FrannHammer.WebScraping.Tests
             attributeRows.ForEach(row =>
             {
                 Assert.That(row.Owner, Is.Not.Empty);
-                Assert.That(row.Name, Is.EqualTo(attributeScraper.AttributeName));
+                Assert.That(row.Name, Is.EqualTo(string.IsNullOrEmpty(attributeDisplayName) ? attributeScraper.AttributeName : attributeDisplayName));
                 row.Values.ToList().ForEach(attribute =>
                 {
                     Assert.That(attribute.Name, Is.Not.EqualTo("RANK"));
@@ -85,7 +85,7 @@ namespace FrannHammer.WebScraping.Tests
         [TestCase(Keys.KHSiteBaseUrl + Keys.UltimateUrl)]
         public void ScraperAttributeRowData_Counters(string urlUnderTest)
         {
-            var sut = new CounterScraper(_scrapingServices, urlUnderTest);
+            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.Counters);
             var results = sut.Scrape(Characters.Greninja).ToList();
 
             AssertAttributeCollectionIsValid(sut, results);
@@ -96,7 +96,7 @@ namespace FrannHammer.WebScraping.Tests
         [TestCase(Keys.KHSiteBaseUrl + Keys.UltimateUrl)]
         public void ScraperAttributeRowData_Weight(string urlUnderTest)
         {
-            var sut = new WeightScraper(_scrapingServices, urlUnderTest);
+            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.Weight);
             var results = sut.Scrape(Characters.Ryu).ToList();
 
             AssertAttributeCollectionIsValid(sut, results);
@@ -104,10 +104,50 @@ namespace FrannHammer.WebScraping.Tests
 
         [Test]
         [TestCase(Keys.KHSiteBaseUrl + Keys.Smash4Url)]
+        public void ScraperAttributeRowData_HardTrip(string urlUnderTest)
+        {
+            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.Trip, AttributeScrapers.HardTrip, ScrapingConstants.XPathTableNodeAttributesWithNoDescription);
+            var results = sut.Scrape(Characters.Roy).ToList();
+
+            AssertAttributeCollectionIsValid(sut, results, "HardTrip");
+        }
+
+        [Test]
+        [TestCase(Keys.KHSiteBaseUrl + Keys.Smash4Url)]
+        public void ScraperAttributeRowData_SoftTrip(string urlUnderTest)
+        {
+            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.Trip, AttributeScrapers.SoftTrip, ScrapingConstants.XPathTableNodeAttributesWithDescription);
+            var results = sut.Scrape(Characters.Charizard).ToList();
+
+            AssertAttributeCollectionIsValid(sut, results, "SoftTrip");
+        }
+
+        [Test]
+        [TestCase(Keys.KHSiteBaseUrl + Keys.Smash4Url)]
+        public void ScraperAttributeRowData_GetUpOnBack(string urlUnderTest)
+        {
+            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.GetUpStand, AttributeScrapers.GetUpStandOnBack, ScrapingConstants.XPathTableNodeAttributesWithNoDescription);
+            var results = sut.Scrape(new WiiFitTrainer()).ToList();
+
+            AssertAttributeCollectionIsValid(sut, results, "GetUp On Back");
+        }
+
+        [Test]
+        [TestCase(Keys.KHSiteBaseUrl + Keys.Smash4Url)]
+        public void ScraperAttributeRowData_GetUpOnFront(string urlUnderTest)
+        {
+            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.GetUpStand, AttributeScrapers.GetUpStandOnFront, ScrapingConstants.XPathTableNodeAttributesWithDescription);
+            var results = sut.Scrape(new WiiFitTrainer()).ToList();
+
+            AssertAttributeCollectionIsValid(sut, results, "GetUp On Front");
+        }
+
+        [Test]
+        [TestCase(Keys.KHSiteBaseUrl + Keys.Smash4Url)]
         [TestCase(Keys.KHSiteBaseUrl + Keys.UltimateUrl)]
         public void ScrapeAttributeRowData_Reflectors(string urlUnderTest)
         {
-            var sut = new ReflectorScraper(_scrapingServices, urlUnderTest);
+            var sut = new AttributeScraper(urlUnderTest, _scrapingServices, AttributeScrapers.Reflector);
             var results = sut.Scrape(Characters.DarkPit).ToList();
 
             AssertAttributeCollectionIsValid(sut, results);
@@ -117,20 +157,20 @@ namespace FrannHammer.WebScraping.Tests
         [TestCaseSource(nameof(ScrapersSmash4))]
         public void ScrapeAttributeRowData_CharacterHasSpaceInName_Smash4(AttributeScraper scraper)
         {
-            var drMario = new DrMario();
-            drMario.SourceUrl = $"{Keys.KHSiteBaseUrl}{Keys.Smash4Url}{drMario.EscapedCharacterName}";
-            var attributeRows = scraper.Scrape(drMario).ToList();
+            var palutena = new Palutena();
+            palutena.SourceUrl = $"{Keys.KHSiteBaseUrl}{Keys.Smash4Url}{palutena.EscapedCharacterName}";
+            var attributeRows = scraper.Scrape(palutena).ToList();
 
-            AssertAttributeCollectionIsValid(scraper, attributeRows);
+            AssertAttributeCollectionIsValid(scraper, attributeRows, scraper.AttributeDisplayName);
         }
 
         [Test]
         [TestCaseSource(nameof(ScrapersUltimate))]
         public void ScrapeAttributeRowData_CharacterHasSpaceInName_Ultimate(AttributeScraper scraper)
         {
-            var littleMac = new LittleMac();
-            littleMac.SourceUrl = $"{Keys.KHSiteBaseUrl}{Keys.UltimateUrl}{littleMac.EscapedCharacterName}";
-            var attributeRows = scraper.Scrape(littleMac).ToList();
+            var palutena = new Palutena();
+            palutena.SourceUrl = $"{Keys.KHSiteBaseUrl}{Keys.UltimateUrl}{palutena.EscapedCharacterName}";
+            var attributeRows = scraper.Scrape(palutena).ToList();
 
             AssertAttributeCollectionIsValid(scraper, attributeRows);
         }
@@ -155,7 +195,7 @@ namespace FrannHammer.WebScraping.Tests
         [TestCaseSource(nameof(TestCharactersSmash4))]
         public void ScrapeAttributeRowData_AllCharacters_ReturnsValidData_Smash4(WebCharacter character)
         {
-            var sut = new AirSpeedScraper(_scrapingServices, $"{Keys.KHSiteBaseUrl}{Keys.Smash4Url}");
+            var sut = new AttributeScraper($"{Keys.KHSiteBaseUrl}{Keys.Smash4Url}", _scrapingServices, AttributeScrapers.AirSpeed);
 
             var attributeRows = sut.Scrape(character).ToList();
 
@@ -166,7 +206,7 @@ namespace FrannHammer.WebScraping.Tests
         [TestCaseSource(nameof(TestCharactersUltimate))]
         public void ScrapeAttributeRowData_AllCharacters_ReturnsValidData_Ultimate(WebCharacter character)
         {
-            var sut = new AirSpeedScraper(_scrapingServices, $"{Keys.KHSiteBaseUrl}{Keys.UltimateUrl}");
+            var sut = new AttributeScraper($"{Keys.KHSiteBaseUrl}{Keys.UltimateUrl}", _scrapingServices, AttributeScrapers.AirSpeed);
 
             var attributeRows = sut.Scrape(character).ToList();
 
@@ -176,7 +216,7 @@ namespace FrannHammer.WebScraping.Tests
         [Test]
         public void ScrapeRollsData_ForGreninja_ReturnsBothEntriesSinceForwardAndBackRollAreDifferent()
         {
-            var sut = new RollScraper(_scrapingServices, $"{Keys.KHSiteBaseUrl}{Keys.Smash4Url}");
+            var sut = new AttributeScraper($"{Keys.KHSiteBaseUrl}{Keys.Smash4Url}", _scrapingServices, AttributeScrapers.Rolls);
 
             var attributeRows = sut.Scrape(Characters.Greninja).ToList();
 
@@ -187,7 +227,7 @@ namespace FrannHammer.WebScraping.Tests
         [Test]
         public void ScrapeRunSpeed_ForNess_ReturnsRunSpeedEvenWithAltName()
         {
-            var sut = new RunSpeedScraper(_scrapingServices, $"{Keys.KHSiteBaseUrl}{Keys.Smash4Url}");
+            var sut = new AttributeScraper($"{Keys.KHSiteBaseUrl}{Keys.Smash4Url}", _scrapingServices, AttributeScrapers.RunSpeed);
 
             var attributeRows = sut.Scrape(Characters.Ness).ToList();
 
