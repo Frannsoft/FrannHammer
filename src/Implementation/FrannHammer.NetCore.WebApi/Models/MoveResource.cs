@@ -22,7 +22,6 @@ namespace FrannHammer.NetCore.WebApi.Models
         public string KnockbackGrowth { get; set; }
         public string MoveType { get; set; }
         public bool IsWeightDependent { get; set; }
-        public string Game { get; set; }
     }
 
     public class ExpandedMoveResource : MoveResource
@@ -42,8 +41,6 @@ namespace FrannHammer.NetCore.WebApi.Models
     public class ExpandedHitboxResource
     {
         public string Frames { get; set; }
-
-        [JsonProperty("Adv")]
         public string Adv { get; set; }
     }
 }

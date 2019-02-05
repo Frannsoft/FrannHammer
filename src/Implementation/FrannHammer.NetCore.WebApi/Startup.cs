@@ -57,6 +57,19 @@ namespace FrannHammer.NetCore.WebApi
             services.AddAutoMapperSupport();
             services.AddScrapingSupport();
 
+#if DEBUG
+            services.AddTransient(sp =>
+            {
+                return new DebugStorageLocationResolver(
+                    "../../localstorage/character.json",
+                    "../../localstorage/move.json",
+                    "../../localstorage/movement.json",
+                    "../../localstorage/attribute.json",
+                    "../../localstorage/unique.json"
+                    );
+            });
+#endif
+
             services.AddSingleton(_characterData);
             services.AddSingleton(_moveData);
             services.AddSingleton(_movementData);
@@ -72,7 +85,8 @@ namespace FrannHammer.NetCore.WebApi
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             var characterDataScraper = app.ApplicationServices.GetService<ICharacterDataScraper>();
-            SeedData(characterDataScraper);
+            var fileLocationResolver = app.ApplicationServices.GetService<DebugStorageLocationResolver>();
+            SeedData(characterDataScraper, fileLocationResolver);
 
             if (env.IsDevelopment())
             {
@@ -81,7 +95,6 @@ namespace FrannHammer.NetCore.WebApi
             else
             {
                 app.UseHsts();
-                app.UseHttpsRedirection();
             }
 
             app.UseSwagger();
@@ -114,7 +127,7 @@ namespace FrannHammer.NetCore.WebApi
             app.UseMvc();
         }
 
-        private void SeedData(ICharacterDataScraper characterDataScraper)
+        private void SeedData(ICharacterDataScraper characterDataScraper, DebugStorageLocationResolver fileLocationResolver)
         {
 #if !DEBUG
             var charactersToSeed = Characters.All.Where(c => c.DisplayName == "Ryu");
@@ -148,10 +161,10 @@ namespace FrannHammer.NetCore.WebApi
             }
 #endif
 #if DEBUG
-            _characterData.AddRange(JsonConvert.DeserializeObject<List<Character>>(File.ReadAllText("../../../../../localstorage/character.json")));
-            _moveData.AddRange(JsonConvert.DeserializeObject<List<Move>>(File.ReadAllText("../../../../../localstorage/move.json")));
-            _movementData.AddRange(JsonConvert.DeserializeObject<List<Movement>>(File.ReadAllText("../../../../../localstorage/movement.json")));
-            _characterAttributeRowData.AddRange(JsonConvert.DeserializeObject<List<dynamic>>(File.ReadAllText("../../../../../localstorage/attribute.json")).Select(attr =>
+            _characterData.AddRange(JsonConvert.DeserializeObject<List<Character>>(File.ReadAllText(fileLocationResolver.Character)));//"../../localstorage/character.json")));
+            _moveData.AddRange(JsonConvert.DeserializeObject<List<Move>>(File.ReadAllText(fileLocationResolver.Move)));//"../../localstorage/move.json")));
+            _movementData.AddRange(JsonConvert.DeserializeObject<List<Movement>>(File.ReadAllText(fileLocationResolver.Movement)));//"../../localstorage/movement.json")));
+            _characterAttributeRowData.AddRange(JsonConvert.DeserializeObject<List<dynamic>>(File.ReadAllText(fileLocationResolver.Attribute))/*"../../localstorage/attribute.json"))*/.Select(attr =>
             {
                 return new CharacterAttributeRow
                 {
@@ -163,7 +176,7 @@ namespace FrannHammer.NetCore.WebApi
                     Values = attr["Values"] as List<IAttribute>
                 };
             }));
-            _uniqueData.AddRange(JsonConvert.DeserializeObject<List<UniqueData>>(File.ReadAllText("../../../../../localstorage/unique.json")));
+            _uniqueData.AddRange(JsonConvert.DeserializeObject<List<UniqueData>>(File.ReadAllText(fileLocationResolver.Unique)));//"../../localstorage/unique.json")));
 #endif
 
             _characterData.Sort((c1, c2) => c1.OwnerId.CompareTo(c2.OwnerId));
@@ -179,6 +192,24 @@ namespace FrannHammer.NetCore.WebApi
             //File.WriteAllText("attribute.json", JsonConvert.SerializeObject(_characterAttributeRowData));
             //File.WriteAllText("unique.json", JsonConvert.SerializeObject(_uniqueData));
             //done writing to local
+        }
+    }
+
+    public class DebugStorageLocationResolver
+    {
+        public string Character { get; set; }
+        public string Move { get; set; }
+        public string Movement { get; set; }
+        public string Attribute { get; set; }
+        public string Unique { get; set; }
+
+        public DebugStorageLocationResolver(string character, string move, string movement, string attribute, string unique)
+        {
+            Character = character;
+            Move = move;
+            Movement = movement;
+            Attribute = attribute;
+            Unique = unique;
         }
     }
 }

@@ -57,7 +57,7 @@ namespace FrannHammer.NetCore.WebApi.Controllers
         }
 
         [HttpGet(CharactersRouteKey + NameRouteKey + ThrowsRouteKey)]
-        public IActionResult GetAllThrowsForCharacterWhereName(string name, bool expand = false)
+        public IActionResult GetAllThrowsForCharacterWhereName(string name)
         {
             var throws = _characterService.GetAllThrowsWhereCharacterNameIs(name);
             var resources = _enrichmentProvider.EnrichManyMoves(throws);
@@ -65,7 +65,7 @@ namespace FrannHammer.NetCore.WebApi.Controllers
         }
 
         [HttpGet(CharactersRouteKey + IdRouteKey + ThrowsRouteKey)]
-        public IActionResult GetAllThrowsForCharacterWhereOwnerId(int id, bool expand = false)
+        public IActionResult GetAllThrowsForCharacterWhereOwnerId(int id)
         {
             var throws = _characterService.GetAllThrowsWhereCharacterOwnerIdIs(id);
             var resources = _enrichmentProvider.EnrichManyMoves(throws);

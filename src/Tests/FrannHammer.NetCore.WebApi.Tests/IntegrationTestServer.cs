@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -14,7 +15,19 @@ namespace FrannHammer.NetCore.WebApi.Tests
 
         public IntegrationTestServer()
         {
-            _testServer = new TestServer(WebHost.CreateDefaultBuilder().UseStartup<Startup>().UseEnvironment("development"));
+            _testServer = new TestServer(WebHost.CreateDefaultBuilder().UseStartup<Startup>().ConfigureTestServices(services =>
+            {
+                services.AddTransient(sp =>
+                {
+                    return new DebugStorageLocationResolver(
+                        "../../../../../localstorage/character.json",
+                        "../../../../../localstorage/move.json",
+                        "../../../../../localstorage/movement.json",
+                        "../../../../../localstorage/attribute.json",
+                        "../../../../../localstorage/unique.json"
+                        );
+                });
+            }).UseEnvironment("development"));
             _httpClient = _testServer.CreateClient();
         }
 
