@@ -32,17 +32,12 @@ namespace FrannHammer.Api.Services
 
         public ICharacter GetSingleByOwnerId(int id)
         {
-            return Repository.GetSingleWhere(c => c.OwnerId == id && WhereGameIs()(c));
+            return GetSingleWhere(c => c.OwnerId == id && WhereGameIs()(c));
         }
 
         public ICharacter GetSingleByName(string name)
         {
-            var character = Repository.GetSingleWhere(c => c.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase) && WhereGameIs()(c));
-
-            if (character == null)
-            {
-                throw new ResourceNotFoundException($"No character with name '{name}' found.");
-            }
+            var character = GetSingleWhere(c => c.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase) && WhereGameIs()(c));
             return character;
         }
 

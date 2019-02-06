@@ -45,18 +45,9 @@ namespace FrannHammer.NetCore.WebApi.DataAccess
             return _data.Where(where);
         }
 
-        public IEnumerable<T> GetAllWhere(IDictionary<string, object> queryParameters)
-        {
-            throw new NotImplementedException();
-        }
-
         public T GetSingleWhere(Func<T, bool> where)
         {
             var foundData = _data.SingleOrDefault(where);
-            if (foundData == null)
-            {
-                throw new ResourceNotFoundException($"Resource of type '{typeof(T).Name}' not found.");
-            }
             return foundData;
         }
 

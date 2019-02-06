@@ -8,12 +8,15 @@ using System.Threading.Tasks;
 
 namespace FrannHammer.NetCore.WebApi.Tests
 {
+    /// <summary>
+    /// Singleton instance of the netcore.webapi. Uses the Startup logic from netcore.webapi.
+    /// </summary>
     public class IntegrationTestServer : IDisposable
     {
-        private HttpClient _httpClient;
-        private TestServer _testServer;
+        private static HttpClient _httpClient;
+        private static TestServer _testServer;
 
-        public IntegrationTestServer()
+        static IntegrationTestServer()
         {
             _testServer = new TestServer(WebHost.CreateDefaultBuilder().UseStartup<Startup>().ConfigureTestServices(services =>
             {

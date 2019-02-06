@@ -4,7 +4,6 @@ using FrannHammer.Domain.Contracts;
 using FrannHammer.Utility;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 
 namespace FrannHammer.Api.Services
@@ -12,17 +11,9 @@ namespace FrannHammer.Api.Services
     public abstract class BaseApiService<T> : ICrudService<T>
         where T : IModel
     {
+        private Games _game;
+
         protected IRepository<T> Repository { get; }
-
-        private readonly Games _game;
-
-        protected BaseApiService(IRepository<T> repository, string game)
-        {
-            Guard.VerifyObjectNotNull(repository, nameof(repository));
-            Repository = repository;
-            string adjustedCasingGame = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(game);
-            Enum.TryParse(adjustedCasingGame, out _game);
-        }
 
         protected BaseApiService(IRepository<T> repository, IGameParameterParserService gameParameterParserService)
         {
@@ -35,7 +26,12 @@ namespace FrannHammer.Api.Services
 
         public T GetSingleByInstanceId(string id)
         {
-            return GetSingleWhere(m => m.InstanceId == id);
+            var foundItem = GetSingleWhere(m => m.InstanceId == id && m.Game == _game);
+            if (foundItem == null)
+            {
+                throw new ResourceNotFoundException($"Resource of type '{typeof(T).Name}' not found.");
+            }
+            return foundItem;
         }
 
         public IEnumerable<T> GetAllWhereName(string name)
@@ -62,21 +58,48 @@ namespace FrannHammer.Api.Services
 
         public T GetSingleWhere(Func<T, bool> @where)
         {
-            var move = Repository.GetSingleWhere(where);
-            return move;
+            var item = Repository.GetSingleWhere(where);
+
+            if (item == null)
+            {
+                //if the item wasn't found, maybe the user is looking for an Ultimate
+                //resource, but didn't specify Ultimate on the request.
+                //let's make their life a bit easier and check Ultimate for them.
+                //If nothing is still found we can throw a not found exception
+                //knowing the desired couldn't be found in either game.
+                if (_game == Games.Smash4)
+                {
+                    _game = Games.Ultimate;
+                    item = Repository.GetSingleWhere(where);
+                }
+                if (item == null)
+                {
+                    throw new ResourceNotFoundException($"Resource of type '{typeof(T).Name}' not found.");
+                }
+            }
+
+            return item;
         }
 
         public IEnumerable<T> GetAllWhere(Func<T, bool> @where)
         {
-            var moves = Repository.GetAllWhere(where).Where(i => i.Game == _game);
+            var items = Repository.GetAllWhere(where).Where(i => i.Game == _game);
 
-            return moves;
-        }
+            if (!items.Any())
+            {
+                //if the item wasn't found, maybe the user is looking for an Ultimate
+                //resource, but didn't specify Ultimate on the request.
+                //let's make their life a bit easier and check Ultimate for them.
+                //If nothing is still found we can throw a not found exception
+                //knowing the desired couldn't be found in either game.
+                if (_game == Games.Smash4)
+                {
+                    _game = Games.Ultimate;
+                    items = Repository.GetAllWhere(where).Where(i => i.Game == _game);
+                }
+            }
 
-        public IEnumerable<T> GetAllWhere(IDictionary<string, object> queryParameters)
-        {
-            var moves = Repository.GetAllWhere(queryParameters);
-            return moves;
+            return items;
         }
     }
 }
