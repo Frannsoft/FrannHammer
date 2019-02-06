@@ -48,7 +48,6 @@ namespace FrannHammer.NetCore.WebApi.Tests.Controllers
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                // ReSharper disable once ObjectCreationAsStatement
                 new CharacterController(null, null);
             });
         }
