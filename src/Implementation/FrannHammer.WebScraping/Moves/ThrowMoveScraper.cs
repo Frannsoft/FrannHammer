@@ -41,26 +41,33 @@ namespace FrannHammer.WebScraping.Moves
                     {
                         bool isWeightDependent = TranslateYesNoToBool(cells[1].InnerText);
                         move.IsWeightDependent = isWeightDependent;
+
+                        string baseDamage = new Smash4BaseDamageResolver().GetRawValue(cells[2]);
+                        move.BaseDamage = baseDamage;
+
+                        string angle = cells[3].InnerText;
+                        string baseKnockbackSetKnockback = cells[4].InnerText;
+                        string knockbackGrowth = cells[5].InnerText;
+
+                        move.Angle = angle;
+                        move.BaseKnockBackSetKnockback = baseKnockbackSetKnockback;
+                        move.KnockbackGrowth = knockbackGrowth;
                     }
                     else if (character.SourceUrl.Contains("Ultimate"))
                     {
                         string baseDamage = new UltimateBaseDamageResolver().GetRawValue(cells[1]);
                         move.BaseDamage = baseDamage;
+
+                        string angle = cells[2].InnerText;
+                        string baseKnockbackSetKnockback = cells[3].InnerText;
+                        string knockbackGrowth = cells[4].InnerText;
+
+                        move.Angle = angle;
+                        move.BaseKnockBackSetKnockback = baseKnockbackSetKnockback;
+                        move.KnockbackGrowth = knockbackGrowth;
+
                         move.Game = character.Game;
                     }
-                    else
-                    {
-                        string baseDamage = new Smash4BaseDamageResolver().GetRawValue(cells[2]);
-                        move.BaseDamage = baseDamage;
-                    }
-
-                    string angle = cells[3].InnerText;
-                    string baseKnockbackSetKnockback = cells[4].InnerText;
-                    string knockbackGrowth = cells[5].InnerText;
-
-                    move.Angle = angle;
-                    move.BaseKnockBackSetKnockback = baseKnockbackSetKnockback;
-                    move.KnockbackGrowth = knockbackGrowth;
 
                     return move;
                 }

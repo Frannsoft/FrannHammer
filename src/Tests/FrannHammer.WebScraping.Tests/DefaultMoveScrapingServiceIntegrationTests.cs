@@ -185,6 +185,48 @@ namespace FrannHammer.WebScraping.Tests
         }
 
         [Test]
+        public void ThrowMoveScraperExtractsCorrectData_Smash4()
+        {
+            var throwMoveScraper = new ThrowMoveScraper(_scrapingServices);
+
+            var character = new Ganondorf();
+            character.SourceUrl = $"{Keys.KHSiteBaseUrl}{Keys.Smash4Url}{character.EscapedCharacterName}";
+            var throwMoves = throwMoveScraper.Scrape(character).ToList();
+
+            CollectionAssert.IsNotEmpty(throwMoves);
+
+            Assert.That(throwMoves.Count, Is.EqualTo(4));
+            var backThrow = throwMoves.SingleOrDefault(t => t.Name == "Bthrow");
+
+            Assert.That(backThrow.IsWeightDependent, Is.EqualTo(false));
+            Assert.That(backThrow.BaseDamage, Is.EqualTo("5, 5"));
+            Assert.That(backThrow.Angle, Is.EqualTo("43"));
+            Assert.That(backThrow.BaseKnockBackSetKnockback, Is.EqualTo("30"));
+            Assert.That(backThrow.KnockbackGrowth, Is.EqualTo("130"));
+        }
+
+        [Test]
+        public void ThrowMoveScraperExtractsCorrectData_Ultimate()
+        {
+            var throwMoveScraper = new ThrowMoveScraper(_scrapingServices);
+
+            var character = new Ganondorf();
+            character.SourceUrl = $"{Keys.KHSiteBaseUrl}{Keys.UltimateUrl}{character.EscapedCharacterName}";
+            var throwMoves = throwMoveScraper.Scrape(character).ToList();
+
+            CollectionAssert.IsNotEmpty(throwMoves);
+
+            Assert.That(throwMoves.Count, Is.EqualTo(4));
+            var backThrow = throwMoves.SingleOrDefault(t => t.Name == "Bthrow");
+
+            Assert.That(backThrow.IsWeightDependent, Is.EqualTo(false));
+            Assert.That(backThrow.BaseDamage, Is.EqualTo("5, 5;1v1: 6, 6"));
+            Assert.That(backThrow.Angle, Is.EqualTo("43"));
+            Assert.That(backThrow.BaseKnockBackSetKnockback, Is.EqualTo("30"));
+            Assert.That(backThrow.KnockbackGrowth, Is.EqualTo("130"));
+        }
+
+        [Test]
         public void ScrapeThrowMovesForCharacter_DonkeyKongHasEightThrows()
         {
             var throwMoveScraper = new ThrowMoveScraper(_scrapingServices);
