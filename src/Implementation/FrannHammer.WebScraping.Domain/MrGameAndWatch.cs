@@ -5,7 +5,7 @@ namespace FrannHammer.WebScraping.Domain
     public class MrGameAndWatch : WebCharacter
     {
         public MrGameAndWatch()
-            : base("MrGameWatch", "Game%20And%20Watch", null, "MrGameWatch", "GameWatch", "Mr. Game & Watch")
+            : base("MrGameWatch", "Game%20And%20Watch", null, "MrGameWatch", "GameWatch", "Mr. Game & Watch", "M. Game & Watch")
         {
             DisplayName = "Game & Watch";
         }

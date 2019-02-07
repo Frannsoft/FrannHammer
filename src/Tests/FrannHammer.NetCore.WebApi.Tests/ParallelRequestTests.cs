@@ -1,5 +1,6 @@
 ﻿using FrannHammer.Domain;
 using FrannHammer.NetCore.WebApi;
+using FrannHammer.NetCore.WebApi.Tests;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.TestHost;
 using Newtonsoft.Json;
@@ -15,28 +16,11 @@ using System.Threading.Tasks;
 namespace FrannHammer.WebApi.Tests
 {
     [TestFixture]
+    [Explicit]
     public class ParallelRequestTests
     {
         [Test]
-        public async Task ExecuteSingleGET()
-        {
-            using (var httpClient = new HttpClient())
-            {
-                var sw = new Stopwatch();
-                sw.Start();
-                var response = await httpClient.GetAsync("https://core-test-khapi.azurewebsites.net/api/characters/1/moves");
-                response.EnsureSuccessStatusCode();
-
-                string content = await response.Content.ReadAsStringAsync();
-
-                sw.Stop();
-                var parsedContent = JsonConvert.DeserializeObject<List<Move>>(content);
-                Console.WriteLine($"{sw.Elapsed.Milliseconds}");
-                Assert.That(parsedContent[0].Owner, Is.EqualTo("Bayonetta"));
-            }
-        }
-
-        [Test]
+        [Explicit]
         public async Task ExecuteSingleGETonCurrentProd()
         {
             using (var httpClient = new HttpClient())
@@ -56,10 +40,10 @@ namespace FrannHammer.WebApi.Tests
         }
 
         [Test]
+        [Explicit]
         public async Task ExecuteGETsInParallel()
         {
-            var testServer = new TestServer(WebHost.CreateDefaultBuilder<Startup>(null));
-            var httpClient = testServer.CreateClient();
+            var testServer = new IntegrationTestServer();
 
             var semaphoreSlim = new SemaphoreSlim(4);
             var times = Enumerable.Range(0, 100);
@@ -71,7 +55,7 @@ namespace FrannHammer.WebApi.Tests
                 //await semaphoreSlim.WaitAsync();
                 trackedTasks.Add(Task.Run(async () =>
                 {
-                    var response = await httpClient.GetAsync("api/characters/name/bowser/moves");
+                    var response = await testServer.GetAsync("api/characters/name/bowser/moves");
                     response.EnsureSuccessStatusCode();
 
                     string content = await response.Content.ReadAsStringAsync();
@@ -87,41 +71,8 @@ namespace FrannHammer.WebApi.Tests
         }
 
         [Test]
-        public async Task ExecuteGETsInParallelOnDropletEnvironment()
-        {
-            using (var httpClient = new HttpClient())
-            {
-                var semaphoreSlim = new SemaphoreSlim(4);
-                var times = Enumerable.Range(0, 100);
-
-                var trackedTasks = new List<Task>();
-
-                foreach (var time in times)
-                {
-                    //await semaphoreSlim.WaitAsync();
-                    trackedTasks.Add(Task.Run(async () =>
-                    {
-                        var sw = new Stopwatch();
-                        sw.Start();
-                        var response = await httpClient.GetAsync("https://api.redbrickroadstudio.com/api/characters/1/moves");
-                        response.EnsureSuccessStatusCode();
-
-                        string content = await response.Content.ReadAsStringAsync();
-
-                        sw.Stop();
-                        var parsedContent = JsonConvert.DeserializeObject<List<Move>>(content);
-                        Console.WriteLine($"{sw.Elapsed.Milliseconds}");
-                        Assert.That(parsedContent[0].Owner, Is.EqualTo("Bayonetta"));
-                        semaphoreSlim.Release();
-                    }));
-                }
-
-                await Task.WhenAll(trackedTasks);
-            }
-        }
-
-        [Test]
-        public async Task ExecuteGETsInParallelOnCurrentProdEnvironment()
+        [Explicit]
+        public async Task ExecuteGETsInParallelOnCurrentTestEnvironment()
         {
             using (var httpClient = new HttpClient())
             {
@@ -132,12 +83,11 @@ namespace FrannHammer.WebApi.Tests
 
                 foreach (var time in times)
                 {
-                    //await semaphoreSlim.WaitAsync();
                     trackedTasks.Add(Task.Run(async () =>
                     {
                         var sw = new Stopwatch();
                         sw.Start();
-                        var response = await httpClient.GetAsync("http://beta-api-kuroganehammer.azurewebsites.net/api/characters/1/moves");
+                        var response = await httpClient.GetAsync("http://test-khapi.frannsoft.com/api/characters/1/moves");
                         response.EnsureSuccessStatusCode();
 
                         string content = await response.Content.ReadAsStringAsync();

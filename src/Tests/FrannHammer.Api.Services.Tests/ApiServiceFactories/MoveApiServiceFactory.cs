@@ -8,7 +8,7 @@ namespace FrannHammer.Api.Services.Tests.ApiServiceFactories
     {
         public override ICrudService<IMove> CreateService(IRepository<IMove> repository)
         {
-            return new DefaultMoveService(repository, new QueryMappingService(new DefaultAttributeStrategy()), string.Empty);
+            return new DefaultMoveService(repository, new GameParameterParserService("Smash4"));
         }
     }
 }

@@ -66,7 +66,7 @@ namespace FrannHammer.Api.Services.Tests
             const string expectedAttributeValue = "twovalue";
 
             var repository = MakeCharacterAttributesRepository();
-            var sut = new DefaultCharacterAttributeService(repository, new DefaultCharacterAttributeNameProvider(), string.Empty);
+            var sut = new DefaultCharacterAttributeService(repository, new DefaultCharacterAttributeNameProvider(), new GameParameterParserService("Smash4"));
 
             var results = sut.GetSingleWithNameAndMatchingCharacterOwnerId(expectedCharacterAttributeName, expectedOwnerId).ToList();
 
@@ -95,7 +95,7 @@ namespace FrannHammer.Api.Services.Tests
             const string expectedAttributeValue = "twovalue";
 
             var repository = MakeCharacterAttributesRepository();
-            var sut = new DefaultCharacterAttributeService(repository, new DefaultCharacterAttributeNameProvider(), string.Empty);
+            var sut = new DefaultCharacterAttributeService(repository, new DefaultCharacterAttributeNameProvider(), new GameParameterParserService("Smash4"));
 
             var results = sut.GetAllWithNameAndMatchingCharacterOwner(expectedCharacterAttributeName, expectedOwner).ToList();
 

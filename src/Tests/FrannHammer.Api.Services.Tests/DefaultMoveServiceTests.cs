@@ -130,7 +130,7 @@ namespace FrannHammer.Api.Services.Tests
         {
             var items = new List<Move>
             {
-                new Move {Name = "test"}
+                new Move {Name = "test", Owner = "testowner"}
             };
 
             var mockRepository = new Mock<IRepository<IMove>>();

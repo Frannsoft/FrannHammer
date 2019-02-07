@@ -32,7 +32,7 @@ namespace FrannHammer.NetCore.WebApi.Tests.Hypermedia
         {
             return new List<string>
             {
-                "/api/moves/d57259575528444b9ea997580e20ed2e"
+                "/api/moves/ab238414ce4f4bba8d516d2e8c09019e"
             };
         }
 

@@ -19,6 +19,11 @@ namespace FrannHammer.WebScraping.Attributes
         protected IAttributeScrapingServices ScrapingServices { get; }
         public string SourceUrl { get; set; }
 
+        public override string ToString()
+        {
+            return $"{typeof(AttributeScraper).Name}.{AttributeDisplayName}";
+        }
+
         public AttributeScraper(string baseUrl, IAttributeScrapingServices scrapingServices, string attributeName,
                 string attributeDisplayName = "", string xpathToTable = "")
         {
@@ -69,7 +74,7 @@ namespace FrannHammer.WebScraping.Attributes
                     attributeTableHtml = htmlParser.GetSingle(xpathToTable);
                 }
 
-                string xpath = ScrapingConstants.XPathEveryoneElseTableRow.Replace(ScrapingConstants.EveryoneKey, $"contains(., '{character.DisplayName}')");
+                string xpath = ScrapingConstants.XPathEveryoneElseTableRow.Replace(ScrapingConstants.EveryoneKey, $"contains(., \"{character.DisplayName}\")");
                 var tableHtmlNode = HtmlNode.CreateNode(attributeTableHtml);
 
                 //scrape using default character name
@@ -83,7 +88,7 @@ namespace FrannHammer.WebScraping.Attributes
                     {
                         string altCharacterNameXPath =
                             ScrapingConstants.XPathEveryoneElseTableRow.Replace(
-                                ScrapingConstants.EveryoneKey, $"contains(., '{name}')");
+                                ScrapingConstants.EveryoneKey, $"contains(text(), \"{name}\")");
                         attributeTableRows = tableHtmlNode?.SelectNodes(altCharacterNameXPath);
 
                         if (attributeTableRows != null)

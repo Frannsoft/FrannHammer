@@ -11,6 +11,7 @@ using FrannHammer.WebScraping.Contracts.Moves;
 using FrannHammer.WebScraping.Contracts.PageDownloading;
 using FrannHammer.WebScraping.Contracts.UniqueData;
 using FrannHammer.WebScraping.Contracts.WebClients;
+using FrannHammer.WebScraping.Domain;
 using FrannHammer.WebScraping.Domain.Contracts;
 using FrannHammer.WebScraping.HtmlParsing;
 using FrannHammer.WebScraping.Images;
@@ -28,7 +29,6 @@ using static FrannHammer.Tests.Utility.Categories;
 namespace FrannHammer.WebScraping.Tests
 {
     [TestFixture]
-    [TestFixtureSource(nameof(FixtureArgs))]
     public class DefaultCharacterDataScrapingServiceIntegrationTests
     {
         private static IMovementScrapingServices _movementScrapingServices;
@@ -54,20 +54,7 @@ namespace FrannHammer.WebScraping.Tests
         private static IUniqueDataScrapingServices _uniqueDataScrapingServices;
         private static IUniqueDataProvider _uniqueDataProvider;
 
-        private readonly string _game;
         private string _urlUnderTest;
-
-        public DefaultCharacterDataScrapingServiceIntegrationTests(string game)
-        {
-            _game = game;
-            _characterDataScraper = MakeCharacterDataScraper();
-        }
-
-        private static object[] FixtureArgs =
-        {
-            new object[]{"Smash4"},
-            new object[]{"Ultimate"}
-        };
 
         public DefaultCharacterDataScraper MakeCharacterDataScraper()
         {
@@ -107,20 +94,13 @@ namespace FrannHammer.WebScraping.Tests
 
         private static IEnumerable<WebCharacter> Characters()
         {
-            return new List<WebCharacter> { Domain.Characters.DarkPit, Domain.Characters.Bowser, Domain.Characters.DrMario };
+            return new List<WebCharacter> { Domain.Characters.DarkPit, Domain.Characters.Bowser };
         }
 
-        [Test]
-        [Category(LongRunning)]
-        [TestCaseSource(nameof(Characters))]
-        public void ExpectedCharacterDataCanBeScraped(WebCharacter character)
+        private void AssertCharacterDataIsValid(WebCharacter character)
         {
-            _urlUnderTest = $"{Keys.KHSiteBaseUrl}{_game}/";
-            _characterDataScraper = MakeCharacterDataScraper();
-            character = _characterDataScraper.PopulateCharacterFromWeb(character, _urlUnderTest);
-
             Assert.That(character.FullUrl, Is.Not.Empty);
-            Assert.That(character.ColorTheme, Is.Not.Empty);
+            //Assert.That(character.ColorTheme, Is.Not.Empty);//not in any ultimate yet
             Assert.That(character.DisplayName, Is.Not.Empty);
             Assert.That(character.ThumbnailUrl, Is.Not.Null);
             Assert.That(character.MainImageUrl, Is.Not.Empty);
@@ -132,6 +112,31 @@ namespace FrannHammer.WebScraping.Tests
             CollectionAssert.IsNotEmpty(character.Movements, $"Movements for character '{character.Name}' are empty.");
             CollectionAssert.IsNotEmpty(character.Moves, $"Moves for character '{character.Name}' are empty.");
             CollectionAssert.IsNotEmpty(character.AttributeRows, $"Attributes Rows for character '{character.Name}' are empty.");
+        }
+
+        [Test]
+        [Category(LongRunning)]
+        [TestCaseSource(nameof(Characters))]
+        public void ExpectedCharacterWithSpaceInNameCanBeScraped_Smash4(WebCharacter character)
+        {
+            _urlUnderTest = $"{Keys.KHSiteBaseUrl}{Keys.Smash4Url}/";
+
+            _characterDataScraper = MakeCharacterDataScraper();
+
+            character = _characterDataScraper.PopulateCharacterFromWeb(character, _urlUnderTest);
+            AssertCharacterDataIsValid(character);
+        }
+
+        [Test]
+        [Category(LongRunning)]
+        [TestCaseSource(nameof(Characters))]
+        public void ExpectedCharacterWithSpaceInNameCanBeScraped_Ultimate(WebCharacter character)
+        {
+            _urlUnderTest = $"{Keys.KHSiteBaseUrl}{Keys.UltimateUrl}/";
+            _characterDataScraper = MakeCharacterDataScraper();
+
+            character = _characterDataScraper.PopulateCharacterFromWeb(character, _urlUnderTest);
+            AssertCharacterDataIsValid(character);
         }
     }
 }

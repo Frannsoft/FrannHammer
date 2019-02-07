@@ -55,7 +55,6 @@ namespace FrannHammer.WebScraping.Attributes
             Guard.VerifyObjectNotNull(scrapingServices, nameof(scrapingServices));
             return new List<AttributeScraper>
             {
-                //new
                 new AttributeScraper(baseUrl, scrapingServices, AerialJump),
                 new AttributeScraper(baseUrl, scrapingServices, AirAcceleration),
                 new AttributeScraper(baseUrl, scrapingServices, AirDodge),
@@ -70,14 +69,29 @@ namespace FrannHammer.WebScraping.Attributes
                 new AttributeScraper(baseUrl, scrapingServices, Reflector),
                 new AttributeScraper(baseUrl, scrapingServices, Rolls),
                 new AttributeScraper(baseUrl, scrapingServices, RunSpeed),
+                new AttributeScraper(baseUrl, scrapingServices, ShieldSize),
+                new AttributeScraper(baseUrl, scrapingServices, ShortHop),
                 new AttributeScraper(baseUrl, scrapingServices, Trip, HardTrip, ScrapingConstants.XPathTableNodeAttributesFirstTable),
                 new AttributeScraper(baseUrl, scrapingServices, Trip, SoftTrip, ScrapingConstants.XPathTableNodeAttributesSecondTable),
+                new AttributeScraper(baseUrl, scrapingServices, Spotdodge),
+                new AttributeScraper(baseUrl, scrapingServices, Traction, xpathToTable: ScrapingConstants.XPathTableNodeAttributesSecondTable),
                 new AttributeScraper(baseUrl, scrapingServices, GetUpStand, GetUpStandOnBack, ScrapingConstants.XPathTableNodeAttributesFirstTable),
                 new AttributeScraper(baseUrl, scrapingServices, GetUpStand, GetUpStandOnFront, ScrapingConstants.XPathTableNodeAttributesSecondTable),
-                new AttributeScraper(baseUrl, scrapingServices, Traction),
+                new AttributeScraper(baseUrl, scrapingServices, GetUpBackRoll, GetUpBackRollBack, ScrapingConstants.XPathTableNodeAttributesFirstTable),
+                new AttributeScraper(baseUrl, scrapingServices, GetUpBackRoll, GetUpBackRollFront,  ScrapingConstants.XPathTableNodeAttributesSecondTable),
+                new AttributeScraper(baseUrl, scrapingServices, GetUpForwardRoll, GetUpForwardRollBack, ScrapingConstants.XPathTableNodeAttributesFirstTable),
+                new AttributeScraper(baseUrl, scrapingServices, GetUpForwardRoll, GetUpForwardRollFront, ScrapingConstants.XPathTableNodeAttributesSecondTable),
+                new AttributeScraper(baseUrl, scrapingServices, Tech, TechFrameData, ScrapingConstants.XPathTableNodeAttributesFirstTable),
+                new AttributeScraper(baseUrl, scrapingServices, Tech, TechRollForward, ScrapingConstants.XPathTableNodeAttributesSecondTable),
+                new AttributeScraper(baseUrl, scrapingServices, Tech, TechRollBackward, ScrapingConstants.XPathTableNodeAttributesThirdTable),
+                new AttributeScraper(baseUrl, scrapingServices, LedgeAttack),
+                new AttributeScraper(baseUrl, scrapingServices, LedgeGetUp),
+                new AttributeScraper(baseUrl, scrapingServices, LedgeRoll),
+                new AttributeScraper(baseUrl, scrapingServices, JabLock, JabLockFront, ScrapingConstants.XPathTableNodeAttributesFirstTable),
+                new AttributeScraper(baseUrl, scrapingServices, JabLock, JabLockBack, ScrapingConstants.XPathTableNodeAttributesSecondTable),
+                new AttributeScraper(baseUrl, scrapingServices, LedgeJump),
                 new AttributeScraper(baseUrl, scrapingServices, WalkSpeed),
-                new AttributeScraper(baseUrl, scrapingServices, Weight),
-                new AttributeScraper(baseUrl, scrapingServices, AerialJump)
+                new AttributeScraper(baseUrl, scrapingServices, Weight)
             };
         }
     }

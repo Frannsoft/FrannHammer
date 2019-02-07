@@ -62,7 +62,7 @@ namespace FrannHammer.WebScraping.Tests
         {
             yield return Characters.Cloud;
             yield return Characters.Yoshi;
-            yield return Characters.Greninja;
+            yield return Characters.Ryu;
             yield return Characters.Bowser;
         }
 
@@ -71,7 +71,7 @@ namespace FrannHammer.WebScraping.Tests
         {
             var groundMoveScrapingService = new GroundMoveScraper(_scrapingServices);
 
-            var character = Characters.Greninja;
+            var character = Characters.Ryu;
             character.SourceUrl = $"{Keys.KHSiteBaseUrl}{_game}{character.EscapedCharacterName}";
             var groundMoves = groundMoveScrapingService.Scrape(character).ToList();
 
@@ -99,7 +99,7 @@ namespace FrannHammer.WebScraping.Tests
         {
             var groundMoveScrapingService = new GroundMoveScraper(_scrapingServices);
 
-            var character = Characters.Greninja;
+            var character = Characters.Ryu;
             character.SourceUrl = $"{Keys.KHSiteBaseUrl}{_game}{character.EscapedCharacterName}";
             var groundMoves = groundMoveScrapingService.Scrape(character).ToList();
 

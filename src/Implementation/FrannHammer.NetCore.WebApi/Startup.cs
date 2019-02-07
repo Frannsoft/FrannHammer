@@ -186,11 +186,11 @@ namespace FrannHammer.NetCore.WebApi
             _uniqueData.Sort((u1, u2) => u1.Name.CompareTo(u2.Name));
 
             //write pulled data to local
-            //File.WriteAllText("character.json", JsonConvert.SerializeObject(_characterData));
-            //File.WriteAllText("move.json", JsonConvert.SerializeObject(_moveData));
-            //File.WriteAllText("movement.json", JsonConvert.SerializeObject(_movementData));
-            //File.WriteAllText("attribute.json", JsonConvert.SerializeObject(_characterAttributeRowData));
-            //File.WriteAllText("unique.json", JsonConvert.SerializeObject(_uniqueData));
+            //File.WriteAllText(fileLocationResolver.Character, JsonConvert.SerializeObject(_characterData));
+            //File.WriteAllText(fileLocationResolver.Move, JsonConvert.SerializeObject(_moveData));
+            //File.WriteAllText(fileLocationResolver.Movement, JsonConvert.SerializeObject(_movementData));
+            //File.WriteAllText(fileLocationResolver.Attribute, JsonConvert.SerializeObject(_characterAttributeRowData));
+            //File.WriteAllText(fileLocationResolver.Unique, JsonConvert.SerializeObject(_uniqueData));
             //done writing to local
         }
     }

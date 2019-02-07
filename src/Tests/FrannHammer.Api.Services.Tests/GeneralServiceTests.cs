@@ -114,8 +114,10 @@ namespace FrannHammer.Api.Services.Tests
             Assert.That(result.Name, Is.EqualTo(name), $"{nameof(result.Name)}");
         }
 
+
+
         [Test]
-        public void ReturnsNullForNoItemFoundById()
+        public void ThrowsResourceNotFoundExceptionForNoSingleItemFoundById()
         {
             var items = _fixture.CreateMany<TModel>().ToList();
 
@@ -124,9 +126,7 @@ namespace FrannHammer.Api.Services.Tests
 
             var sut = CreateCrudService(repositoryMock.Object);
 
-            var result = sut.GetSingleByInstanceId("0");
-
-            Assert.That(result, Is.Null);
+            Assert.Throws<ResourceNotFoundException>(() => sut.GetSingleByInstanceId("0"));
         }
 
         [Test]
@@ -164,7 +164,7 @@ namespace FrannHammer.Api.Services.Tests
         /// <returns></returns>
         private static ICrudService<TModelInterface> CreateCrudService(IRepository<TModelInterface> repository)
         {
-            var serviceFactory = (TSutFactory) Activator.CreateInstance(typeof(TSutFactory));
+            var serviceFactory = (TSutFactory)Activator.CreateInstance(typeof(TSutFactory));
 
             return serviceFactory.CreateService(repository);
         }

@@ -71,6 +71,12 @@ namespace FrannHammer.WebScraping.Tests
             }
         }
 
+        private static IEnumerable<WebCharacter> CharacterWithSpecialCharactersInNames()
+        {
+            yield return new Lucina();
+            yield return new Marth();
+        }
+
         [Test]
         [TestCaseSource(nameof(ScrapersSmash4))]
         [TestCaseSource(nameof(ScrapersUltimate))]
@@ -78,6 +84,15 @@ namespace FrannHammer.WebScraping.Tests
         {
             var attributeRows = scraper.Scrape(Characters.Ryu).ToList();
             AssertAttributeCollectionIsValid(scraper, attributeRows);
+        }
+
+        [Test]
+        [TestCaseSource(nameof(CharacterWithSpecialCharactersInNames))]
+        public void AttributesAreScrapedAsExpectedForCharactersWithSpecialCharactersInName(WebCharacter character)
+        {
+            var scraper = new AttributeScraper(Keys.KHSiteBaseUrl + Keys.Smash4Url, _scrapingServices, AttributeScrapers.Gravity);
+            var attributeRows = scraper.Scrape(character).ToList();
+            AssertAttributeCollectionIsValid(scraper, attributeRows, scraper.AttributeDisplayName);
         }
 
         [Test]

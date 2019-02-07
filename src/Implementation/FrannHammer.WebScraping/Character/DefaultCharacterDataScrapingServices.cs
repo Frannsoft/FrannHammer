@@ -12,6 +12,7 @@ using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace FrannHammer.WebScraping.Character
 {
@@ -60,7 +61,8 @@ namespace FrannHammer.WebScraping.Character
 
             string displayName = GetCharacterDisplayName(displayNameHtml);
 
-            var thumbnailHtmlParser = _webServices.CreateParserFromSourceUrl(populatedCharacter.SourceUrl.Replace($"/{populatedCharacter.Name}", string.Empty));//(WebCharacter.SourceSmash4UrlBase);
+            string thumbnailPreparedUrl = Regex.Replace(populatedCharacter.SourceUrl, "([^/]*)$", string.Empty);
+            var thumbnailHtmlParser = _webServices.CreateParserFromSourceUrl(thumbnailPreparedUrl);//(WebCharacter.SourceSmash4UrlBase);
             string thumbnailHtml = thumbnailHtmlParser.GetSingle(ScrapingConstants.XPathThumbnailUrl.Replace(characterNameKey, character.DisplayName));
 
             string thumbnailUrl = string.Empty;

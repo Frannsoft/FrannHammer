@@ -9,13 +9,12 @@ namespace FrannHammer.Api.Services.Tests.ApiServiceFactories
     {
         public override ICrudService<ICharacter> CreateService(IRepository<ICharacter> repository)
         {
-            var queryMappingService = new QueryMappingService(new Mock<IAttributeStrategy>().Object);
             return new DefaultCharacterService(repository,
-                new DefaultMovementService(new Mock<IRepository<IMovement>>().Object, queryMappingService, string.Empty),
-                new DefaultCharacterAttributeService(new Mock<IRepository<ICharacterAttributeRow>>().Object, new DefaultCharacterAttributeNameProvider(), string.Empty),
-                new DefaultMoveService(new Mock<IRepository<IMove>>().Object, queryMappingService, string.Empty),
-                new DefaultUniqueDataService(new Mock<IRepository<IUniqueData>>().Object, queryMappingService, string.Empty),
-                string.Empty);
+                new DefaultMovementService(new Mock<IRepository<IMovement>>().Object, new GameParameterParserService("Smash4")),
+            new DefaultCharacterAttributeService(new Mock<IRepository<ICharacterAttributeRow>>().Object, new DefaultCharacterAttributeNameProvider(), new GameParameterParserService("Smash4")),
+            new DefaultMoveService(new Mock<IRepository<IMove>>().Object, new GameParameterParserService("Smash4")),
+            new DefaultUniqueDataService(new Mock<IRepository<IUniqueData>>().Object, new GameParameterParserService("Smash4")),
+            new GameParameterParserService("Smash4"));
         }
     }
 }

@@ -21,24 +21,6 @@ namespace FrannHammer.WebScraping.Tests
         }
 
         [Test]
-        public void AllWithScrapingServicesReturnsAllAttributeScrapers()
-        {
-            var referencedAssemblyNames = Assembly.GetExecutingAssembly().GetReferencedAssemblies();
-
-            var webScrapingAssembly = Assembly.Load(referencedAssemblyNames.First(an => an.Name.Equals("FrannHammer.WebScraping")));
-
-            var expectedAttributeScrapers = webScrapingAssembly.GetTypes().Where(t => t.IsSubclassOf(typeof(AttributeScraper)))
-                .OrderBy(scraper => scraper.Name);
-
-            var attributeScrapingServiceMock = new Mock<IAttributeScrapingServices>();
-            var actualAttributeScrapers = AttributeScrapers.AllWithScrapingServices(attributeScrapingServiceMock.Object, string.Empty)
-                .Select(scraper => scraper.GetType())
-                .OrderBy(type => type.Name);
-
-            Assert.That(actualAttributeScrapers, Is.EqualTo(expectedAttributeScrapers));
-        }
-
-        [Test]
         public void AllWithScrapingServicesContainsNoDuplicateScrapers()
         {
             var attributeScrapingServiceMock = new Mock<IAttributeScrapingServices>();

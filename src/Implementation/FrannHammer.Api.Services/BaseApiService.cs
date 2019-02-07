@@ -27,10 +27,6 @@ namespace FrannHammer.Api.Services
         public T GetSingleByInstanceId(string id)
         {
             var foundItem = GetSingleWhere(m => m.InstanceId == id && m.Game == _game);
-            if (foundItem == null)
-            {
-                throw new ResourceNotFoundException($"Resource of type '{typeof(T).Name}' not found.");
-            }
             return foundItem;
         }
 
