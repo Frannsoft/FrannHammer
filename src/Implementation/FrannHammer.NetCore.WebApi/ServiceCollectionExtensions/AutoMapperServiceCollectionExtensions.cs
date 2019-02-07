@@ -16,14 +16,20 @@ namespace FrannHammer.NetCore.WebApi.ServiceCollectionExtensions
             {
                 cfg.CreateMap<WebCharacter, Character>();
                 cfg.CreateMap<ICharacter, CharacterResource>();
-                cfg.CreateMap<IMove, MoveResource>();
+                cfg.CreateMap<IMove, MoveResource>()
+                .ForMember(
+                    dest => dest.BaseDamage,
+                    opt => opt.MapFrom(src => new DefaultBaseDamageResourceMapService().MapFrom(src)))
+                .ForMember(
+                    dest => dest.HitboxActive,
+                    opt => opt.MapFrom(src => new DefaultHitboxActiveResourceMapService().MapFrom(src)));
                 cfg.CreateMap<IMove, ExpandedMoveResource>()
                 .ForMember(
                     dest => dest.BaseDamage,
                     opt => opt.MapFrom(src => new UltimateBaseDamageResourceMapService().MapFrom(src)))
                 .ForMember(
                     dest => dest.HitboxActive,
-                    opt => opt.MapFrom(src => new UltimateHitboxResourceMapService().MapFrom(src)));
+                    opt => opt.MapFrom(src => new UltimateHitboxActiveResourceMapService().MapFrom(src)));
 
                 cfg.CreateMap<IMovement, MovementResource>();
                 cfg.CreateMap<ICharacterAttributeRow, CharacterAttributeRowResource>();

@@ -161,10 +161,11 @@ namespace FrannHammer.NetCore.WebApi
             }
 #endif
 #if DEBUG
-            _characterData.AddRange(JsonConvert.DeserializeObject<List<Character>>(File.ReadAllText(fileLocationResolver.Character)));//"../../localstorage/character.json")));
-            _moveData.AddRange(JsonConvert.DeserializeObject<List<Move>>(File.ReadAllText(fileLocationResolver.Move)));//"../../localstorage/move.json")));
-            _movementData.AddRange(JsonConvert.DeserializeObject<List<Movement>>(File.ReadAllText(fileLocationResolver.Movement)));//"../../localstorage/movement.json")));
-            _characterAttributeRowData.AddRange(JsonConvert.DeserializeObject<List<dynamic>>(File.ReadAllText(fileLocationResolver.Attribute))/*"../../localstorage/attribute.json"))*/.Select(attr =>
+            _characterData.AddRange(JsonConvert.DeserializeObject<List<Character>>(File.ReadAllText(fileLocationResolver.Character)));
+            _moveData.AddRange(JsonConvert.DeserializeObject<List<Move>>(File.ReadAllText(fileLocationResolver.Move)));
+            _movementData.AddRange(JsonConvert.DeserializeObject<List<Movement>>(File.ReadAllText(fileLocationResolver.Movement)));
+            _characterAttributeRowData.AddRange(JsonConvert.DeserializeObject<List<dynamic>>(File.ReadAllText(fileLocationResolver.Attribute))
+                .Select(attr =>
             {
                 return new CharacterAttributeRow
                 {
@@ -176,7 +177,7 @@ namespace FrannHammer.NetCore.WebApi
                     Values = attr["Values"] as List<IAttribute>
                 };
             }));
-            _uniqueData.AddRange(JsonConvert.DeserializeObject<List<UniqueData>>(File.ReadAllText(fileLocationResolver.Unique)));//"../../localstorage/unique.json")));
+            _uniqueData.AddRange(JsonConvert.DeserializeObject<List<UniqueData>>(File.ReadAllText(fileLocationResolver.Unique)));
 #endif
 
             _characterData.Sort((c1, c2) => c1.OwnerId.CompareTo(c2.OwnerId));

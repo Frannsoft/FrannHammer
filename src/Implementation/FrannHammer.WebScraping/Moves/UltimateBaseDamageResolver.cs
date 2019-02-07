@@ -19,7 +19,7 @@ namespace FrannHammer.WebScraping.Moves
                 string normalBaseDamage = normalBaseDamageNode.FirstChild.InnerText;
 
                 string oneVoneBaseDamage = normalBaseDamageNode.LastChild.InnerText;
-                basedmg = normalBaseDamage + oneVoneBaseDamage;
+                basedmg = normalBaseDamage + ";" + oneVoneBaseDamage;
             }
             else
             {
@@ -45,7 +45,7 @@ namespace FrannHammer.WebScraping.Moves
             {
                 string hitboxData = allContentInHitboxNode.FirstChild.InnerText;
                 string advData = allContentInHitboxNode.LastChild.InnerText;
-                hitbox = hitbox + advData;
+                hitbox = hitboxData + ";" + advData;
             }
             else
             {
@@ -88,7 +88,7 @@ namespace FrannHammer.WebScraping.Moves
                     }
                 case Games.Ultimate:
                     {
-                        move.HitboxActive = new Smash4HitboxResolver().Resolve(nodes[1]);
+                        move.HitboxActive = new UltimateHitboxResolver().Resolve(nodes[1]);
                         move.BaseDamage = new UltimateBaseDamageResolver().GetRawValue(nodes[3]);
                         move.Game = Games.Ultimate;
                         break;

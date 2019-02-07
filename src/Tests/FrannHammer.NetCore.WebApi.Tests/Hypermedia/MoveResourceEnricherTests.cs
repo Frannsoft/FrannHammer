@@ -32,7 +32,7 @@ namespace FrannHammer.NetCore.WebApi.Tests.Hypermedia
         {
             return new List<string>
             {
-                "/api/moves/ab238414ce4f4bba8d516d2e8c09019e"
+                "/api/moves/b50a889439da465fb86fa0d24e9e7d5c"
             };
         }
 
@@ -123,6 +123,8 @@ namespace FrannHammer.NetCore.WebApi.Tests.Hypermedia
             foreach (var move in GetMovesExceptThrows(moves))
             {
                 AssertNonExpandedSingleIsValid(move);
+                Assert.That(move.HitboxActive, Does.Not.Contain(";"));
+                Assert.That(move.BaseDamage, Does.Not.Contain(";"));
             }
         }
 
@@ -138,6 +140,8 @@ namespace FrannHammer.NetCore.WebApi.Tests.Hypermedia
             foreach (var move in GetMovesExceptThrows(moves))
             {
                 AssertNonExpandedSingleIsValid(move);
+                Assert.That(move.HitboxActive, Does.Not.Contain(";"));
+                Assert.That(move.BaseDamage, Does.Not.Contain(";"));
             }
         }
 
@@ -149,6 +153,8 @@ namespace FrannHammer.NetCore.WebApi.Tests.Hypermedia
 
             var move = JsonConvert.DeserializeObject<dynamic>(await response.Content.ReadAsStringAsync());
             AssertNonExpandedSingleIsValid(move);
+            Assert.That(move.HitboxActive, Does.Not.Contain(";"));
+            Assert.That(move.BaseDamage, Does.Not.Contain(";"));
         }
 
         [Test]
@@ -159,6 +165,8 @@ namespace FrannHammer.NetCore.WebApi.Tests.Hypermedia
 
             var move = JsonConvert.DeserializeObject<dynamic>(await response.Content.ReadAsStringAsync());
             AssertNonExpandedSingleIsValid(move);
+            Assert.That(move.HitboxActive, Does.Not.Contain(";"));
+            Assert.That(move.BaseDamage, Does.Not.Contain(";"));
         }
     }
 }
