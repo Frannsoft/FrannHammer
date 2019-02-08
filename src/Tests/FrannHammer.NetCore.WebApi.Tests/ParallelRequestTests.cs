@@ -16,7 +16,6 @@ using System.Threading.Tasks;
 namespace FrannHammer.WebApi.Tests
 {
     [TestFixture]
-    [Explicit]
     public class ParallelRequestTests
     {
         [Test]
@@ -71,7 +70,6 @@ namespace FrannHammer.WebApi.Tests
         }
 
         [Test]
-        [Explicit]
         public async Task ExecuteGETsInParallelOnCurrentTestEnvironment()
         {
             using (var httpClient = new HttpClient())
@@ -94,7 +92,7 @@ namespace FrannHammer.WebApi.Tests
 
                         sw.Stop();
                         var parsedContent = JsonConvert.DeserializeObject<List<Move>>(content);
-                        Console.WriteLine($"{sw.Elapsed.Milliseconds}");
+                        Console.WriteLine($"{sw.Elapsed.Milliseconds}{parsedContent.First().Name}");
                         Assert.That(parsedContent[0].Owner, Is.EqualTo("Bayonetta"));
                         semaphoreSlim.Release();
                     }));

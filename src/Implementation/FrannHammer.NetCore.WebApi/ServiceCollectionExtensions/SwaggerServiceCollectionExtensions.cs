@@ -17,8 +17,8 @@ namespace FrannHammer.NetCore.WebApi.ServiceCollectionExtensions
                     Version = "v7",
                     Contact = new Contact
                     {
-                        Name = "@FrannDotExe",
-                        Url = "https://twitter.com/@franndotexe"
+                        Name = "FrannHammer - GitHub",
+                        Url = "https://github.com/Frannsoft/FrannHammer"
                     },
                     License = new License
                     {
