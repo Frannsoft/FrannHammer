@@ -15,19 +15,21 @@ namespace FrannHammer.NetCore.WebApi.MapServices
                 BaseDamage = "11;1v1: 13.2"
             };
 
-            var sut = new UltimateBaseDamageResourceMapService();
+            var sut = new UltimateBaseDamageResourceMapService(new TooltipPartParser());
             var actualResult = sut.MapFrom(move);
 
             Assert.That(actualResult.Normal, Is.EqualTo("11"));
             Assert.That(actualResult.Vs1, Is.EqualTo("13.2"));
         }
 
+
+
         [Test]
         public void ReturnsJustNormalAndEmpty1v1When1v1NotPresent()
         {
             var move = new Move { BaseDamage = "13/13/14" };
 
-            var sut = new UltimateBaseDamageResourceMapService();
+            var sut = new UltimateBaseDamageResourceMapService(new TooltipPartParser());
             var actualResult = sut.MapFrom(move);
 
             Assert.That(actualResult.Normal, Is.EqualTo("13/13/14"));

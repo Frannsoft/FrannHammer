@@ -14,6 +14,7 @@ namespace FrannHammer.NetCore.WebApi.ServiceCollectionExtensions
         {
             Mapper.Initialize(cfg =>
             {
+                var tooltipParser = new TooltipPartParser();
                 cfg.CreateMap<WebCharacter, Character>();
                 cfg.CreateMap<ICharacter, CharacterResource>();
                 cfg.CreateMap<IMove, MoveResource>()
@@ -26,10 +27,10 @@ namespace FrannHammer.NetCore.WebApi.ServiceCollectionExtensions
                 cfg.CreateMap<IMove, ExpandedMoveResource>()
                 .ForMember(
                     dest => dest.BaseDamage,
-                    opt => opt.MapFrom(src => new UltimateBaseDamageResourceMapService().MapFrom(src)))
+                    opt => opt.MapFrom(src => new UltimateBaseDamageResourceMapService(tooltipParser).MapFrom(src)))
                 .ForMember(
                     dest => dest.HitboxActive,
-                    opt => opt.MapFrom(src => new UltimateHitboxActiveResourceMapService().MapFrom(src)));
+                    opt => opt.MapFrom(src => new UltimateHitboxActiveResourceMapService(tooltipParser).MapFrom(src)));
 
                 cfg.CreateMap<IMovement, MovementResource>();
                 cfg.CreateMap<ICharacterAttributeRow, CharacterAttributeRowResource>();

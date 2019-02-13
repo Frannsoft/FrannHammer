@@ -36,11 +36,22 @@ namespace FrannHammer.NetCore.WebApi.Models
 
         [JsonProperty("OneVOne")]
         public string Vs1 { get; set; }
+
     }
 
     public class ExpandedHitboxResource
     {
         public string Frames { get; set; }
-        public string Adv { get; set; }
+        public string Adv { get; set; } = string.Empty;
+        public string SD { get; set; } = string.Empty;
+        public string ShieldstunMultiplier { get; set; } = string.Empty;
+        public string RehitRate { get; set; } = string.Empty;
+        public string FacingRestrict { get; set; } = string.Empty;
+        public string SuperArmor { get; set; } = string.Empty;
+        public string HeadMultiplier { get; set; } = string.Empty;
+        public string Intangible { get; set; } = string.Empty;
+        public bool SetWeight { get; set; } = false;
+        public bool GroundOnly { get; set; } = false;
+
     }
 }

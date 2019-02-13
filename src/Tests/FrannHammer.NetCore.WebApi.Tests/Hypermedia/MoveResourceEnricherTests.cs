@@ -32,7 +32,7 @@ namespace FrannHammer.NetCore.WebApi.Tests.Hypermedia
         {
             return new List<string>
             {
-                "/api/moves/b50a889439da465fb86fa0d24e9e7d5c"
+                "/api/moves/39cdff182b8340f99795f77fe34fbd21"
             };
         }
 
@@ -80,6 +80,14 @@ namespace FrannHammer.NetCore.WebApi.Tests.Hypermedia
         private void AssertExpandedSingleIsValid(dynamic move)
         {
             Assert.DoesNotThrow(() => { var x = move.HitboxActive.Adv; });
+            Assert.DoesNotThrow(() => { var x = move.HitboxActive.SD; });
+            Assert.DoesNotThrow(() => { var x = move.HitboxActive.ShieldstunMultiplier; });
+            Assert.DoesNotThrow(() => { var x = move.HitboxActive.RehitRate; });
+            Assert.DoesNotThrow(() => { var x = move.HitboxActive.FacingRestrict; });
+            Assert.DoesNotThrow(() => { var x = move.HitboxActive.SuperArmor; });
+            Assert.DoesNotThrow(() => { var x = move.HitboxActive.HeadMultiplier; });
+
+
             Assert.DoesNotThrow(() => { var x = move.BaseDamage.OneVOne; });
         }
 

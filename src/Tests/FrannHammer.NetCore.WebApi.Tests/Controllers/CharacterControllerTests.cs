@@ -112,6 +112,13 @@ namespace FrannHammer.NetCore.WebApi.Tests.Controllers
             Assert.That(moves.Count, Is.GreaterThan(0));
             Assert.That(moves.TrueForAll(m => m.Game == Games.Ultimate));
             Assert.DoesNotThrow(() => { var x = moves.First().HitboxActive.Frames; });
+            Assert.DoesNotThrow(() => { var x = moves.First().HitboxActive.Adv; });
+            Assert.DoesNotThrow(() => { var x = moves.First().HitboxActive.SD; });
+            Assert.DoesNotThrow(() => { var x = moves.First().HitboxActive.ShieldstunMultiplier; });
+            Assert.DoesNotThrow(() => { var x = moves.First().HitboxActive.RehitRate; });
+            Assert.DoesNotThrow(() => { var x = moves.First().HitboxActive.FacingRestrict; });
+            Assert.DoesNotThrow(() => { var x = moves.First().HitboxActive.SuperArmor; });
+
             Assert.DoesNotThrow(() => { var x = moves.First().BaseDamage.Normal; });
         }
 

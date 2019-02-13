@@ -8,35 +8,40 @@ namespace FrannHammer.NetCore.WebApi.HypermediaServices.MapServices
 {
     public class UltimateHitboxActiveResourceMapService
     {
+        private readonly TooltipPartParser _tooltipPartParser;
+
+        public UltimateHitboxActiveResourceMapService(TooltipPartParser tooltipPartParser)
+        {
+            Guard.VerifyObjectNotNull(tooltipPartParser, nameof(tooltipPartParser));
+            _tooltipPartParser = tooltipPartParser;
+        }
+
         public ExpandedHitboxResource MapFrom(IMove move)
         {
             Guard.VerifyObjectNotNull(move, nameof(move));
 
             var hitboxResource = new ExpandedHitboxResource();
 
-            var parts = move.HitboxActive.Split(new[] { "Adv:" }, StringSplitOptions.None);
+            var parts = move.HitboxActive.Split(new[] { "|" }, StringSplitOptions.None);
 
             hitboxResource.Frames = parts[0].TrimEnd(';');
             string adv = string.Empty;
             if (parts.Count() > 1)
             {
-                adv = parts[1].Split(new[] { "," }, StringSplitOptions.None).FirstOrDefault() ?? string.Empty;
+                string tooltipContent = parts[1];
+                hitboxResource.Adv = _tooltipPartParser.GetValue("Adv", tooltipContent);
+                hitboxResource.SD = _tooltipPartParser.GetValue("SD", tooltipContent);
+                hitboxResource.ShieldstunMultiplier = _tooltipPartParser.GetValue("Shieldstun Multiplier", tooltipContent);
+                hitboxResource.RehitRate = _tooltipPartParser.GetValue("Rehit Rate", tooltipContent);
+                hitboxResource.FacingRestrict = _tooltipPartParser.GetValue("Facing Restrict", tooltipContent);
+                hitboxResource.SuperArmor = _tooltipPartParser.GetValue("Super Armor", tooltipContent);
+                hitboxResource.HeadMultiplier = _tooltipPartParser.GetValue("Head Multiplier", tooltipContent);
+                hitboxResource.Intangible = _tooltipPartParser.GetValue("Intangible", tooltipContent);
+                hitboxResource.SetWeight = _tooltipPartParser.GetPhraseOnlyValue("Set Weight", tooltipContent);
+                hitboxResource.GroundOnly = _tooltipPartParser.GetPhraseOnlyValue("Ground Only", tooltipContent);
             }
-            hitboxResource.Adv = adv;
 
             return hitboxResource;
-        }
-    }
-
-    public class DefaultHitboxActiveResourceMapService
-    {
-        public string MapFrom(IMove move)
-        {
-            Guard.VerifyObjectNotNull(move, nameof(move));
-
-            //return just the first portion of the move, not the 'extended' data
-            var parts = move.HitboxActive.Split(new[] { ";" }, StringSplitOptions.None);
-            return parts.FirstOrDefault() ?? string.Empty;
         }
     }
 }

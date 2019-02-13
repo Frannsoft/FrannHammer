@@ -8,6 +8,14 @@ namespace FrannHammer.NetCore.WebApi.HypermediaServices.MapServices
 {
     public class UltimateBaseDamageResourceMapService
     {
+        private readonly TooltipPartParser _tooltipPartParser;
+
+        public UltimateBaseDamageResourceMapService(TooltipPartParser tooltipPartParser)
+        {
+            Guard.VerifyObjectNotNull(tooltipPartParser, nameof(tooltipPartParser));
+            _tooltipPartParser = tooltipPartParser;
+        }
+
         public ExpandedBaseDamageResource MapFrom(IMove move)
         {
             Guard.VerifyObjectNotNull(move, nameof(move));
@@ -15,7 +23,7 @@ namespace FrannHammer.NetCore.WebApi.HypermediaServices.MapServices
 
             var parts = move.BaseDamage.Split(new[] { "1v1:" }, StringSplitOptions.None);
 
-            baseDamageResource.Normal = parts[0].TrimEnd(';');
+            baseDamageResource.Normal = parts[0].TrimEnd('|');
             string vs1 = string.Empty;
             if (parts.Count() > 1)
             {
@@ -24,18 +32,6 @@ namespace FrannHammer.NetCore.WebApi.HypermediaServices.MapServices
             baseDamageResource.Vs1 = vs1;
 
             return baseDamageResource;
-        }
-    }
-
-    public class DefaultBaseDamageResourceMapService
-    {
-        public string MapFrom(IMove move)
-        {
-            Guard.VerifyObjectNotNull(move, nameof(move));
-
-            //return just the first portion of the move data, not the 'extended' data
-            var parts = move.BaseDamage.Split(new[] { ';' }, StringSplitOptions.None);
-            return parts.FirstOrDefault() ?? string.Empty;
         }
     }
 }

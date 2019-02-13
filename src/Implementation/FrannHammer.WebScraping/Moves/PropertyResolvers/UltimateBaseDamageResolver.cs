@@ -19,7 +19,7 @@ namespace FrannHammer.WebScraping.Moves
                 string normalBaseDamage = normalBaseDamageNode.FirstChild.InnerText;
 
                 string oneVoneBaseDamage = normalBaseDamageNode.LastChild.InnerText;
-                basedmg = normalBaseDamage + ";" + oneVoneBaseDamage;
+                basedmg = normalBaseDamage + "|" + oneVoneBaseDamage;
             }
             else
             {
@@ -39,20 +39,21 @@ namespace FrannHammer.WebScraping.Moves
     {
         public string Resolve(HtmlNode node)
         {
-            string hitbox = string.Empty;
+            string data = string.Empty;
             var allContentInHitboxNode = node.SelectSingleNode("./div[@class = 'tooltip']");
             if (allContentInHitboxNode != null)
             {
                 string hitboxData = allContentInHitboxNode.FirstChild.InnerText;
-                string advData = allContentInHitboxNode.LastChild.InnerText;
-                hitbox = hitboxData + ";" + advData;
+
+                string remainingData = allContentInHitboxNode.LastChild.InnerText;
+                data = hitboxData + "|" + remainingData;
             }
             else
             {
-                hitbox = node.InnerText;
+                data = node.InnerText;
             }
 
-            return hitbox;
+            return data;
         }
     }
 
