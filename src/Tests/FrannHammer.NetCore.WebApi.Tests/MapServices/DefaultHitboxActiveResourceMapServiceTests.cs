@@ -9,8 +9,8 @@ namespace FrannHammer.NetCore.WebApi.MapServices
     public class DefaultHitboxActiveResourceMapServiceTests
     {
         [Test]
-        [TestCase("5-6;Adv:-7", "5-6")]
-        [TestCase("20-30;Adv:-10;SD:+5", "20-30")]
+        [TestCase("5-6|Adv:-7", "5-6")]
+        [TestCase("20-30|Adv:-10|SD:+5", "20-30")]
         public void ReturnsFirstValueFromRawValuesSeparatedBySemiColon(string rawValue, string expectedParsedValue)
         {
             var move = new Move

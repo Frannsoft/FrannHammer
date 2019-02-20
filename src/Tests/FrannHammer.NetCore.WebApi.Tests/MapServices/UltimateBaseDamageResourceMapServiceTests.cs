@@ -12,7 +12,7 @@ namespace FrannHammer.NetCore.WebApi.MapServices
         {
             var move = new Move
             {
-                BaseDamage = "11;1v1: 13.2"
+                BaseDamage = "11|1v1: 13.2"
             };
 
             var sut = new UltimateBaseDamageResourceMapService(new TooltipPartParser());
@@ -21,8 +21,6 @@ namespace FrannHammer.NetCore.WebApi.MapServices
             Assert.That(actualResult.Normal, Is.EqualTo("11"));
             Assert.That(actualResult.Vs1, Is.EqualTo("13.2"));
         }
-
-
 
         [Test]
         public void ReturnsJustNormalAndEmpty1v1When1v1NotPresent()
