@@ -76,6 +76,7 @@ namespace FrannHammer.WebScraping.Domain.Contracts
         public const int Wolf = 68;
         public const int PiranhaPlant = 69;
         public const int Ken = 70;
+        public const int Ridley = 71;
 
         public static int FindByName(string characterName)
         {
