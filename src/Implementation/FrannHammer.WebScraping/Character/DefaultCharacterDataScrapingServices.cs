@@ -98,6 +98,7 @@ namespace FrannHammer.WebScraping.Character
             }
 
             //color hex
+            Console.WriteLine("MAIN IMAGE URL: " + mainImageUrl);
             string colorTheme = _imageScrapingService.GetColorHexValue(mainImageUrl).Result;
 
             //movements
