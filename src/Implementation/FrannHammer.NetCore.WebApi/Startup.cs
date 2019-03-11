@@ -180,12 +180,6 @@ namespace FrannHammer.NetCore.WebApi
             _uniqueData.AddRange(JsonConvert.DeserializeObject<List<UniqueData>>(File.ReadAllText(fileLocationResolver.Unique)));
 #endif
 
-            _characterData.Sort((c1, c2) => c1.OwnerId.CompareTo(c2.OwnerId));
-            _moveData.Sort((m1, m2) => m1.Name.CompareTo(m2.Name));
-            _movementData.Sort((m1, m2) => m1.Name.CompareTo(m2.Name));
-            _characterAttributeRowData.Sort((c1, c2) => c1.Name.CompareTo(c2.Name));
-            _uniqueData.Sort((u1, u2) => u1.Name.CompareTo(u2.Name));
-
             //write pulled data to local
             //File.WriteAllText(fileLocationResolver.Character, JsonConvert.SerializeObject(_characterData));
             //File.WriteAllText(fileLocationResolver.Move, JsonConvert.SerializeObject(_moveData));
