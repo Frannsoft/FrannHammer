@@ -91,7 +91,10 @@ namespace FrannHammer.WebScraping.Character
             Uri mainImageUri;
             if (!Uri.TryCreate(mainImageUrl, UriKind.Absolute, out mainImageUri)) //add base address if it doesn't exist
             {
-                mainImageUrl = populatedCharacter.SourceUrl + mainImageUrl;
+                var sourceUri = new Uri(populatedCharacter.SourceUrl);
+
+                string baseUri = sourceUri.GetLeftPart(UriPartial.Authority);
+                mainImageUrl = baseUri + mainImageUrl;
             }
 
             //color hex
