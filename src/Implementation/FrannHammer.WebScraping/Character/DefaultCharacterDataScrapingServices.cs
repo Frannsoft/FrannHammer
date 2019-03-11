@@ -88,13 +88,12 @@ namespace FrannHammer.WebScraping.Character
 
             //character details
             string mainImageUrl = htmlParser.GetAttributeFromSingleNavigable(srcAttributeKey, ScrapingConstants.XPathImageUrl);
-            Uri mainImageUri;
-            //if (!Uri.TryCreate(mainImageUrl, UriKind.Absolute, out mainImageUri)) //add base address if it doesn't exist
-            if (!mainImageUrl.StartsWith("http://kuroganehammer.com"))
-            {
-                var sourceUri = new Uri(populatedCharacter.SourceUrl);
 
-                string baseUri = sourceUri.GetLeftPart(UriPartial.Authority);
+            var sourceUri = new Uri(populatedCharacter.SourceUrl);
+            string baseUri = sourceUri.GetLeftPart(UriPartial.Authority);
+
+            if (!mainImageUrl.StartsWith(baseUri))
+            {
                 mainImageUrl = baseUri + mainImageUrl;
             }
 
