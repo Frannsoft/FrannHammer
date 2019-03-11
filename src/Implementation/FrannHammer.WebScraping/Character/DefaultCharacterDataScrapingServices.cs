@@ -89,7 +89,8 @@ namespace FrannHammer.WebScraping.Character
             //character details
             string mainImageUrl = htmlParser.GetAttributeFromSingleNavigable(srcAttributeKey, ScrapingConstants.XPathImageUrl);
             Uri mainImageUri;
-            if (!Uri.TryCreate(mainImageUrl, UriKind.Absolute, out mainImageUri)) //add base address if it doesn't exist
+            //if (!Uri.TryCreate(mainImageUrl, UriKind.Absolute, out mainImageUri)) //add base address if it doesn't exist
+            if (!mainImageUrl.StartsWith("http://kuroganehammer.com"))
             {
                 var sourceUri = new Uri(populatedCharacter.SourceUrl);
 
@@ -98,7 +99,6 @@ namespace FrannHammer.WebScraping.Character
             }
 
             //color hex
-            Console.WriteLine("MAIN IMAGE URL: " + mainImageUrl);
             string colorTheme = _imageScrapingService.GetColorHexValue(mainImageUrl).Result;
 
             //movements
