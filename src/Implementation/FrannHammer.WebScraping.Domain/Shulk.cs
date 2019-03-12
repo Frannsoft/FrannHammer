@@ -7,7 +7,7 @@ namespace FrannHammer.WebScraping.Domain
         public Shulk()
             : base("Shulk", potentialScrapingNames: new[] { "Shulk (Ground)", "Shulk (Air)" })
         {
-            CssKey = "shulk";
+            CssKey = "feelingit";
         }
     }
 }
