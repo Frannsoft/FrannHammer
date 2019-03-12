@@ -19,6 +19,7 @@ using FrannHammer.WebScraping.PageDownloading;
 using FrannHammer.WebScraping.Unique;
 using FrannHammer.WebScraping.WebClients;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 
 namespace FrannHammer.NetCore.WebApi.ServiceCollectionExtensions
@@ -34,8 +35,14 @@ namespace FrannHammer.NetCore.WebApi.ServiceCollectionExtensions
             services.AddTransient<IPageDownloader, DefaultPageDownloader>();
             services.AddTransient<IWebClientProvider, DefaultWebClientProvider>();
             services.AddTransient<IAttributeProvider, DefaultAttributeProvider>();
-            services.AddTransient<IImageScrapingProvider, DefaultImageScrapingProvider>();
-            services.AddTransient<IColorScrapingService, DefaultColorScrapingService>();
+            //services.AddTransient<IImageScrapingProvider, DefaultImageScrapingProvider>();
+            services.AddSingleton<IColorScrapingService, DefaultColorScrapingService>(sp =>
+            {
+                string css = sp.GetService<IPageDownloader>()
+                            .DownloadPageSource(new Uri("http://kuroganehammer.com/css/character.css"),
+                            sp.GetService<IWebClientProvider>());
+                return new DefaultColorScrapingService(css);
+            });
             services.AddTransient<IAttributeScrapingServices, DefaultAttributeScrapingServices>();
             services.AddTransient<IMoveScrapingServices, DefaultMoveScrapingServices>();
             services.AddTransient<IMovementScrapingServices, DefaultMovementScrapingServices>();
