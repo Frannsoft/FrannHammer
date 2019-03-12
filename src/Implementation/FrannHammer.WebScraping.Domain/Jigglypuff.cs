@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public Jigglypuff()
             : base("Jigglypuff")
-        { }
+        {
+            CssKey = "jiggsu";
+        }
     }
 }

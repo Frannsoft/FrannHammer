@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public Palutena()
             : base("Palutena")
-        { }
+        {
+            CssKey = "palutena";
+        }
     }
 }

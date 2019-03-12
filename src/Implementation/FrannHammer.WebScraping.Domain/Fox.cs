@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public Fox()
             : base("Fox")
-        { }
+        {
+            CssKey = "fox";
+        }
     }
 }

@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public Wolf()
             : base("Wolf")
-        { }
+        {
+            CssKey = "wolf";
+        }
     }
 }

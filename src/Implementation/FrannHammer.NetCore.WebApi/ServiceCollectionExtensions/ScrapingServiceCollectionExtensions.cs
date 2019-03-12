@@ -35,7 +35,7 @@ namespace FrannHammer.NetCore.WebApi.ServiceCollectionExtensions
             services.AddTransient<IWebClientProvider, DefaultWebClientProvider>();
             services.AddTransient<IAttributeProvider, DefaultAttributeProvider>();
             services.AddTransient<IImageScrapingProvider, DefaultImageScrapingProvider>();
-            services.AddTransient<IImageScrapingService, DefaultImageScrapingService>();
+            services.AddTransient<IColorScrapingService, DefaultColorScrapingService>();
             services.AddTransient<IAttributeScrapingServices, DefaultAttributeScrapingServices>();
             services.AddTransient<IMoveScrapingServices, DefaultMoveScrapingServices>();
             services.AddTransient<IMovementScrapingServices, DefaultMovementScrapingServices>();
@@ -63,7 +63,7 @@ namespace FrannHammer.NetCore.WebApi.ServiceCollectionExtensions
             {
                 var scrapers = AttributeScrapers.AllWithScrapingServices(sp.GetService<IAttributeScrapingServices>());
                 return new DefaultCharacterDataScrapingServices(
-                    sp.GetService<IImageScrapingService>(),
+                    sp.GetService<IColorScrapingService>(),
                     sp.GetService<IMovementScraper>(),
                     scrapers,
                     sp.GetService<ICharacterMoveScraper>(),

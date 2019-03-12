@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public Pit()
             : base("Pit")
-        { }
+        {
+            CssKey = "pit";
+        }
     }
 }

@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public Bayonetta()
             : base("Bayonetta")
-        { }
+        {
+            CssKey = "bazza";
+        }
     }
 }

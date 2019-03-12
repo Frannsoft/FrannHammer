@@ -5,7 +5,9 @@ namespace FrannHammer.WebScraping.Domain
     public class Greninja : WebCharacter
     {
         public Greninja()
-            : base("Greninja", potentialScrapingNames: new[] {"GreninjaForward", "GreninjaBack", "Greninja (Forward)", "Greninja (Back)"})
-        { }
+            : base("Greninja", potentialScrapingNames: new[] { "GreninjaForward", "GreninjaBack", "Greninja (Forward)", "Greninja (Back)" })
+        {
+            CssKey = "frog";
+        }
     }
 }

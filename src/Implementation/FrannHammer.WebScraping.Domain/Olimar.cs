@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public Olimar()
             : base("Olimar")
-        { }
+        {
+            CssKey = "olimar";
+        }
     }
 }

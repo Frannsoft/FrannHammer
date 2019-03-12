@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public Zelda()
             : base("Zelda")
-        { }
+        {
+            CssKey = "zelda";
+        }
     }
 }

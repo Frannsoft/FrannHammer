@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public Daisy()
             : base("Daisy")
-        { }
+        {
+            CssKey = "daisy";
+        }
     }
 }

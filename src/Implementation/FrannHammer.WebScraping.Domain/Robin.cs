@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public Robin()
             : base("Robin")
-        { }
+        {
+            CssKey = "magicmarth";
+        }
     }
 }

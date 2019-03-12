@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public Squirtle()
             : base("Squirtle")
-        { }
+        {
+            CssKey = "squirtle";
+        }
     }
 }

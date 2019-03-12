@@ -2,8 +2,8 @@
 
 namespace FrannHammer.WebScraping.Contracts.Images
 {
-    public interface IImageScrapingService
+    public interface IColorScrapingService
     {
-        Task<string> GetColorHexValue(string imageSourceUrl);
+        Task<string> GetColorHexValue(string characterName);
     }
 }

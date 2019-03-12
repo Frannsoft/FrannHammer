@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public Incineroar()
            : base("Incineroar")
-        { }
+        {
+            CssKey = "barafurrybait";
+        }
     }
 }

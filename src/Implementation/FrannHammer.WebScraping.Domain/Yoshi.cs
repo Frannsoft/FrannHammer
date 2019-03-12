@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public Yoshi()
             : base("Yoshi")
-        { }
+        {
+            CssKey = "cancer";
+        }
     }
 }

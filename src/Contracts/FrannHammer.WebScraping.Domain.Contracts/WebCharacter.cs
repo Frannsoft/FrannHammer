@@ -37,6 +37,7 @@ namespace FrannHammer.WebScraping.Domain.Contracts
         public int OwnerId { get; set; }
 
         public IEnumerable<Type> UniqueScraperTypes { get; }
+        public string CssKey { get; set; }
 
         public WebCharacter(string name, string escapedCharacterName = "",
             IEnumerable<Type> uniqueScraperTypes = null, params string[] potentialScrapingNames)

@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public Villager()
             : base("Villager")
-        { }
+        {
+            CssKey = "villager";
+        }
     }
 }

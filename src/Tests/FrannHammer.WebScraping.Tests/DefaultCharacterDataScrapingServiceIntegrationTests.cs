@@ -40,7 +40,7 @@ namespace FrannHammer.WebScraping.Tests
         private static IWebClientProvider _webClientProvider;
         private static IAttributeProvider _attributeProvider;
         private static IMoveProvider _moveProvider;
-        private static IImageScrapingService _imageScrapingService;
+        private static IColorScrapingService _imageScrapingService;
         private static IImageScrapingProvider _imageScrapingProvider;
         private static IMovementScraper _movementScraper;
         private static ICharacterDataScrapingServices _characterDataScrapingServices;
@@ -56,6 +56,15 @@ namespace FrannHammer.WebScraping.Tests
 
         private string _urlUnderTest;
 
+        private string _characterCss;
+        [OneTimeSetUp]
+        public void OneTimeSetUp()
+        {
+            _characterCss = new DefaultPageDownloader()
+                .DownloadPageSource(new Uri("http://kuroganehammer.com/css/character.css"),
+                new DefaultWebClientProvider());
+        }
+
         public DefaultCharacterDataScraper MakeCharacterDataScraper()
         {
             var instanceIdGenerator = new InstanceIdGenerator();
@@ -66,7 +75,7 @@ namespace FrannHammer.WebScraping.Tests
             _webClientProvider = new DefaultWebClientProvider();
             _attributeProvider = new DefaultAttributeProvider(instanceIdGenerator);
             _imageScrapingProvider = new DefaultImageScrapingProvider();
-            _imageScrapingService = new DefaultImageScrapingService(_imageScrapingProvider);
+            _imageScrapingService = new DefaultColorScrapingService(_characterCss); //_imageScrapingProvider);
             _uniqueDataProvider = new DefaultUniqueDataProvider(instanceIdGenerator);
             _webServices = new DefaultWebServices(_htmlParserProvider, _webClientProvider, _pageDownloader);
 
@@ -97,10 +106,15 @@ namespace FrannHammer.WebScraping.Tests
             return new List<WebCharacter> { Domain.Characters.DarkPit, Domain.Characters.Bowser };
         }
 
+        private static IEnumerable<WebCharacter> CharactersSmash4()
+        {
+            return Domain.Characters.All;
+        }
+
         private void AssertCharacterDataIsValid(WebCharacter character)
         {
             Assert.That(character.FullUrl, Is.Not.Empty);
-            //Assert.That(character.ColorTheme, Is.Not.Empty);//not in any ultimate yet
+            Assert.That(character.ColorTheme, Is.Not.Empty);
             Assert.That(character.DisplayName, Is.Not.Empty);
             Assert.That(character.ThumbnailUrl, Is.Not.Null);
             Assert.That(character.MainImageUrl, Is.Not.Empty);
@@ -116,7 +130,7 @@ namespace FrannHammer.WebScraping.Tests
 
         [Test]
         [Category(LongRunning)]
-        [TestCaseSource(nameof(Characters))]
+        [TestCaseSource(nameof(CharactersSmash4))]
         public void ExpectedCharacterWithSpaceInNameCanBeScraped_Smash4(WebCharacter character)
         {
             _urlUnderTest = $"{Keys.KHSiteBaseUrl}{Keys.Smash4Url}/";

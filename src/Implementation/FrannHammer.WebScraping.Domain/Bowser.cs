@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public Bowser()
             : base("Bowser")
-        { }
+        {
+            CssKey = "bowser";
+        }
     }
 }

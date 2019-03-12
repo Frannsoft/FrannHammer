@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public Chrom()
             : base("Chrom")
-        { }
+        {
+            CssKey = "chrom";
+        }
     }
 }

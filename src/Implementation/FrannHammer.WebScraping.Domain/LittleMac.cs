@@ -8,6 +8,7 @@ namespace FrannHammer.WebScraping.Domain
             : base("LittleMac", "Little%20Mac", null, "Little Mac")
         {
             DisplayName = "Little Mac";
+            CssKey = "smallpenis";
         }
     }
 }

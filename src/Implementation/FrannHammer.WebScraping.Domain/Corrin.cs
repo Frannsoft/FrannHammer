@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public Corrin()
             : base("Corrin")
-        { }
+        {
+            CssKey = "corrin";
+        }
     }
 }

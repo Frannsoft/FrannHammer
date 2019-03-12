@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public Ganondorf()
             : base("Ganondorf")
-        { }
+        {
+            CssKey = "ganondork";
+        }
     }
 }

@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public Ike()
             : base("Ike")
-        { }
+        {
+            CssKey = "ike";
+        }
     }
 }

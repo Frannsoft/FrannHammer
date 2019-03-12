@@ -8,6 +8,7 @@ namespace FrannHammer.WebScraping.Domain
             : base("DonkeyKong", "Donkey%20Kong")
         {
             DisplayName = "Donkey Kong";
+            CssKey = "dk";
         }
     }
 }

@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public Pikachu()
             : base("Pikachu")
-        { }
+        {
+            CssKey = "annoyingyellowrat";
+        }
     }
 }

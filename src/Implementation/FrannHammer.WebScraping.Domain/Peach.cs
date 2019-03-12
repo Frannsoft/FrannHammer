@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public Peach()
             : base("Peach")
-        { }
+        {
+            CssKey = "peachu";
+        }
     }
 }

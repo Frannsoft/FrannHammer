@@ -12,6 +12,7 @@ namespace FrannHammer.WebScraping.Domain
                 typeof(LimitBreakScraper)
             })
         {
+            CssKey = "cloud";
         }
     }
 }

@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public Lucina()
             : base("Lucina", potentialScrapingNames: "Marth\'s worthless granddaughter")
-        { }
+        {
+            CssKey = "lucina";
+        }
     }
 }

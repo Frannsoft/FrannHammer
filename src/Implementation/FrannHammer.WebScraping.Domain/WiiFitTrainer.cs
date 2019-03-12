@@ -8,6 +8,7 @@ namespace FrannHammer.WebScraping.Domain
             : base("WiiFitTrainer", "Wii%20Fit%20Trainer", potentialScrapingNames: "Wii FIt Trainer")
         {
             DisplayName = "Wii Fit Trainer";
+            CssKey = "wiifit";
         }
     }
 }

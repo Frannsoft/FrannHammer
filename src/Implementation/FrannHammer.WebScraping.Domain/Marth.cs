@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public Marth()
             : base("Marth", potentialScrapingNames: "Lucina\'s worthless grandfather")
-        { }
+        {
+            CssKey = "marth";
+        }
     }
 }

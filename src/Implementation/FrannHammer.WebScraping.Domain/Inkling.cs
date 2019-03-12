@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public Inkling()
             : base("Inkling")
-        { }
+        {
+            CssKey = "inkling";
+        }
     }
 }

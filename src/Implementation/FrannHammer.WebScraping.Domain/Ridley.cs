@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public Ridley()
             : base("Ridley")
-        { }
+        {
+            CssKey = "ridley";
+        }
     }
 }

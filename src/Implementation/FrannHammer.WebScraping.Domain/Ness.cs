@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public Ness()
             : base("Ness", potentialScrapingNames: new[] { "EbolaBackThrow", "Ebola Back Throw" })
-        { }
+        {
+            CssKey = "ebola";
+        }
     }
 }

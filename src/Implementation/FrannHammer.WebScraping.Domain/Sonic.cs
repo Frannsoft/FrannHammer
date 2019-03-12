@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public Sonic()
             : base("Sonic")
-        { }
+        {
+            CssKey = "sonic";
+        }
     }
 }

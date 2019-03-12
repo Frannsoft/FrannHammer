@@ -19,14 +19,14 @@ namespace FrannHammer.WebScraping.Character
     public class DefaultCharacterDataScrapingServices : ICharacterDataScrapingServices
     {
         private readonly IInstanceIdGenerator _instanceIdGenerator;
-        private readonly IImageScrapingService _imageScrapingService;
+        private readonly IColorScrapingService _imageScrapingService;
         private readonly IMovementScraper _movementScraper;
         private readonly IEnumerable<IAttributeScraper> _attributeScrapers;
         private readonly ICharacterMoveScraper _characterMoveScraper;
         private readonly IWebServices _webServices;
         private readonly IUniqueDataScrapingServices _uniqueDataScrapingService;
 
-        public DefaultCharacterDataScrapingServices(IImageScrapingService imageScrapingService, IMovementScraper movementScraper,
+        public DefaultCharacterDataScrapingServices(IColorScrapingService imageScrapingService, IMovementScraper movementScraper,
             IEnumerable<IAttributeScraper> attributeScrapers,
             ICharacterMoveScraper characterMoveScraper,
             IUniqueDataScrapingServices uniqueDataScrapingServices,
@@ -53,6 +53,7 @@ namespace FrannHammer.WebScraping.Character
         {
             var populatedCharacter = new WebCharacter(character.Name, character.EscapedCharacterName, character.UniqueScraperTypes, character.PotentialScrapingNames);
             populatedCharacter.SourceUrl = sourceBaseUrl + populatedCharacter.EscapedCharacterName;
+            populatedCharacter.CssKey = character.CssKey;
 
             const string srcAttributeKey = "src";
             const string characterNameKey = "[charactername]";
@@ -98,7 +99,7 @@ namespace FrannHammer.WebScraping.Character
             }
 
             //color hex
-            string colorTheme = _imageScrapingService.GetColorHexValue(mainImageUrl).Result;
+            string colorTheme = _imageScrapingService.GetColorHexValue(populatedCharacter.CssKey).Result;
 
             //movements
             var movements = _movementScraper.GetMovementsForCharacter(populatedCharacter);

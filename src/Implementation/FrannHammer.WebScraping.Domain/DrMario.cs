@@ -8,6 +8,7 @@ namespace FrannHammer.WebScraping.Domain
             : base("DrMario", "Dr.%20Mario", null, "PhDMario", "Ph.D. Mario", "Educated Mario")
         {
             DisplayName = "Dr. Mario";
+            CssKey = "doctor";
         }
     }
 }

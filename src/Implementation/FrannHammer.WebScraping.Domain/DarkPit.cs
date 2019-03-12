@@ -8,6 +8,7 @@ namespace FrannHammer.WebScraping.Domain
             : base("DarkPit", "Dark%20Pit", null, "Pit, but edgy")
         {
             DisplayName = "Dark Pit";
+            CssKey = "darkpit";
         }
     }
 }

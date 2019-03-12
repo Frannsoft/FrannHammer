@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public Kirby()
             : base("Kirby")
-        { }
+        {
+            CssKey = "kirby";
+        }
     }
 }

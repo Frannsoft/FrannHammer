@@ -6,6 +6,8 @@ namespace FrannHammer.WebScraping.Domain
     {
         public Mewtwo()
             : base("Mewtwo")
-        { }
+        {
+            CssKey = "mewtwo";
+        }
     }
 }
