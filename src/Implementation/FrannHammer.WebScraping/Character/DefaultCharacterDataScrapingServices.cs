@@ -46,7 +46,7 @@ namespace FrannHammer.WebScraping.Character
             _characterMoveScraper = characterMoveScraper;
             _uniqueDataScrapingService = uniqueDataScrapingServices;
             _webServices = webServices;
-            _instanceIdGenerator = instanceIdGenerator;//testtt2
+            _instanceIdGenerator = instanceIdGenerator;//testtt23
         }
 
         public WebCharacter PopulateCharacter(WebCharacter character, string sourceBaseUrl)
