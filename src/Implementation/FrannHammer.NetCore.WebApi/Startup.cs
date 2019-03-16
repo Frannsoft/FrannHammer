@@ -5,6 +5,7 @@ using FrannHammer.WebScraping.Contracts.Character;
 using FrannHammer.WebScraping.Domain;
 using FrannHammer.WebScraping.PageDownloading;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -31,6 +32,8 @@ namespace FrannHammer.NetCore.WebApi
         private List<ICharacterAttributeRow> _characterAttributeRowData = new List<ICharacterAttributeRow>();
         private List<IUniqueData> _uniqueData = new List<IUniqueData>();
 
+        private readonly string _corsPolicy = "defaultCors";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -51,7 +54,16 @@ namespace FrannHammer.NetCore.WebApi
                 .AddControllersAsServices();
 
             services.AddTransient<IActionContextAccessor, ActionContextAccessor>();
-
+            services.AddCors(opts =>
+            {
+                opts.AddPolicy(_corsPolicy,
+                    builder =>
+                    {
+                        builder
+                         .AllowAnyOrigin()
+                         .WithHeaders("HEAD", "OPTIONS", "GET");
+                    });
+            });
             services.AddSwaggerSupport();
             services.AddResourceEnrichers();
             services.AddAutoMapperSupport();
@@ -97,6 +109,7 @@ namespace FrannHammer.NetCore.WebApi
                 app.UseHsts();
             }
 
+            app.UseCors(_corsPolicy);
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
