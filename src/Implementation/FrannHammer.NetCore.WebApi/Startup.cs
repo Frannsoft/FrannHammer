@@ -44,6 +44,17 @@ namespace FrannHammer.NetCore.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(opts =>
+            {
+                opts.AddPolicy(_corsPolicy,
+                    builder =>
+                    {
+                        builder
+                         .AllowAnyOrigin()
+                         .AllowAnyHeader()
+                         .AllowAnyMethod();
+                    });
+            });
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(options =>
@@ -54,16 +65,6 @@ namespace FrannHammer.NetCore.WebApi
                 .AddControllersAsServices();
 
             services.AddTransient<IActionContextAccessor, ActionContextAccessor>();
-            services.AddCors(opts =>
-            {
-                opts.AddPolicy(_corsPolicy,
-                    builder =>
-                    {
-                        builder
-                         .AllowAnyOrigin()
-                         .WithHeaders("HEAD", "OPTIONS", "GET");
-                    });
-            });
             services.AddSwaggerSupport();
             services.AddResourceEnrichers();
             services.AddAutoMapperSupport();
@@ -142,8 +143,8 @@ namespace FrannHammer.NetCore.WebApi
 
         private void SeedData(ICharacterDataScraper characterDataScraper, DebugStorageLocationResolver fileLocationResolver)
         {
-#if !DEBUG
-            var charactersToSeed = Characters.All;
+#if DEBUG
+            var charactersToSeed = Characters.All.Where(c => c.Name == "Lucas");
             foreach (var character in charactersToSeed)
             {
                 Console.WriteLine($"Scraping data for '{character.Name}'...");
@@ -173,7 +174,7 @@ namespace FrannHammer.NetCore.WebApi
                 }
             }
 #endif
-#if DEBUG
+#if !DEBUG
             _characterData.AddRange(JsonConvert.DeserializeObject<List<Character>>(File.ReadAllText(fileLocationResolver.Character)));
             _moveData.AddRange(JsonConvert.DeserializeObject<List<Move>>(File.ReadAllText(fileLocationResolver.Move)));
             _movementData.AddRange(JsonConvert.DeserializeObject<List<Movement>>(File.ReadAllText(fileLocationResolver.Movement)));
