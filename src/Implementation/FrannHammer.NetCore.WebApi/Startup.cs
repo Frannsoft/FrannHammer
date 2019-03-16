@@ -46,14 +46,13 @@ namespace FrannHammer.NetCore.WebApi
         {
             services.AddCors(opts =>
             {
-                opts.AddPolicy(_corsPolicy,
-                    builder =>
-                    {
-                        builder
-                         .AllowAnyOrigin()
-                         .AllowAnyHeader()
-                         .AllowAnyMethod();
-                    });
+                opts.AddPolicy(_corsPolicy, builder =>
+                {
+                    builder
+                     .AllowAnyOrigin()
+                     .AllowAnyHeader()
+                     .AllowAnyMethod();
+                });
             });
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
