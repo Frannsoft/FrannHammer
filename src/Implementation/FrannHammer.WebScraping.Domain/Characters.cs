@@ -92,7 +92,8 @@ namespace FrannHammer.WebScraping.Domain
             new Wolf(),
             new PiranhaPlant(),
             new Ken(),
-            new Ridley()
+            new Ridley(),
+            new Ivysaur()
         };
     }
 }
