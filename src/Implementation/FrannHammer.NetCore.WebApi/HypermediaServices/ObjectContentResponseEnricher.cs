@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FrannHammer.Domain.Contracts;
 using FrannHammer.NetCore.WebApi.Models;
 using FrannHammer.Utility;
 using Microsoft.AspNetCore.Http;
@@ -100,13 +101,20 @@ namespace FrannHammer.NetCore.WebApi.HypermediaServices
 
             if (Context.Request.Query.ContainsKey(queryParameterName))
             {
-                if (Context.Request.Query[queryParameterName].ToString().Equals("ultimate", StringComparison.OrdinalIgnoreCase))
+                string queryParamValue = Context.Request.Query[queryParameterName];
+
+                if (queryParamValue.Equals("ultimate", StringComparison.OrdinalIgnoreCase))
                 {
                     gameQueryParameter += "ultimate";
                 }
-                else
+                else if (queryParamValue.Equals("smash4", StringComparison.OrdinalIgnoreCase))
                 {
                     gameQueryParameter += "smash4";
+                }
+                else
+                {
+                    throw new QueryParameterException($"Unexpected 'game' query parameter value found: {queryParamValue}. Expected" +
+                        $" values are 'ultimate' or 'smash4' (no quotes needed).");
                 }
             }
             else

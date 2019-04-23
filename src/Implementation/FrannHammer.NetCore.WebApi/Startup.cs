@@ -128,6 +128,10 @@ namespace FrannHammer.NetCore.WebApi
                     {
                         context.Response.StatusCode = (int)HttpStatusCode.NotFound;
                     }
+                    else if (exception is QueryParameterException)
+                    {
+                        context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    }
                     else
                     {
                         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;

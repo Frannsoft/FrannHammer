@@ -1,16 +1,34 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 
 namespace FrannHammer.NetCore.WebApi.Controllers
 {
     public abstract class BaseApiController : Controller
     {
+        protected IActionResult Result<T>(IEnumerable<T> content)
+        {
+            if (content == null)
+            {
+                return NotFound();
+            }
+
+            var response = new ObjectResult(content.ToList())
+            {
+                StatusCode = (int)HttpStatusCode.OK
+            };
+
+            return response;
+        }
+
         protected IActionResult Result<T>(T content)
         {
             if (content == null)
             {
                 return NotFound();
             }
+
             var response = new ObjectResult(content)
             {
                 StatusCode = (int)HttpStatusCode.OK
