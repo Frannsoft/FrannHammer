@@ -14,7 +14,7 @@ namespace FrannHammer.NetCore.WebApi
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
 #if !DEBUG
-                .UseSentry(Environment.GetEnvironmentVariable("SENTRY_URL")),
+                .UseSentry(Environment.GetEnvironmentVariable("SENTRY_URL"))
 #endif
                 .UseStartup<Startup>();
     }
