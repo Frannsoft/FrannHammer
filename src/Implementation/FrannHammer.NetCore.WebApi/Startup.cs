@@ -147,7 +147,7 @@ namespace FrannHammer.NetCore.WebApi
         private void SeedData(ICharacterDataScraper characterDataScraper, DebugStorageLocationResolver fileLocationResolver)
         {
 #if !DEBUG
-            var charactersToSeed = Characters.All.Where(c => c.DisplayName == "Ganondorf");
+            var charactersToSeed = Characters.All;
             foreach (var character in charactersToSeed)
             {
                 Console.WriteLine($"Scraping data for '{character.Name}'...");
