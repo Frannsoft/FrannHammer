@@ -21,6 +21,6 @@ namespace FrannHammer.WebScraping.Unique
         }
 
         public IHtmlParser CreateParserFromSourceUrl(string url) => _webServices.CreateParserFromSourceUrl(url);
-        public IUniqueData Create() => _uniqueDataProvider.Create();
+        public T Create<T>() where T : class, IUniqueData, new() => _uniqueDataProvider.Create<T>();
     }
 }

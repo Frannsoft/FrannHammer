@@ -6,7 +6,7 @@ using System.Linq;
 namespace FrannHammer.NetCore.WebApi.HypermediaServices
 {
     public class ManyUniqueDataResourceEnricher :
-        ObjectContentResponseEnricher<IEnumerable<IUniqueData>, IEnumerable<UniqueDataResource>>
+        ObjectContentResponseEnricher<IEnumerable<IUniqueData>, IEnumerable<dynamic>>
     {
         private readonly UniqueDataResourceEnricher _singleResourceEnricher;
 
@@ -16,7 +16,7 @@ namespace FrannHammer.NetCore.WebApi.HypermediaServices
             _singleResourceEnricher = singleResourceEnricher;
         }
 
-        public override IEnumerable<UniqueDataResource> Enrich(IEnumerable<IUniqueData> content, bool expand = false)
+        public override IEnumerable<dynamic> Enrich(IEnumerable<IUniqueData> content, bool expand = false)
         {
             return content.Select(data => _singleResourceEnricher.Enrich(data));
         }

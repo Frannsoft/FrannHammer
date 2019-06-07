@@ -7,6 +7,6 @@ namespace FrannHammer.WebScraping.Contracts.UniqueData
 {
     public interface IUniqueDataScraper
     {
-        Func<WebCharacter, IEnumerable<IUniqueData>> Scrape { get; }
+        Func<WebCharacter, IEnumerable<object>> Scrape { get; }
     }
 }

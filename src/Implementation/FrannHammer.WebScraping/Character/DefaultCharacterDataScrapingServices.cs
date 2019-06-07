@@ -135,8 +135,9 @@ namespace FrannHammer.WebScraping.Character
             }
 
             //unique data
-            var uniqueData = new List<IUniqueData>();
+            var uniqueData = new List<object>();
             var uniqueDataScrapersForThisCharacter = GetUniqueDataScrapersForCharacter(populatedCharacter);
+
             foreach (var uniqueDataScraper in uniqueDataScrapersForThisCharacter)
             {
                 uniqueData.AddRange(uniqueDataScraper.Scrape(populatedCharacter));

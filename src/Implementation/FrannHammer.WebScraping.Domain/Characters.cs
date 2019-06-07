@@ -19,6 +19,7 @@ namespace FrannHammer.WebScraping.Domain
         public static WebCharacter Ryu => new Ryu();
         public static WebCharacter Roy => new Roy();
         public static WebCharacter Charizard => new Charizard();
+        public static WebCharacter Shulk => new Shulk();
 
         public static IEnumerable<WebCharacter> All => new List<WebCharacter>
         {

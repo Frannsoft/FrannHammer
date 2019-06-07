@@ -35,7 +35,6 @@ namespace FrannHammer.NetCore.WebApi.ServiceCollectionExtensions
             services.AddTransient<IPageDownloader, DefaultPageDownloader>();
             services.AddTransient<IWebClientProvider, DefaultWebClientProvider>();
             services.AddTransient<IAttributeProvider, DefaultAttributeProvider>();
-            //services.AddTransient<IImageScrapingProvider, DefaultImageScrapingProvider>();
             services.AddSingleton<IColorScrapingService, DefaultColorScrapingService>(sp =>
             {
                 string css = sp.GetService<IPageDownloader>()

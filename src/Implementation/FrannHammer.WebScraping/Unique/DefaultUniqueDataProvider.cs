@@ -1,6 +1,6 @@
-﻿using FrannHammer.Domain;
-using FrannHammer.Domain.Contracts;
+﻿using FrannHammer.Domain.Contracts;
 using FrannHammer.WebScraping.Contracts.UniqueData;
+using System;
 
 namespace FrannHammer.WebScraping.Unique
 {
@@ -13,9 +13,11 @@ namespace FrannHammer.WebScraping.Unique
             _instanceIdGenerator = instanceIdGenerator;
         }
 
-        public IUniqueData Create()
+        public T Create<T>() where T : class, IUniqueData, new()
         {
-            return new UniqueData() { InstanceId = _instanceIdGenerator.GenerateId() };
+            var uniqueData = Activator.CreateInstance<T>();
+            uniqueData.InstanceId = _instanceIdGenerator.GenerateId();
+            return uniqueData;
         }
     }
 }

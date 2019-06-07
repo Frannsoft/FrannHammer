@@ -4,25 +4,42 @@ using FrannHammer.NetCore.WebApi.Controllers;
 using FrannHammer.NetCore.WebApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using System.Collections.Generic;
 using System.Dynamic;
+using System.Linq;
 
 namespace FrannHammer.NetCore.WebApi.HypermediaServices
 {
-    public class UniqueDataResourceEnricher : ObjectContentResponseEnricher<IUniqueData, UniqueDataResource>
+    public class UniqueDataResourceEnricher : ObjectContentResponseEnricher<IUniqueData, dynamic>
     {
         public UniqueDataResourceEnricher(ILinkProvider linkProvider, IMapper entityToDtoMapper, LinkGenerator linkGenerator, HttpContext context)
             : base(linkProvider, entityToDtoMapper, linkGenerator, context)
         { }
 
-        public override UniqueDataResource Enrich(IUniqueData content, bool expand = false)
+        public override dynamic Enrich(IUniqueData content, bool expand = false)
         {
             var resource = EntityToDtoMapper.Map<UniqueDataResource>(content);
 
             var characterLink = CreateNameBasedLink<CharacterLink>(content.Owner, nameof(CharacterController.GetSingleCharacterByName), "Character");
             var selfLink = CreateIdBasedLink<SelfLink>(content.InstanceId, nameof(UniqueDataController.GetAllUniquePropertiesById), "UniqueData");
 
+            var resd = new ExpandoObject() as IDictionary<string, object>;
+            var props = content.GetType().GetProperties().ToList();
+            props.ForEach(prop =>
+            {
+                var value = prop.GetValue(content);
+                resd.Add(prop.Name, value);
+            });
+
+            var links = new List<Link>();
+            links.Add(selfLink);
+            links.Add(characterLink);
+
+            resd.Add("Links", links);
+
             resource.AddLink(selfLink);
             resource.AddLink(characterLink);
+
 
             var relatedLinks = new RelatedLinks();
 
@@ -37,9 +54,11 @@ namespace FrannHammer.NetCore.WebApi.HypermediaServices
 
             new RelatedLinkSelfLinkAttacher().AddSelf(relatedLinks, content.Game, selfLink);
 
-            resource.AddRelated(relatedLinks);
+            resd.Add("Related", relatedLinks);
+            //resource.AddRelated(relatedLinks);
 
-            return resource;
+            return resd;
+            //return resource;
         }
     }
 }

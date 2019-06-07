@@ -29,7 +29,7 @@ namespace FrannHammer.WebScraping.Domain.Contracts
         public IEnumerable<IMovement> Movements { get; set; }
         public IEnumerable<IAttribute> Attributes { get; set; }
         public IEnumerable<ICharacterAttributeRow> AttributeRows { get; set; }
-        public IEnumerable<IUniqueData> UniqueProperties { get; set; }
+        public IEnumerable<object> UniqueProperties { get; set; }
 
         /// <summary>
         /// The non-incrementing Id used to identity this character resource from an api consumer perspective.

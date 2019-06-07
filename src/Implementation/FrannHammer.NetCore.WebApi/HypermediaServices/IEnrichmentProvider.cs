@@ -14,9 +14,9 @@ namespace FrannHammer.NetCore.WebApi.HypermediaServices
         IEnumerable<CharacterResource> EnrichManyCharacters(IEnumerable<ICharacter> characters);
         IEnumerable<MovementResource> EnrichManyMovements(IEnumerable<IMovement> movements);
         IEnumerable<IMoveResource> EnrichManyMoves(IEnumerable<IMove> moves, bool expand = false);
-        IEnumerable<UniqueDataResource> EnrichManyUniqueDatas(IEnumerable<IUniqueData> uniqueDatas);
+        IEnumerable<dynamic> EnrichManyUniqueDatas(IEnumerable<IUniqueData> uniqueDatas);
         IMoveResource EnrichMove(IMove move, bool expand = false);
         MovementResource EnrichMovement(IMovement movement);
-        UniqueDataResource EnrichUniqueData(IUniqueData uniqueData);
+        dynamic EnrichUniqueData(IUniqueData uniqueData);
     }
 }

@@ -78,13 +78,13 @@ namespace FrannHammer.NetCore.WebApi.HypermediaServices
             return movements.Select(EnrichMovement);
         }
 
-        public UniqueDataResource EnrichUniqueData(IUniqueData uniqueData)
+        public dynamic EnrichUniqueData(IUniqueData uniqueData)
         {
             var enricher = new UniqueDataResourceEnricher(_linkProvider, _mapper, _linkGenerator, _httpContext);
             return enricher.Enrich(uniqueData);
         }
 
-        public IEnumerable<UniqueDataResource> EnrichManyUniqueDatas(IEnumerable<IUniqueData> uniqueDatas)
+        public IEnumerable<dynamic> EnrichManyUniqueDatas(IEnumerable<IUniqueData> uniqueDatas)
         {
             return uniqueDatas.Select(EnrichUniqueData);
         }

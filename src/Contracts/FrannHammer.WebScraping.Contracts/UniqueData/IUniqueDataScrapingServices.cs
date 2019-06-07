@@ -4,6 +4,6 @@ namespace FrannHammer.WebScraping.Contracts.UniqueData
 {
     public interface IUniqueDataScrapingServices : IWebServices
     {
-        IUniqueData Create();
+        T Create<T>() where T : class, IUniqueData, new();
     }
 }

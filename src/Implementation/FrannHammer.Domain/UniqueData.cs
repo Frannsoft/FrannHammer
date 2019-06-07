@@ -11,8 +11,5 @@ namespace FrannHammer.Domain
 
         [FriendlyName(OwnerName)]
         public string Owner { get; set; }
-
-        [FriendlyName("value")]
-        public string Value { get; set; }
     }
 }

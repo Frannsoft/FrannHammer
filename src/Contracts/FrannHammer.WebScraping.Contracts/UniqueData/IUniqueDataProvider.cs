@@ -1,9 +1,10 @@
-﻿using FrannHammer.Domain.Contracts;
+﻿
+using FrannHammer.Domain.Contracts;
 
 namespace FrannHammer.WebScraping.Contracts.UniqueData
 {
     public interface IUniqueDataProvider
     {
-        IUniqueData Create();
+        T Create<T>() where T : class, IUniqueData, new();
     }
 }

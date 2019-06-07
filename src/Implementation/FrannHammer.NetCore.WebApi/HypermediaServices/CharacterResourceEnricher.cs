@@ -22,11 +22,13 @@ namespace FrannHammer.NetCore.WebApi.HypermediaServices
             var characterAttributesLink = CreateNameBasedLink<CharacterAttributesLink>(content.Name, nameof(CharacterController.GetAttributesForCharacterByName), "Character");
             var movementsLink = CreateNameBasedLink<MovementsLink>(content.Name, nameof(CharacterController.GetAllMovementsForCharacterWhereName), "Character");
             var selfLink = CreateNameBasedLink<SelfLink>(content.Name, nameof(CharacterController.GetSingleCharacterByName), "Character");
+            var uniquePropertiesLink = CreateNameBasedLink<UniquePropertiesLink>(content.Name, nameof(CharacterController.GetUniquePropertiesForCharacterByName), "Character");
 
             resource.AddLink(selfLink);
             resource.AddLink(movesLink);
             resource.AddLink(characterAttributesLink);
             resource.AddLink(movementsLink);
+            resource.AddLink(uniquePropertiesLink);
 
             //new hateoas stuff
             var relatedLinks = new RelatedLinks();
@@ -38,6 +40,7 @@ namespace FrannHammer.NetCore.WebApi.HypermediaServices
                 relatedLinks.Smash4.Moves = movesLink.Href.ReplaceUltimateWithSmash4();
                 relatedLinks.Smash4.Movements = movementsLink.Href.ReplaceUltimateWithSmash4();
                 relatedLinks.Smash4.Attributes = characterAttributesLink.Href.ReplaceUltimateWithSmash4();
+                relatedLinks.Smash4.UniqueProperties = uniquePropertiesLink.Href.ReplaceUltimateWithSmash4();
             }
 
             relatedLinks.Ultimate = new ExpandoObject();
@@ -45,6 +48,7 @@ namespace FrannHammer.NetCore.WebApi.HypermediaServices
             relatedLinks.Ultimate.Moves = movesLink.Href.ReplaceSmash4WithUltimate();
             relatedLinks.Ultimate.Movements = movementsLink.Href.ReplaceSmash4WithUltimate();
             relatedLinks.Ultimate.Attributes = characterAttributesLink.Href.ReplaceSmash4WithUltimate();
+            relatedLinks.Ultimate.UniqueProperties = uniquePropertiesLink.Href.ReplaceSmash4WithUltimate();
 
             resource.AddRelated(relatedLinks);
 
