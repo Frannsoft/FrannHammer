@@ -5,6 +5,8 @@
         public const string XPathFrameDataVersion = @"/html/body/div[1]/div/h1|/html/body/div/div/*/h1";
         public const string XPathImageUrl = @"html/body/div[1]/div/img";
         public const string XPathMovementTableCellKeys = @"td[contains(@style, 'font-weight: bold')]";
+        public const string XPathVegetableTableCellKeys = @"th[contains(@style, 'font-weight: bold')]";
+
         public const string XPathTableCellValues = @"following-sibling::td[not(contains(@style, 'font-weight: bold'))]";
         public const string XPathTableNodeMovementStats = @"(//*/table[@id='AutoNumber1'])[1]";
         public const string XPathTableRows = "tbody/tr";
@@ -25,6 +27,12 @@
 
         public const string XPathTableNodeAttributeHeaders = @"//*[@id='AutoNumber1'][2]/thead/tr";
         public const string XPathTableNodeAttributeHeadersWithNoDescription = @"//*[@id='AutoNumber1'][1]/thead/tr";
+
+        public class EncodedValues
+        {
+            public const string PercentSymbolEncoded = "&#37;";
+            public const string TimesSymbolEncoded = "&#215;";
+        }
 
         public class ExcludedRowHeaders
         {

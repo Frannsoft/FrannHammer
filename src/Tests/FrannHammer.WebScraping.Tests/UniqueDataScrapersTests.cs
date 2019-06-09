@@ -6,8 +6,6 @@ using FrannHammer.WebScraping.PageDownloading;
 using FrannHammer.WebScraping.Unique;
 using FrannHammer.WebScraping.WebClients;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace FrannHammer.WebScraping.Tests
@@ -15,18 +13,29 @@ namespace FrannHammer.WebScraping.Tests
     [TestFixture]
     public class UniqueDataScrapersTests
     {
+        private readonly InstanceIdGenerator instanceIdGenerator;
+        private readonly DefaultHtmlParserProvider htmlParserProvider;
+        private readonly DefaultPageDownloader pageDownloader;
+        private readonly DefaultWebClientProvider webClientProvider;
+        private readonly DefaultWebServices webServices;
+        private readonly DefaultUniqueDataProvider uniqueDataProvider;
+        private readonly DefaultUniqueDataScrapingServices scrapingServices;
+
+        public UniqueDataScrapersTests()
+        {
+            instanceIdGenerator = new InstanceIdGenerator();
+            htmlParserProvider = new DefaultHtmlParserProvider();
+            pageDownloader = new DefaultPageDownloader();
+            webClientProvider = new DefaultWebClientProvider();
+            webServices = new DefaultWebServices(htmlParserProvider, webClientProvider, pageDownloader);
+            uniqueDataProvider = new DefaultUniqueDataProvider(instanceIdGenerator);
+            scrapingServices = new DefaultUniqueDataScrapingServices(uniqueDataProvider, webServices);
+        }
+
         [Test]
         [TestCase("Smash4")]
         public void ScrapeUniqueData_CloudLimitBreak_ReturnsLimitBreakTableData(string gameUrlModifier)
         {
-            var instanceIdGenerator = new InstanceIdGenerator();
-            var htmlParserProvider = new DefaultHtmlParserProvider();
-            var pageDownloader = new DefaultPageDownloader();
-            var webClientProvider = new DefaultWebClientProvider();
-            var webServices = new DefaultWebServices(htmlParserProvider, webClientProvider, pageDownloader);
-            var uniqueDataProvider = new DefaultUniqueDataProvider(instanceIdGenerator);
-            var scrapingServices = new DefaultUniqueDataScrapingServices(uniqueDataProvider, webServices);
-
             var limitBreakScraper = new LimitBreakScraper(scrapingServices);
 
             var character = Characters.Cloud;
@@ -50,16 +59,92 @@ namespace FrannHammer.WebScraping.Tests
         }
 
         [Test]
+        public void VegetableScraper_Returns_Daisy_Ultimate_Vegetable_Data()
+        {
+            var vegetableScraper = new VegetableScraper(scrapingServices);
+
+            var character = Characters.Daisy;
+            character.Game = Games.Ultimate;
+            character.SourceUrl = $"{Keys.KHSiteBaseUrl}Ultimate/{character.EscapedCharacterName}";
+
+            var vegetableData = vegetableScraper.Scrape(character).Cast<Vegetable>().ToList();
+
+            Assert.That(vegetableData.Count, Is.EqualTo(6));
+            Assert.That(vegetableData[0].Name, Is.EqualTo("Vegetable - Normal"));
+            Assert.That(vegetableData[1].Name, Is.EqualTo("Vegetable - Winking"));
+            Assert.That(vegetableData[2].Name, Is.EqualTo("Vegetable - Dot Eyes"));
+            Assert.That(vegetableData[3].Name, Is.EqualTo("Vegetable - Stitchface"));
+            Assert.That(vegetableData[4].Name, Is.EqualTo("Vegetable - Bob-omb"));
+            Assert.That(vegetableData[5].Name, Is.EqualTo("Vegetable - Mr. Saturn"));
+            Assert.That(vegetableData[5].Chance, Is.EqualTo("1/166 (0.6%)"));
+            Assert.That(vegetableData[5].DamageDealt, Is.EqualTo("6%"));
+        }
+
+        [Test]
+        public void VegetableScraper_Returns_Peach_Smash4_Vegetable_Data()
+        {
+            var vegetableScraper = new VegetableScraper(scrapingServices);
+
+            var character = Characters.Peach;
+            character.Game = Games.Smash4;
+            character.SourceUrl = $"{Keys.KHSiteBaseUrl}Smash4/{character.EscapedCharacterName}";
+
+            var vegetableData = vegetableScraper.Scrape(character).Cast<Vegetable>().ToList();
+
+            Assert.That(vegetableData.Count, Is.EqualTo(6));
+            Assert.That(vegetableData[0].Name, Is.EqualTo("Vegetable - Normal"));
+            Assert.That(vegetableData[1].Name, Is.EqualTo("Vegetable - Winking"));
+            Assert.That(vegetableData[2].Name, Is.EqualTo("Vegetable - Dot Eyes"));
+            Assert.That(vegetableData[3].Name, Is.EqualTo("Vegetable - Stitchface"));
+            Assert.That(vegetableData[4].Name, Is.EqualTo("Vegetable - Bob-omb"));
+            Assert.That(vegetableData[5].Name, Is.EqualTo("Vegetable - Mr. Saturn"));
+            Assert.That(vegetableData[5].Chance, Is.EqualTo("1/166"));
+            Assert.That(vegetableData[5].DamageDealt, Is.EqualTo("6%"));
+        }
+
+        [Test]
+        public void FloatScraper_Returns_Daisy_Ultimate_Float_Data()
+        {
+            var floatScraper = new FloatScraper(scrapingServices);
+
+            var character = Characters.Daisy;
+            character.Game = Games.Ultimate;
+            character.SourceUrl = $"{Keys.KHSiteBaseUrl}Ultimate/{character.EscapedCharacterName}";
+
+            var floatResultData = floatScraper.Scrape(character).Cast<Float>().ToList();
+
+            Assert.That(floatResultData.Count(), Is.EqualTo(1));
+
+            Assert.That(floatResultData[0].Name, Is.EqualTo("Float"));
+            Assert.That(floatResultData[0].Game, Is.EqualTo(Games.Ultimate));
+            Assert.That(floatResultData[0].Owner, Is.EqualTo(character.Name));
+            Assert.That(floatResultData[0].DurationInFrames, Is.EqualTo("150"));
+            Assert.That(floatResultData[0].DurationInSeconds, Is.EqualTo("2.5"));
+        }
+
+        [Test]
+        public void FloatScraper_Returns_Peach_Smash4_Float_Data()
+        {
+            var floatScraper = new FloatScraper(scrapingServices);
+
+            var character = Characters.Peach;
+            character.Game = Games.Ultimate;
+            character.SourceUrl = $"{Keys.KHSiteBaseUrl}Smash4/{character.EscapedCharacterName}";
+
+            var floatResultData = floatScraper.Scrape(character).Cast<Float>().ToList();
+
+            Assert.That(floatResultData.Count(), Is.EqualTo(1));
+
+            Assert.That(floatResultData[0].Name, Is.EqualTo("Float"));
+            Assert.That(floatResultData[0].Game, Is.EqualTo(Games.Smash4));
+            Assert.That(floatResultData[0].Owner, Is.EqualTo(character.Name));
+            Assert.That(floatResultData[0].DurationInFrames, Is.EqualTo("150"));
+            Assert.That(floatResultData[0].DurationInSeconds, Is.EqualTo("2.5"));
+        }
+
+        [Test]
         public void Shulk_Monado_Data_Returns_Monado_Arts_Ultimate_Table_Data()
         {
-            var instanceIdGenerator = new InstanceIdGenerator();
-            var htmlParserProvider = new DefaultHtmlParserProvider();
-            var pageDownloader = new DefaultPageDownloader();
-            var webClientProvider = new DefaultWebClientProvider();
-            var webServices = new DefaultWebServices(htmlParserProvider, webClientProvider, pageDownloader);
-            var uniqueDataProvider = new DefaultUniqueDataProvider(instanceIdGenerator);
-            var scrapingServices = new DefaultUniqueDataScrapingServices(uniqueDataProvider, webServices);
-
             var monadoArtsScraper = new MonadoArtsScraper(scrapingServices);
 
             var character = Characters.Shulk;
@@ -97,14 +182,6 @@ namespace FrannHammer.WebScraping.Tests
         [Test]
         public void Shulk_Monado_Data_Returns_Monado_Arts_Smash4_Table_Data()
         {
-            var instanceIdGenerator = new InstanceIdGenerator();
-            var htmlParserProvider = new DefaultHtmlParserProvider();
-            var pageDownloader = new DefaultPageDownloader();
-            var webClientProvider = new DefaultWebClientProvider();
-            var webServices = new DefaultWebServices(htmlParserProvider, webClientProvider, pageDownloader);
-            var uniqueDataProvider = new DefaultUniqueDataProvider(instanceIdGenerator);
-            var scrapingServices = new DefaultUniqueDataScrapingServices(uniqueDataProvider, webServices);
-
             var monadoArtsScraper = new MonadoArtsScraper(scrapingServices);
 
             var character = Characters.Shulk;
@@ -130,15 +207,5 @@ namespace FrannHammer.WebScraping.Tests
                 Assert.That(monadoArt.WalkSpeed, Is.Not.Null);
             }
         }
-
-        //private static void AssertThatUniqueDataDictionaryHasKeyWithNonEmptyValue(IEnumerable<IUniqueData> uniqueDataList, string keyUnderTest)
-        //{
-        //    var uniqueData = uniqueDataList.FirstOrDefault(u => u.Name.Equals(keyUnderTest, StringComparison.OrdinalIgnoreCase));
-
-        //    Assert.That(uniqueData, Is.Not.Null, $"does not contain item with {nameof(IUniqueData.Name)} '{keyUnderTest}'");
-
-        //    // ReSharper disable once PossibleNullReferenceException
-        //    //Assert.That(uniqueData.Value, Is.Not.Empty);
-        //}
     }
 }

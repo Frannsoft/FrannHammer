@@ -13,7 +13,6 @@ namespace FrannHammer.WebScraping
     public class LimitBreakScraper : IUniqueDataScraper
     {
         private const string LimitBreakAttributeTableXPath = @"(//*/table[@id='AutoNumber1'])[2]";
-        private const string PercentSymbolEncoded = "&#37;";
 
         private readonly IUniqueDataScrapingServices _uniqueDataScrapingServices;
 
@@ -46,7 +45,7 @@ namespace FrannHammer.WebScraping
                     }
 
                     var uniqueData = new List<LimitBreak>();
-                    if (character.SourceUrl.Contains("Ultimate"))
+                    if (character.SourceUrl.Contains(Games.Ultimate.ToString()))
                     {
                         var limitBreak = GetUniqueAttributeForSmash4(limitBreakTableRows, character); //cloud doesn't exist for Ultimate kh data yet
                         uniqueData.Add(limitBreak);
@@ -59,6 +58,8 @@ namespace FrannHammer.WebScraping
                     return uniqueData;
                 };
             }
+
+
         }
 
         private LimitBreak GetUniqueAttributeForSmash4(HtmlNodeCollection rows, WebCharacter character)
@@ -66,16 +67,6 @@ namespace FrannHammer.WebScraping
             var uniqueData = _uniqueDataScrapingServices.Create<LimitBreak>();
             uniqueData.Owner = character.Name;
             uniqueData.OwnerId = character.OwnerId;
-
-
-            string framesToCharge = rows.FirstOrDefault(node =>
-            {
-                var cell = node.SelectSingleNode($@"td[text()='Frames to Charge']");
-                return cell != null;
-
-            })
-            ?.SelectSingleNode($"//{ScrapingConstants.XPathTableCellValues}")
-            ?.InnerText;
 
             uniqueData.FramesToCharge = GetValue("Frames to Charge", rows);
             uniqueData.PercentDealtToCharge = GetValue("% Dealt to Charge", rows);
@@ -90,41 +81,25 @@ namespace FrannHammer.WebScraping
             uniqueData.AirAcceleration = GetValue("Air Acceleration", rows);
             uniqueData.FHAirTime = GetValue("FH Air Time", rows);
 
-            //uniqueData.Add("InstanceId", _uniqueDataScrapingServices.GenerateId());
-            //uniqueData.Add("Name", name);
-            //uniqueData.Add("Value", value);
-            //uniqueData.Owner = character.Name;
-            //uniqueData.OwnerId = character.OwnerId;
-
             return uniqueData;
         }
 
         private static string GetValue(string propertyName, HtmlNodeCollection rows)
         {
+            string matchingCellXPath = $@"td[text()='{propertyName}']";
+
             var cellContainingMatch = rows.FirstOrDefault(node =>
             {
-                var row = node.SelectSingleNode($@"td[text()='{propertyName}']");
+                var row = node.SelectSingleNode(matchingCellXPath);
                 return row != null;
 
-            })?.SelectSingleNode($"td[text()='{propertyName}']");
+            })?.SelectSingleNode(matchingCellXPath);
 
             string value = cellContainingMatch?.NextSibling?.NextSibling.InnerText;
 
             return CleanupValue(value);
         }
 
-        private static string CleanupValue(string dirtyValue) => dirtyValue.Replace(PercentSymbolEncoded, "%");
-
-        private static string GetStatName(HtmlNode cell)
-        {
-            var retVal = string.Empty;
-
-            if (!string.IsNullOrEmpty(cell.InnerText))
-            {
-                retVal = cell.InnerText.Trim();
-            }
-
-            return retVal;
-        }
+        private static string CleanupValue(string dirtyValue) => dirtyValue.Replace(ScrapingConstants.EncodedValues.PercentSymbolEncoded, "%");
     }
 }

@@ -11,12 +11,14 @@ namespace FrannHammer.WebScraping.Domain
         public static WebCharacter DarkPit => new DarkPit();
         public static WebCharacter Bowser => new Bowser();
         public static WebCharacter DonkeyKong => new DonkeyKong();
+        public static WebCharacter Daisy => new Daisy();
         public static WebCharacter CaptainFalcon => new CaptainFalcon();
         public static WebCharacter DrMario => new DrMario();
         public static WebCharacter Fox => new Fox();
         public static WebCharacter Ganondorf => new Ganondorf();
         public static WebCharacter Ness => new Ness();
         public static WebCharacter Ryu => new Ryu();
+        public static WebCharacter Peach => new Peach();
         public static WebCharacter Roy => new Roy();
         public static WebCharacter Charizard => new Charizard();
         public static WebCharacter Shulk => new Shulk();

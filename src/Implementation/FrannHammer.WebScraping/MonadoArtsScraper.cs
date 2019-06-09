@@ -13,10 +13,6 @@ namespace FrannHammer.WebScraping
     public class MonadoArtsScraper : IUniqueDataScraper
     {
         private const string MonadoArtsAttributeTableXPath = @"(//*/table[@id='AutoNumber3'])[2]";
-        private const string TimesSymbolEncoded = "&#215;";
-        private const string PercentSymbolEncoded = "&#37;";
-
-
         private readonly IUniqueDataScrapingServices _uniqueDataScrapingServices;
 
         public MonadoArtsScraper(IUniqueDataScrapingServices uniqueDataScrapingServices)
@@ -46,7 +42,7 @@ namespace FrannHammer.WebScraping
                             $"Error getting unique data after attempting to scrape full table using xpath: '{ScrapingConstants.XPathTableRows}'");
                     }
 
-                    if (character.SourceUrl.Contains("Ultimate"))
+                    if (character.SourceUrl.Contains(Games.Ultimate.ToString()))
                     {
                         return monadoArtsTableRows.SelectMany(
                             row => row.SelectNodes(ScrapingConstants.XPathMovementTableCellKeys),
@@ -145,18 +141,7 @@ namespace FrannHammer.WebScraping
             return uniqueData;
         }
 
-        private static string CleanupValue(string dirtyValue) => dirtyValue.Replace(TimesSymbolEncoded, "x").Replace(PercentSymbolEncoded, "%");
-
-        private static string GetStatName(HtmlNode cell)
-        {
-            var retVal = string.Empty;
-
-            if (!string.IsNullOrEmpty(cell.InnerText))
-            {
-                retVal = cell.InnerText.Trim();
-            }
-
-            return retVal;
-        }
+        private static string CleanupValue(string dirtyValue) => dirtyValue.Replace(ScrapingConstants.EncodedValues.TimesSymbolEncoded, "x")
+            .Replace(ScrapingConstants.EncodedValues.PercentSymbolEncoded, "%");
     }
 }
