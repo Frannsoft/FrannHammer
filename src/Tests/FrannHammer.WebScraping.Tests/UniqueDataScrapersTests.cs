@@ -103,6 +103,51 @@ namespace FrannHammer.WebScraping.Tests
         }
 
         [Test]
+        public void PikminScraper_Returns_Olimar_Smash4_Pikmin_Data()
+        {
+            var pikminScraper = new PikminScraper(scrapingServices);
+
+            var character = new Olimar
+            {
+                Game = Games.Smash4
+            };
+            character.SourceUrl = $"{Keys.KHSiteBaseUrl}Smash4/{character.EscapedCharacterName}";
+
+            var pikminData = pikminScraper.Scrape(character).Cast<Pikmin>().ToList();
+
+            Assert.That(pikminData.Count, Is.EqualTo(5));
+            Assert.That(pikminData[0].Name, Is.EqualTo("Red"));
+            Assert.That(pikminData[1].Name, Is.EqualTo("Yellow"));
+            Assert.That(pikminData[2].Name, Is.EqualTo("Blue"));
+            Assert.That(pikminData[3].Name, Is.EqualTo("White"));
+            Assert.That(pikminData[4].Name, Is.EqualTo("Purple"));
+
+            Assert.That(pikminData[3].Attack, Is.EqualTo("0.8x"));
+            Assert.That(pikminData[3].Throw, Is.EqualTo("1.0x"));
+            Assert.That(pikminData[3].HP, Is.EqualTo("7%"));
+        }
+
+        [Test]
+        public void AuraScraper_Returns_Lucario_Smash4_Aura_Data()
+        {
+            var auraScraper = new AuraScraper(scrapingServices);
+
+            var character = new Lucario();
+            character.SourceUrl = $"{Keys.KHSiteBaseUrl}Smash4/{character.EscapedCharacterName}";
+
+            var auraResultDataList = auraScraper.Scrape(character).Cast<Aura>().ToList();
+
+            Assert.That(auraResultDataList.Count, Is.EqualTo(1));
+            var auraResultData = auraResultDataList.First();
+
+            Assert.That(auraResultData.Name, Is.EqualTo("Aura"));
+            Assert.That(auraResultData.MinPercentAuraMultiplier, Is.EqualTo("0.66"));
+            Assert.That(auraResultData.MaxPercentAuraMultiplier, Is.EqualTo("1.7"));
+            Assert.That(auraResultData.AuraBaselinePercent, Is.EqualTo("70"));
+            Assert.That(auraResultData.AuraCeilingPercent, Is.EqualTo("190"));
+        }
+
+        [Test]
         public void FloatScraper_Returns_Daisy_Ultimate_Float_Data()
         {
             var floatScraper = new FloatScraper(scrapingServices);
