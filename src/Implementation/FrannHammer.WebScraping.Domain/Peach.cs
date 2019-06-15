@@ -1,4 +1,5 @@
 using FrannHammer.WebScraping.Domain.Contracts;
+using FrannHammer.WebScraping.Unique;
 using System;
 using System.Collections.Generic;
 

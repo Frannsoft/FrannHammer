@@ -8,16 +8,15 @@ using FrannHammer.WebScraping.Contracts.UniqueData;
 using FrannHammer.WebScraping.Domain.Contracts;
 using HtmlAgilityPack;
 
-namespace FrannHammer.WebScraping
+namespace FrannHammer.WebScraping.Unique
 {
-    public class FloatScraper : IUniqueDataScraper
+    public class PikminScraper : IUniqueDataScraper
     {
         private readonly IUniqueDataScrapingServices _uniqueDataScrapingServices;
-        private const string LimitBreakAttributeTableXPath = @"(//*/table[@id='AutoNumber1'])[2]";
+        private const string PikminAttributeTableXPath = @"(//*/table[@id='AutoNumber1'])[2]";
 
-        public FloatScraper(IUniqueDataScrapingServices uniqueDataScrapingServices)
+        public PikminScraper(IUniqueDataScrapingServices uniqueDataScrapingServices)
         {
-            Guard.VerifyObjectNotNull(uniqueDataScrapingServices, nameof(uniqueDataScrapingServices));
             _uniqueDataScrapingServices = uniqueDataScrapingServices;
         }
 
@@ -32,7 +31,7 @@ namespace FrannHammer.WebScraping
 
                     var htmlParser = _uniqueDataScrapingServices.CreateParserFromSourceUrl(character.SourceUrl);
 
-                    string attributeTableHtml = htmlParser.GetSingle(LimitBreakAttributeTableXPath);
+                    string attributeTableHtml = htmlParser.GetSingle(PikminAttributeTableXPath);
 
                     var floatTableRows = HtmlNode.CreateNode(attributeTableHtml)?.SelectNodes(ScrapingConstants.XPathTableRows);
 

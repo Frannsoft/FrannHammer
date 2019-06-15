@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FrannHammer.NetCore.WebApi</name>
+    </assembly>
+    <members>
+        <member name="M:FrannHammer.NetCore.WebApi.Controllers.MovementController.GetAllMovements">
+            <summary>
+            Get all movement data.
+            </summary>
+        </member>
+        <member name="M:FrannHammer.NetCore.WebApi.Controllers.MovementController.GetMovementById(System.String)">
+            <summary>
+            Get a specific <see cref="T:FrannHammer.Domain.Contracts.IMovement"/>.
+            </summary>
+            <param name="id"></param>
+        </member>
+    </members>
+</doc>

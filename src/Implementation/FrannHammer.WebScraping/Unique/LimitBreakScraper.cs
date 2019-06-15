@@ -8,7 +8,7 @@ using FrannHammer.WebScraping.Contracts.UniqueData;
 using FrannHammer.WebScraping.Domain.Contracts;
 using HtmlAgilityPack;
 
-namespace FrannHammer.WebScraping
+namespace FrannHammer.WebScraping.Unique
 {
     public class LimitBreakScraper : IUniqueDataScraper
     {

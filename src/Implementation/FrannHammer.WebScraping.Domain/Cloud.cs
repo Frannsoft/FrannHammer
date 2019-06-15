@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using FrannHammer.WebScraping.Domain.Contracts;
+using FrannHammer.WebScraping.Unique;
 
 namespace FrannHammer.WebScraping.Domain
 {
