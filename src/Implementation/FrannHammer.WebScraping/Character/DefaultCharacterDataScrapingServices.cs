@@ -52,7 +52,15 @@ namespace FrannHammer.WebScraping.Character
         public WebCharacter PopulateCharacter(WebCharacter character, string sourceBaseUrl)
         {
             var populatedCharacter = new WebCharacter(character.Name, character.EscapedCharacterName, character.UniqueScraperTypes, character.PotentialScrapingNames);
-            populatedCharacter.SourceUrl = sourceBaseUrl + populatedCharacter.EscapedCharacterName;
+
+            if(populatedCharacter.OwnerId != CharacterIds.RosalinaLuma || (populatedCharacter.OwnerId == CharacterIds.RosalinaLuma && sourceBaseUrl.Contains("Smash4")))
+            {
+                populatedCharacter.SourceUrl = sourceBaseUrl + populatedCharacter.EscapedCharacterName;
+            }
+            else if(populatedCharacter.OwnerId == CharacterIds.RosalinaLuma && sourceBaseUrl.Contains("Ultimate"))
+            {
+                populatedCharacter.SourceUrl = sourceBaseUrl + "Rosalina"; //hack, but having different names for same chars across games? come on.
+            } 
             populatedCharacter.CssKey = character.CssKey;
 
             const string srcAttributeKey = "src";
@@ -62,8 +70,13 @@ namespace FrannHammer.WebScraping.Character
 
             string displayName = GetCharacterDisplayName(displayNameHtml);
 
+            if(displayName == "Rosalina")
+            {
+                displayName = "Rosalina & Luma"; //see previously mentioned hack comment
+            }
+
             string thumbnailPreparedUrl = Regex.Replace(populatedCharacter.SourceUrl, "([^/]*)$", string.Empty);
-            var thumbnailHtmlParser = _webServices.CreateParserFromSourceUrl(thumbnailPreparedUrl);//(WebCharacter.SourceSmash4UrlBase);
+            var thumbnailHtmlParser = _webServices.CreateParserFromSourceUrl(thumbnailPreparedUrl);
             string thumbnailHtml = thumbnailHtmlParser.GetSingle(ScrapingConstants.XPathThumbnailUrl.Replace(characterNameKey, character.DisplayName));
 
             string thumbnailUrl = string.Empty;
