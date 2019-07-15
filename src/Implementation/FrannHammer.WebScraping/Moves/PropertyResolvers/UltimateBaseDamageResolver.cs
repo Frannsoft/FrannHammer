@@ -25,7 +25,7 @@ namespace FrannHammer.WebScraping.Moves
                     {
                         return int.TryParse(sp.InnerText, out int res);
                     });
-                    foreach (var numberSpan in numberSpans.Skip(1))
+                    foreach (var numberSpan in normalBaseDamage.EndsWith("/") ? numberSpans :  numberSpans.Skip(1))
                     {
                         if (normalBaseDamage.EndsWith("/"))
                         {
