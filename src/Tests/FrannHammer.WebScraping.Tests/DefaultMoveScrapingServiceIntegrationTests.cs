@@ -67,6 +67,22 @@ namespace FrannHammer.WebScraping.Tests
         }
 
         [Test]
+        public void ScrapeGroundMoves_WhenMoveHas_GroundAirOnlyHitboxes()
+        {
+            var groundMoveScrapingService = new GroundMoveScraper(_scrapingServices);
+
+            var character = Characters.Fox;
+            character.Game = Games.Ultimate;
+            character.SourceUrl = $"{Keys.KHSiteBaseUrl}Ultimate/{character.EscapedCharacterName}";
+
+            var groundMoves = groundMoveScrapingService.Scrape(character).ToList();
+
+            var utilt = groundMoves.First(m => m.Name == "Utilt");
+
+            Assert.That(utilt.BaseDamage, Is.EqualTo("6/6/8/7|1v1: 7.2/7.2/9.6/8.4"));
+        }
+
+        [Test]
         public void ScrapeGroundMoves_HeaderRowsAreExcludeFromScrapedValues()
         {
             var groundMoveScrapingService = new GroundMoveScraper(_scrapingServices);

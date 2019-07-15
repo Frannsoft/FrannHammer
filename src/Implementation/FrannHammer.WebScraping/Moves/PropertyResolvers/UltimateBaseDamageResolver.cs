@@ -1,5 +1,6 @@
 ﻿using FrannHammer.Domain.Contracts;
 using HtmlAgilityPack;
+using System.Linq;
 
 namespace FrannHammer.WebScraping.Moves
 {
@@ -17,7 +18,37 @@ namespace FrannHammer.WebScraping.Moves
             if (normalBaseDamageNode != null)
             {
                 string normalBaseDamage = normalBaseDamageNode.FirstChild.InnerText;
+                if (normalBaseDamageNode.FirstChild.NextSibling != null && !normalBaseDamageNode.FirstChild.NextSibling.InnerText.Contains("1v1"))
+                {
+                    var allSpans = normalBaseDamageNode.SelectNodes("./span");
+                    var numberSpans = allSpans.Where(sp =>
+                    {
+                        return int.TryParse(sp.InnerText, out int res);
+                    });
+                    foreach (var numberSpan in numberSpans.Skip(1))
+                    {
+                        if (normalBaseDamage.EndsWith("/"))
+                        {
+                            normalBaseDamage += numberSpan.InnerText;
+                        }
+                        else
+                        {
+                            normalBaseDamage += "/" + numberSpan.InnerText;
+                        }
+                    }
+                    //handling ground/air only moves which have a slightly different dom (but only for those two values)
+                    //normalBaseDamage += normalBaseDamageNode.FirstChild.NextSibling.InnerText;
 
+                    //if (normalBaseDamageNode.FirstChild.NextSibling.NextSibling != null)
+                    //{
+                    //    var groundAirOnlyIndicatorNode = normalBaseDamageNode.FirstChild.NextSibling.NextSibling;
+                    //    if (groundAirOnlyIndicatorNode != null && groundAirOnlyIndicatorNode.InnerText == "/")
+                    //    {
+                    //        normalBaseDamage += groundAirOnlyIndicatorNode.InnerText;
+                    //        normalBaseDamage += normalBaseDamageNode.FirstChild.NextSibling.NextSibling.NextSibling.InnerText;
+                    //    }
+                    //}
+                }
                 string oneVoneBaseDamage = normalBaseDamageNode.LastChild.InnerText;
                 basedmg = normalBaseDamage + "|" + oneVoneBaseDamage;
             }
