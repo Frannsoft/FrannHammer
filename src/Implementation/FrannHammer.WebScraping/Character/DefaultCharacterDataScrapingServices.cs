@@ -53,14 +53,14 @@ namespace FrannHammer.WebScraping.Character
         {
             var populatedCharacter = new WebCharacter(character.Name, character.EscapedCharacterName, character.UniqueScraperTypes, character.PotentialScrapingNames);
 
-            if(populatedCharacter.OwnerId != CharacterIds.RosalinaLuma || (populatedCharacter.OwnerId == CharacterIds.RosalinaLuma && sourceBaseUrl.Contains("Smash4")))
+            if (populatedCharacter.OwnerId != CharacterIds.RosalinaLuma || (populatedCharacter.OwnerId == CharacterIds.RosalinaLuma && sourceBaseUrl.Contains("Smash4")))
             {
                 populatedCharacter.SourceUrl = sourceBaseUrl + populatedCharacter.EscapedCharacterName;
             }
-            else if(populatedCharacter.OwnerId == CharacterIds.RosalinaLuma && sourceBaseUrl.Contains("Ultimate"))
+            else if (populatedCharacter.OwnerId == CharacterIds.RosalinaLuma && sourceBaseUrl.Contains("Ultimate"))
             {
                 populatedCharacter.SourceUrl = sourceBaseUrl + "Rosalina"; //hack, but having different names for same chars across games? come on.
-            } 
+            }
             populatedCharacter.CssKey = character.CssKey;
 
             const string srcAttributeKey = "src";
@@ -70,7 +70,7 @@ namespace FrannHammer.WebScraping.Character
 
             string displayName = GetCharacterDisplayName(displayNameHtml);
 
-            if(displayName == "Rosalina")
+            if (displayName == "Rosalina")
             {
                 displayName = "Rosalina & Luma"; //see previously mentioned hack comment
             }
@@ -112,7 +112,12 @@ namespace FrannHammer.WebScraping.Character
             }
 
             //color hex
-            string colorTheme = _imageScrapingService.GetColorHexValue(populatedCharacter.CssKey).Result;
+            string colorTheme = string.Empty;
+
+            if (!string.IsNullOrEmpty(populatedCharacter.CssKey))
+            {
+                colorTheme = _imageScrapingService.GetColorHexValue(populatedCharacter.CssKey).Result;
+            }
 
             //movements
             var movements = _movementScraper.GetMovementsForCharacter(populatedCharacter);
