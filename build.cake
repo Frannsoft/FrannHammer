@@ -101,7 +101,7 @@ Task("Assign-Assembly-Info")
         CreateAssemblyInfo(
             "./SolutionInfo.cs",
             new AssemblyInfoSettings{
-                Version = "0.5.*",
+                Version = "0.6.*",
                 Company = "FrannDotExe"
         });
 });

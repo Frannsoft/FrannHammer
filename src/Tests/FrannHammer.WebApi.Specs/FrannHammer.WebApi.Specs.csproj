@@ -1,0 +1,132 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AssemblyTitle>FrannHammer.WebApi.Specs</AssemblyTitle>
+    <GenerateAssemblyCompanyAttribute>False</GenerateAssemblyCompanyAttribute>
+    <Product>FrannHammer.WebApi.Specs</Product>
+    <Copyright>Copyright ©  2017</Copyright>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <PostBuildEvent>xcopy $(SolutionDir)\Tests\tests.connectionstrings.config $(TargetDir) /I /Y
+xcopy $(SolutionDir)\Tests\tests.appsettings.config $(TargetDir) /I /Y</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>xcopy $(SolutionDir)\Tests\tests.connectionstrings.config $(TargetDir) /I /Y
+xcopy $(SolutionDir)\Tests\tests.appsettings.config $(TargetDir) /I /Y</PostBuildEvent>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.8.1" />
+    <PackageReference Include="DnsClient" Version="1.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />    
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="2.2.0" />
+    <PackageReference Include="MongoDB.Bson"  />
+    <PackageReference Include="MongoDB.Driver"  />
+    <PackageReference Include="MongoDB.Driver.Core" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="NUnit" Version="3.11.0" />
+    <PackageReference Include="NUnit.Console" Version="3.9.0" />
+    <PackageReference Include="NUnit.ConsoleRunner" Version="3.9.0" />
+    <PackageReference Include="NUnit.Extension.NUnitProjectLoader" Version="3.6.0" />
+    <PackageReference Include="NUnit.Extension.NUnitV2Driver" Version="3.7.0" />
+    <PackageReference Include="NUnit.Extension.NUnitV2ResultWriter" Version="3.6.0" />
+    <PackageReference Include="NUnit.Extension.TeamCityEventListener" Version="1.0.5" />
+    <PackageReference Include="NUnit.Extension.VSProjectLoader" Version="3.8.0" />
+    <PackageReference Include="Owin" Version="1.0.0" />
+    <PackageReference Include="SpecFlow.NUnit" />
+    <PackageReference Include="SpecRun.SpecFlow.3-0-0" Version="3.0.21-beta" />
+    <PackageReference Include="System.Buffers" Version="4.5.0" />
+    <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\SolutionInfo.cs" Link="Properties\SolutionInfo.cs" />
+    <Compile Update="Attributes\CharacterAttributesApi.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CharacterAttributesApi.feature</DependentUpon>
+    </Compile>
+    <Compile Update="Characters\CharacterApi.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CharacterApi.feature</DependentUpon>
+    </Compile>
+    <Compile Update="Movements\MovementsApi.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MovementsApi.feature</DependentUpon>
+    </Compile>
+    <Compile Update="Moves\MovesApi.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MovesApi.feature</DependentUpon>
+    </Compile>
+    <Compile Update="Unique\UniqueApi.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UniqueApi.feature</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Attributes\CharacterAttributesApi.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>CharacterAttributesApi.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Characters\CharacterApi.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>CharacterApi.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Default.srprofile">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Movements\MovementsApi.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>MovementsApi.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Moves\MovesApi.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>MovesApi.feature.cs</LastGenOutput>
+    </None>
+    <None Include="runtests.cmd" />
+    <None Include="SpecRunTestProfile.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="SpecRunTestProfile_2011_09.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Unique\UniqueApi.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>UniqueApi.feature.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Contracts\FrannHammer.Api.Services.Contracts\FrannHammer.Api.Services.Contracts.csproj" />
+    <ProjectReference Include="..\..\FrannHammer.NetCore.WebApi\FrannHammer.NetCore.WebApi.csproj" />
+    <ProjectReference Include="..\..\Implementation\FrannHammer.Api.Services\FrannHammer.Api.Services.csproj" />
+    <ProjectReference Include="..\..\Contracts\FrannHammer.DataAccess.Contracts\FrannHammer.DataAccess.Contracts.csproj" />
+    <ProjectReference Include="..\..\Implementation\FrannHammer.DataAccess.MongoDb\FrannHammer.DataAccess.MongoDb.csproj" />
+    <ProjectReference Include="..\..\Contracts\FrannHammer.Domain.Contracts\FrannHammer.Domain.Contracts.csproj" />
+    <ProjectReference Include="..\..\Implementation\FrannHammer.Domain\FrannHammer.Domain.csproj" />
+    <ProjectReference Include="..\..\Implementation\FrannHammer.Utility\FrannHammer.Utility.csproj" />
+    <ProjectReference Include="..\..\Contracts\FrannHammer.WebScraping.Domain.Contracts\FrannHammer.WebScraping.Domain.Contracts.csproj" />
+    <ProjectReference Include="..\..\Implementation\FrannHammer.WebScraping\FrannHammer.WebScraping.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Attributes\CharacterAttributesApi.feature.cs" />
+    <Compile Remove="Characters\CharacterApi.feature.cs" />
+    <Compile Remove="Movements\MovementsApi.feature.cs" />
+    <Compile Remove="Moves\MovesApi.feature.cs" />
+    <Compile Remove="Unique\UniqueApi.feature.cs" />
+  </ItemGroup>
+</Project>

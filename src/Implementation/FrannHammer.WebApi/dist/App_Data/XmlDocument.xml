@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FrannHammer.WebApi</name>
+    </assembly>
+    <members>
+        <member name="M:FrannHammer.WebApi.Controllers.MovementController.GetAllMovements(System.String)">
+            <summary>
+            Get all movement data.
+            </summary>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
+        </member>
+        <member name="M:FrannHammer.WebApi.Controllers.MovementController.GetMovementById(System.String,System.String)">
+            <summary>
+            Get a specific <see cref="T:FrannHammer.Domain.Contracts.IMovement"/>.
+            </summary>
+            <param name="id"></param>
+            <param name="fields">Specify which specific pieces of the response model you need via comma-separated values. <para> 
+            E.g., id,name to get back just the id and name.</para></param>
+        </member>
+        <member name="T:FrannHammer.WebApi.CustomExceptionFilterAttribute">
+            <summary>
+            Middleware for pushing exceptional data to the Application Insights instance.
+            </summary>
+        </member>
+    </members>
+</doc>

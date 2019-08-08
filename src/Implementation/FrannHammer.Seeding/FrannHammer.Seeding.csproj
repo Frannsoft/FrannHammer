@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyTitle>FrannHammer.Seeding</AssemblyTitle>
+    <GenerateAssemblyCompanyAttribute>False</GenerateAssemblyCompanyAttribute>
+    <Product>FrannHammer.Seeding</Product>
+    <Copyright>Copyright ©  2017</Copyright>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.0.0" />
+    <PackageReference Include="Castle.Core" Version="4.3.1" />
+    <PackageReference Include="Moq" Version="4.10.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\SolutionInfo.cs" Link="Properties\SolutionInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Contracts\FrannHammer.Api.Services.Contracts\FrannHammer.Api.Services.Contracts.csproj" />
+    <ProjectReference Include="..\..\Contracts\FrannHammer.Domain.Contracts\FrannHammer.Domain.Contracts.csproj" />
+    <ProjectReference Include="..\FrannHammer.Domain\FrannHammer.Domain.csproj" />
+    <ProjectReference Include="..\..\Contracts\FrannHammer.Seeding.Contracts\FrannHammer.Seeding.Contracts.csproj" />
+    <ProjectReference Include="..\FrannHammer.Utility\FrannHammer.Utility.csproj" />
+    <ProjectReference Include="..\..\Contracts\FrannHammer.WebScraping.Contracts\FrannHammer.WebScraping.Contracts.csproj" />
+    <ProjectReference Include="..\..\Contracts\FrannHammer.WebScraping.Domain.Contracts\FrannHammer.WebScraping.Domain.Contracts.csproj" />
+  </ItemGroup>
+</Project>

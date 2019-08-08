@@ -1,0 +1,60 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyTitle>FrannHammer.Seeding.Tests</AssemblyTitle>
+    <GenerateAssemblyCompanyAttribute>False</GenerateAssemblyCompanyAttribute>
+    <Product>FrannHammer.Seeding.Tests</Product>
+    <Copyright>Copyright ©  2017</Copyright>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.8.1" />
+    <PackageReference Include="Castle.Core" Version="4.3.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+    <PackageReference Include="Microsoft.TestPlatform" Version="15.9.0" />
+    <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="15.9.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.12.0" />
+    <PackageReference Include="DnsClient" Version="1.2.0" />
+    <PackageReference Include="MongoDB.Bson" Version="2.7.2" />
+    <PackageReference Include="MongoDB.Driver" Version="2.7.2" />
+    <PackageReference Include="MongoDB.Driver.Core" Version="2.7.2" />
+    <PackageReference Include="Moq" Version="4.10.1" />
+    <PackageReference Include="NUnit" Version="3.11.0" />
+    <PackageReference Include="System.Buffers" Version="4.5.0" />
+    <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\SolutionInfo.cs" Link="Properties\SolutionInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Contracts\FrannHammer.Api.Services.Contracts\FrannHammer.Api.Services.Contracts.csproj" />
+    <ProjectReference Include="..\..\Implementation\FrannHammer.Api.Services\FrannHammer.Api.Services.csproj" />
+    <ProjectReference Include="..\..\Contracts\FrannHammer.DataAccess.Contracts\FrannHammer.DataAccess.Contracts.csproj" />
+    <ProjectReference Include="..\..\Implementation\FrannHammer.DataAccess.MongoDb\FrannHammer.DataAccess.MongoDb.csproj" />
+    <ProjectReference Include="..\..\Contracts\FrannHammer.Domain.Contracts\FrannHammer.Domain.Contracts.csproj" />
+    <ProjectReference Include="..\..\Implementation\FrannHammer.Domain\FrannHammer.Domain.csproj" />
+    <ProjectReference Include="..\..\Implementation\FrannHammer.Seeding\FrannHammer.Seeding.csproj" />
+    <ProjectReference Include="..\FrannHammer.Tests.Utility\FrannHammer.Tests.Utility.csproj" />
+    <ProjectReference Include="..\..\Contracts\FrannHammer.WebScraping.Contracts\FrannHammer.WebScraping.Contracts.csproj" />
+    <ProjectReference Include="..\..\Contracts\FrannHammer.WebScraping.Domain.Contracts\FrannHammer.WebScraping.Domain.Contracts.csproj" />
+    <ProjectReference Include="..\..\Implementation\FrannHammer.WebScraping.Domain\FrannHammer.WebScraping.Domain.csproj" />
+    <ProjectReference Include="..\..\Implementation\FrannHammer.WebScraping\FrannHammer.WebScraping.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+</Project>
