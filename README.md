@@ -39,8 +39,6 @@ To see more details on these features, check out these wiki pages:
 
 The live docs (above) are a great place to see the full capability and how one can use it.
 
-##### NOTE: The API is in beta and is subject to rapid change.
-
 ##### Issues and Feedback
 Changes are being made that could affect public calls.  I'll be sure to post those types of changes in this repo.  If you have an issue, feel free to open one up on the [Issues](https://github.com/Frannsoft/FrannHammer/issues) page or email me at the address in [my Profile](https://github.com/Frannsoft) or twitter at franndotexe.
 
