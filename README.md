@@ -9,7 +9,7 @@ Restful api and database layer for Super Smash Bros. 4 and Super Smash Bros. Ult
 This is being worked on with @KuroganeHammer's permission.  All credit for the actual data that is stored and retrieved goes to him and 
 any other people that are involved in that process.
 
-Allows consumers to pull back the data displayed on @KuroganeHammer's site as JSON.  The data is stored in a database and is not 
+Allows consumers to pull back the data displayed on @KuroganeHammer's site as JSON.  The data is cached and is not 
 scraped from the site on-call.
 
 See the [Wiki](https://github.com/Frannsoft/FrannHammer/wiki) for more information.
