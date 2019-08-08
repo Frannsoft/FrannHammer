@@ -16,7 +16,7 @@ See the [Wiki](https://github.com/Frannsoft/FrannHammer/wiki) for more informati
 
 ## Getting Started
 
-Live API documentation can be found via [Swagger docs](http://beta-api-kuroganehammer.azurewebsites.net/swagger/ui/index).  
+Live API documentation can be found via [Swagger docs](https://api.kuroganehammer.com/swagger/index.html).  
 
 A good place to get started is the [Character Data page](https://github.com/Frannsoft/FrannHammer/wiki/Character-Data).
 
