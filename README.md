@@ -1,18 +1,8 @@
 # The KuroganeHammer.com API
 
-### Ultimate support is now available for testing! (still in development) [Details here](https://github.com/Frannsoft/FrannHammer/wiki/How-to-test-out-the-Ultimate-support-changes)
+**Details on the latest stable release [here](https://github.com/Frannsoft/FrannHammer/wiki/v0.7.0-Update)**
 
-*** 
-
-#### The legacy version of the API has been turned off now. This means requests to `api.kuroganehammer.com` will not work.
-
-***
-
-**Details on the latest stable release [here](https://github.com/Frannsoft/FrannHammer/releases/tag/v0.6.0)**
-
-[![Build status](https://ci.appveyor.com/api/projects/status/ruxmxhiutxe9q8v9/branch/develop?svg=true)](https://ci.appveyor.com/project/Frannsoft/frannhammer-0uqqq/branch/develop)
-
-[![Swagger Docs](https://img.shields.io/badge/Swagger%20Docs-Live-orange.svg)](http://beta-api-kuroganehammer.azurewebsites.net/swagger/)
+[![Swagger Docs](https://img.shields.io/badge/Swagger%20Docs-Live-orange.svg)](https://api.kuroganehammer.com/swagger/index.html)
 
 Restful api and database layer for Super Smash Bros. 4 and Super Smash Bros. Ultimate frame data as told by @KuroganeHammer.
 
