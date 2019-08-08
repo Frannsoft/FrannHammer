@@ -1,6 +1,6 @@
 # The KuroganeHammer.com API
 
-**Details on the latest stable release [here](https://github.com/Frannsoft/FrannHammer/wiki/v0.7.0-Update)**
+**Details on the latest stable release [here](https://github.com/Frannsoft/FrannHammer/wiki/v0.7.0-Update)**!
 
 [![Swagger Docs](https://img.shields.io/badge/Swagger%20Docs-Live-orange.svg)](https://api.kuroganehammer.com/swagger/index.html)
 
