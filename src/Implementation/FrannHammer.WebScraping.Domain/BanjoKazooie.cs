@@ -5,9 +5,10 @@ namespace FrannHammer.WebScraping.Domain
     public class BanjoKazooie : WebCharacter
     {
         public BanjoKazooie()
-            : base("Banjo-Kazooie")
+            : base("BanjoKazooie", "Banjo-Kazooie", potentialScrapingNames: "Banjo-Kazooie")
         {
             CssKey = "bear";
+            DisplayName = "Banjo & Kazooie";
         }
     }
 }
