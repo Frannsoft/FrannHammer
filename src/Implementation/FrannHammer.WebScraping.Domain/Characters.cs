@@ -99,7 +99,8 @@ namespace FrannHammer.WebScraping.Domain
             new Ivysaur(),
             new KingKRool(),
             new Joker(),
-            new Hero()
+            new Hero(),
+            new BanjoKazooie()
         };
     }
 }
