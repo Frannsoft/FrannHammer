@@ -5,9 +5,10 @@ namespace FrannHammer.WebScraping.Domain
     public class PiranhaPlant : WebCharacter
     {
         public PiranhaPlant()
-            : base("Piranha Plant", "Piranha%20Plant")
+            : base("PiranhaPlant", "Piranha%20Plant", potentialScrapingNames: "Piranha Plant")
         {
             CssKey = "potplant";
+            DisplayName = "Pirahna Plant";
         }
     }
 }
