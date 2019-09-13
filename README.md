@@ -4,7 +4,7 @@
 
 [![Swagger Docs](https://img.shields.io/badge/Swagger%20Docs-Live-orange.svg)](https://api.kuroganehammer.com/swagger/index.html)
 
-Restful api and database layer for Super Smash Bros. 4 and Super Smash Bros. Ultimate frame data as told by @KuroganeHammer.
+Restful api for Super Smash Bros. 4 and Super Smash Bros. Ultimate frame data as told by @KuroganeHammer.
 
 This is being worked on with @KuroganeHammer's permission.  All credit for the actual data that is stored and retrieved goes to him and 
 any other people that are involved in that process.
