@@ -100,7 +100,8 @@ namespace FrannHammer.WebScraping.Domain
             new KingKRool(),
             new Joker(),
             new Hero(),
-            new BanjoKazooie()
+            new BanjoKazooie(),
+            new IceClimbers()
         };
     }
 }
