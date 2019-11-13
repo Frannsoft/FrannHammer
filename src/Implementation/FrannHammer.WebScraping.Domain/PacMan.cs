@@ -11,4 +11,14 @@ namespace FrannHammer.WebScraping.Domain
             CssKey = "pacman";
         }
     }
+
+    public class Terry : WebCharacter
+    {
+        public Terry()
+            : base("Terry", potentialScrapingNames: "terry")
+        {
+            DisplayName = "Terry";
+            CssKey = "terry";
+        }
+    }
 }
