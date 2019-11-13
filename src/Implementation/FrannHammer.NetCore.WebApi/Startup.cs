@@ -146,8 +146,8 @@ namespace FrannHammer.NetCore.WebApi
 
         private void SeedData(ICharacterDataScraper characterDataScraper, DebugStorageLocationResolver fileLocationResolver)
         {
-#if !DEBUG
-            var charactersToSeed = Characters.All;
+#if DEBUG
+            var charactersToSeed = Characters.All.Where(d => d.DisplayName == "Terry");
             foreach (var character in charactersToSeed)
             {
                 Console.WriteLine($"Scraping data for '{character.Name}'...");
@@ -177,7 +177,7 @@ namespace FrannHammer.NetCore.WebApi
                 }
             }
 #endif
-#if DEBUG
+#if !DEBUG
             _characterData.AddRange(JsonConvert.DeserializeObject<List<Character>>(File.ReadAllText(fileLocationResolver.Character)));
             _moveData.AddRange(JsonConvert.DeserializeObject<List<Move>>(File.ReadAllText(fileLocationResolver.Move)));
             _movementData.AddRange(JsonConvert.DeserializeObject<List<Movement>>(File.ReadAllText(fileLocationResolver.Movement)));
