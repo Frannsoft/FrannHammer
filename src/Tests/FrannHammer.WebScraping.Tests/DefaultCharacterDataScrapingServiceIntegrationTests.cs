@@ -61,7 +61,7 @@ namespace FrannHammer.WebScraping.Tests
         public void OneTimeSetUp()
         {
             _characterCss = new DefaultPageDownloader()
-                .DownloadPageSource(new Uri("http://kuroganehammer.com/css/character.css"),
+                .DownloadPageSource(new Uri("https://kuroganehammer.com/css/character.css"),
                 new DefaultWebClientProvider());
         }
 

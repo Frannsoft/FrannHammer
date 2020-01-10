@@ -16,7 +16,7 @@ namespace FrannHammer.WebScraping.Tests
         public async Task PullsExpectedColorForCharacter(string characterName, string expectedColor)
         {
             string css = new DefaultPageDownloader()
-                .DownloadPageSource(new Uri("http://kuroganehammer.com/css/character.css"),
+                .DownloadPageSource(new Uri("https://kuroganehammer.com/css/character.css"),
                 new DefaultWebClientProvider());
 
             var sut = new DefaultColorScrapingService(css);

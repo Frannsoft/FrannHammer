@@ -186,7 +186,7 @@ namespace FrannHammer.WebScraping.Character
         {
             string thumbnailUriFromSource = HtmlNode.CreateNode(thumbnailHtml).GetAttributeValue(attributeKey, string.Empty);
 
-            thumbnailUriFromSource = "http://kuroganehammer.com" + thumbnailUriFromSource;
+            thumbnailUriFromSource = "https://kuroganehammer.com" + thumbnailUriFromSource;
             return thumbnailUriFromSource;
         }
 
