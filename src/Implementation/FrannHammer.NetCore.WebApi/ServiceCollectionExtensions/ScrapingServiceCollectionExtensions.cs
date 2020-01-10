@@ -38,7 +38,7 @@ namespace FrannHammer.NetCore.WebApi.ServiceCollectionExtensions
             services.AddSingleton<IColorScrapingService, DefaultColorScrapingService>(sp =>
             {
                 string css = sp.GetService<IPageDownloader>()
-                            .DownloadPageSource(new Uri("http://kuroganehammer.com/css/character.css"),
+                            .DownloadPageSource(new Uri("https://kuroganehammer.com/css/character.css"),
                             sp.GetService<IWebClientProvider>());
                 return new DefaultColorScrapingService(css);
             });

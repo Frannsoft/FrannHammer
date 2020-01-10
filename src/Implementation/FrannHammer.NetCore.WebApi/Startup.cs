@@ -151,7 +151,7 @@ namespace FrannHammer.NetCore.WebApi
             foreach (var character in charactersToSeed)
             {
                 Console.WriteLine($"Scraping data for '{character.Name}'...");
-                List<string> sourceUrls = new List<string> { "http://kuroganehammer.com/Smash4/", "http://kuroganehammer.com/Ultimate/" };
+                List<string> sourceUrls = new List<string> { "https://kuroganehammer.com/Smash4/", "https://kuroganehammer.com/Ultimate/" };
 
                 if (character.OwnerId > 58)
                 {
