@@ -10,13 +10,13 @@ using HtmlAgilityPack;
 
 namespace FrannHammer.WebScraping.Unique
 {
-    public class LimitBreakScraper : IUniqueDataScraper
+    public class OneWingedAngelScraper : IUniqueDataScraper
     {
         private const string LimitBreakAttributeTableXPath = @"(//*/table[@id='AutoNumber1'])[2]";
 
         private readonly IUniqueDataScrapingServices _uniqueDataScrapingServices;
 
-        public LimitBreakScraper(IUniqueDataScrapingServices uniqueDataScrapingServices)
+        public OneWingedAngelScraper(IUniqueDataScrapingServices uniqueDataScrapingServices)
         {
             Guard.VerifyObjectNotNull(uniqueDataScrapingServices, nameof(uniqueDataScrapingServices));
 
@@ -44,38 +44,33 @@ namespace FrannHammer.WebScraping.Unique
                             $"Error getting unique data after attempting to scrape full table using xpath: '{ScrapingConstants.XPathTableRows}'");
                     }
 
-                    var uniqueData = new List<LimitBreak>();
-                    if (character.SourceUrl.Contains(Games.Ultimate.ToString()))
-                    {
-                        var limitBreak = GetUniqueAttributeForSmash4(limitBreakTableRows, character); //cloud doesn't exist for Ultimate kh data yet
-                        uniqueData.Add(limitBreak);
-                    }
-                    else
-                    {
-                        var limitBreak = GetUniqueAttributeForSmash4(limitBreakTableRows, character);
-                        uniqueData.Add(limitBreak);
-                    }
+                    var uniqueData = new List<OneWingedAngel>();
+                    var limitBreak = GetUniqueAttribute(limitBreakTableRows, character); //cloud doesn't exist for Ultimate kh data yet
+                    limitBreak.Game = Games.Ultimate;
+                    uniqueData.Add(limitBreak);
                     return uniqueData;
                 };
             }
         }
 
-        private LimitBreak GetUniqueAttributeForSmash4(HtmlNodeCollection rows, WebCharacter character)
+        private OneWingedAngel GetUniqueAttribute(HtmlNodeCollection rows, WebCharacter character)
         {
-            var uniqueData = _uniqueDataScrapingServices.Create<LimitBreak>();
+            var uniqueData = _uniqueDataScrapingServices.Create<OneWingedAngel>();
             uniqueData.Owner = character.Name;
             uniqueData.OwnerId = character.OwnerId;
 
-            uniqueData.FramesToCharge = GetValue("Frames to Charge", rows);
-            uniqueData.PercentDealtToCharge = GetValue("% Dealt to Charge", rows);
+            uniqueData.RunAcceleration = GetValue("Run Accel", rows);
+            uniqueData.WalkAcceleration = GetValue("Walk Accel", rows);
             uniqueData.RunSpeed = GetValue("Run Speed", rows);
             uniqueData.WalkSpeed = GetValue("Walk Speed", rows);
             uniqueData.Gravity = GetValue("Gravity", rows);
             uniqueData.SHAirTime = GetValue("SH Air Time", rows);
-            uniqueData.GainedPerFrame = GetValue("Gained per Frame", rows);
-            uniqueData.PercentTakenToCharge = GetValue("% Taken to Charge", rows);
+            uniqueData.DamageDealt = GetValue("Damage Dealt", rows);
+            uniqueData.MaxJumps = GetValue("Max Jumps", rows);
             uniqueData.AirSpeed = GetValue("Air Speed", rows);
+            uniqueData.AirSpeedFriction = GetValue("Air Speed Friction", rows);
             uniqueData.FallSpeed = GetValue("Fall Speed", rows);
+            uniqueData.FastFallSpeed = GetValue("Fast Fall Speed", rows);
             uniqueData.AirAcceleration = GetValue("Air Acceleration", rows);
             uniqueData.FHAirTime = GetValue("FH Air Time", rows);
 

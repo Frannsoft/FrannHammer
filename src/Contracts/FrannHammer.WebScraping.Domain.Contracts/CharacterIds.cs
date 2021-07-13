@@ -85,6 +85,10 @@ namespace FrannHammer.WebScraping.Domain.Contracts
         public const int IceClimbers = 77;
         public const int Terry = 78;
         public const int YoungLink = 79;
+        public const int MinMin = 80;
+        public const int Pyra = 81;
+        public const int Mythra = 82;
+        public const int Sephiroth = 83;
 
         public static int FindByName(string characterName)
         {
