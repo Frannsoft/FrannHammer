@@ -103,7 +103,11 @@ namespace FrannHammer.WebScraping.Domain
             new BanjoKazooie(),
             new IceClimbers(),
             new Terry(),
-            new YoungLink()
+            new YoungLink(),
+            new MinMin(),
+            new Pyra(),
+            new Mythra(),
+            new Sephiroth()
         };
     }
 }

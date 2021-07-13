@@ -106,7 +106,7 @@ namespace FrannHammer.WebScraping.Character
             var sourceUri = new Uri(populatedCharacter.SourceUrl);
             string baseUri = sourceUri.GetLeftPart(UriPartial.Authority);
 
-            if (!mainImageUrl.StartsWith(baseUri))
+            if (!string.IsNullOrEmpty(mainImageUrl) && !mainImageUrl.StartsWith(baseUri))
             {
                 mainImageUrl = baseUri + mainImageUrl;
             }

@@ -35,7 +35,7 @@ namespace FrannHammer.WebScraping.HtmlDocs
         public string GetAttributeFromSingleNavigable(string attributeName, string xpath)
         {
             Guard.VerifyStringIsNotNullOrEmpty(xpath, nameof(xpath));
-            return _agilityDoc.DocumentNode.SelectSingleNode(xpath)?.Attributes[attributeName].Value;
+            return _agilityDoc.DocumentNode.SelectSingleNode(xpath)?.Attributes[attributeName]?.Value;
         }
     }
 }
