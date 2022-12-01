@@ -1,5 +1,7 @@
 # The KuroganeHammer.com API
 
+**This API will no longer be accessible as of January 1st, 2023.**
+
 **Details on the latest stable release [here](https://github.com/Frannsoft/FrannHammer/releases/tag/v0.7.0)**!
 
 [![Swagger Docs](https://img.shields.io/badge/Swagger%20Docs-Live-orange.svg)](https://api.kuroganehammer.com/swagger/index.html)
